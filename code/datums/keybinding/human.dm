@@ -67,5 +67,5 @@
 	if(.)
 		return
 	var/mob/living/carbon/human/H = user.mob
-	H.SwitchBlocking
+	H.SwitchBlocking()
 	return TRUE

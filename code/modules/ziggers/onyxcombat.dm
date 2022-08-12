@@ -128,7 +128,32 @@
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
-/atom/movable/screen/block/Click()
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.SwitchBlocking()
+/atom/movable/screen/blood
+	name = "bloodpool"
+	icon = 'code/modules/ziggers/vamphud.dmi'
+	icon_state = "blood0"
+	layer = HUD_LAYER
+	plane = HUD_PLANE
+
+/atom/movable/screen/blood/Click()
+	..()
+
+/mob/living
+	var/bloodpool = 7
+	var/maxbloodpool = 10
+
+/mob/living/carbon/human/Life()
+	update_blood_hud()
+	..()
+
+/mob/living/proc/update_blood_hud()
+	if(!client || !hud_used)
+		return
+	if(hud_used.blood_icon)
+		var/emm = round((10/maxbloodpool)*bloodpool)
+		if(emm > 10)
+			hud_used.blood_icon = "blood10"
+		if(emm < 0)
+			hud_used.blood_icon = "blood0"
+		else
+			hud_used.blood_icon = "blood[emm]"

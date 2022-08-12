@@ -279,21 +279,27 @@
 	block_icon.hud = src
 	static_inventory += block_icon
 
-	internals = new /atom/movable/screen/internals()
-	internals.hud = src
-	infodisplay += internals
+//	internals = new /atom/movable/screen/internals()
+//	internals.hud = src
+//	infodisplay += internals
 
 	spacesuit = new /atom/movable/screen/spacesuit
 	spacesuit.hud = src
 	infodisplay += spacesuit
 
 	healths = new /atom/movable/screen/healths()
+	healths.icon = 'code/modules/ziggers/32x48.dmi'
 	healths.hud = src
 	infodisplay += healths
 
-	healthdoll = new /atom/movable/screen/healthdoll()
-	healthdoll.hud = src
-	infodisplay += healthdoll
+	blood_icon = new /atom/movable/screen/blood()
+	blood_icon.icon = 'code/modules/ziggers/vamphud.dmi'
+	blood_icon.hud = src
+	infodisplay += blood_icon
+
+//	healthdoll = new /atom/movable/screen/healthdoll()
+//	healthdoll.hud = src
+//	infodisplay += healthdoll
 
 	pull_icon = new /atom/movable/screen/pull()
 	pull_icon.icon = ui_style

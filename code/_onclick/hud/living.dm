@@ -15,6 +15,6 @@
 	infodisplay += combo_display
 
 	//mob health doll! assumes whatever sprite the mob is
-	healthdoll = new /atom/movable/screen/healthdoll/living()
-	healthdoll.hud = src
-	infodisplay += healthdoll
+//	healthdoll = new /atom/movable/screen/healthdoll/living()
+//	healthdoll.hud = src
+//	infodisplay += healthdoll
