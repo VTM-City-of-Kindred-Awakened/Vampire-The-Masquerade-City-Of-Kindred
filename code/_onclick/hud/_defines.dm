@@ -39,7 +39,7 @@
 #define ui_lingstingdisplay "WEST:6,CENTER-3:11"
 
 //Lower center, persistent menu
-#define ui_sstore1 "CENTER-5:6,SOUTH:5"
+#define ui_sstore1 "CENTER-5:16,SOUTH:5"
 #define ui_id "CENTER-4:16,SOUTH:5"
 #define ui_belt "CENTER-3:16,SOUTH:5"
 #define ui_back "CENTER-2:16,SOUTH:5"
@@ -69,8 +69,8 @@
 
 //Middle right (status indicators)
 #define ui_healthdoll "EAST-1:28,CENTER-2:13"
-#define ui_health "EAST-1:32,CENTER-1:16"
-#define ui_bloodpool "EAST-1:16,CENTER+1"
+#define ui_health "EAST-1:32,CENTER-3:16"
+#define ui_bloodpool "EAST-1:16,CENTER-1"
 #define ui_internal "EAST-1:28,CENTER-3:10"
 #define ui_mood "EAST-1:28,CENTER:17"
 #define ui_spacesuit "EAST-1:28,CENTER-4:10"
@@ -85,6 +85,10 @@
 #define ui_ears "WEST+2:6,SOUTH+2:5"
 #define ui_neck "WEST:6,SOUTH+2:5"
 #define ui_head "WEST+1:6,SOUTH+3:5"
+
+#define ui_gorg "WEST+2:6,SOUTH+3:5"
+#define ui_cross1 "WEST+1:6,SOUTH+4:5"
+#define ui_cross2 "WEST:6,SOUTH+4:5"
 
 //Generic living
 #define ui_living_pull "EAST-1:28,CENTER-3:15"

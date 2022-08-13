@@ -123,13 +123,14 @@
 	/// Icon when empty. For now used only by humans.
 	var/icon_empty
 	/// Icon when contains an item. For now used only by humans.
-	var/icon_full
+	var/icon_full = "block"
 	/// The overlay when hovering over with an item in your hand
 	var/image/object_overlay
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
 /atom/movable/screen/inventory/Click(location, control, params)
+	update_icon_state()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)

@@ -3,6 +3,7 @@
 	var/parry_class = WEIGHT_CLASS_TINY
 	var/parry_cd = 0
 	var/blocking = FALSE
+	var/last_m_intent = MOVE_INTENT_RUN
 
 /mob/living/carbon/human/toggle_move_intent(mob/living/user)
 	if(blocking && m_intent == MOVE_INTENT_WALK)
@@ -20,12 +21,15 @@
 		var/mutable_appearance/block_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "block", -HALO_LAYER)
 		overlays_standing[HALO_LAYER] = block_overlay
 		apply_overlay(HALO_LAYER)
+		last_m_intent = m_intent
 		if(m_intent == MOVE_INTENT_RUN)
 			toggle_move_intent(src)
 	else
 		to_chat(src, "<span class='warning'>You lower your defense.</span>")
 		remove_overlay(HALO_LAYER)
 		blocking = FALSE
+		if(m_intent != last_m_intent)
+			toggle_move_intent(src)
 		if(hud_used)
 			hud_used.block_icon.icon_state = "act_block_off"
 
@@ -128,6 +132,12 @@
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
+/atom/movable/screen/block/Click()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/BL = usr
+		BL.SwitchBlocking()
+	..()
+
 /atom/movable/screen/blood
 	name = "bloodpool"
 	icon = 'code/modules/ziggers/vamphud.dmi'
@@ -135,7 +145,18 @@
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
+/atom/movable/screen/addinv
+	layer = HUD_LAYER
+	plane = HUD_PLANE
+
 /atom/movable/screen/blood/Click()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/BD = usr
+		BD.update_blood_hud()
+		if(BD.bloodpool > 0)
+			to_chat(BD, "<span class='notice'>You've got [BD.bloodpool]/[BD.maxbloodpool] blood points.</span>")
+		else
+			to_chat(BD, "<span class='warning'>You've got [BD.bloodpool]/[BD.maxbloodpool] blood points.</span>")
 	..()
 
 /mob/living
@@ -150,10 +171,10 @@
 	if(!client || !hud_used)
 		return
 	if(hud_used.blood_icon)
-		var/emm = round((10/maxbloodpool)*bloodpool)
+		var/emm = round((bloodpool/maxbloodpool)*10)
 		if(emm > 10)
-			hud_used.blood_icon = "blood10"
+			hud_used.blood_icon.icon_state = "blood10"
 		if(emm < 0)
-			hud_used.blood_icon = "blood0"
+			hud_used.blood_icon.icon_state = "blood0"
 		else
-			hud_used.blood_icon = "blood[emm]"
+			hud_used.blood_icon.icon_state = "blood[emm]"

@@ -57,6 +57,7 @@
 
 	var/atom/movable/screen/using
 	var/atom/movable/screen/inventory/inv_box
+	var/atom/movable/screen/inventory/inv_add
 
 	using = new/atom/movable/screen/language_menu
 	using.icon = ui_style
@@ -151,6 +152,30 @@
 	inv_box.slot_id = ITEM_SLOT_NECK
 	inv_box.hud = src
 	toggleable_inventory += inv_box
+
+	inv_add = new /atom/movable/screen/addinv()
+	inv_add.name = "inventory"
+	inv_add.icon = 'code/modules/ziggers/32x48.dmi'
+	inv_add.icon_state = "gorg"
+	inv_add.screen_loc = ui_gorg
+	inv_add.hud = src
+	toggleable_inventory += inv_add
+
+	inv_add = new /atom/movable/screen/addinv()
+	inv_add.name = "inventory"
+	inv_add.icon = 'code/modules/ziggers/icons.dmi'
+	inv_add.icon_state = "cross1"
+	inv_add.screen_loc = ui_cross1
+	inv_add.hud = src
+	toggleable_inventory += inv_add
+
+	inv_add = new /atom/movable/screen/addinv()
+	inv_add.name = "inventory"
+	inv_add.icon = 'code/modules/ziggers/icons.dmi'
+	inv_add.icon_state = "cross2"
+	inv_add.screen_loc = ui_cross2
+	inv_add.hud = src
+	toggleable_inventory += inv_add
 
 	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "back"
@@ -293,7 +318,8 @@
 	infodisplay += healths
 
 	blood_icon = new /atom/movable/screen/blood()
-	blood_icon.icon = 'code/modules/ziggers/vamphud.dmi'
+//	blood_icon.icon = 'code/modules/ziggers/vamphud.dmi'
+	blood_icon.screen_loc = ui_bloodpool
 	blood_icon.hud = src
 	infodisplay += blood_icon
 
