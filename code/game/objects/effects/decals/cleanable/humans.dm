@@ -8,7 +8,10 @@
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	beauty = -100
 	clean_type = CLEAN_TYPE_BLOOD
-
+/obj/effect/decal/cleanable/blood/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	pixel_x = rand(-8,8) //MOJAVE SUN EDIT - Blood Sprites
+	pixel_y = rand(-8,8) //MOJAVE SUN EDIT - Blood Sprites
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	C.add_blood_DNA(return_blood_DNA())
 	if (bloodiness)
@@ -27,9 +30,10 @@
 	icon_state = "[icon_state]-old" //change from the normal blood icon selected from random_icon_states in the parent's Initialize to the old dried up blood.
 
 /obj/effect/decal/cleanable/blood/splatter
-	icon_state = "gibbl1"
-	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
-
+	icon_state = "floor1" //MOJAVE SUN EDIT - Blood Sprites
+	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7","splatter1","splatter2","splatter3","splatter4","splatter5","splatter6") //MOJAVE SUN EDIT - Blood Sprites
+/obj/effect/decal/cleanable/blood/splatter/replace_decal(obj/effect/decal/cleanable/C) //MOJAVE SUN EDIT - Blood Sprites
+	return FALSE
 /obj/effect/decal/cleanable/blood/tracks
 	icon_state = "tracks"
 	desc = "They look like tracks left by wheels."
@@ -159,7 +163,7 @@
 /obj/effect/decal/cleanable/blood/footprints
 	name = "footprints"
 	desc = "WHOSE FOOTPRINTS ARE THESE?"
-	icon = 'icons/effects/footprints.dmi'
+	icon = 'icons/effects/blood.dmi'
 	icon_state = "blood1"
 	random_icon_states = null
 	blood_state = BLOOD_STATE_HUMAN //the icon state to load images from
@@ -213,8 +217,6 @@
 			if(!bloodstep_overlay)
 				GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]2", dir = Ddir)
 			add_overlay(bloodstep_overlay)
-
-	alpha = min(BLOODY_FOOTPRINT_BASE_ALPHA + (255 - BLOODY_FOOTPRINT_BASE_ALPHA) * bloodiness / (BLOOD_ITEM_MAX / 2), 255)
 
 
 /obj/effect/decal/cleanable/blood/footprints/examine(mob/user)

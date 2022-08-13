@@ -829,7 +829,7 @@
 	return bleed_amount
 
 /mob/living/proc/getTrail()
-	if(getBruteLoss() < 300)
+	if(getBruteLoss() < 100)
 		return pick("ltrails_1", "ltrails_2")
 	else
 		return pick("trails_1", "trails_2")
