@@ -14,9 +14,9 @@
 	burnmod = 2
 	punchdamagelow = 10
 	punchdamagehigh = 20
-	var/datum/clane/vampire_clane
+	var/datum/vampire_clane/clane
 /datum/species/kindred/on_species_gain(mob/living/carbon/human/C, datum/species/old_species, pref_load)
 	. = ..()
-	//clane = C.client.prefs.clane
+	C.set_clane(C.client.prefs.clane)
 	C.skin_tone = "albino"
 	C.update_body(0)
