@@ -1,7 +1,8 @@
 /* a basic datum базированный датум для расы вампиров. Кланы и дисциплины храняться в другом месте
 */
+#define DEFAULT_BLOOD_LOSS 0.2
 /datum/species/kindred
-	name = "SORODICH"
+	name = "Сородич"
 	id = "kindred"
 	default_color = "FFFFFF"
 	toxic_food = MEAT | VEGETABLES | RAW | JUNKFOOD | GRAIN | FRUIT | DAIRY | FRIED | ALCOHOL | SUGAR | PINEAPPLE
@@ -15,8 +16,6 @@
 	punchdamagelow = 10
 	punchdamagehigh = 20
 	var/datum/vampire_clane/clane
-/datum/species/kindred/on_species_gain(mob/living/carbon/human/C, datum/species/old_species, pref_load)
+/datum/species/kindred/spec_life(mob/living/carbon/human/H)
 	. = ..()
-	C.set_clane(C.client.prefs.clane)
-	C.skin_tone = "albino"
-	C.update_body(0)
+	SEND_SIGNAL(H, COMSIG_VAMP_WASTEBLOOD, DEFAULT_BLOOD_LOSS)

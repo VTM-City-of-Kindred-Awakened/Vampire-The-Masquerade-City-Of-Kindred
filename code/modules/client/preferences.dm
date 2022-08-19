@@ -37,6 +37,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/see_chat_non_mob = TRUE
 	///Whether emotes will be displayed on runechat. Requires chat_on_map to have effect. Boolean.
 	var/see_rc_emotes = TRUE
+	//Клан вампиров
 	var/datum/vampire_clane/clane
 	// Custom Keybindings
 	var/list/key_bindings = list()
@@ -137,7 +138,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/persistent_scars = TRUE
 	///If we want to broadcast deadchat connect/disconnect messages
 	var/broadcast_login_logout = TRUE
-
+//Поколение
+	var/generation = 13
+//maskarad
+	var/masquerade = 6
+	var/datum/vampire_clane/Clane
 /datum/preferences/New(client/C)
 	parent = C
 
