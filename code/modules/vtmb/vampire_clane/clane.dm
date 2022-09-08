@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(basic_disciplines, list()) //сюда написать осно
 	..()
 	C.skin_tone = "albino"
 	C.update_body(0)
-	var/datum/preferences.Pref = C.client.prefs
+	var/datum/preferences/Pref = C.client.prefs
 	C.clane = new Pref.Clane()
 	if(Pref.Clane.clane_outfit)
 		C.equipOutfit(Pref.Clane.clane_outfit)
