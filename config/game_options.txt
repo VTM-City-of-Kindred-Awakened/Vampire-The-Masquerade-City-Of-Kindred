@@ -33,8 +33,8 @@ EMOJIS
 ## To speed things up make the number negative, to slow things down, make the number positive.
 
 ## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied.
-RUN_DELAY 1.5
-WALK_DELAY 4
+RUN_DELAY 2
+WALK_DELAY 3
 
 ## The variables below affect the movement of specific mob types. THIS AFFECTS ALL SUBTYPES OF THE TYPE YOU CHOOSE!
 ## Entries completely override all subtypes. Later entries have precedence over earlier entries.
@@ -113,22 +113,22 @@ REPEATED_MODE_ADJUST 45 30 10
 ## Toggles for continuous modes.
 ## Modes that aren't continuous will end the instant all antagonists are dead.
 
-CONTINUOUS TRAITOR
-CONTINUOUS TRAITORBRO
-CONTINUOUS TRAITORCHAN
-CONTINUOUS INTERNAL_AFFAIRS
+#CONTINUOUS TRAITOR
+#CONTINUOUS TRAITORBRO
+#CONTINUOUS TRAITORCHAN
+#CONTINUOUS INTERNAL_AFFAIRS
 #CONTINUOUS NUCLEAR
 #CONTINUOUS REVOLUTION
-CONTINUOUS CULT
-CONTINUOUS CHANGELING
-CONTINUOUS WIZARD
+#CONTINUOUS CULT
+#CONTINUOUS CHANGELING
+#CONTINUOUS WIZARD
 #CONTINUOUS MONKEY
 
 ##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
 
-CONTINUOUS METEOR
+#CONTINUOUS METEOR
 CONTINUOUS EXTENDED
-CONTINUOUS SECRET_EXTENDED
+#CONTINUOUS SECRET_EXTENDED
 
 
 ## Toggles for allowing midround antagonists (aka mulligan antagonists).
@@ -136,13 +136,13 @@ CONTINUOUS SECRET_EXTENDED
 
 MIDROUND_ANTAG TRAITOR
 #MIDROUND_ANTAG TRAITORBRO
-MIDROUND_ANTAG TRAITORCHAN
-MIDROUND_ANTAG INTERNAL_AFFAIRS
+#MIDROUND_ANTAG TRAITORCHAN
+#MIDROUND_ANTAG INTERNAL_AFFAIRS
 #MIDROUND_ANTAG  NUCLEAR
 #MIDROUND_ANTAG  REVOLUTION
-MIDROUND_ANTAG CULT
-MIDROUND_ANTAG CHANGELING
-MIDROUND_ANTAG WIZARD
+#MIDROUND_ANTAG CULT
+#MIDROUND_ANTAG CHANGELING
+#MIDROUND_ANTAG WIZARD
 #MIDROUND_ANTAG  MONKEY
 
 ## Uncomment these for overrides of the minimum / maximum number of players in a round type.

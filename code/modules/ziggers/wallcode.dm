@@ -1,12 +1,10 @@
 //Smooth Operator soset biby
 
-/obj/effect/adwall
+/obj/effect/addwall
 	name = "Debug"
 	desc = "First rule of debug placeholder: Do not talk about debug placeholder."
 	icon = 'code/modules/ziggers/addwalls.dmi'
 	base_icon_state = "wall"
-
-get_step(src, NORTH)
 
 /turf/closed/indestructible/vampwall
 	name = "old brick wall"

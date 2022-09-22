@@ -3336,6 +3336,7 @@
 #include "code\modules\vtmb\vampire_clane\clane.dm"
 #include "code\modules\ziggers\onyxcombat.dm"
 #include "code\modules\ziggers\pigs.dm"
+#include "code\modules\ziggers\wallcode.dm"
 #include "code\modules\zombie\items.dm"
 #include "code\modules\zombie\organs.dm"
 #include "interface\interface.dm"
