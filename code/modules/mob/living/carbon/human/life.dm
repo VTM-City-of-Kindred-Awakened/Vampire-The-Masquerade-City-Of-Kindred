@@ -79,6 +79,8 @@
 		..()
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
+	if(HAS_TRAIT(src, TRAIT_NOBREATH))
+		return
 
 	var/L = getorganslot(ORGAN_SLOT_LUNGS)
 

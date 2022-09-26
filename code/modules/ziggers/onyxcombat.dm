@@ -4,6 +4,15 @@
 	var/parry_cd = 0
 	var/blocking = FALSE
 	var/last_m_intent = MOVE_INTENT_RUN
+	var/last_bloodheal_use = 0
+	var/last_bloodpower_use = 0
+	var/last_drinkblood_use = 0
+
+/mob/living/carbon/human/death()
+	..()
+	if(dna.species.type == /datum/species/kindred)
+		spawn(30)
+			dust()
 
 /mob/living/carbon/human/toggle_move_intent(mob/living/user)
 	if(blocking && m_intent == MOVE_INTENT_WALK)
@@ -158,6 +167,166 @@
 		else
 			to_chat(BD, "<span class='warning'>You've got [BD.bloodpool]/[BD.maxbloodpool] blood points.</span>")
 	..()
+
+/atom/movable/screen/drinkblood
+	name = "bloodheal"
+	icon = 'code/modules/ziggers/disciplines.dmi'
+	icon_state = "drink"
+	layer = HUD_LAYER
+	plane = HUD_PLANE
+
+/mob/living
+	var/bloodamount = 1
+	var/maxbloodamount = 1
+
+/mob/living/carbon/human
+	bloodamount = 5
+	maxbloodamount = 5
+
+/atom/movable/screen/drinkblood/Click()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/BD = usr
+		BD.update_blood_hud()
+		if(world.time < BD.last_drinkblood_use+95)
+			return
+		BD.last_drinkblood_use = world.time
+		if(BD.bloodpool >= BD.maxbloodpool)
+			SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
+			to_chat(BD, "<span class='warning'>You're full of <b>BLOOD</b>.</span>")
+			return
+		if(BD.grab_state > GRAB_PASSIVE)
+			if(ishuman(pulling))
+				var/mob/living/carbon/human/PB = pulledby
+				if(PB.dna.species.id == "kindred")
+					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
+					to_chat(BD, "<span class='warning'>You can't drink <b>BLOOD</b> of your own kind. <b>THIS IS INSANE!</b></span>")
+					return
+			if(isliving(BD.pulling))
+				var/mob/living/LV = BD.pulling
+				if(LV.bloodamount <= 0)
+					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
+					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
+					return
+				BD.drinksomeblood(LV)
+	..()
+
+/mob/living/carbon/human/proc/drinksomeblood(var/mob/living/mob)
+	playsound(src, 'code/modules/ziggers/drinkblood1.ogg', 50, TRUE)
+	SEND_SOUND(src, sound('code/modules/ziggers/drinkblood2.ogg'))
+	if(mob.bloodamount == 1 && mob.maxbloodamount > 1)
+//		if(alert("This action will kill your victim. Are you sure?",,"Yes","No")!="Yes")
+//			return
+		to_chat(src, "<span class='warning'>You feel small amount of <b>BLOOD</b> in your victim.</span>")
+	if(do_after(src, 95, target = mob))
+		mob.bloodamount -= 1
+		if(ishuman(mob))
+			var/mob/living/carbon/human/H = mob
+			H.blood_volume = max(H.blood_volume-10, 150)
+		bloodpool = min(maxbloodpool, bloodpool+1)
+		update_blood_hud()
+		if(mob.bloodamount <= 0)
+			if(ishuman(mob))
+				var/mob/living/carbon/human/K = mob
+				K.blood_volume = 0
+			mob.death()
+			if(ishuman(mob))
+				SEND_SOUND(src, sound('code/modules/ziggers/feed_failed.ogg'))
+				to_chat(src, "<span class='warning'>This sad sacrifice for your own pleasure affects something deep in your mind.</span>")
+			return
+		if(grab_state > GRAB_PASSIVE)
+			drinksomeblood(mob)
+
+/atom/movable/screen/bloodheal
+	name = "bloodheal"
+	icon = 'code/modules/ziggers/disciplines.dmi'
+	icon_state = "bloodheal"
+	layer = HUD_LAYER
+	plane = HUD_PLANE
+
+/atom/movable/screen/bloodheal/Click()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/BD = usr
+		if(world.time < BD.last_bloodheal_use+30)
+			return
+		BD.last_bloodheal_use = world.time
+		if(BD.bloodpool >= 1)
+			BD.bloodpool -= 1
+			icon_state = "[initial(icon_state)]-on"
+			to_chat(BD, "<span class='notice'>You use blood to heal your wounds.</span>")
+			BD.adjustBruteLoss(-5, TRUE)
+			BD.adjustFireLoss(-5, TRUE)
+			BD.update_damage_overlays()
+			BD.update_health_hud()
+		else
+			SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
+			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to heal your wounds.</span>")
+		BD.update_blood_hud()
+	spawn(15)
+		icon_state = initial(icon_state)
+
+/atom/movable/screen/bloodpower
+	name = "bloodpower"
+	icon = 'code/modules/ziggers/disciplines.dmi'
+	icon_state = "bloodpower"
+	layer = HUD_LAYER
+	plane = HUD_PLANE
+
+/atom/movable/screen/bloodpower/Click()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/BD = usr
+		if(world.time < BD.last_bloodpower_use+110)
+			return
+		BD.last_bloodpower_use = world.time
+		if(BD.bloodpool >= 1)
+			BD.bloodpool -= 1
+			icon_state = "[initial(icon_state)]-on"
+			to_chat(BD, "<span class='notice'>You use blood to become more powerful.</span>")
+			BD.dna.species.punchdamagelow += 15
+			BD.dna.species.punchdamagehigh += 15
+			BD.dna.species.speedmod -= 1
+			if(!HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
+				ADD_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
+		else
+			SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
+			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to become more powerful.</span>")
+		BD.update_blood_hud()
+		addtimer(CALLBACK(src, .proc/end_bloodpower), 100)
+
+/atom/movable/screen/bloodpower/proc/end_bloodpower()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/BD = usr
+		to_chat(BD, "<span class='warning'>You feel like your <b>BLOOD</b>-powers slowly decrease.</span>")
+		if(BD.dna.species)
+			BD.dna.species.punchdamagelow = initial(BD.dna.species.punchdamagelow)
+			BD.dna.species.punchdamagehigh = initial(BD.dna.species.punchdamagehigh)
+			BD.dna.species.speedmod = initial(BD.dna.species.speedmod)
+			if(HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
+				REMOVE_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
+	icon_state = initial(icon_state)
+
+//Na budushee
+//	H.physiology.armor.melee += 25
+//	H.physiology.armor.bullet += 20
+
+/atom/movable/screen/discipline1
+	icon = 'code/modules/ziggers/disciplines.dmi'
+	layer = HUD_LAYER
+	plane = HUD_PLANE
+
+/atom/movable/screen/discipline2
+	icon = 'code/modules/ziggers/disciplines.dmi'
+	layer = HUD_LAYER
+	plane = HUD_PLANE
+
+/atom/movable/screen/discipline3
+	icon = 'code/modules/ziggers/disciplines.dmi'
+	layer = HUD_LAYER
+	plane = HUD_PLANE
+
+/atom/movable/screen/discipline4
+	icon = 'code/modules/ziggers/disciplines.dmi'
+	layer = HUD_LAYER
+	plane = HUD_PLANE
 
 /mob/living
 	var/bloodpool = 7

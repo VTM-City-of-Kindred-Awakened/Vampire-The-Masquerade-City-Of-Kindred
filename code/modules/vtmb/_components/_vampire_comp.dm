@@ -12,12 +12,13 @@
 	desc = _desc
 	generation = _generation
 	spec_disciplines = _disciplines
+/datum/component/vampire/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_VAMP_DRINKBLOOD, .proc/add_drinked_blood)
 	//RegisterSignal(parent, COMSIG_VAMP_CURSE_NOSFERATU, .proc/izurodovat) не готов
 	//RegisterSignal(parent, COMSIG_VAMP_CURSE_MALKAVIAN, .proc/SdelatShizom) не готово
 	//RegisterSignal(parent, COMSIG_VAMP_SEENBYPEOPLE, .proc/seen_by_people) пока не готово
 	RegisterSignal(parent, COMSIG_VAMP_WASTEBLOOD, .proc/wasteblood)
-	parent.clane.sosalka.Grant(parent)
+//	parent.clane.sosalka.Grant(parent)
 /datum/component/vampire/proc/wasteblood(waste_amount)
 	blood_amount = blood_amount - waste_amount
 /datum/component/vampire/proc/add_drinked_blood(given_amount)

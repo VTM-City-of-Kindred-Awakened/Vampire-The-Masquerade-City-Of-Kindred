@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(basic_disciplines, list()) //сюда написать осно
 	var/list/allowed_jobs = list()
 	var/list/denied_jobs = list()
 	var/clane_curse //Здесь должен быть сигнал
-	var/datum/action/innate/drink_blood/sosalka = new
+//	var/datum/action/innate/drink_blood/sosalka = new
 //Дополнительная игровая логика должна храниться в компоненте
 /datum/species/kindred/on_species_gain(mob/living/carbon/human/C)
 	..()

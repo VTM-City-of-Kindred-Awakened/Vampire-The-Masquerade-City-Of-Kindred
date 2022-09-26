@@ -47,6 +47,14 @@
 #define ui_storage2 "CENTER+2:16,SOUTH:5"
 #define ui_combo "CENTER+4:24,SOUTH+1:7" //combo meter for martial arts
 
+#define ui_drinkblood "CENTER+1:16,SOUTH+1:8"
+#define ui_bloodheal "CENTER+2,SOUTH+1:8"
+#define ui_bloodpower "CENTER+2:16,SOUTH+1:8"
+#define ui_discipline1 "CENTER+3,SOUTH+1:8"
+#define ui_discipline2 "CENTER+3:16,SOUTH+1:8"
+#define ui_discipline3 "CENTER+4,SOUTH+1:8"
+#define ui_discipline4 "CENTER+4:16,SOUTH+1:8"
+
 //Lower right, persistent menu
 #define ui_drop_throw "EAST-1:24,SOUTH+1:5"
 #define ui_above_movement "EAST-2:24,SOUTH+1:5"
