@@ -173,7 +173,7 @@
 	..()
 
 /atom/movable/screen/drinkblood
-	name = "bloodheal"
+	name = "Drink Blood"
 	icon = 'code/modules/ziggers/disciplines.dmi'
 	icon_state = "drink"
 	layer = HUD_LAYER
