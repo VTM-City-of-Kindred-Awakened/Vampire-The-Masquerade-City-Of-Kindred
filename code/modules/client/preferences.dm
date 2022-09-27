@@ -38,7 +38,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///Whether emotes will be displayed on runechat. Requires chat_on_map to have effect. Boolean.
 	var/see_rc_emotes = TRUE
 	//Клан вампиров
-	var/datum/vampire_clane/clane
+	var/datum/vampire_clane/clane = new /datum/vampire_clane/brujah()
 	// Custom Keybindings
 	var/list/key_bindings = list()
 
@@ -141,8 +141,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //Поколение
 	var/generation = 13
 //maskarad
-	var/masquerade = 6
-	var/datum/vampire_clane/Clane
+	var/masquerade = 5
+
+	var/humanity = 7
+//	var/datum/vampire_clane/Clane
 /datum/preferences/New(client/C)
 	parent = C
 
@@ -161,10 +163,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(load_character())
 			return
 	//we couldn't load character data so just randomize the character appearance + name
+	random_species()
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
 	C?.set_macros()
-	pref_species = new /datum/species/kindred()
+//	pref_species = new /datum/species/kindred()
 	real_name = pref_species.random_name(gender,1)
 	if(!loaded_preferences_successfully)
 		save_preferences()
@@ -255,21 +258,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_AGE]'>Always Random Age: [(randomise[RANDOM_AGE]) ? "Yes" : "No"]</A>"
 				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_AGE_ANTAG]'>When Antagonist: [(randomise[RANDOM_AGE_ANTAG]) ? "Yes" : "No"]</A>"
 
-			dat += "<br><br><b>Special Names:</b><BR>"
-			var/old_group
-			for(var/custom_name_id in GLOB.preferences_custom_names)
-				var/namedata = GLOB.preferences_custom_names[custom_name_id]
-				if(!old_group)
-					old_group = namedata["group"]
-				else if(old_group != namedata["group"])
-					old_group = namedata["group"]
-					dat += "<br>"
-				dat += "<a href ='?_src_=prefs;preference=[custom_name_id];task=input'><b>[namedata["pref_name"]]:</b> [custom_names[custom_name_id]]</a> "
-			dat += "<br><br>"
+//			dat += "<br><br><b>Special Names:</b><BR>"
+//			var/old_group
+//			for(var/custom_name_id in GLOB.preferences_custom_names)
+//				var/namedata = GLOB.preferences_custom_names[custom_name_id]
+//				if(!old_group)
+//					old_group = namedata["group"]
+//				else if(old_group != namedata["group"])
+//					old_group = namedata["group"]
+//					dat += "<br>"
+//				dat += "<a href ='?_src_=prefs;preference=[custom_name_id];task=input'><b>[namedata["pref_name"]]:</b> [custom_names[custom_name_id]]</a> "
+//			dat += "<br><br>"
 
-			dat += "<b>Custom Job Preferences:</b><BR>"
-			dat += "<a href='?_src_=prefs;preference=ai_core_icon;task=input'><b>Preferred AI Core Display:</b> [preferred_ai_core_display]</a><br>"
-			dat += "<a href='?_src_=prefs;preference=sec_dept;task=input'><b>Preferred Security Department:</b> [prefered_security_department]</a><BR></td>"
+//			dat += "<b>Custom Job Preferences:</b><BR>"
+//			dat += "<a href='?_src_=prefs;preference=ai_core_icon;task=input'><b>Preferred AI Core Display:</b> [preferred_ai_core_display]</a><br>"
+//			dat += "<a href='?_src_=prefs;preference=sec_dept;task=input'><b>Preferred Security Department:</b> [prefered_security_department]</a><BR></td>"
 
 			dat += "</tr></table>"
 
@@ -281,8 +284,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
 			dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
-			if(pref_species.name != "Ghoul")
-				dat += "<b>Clane:</b> WIP<BR>"
+			dat += "<b>Humanity:</b> [humanity]/10<BR>"
+			if(pref_species.name == "Vampire")
+				dat += "<b>Generation:</b> [generation]<BR>"
+				dat += "<b>Masquerade:</b> [masquerade]/5<BR>"
+				dat += "<b>Clane:</b> <a href='?_src_=prefs;preference=clane;task=input'>[clane.name]</a><BR>"
+				dat += "<b>Clane description:</b> [clane.desc]<BR>"
 //			dat += "<a href='?_src_=prefs;preference=species;task=random'>Random Species</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SPECIES]'>Always Random Species: [(randomise[RANDOM_SPECIES]) ? "Yes" : "No"]</A><br>"
 
@@ -1396,9 +1403,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_eyes)
 						eye_color = sanitize_hexcolor(new_eyes)
 
+				if("clane")
+					var/result = input(user, "Select a clane", "Clane Selection") as null|anything in GLOB.clanes_list
+					if(result)
+						var/newtype = GLOB.clanes_list[result]
+						clane = new newtype()
+//						real_name = clane.random_name(gender)		//potom sdelat
+
 				if("species")
-					pref_species = new /datum/species/kindred()
-/*
+//				var/newtype = GLOB.species_list["kindred"]
+//				pref_species = new newtype()
+
 					var/result = input(user, "Select a species", "Species Selection") as null|anything in GLOB.roundstart_races
 
 					if(result)
@@ -1410,7 +1425,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mcolor"] = pref_species.default_color
 						if(randomise[RANDOM_NAME])
 							real_name = pref_species.random_name(gender)
-*/
+
 				if("mutant_color")
 					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference","#"+features["mcolor"]) as color|null
 					if(new_mutantcolor)
@@ -1605,7 +1620,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(unlock_content)
 						toggles ^= MEMBER_PUBLIC
 				if("gender")
-					var/list/friendlyGenders = list("Male" = "male", "Female" = "female", "Other" = "plural")
+					var/list/friendlyGenders = list("Male" = "male", "Female" = "female")
 					var/pickedGender = input(user, "Choose your gender.", "Character Preference", gender) as null|anything in friendlyGenders
 					if(pickedGender && friendlyGenders[pickedGender] != gender)
 						gender = friendlyGenders[pickedGender]
@@ -1865,6 +1880,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					load_preferences()
 					load_character()
 
+				if("reset_all")
+					humanity = initial(humanity)
+					masquerade = initial(masquerade)
+					generation = initial(generation)
+					clane = null
+					clane = new /datum/vampire_clane/brujah()
+					random_species()
+					random_character()
+					real_name = random_unique_name(gender)
+					save_character()
+
 				if("changeslot")
 					if(!load_character(text2num(href_list["num"])))
 						random_character()
@@ -1915,6 +1941,47 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.real_name = real_name
 	character.name = character.real_name
+
+	character.clane = clane
+	character.maxbloodpool = 10+(13-generation)
+	character.bloodpool = rand(1, character.maxbloodpool)
+	if(character.dna.species.id == "kindred")
+		if(clane.clane_disciplines[1])
+			character.hud_used.discipline1_icon = new /atom/movable/screen/disciplines()
+			character.hud_used.discipline1_icon.dscpln = clane.clane_disciplines[1]
+			character.hud_used.discipline1_icon.name = character.hud_used.discipline1_icon.dscpln.name
+			character.hud_used.discipline1_icon.desc = character.hud_used.discipline1_icon.dscpln.desc
+			character.hud_used.discipline1_icon.icon_state = character.hud_used.discipline1_icon.dscpln.icon_state
+			character.hud_used.discipline1_icon.screen_loc = ui_discipline1
+			character.hud_used.discipline1_icon.hud = src
+			character.hud_used.static_inventory += character.hud_used.discipline1_icon
+		if(clane.clane_disciplines[2])
+			character.hud_used.discipline2_icon = new /atom/movable/screen/disciplines()
+			character.hud_used.discipline2_icon.dscpln = clane.clane_disciplines[2]
+			character.hud_used.discipline2_icon.name = character.hud_used.discipline2_icon.dscpln.name
+			character.hud_used.discipline2_icon.desc = character.hud_used.discipline2_icon.dscpln.desc
+			character.hud_used.discipline2_icon.icon_state = character.hud_used.discipline2_icon.dscpln.icon_state
+			character.hud_used.discipline2_icon.screen_loc = ui_discipline2
+			character.hud_used.discipline2_icon.hud = src
+			character.hud_used.static_inventory += character.hud_used.discipline2_icon
+		if(clane.clane_disciplines[3])
+			character.hud_used.discipline3_icon = new /atom/movable/screen/disciplines()
+			character.hud_used.discipline3_icon.dscpln = clane.clane_disciplines[3]
+			character.hud_used.discipline3_icon.name = character.hud_used.discipline3_icon.dscpln.name
+			character.hud_used.discipline3_icon.desc = character.hud_used.discipline3_icon.dscpln.desc
+			character.hud_used.discipline3_icon.icon_state = character.hud_used.discipline3_icon.dscpln.icon_state
+			character.hud_used.discipline3_icon.screen_loc = ui_discipline3
+			character.hud_used.discipline3_icon.hud = src
+			character.hud_used.static_inventory += character.hud_used.discipline3_icon
+		if(clane.clane_disciplines[4])
+			character.hud_used.discipline4_icon = new /atom/movable/screen/disciplines()
+			character.hud_used.discipline4_icon.dscpln = clane.clane_disciplines[4]
+			character.hud_used.discipline4_icon.name = character.hud_used.discipline4_icon.dscpln.name
+			character.hud_used.discipline4_icon.desc = character.hud_used.discipline4_icon.dscpln.desc
+			character.hud_used.discipline4_icon.icon_state = character.hud_used.discipline4_icon.dscpln.icon_state
+			character.hud_used.discipline4_icon.screen_loc = ui_discipline4
+			character.hud_used.discipline4_icon.hud = src
+			character.hud_used.static_inventory += character.hud_used.discipline4_icon
 
 	character.gender = gender
 	character.age = age

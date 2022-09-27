@@ -7,6 +7,10 @@
 	var/last_bloodheal_use = 0
 	var/last_bloodpower_use = 0
 	var/last_drinkblood_use = 0
+	var/last_bloodheal_click = 0
+	var/last_bloodpower_click = 0
+	var/last_drinkblood_click = 0
+	var/last_discipline_click = 0
 
 /mob/living/carbon/human/death()
 	..()
@@ -189,11 +193,13 @@
 		BD.update_blood_hud()
 		if(world.time < BD.last_drinkblood_use+95)
 			return
-		BD.last_drinkblood_use = world.time
-		if(BD.bloodpool >= BD.maxbloodpool)
-			SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
-			to_chat(BD, "<span class='warning'>You're full of <b>BLOOD</b>.</span>")
+		if(world.time < BD.last_drinkblood_click+10)
 			return
+		BD.last_drinkblood_click = world.time
+//		if(BD.bloodpool >= BD.maxbloodpool)
+//			SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
+//			to_chat(BD, "<span class='warning'>You're full of <b>BLOOD</b>.</span>")
+//			return
 		if(BD.grab_state > GRAB_PASSIVE)
 			if(ishuman(pulling))
 				var/mob/living/carbon/human/PB = pulledby
@@ -207,12 +213,18 @@
 					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
+				if(isdead(LV))
+					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
+					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
+					return
+				BD.last_drinkblood_use = world.time
+				playsound(BD, 'code/modules/ziggers/drinkblood1.ogg', 50, TRUE)
 				BD.drinksomeblood(LV)
 	..()
 
 /mob/living/carbon/human/proc/drinksomeblood(var/mob/living/mob)
-	playsound(src, 'code/modules/ziggers/drinkblood1.ogg', 50, TRUE)
 	SEND_SOUND(src, sound('code/modules/ziggers/drinkblood2.ogg'))
+	to_chat(src, "<span class='warning'>You sip some <b>BLOOD</b> from your victim. It feels good.</span>")
 	if(mob.bloodamount == 1 && mob.maxbloodamount > 1)
 //		if(alert("This action will kill your victim. Are you sure?",,"Yes","No")!="Yes")
 //			return
@@ -223,6 +235,10 @@
 			var/mob/living/carbon/human/H = mob
 			H.blood_volume = max(H.blood_volume-10, 150)
 		bloodpool = min(maxbloodpool, bloodpool+1)
+		adjustBruteLoss(-5, TRUE)
+		adjustFireLoss(-5, TRUE)
+		update_damage_overlays()
+		update_health_hud()
 		update_blood_hud()
 		if(mob.bloodamount <= 0)
 			if(ishuman(mob))
@@ -248,8 +264,11 @@
 		var/mob/living/carbon/human/BD = usr
 		if(world.time < BD.last_bloodheal_use+30)
 			return
-		BD.last_bloodheal_use = world.time
+		if(world.time < BD.last_bloodheal_click+10)
+			return
+		BD.last_bloodheal_click = world.time
 		if(BD.bloodpool >= 1)
+			BD.last_bloodheal_use = world.time
 			BD.bloodpool -= 1
 			icon_state = "[initial(icon_state)]-on"
 			to_chat(BD, "<span class='notice'>You use blood to heal your wounds.</span>")
@@ -276,13 +295,18 @@
 		var/mob/living/carbon/human/BD = usr
 		if(world.time < BD.last_bloodpower_use+110)
 			return
-		BD.last_bloodpower_use = world.time
-		if(BD.bloodpool >= 1)
-			BD.bloodpool -= 1
+		if(world.time < BD.last_bloodpower_click+10)
+			return
+		BD.last_bloodpower_click = world.time
+		if(BD.bloodpool >= 3)
+			BD.last_bloodpower_use = world.time
+			BD.bloodpool -= 3
 			icon_state = "[initial(icon_state)]-on"
 			to_chat(BD, "<span class='notice'>You use blood to become more powerful.</span>")
-			BD.dna.species.punchdamagelow += 15
-			BD.dna.species.punchdamagehigh += 15
+			BD.dna.species.punchdamagelow += 10
+			BD.dna.species.punchdamagehigh += 10
+			BD.physiology.armor.melee += 15
+			BD.physiology.armor.bullet += 15
 			BD.dna.species.speedmod -= 1
 			if(!HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
 				ADD_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
@@ -299,6 +323,8 @@
 		if(BD.dna.species)
 			BD.dna.species.punchdamagelow = initial(BD.dna.species.punchdamagelow)
 			BD.dna.species.punchdamagehigh = initial(BD.dna.species.punchdamagehigh)
+			BD.physiology.armor.melee = initial(BD.physiology.armor.melee)
+			BD.physiology.armor.bullet = initial(BD.physiology.armor.bullet)
 			BD.dna.species.speedmod = initial(BD.dna.species.speedmod)
 			if(HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
 				REMOVE_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
@@ -308,25 +334,25 @@
 //	H.physiology.armor.melee += 25
 //	H.physiology.armor.bullet += 20
 
-/atom/movable/screen/discipline1
+/atom/movable/screen/disciplines
 	icon = 'code/modules/ziggers/disciplines.dmi'
 	layer = HUD_LAYER
 	plane = HUD_PLANE
+	var/datum/discipline/dscpln
+	var/main_state
 
-/atom/movable/screen/discipline2
-	icon = 'code/modules/ziggers/disciplines.dmi'
-	layer = HUD_LAYER
-	plane = HUD_PLANE
-
-/atom/movable/screen/discipline3
-	icon = 'code/modules/ziggers/disciplines.dmi'
-	layer = HUD_LAYER
-	plane = HUD_PLANE
-
-/atom/movable/screen/discipline4
-	icon = 'code/modules/ziggers/disciplines.dmi'
-	layer = HUD_LAYER
-	plane = HUD_PLANE
+/atom/movable/screen/disciplines/Click()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/BD = usr
+		if(world.time < BD.last_discipline_click+10)
+			return
+		main_state = icon_state
+		BD.last_discipline_click = world.time
+		icon_state = "[main_state]-on"
+		if(dscpln)
+			dscpln.activate(BD)
+		spawn(100)
+			icon_state = main_state
 
 /mob/living
 	var/bloodpool = 7
@@ -339,6 +365,7 @@
 /mob/living/proc/update_blood_hud()
 	if(!client || !hud_used)
 		return
+	maxbloodpool = 10+(13-client.prefs.generation)
 	if(hud_used.blood_icon)
 		var/emm = round((bloodpool/maxbloodpool)*10)
 		if(emm > 10)

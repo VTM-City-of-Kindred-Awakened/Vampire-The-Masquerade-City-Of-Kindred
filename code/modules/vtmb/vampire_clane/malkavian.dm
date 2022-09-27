@@ -1,0 +1,4 @@
+/datum/vampire_clane/malkavian
+	name = "Malkavian"
+	desc = "Derided as Lunatics by other vampires, the Blood of the Malkavians lets them perceive and foretell truths hidden from others. Like the “wise madmen” of poetry their fractured perspective stems from seeing too much of the world at once, from understanding too deeply, and feeling emotions that are just too strong to bear."
+	clane_disciplines = list()

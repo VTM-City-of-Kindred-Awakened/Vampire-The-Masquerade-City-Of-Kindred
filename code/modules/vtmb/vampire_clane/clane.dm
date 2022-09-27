@@ -1,7 +1,7 @@
 /mob/living/carbon/human
 	var/datum/vampire_clane/clane
 //Дополнительная игровая логика должна храниться в компоненте
-GLOBAL_LIST_INIT(basic_disciplines, list()) //сюда написать основные дисциплины когда я их сделаю
+GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюда написать основные дисциплины когда я их сделаю
 /*
 В этом датуме хранится декларативное описание кланов, для того чтобы из этой реализации делать в рантайме инстанс компонента клана
 А также это помогает для панельки чарсетапа*/
@@ -18,13 +18,13 @@ GLOBAL_LIST_INIT(basic_disciplines, list()) //сюда написать осно
 //Дополнительная игровая логика должна храниться в компоненте
 /datum/species/kindred/on_species_gain(mob/living/carbon/human/C)
 	..()
+//		var/datum/preferences/Pref = C.client.prefs
+//		C.clane = new C.client.prefs.clane()
 	C.skin_tone = "albino"
 	C.update_body(0)
-	var/datum/preferences/Pref = C.client.prefs
-	C.clane = new Pref.Clane()
-	if(Pref.Clane.clane_outfit)
-		C.equipOutfit(Pref.Clane.clane_outfit)
-	if(Pref.Clane.clane_disciplines && Pref.Clane.name && Pref.Clane.desc)
-		AddComponent(/datum/component/vampire, Pref.Clane.name, Pref.Clane.desc, Pref.generation, Pref.Clane.clane_disciplines, Pref.masquerade)
-	if(Pref.Clane.clane_curse)
-		SEND_SIGNAL(src, Pref.Clane.clane_curse)
+//	if(Pref.clane.clane_outfit)
+//		C.equipOutfit(Pref.clane.clane_outfit)
+//	if(Pref.clane.clane_disciplines && Pref.clane.name && Pref.clane.desc)
+//		AddComponent(/datum/component/vampire, Pref.clane.name, Pref.clane.desc, Pref.generation, Pref.clane.clane_disciplines, Pref.masquerade)
+//	if(Pref.clane.clane_curse)
+//		SEND_SIGNAL(src, Pref.clane.clane_curse)

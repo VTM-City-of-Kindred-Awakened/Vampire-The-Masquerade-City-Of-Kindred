@@ -214,7 +214,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			GLOB.roundstart_races += S.id
 			qdel(S)
 	if(!GLOB.roundstart_races.len)
-		GLOB.roundstart_races += "human"
+		GLOB.roundstart_races += "kindred"
 
 /**
  * Checks if a species is eligible to be picked at roundstart.
@@ -223,8 +223,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  * Used by [/proc/generate_selectable_species].
  */
 /datum/species/proc/check_roundstart_eligible()
-	if(id in (CONFIG_GET(keyed_list/roundstart_races)))
-		return TRUE
+//	if(id in (CONFIG_GET(keyed_list/roundstart_races)))
+//		return TRUE
 	return FALSE
 
 /**

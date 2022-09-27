@@ -5,8 +5,10 @@
 	desc = "First rule of debug placeholder: Do not talk about debug placeholder."
 	icon = 'code/modules/ziggers/addwalls.dmi'
 	base_icon_state = "wall"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
 
-/turf/closed/indestructible/vampwall
+/turf/closed/wall/vampwall
 	name = "old brick wall"
 	desc = "A huge chunk of bricks used to separate rooms."
 	icon = 'code/modules/ziggers/walls.dmi'
@@ -18,17 +20,26 @@
 
 	var/obj/effect/addwall/addwall
 
-/turf/closed/indestructible/vampwall/Initialize()
+/turf/closed/wall/vampwall/attack_hand(mob/user)
+	return
+/turf/closed/wall/vampwall/attackby(obj/item/W, mob/user, params)
+	return
+/turf/closed/wall/vampwall/ex_act(severity, target)
+	return
+
+/turf/closed/wall/vampwall/Initialize()
 	..()
 	addwall = new(get_step(src, NORTH))
 	addwall.icon_state = icon_state
+	addwall.update_icon()
 	addwall.name = name
 	addwall.desc = desc
 
-/turf/closed/indestructible/vampwall/update_icon()
+/turf/closed/wall/vampwall/visibilityChanged()
 	..()
 	addwall.icon_state = icon_state
+	addwall.update_icon()
 
-/turf/closed/indestructible/vampwall/Destroy()
+/turf/closed/wall/vampwall/Destroy()
 	..()
 	qdel(addwall)

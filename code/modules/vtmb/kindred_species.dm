@@ -19,3 +19,6 @@
 /datum/species/kindred/spec_life(mob/living/carbon/human/H)
 	. = ..()
 	SEND_SIGNAL(H, COMSIG_VAMP_WASTEBLOOD, DEFAULT_BLOOD_LOSS)
+
+/datum/species/kindred/check_roundstart_eligible()
+	return TRUE

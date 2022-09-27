@@ -354,7 +354,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			pref_species = new newtype
 
 
+	var/clane_id
+	READ_FILE(S["clane"], clane_id)
+	if(clane_id)
+		var/newtype = GLOB.clanes_list[clane_id]
+		if(newtype)
+			clane = new newtype
+
 	//Character
+	READ_FILE(S["humanity"], humanity)
+//	READ_FILE(S["clane"], clane)
+	READ_FILE(S["generation"], generation)
+	READ_FILE(S["masquerade"], masquerade)
 	READ_FILE(S["real_name"], real_name)
 	READ_FILE(S["gender"], gender)
 	READ_FILE(S["body_type"], body_type)
@@ -422,6 +433,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	body_type = sanitize_gender(body_type, FALSE, FALSE, gender)
 	if(!real_name)
 		real_name = random_unique_name(gender)
+//	if(!clane)
+//		var/newtype = GLOB.clanes_list["Brujah"]
+//		clane = new newtype()
 
 	for(var/custom_name_id in GLOB.preferences_custom_names)
 		var/namedata = GLOB.preferences_custom_names[custom_name_id]
@@ -455,6 +469,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	socks			= sanitize_inlist(socks, GLOB.socks_list)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
+	humanity				= sanitize_integer(humanity, 0, 10, initial(humanity))
+	masquerade				= sanitize_integer(masquerade, 0, 5, initial(masquerade))
+	generation				= sanitize_integer(generation, 3, 13, initial(generation))
 	hair_color			= sanitize_hexcolor(hair_color, 3, 0)
 	facial_hair_color			= sanitize_hexcolor(facial_hair_color, 3, 0)
 	underwear_color			= sanitize_hexcolor(underwear_color, 3, 0)
@@ -503,6 +520,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["version"]			, SAVEFILE_VERSION_MAX)	//load_character will sanitize any bad data, so assume up-to-date.)
 
 	//Character
+	WRITE_FILE(S["humanity"]			, humanity)
+	WRITE_FILE(S["clane"]			, clane.name)
+	WRITE_FILE(S["generation"]			, generation)
+	WRITE_FILE(S["masquerade"]			, masquerade)
 	WRITE_FILE(S["real_name"]			, real_name)
 	WRITE_FILE(S["gender"]			, gender)
 	WRITE_FILE(S["body_type"]		, body_type)
