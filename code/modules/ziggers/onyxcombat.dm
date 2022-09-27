@@ -10,7 +10,6 @@
 	var/last_bloodheal_click = 0
 	var/last_bloodpower_click = 0
 	var/last_drinkblood_click = 0
-	var/last_discipline_click = 0
 
 /mob/living/carbon/human/death()
 	..()
@@ -217,19 +216,19 @@
 					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
 					return
-				BD.last_drinkblood_use = world.time
 				playsound(BD, 'code/modules/ziggers/drinkblood1.ogg', 50, TRUE)
 				BD.drinksomeblood(LV)
 	..()
 
 /mob/living/carbon/human/proc/drinksomeblood(var/mob/living/mob)
+	last_drinkblood_use = world.time
 	SEND_SOUND(src, sound('code/modules/ziggers/drinkblood2.ogg'))
 	to_chat(src, "<span class='warning'>You sip some <b>BLOOD</b> from your victim. It feels good.</span>")
 	if(mob.bloodamount == 1 && mob.maxbloodamount > 1)
 //		if(alert("This action will kill your victim. Are you sure?",,"Yes","No")!="Yes")
 //			return
 		to_chat(src, "<span class='warning'>You feel small amount of <b>BLOOD</b> in your victim.</span>")
-	if(do_after(src, 95, target = mob))
+	if(do_after(src, 96, target = mob))
 		mob.bloodamount -= 1
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
@@ -248,6 +247,10 @@
 			if(ishuman(mob))
 				SEND_SOUND(src, sound('code/modules/ziggers/feed_failed.ogg'))
 				to_chat(src, "<span class='warning'>This sad sacrifice for your own pleasure affects something deep in your mind.</span>")
+				if(client)
+					client.prefs.humanity = max(0, client.prefs.humanity-1)
+					client.prefs.save_preferences()
+					to_chat(src, "<span class='danger'><b>HUMANITY DECREASES.</b></span>")
 			return
 		if(grab_state > GRAB_PASSIVE)
 			drinksomeblood(mob)
@@ -335,24 +338,56 @@
 //	H.physiology.armor.bullet += 20
 
 /atom/movable/screen/disciplines
-	icon = 'code/modules/ziggers/disciplines.dmi'
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 	var/datum/discipline/dscpln
+	var/last_discipline_click = 0
 	var/main_state
 
 /atom/movable/screen/disciplines/Click()
 	if(ishuman(usr))
 		var/mob/living/carbon/human/BD = usr
-		if(world.time < BD.last_discipline_click+10)
+		if(world.time < last_discipline_click+10)
 			return
-		main_state = icon_state
-		BD.last_discipline_click = world.time
-		icon_state = "[main_state]-on"
-		if(dscpln)
-			dscpln.activate(BD)
-		spawn(100)
-			icon_state = main_state
+		if(BD.active_discipline != dscpln)
+			return
+		last_discipline_click = world.time
+		if(BD.bloodpool < dscpln.cost)
+			SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
+			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to use this discipline.</span>")
+			return
+		if(dscpln.ranged)
+			if(dscpln.active)
+				icon_state = main_state
+				BD.active_discipline = null
+			else
+				main_state = icon_state
+				icon_state = "[main_state]-on"
+				BD.active_discipline = dscpln
+		else if(!dscpln.ranged)
+			dscpln.activate(BD, BD)
+			main_state = icon_state
+			icon_state = "[main_state]-on"
+			spawn(10)
+				icon_state = main_state
+
+/mob/living/carbon/human/proc/update_discipline_icons()
+	if(!hud_used.discipline1_icon.dscpln.active)
+		hud_used.discipline1_icon.icon_state = hud_used.discipline1_icon.dscpln.icon_state
+	else
+		hud_used.discipline1_icon.icon_state = "[hud_used.discipline1_icon.dscpln.icon_state]-on"
+	if(!hud_used.discipline2_icon.dscpln.active)
+		hud_used.discipline2_icon.icon_state = hud_used.discipline2_icon.dscpln.icon_state
+	else
+		hud_used.discipline2_icon.icon_state = "[hud_used.discipline2_icon.dscpln.icon_state]-on"
+	if(!hud_used.discipline3_icon.dscpln.active)
+		hud_used.discipline3_icon.icon_state = hud_used.discipline3_icon.dscpln.icon_state
+	else
+		hud_used.discipline3_icon.icon_state = "[hud_used.discipline3_icon.dscpln.icon_state]-on"
+	if(!hud_used.discipline4_icon.dscpln.active)
+		hud_used.discipline4_icon.icon_state = hud_used.discipline4_icon.dscpln.icon_state
+	else
+		hud_used.discipline4_icon.icon_state = "[hud_used.discipline4_icon.dscpln.icon_state]-on"
 
 /mob/living
 	var/bloodpool = 7

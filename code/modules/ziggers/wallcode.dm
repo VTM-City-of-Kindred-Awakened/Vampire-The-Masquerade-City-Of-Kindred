@@ -35,7 +35,7 @@
 	addwall.name = name
 	addwall.desc = desc
 
-/turf/closed/wall/vampwall/visibilityChanged()
+/turf/closed/wall/vampwall/update_icon_state()
 	..()
 	addwall.icon_state = icon_state
 	addwall.update_icon()

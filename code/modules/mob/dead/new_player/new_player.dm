@@ -327,7 +327,7 @@
 		if(!arrivals_docked)
 			var/atom/movable/screen/splash/Spl = new(character.client, TRUE)
 			Spl.Fade(TRUE)
-			character.playsound_local(get_turf(character), 'sound/voice/ApproachingTG.ogg', 25)
+//			character.playsound_local(get_turf(character), 'sound/voice/ApproachingTG.ogg', 25)
 
 		character.update_parallax_teleport()
 
@@ -343,6 +343,7 @@
 			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
 		else
 			AnnounceArrival(humanc, rank)
+//		humanc.create_disciplines()
 		AddEmploymentContract(humanc)
 		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")

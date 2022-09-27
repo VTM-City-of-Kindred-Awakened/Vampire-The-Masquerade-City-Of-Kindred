@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
-	var/max_save_slots = 3
+	var/max_save_slots = 2
 
 	//non-preference stuff
 	var/muted = 0
@@ -155,9 +155,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
-			unlock_content = C.IsByondMember()
-			if(unlock_content)
-				max_save_slots = 8
+//			unlock_content = C.IsByondMember()
+//			if(unlock_content)
+//				max_save_slots = 8
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
@@ -1945,43 +1945,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.clane = clane
 	character.maxbloodpool = 10+(13-generation)
 	character.bloodpool = rand(1, character.maxbloodpool)
-	if(character.dna.species.id == "kindred")
-		if(clane.clane_disciplines[1])
-			character.hud_used.discipline1_icon = new /atom/movable/screen/disciplines()
-			character.hud_used.discipline1_icon.dscpln = clane.clane_disciplines[1]
-			character.hud_used.discipline1_icon.name = character.hud_used.discipline1_icon.dscpln.name
-			character.hud_used.discipline1_icon.desc = character.hud_used.discipline1_icon.dscpln.desc
-			character.hud_used.discipline1_icon.icon_state = character.hud_used.discipline1_icon.dscpln.icon_state
-			character.hud_used.discipline1_icon.screen_loc = ui_discipline1
-			character.hud_used.discipline1_icon.hud = src
-			character.hud_used.static_inventory += character.hud_used.discipline1_icon
-		if(clane.clane_disciplines[2])
-			character.hud_used.discipline2_icon = new /atom/movable/screen/disciplines()
-			character.hud_used.discipline2_icon.dscpln = clane.clane_disciplines[2]
-			character.hud_used.discipline2_icon.name = character.hud_used.discipline2_icon.dscpln.name
-			character.hud_used.discipline2_icon.desc = character.hud_used.discipline2_icon.dscpln.desc
-			character.hud_used.discipline2_icon.icon_state = character.hud_used.discipline2_icon.dscpln.icon_state
-			character.hud_used.discipline2_icon.screen_loc = ui_discipline2
-			character.hud_used.discipline2_icon.hud = src
-			character.hud_used.static_inventory += character.hud_used.discipline2_icon
-		if(clane.clane_disciplines[3])
-			character.hud_used.discipline3_icon = new /atom/movable/screen/disciplines()
-			character.hud_used.discipline3_icon.dscpln = clane.clane_disciplines[3]
-			character.hud_used.discipline3_icon.name = character.hud_used.discipline3_icon.dscpln.name
-			character.hud_used.discipline3_icon.desc = character.hud_used.discipline3_icon.dscpln.desc
-			character.hud_used.discipline3_icon.icon_state = character.hud_used.discipline3_icon.dscpln.icon_state
-			character.hud_used.discipline3_icon.screen_loc = ui_discipline3
-			character.hud_used.discipline3_icon.hud = src
-			character.hud_used.static_inventory += character.hud_used.discipline3_icon
-		if(clane.clane_disciplines[4])
-			character.hud_used.discipline4_icon = new /atom/movable/screen/disciplines()
-			character.hud_used.discipline4_icon.dscpln = clane.clane_disciplines[4]
-			character.hud_used.discipline4_icon.name = character.hud_used.discipline4_icon.dscpln.name
-			character.hud_used.discipline4_icon.desc = character.hud_used.discipline4_icon.dscpln.desc
-			character.hud_used.discipline4_icon.icon_state = character.hud_used.discipline4_icon.dscpln.icon_state
-			character.hud_used.discipline4_icon.screen_loc = ui_discipline4
-			character.hud_used.discipline4_icon.hud = src
-			character.hud_used.static_inventory += character.hud_used.discipline4_icon
 
 	character.gender = gender
 	character.age = age
@@ -2031,6 +1994,37 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_body()
 		character.update_hair()
 		character.update_body_parts()
+
+/mob/living/carbon/human/proc/create_disciplines()
+	if(dna.species.id == "kindred")
+		if(clane.clane_disciplines[1])
+			var/datum/discipline/D = clane.clane_disciplines[1]
+			hud_used.discipline1_icon.icon = 'code/modules/ziggers/disciplines.dmi'
+			hud_used.discipline1_icon.dscpln = new D()
+			hud_used.discipline1_icon.name = hud_used.discipline1_icon.dscpln.name
+			hud_used.discipline1_icon.desc = hud_used.discipline1_icon.dscpln.desc
+			hud_used.discipline1_icon.icon_state = hud_used.discipline1_icon.dscpln.icon_state
+		if(clane.clane_disciplines[2])
+			var/datum/discipline/D = clane.clane_disciplines[2]
+			hud_used.discipline2_icon.icon = 'code/modules/ziggers/disciplines.dmi'
+			hud_used.discipline2_icon.dscpln = new D()
+			hud_used.discipline2_icon.name = hud_used.discipline2_icon.dscpln.name
+			hud_used.discipline2_icon.desc = hud_used.discipline2_icon.dscpln.desc
+			hud_used.discipline2_icon.icon_state = hud_used.discipline2_icon.dscpln.icon_state
+		if(clane.clane_disciplines[3])
+			var/datum/discipline/D = clane.clane_disciplines[3]
+			hud_used.discipline3_icon.icon = 'code/modules/ziggers/disciplines.dmi'
+			hud_used.discipline3_icon.dscpln = new D()
+			hud_used.discipline3_icon.name = hud_used.discipline3_icon.dscpln.name
+			hud_used.discipline3_icon.desc = hud_used.discipline3_icon.dscpln.desc
+			hud_used.discipline3_icon.icon_state = hud_used.discipline3_icon.dscpln.icon_state
+		if(clane.clane_disciplines[4])
+			var/datum/discipline/D = clane.clane_disciplines[4]
+			hud_used.discipline4_icon.icon = 'code/modules/ziggers/disciplines.dmi'
+			hud_used.discipline4_icon.dscpln = new D()
+			hud_used.discipline4_icon.name = hud_used.discipline4_icon.dscpln.name
+			hud_used.discipline4_icon.desc = hud_used.discipline4_icon.dscpln.desc
+			hud_used.discipline4_icon.icon_state = hud_used.discipline4_icon.dscpln.icon_state
 
 /datum/preferences/proc/can_be_random_hardcore()
 	if(parent.mob.mind.assigned_role in GLOB.command_positions) //No command staff
