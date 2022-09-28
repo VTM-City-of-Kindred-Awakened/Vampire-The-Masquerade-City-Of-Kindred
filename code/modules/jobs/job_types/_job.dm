@@ -116,8 +116,6 @@
 		var/mob/living/carbon/human/experiencer = H
 		for(var/i in roundstart_experience)
 			experiencer.mind.adjust_experience(i, roundstart_experience[i], TRUE)
-	var/mob/living/carbon/human/DSCPLN
-	DSCPLN.create_disciplines()
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 	if(head_announce)

@@ -342,7 +342,7 @@
 	plane = HUD_PLANE
 	var/datum/discipline/dscpln
 	var/last_discipline_click = 0
-	var/main_state
+	var/main_state = ""
 
 /atom/movable/screen/disciplines/Click()
 	if(ishuman(usr))
@@ -357,37 +357,19 @@
 			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to use this discipline.</span>")
 			return
 		if(dscpln.ranged)
-			if(dscpln.active)
+			if(BD.active_discipline)
 				icon_state = main_state
-				BD.active_discipline = null
+				if(BD.active_discipline)
+					qdel(BD.active_discipline)
 			else
-				main_state = icon_state
 				icon_state = "[main_state]-on"
-				BD.active_discipline = dscpln
+				BD.active_discipline = new (dscpln)
+				BD.active_discipline.HUD = src
 		else if(!dscpln.ranged)
 			dscpln.activate(BD, BD)
-			main_state = icon_state
 			icon_state = "[main_state]-on"
 			spawn(10)
 				icon_state = main_state
-
-/mob/living/carbon/human/proc/update_discipline_icons()
-	if(!hud_used.discipline1_icon.dscpln.active)
-		hud_used.discipline1_icon.icon_state = hud_used.discipline1_icon.dscpln.icon_state
-	else
-		hud_used.discipline1_icon.icon_state = "[hud_used.discipline1_icon.dscpln.icon_state]-on"
-	if(!hud_used.discipline2_icon.dscpln.active)
-		hud_used.discipline2_icon.icon_state = hud_used.discipline2_icon.dscpln.icon_state
-	else
-		hud_used.discipline2_icon.icon_state = "[hud_used.discipline2_icon.dscpln.icon_state]-on"
-	if(!hud_used.discipline3_icon.dscpln.active)
-		hud_used.discipline3_icon.icon_state = hud_used.discipline3_icon.dscpln.icon_state
-	else
-		hud_used.discipline3_icon.icon_state = "[hud_used.discipline3_icon.dscpln.icon_state]-on"
-	if(!hud_used.discipline4_icon.dscpln.active)
-		hud_used.discipline4_icon.icon_state = hud_used.discipline4_icon.dscpln.icon_state
-	else
-		hud_used.discipline4_icon.icon_state = "[hud_used.discipline4_icon.dscpln.icon_state]-on"
 
 /mob/living
 	var/bloodpool = 7

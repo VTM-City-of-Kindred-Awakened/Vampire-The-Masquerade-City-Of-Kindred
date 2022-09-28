@@ -477,6 +477,10 @@
 	if(.)
 		new_character.key = key		//Manually transfer the key to log them in,
 		new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+		if(ishuman(new_character))
+			var/mob/living/carbon/human/H = new_character
+			if(H.client)
+				H.create_disciplines()
 		new_character = null
 		qdel(src)
 

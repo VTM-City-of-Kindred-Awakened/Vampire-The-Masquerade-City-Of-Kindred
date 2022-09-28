@@ -3,8 +3,8 @@
 	var/desc = "Shit with blood, cope and seethe"
 	var/icon_state
 	var/cost = 2
-	var/active = FALSE
 	var/ranged = FALSE
+	var/atom/movable/screen/disciplines/HUD
 
 /mob/living/carbon/human
 	var/datum/discipline/active_discipline
@@ -16,10 +16,12 @@
 			if(isliving(src))
 				var/mob/living/TRGT = src
 				BD.active_discipline.activate(TRGT, BD)
+				BD.active_discipline.HUD.icon_state = BD.active_discipline.HUD.main_state
+				qdel(BD.active_discipline)
 			else
-				BD.active_discipline.active = FALSE
-				BD.active_discipline = null
-			BD.update_discipline_icons()
+				BD.active_discipline.HUD.icon_state = BD.active_discipline.HUD.main_state
+				qdel(BD.active_discipline)
+			return
 	..()
 
 /datum/discipline/proc/activate(var/mob/living/target, var/mob/living/caster)
@@ -55,3 +57,14 @@
 	target.apply_damage(25, BRUTE, BODY_ZONE_CHEST)
 	spawn(5)
 		qdel(W)
+
+/datum/discipline/auspex
+	name = "Auspex"
+	desc = "Allows to see auras."
+	icon_state = "auspex"
+	cost = 1
+	ranged = FALSE
+
+/datum/discipline/auspex/activate(mob/living/target, mob/living/caster)
+	..()
+	to_chat(target, "<span class='warning'>DEBUG: Rabotaet.</span>")
