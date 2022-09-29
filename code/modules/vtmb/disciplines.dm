@@ -38,7 +38,7 @@
 	W.set_light(2, 2, "#6eeeff")
 	target.Stun(5)
 	target.apply_damage(25, BRUTE, BODY_ZONE_CHEST)
-	visible_message("<span class='warning'><b>[W] bites [target]!</b></span>", "<span class='warning'><b>[W] bites you!</b></span>")
+	target.visible_message("<span class='warning'><b>[W] bites [target]!</b></span>", "<span class='warning'><b>[W] bites you!</b></span>")
 	spawn(5)
 		W.set_light(0)
 		qdel(W)

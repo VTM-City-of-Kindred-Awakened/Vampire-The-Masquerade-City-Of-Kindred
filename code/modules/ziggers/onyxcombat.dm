@@ -217,6 +217,7 @@
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
 					return
 				playsound(BD, 'code/modules/ziggers/drinkblood1.ogg', 50, TRUE)
+				LV.visible_message("<span class='warning'><b>[BD] bites [target]'s neck!</b></span>", "<span class='warning'><b>[BD] bites your neck!</b></span>")
 				BD.drinksomeblood(LV)
 	..()
 
@@ -228,7 +229,8 @@
 //		if(alert("This action will kill your victim. Are you sure?",,"Yes","No")!="Yes")
 //			return
 		to_chat(src, "<span class='warning'>You feel small amount of <b>BLOOD</b> in your victim.</span>")
-	if(do_after(src, 96, target = mob))
+	mob.Stun(95)
+	if(do_after(src, 95, target = mob))
 		mob.bloodamount -= 1
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
@@ -275,6 +277,8 @@
 			BD.bloodpool -= 1
 			icon_state = "[initial(icon_state)]-on"
 			to_chat(BD, "<span class='notice'>You use blood to heal your wounds.</span>")
+			if(BD.getBruteLoss() + BD.getBruteLoss() >= 25)
+				BD.visible_message("<span class='warning'>Some of [BD]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
 			BD.adjustBruteLoss(-5, TRUE)
 			BD.adjustFireLoss(-5, TRUE)
 			BD.update_damage_overlays()
@@ -385,6 +389,13 @@
 			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to use this discipline.</span>")
 			return
 		if(dscpln.ranged)
+			for(var/atom/movable/screen/disciplines/DISCP in BD.hud_used.static_inventory)
+				if(DISCP)
+					if(DISCP.active && DISCP != src)
+						DISCP.active = FALSE
+						BD.toggled = null
+						DISCP.icon_state = main_state
+						return
 			active = TRUE
 			BD.toggled = src
 			icon_state = "[main_state]-on"
