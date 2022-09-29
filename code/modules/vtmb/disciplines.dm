@@ -4,27 +4,9 @@
 	var/icon_state
 	var/cost = 2
 	var/ranged = FALSE
-	var/atom/movable/screen/disciplines/HUD
+	var/delay = 15
 
-/mob/living/carbon/human
-	var/datum/discipline/active_discipline
-
-/atom/Click()
-	if(ishuman(usr))
-		var/mob/living/carbon/human/BD = usr
-		if(BD.active_discipline)
-			if(isliving(src))
-				var/mob/living/TRGT = src
-				BD.active_discipline.activate(TRGT, BD)
-				BD.active_discipline.HUD.icon_state = BD.active_discipline.HUD.main_state
-				qdel(BD.active_discipline)
-			else
-				BD.active_discipline.HUD.icon_state = BD.active_discipline.HUD.main_state
-				qdel(BD.active_discipline)
-			return
-	..()
-
-/datum/discipline/proc/activate(var/mob/living/target, var/mob/living/caster)
+/datum/discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	if(!target)
 		return
 	caster.bloodpool -= cost
@@ -50,12 +32,15 @@
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER
 
-/datum/discipline/animalism/activate(mob/living/target, mob/living/caster)
+/datum/discipline/animalism/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	var/obj/effect/spectral_wolf/W = new(target.loc)
+	W.set_light(2, 2, "#6eeeff")
 	target.Stun(5)
 	target.apply_damage(25, BRUTE, BODY_ZONE_CHEST)
+	visible_message("<span class='warning'><b>[W] bites [target]!</b></span>", "<span class='warning'><b>[W] bites you!</b></span>")
 	spawn(5)
+		W.set_light(0)
 		qdel(W)
 
 /datum/discipline/auspex
@@ -65,6 +50,8 @@
 	cost = 1
 	ranged = FALSE
 
-/datum/discipline/auspex/activate(mob/living/target, mob/living/caster)
+//Smooth sdelai auspex, eto wallhack na auri
+
+/datum/discipline/auspex/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	to_chat(target, "<span class='warning'>DEBUG: Rabotaet.</span>")

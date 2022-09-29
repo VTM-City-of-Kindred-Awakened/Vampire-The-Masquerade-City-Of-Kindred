@@ -1997,7 +1997,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /mob/living/carbon/human/proc/create_disciplines()
 	if(dna.species.id == "kindred")
-		if(clane.clane_disciplines[1])
+		if(length(clane.clane_disciplines) >= 1)
 			var/datum/discipline/D = clane.clane_disciplines[1]
 			hud_used.discipline1_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline1_icon.dscpln = new D()
@@ -2005,7 +2005,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			hud_used.discipline1_icon.desc = hud_used.discipline1_icon.dscpln.desc
 			hud_used.discipline1_icon.icon_state = hud_used.discipline1_icon.dscpln.icon_state
 			hud_used.discipline1_icon.main_state = hud_used.discipline1_icon.dscpln.icon_state
-		if(clane.clane_disciplines[2])
+		if(length(clane.clane_disciplines) >= 2)
 			var/datum/discipline/D = clane.clane_disciplines[2]
 			hud_used.discipline2_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline2_icon.dscpln = new D()
@@ -2013,7 +2013,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			hud_used.discipline2_icon.desc = hud_used.discipline2_icon.dscpln.desc
 			hud_used.discipline2_icon.icon_state = hud_used.discipline2_icon.dscpln.icon_state
 			hud_used.discipline2_icon.main_state = hud_used.discipline2_icon.dscpln.icon_state
-		if(clane.clane_disciplines[3])
+		if(length(clane.clane_disciplines) >= 3)
 			var/datum/discipline/D = clane.clane_disciplines[3]
 			hud_used.discipline3_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline3_icon.dscpln = new D()
@@ -2021,7 +2021,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			hud_used.discipline3_icon.desc = hud_used.discipline3_icon.dscpln.desc
 			hud_used.discipline3_icon.icon_state = hud_used.discipline3_icon.dscpln.icon_state
 			hud_used.discipline3_icon.main_state = hud_used.discipline3_icon.dscpln.icon_state
-		if(clane.clane_disciplines[4])
+		if(length(clane.clane_disciplines) >= 4)
 			var/datum/discipline/D = clane.clane_disciplines[4]
 			hud_used.discipline4_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline4_icon.dscpln = new D()

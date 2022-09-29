@@ -256,7 +256,7 @@
 			drinksomeblood(mob)
 
 /atom/movable/screen/bloodheal
-	name = "bloodheal"
+	name = "Bloodheal"
 	icon = 'code/modules/ziggers/disciplines.dmi'
 	icon_state = "bloodheal"
 	layer = HUD_LAYER
@@ -287,7 +287,7 @@
 		icon_state = initial(icon_state)
 
 /atom/movable/screen/bloodpower
-	name = "bloodpower"
+	name = "Bloodpower"
 	icon = 'code/modules/ziggers/disciplines.dmi'
 	icon_state = "bloodpower"
 	layer = HUD_LAYER
@@ -342,34 +342,64 @@
 	plane = HUD_PLANE
 	var/datum/discipline/dscpln
 	var/last_discipline_click = 0
+	var/last_discipline_use = 0
 	var/main_state = ""
+	var/active = FALSE
+
+/atom/MouseEntered(location,control,params)
+	if(isturf(src) || ismob(src) || isobj(src))
+		if(loc && ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			if(H.a_intent == INTENT_HARM)
+				H.face_atom(src)
+
+/mob/living/Click()
+	if(ishuman(usr) && usr != src)
+		var/mob/living/carbon/human/SH = usr
+		for(var/atom/movable/screen/disciplines/DISCP in SH.hud_used.static_inventory)
+			if(DISCP)
+				if(DISCP.active)
+					DISCP.range_activate(src, SH)
+					SH.face_atom(src)
+					return
+	..()
+
+/mob/living/carbon/human
+	var/atom/movable/screen/disciplines/toggled
 
 /atom/movable/screen/disciplines/Click()
 	if(ishuman(usr))
 		var/mob/living/carbon/human/BD = usr
-		if(world.time < last_discipline_click+10)
+		if(world.time < last_discipline_click+5)
 			return
-		if(BD.active_discipline != dscpln)
+		if(world.time < last_discipline_use+dscpln.delay+5)
 			return
 		last_discipline_click = world.time
+		if(active)
+			active = FALSE
+			BD.toggled = null
+			icon_state = main_state
+			return
 		if(BD.bloodpool < dscpln.cost)
 			SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
 			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to use this discipline.</span>")
 			return
 		if(dscpln.ranged)
-			if(BD.active_discipline)
-				icon_state = main_state
-				if(BD.active_discipline)
-					qdel(BD.active_discipline)
-			else
-				icon_state = "[main_state]-on"
-				BD.active_discipline = new (dscpln)
-				BD.active_discipline.HUD = src
+			active = TRUE
+			BD.toggled = src
+			icon_state = "[main_state]-on"
 		else if(!dscpln.ranged)
 			dscpln.activate(BD, BD)
+			last_discipline_use = world.time
 			icon_state = "[main_state]-on"
-			spawn(10)
+			spawn(dscpln.delay)
 				icon_state = main_state
+
+/atom/movable/screen/disciplines/proc/range_activate(var/mob/living/trgt, var/mob/living/carbon/human/cstr)
+	dscpln.activate(trgt, cstr)
+	last_discipline_use = world.time
+	spawn(dscpln.delay)
+		icon_state = main_state
 
 /mob/living
 	var/bloodpool = 7
@@ -378,6 +408,7 @@
 /mob/living/carbon/human/Life()
 	update_blood_hud()
 	..()
+
 
 /mob/living/proc/update_blood_hud()
 	if(!client || !hud_used)
