@@ -54,4 +54,10 @@
 
 /datum/discipline/auspex/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	to_chat(target, "<span class='warning'>DEBUG: Rabotaet.</span>")
+	ADD_TRAIT(target, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
+	target.update_sight()
+	target.add_client_colour(/datum/client_colour/glass_colour/blue)
+	spawn(10 SECONDS)
+		REMOVE_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
+		target.remove_client_colour(/datum/client_colour/glass_colour/blue)
+		target.update_sight()
