@@ -10,7 +10,7 @@
 
 /turf/closed/wall/vampwall
 	name = "old brick wall"
-	desc = "A huge chunk of bricks used to separate rooms."
+	desc = "A huge chunk of old bricks used to separate rooms."
 	icon = 'code/modules/ziggers/walls.dmi'
 	icon_state = "wall-0"
 	base_icon_state = "wall"
@@ -43,3 +43,15 @@
 /turf/closed/wall/vampwall/Destroy()
 	..()
 	qdel(addwall)
+
+/turf/closed/wall/vampwall/rich
+	name = "rich-looking wall"
+	desc = "A huge chunk of expensive bricks used to separate rooms."
+	icon_state = "rich-0"
+	base_icon_state = "rich"
+
+/turf/closed/wall/vampwall/junk
+	name = "junk brick wall"
+	desc = "A huge chunk of dirty bricks used to separate rooms."
+	icon_state = "junk-0"
+	base_icon_state = "junk"
