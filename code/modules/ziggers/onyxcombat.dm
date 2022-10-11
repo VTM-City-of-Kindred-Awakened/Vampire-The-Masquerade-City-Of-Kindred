@@ -217,7 +217,7 @@
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
 					return
 				playsound(BD, 'code/modules/ziggers/drinkblood1.ogg', 50, TRUE)
-				LV.visible_message("<span class='warning'><b>[BD] bites [target]'s neck!</b></span>", "<span class='warning'><b>[BD] bites your neck!</b></span>")
+				LV.visible_message("<span class='warning'><b>[BD] bites [LV]'s neck!</b></span>", "<span class='warning'><b>[BD] bites your neck!</b></span>")
 				BD.drinksomeblood(LV)
 	..()
 
