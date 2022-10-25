@@ -206,6 +206,10 @@
 					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
 					to_chat(BD, "<span class='warning'>You can't drink <b>BLOOD</b> of your own kind. <b>THIS IS INSANE!</b></span>")
 					return
+				if(isdead(PB))
+					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
+					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
+					return
 			if(isliving(BD.pulling))
 				var/mob/living/LV = BD.pulling
 				if(LV.bloodamount <= 0)
@@ -250,9 +254,11 @@
 				SEND_SOUND(src, sound('code/modules/ziggers/feed_failed.ogg'))
 				to_chat(src, "<span class='warning'>This sad sacrifice for your own pleasure affects something deep in your mind.</span>")
 				if(client)
-					client.prefs.humanity = max(0, client.prefs.humanity-1)
-					client.prefs.save_preferences()
-					to_chat(src, "<span class='danger'><b>HUMANITY DECREASES.</b></span>")
+					if(client.prefs.humanity > 4)
+						client.prefs.humanity = max(4, client.prefs.humanity-1)
+						client.prefs.save_preferences()
+						client.prefs.save_character()
+						to_chat(src, "<span class='danger'><b>HUMANITY DECREASES.</b></span>")
 			return
 		if(grab_state > GRAB_PASSIVE)
 			drinksomeblood(mob)
@@ -407,6 +413,12 @@
 				icon_state = main_state
 
 /atom/movable/screen/disciplines/proc/range_activate(var/mob/living/trgt, var/mob/living/carbon/human/cstr)
+	if(cstr.bloodpool < dscpln.cost)
+		icon_state = main_state
+		active = FALSE
+		SEND_SOUND(cstr, sound('code/modules/ziggers/need_blood.ogg'))
+		to_chat(cstr, "<span class='warning'>You don't have enough <b>BLOOD</b> to use this discipline.</span>")
+		return
 	dscpln.activate(trgt, cstr)
 	last_discipline_use = world.time
 	spawn(dscpln.delay)

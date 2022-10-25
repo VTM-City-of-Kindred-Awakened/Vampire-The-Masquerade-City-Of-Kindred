@@ -9,6 +9,8 @@
 /datum/discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	if(!target)
 		return
+	if(caster.bloodpool < cost)
+		return
 	caster.bloodpool -= cost
 //	if(!target)
 //		var/choice = input(caster, "Choose your target", "Available Targets") as mob in oviewers(4, caster)
@@ -34,9 +36,22 @@
 
 /datum/discipline/animalism/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/obj/effect/spectral_wolf/W = new(target.loc)
+	var/antidir = NORTH
+	switch(target.dir)
+		if(NORTH)
+			antidir = SOUTH
+		if(SOUTH)
+			antidir = NORTH
+		if(WEST)
+			antidir = EAST
+		if(EAST)
+			antidir = WEST
+	var/obj/effect/spectral_wolf/W = new(get_step(target, antidir))
+	W.dir = target.dir
 	W.set_light(2, 2, "#6eeeff")
 	target.Stun(5)
+	W.do_attack_animation(target)
+	playsound(W, 'code/modules/ziggers/volk.ogg', 80, TRUE)
 	target.apply_damage(25, BRUTE, BODY_ZONE_CHEST)
 	target.visible_message("<span class='warning'><b>[W] bites [target]!</b></span>", "<span class='warning'><b>[W] bites you!</b></span>")
 	spawn(5)
