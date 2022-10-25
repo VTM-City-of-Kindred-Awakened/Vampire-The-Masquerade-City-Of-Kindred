@@ -3341,6 +3341,7 @@
 #include "code\modules\vtmb\vampire_clane\toreador.dm"
 #include "code\modules\vtmb\vampire_clane\tremere.dm"
 #include "code\modules\vtmb\vampire_clane\ventrue.dm"
+#include "code\modules\ziggers\npc.dm"
 #include "code\modules\ziggers\onyxcombat.dm"
 #include "code\modules\ziggers\pigs.dm"
 #include "code\modules\ziggers\wallcode.dm"
