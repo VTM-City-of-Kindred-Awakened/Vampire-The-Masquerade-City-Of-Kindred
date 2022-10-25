@@ -10,6 +10,7 @@
 	var/last_bloodheal_click = 0
 	var/last_bloodpower_click = 0
 	var/last_drinkblood_click = 0
+	var/harm_focus = SOUTH
 
 /mob/living/carbon/human/death()
 	..()
@@ -206,7 +207,7 @@
 					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
 					to_chat(BD, "<span class='warning'>You can't drink <b>BLOOD</b> of your own kind. <b>THIS IS INSANE!</b></span>")
 					return
-				if(isdead(PB))
+				if(PB.stat == 4)
 					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
 					return
@@ -216,7 +217,7 @@
 					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
-				if(isdead(LV))
+				if(LV.stat == 4)
 					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
 					return
@@ -362,6 +363,14 @@
 			var/mob/living/carbon/human/H = usr
 			if(H.a_intent == INTENT_HARM)
 				H.face_atom(src)
+				H.harm_focus = H.dir
+
+/mob/living/carbon/human/Move(atom/newloc, direct, glide_size_override)
+	..()
+	if(a_intent == INTENT_HARM)
+		setDir(harm_focus)
+	else
+		harm_focus = dir
 
 /mob/living/Click()
 	if(ishuman(usr) && usr != src)
@@ -421,8 +430,8 @@
 		return
 	dscpln.activate(trgt, cstr)
 	last_discipline_use = world.time
-	spawn(dscpln.delay)
-		icon_state = main_state
+	active = FALSE
+	icon_state = main_state
 
 /mob/living
 	var/bloodpool = 7

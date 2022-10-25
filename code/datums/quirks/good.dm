@@ -17,6 +17,15 @@
 	mood_quirk = TRUE
 	medical_record_text = "Patient was administered the Apathy Evaluation Scale but did not bother to complete it."
 
+/datum/quirk/no_taste
+	name = "Ageusia"
+	desc = "You can't taste anything! Toxic food will still poison you."
+	value = 1
+	mob_trait = TRAIT_AGEUSIA
+	gain_text = "<span class='notice'>You can't taste anything!</span>"
+	lose_text = "<span class='notice'>You can taste again!</span>"
+	medical_record_text = "Patient suffers from ageusia and is incapable of tasting food or reagents."
+
 /datum/quirk/apathetic/add()
 	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
 	if(mood)
@@ -58,6 +67,7 @@
 	gain_text = "<span class='notice'>You feel in tune with those around you.</span>"
 	lose_text = "<span class='danger'>You feel isolated from others.</span>"
 	medical_record_text = "Patient is highly perceptive of and sensitive to social cues, or may possibly have ESP. Further testing needed."
+	mood_quirk = TRUE
 
 /datum/quirk/fan_clown
 	name = "Clown Fan"
@@ -67,6 +77,7 @@
 	gain_text = "<span class='notice'>You are a big fan of clowns.</span>"
 	lose_text = "<span class='danger'>The clown doesn't seem so great.</span>"
 	medical_record_text = "Patient reports being a big fan of clowns."
+	mood_quirk = TRUE
 
 /datum/quirk/fan_clown/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -80,13 +91,14 @@
 	fan.add_hud_to(H)
 
 /datum/quirk/fan_mime
-	name = "Mime Fan"
+	name = "Mime Enjoyer"
 	desc = "You enjoy mime antics and get a mood boost from wearing your mime pin."
 	value = 2
 	mob_trait = TRAIT_FAN_MIME
 	gain_text = "<span class='notice'>You are a big fan of the Mime.</span>"
 	lose_text = "<span class='danger'>The mime doesn't seem so great.</span>"
 	medical_record_text = "Patient reports being a big fan of mimes."
+	mood_quirk = TRUE
 
 /datum/quirk/fan_mime/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -230,3 +242,4 @@
 	mob_trait = TRAIT_VORACIOUS
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
 	lose_text = "<span class='danger'>You no longer feel HONGRY.</span>"
+	mood_quirk = TRUE
