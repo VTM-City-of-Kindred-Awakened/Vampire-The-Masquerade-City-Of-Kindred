@@ -2044,10 +2044,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.real_name = character.real_name
 	character.clane.on_gain(character)
 
-	slotlocked = 1
-	save_preferences()
-	save_character()
-
 	if(pref_species.mutant_bodyparts["tail_lizard"])
 		character.dna.species.mutant_bodyparts["tail_lizard"] = pref_species.mutant_bodyparts["tail_lizard"]
 	if(pref_species.mutant_bodyparts["spines"])
@@ -2059,6 +2055,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_body_parts()
 
 /mob/living/carbon/human/proc/create_disciplines()
+	client.prefs.slotlocked = 1
+	client.prefs.save_preferences()
+	client.prefs.save_character()
 	if(dna.species.id == "kindred")
 		if(length(clane.clane_disciplines) >= 1)
 			var/datum/discipline/D = clane.clane_disciplines[1]
