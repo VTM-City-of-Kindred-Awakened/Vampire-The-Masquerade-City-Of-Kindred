@@ -15,8 +15,9 @@
 /mob/living/carbon/human/death()
 	..()
 	if(dna.species.type == /datum/species/kindred)
-		spawn(30)
-			dust()
+		SEND_SOUND(src, sound('code/modules/ziggers/final_death.ogg', 0, 0, 50))
+		set_light(2, 2, "#feb716")
+		dust(1, 0, 1)
 
 /mob/living/carbon/human/toggle_move_intent(mob/living/user)
 	if(blocking && m_intent == MOVE_INTENT_WALK)
@@ -204,21 +205,21 @@
 			if(ishuman(pulling))
 				var/mob/living/carbon/human/PB = pulledby
 				if(PB.dna.species.id == "kindred")
-					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
+					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>You can't drink <b>BLOOD</b> of your own kind. <b>THIS IS INSANE!</b></span>")
 					return
 				if(PB.stat == 4)
-					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
+					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
 					return
 			if(isliving(BD.pulling))
 				var/mob/living/LV = BD.pulling
 				if(LV.bloodamount <= 0)
-					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
+					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
 				if(LV.stat == 4)
-					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
+					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
 					return
 				playsound(BD, 'code/modules/ziggers/drinkblood1.ogg', 50, TRUE)
@@ -252,7 +253,7 @@
 				K.blood_volume = 0
 			mob.death()
 			if(ishuman(mob))
-				SEND_SOUND(src, sound('code/modules/ziggers/feed_failed.ogg'))
+				SEND_SOUND(src, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
 				to_chat(src, "<span class='warning'>This sad sacrifice for your own pleasure affects something deep in your mind.</span>")
 				if(client)
 					if(client.prefs.humanity > 4)
@@ -286,12 +287,12 @@
 			to_chat(BD, "<span class='notice'>You use blood to heal your wounds.</span>")
 			if(BD.getBruteLoss() + BD.getBruteLoss() >= 25)
 				BD.visible_message("<span class='warning'>Some of [BD]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
-			BD.adjustBruteLoss(-5, TRUE)
-			BD.adjustFireLoss(-5, TRUE)
+			BD.adjustBruteLoss(-10, TRUE)
+			BD.adjustFireLoss(-10, TRUE)
 			BD.update_damage_overlays()
 			BD.update_health_hud()
 		else
-			SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
+			SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
 			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to heal your wounds.</span>")
 		BD.update_blood_hud()
 	spawn(15)
@@ -325,7 +326,7 @@
 			if(!HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
 				ADD_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
 		else
-			SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
+			SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
 			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to become more powerful.</span>")
 		BD.update_blood_hud()
 		addtimer(CALLBACK(src, .proc/end_bloodpower), 100)
@@ -400,7 +401,7 @@
 			icon_state = main_state
 			return
 		if(BD.bloodpool < dscpln.cost)
-			SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg'))
+			SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
 			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to use this discipline.</span>")
 			return
 		if(dscpln.ranged)
@@ -425,7 +426,7 @@
 	if(cstr.bloodpool < dscpln.cost)
 		icon_state = main_state
 		active = FALSE
-		SEND_SOUND(cstr, sound('code/modules/ziggers/need_blood.ogg'))
+		SEND_SOUND(cstr, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
 		to_chat(cstr, "<span class='warning'>You don't have enough <b>BLOOD</b> to use this discipline.</span>")
 		return
 	dscpln.activate(trgt, cstr)

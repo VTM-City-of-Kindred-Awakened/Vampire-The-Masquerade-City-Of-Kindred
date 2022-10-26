@@ -63,6 +63,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	//character preferences
 	var/slot_randomized					//keeps track of round-to-round randomization of the character slot, prevents overwriting
+	var/slotlocked = 0
 	var/real_name						//our character's name
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
@@ -829,9 +830,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "</body>"
 	dat += "<hr><center>"
 
-	if(!IsGuestKey(user.key))
+	if(slotlocked)
+		dat += "Your character is saved. You can't change name and appearance, but your progress will be saved.<br>"
+	if(!IsGuestKey(user.key) && !slotlocked)
 		dat += "<a href='?_src_=prefs;preference=load'>Undo</a> "
-		dat += "<a href='?_src_=prefs;preference=save'>Save Setup</a> "
+		dat += "<a href='?_src_=prefs;preference=save'>Save Character</a> "
+//	dat += "<a href='?_src_=prefs;preference=save_pref'>Save Preferences</a> "
 
 	dat += "<a href='?_src_=prefs;preference=reset_all'>Reset Setup</a>"
 	dat += "</center>"
@@ -1289,6 +1293,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							ghost_others = GHOST_OTHERS_SIMPLE
 
 				if("name")
+					if(slotlocked)
+						return
 					var/new_name = input(user, "Choose your character's name:", "Character Preference")  as text|null
 					if(new_name)
 						new_name = reject_bad_name(new_name)
@@ -1298,27 +1304,38 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and . It must not contain any words restricted by IC chat and name filters.</font>")
 
 				if("age")
+					if(slotlocked)
+						return
 					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
 					if(new_age)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 				if("hair")
+					if(slotlocked)
+						return
 					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference","#"+hair_color) as color|null
 					if(new_hair)
 						hair_color = sanitize_hexcolor(new_hair)
 
 				if("hairstyle")
-					var/new_hairstyle
-					if(gender == MALE)
-						new_hairstyle = input(user, "Choose your character's hairstyle:", "Character Preference")  as null|anything in GLOB.hairstyles_male_list
-					else if(gender == FEMALE)
-						new_hairstyle = input(user, "Choose your character's hairstyle:", "Character Preference")  as null|anything in GLOB.hairstyles_female_list
+					if(clane.no_hair)
+						hairstyle = "Bald"
+					if(slotlocked)
+						return
 					else
-						new_hairstyle = input(user, "Choose your character's hairstyle:", "Character Preference")  as null|anything in GLOB.hairstyles_list
-					if(new_hairstyle)
-						hairstyle = new_hairstyle
+						var/new_hairstyle
+						if(gender == MALE)
+							new_hairstyle = input(user, "Choose your character's hairstyle:", "Character Preference")  as null|anything in GLOB.hairstyles_male_list
+						else if(gender == FEMALE)
+							new_hairstyle = input(user, "Choose your character's hairstyle:", "Character Preference")  as null|anything in GLOB.hairstyles_female_list
+						else
+							new_hairstyle = input(user, "Choose your character's hairstyle:", "Character Preference")  as null|anything in GLOB.hairstyles_list
+						if(new_hairstyle)
+							hairstyle = new_hairstyle
 
 				if("next_hairstyle")
+					if(slotlocked)
+						return
 					if (gender == MALE)
 						hairstyle = next_list_item(hairstyle, GLOB.hairstyles_male_list)
 					else if(gender == FEMALE)
@@ -1327,6 +1344,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						hairstyle = next_list_item(hairstyle, GLOB.hairstyles_list)
 
 				if("previous_hairstyle")
+					if(slotlocked)
+						return
 					if (gender == MALE)
 						hairstyle = previous_list_item(hairstyle, GLOB.hairstyles_male_list)
 					else if(gender == FEMALE)
@@ -1335,22 +1354,31 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						hairstyle = previous_list_item(hairstyle, GLOB.hairstyles_list)
 
 				if("facial")
+					if(slotlocked)
+						return
 					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference","#"+facial_hair_color) as color|null
 					if(new_facial)
 						facial_hair_color = sanitize_hexcolor(new_facial)
 
 				if("facial_hairstyle")
-					var/new_facial_hairstyle
-					if(gender == MALE)
-						new_facial_hairstyle = input(user, "Choose your character's facial-hairstyle:", "Character Preference")  as null|anything in GLOB.facial_hairstyles_male_list
-					else if(gender == FEMALE)
-						new_facial_hairstyle = input(user, "Choose your character's facial-hairstyle:", "Character Preference")  as null|anything in GLOB.facial_hairstyles_female_list
+					if(clane.no_hair)
+						facial_hairstyle = "Shaved"
+					if(slotlocked)
+						return
 					else
-						new_facial_hairstyle = input(user, "Choose your character's facial-hairstyle:", "Character Preference")  as null|anything in GLOB.facial_hairstyles_list
-					if(new_facial_hairstyle)
-						facial_hairstyle = new_facial_hairstyle
+						var/new_facial_hairstyle
+						if(gender == MALE)
+							new_facial_hairstyle = input(user, "Choose your character's facial-hairstyle:", "Character Preference")  as null|anything in GLOB.facial_hairstyles_male_list
+						else if(gender == FEMALE)
+							new_facial_hairstyle = input(user, "Choose your character's facial-hairstyle:", "Character Preference")  as null|anything in GLOB.facial_hairstyles_female_list
+						else
+							new_facial_hairstyle = input(user, "Choose your character's facial-hairstyle:", "Character Preference")  as null|anything in GLOB.facial_hairstyles_list
+						if(new_facial_hairstyle)
+							facial_hairstyle = new_facial_hairstyle
 
 				if("next_facehairstyle")
+					if(slotlocked)
+						return
 					if (gender == MALE)
 						facial_hairstyle = next_list_item(facial_hairstyle, GLOB.facial_hairstyles_male_list)
 					else if(gender == FEMALE)
@@ -1359,6 +1387,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						facial_hairstyle = next_list_item(facial_hairstyle, GLOB.facial_hairstyles_list)
 
 				if("previous_facehairstyle")
+					if(slotlocked)
+						return
 					if (gender == MALE)
 						facial_hairstyle = previous_list_item(facial_hairstyle, GLOB.facial_hairstyles_male_list)
 					else if (gender == FEMALE)
@@ -1400,18 +1430,27 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						socks = new_socks
 
 				if("eyes")
+					if(slotlocked)
+						return
 					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference","#"+eye_color) as color|null
 					if(new_eyes)
 						eye_color = sanitize_hexcolor(new_eyes)
 
 				if("clane")
+					if(slotlocked)
+						return
 					var/result = input(user, "Select a clane", "Clane Selection") as null|anything in GLOB.clanes_list
 					if(result)
 						var/newtype = GLOB.clanes_list[result]
 						clane = new newtype()
+						if(clane.no_hair)
+							hairstyle = "Bald"
+							facial_hairstyle = "Shaved"
 //						real_name = clane.random_name(gender)		//potom sdelat
 
 				if("species")
+					if(slotlocked)
+						return
 //				var/newtype = GLOB.species_list["kindred"]
 //				pref_species = new newtype()
 
@@ -1428,6 +1467,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							real_name = pref_species.random_name(gender)
 
 				if("mutant_color")
+					if(slotlocked)
+						return
 					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference","#"+features["mcolor"]) as color|null
 					if(new_mutantcolor)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
@@ -1523,6 +1564,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["moth_markings"] = new_moth_markings
 
 				if("s_tone")
+					if(slotlocked)
+						return
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in GLOB.skin_tones
 					if(new_s_tone)
 						skin_tone = new_s_tone
@@ -1874,18 +1917,24 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					user.client.view_size.setZoomMode()
 
 				if("save")
-					save_preferences()
-					save_character()
+					if(alert("Are you finished with your setup?",,"Yes","No")=="Yes")
+						slotlocked = 1
+						save_preferences()
+						save_character()
+//				if("save_pref")
+//					save_preferences()
+//					save_character()
 
 				if("load")
 					load_preferences()
 					load_character()
 
 				if("reset_all")
+					slotlocked = 0
 					humanity = initial(humanity)
 					masquerade = initial(masquerade)
 					generation = initial(generation)
-					clane = null
+					qdel(clane)
 					clane = new /datum/vampire_clane/brujah()
 					random_species()
 					random_character()
@@ -1985,6 +2034,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.features = features.Copy()
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
 	character.dna.real_name = character.real_name
+	character.clane.on_gain(character)
+
+	slotlocked = 1
+	save_preferences()
+	save_character()
 
 	if(pref_species.mutant_bodyparts["tail_lizard"])
 		character.dna.species.mutant_bodyparts["tail_lizard"] = pref_species.mutant_bodyparts["tail_lizard"]

@@ -464,6 +464,7 @@
 	lose_text = "<span class='notice'>You feel in tune with the world again.</span>"
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
 	hardcore_value = 6
+	mood_quirk = TRUE
 
 /datum/quirk/insanity/on_process(delta_time)
 	if(quirk_holder.reagents.has_reagent(/datum/reagent/toxin/mindbreaker, needs_metabolizing = TRUE))

@@ -362,6 +362,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			clane = new newtype
 
 	//Character
+	READ_FILE(S["slotlocked"], slotlocked)
 	READ_FILE(S["humanity"], humanity)
 //	READ_FILE(S["clane"], clane)
 	READ_FILE(S["generation"], generation)
@@ -469,6 +470,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	socks			= sanitize_inlist(socks, GLOB.socks_list)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
+	slotlocked			= sanitize_integer(slotlocked, 0, 1, initial(slotlocked))
 	humanity				= sanitize_integer(humanity, 0, 10, initial(humanity))
 	masquerade				= sanitize_integer(masquerade, 0, 5, initial(masquerade))
 	generation				= sanitize_integer(generation, 3, 13, initial(generation))
@@ -520,6 +522,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["version"]			, SAVEFILE_VERSION_MAX)	//load_character will sanitize any bad data, so assume up-to-date.)
 
 	//Character
+	WRITE_FILE(S["slotlocked"]			, slotlocked)
 	WRITE_FILE(S["humanity"]			, humanity)
 	WRITE_FILE(S["clane"]			, clane.name)
 	WRITE_FILE(S["generation"]			, generation)

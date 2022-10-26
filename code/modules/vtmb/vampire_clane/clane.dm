@@ -14,6 +14,8 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 	var/list/allowed_jobs = list()
 	var/list/denied_jobs = list()
 	var/clane_curse //Здесь должен быть сигнал
+	var/alt_sprite
+	var/no_hair
 //	var/datum/action/innate/drink_blood/sosalka = new
 //Дополнительная игровая логика должна храниться в компоненте
 /datum/species/kindred/on_species_gain(mob/living/carbon/human/C)
@@ -28,3 +30,14 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 //		AddComponent(/datum/component/vampire, Pref.clane.name, Pref.clane.desc, Pref.generation, Pref.clane.clane_disciplines, Pref.masquerade)
 //	if(Pref.clane.clane_curse)
 //		SEND_SIGNAL(src, Pref.clane.clane_curse)
+
+/datum/vampire_clane/proc/on_gain(var/mob/living/carbon/human/H)
+	if(alt_sprite)
+		H.dna.species.limbs_id = "nosferatu"
+		H.update_body_parts()
+		H.update_body()
+		H.update_icon()
+//	if(no_hair)
+//		H.facial_hairstyle = "Shaved"
+//		H.hairstyle = "Bald"
+//		H.update_hair()

@@ -4,7 +4,7 @@
 	var/icon_state
 	var/cost = 2
 	var/ranged = FALSE
-	var/delay = 15
+	var/delay = 5
 
 /datum/discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	if(!target)
@@ -52,7 +52,7 @@
 	target.Stun(5)
 	W.do_attack_animation(target)
 	playsound(W, 'code/modules/ziggers/volk.ogg', 80, TRUE)
-	target.apply_damage(25, BRUTE, BODY_ZONE_CHEST)
+	target.apply_damage(50, BRUTE, BODY_ZONE_CHEST)
 	target.visible_message("<span class='warning'><b>[W] bites [target]!</b></span>", "<span class='warning'><b>[W] bites you!</b></span>")
 	spawn(5)
 		W.set_light(0)
@@ -64,6 +64,7 @@
 	icon_state = "auspex"
 	cost = 1
 	ranged = FALSE
+	delay = 100
 
 //Smooth sdelai auspex, eto wallhack na auri
 
