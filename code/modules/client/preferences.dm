@@ -1334,6 +1334,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							hairstyle = new_hairstyle
 
 				if("next_hairstyle")
+					if(clane.no_hair)
+						hairstyle = "Bald"
 					if(slotlocked)
 						return
 					if (gender == MALE)
@@ -1344,6 +1346,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						hairstyle = next_list_item(hairstyle, GLOB.hairstyles_list)
 
 				if("previous_hairstyle")
+					if(clane.no_hair)
+						hairstyle = "Bald"
 					if(slotlocked)
 						return
 					if (gender == MALE)
@@ -1377,6 +1381,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							facial_hairstyle = new_facial_hairstyle
 
 				if("next_facehairstyle")
+					if(clane.no_hair)
+						facial_hairstyle = "Shaved"
 					if(slotlocked)
 						return
 					if (gender == MALE)
@@ -1387,6 +1393,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						facial_hairstyle = next_list_item(facial_hairstyle, GLOB.facial_hairstyles_list)
 
 				if("previous_facehairstyle")
+					if(clane.no_hair)
+						facial_hairstyle = "Shaved"
 					if(slotlocked)
 						return
 					if (gender == MALE)
