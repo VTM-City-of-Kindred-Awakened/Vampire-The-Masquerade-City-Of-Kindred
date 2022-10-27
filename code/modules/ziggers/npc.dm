@@ -308,6 +308,8 @@
 		return
 	if(run_or_anger)
 		return
+	if(stat >= 2)
+		return
 	if(world.time <= last_annoy+50)
 		return
 	last_annoy = world.time
