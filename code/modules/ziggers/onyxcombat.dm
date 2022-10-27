@@ -385,6 +385,10 @@
 					return
 	..()
 
+/atom/proc/isnear(var/atom/f)
+	if(src in range(1, f))
+		return TRUE
+
 /atom/Click(location,control,params)
 	if(usr.client)
 		if(!isobserver(usr))
@@ -395,20 +399,21 @@
 		if(isopenturf(src.loc) || isopenturf(src))
 			var/list/modifiers = params2list(params)
 			var/mob/living/carbon/human/HUY = usr
-			if(!HUY.get_active_held_item())
+			if(!HUY.get_active_held_item() && isnear(usr))
 				if(LAZYACCESS(modifiers, "right"))
 					var/list/shit = list()
 					var/obj/item/item_to_pick
-					for(var/obj/item/I in range(1, usr))
+					var/turf/T
+					if(isopenturf(src))
+						T = src
+					else
+						T = src.loc
+					for(var/obj/item/I in T)
 						if(I)
-							if(I.loc == src.loc)
-								if(!I.anchored)
-									shit[I.name] = I
-							if(isopenturf(src) && I.loc == src)
-								if(!I.anchored)
-									shit[I.name] = I
-							if(length(shit) == 1)
-								item_to_pick = I
+							if(!I.anchored)
+								shit[I.name] = I
+						if(length(shit) == 1)
+							item_to_pick = I
 					if(length(shit) >= 2)
 						var/result = input(usr, "Select the item you want to pick up.", "Pick up") as null|anything in shit
 						if(result)
