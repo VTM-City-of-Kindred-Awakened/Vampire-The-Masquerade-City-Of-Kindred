@@ -9,6 +9,9 @@
 
 	var/last_m_intent_change = 0
 
+	var/last_tupik = 0
+	var/turf/myloc
+
 	var/obj/item/melee/melee_weapon
 	var/obj/item/gun/range_weapon
 
@@ -340,6 +343,8 @@
 	..()
 
 /mob/living/carbon/human/npc/Move(NewLoc, direct)
+	if(is_talking)
+		return
 	var/mob/living/carbon/human/npc/NPC = locate() in NewLoc
 	if(NPC)
 		NPC.Stun(rand(5, 10))
@@ -350,6 +355,13 @@
 		Annoy(user)
 	..()
 
+/mob/living/carbon/human/npc/proc/EmoteAction()
+	var/shitemote = pick("*sigh", "*smile", "*stare", "*look", "*spin", "*giggle", "*blink", "*blush", "*nod", "*sniff", "*shrug", "*cough", "*yawn")
+	if(!is_talking)
+		is_talking = TRUE
+		spawn(rand(5, 10))
+			say(shitemote)
+			is_talking = FALSE
 
 /datum/socialrole/nigger
 	s_tones = list("african1",

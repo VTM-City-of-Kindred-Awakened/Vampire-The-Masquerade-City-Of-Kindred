@@ -12,10 +12,17 @@
 
 /mob/living/carbon/human/npc/Life()
 	nutrition = 400
+	if(prob(10) && !run_or_anger)
+		EmoteAction()
 	if(last_m_intent_change+300 <= world.time)
 		last_m_intent_change = world.time
 		if(prob(50))
 			toggle_move_intent(src)
+	if(myloc != loc)
+		last_tupik = world.time
+		myloc = loc
+	if(last_tupik+50 <= world.time)
+		ChoosePath()
 	..()
 
 /mob/living/carbon/human/npc/proc/CreateWay(var/direction)
@@ -25,7 +32,7 @@
 		if(iswallturf(location))
 			return location
 		for(var/atom/A in location)
-			if(A.density && !ismob(A))
+			if(A.density)
 				return location
 
 /mob/living/carbon/human/npc/proc/ChoosePath()
@@ -59,10 +66,11 @@
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
 	if(is_talking)
 		return
+	set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
 	if(!walktarget || get_dist(src, walktarget) <= 2)
 		walktarget = ChoosePath()
 	if(!run_or_anger)
 		if(m_intent == MOVE_INTENT_RUN)
-			walk_to(src, walktarget, 2, 2)
+			walk_to(src, walktarget, 2, total_multiplicative_slowdown())
 		else
-			walk_to(src, walktarget, 1, 4)
+			walk_to(src, walktarget, 1, total_multiplicative_slowdown())
