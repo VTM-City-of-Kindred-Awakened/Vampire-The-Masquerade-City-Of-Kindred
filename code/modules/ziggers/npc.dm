@@ -7,6 +7,8 @@
 	var/run_or_anger = FALSE
 	var/turf/walktarget	//dlya movementa
 
+	var/last_m_intent_change = 0
+
 	var/obj/item/melee/melee_weapon
 	var/obj/item/gun/range_weapon
 
@@ -335,6 +337,12 @@
 	if(NPC)
 		if(a_intent != INTENT_HELP)
 			NPC.Annoy(src)
+	..()
+
+/mob/living/carbon/human/npc/Move(NewLoc, direct)
+	var/mob/living/carbon/human/npc/NPC = locate() in NewLoc
+	if(NPC)
+		NPC.Stun(rand(5, 10))
 	..()
 
 /mob/living/carbon/human/npc/attack_hand(mob/user)

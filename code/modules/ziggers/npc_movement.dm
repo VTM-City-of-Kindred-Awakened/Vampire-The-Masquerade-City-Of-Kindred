@@ -10,6 +10,14 @@
 	..()
 	GLOB.npc_list -= src
 
+/mob/living/carbon/human/npc/Life()
+	nutrition = 400
+	if(last_m_intent_change+300 <= world.time)
+		last_m_intent_change = world.time
+		if(prob(50))
+			toggle_move_intent(src)
+	..()
+
 /mob/living/carbon/human/npc/proc/CreateWay(var/direction)
 	var/turf/location = loc
 	for(var/distance = 1 to 100)
@@ -17,7 +25,7 @@
 		if(iswallturf(location))
 			return location
 		for(var/atom/A in location)
-			if(A.density)
+			if(A.density && !ismob(A))
 				return location
 
 /mob/living/carbon/human/npc/proc/ChoosePath()
@@ -27,35 +35,34 @@
 	var/turf/east_steps = CreateWay(EAST)
 
 	if(dir == NORTH || dir == SOUTH)
-		if(get_dist(src, west_steps) <= 1 && get_dist(src, east_steps) <= 1)
-			if(dir == NORTH)
-				return south_steps
-			if(dir == SOUTH)
-				return north_steps
 		if(get_dist(src, west_steps) > get_dist(src, east_steps))
 			return west_steps
 		else if(get_dist(src, east_steps) > get_dist(src, west_steps))
 			return east_steps
 		else
-			return pick(west_steps, east_steps)
+			if(dir == NORTH)
+				return pick(west_steps, east_steps, south_steps)
+			else
+				return pick(west_steps, east_steps, north_steps)
 
 	if(dir == WEST || dir == EAST)
-		if(get_dist(src, north_steps) <= 1 && get_dist(src, south_steps) <= 1)
-			if(dir == WEST)
-				return east_steps
-			if(dir == EAST)
-				return west_steps
 		if(get_dist(src, north_steps) > get_dist(src, south_steps))
 			return north_steps
 		else if(get_dist(src, south_steps) > get_dist(src, north_steps))
 			return south_steps
 		else
-			return pick(north_steps, south_steps)
+			if(dir == WEST)
+				return pick(north_steps, south_steps, east_steps)
+			else
+				return pick(north_steps, south_steps, west_steps)
 
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
 	if(is_talking)
 		return
-	if(!walktarget || get_dist(src, walktarget) <= 1)
+	if(!walktarget || get_dist(src, walktarget) <= 2)
 		walktarget = ChoosePath()
 	if(!run_or_anger)
-		walk_to(src, walktarget, rand(1, 3), 2)
+		if(m_intent == MOVE_INTENT_RUN)
+			walk_to(src, walktarget, 2, 2)
+		else
+			walk_to(src, walktarget, 1, 4)
