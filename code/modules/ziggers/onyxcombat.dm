@@ -385,26 +385,21 @@
 					return
 	..()
 
-/atom/proc/isnear(var/atom/f)
-	if(src in range(1, f))
-		return TRUE
-
 /atom/Click(location,control,params)
-	if(usr.client)
-		if(!isobserver(usr))
-			usr.client.show_popup_menus = FALSE
-		else
-			usr.client.show_popup_menus = TRUE
+	if(!isobserver(usr))
+		usr.client.show_popup_menus = FALSE
+	else
+		usr.client.show_popup_menus = TRUE
 	if(ishuman(usr))
 		if(isopenturf(src.loc) || isopenturf(src))
 			var/list/modifiers = params2list(params)
 			var/mob/living/carbon/human/HUY = usr
-			if(!HUY.get_active_held_item() && isnear(usr))
+			if(!HUY.get_active_held_item() && Adjacent(usr))
 				if(LAZYACCESS(modifiers, "right"))
 					var/list/shit = list()
 					var/obj/item/item_to_pick
 					var/turf/T
-					if(isopenturf(src))
+					if(isturf(src))
 						T = src
 					else
 						T = src.loc
