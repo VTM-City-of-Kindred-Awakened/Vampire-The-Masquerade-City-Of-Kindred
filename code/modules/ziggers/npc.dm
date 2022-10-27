@@ -206,6 +206,7 @@
 		return
 	socialrole = new S()
 	if(!dont_random)
+		gender = pick(MALE, FEMALE)
 		var/list/m_names = list()
 		var/list/f_names = list()
 		var/list/s_names = list()
@@ -244,7 +245,6 @@
 		dna.real_name = real_name
 		var/obj/item/organ/eyes/organ_eyes = getorgan(/obj/item/organ/eyes)
 		organ_eyes.eye_color = random_eye_color()
-		gender = pick(MALE, FEMALE)
 		underwear = random_underwear(gender)
 		if(prob(50))
 			underwear_color = organ_eyes.eye_color
