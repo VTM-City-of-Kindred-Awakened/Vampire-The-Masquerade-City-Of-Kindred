@@ -209,35 +209,35 @@
 		var/list/m_names = list()
 		var/list/f_names = list()
 		var/list/s_names = list()
-		if(S.male_names)
-			m_names = S.male_names
+		if(socialrole.male_names)
+			m_names = socialrole.male_names
 		else
 			m_names = GLOB.first_names_male
-		if(S.female_names)
-			f_names = S.female_names
+		if(socialrole.female_names)
+			f_names = socialrole.female_names
 		else
 			f_names = GLOB.first_names_female
-		if(S.surnames)
-			s_names = S.surnames
+		if(socialrole.surnames)
+			s_names = socialrole.surnames
 		else
 			s_names = GLOB.last_names
-		age = rand(S.min_age, S.max_age)
-		skin_tone = pick(S.s_tones)
+		age = rand(socialrole.min_age, socialrole.max_age)
+		skin_tone = pick(socialrole.s_tones)
 		if(age >= 55)
 			hair_color = "a2a2a2"
 			facial_hair_color = hair_color
 		else
-			hair_color = pick(S.hair_colors)
+			hair_color = pick(socialrole.hair_colors)
 			facial_hair_color = hair_color
 		if(gender == MALE)
-			hairstyle = pick(S.male_hair)
+			hairstyle = pick(socialrole.male_hair)
 			if(prob(25) || age >= 25)
-				facial_hairstyle = pick(S.male_facial)
+				facial_hairstyle = pick(socialrole.male_facial)
 			else
 				facial_hairstyle = "Shaved"
 			real_name = "[pick(m_names)] [pick(s_names)]"
 		else
-			hairstyle = pick(S.female_hair)
+			hairstyle = pick(socialrole.female_hair)
 			facial_hairstyle = "Shaved"
 			real_name = "[pick(f_names)] [pick(s_names)]"
 		name = real_name
@@ -257,32 +257,32 @@
 		update_body_parts()
 
 	var/datum/outfit/O = new()
-	if(length(S.backpacks))
-		O.back = pick(S.backpacks)
-	if(length(S.uniforms))
-		O.uniform = pick(S.uniforms)
-	if(length(S.belts))
-		O.belt = pick(S.belts)
-	if(length(S.suits))
-		O.suit = pick(S.suits)
-	if(length(S.gloves))
-		O.gloves = pick(S.gloves)
-	if(length(S.shoes))
-		O.shoes = pick(S.shoes)
-	if(length(S.hats))
-		O.head = pick(S.hats)
-	if(length(S.masks))
-		O.mask = pick(S.masks)
-	if(length(S.neck))
-		O.neck = pick(S.neck)
-	if(length(S.ears))
-		O.ears = pick(S.ears)
-	if(length(S.glasses))
-		O.glasses = pick(S.glasses)
-	if(length(S.inhand_items))
-		O.r_hand = pick(S.inhand_items)
-	if(S.id_type)
-		O.id = S.id_type
+	if(length(socialrole.backpacks))
+		O.back = pick(socialrole.backpacks)
+	if(length(socialrole.uniforms))
+		O.uniform = pick(socialrole.uniforms)
+	if(length(socialrole.belts))
+		O.belt = pick(socialrole.belts)
+	if(length(socialrole.suits))
+		O.suit = pick(socialrole.suits)
+	if(length(socialrole.gloves))
+		O.gloves = pick(socialrole.gloves)
+	if(length(socialrole.shoes))
+		O.shoes = pick(socialrole.shoes)
+	if(length(socialrole.hats))
+		O.head = pick(socialrole.hats)
+	if(length(socialrole.masks))
+		O.mask = pick(socialrole.masks)
+	if(length(socialrole.neck))
+		O.neck = pick(socialrole.neck)
+	if(length(socialrole.ears))
+		O.ears = pick(socialrole.ears)
+	if(length(socialrole.glasses))
+		O.glasses = pick(socialrole.glasses)
+	if(length(socialrole.inhand_items))
+		O.r_hand = pick(socialrole.inhand_items)
+	if(socialrole.id_type)
+		O.id = socialrole.id_type
 	equipOutfit(O)
 	qdel(O)
 
@@ -291,7 +291,7 @@
 		return
 	if(is_talking)
 		return
-	var/delay = length_char(message)*2
+	var/delay = length_char(message)
 	is_talking = TRUE
 	remove_overlay(FIGHT_LAYER)
 	var/mutable_appearance/parry_overlay = mutable_appearance('icons/mob/talk.dmi', "default0", -FIGHT_LAYER)
@@ -307,7 +307,7 @@
 		return
 	if(run_or_anger)
 		return
-	if(world.time <= last_annoy+30)
+	if(world.time <= last_annoy+50)
 		return
 	last_annoy = world.time
 	var/phrase
