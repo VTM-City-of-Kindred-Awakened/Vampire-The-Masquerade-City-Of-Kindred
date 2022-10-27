@@ -1324,6 +1324,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("hairstyle")
 					if(clane.no_hair)
 						hairstyle = "Bald"
+						return
 					if(slotlocked)
 						return
 					else
@@ -1340,6 +1341,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("next_hairstyle")
 					if(clane.no_hair)
 						hairstyle = "Bald"
+						return
 					if(slotlocked)
 						return
 					if (gender == MALE)
@@ -1352,6 +1354,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("previous_hairstyle")
 					if(clane.no_hair)
 						hairstyle = "Bald"
+						return
 					if(slotlocked)
 						return
 					if (gender == MALE)
@@ -1371,6 +1374,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("facial_hairstyle")
 					if(clane.no_hair)
 						facial_hairstyle = "Shaved"
+						return
 					if(slotlocked)
 						return
 					else
@@ -1387,6 +1391,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("next_facehairstyle")
 					if(clane.no_hair)
 						facial_hairstyle = "Shaved"
+						return
 					if(slotlocked)
 						return
 					if (gender == MALE)
@@ -1399,6 +1404,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("previous_facehairstyle")
 					if(clane.no_hair)
 						facial_hairstyle = "Shaved"
+						return
 					if(slotlocked)
 						return
 					if (gender == MALE)

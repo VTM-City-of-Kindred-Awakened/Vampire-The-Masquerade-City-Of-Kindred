@@ -303,7 +303,9 @@
 			say(message)
 			is_talking = FALSE
 
-/mob/living/carbon/human/npc/proc/Annoy()
+/mob/living/carbon/human/npc/proc/Annoy(var/atom/source)
+	if(client)
+		return
 	if(is_talking)
 		return
 	if(run_or_anger)
@@ -312,6 +314,9 @@
 		return
 	if(world.time <= last_annoy+50)
 		return
+	if(source)
+		spawn(rand(3, 7)
+			face_atom(source)
 	last_annoy = world.time
 	var/phrase
 	if(prob(50))
@@ -325,7 +330,7 @@
 
 /mob/living/carbon/human/npc/attack_hand(mob/user)
 	if(user.a_intent != INTENT_HARM && user.a_intent != INTENT_DISARM)
-		Annoy()
+		Annoy(user)
 	..()
 
 
