@@ -160,7 +160,7 @@
 		gaussian_next = R2 * working
 	return (mean + stddev * R1)
 #undef ACCURACY
-/*
+
 /proc/get_line(atom/starting_atom, atom/ending_atom)
 	var/current_x_step = starting_atom.x//start at x and y, then add 1 or -1 to these to get every turf from starting_atom to ending_atom
 	var/current_y_step = starting_atom.y
@@ -177,8 +177,8 @@
 	var/x_distance_sign = SIGN(x_distance) //Sign of x distance (+ or -)
 	var/y_distance_sign = SIGN(y_distance)
 
-	var/x = abs_x_distance >> 1 //Counters for steps taken, setting to distance/2
-	var/y = abs_y_distance >> 1 //Bit-shifting makes me l33t.  It also makes get_line() unnessecarrily fast.
+	var/x = abs_x_distance / 2 //Counters for steps taken, setting to distance/2
+	var/y = abs_y_distance / 2 //Bit-shifting makes me l33t.  It also makes get_line() unnessecarrily fast.
 
 	if(abs_x_distance >= abs_y_distance) //x distance is greater than y
 		for(var/distance_counter in 0 to (abs_x_distance - 1))//It'll take abs_x_distance steps to get there
@@ -201,7 +201,7 @@
 			current_y_step += y_distance_sign
 			line += locate(current_x_step, current_y_step, starting_z)
 	return line
-*/
+
 /proc/get_turf_in_angle(angle, turf/starting, increments)
 	var/pixel_x = 0
 	var/pixel_y = 0
