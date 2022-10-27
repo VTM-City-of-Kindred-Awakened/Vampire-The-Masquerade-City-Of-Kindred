@@ -291,16 +291,17 @@
 		return
 	if(is_talking)
 		return
-	var/delay = length_char(message)
 	is_talking = TRUE
-	remove_overlay(FIGHT_LAYER)
-	var/mutable_appearance/parry_overlay = mutable_appearance('icons/mob/talk.dmi', "default0", -FIGHT_LAYER)
-	overlays_standing[FIGHT_LAYER] = parry_overlay
-	apply_overlay(FIGHT_LAYER)
-	spawn(delay)
+	spawn(rand(5, 10))
+		var/delay = length_char(message)
 		remove_overlay(FIGHT_LAYER)
-		say(message)
-		is_talking = FALSE
+		var/mutable_appearance/parry_overlay = mutable_appearance('icons/mob/talk.dmi', "default0", -FIGHT_LAYER)
+		overlays_standing[FIGHT_LAYER] = parry_overlay
+		apply_overlay(FIGHT_LAYER)
+		spawn(delay)
+			remove_overlay(FIGHT_LAYER)
+			say(message)
+			is_talking = FALSE
 
 /mob/living/carbon/human/npc/proc/Annoy()
 	if(is_talking)
