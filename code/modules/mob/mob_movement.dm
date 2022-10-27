@@ -85,7 +85,7 @@
 	if(!isliving(mob))
 		return mob.Move(n, direct)
 	if(mob.stat == DEAD)
-		mob.ghostize()
+//		mob.ghostize()
 		return FALSE
 	if(mob.force_moving)
 		return FALSE

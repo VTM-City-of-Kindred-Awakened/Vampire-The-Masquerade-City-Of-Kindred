@@ -8,7 +8,7 @@
 	if(gender_override && !(randomise[RANDOM_GENDER] || randomise[RANDOM_GENDER_ANTAG] && antag_override))
 		gender = gender_override
 	else
-		gender = pick(MALE,FEMALE,PLURAL)
+		gender = pick(MALE,FEMALE)
 	if(randomise[RANDOM_AGE] || randomise[RANDOM_AGE_ANTAG] && antag_override)
 		age = rand(AGE_MIN,AGE_MAX)
 	if(randomise[RANDOM_UNDERWEAR])

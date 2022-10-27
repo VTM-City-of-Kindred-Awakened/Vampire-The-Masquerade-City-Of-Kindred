@@ -14,10 +14,11 @@
 
 /mob/living/carbon/human/death()
 	..()
-	if(dna.species.type == /datum/species/kindred)
+	if(iskindred(src))
 		SEND_SOUND(src, sound('code/modules/ziggers/final_death.ogg', 0, 0, 50))
 		set_light(2, 2, "#feb716")
-		dust(1, 0, 1)
+		spawn(5)
+			dust(0, 1)
 
 /mob/living/carbon/human/toggle_move_intent(mob/living/user)
 	if(blocking && m_intent == MOVE_INTENT_WALK)
@@ -31,16 +32,16 @@
 		if(hud_used)
 			hud_used.block_icon.icon_state = "act_block_on"
 		clear_parrying()
-		remove_overlay(HALO_LAYER)
-		var/mutable_appearance/block_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "block", -HALO_LAYER)
-		overlays_standing[HALO_LAYER] = block_overlay
-		apply_overlay(HALO_LAYER)
+		remove_overlay(FIGHT_LAYER)
+		var/mutable_appearance/block_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "block", -FIGHT_LAYER)
+		overlays_standing[FIGHT_LAYER] = block_overlay
+		apply_overlay(FIGHT_LAYER)
 		last_m_intent = m_intent
 		if(m_intent == MOVE_INTENT_RUN)
 			toggle_move_intent(src)
 	else
 		to_chat(src, "<span class='warning'>You lower your defense.</span>")
-		remove_overlay(HALO_LAYER)
+		remove_overlay(FIGHT_LAYER)
 		blocking = FALSE
 		if(m_intent != last_m_intent)
 			toggle_move_intent(src)
@@ -120,10 +121,10 @@
 			SwitchBlocking()
 		visible_message("<span class='warning'>[src] prepares to parry [M]'s next attack.</span>", "<span class='warning'>You prepare to parry [M]'s next attack.</span>")
 		playsound(src, 'code/modules/ziggers/parry.ogg', 70, TRUE)
-		remove_overlay(HALO_LAYER)
-		var/mutable_appearance/parry_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "parry", -HALO_LAYER)
-		overlays_standing[HALO_LAYER] = parry_overlay
-		apply_overlay(HALO_LAYER)
+		remove_overlay(FIGHT_LAYER)
+		var/mutable_appearance/parry_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "parry", -FIGHT_LAYER)
+		overlays_standing[FIGHT_LAYER] = parry_overlay
+		apply_overlay(FIGHT_LAYER)
 		parry_cd = world.time
 //		update_icon()
 		spawn(10)
@@ -133,7 +134,7 @@
 /mob/living/carbon/human/proc/clear_parrying()
 	if(parrying)
 		parrying = null
-		remove_overlay(HALO_LAYER)
+		remove_overlay(FIGHT_LAYER)
 		to_chat(src, "<span class='warning'>You lower your defense.</span>")
 //	update_icon()
 
@@ -202,12 +203,12 @@
 //			to_chat(BD, "<span class='warning'>You're full of <b>BLOOD</b>.</span>")
 //			return
 		if(BD.grab_state > GRAB_PASSIVE)
+			if(iskindred(pulling))
+				SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
+				to_chat(BD, "<span class='warning'>You can't drink <b>BLOOD</b> of your own kind. <b>THIS IS INSANE!</b></span>")
+				return
 			if(ishuman(pulling))
-				var/mob/living/carbon/human/PB = pulledby
-				if(PB.dna.species.id == "kindred")
-					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
-					to_chat(BD, "<span class='warning'>You can't drink <b>BLOOD</b> of your own kind. <b>THIS IS INSANE!</b></span>")
-					return
+				var/mob/living/carbon/human/PB = pulling
 				if(PB.stat == 4)
 					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
@@ -382,6 +383,41 @@
 					DISCP.range_activate(src, SH)
 					SH.face_atom(src)
 					return
+	..()
+
+/atom/Click(location,control,params)
+	if(usr.client)
+		if(!isobserver(usr))
+			usr.client.show_popup_menus = FALSE
+		else
+			usr.client.show_popup_menus = TRUE
+	if(ishuman(usr))
+		if(isopenturf(src.loc) || isopenturf(src))
+			var/list/modifiers = params2list(params)
+			var/mob/living/carbon/human/HUY = usr
+			if(!HUY.get_active_held_item())
+				if(LAZYACCESS(modifiers, "right"))
+					var/list/shit = list()
+					var/obj/item/item_to_pick
+					for(var/obj/item/I in range(1, usr))
+						if(I)
+							if(I.loc == src.loc)
+								if(!I.anchored)
+									shit[I.name] = I
+							if(isopenturf(src) && I.loc == src)
+								if(!I.anchored)
+									shit[I.name] = I
+							if(length(shit) == 1)
+								item_to_pick = I
+					if(length(shit) >= 2)
+						var/result = input(usr, "Select the item you want to pick up.", "Pick up") as null|anything in shit
+						if(result)
+							item_to_pick = shit[result]
+						else
+							return
+					if(item_to_pick)
+						HUY.put_in_active_hand(item_to_pick)
+						return
 	..()
 
 /mob/living/carbon/human

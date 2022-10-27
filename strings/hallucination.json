@@ -1,59 +1,59 @@
 {
 	"suspicion": [
-		"@pick(add_name)i'm watching you...",
-		"@pick(add_name)i know what you're doing",
-		"@pick(add_name)what are you hiding?",
-		"I saw that"
+		"Я слежу за тобой...",
+		"Я знаю, что ты задумал.",
+		"Что ты прячешь?",
+		"Я видел это, признавайся."
 	],
 
 	"conversation": [
-		"Yes",
-		"Yeah",
-		"Yup",
-		"No",
-		"Nah",
-		"I doubt it",
-		"Uh...",
-		"Why?",
-		"But...",
-		"Hold on",
-		"Hmm",
-		"Yeah, i know",
-		"Weird"
+		"Да.",
+		"Конечно.",
+		"Само собой.",
+		"Нет.",
+		"Не-а.",
+		"Ни за что.",
+		"Оу...",
+		"Почему?",
+		"Но...",
+		"Погоди минутку.",
+		"Хмм.",
+		"Да, я знаю.",
+		"Странно."
 	],
 
 	"greetings": [
 		"",
-		"Hey, ",
-		"Hi ",
-		"Hello ",
-		"Wait, ",
-		"It's "
+		"Эй, ",
+		"Здаров ",
+		"Привет ",
+		"Подожди, ",
+		"Это же "
 	],
 
 	"getout": [
-		"@pick(add_name)get out",
-		"@pick(add_name)get out!",
-		"@pick(add_name)go away",
-		"@pick(add_name)fuck off",
-		"OUT!",
-		"@pick(add_name)out!"
+		"Убирайся.",
+		"Убирайся!",
+		"Уходи.",
+		"Отъебись.",
+		"НАХУЙ!",
+		"Вон!"
 	],
 
 	"weird": [
-		"Kchck-Chkck? Kchchck!",
-		"Kchckchk...",
-		"EEEeeeeEEEE",
-		"khhhhh",
-		"#@§*&£",
-		"H**p m*",
-		"H-hhhhh..."
+		"Аыаыаы? Ыааа!",
+		"Ааыыыы...",
+		"ЕЕЕЕЕЕ.",
+		"Ху... ху... ху...",
+		"Жрал ху...",
+		"Помом-ом мнене-не.",
+		"А-хххх..."
 	],
 
 	"didyouhearthat": [
-		"Did you hear that?",
-		"Did you see that?",
-		"What was that?"
+		"Мне же послышалось?",
+		"Кто это?",
+		"Что это было?"
 	],
 
 	"add_name": [
@@ -63,162 +63,131 @@
 	],
 
 	"doubt": [
-		"Why?",
-		"What?",
-		"Wait, what?",
-		"@pick(add_name)wait",
-		"@pick(add_name)hold on",
-		"Uh..."
+		"Почему?",
+		"Что?",
+		"Погоди, что?",
+		"Подожди.",
+		"Секунду.",
+		"Ох..."
 	],
 
 	"aggressive": [
-		"@pick(add_name)give me that!",
-		"@pick(add_name)stop it!",
-		"@pick(add_name)i'm going to kill you!",
-		"@pick(add_name)fuck you!"
+		"Отдай это мне!",
+		"Остановись!",
+		"Я тебя убью!",
+		"Пошёл нахуй!"
 	],
 
 	"help": [
-		"HELP",
-		"HELP",
-		"HELP",
-		"HELP",
-		"HELP",
-		"HELP ME",
-		"HELP HIM",
-		"HELP HER",
-		"HELP THEM",
-		"HELP US",
-		"HELP YOURSELF"
+		"ПОМОГИ",
+		"НА ПОМОЩЬ",
+		"ПОМОГИТЕ",
+		"ПОМОЩЬ",
+		"БЫСТРЕЕ, ПОМОГИТЕ",
+		"ПОМОГИТЕ МНЕ",
+		"ПОМОГИТЕ ЕМУ",
+		"ПОМОГИТЕ ЕЙ",
+		"ПОМОГИТЕ ИМ",
+		"ПОМОГИТЕ НАМ",
+		"ПОМОГИ СЕБЕ САМ"
 	],
 
 	"escape": [
-		"@pick(add_name)RUN!!",
-		"They're behind me!",
-		"It's here!",
-		"@pick(add_name)follow me!",
-		"@pick(add_name)follow me"
+		"БЕГИ!!",
+		"Они гонятся за мной!",
+		"Оно здесь!",
+		"Пиздуй за мной!",
+		"Следуй за мной."
 	],
 
 	"infection_advice": [
-		"@pick(add_name)stay away",
-		"@pick(add_name)don't get close",
-		"@pick(add_name)be careful",
-		"@pick(add_name)help me",
-		"@pick(add_name)kill me"
+		"не подходи",
+		"не трогай меня",
+		"будь осторожнее",
+		"помоги мне",
+		"убей меня"
 	],
 
 	"people": [
-		"Captain",
-		"Hos",
-		"Cmo",
-		"Rd",
-		"Ce",
-		"Hop",
-		"Janitor",
-		"AI",
-		"Viro",
-		"Qm",
-		"%TARGETNAME%"
+		"Князь",
+		"Шериф",
+		"Главврач",
+		"Юстициар",
+		"Гробовщик",
+		"Бухгалтер",
+		"Уборщик",
+		"Архонт",
+		"Начальник склада"
 	],
 
 	"accusations": [
-		"dead",
-		"rogue",
-		"cult",
-		"a cultist",
-		"clockcult",
-		"a clock cultist",
-		"a revhead",
-		"a rev",
-		"a gang leader",
-		"a gangster",
-		"a traitor",
-		"a tator",
-		"a ling",
-		"a changeling"
+		"труп",
+		"бандит",
+		"шабаш",
+		"шабашит",
+		"глава повстания",
+		"повстанец",
+		"предатель",
+		"пердатель",
+		"каитифф"
 	],
 
 	"threat": [
-		"Cult",
-		"Wizard",
-		"Blob",
-		"Ling",
-		"Ops",
-		"Swarmers",
-		"Spiders",
-		"Xenos",
-		"Revenant",
-		"Traitor",
-		"Harm",
-		"Blue APC",
-		"I hear flashing",
-		"Help",
-		"%TARGETNAME%"
+		"Шабаш",
+		"Оборотни",
+		"Каитифф",
+		"Патриарх",
+		"Предатель",
+		"Драка",
+		"Выстрелы",
+		"На помощь"
 	],
 
 	"location": [
-		"space near @pick(sublocation)",
-		"the bridge",
-		"the armory",
-		"sec",
-		"security",
-		"science",
-		"xenobio",
-		"engineering",
-		"cargo",
-		"medbay",
-		"atmos",
-		"maint",
-		"@pick(sublocation) maint",
-		"virology",
-		"morgue",
-		"hops office",
-		"captains office",
-		"the chapel",
-		"the library",
-		"tool storage",
-		"botany",
-		"the kitchen",
-		"the ai sat"
+		"возле @pick(sublocation)",
+		"в мэрии",
+		"у легавых",
+		"у полиции",
+		"в полицейском участке",
+		"на заводе",
+		"у склада",
+		"в больнице",
+		"в гетто",
+		"в морге",
+		"в оффисе Князя",
+		"в церкви",
+		"в библиотеке",
+		"в столовой"
 	],
 
 	"sublocation": [
-		"the bridge",
-		"the armory",
-		"sec",
-		"security",
-		"science",
-		"xenobio",
-		"engineering",
-		"cargo",
-		"medbay",
-		"atmos",
-		"maint",
-		"virology",
-		"morgue",
-		"hops office",
-		"captains office",
-		"the chapel",
-		"the library",
-		"tool storage",
-		"botany",
-		"the kitchen",
-		"the ai sat"
+		"мэрии",
+		"легавых",
+		"полиции",
+		"полицейского участка",
+		"завода",
+		"склада",
+		"больницы",
+		"гетто",
+		"морге",
+		"оффиса князя",
+		"церкви",
+		"библиотеки",
+		"столовой"
 	],
 
 	"advice": [
-		"Hmm...not sure about that.",
-		"Yes. You're doing the right thing.",
-		"No. Stop what you're doing.",
-		"You should be wary of that person.",
-		"Trust that person.",
-		"That person wants to kill you.",
-		"Kill that person. You know who.",
-		"You should go somewhere else. Quickly.",
-		"Good luck. You'll need it.",
-		"You have my permission. Do it.",
-		"Just do it."
+		"Хмм... не знаю.",
+		"Да. именно так.",
+		"Нет. Остановись.",
+		"Остерегайся этого типа.",
+		"Можешь доверять ему.",
+		"Он хочет убить тебя.",
+		"Убей его. Ты знаешь кого.",
+		"Спрячься где-нибудь. Быстрее.",
+		"Удачи. Она тебе понадобится.",
+		"У тебя есть моё разрешение. Делай.",
+		"Просто сделай это."
 	],
 
 	"chemicals": [
@@ -226,13 +195,13 @@
 		"Ooze",
 		"Fire",
 		"Earth",
-		"Lightning",
+		"Lighting",
 		"Air",
 		"Magic",
 		"Spiders",
 		"Button",
 		"Surprise",
-		"Happiness",
+		"Happines",
 		"Despair",
 		"Blood",
 		"Awesome",

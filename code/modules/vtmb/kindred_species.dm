@@ -15,6 +15,7 @@
 	burnmod = 2
 	punchdamagelow = 10
 	punchdamagehigh = 20
+	dust_anim = "dust-h"
 	var/datum/vampire_clane/clane
 /datum/species/kindred/spec_life(mob/living/carbon/human/H)
 	. = ..()
