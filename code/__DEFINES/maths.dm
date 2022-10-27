@@ -160,6 +160,7 @@
 		gaussian_next = R2 * working
 	return (mean + stddev * R1)
 #undef ACCURACY
+/*
 /proc/get_line(atom/starting_atom, atom/ending_atom)
 	var/current_x_step = starting_atom.x//start at x and y, then add 1 or -1 to these to get every turf from starting_atom to ending_atom
 	var/current_y_step = starting_atom.y
@@ -200,6 +201,7 @@
 			current_y_step += y_distance_sign
 			line += locate(current_x_step, current_y_step, starting_z)
 	return line
+*/
 /proc/get_turf_in_angle(angle, turf/starting, increments)
 	var/pixel_x = 0
 	var/pixel_y = 0

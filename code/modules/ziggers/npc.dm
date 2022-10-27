@@ -5,6 +5,7 @@
 	var/is_talking = FALSE
 	var/last_annoy = 0
 	var/run_or_anger = FALSE
+	var/turf/walktarget	//dlya movementa
 
 	var/obj/item/melee/melee_weapon
 	var/obj/item/gun/range_weapon
@@ -292,8 +293,9 @@
 	if(is_talking)
 		return
 	is_talking = TRUE
+	var/delay = length_char(message)
+	Stun(10+delay)
 	spawn(rand(5, 10))
-		var/delay = length_char(message)
 		remove_overlay(FIGHT_LAYER)
 		var/mutable_appearance/parry_overlay = mutable_appearance('icons/mob/talk.dmi', "default0", -FIGHT_LAYER)
 		overlays_standing[FIGHT_LAYER] = parry_overlay
@@ -315,7 +317,7 @@
 	if(world.time <= last_annoy+50)
 		return
 	if(source)
-		spawn(rand(3, 7)
+		spawn(rand(3, 7))
 			face_atom(source)
 	last_annoy = world.time
 	var/phrase
@@ -327,6 +329,13 @@
 		else
 			phrase = pick(socialrole.female_phrases)
 	RealisticSay(phrase)
+
+/mob/living/carbon/human/Move(NewLoc, direct)
+	var/mob/living/carbon/human/npc/NPC = locate() in NewLoc
+	if(NPC)
+		if(a_intent != INTENT_HELP)
+			NPC.Annoy(src)
+	..()
 
 /mob/living/carbon/human/npc/attack_hand(mob/user)
 	if(user.a_intent != INTENT_HARM && user.a_intent != INTENT_DISARM)
