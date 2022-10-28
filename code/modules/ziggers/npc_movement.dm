@@ -41,17 +41,11 @@
 		last_m_intent_change = world.time
 		if(prob(50))
 			toggle_move_intent(src)
-	if(myloc != loc)
-		last_tupik = world.time
-		myloc = loc
-	if(last_tupik+30 <= world.time)
-		last_tupik = world.time
-		ChoosePath()
 	..()
 
 /mob/living/carbon/human/npc/proc/CreateWay(var/direction)
 	var/turf/location = get_turf(src)
-	for(var/distance = 1 to 50)
+	for(var/distance = 1 to 25)
 		location = get_step(location, direction)
 		if(iswallturf(location))
 			return location
@@ -101,13 +95,25 @@
 				return pick(north_steps, south_steps, west_steps)
 
 /mob/living/carbon/human/npc/proc/WalkTo(var/atom/target, var/mindistance = 0, var/delay = 3)
-	set waitfor = 0
-	iswalking = TRUE
-	spawn(delay)
+//	set waitfor = delay
+	if(!iswalking)
+		iswalking = TRUE
+		var/atom/target1 = target
+		var/mindistance1 = mindistance
+		var/delay1 = delay
+		sleep(delay)
 		if(get_dist(target, src) <= mindistance)
 			iswalking = FALSE
 			walktarget = ChoosePath()
-			to_chat(world, "Поиск нового пути")
+//			to_chat(world, "Поиск нового пути")
+			return
+		if(myloc != loc)
+			last_tupik = world.time
+			myloc = loc
+		if(last_tupik+30 <= world.time)
+			iswalking = FALSE
+			last_tupik = world.time
+			walktarget = ChoosePath()
 			return
 		if(stat >= 2)
 			goto Skip
@@ -119,10 +125,11 @@
 			goto Skip
 		if(pulledby && last_grab+30 >= world.time)
 			goto Skip
-		step_towards(src, target)
-	Skip
-		to_chat(world, "Скипнул")
-		WalkTo(target, mindistance, delay)
+		step_towards(src, target1)
+		Skip
+//			to_chat(world, "Скипнул")
+			iswalking = FALSE
+			WalkTo(target1, mindistance1, delay1)
 
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
 	set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
@@ -149,7 +156,6 @@
 
 	if(!walktarget)
 		walktarget = ChoosePath()
-	if(!iswalking)
-		WalkTo(walktarget, stopturf, total_multiplicative_slowdown())
+	WalkTo(walktarget, stopturf, total_multiplicative_slowdown())
 //			walk_to(src, walktarget, stopturf, total_multiplicative_slowdown())
 //			walk_to(src, walktarget, stopturf, total_multiplicative_slowdown())
