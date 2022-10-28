@@ -14,7 +14,7 @@
 		return
 	caster.bloodpool -= cost
 	if(violates_masquerade)
-		if(var/mob/living/carbon/human/npc in viewers(7, target))
+		for(var/mob/living/carbon/human/npc/NPC in viewers(7, target))
 			NPC.danger_source = caster
 			if(caster.client)
 				if(caster.client.prefs.masquerade >= 1)
