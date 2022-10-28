@@ -6,10 +6,10 @@
 	var/is_talking = FALSE
 	var/last_annoy = 0
 	var/last_danger_meet = 0
-	var/mob/danger_source = null
+	var/mob/danger_source
 	var/turf/walktarget	//dlya movementa
 	var/iswalking
-	var/repeats = 0
+	var/last_tupik = 0
 
 	var/last_grab = 0
 
