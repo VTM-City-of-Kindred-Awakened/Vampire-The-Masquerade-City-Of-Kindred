@@ -5,6 +5,7 @@
 	var/cost = 2
 	var/ranged = FALSE
 	var/delay = 5
+	var/violates_masquerade = FALSE
 
 /datum/discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	if(!target)
@@ -12,6 +13,18 @@
 	if(caster.bloodpool < cost)
 		return
 	caster.bloodpool -= cost
+	if(violates_masquerade)
+		for(var/mob/living/carbon/human/npc/NPC in viewers(7, target))
+			if(NPC)
+				NPC.danger_source = caster
+				NPC.walktarget = null
+				if(caster.client)
+					if(caster.client.prefs.masquerade >= 1)
+						caster.client.prefs.masquerade = max(0, caster.client.prefs.masquerade-1)
+						caster.client.prefs.save_preferences()
+						caster.client.prefs.save_character()
+						SEND_SOUND(caster, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
+						to_chat(caster, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
 //	if(!target)
 //		var/choice = input(caster, "Choose your target", "Available Targets") as mob in oviewers(4, caster)
 //		if(choice)
@@ -25,6 +38,7 @@
 	icon_state = "animalism"
 	cost = 2
 	ranged = TRUE
+	violates_masquerade = TRUE
 
 /obj/effect/spectral_wolf
 	name = "Spectral Wolf"

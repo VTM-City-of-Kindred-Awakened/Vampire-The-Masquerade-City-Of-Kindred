@@ -203,15 +203,19 @@
 //			to_chat(BD, "<span class='warning'>You're full of <b>BLOOD</b>.</span>")
 //			return
 		if(BD.grab_state > GRAB_PASSIVE)
-			if(iskindred(pulling))
+			if(iskindred(BD.pulling))
 				SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
 				to_chat(BD, "<span class='warning'>You can't drink <b>BLOOD</b> of your own kind. <b>THIS IS INSANE!</b></span>")
 				return
-			if(ishuman(pulling))
-				var/mob/living/carbon/human/PB = pulling
+			if(ishuman(BD.pulling))
+				var/mob/living/carbon/human/PB = BD.pulling
 				if(PB.stat == 4)
 					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
+					return
+				if(PB.bloodamount <= 0)
+					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
+					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
 			if(isliving(BD.pulling))
 				var/mob/living/LV = BD.pulling
@@ -225,7 +229,23 @@
 					return
 				playsound(BD, 'code/modules/ziggers/drinkblood1.ogg', 50, TRUE)
 				LV.visible_message("<span class='warning'><b>[BD] bites [LV]'s neck!</b></span>", "<span class='warning'><b>[BD] bites your neck!</b></span>")
+				if(ishuman(LV))
+					LV.say("*scream")
+				var/list/seenby = list()
+				for(var/mob/living/carbon/human/npc/CPN in viewers(5, src))
+					if(CPN != LV)
+						seenby += CPN
+						CPN.danger_source = BD
+				if(length(seenby))
+					if(BD.client)
+						if(BD.client.prefs.masquerade >= 1)
+							BD.client.prefs.masquerade = max(0, BD.client.prefs.masquerade-1)
+							BD.client.prefs.save_preferences()
+							BD.client.prefs.save_character()
+							SEND_SOUND(BD, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
+							to_chat(BD, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
 				BD.drinksomeblood(LV)
+				LV.SetSleeping(95)
 	..()
 
 /mob/living/carbon/human/proc/drinksomeblood(var/mob/living/mob)
@@ -239,6 +259,7 @@
 	mob.Stun(95)
 	if(do_after(src, 95, target = mob))
 		mob.bloodamount -= 1
+		mob.SetSleeping(95)
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			H.blood_volume = max(H.blood_volume-10, 150)
@@ -261,7 +282,7 @@
 						client.prefs.humanity = max(4, client.prefs.humanity-1)
 						client.prefs.save_preferences()
 						client.prefs.save_character()
-						to_chat(src, "<span class='danger'><b>HUMANITY DECREASES.</b></span>")
+						to_chat(src, "<span class='userdanger'><b>HUMANITY DECREASES</b></span>")
 			return
 		if(grab_state > GRAB_PASSIVE)
 			drinksomeblood(mob)

@@ -1,16 +1,21 @@
 /mob/living/carbon/human/npc
 	name = "Loh ebanii"
+	a_intent = INTENT_HELP
 	var/datum/socialrole/socialrole
 
 	var/is_talking = FALSE
 	var/last_annoy = 0
-	var/run_or_anger = FALSE
+	var/last_danger_meet = 0
+	var/mob/danger_source = null
 	var/turf/walktarget	//dlya movementa
+
+	var/last_grab = 0
 
 	var/last_m_intent_change = 0
 
 	var/last_tupik = 0
 	var/turf/myloc
+	var/stopturf = 1
 
 	var/obj/item/melee/melee_weapon
 	var/obj/item/gun/range_weapon
@@ -206,6 +211,18 @@
 																	"Мгм...",
 																	"Разве я тебя знаю?",
 																	"У меня мало времени.")
+	var/list/random_phrases = list("Опять приезжие...",
+																	"Кажется я уже третий круг тут мотаю.",
+																	"Чёртовы либералы!",
+																	"Хах, опять выборы?",
+																	"Крысы с канализации сбежали. Во дела...",
+																	"Слухи быстро расходятся.")
+	var/list/answer_phrases = list("Соглашусь.",
+																	"Да-да...",
+																	"Именно.",
+																	"Наверное.",
+																	"Точно.",
+																	"Ага...")
 
 /mob/living/carbon/human/npc/proc/AssignSocialRole(var/datum/socialrole/S, var/dont_random = FALSE)
 	if(!S)
@@ -292,14 +309,19 @@
 	equipOutfit(O)
 	qdel(O)
 
+/mob/living/carbon/human/npc/proc/GetSayDelay(var/message)
+	var/delay = length_char(message)
+	return delay
+
 /mob/living/carbon/human/npc/proc/RealisticSay(var/message)
 	if(!message)
 		return
 	if(is_talking)
 		return
+	if(stat >= 2)
+		return
 	is_talking = TRUE
 	var/delay = length_char(message)
-	Stun(10+delay)
 	spawn(rand(5, 10))
 		remove_overlay(FIGHT_LAYER)
 		var/mutable_appearance/parry_overlay = mutable_appearance('icons/mob/talk.dmi', "default0", -FIGHT_LAYER)
@@ -315,7 +337,7 @@
 		return
 	if(is_talking)
 		return
-	if(run_or_anger)
+	if(danger_source)
 		return
 	if(stat >= 2)
 		return
@@ -345,15 +367,44 @@
 /mob/living/carbon/human/npc/Move(NewLoc, direct)
 	if(is_talking)
 		return
+	if(pulledby && last_grab+30 >= world.time)
+		return
+	if(IsSleeping())
+		return
+	if(stat >= 2)
+		return
 	var/mob/living/carbon/human/npc/NPC = locate() in NewLoc
 	if(NPC)
-		NPC.Stun(rand(5, 10))
+		if(prob(10))
+			NPC.Annoy(src)
 	..()
 
 /mob/living/carbon/human/npc/attack_hand(mob/user)
-	if(user.a_intent != INTENT_HARM && user.a_intent != INTENT_DISARM)
+	if(user.a_intent == INTENT_HELP)
 		Annoy(user)
+	if(user.a_intent == INTENT_DISARM)
+		danger_source = user
+		walktarget = null
+	if(user.a_intent == INTENT_HARM)
+		for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
+			NEPIC.danger_source = user
+			NEPIC.walktarget = null
 	..()
+
+/mob/living/carbon/human/npc/on_hit(obj/projectile/P)
+	..()
+	danger_source = P.firer
+	walktarget = null
+
+/mob/living/carbon/human/npc/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
+	..()
+	var/obj/item/thrown_item = AM
+	danger_source = thrown_item.thrownby
+	walktarget = null
+
+/mob/living/carbon/human/npc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
+	..()
+	last_grab = world.time
 
 /mob/living/carbon/human/npc/proc/EmoteAction()
 	var/shitemote = pick("*sigh", "*smile", "*stare", "*look", "*spin", "*giggle", "*blink", "*blush", "*nod", "*sniff", "*shrug", "*cough", "*yawn")
@@ -362,6 +413,39 @@
 		spawn(rand(5, 10))
 			say(shitemote)
 			is_talking = FALSE
+
+/mob/living/carbon/human/npc/proc/StareAction()
+	if(!is_talking)
+		var/list/interest_persons = list()
+		for(var/mob/living/carbon/human/H in viewers(4, src))
+			if(H)
+				if(H != src)
+					interest_persons += H
+		if(length(interest_persons))
+			is_talking = TRUE
+			spawn(rand(2, 7))
+				face_atom(pick(interest_persons))
+				spawn(rand(1, 5))
+					is_talking = FALSE
+
+/mob/living/carbon/human/npc/proc/SpeechAction()
+	if(!is_talking)
+		var/list/interest_persons = list()
+		for(var/mob/living/carbon/human/npc/H in viewers(4, src))
+			if(H)
+				if(H != src)
+					interest_persons += H
+		if(length(interest_persons))
+			var/mob/living/carbon/human/npc/N = pick(interest_persons)
+			face_atom(N)
+			var/question = pick(socialrole.random_phrases)
+			RealisticSay(question)
+			spawn(rand(1, 5))
+				N.face_atom(src)
+				N.is_talking = TRUE
+				spawn(GetSayDelay(question))
+					N.is_talking = FALSE
+					N.RealisticSay(pick(N.socialrole.answer_phrases))
 
 /datum/socialrole/nigger
 	s_tones = list("african1",
