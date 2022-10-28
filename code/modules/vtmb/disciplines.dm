@@ -17,7 +17,6 @@
 		for(var/mob/living/carbon/human/npc/NPC in viewers(7, target))
 			if(NPC)
 				NPC.danger_source = caster
-				NPC.walktarget = null
 				if(caster.client)
 					if(caster.client.prefs.masquerade >= 1)
 						caster.client.prefs.masquerade = max(0, caster.client.prefs.masquerade-1)

@@ -233,9 +233,9 @@
 					LV.say("*scream")
 				var/list/seenby = list()
 				for(var/mob/living/carbon/human/npc/CPN in viewers(5, src))
-					if(CPN != LV)
-						seenby += CPN
-						CPN.danger_source = BD
+					seenby += CPN
+					CPN.danger_source = BD
+				seenby -= LV
 				if(length(seenby))
 					if(BD.client)
 						if(BD.client.prefs.masquerade >= 1)

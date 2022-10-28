@@ -10,8 +10,8 @@
 	if(ishuman(danger_source))
 		var/mob/living/carbon/human/H = danger_source
 		if(H.client)
-			if(H.client.prefs.humanity > 2)
-				H.client.prefs.humanity = max(2, H.client.prefs.humanity-1)
+			if(H.client.prefs.humanity > 0)
+				H.client.prefs.humanity = max(0, H.client.prefs.humanity-1)
 				H.client.prefs.save_preferences()
 				H.client.prefs.save_character()
 				SEND_SOUND(H, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
@@ -44,7 +44,7 @@
 	if(myloc != loc)
 		last_tupik = world.time
 		myloc = loc
-	if(last_tupik+30 <= world.time && !danger_source)
+	if(last_tupik+30 <= world.time)
 		last_tupik = world.time
 		ChoosePath()
 	..()
@@ -64,7 +64,6 @@
 				return get_step(location, direction)
 
 /mob/living/carbon/human/npc/proc/ChoosePath()
-	walktarget = null
 	stopturf = rand(1, 2)
 	var/turf/north_steps = CreateWay(NORTH)
 	var/turf/south_steps = CreateWay(SOUTH)
@@ -101,8 +100,31 @@
 			else
 				return pick(north_steps, south_steps, west_steps)
 
+/mob/living/carbon/human/npc/proc/WalkTo(var/atom/target, var/mindistance = 0, var/delay = 3)
+	set waitfor = 0
+	iswalking = TRUE
+	spawn(delay)
+		if(locate(target) in range(mindistance, src))
+			iswalking = FALSE
+			walktarget = ChoosePath()
+			return
+		if(stat >= 2)
+			goto skip
+		if(IsSleeping())
+			goto skip
+		if(is_talking)
+			goto skip
+		if(danger_source)
+			goto skip
+		if(pulledby && last_grab+30 >= world.time)
+			goto skip
+		step_towards(src, target)
+		skip
+		WalkTo(target, mindistance, delay)
+
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
 	set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
+
 	if(danger_source)
 		a_intent = INTENT_HARM
 		if(m_intent == MOVE_INTENT_WALK)
@@ -111,21 +133,21 @@
 		if(last_danger_meet+300 <= world.time)
 			danger_source = null
 			a_intent = INTENT_HELP
-		if(locate(danger_source) in viewers(7, src))
-			last_danger_meet = world.time
+		for(var/mob/M in viewers(7, src))
+			if(M == danger_source)
+				last_danger_meet = world.time
 //			if(!range_weapon && !melee_weapon)
-			walk_away(src, danger_source, 11, total_multiplicative_slowdown())
-			if(prob(10))
-				is_talking = TRUE
-				spawn(rand(5, 10))
-					say("*scream")
-					is_talking = FALSE
-			return
-	if(!walktarget || get_dist(src, walktarget) <= stopturf)
-		if(!danger_source)
-			walktarget = ChoosePath()
-	if(!danger_source)
-		if(m_intent == MOVE_INTENT_RUN)
-			walk_to(src, walktarget, stopturf, total_multiplicative_slowdown())
-		else
-			walk_to(src, walktarget, stopturf, total_multiplicative_slowdown())
+				walk_away(src, danger_source, 11, total_multiplicative_slowdown())
+				if(prob(10))
+					is_talking = TRUE
+					spawn(rand(5, 10))
+						say("*scream")
+						is_talking = FALSE
+				return
+
+	if(!walktarget)
+		walktarget = ChoosePath()
+	if(!iswalking)
+		WalkTo(walktarget, stopturf, total_multiplicative_slowdown())
+//			walk_to(src, walktarget, stopturf, total_multiplicative_slowdown())
+//			walk_to(src, walktarget, stopturf, total_multiplicative_slowdown())

@@ -8,6 +8,7 @@
 	var/last_danger_meet = 0
 	var/mob/danger_source = null
 	var/turf/walktarget	//dlya movementa
+	var/iswalking
 
 	var/last_grab = 0
 
@@ -365,14 +366,6 @@
 	..()
 
 /mob/living/carbon/human/npc/Move(NewLoc, direct)
-	if(is_talking)
-		return
-	if(pulledby && last_grab+30 >= world.time)
-		return
-	if(IsSleeping())
-		return
-	if(stat >= 2)
-		return
 	var/mob/living/carbon/human/npc/NPC = locate() in NewLoc
 	if(NPC)
 		if(prob(10))
@@ -384,23 +377,19 @@
 		Annoy(user)
 	if(user.a_intent == INTENT_DISARM)
 		danger_source = user
-		walktarget = null
 	if(user.a_intent == INTENT_HARM)
 		for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
 			NEPIC.danger_source = user
-			NEPIC.walktarget = null
 	..()
 
 /mob/living/carbon/human/npc/on_hit(obj/projectile/P)
 	..()
 	danger_source = P.firer
-	walktarget = null
 
 /mob/living/carbon/human/npc/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	..()
 	var/obj/item/thrown_item = AM
 	danger_source = thrown_item.thrownby
-	walktarget = null
 
 /mob/living/carbon/human/npc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
 	..()
