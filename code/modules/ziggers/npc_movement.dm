@@ -129,8 +129,8 @@
 			goto Skip
 		step_towards(src, target1)
 //			to_chat(world, "Скипнул")
-			iswalking = FALSE
-			WalkTo(target1, mindistance1, delay1)
+		iswalking = FALSE
+		WalkTo(target1, mindistance1, delay1)
 
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
 	if(danger_source)
