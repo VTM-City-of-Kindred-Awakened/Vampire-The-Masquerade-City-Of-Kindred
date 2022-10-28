@@ -109,17 +109,17 @@
 			walktarget = ChoosePath()
 			return
 		if(stat >= 2)
-			goto skip
+			goto Skip
 		if(IsSleeping())
-			goto skip
+			goto Skip
 		if(is_talking)
-			goto skip
+			goto Skip
 		if(danger_source)
-			goto skip
+			goto Skip
 		if(pulledby && last_grab+30 >= world.time)
-			goto skip
+			goto Skip
 		step_towards(src, target)
-		skip
+	Skip
 		WalkTo(target, mindistance, delay)
 
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
