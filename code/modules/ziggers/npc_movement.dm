@@ -50,7 +50,7 @@
 	..()
 
 /mob/living/carbon/human/npc/proc/CreateWay(var/direction)
-	var/turf/location = loc
+	var/turf/location = get_turf(src)
 	for(var/distance = 1 to 50)
 		location = get_step(location, direction)
 		if(iswallturf(location))
