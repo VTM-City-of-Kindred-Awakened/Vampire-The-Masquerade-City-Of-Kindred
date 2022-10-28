@@ -14,17 +14,16 @@
 		return
 	caster.bloodpool -= cost
 	if(violates_masquerade)
-		for(var/mob/living/carbon/human/npc/NPC in viewers(7, target))
-			if(NPC)
-				NPC.danger_source = caster
-				NPC.walktarget = null
-				if(caster.client)
-					if(caster.client.prefs.masquerade >= 1)
-						caster.client.prefs.masquerade = max(0, caster.client.prefs.masquerade-1)
-						caster.client.prefs.save_preferences()
-						caster.client.prefs.save_character()
-						SEND_SOUND(caster, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
-						to_chat(caster, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
+		if(var/mob/living/carbon/human/npc in viewers(7, target))
+			NPC.danger_source = caster
+			NPC.walktarget = null
+			if(caster.client)
+				if(caster.client.prefs.masquerade >= 1)
+					caster.client.prefs.masquerade = max(0, caster.client.prefs.masquerade-1)
+					caster.client.prefs.save_preferences()
+					caster.client.prefs.save_character()
+					SEND_SOUND(caster, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
+					to_chat(caster, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
 //	if(!target)
 //		var/choice = input(caster, "Choose your target", "Available Targets") as mob in oviewers(4, caster)
 //		if(choice)
