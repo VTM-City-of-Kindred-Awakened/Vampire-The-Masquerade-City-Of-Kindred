@@ -102,7 +102,7 @@
 		var/mindistance1 = mindistance
 		var/delay1 = delay
 		sleep(delay)
-		if(src.loc = myloc)
+		if(src.loc == myloc)
 			repeats += 1
 		if(repeats >= 5)
 			walktarget = ChoosePath()
