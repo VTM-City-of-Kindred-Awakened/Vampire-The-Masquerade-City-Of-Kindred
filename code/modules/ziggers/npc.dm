@@ -9,12 +9,12 @@
 	var/mob/danger_source = null
 	var/turf/walktarget	//dlya movementa
 	var/iswalking
+	var/repeats = 0
 
 	var/last_grab = 0
 
 	var/last_m_intent_change = 0
 
-	var/last_tupik = 0
 	var/turf/myloc
 	var/stopturf = 1
 
@@ -370,6 +370,8 @@
 	if(NPC)
 		if(prob(10))
 			NPC.Annoy(src)
+	if(myloc != loc)
+		myloc = loc
 	..()
 
 /mob/living/carbon/human/npc/attack_hand(mob/user)

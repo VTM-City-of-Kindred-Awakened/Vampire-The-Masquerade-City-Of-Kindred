@@ -102,42 +102,38 @@
 		var/mindistance1 = mindistance
 		var/delay1 = delay
 		sleep(delay)
-		if(get_dist(target, src) <= mindistance)
-			iswalking = FALSE
+		if(src.loc = myloc)
+			repeats += 1
+		if(repeats >= 5)
 			walktarget = ChoosePath()
-//			to_chat(world, "Поиск нового пути")
+			iswalking = FALSE
+			WalkTo(target1, mindistance1, delay1)
 			return
-		if(myloc != loc)
-			last_tupik = world.time
-			myloc = loc
-		if(last_tupik+30 <= world.time)
-			iswalking = FALSE
-			last_tupik = world.time
+		if(get_dist(target, src) <= mindistance)
 			walktarget = ChoosePath()
+			iswalking = FALSE
+			WalkTo(target1, mindistance1, delay1)
 			return
 		if(stat >= 2)
-			iswalking = FALSE
-			return
+			goto Skip
 		if(IsSleeping())
-			iswalking = FALSE
-			return
-		if(is_talking)
-			iswalking = FALSE
-			return
+			goto Skip
 		if(danger_source)
-			iswalking = FALSE
-			return
+			if(get_dist(danger_source, src) <= 7)
+				last_danger_meet = world.time
+				step_away(src, danger_source, 9)
+				goto Skip
+		if(is_talking)
+			goto Skip
 		if(pulledby && last_grab+30 >= world.time)
-			iswalking = FALSE
-			return
+			goto Skip
 		step_towards(src, target1)
 //			to_chat(world, "Скипнул")
-		iswalking = FALSE
-		WalkTo(target1, mindistance1, delay1)
+		Skip
+			iswalking = FALSE
+			WalkTo(target1, mindistance1, delay1)
 
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
-	set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
-
 	if(danger_source)
 		a_intent = INTENT_HARM
 		if(m_intent == MOVE_INTENT_WALK)
@@ -146,16 +142,12 @@
 		if(last_danger_meet+300 <= world.time)
 			danger_source = null
 			a_intent = INTENT_HELP
-		if(get_dist(danger_source, src) <= 7)
-			last_danger_meet = world.time
 //			if(!range_weapon && !melee_weapon)
-			walk_away(src, danger_source, 11, total_multiplicative_slowdown())
 			if(prob(10))
 				is_talking = TRUE
 				spawn(rand(5, 10))
 					say("*scream")
 					is_talking = FALSE
-			return
 
 	if(!walktarget)
 		walktarget = ChoosePath()
