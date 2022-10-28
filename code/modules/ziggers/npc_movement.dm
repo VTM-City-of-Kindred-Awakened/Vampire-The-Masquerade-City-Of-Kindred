@@ -104,9 +104,10 @@
 	set waitfor = 0
 	iswalking = TRUE
 	spawn(delay)
-		if(locate(target) in range(mindistance, src))
+		if(get_dist(target, src) <= mindistance)
 			iswalking = FALSE
 			walktarget = ChoosePath()
+			to_chat(world, "Поиск нового пути")
 			return
 		if(stat >= 2)
 			goto Skip
@@ -120,6 +121,7 @@
 			goto Skip
 		step_towards(src, target)
 	Skip
+		to_chat(world, "Скипнул")
 		WalkTo(target, mindistance, delay)
 
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
