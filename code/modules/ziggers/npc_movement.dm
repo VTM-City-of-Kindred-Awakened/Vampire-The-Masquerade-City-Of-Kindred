@@ -129,7 +129,6 @@
 			goto Skip
 		step_towards(src, target1)
 //			to_chat(world, "Скипнул")
-		Skip
 			iswalking = FALSE
 			WalkTo(target1, mindistance1, delay1)
 
