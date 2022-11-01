@@ -5,17 +5,16 @@
 
 	var/is_talking = FALSE
 	var/last_annoy = 0
+
 	var/last_danger_meet = 0
 	var/mob/danger_source
+
 	var/turf/walktarget	//dlya movementa
-	var/iswalking
-	var/last_tupik = 0
 
 	var/last_grab = 0
 
 	var/last_m_intent_change = 0
 
-	var/turf/myloc
 	var/stopturf = 1
 
 	var/obj/item/melee/melee_weapon
@@ -370,8 +369,6 @@
 	if(NPC)
 		if(prob(10))
 			NPC.Annoy(src)
-	if(myloc != loc)
-		myloc = loc
 	..()
 
 /mob/living/carbon/human/npc/attack_hand(mob/user)

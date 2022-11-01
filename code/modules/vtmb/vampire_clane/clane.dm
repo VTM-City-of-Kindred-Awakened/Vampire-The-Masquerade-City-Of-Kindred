@@ -16,6 +16,9 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 	var/clane_curse //Здесь должен быть сигнал
 	var/alt_sprite
 	var/no_hair
+	var/humanitymod = 1
+	var/frenzymod = 1
+	var/start_humanity = 7
 //	var/datum/action/innate/drink_blood/sosalka = new
 //Дополнительная игровая логика должна храниться в компоненте
 /datum/species/kindred/on_species_gain(mob/living/carbon/human/C)

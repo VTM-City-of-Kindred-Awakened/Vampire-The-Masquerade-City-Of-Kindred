@@ -8,14 +8,7 @@
 /mob/living/carbon/human/npc/death()
 	..()
 	if(ishuman(danger_source))
-		var/mob/living/carbon/human/H = danger_source
-		if(H.client)
-			if(H.client.prefs.humanity > 0)
-				H.client.prefs.humanity = max(0, H.client.prefs.humanity-1)
-				H.client.prefs.save_preferences()
-				H.client.prefs.save_character()
-				SEND_SOUND(H, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
-				to_chat(H, "<span class='userdanger'><b>HUMANITY DECREASES</b></span>")
+		AdjustHumanity(danger_source, -1, 0)
 	GLOB.npc_list -= src
 
 /mob/living/carbon/human/npc/Destroy()
@@ -26,9 +19,11 @@
 	if(stat == DEAD)
 		return
 	nutrition = 400
+	if(get_dist(danger_source, src) < 7)
+		last_danger_meet = world.time
 	if(fire_stacks >= 1)
 		resist()
-	if(prob(5) && !danger_source && stat <= 2)
+	if(prob(5) && !danger_source && stat <= 2 && !IsSleeping())
 		var/activity = rand(1, 3)
 		switch(activity)
 			if(1)
@@ -37,7 +32,7 @@
 				EmoteAction()
 			if(3)
 				SpeechAction()
-	if(last_m_intent_change+300 <= world.time && !danger_source)
+	if(last_m_intent_change+150 <= world.time && !danger_source)
 		last_m_intent_change = world.time
 		if(prob(50))
 			toggle_move_intent(src)
@@ -58,7 +53,6 @@
 				return get_step(location, direction)
 
 /mob/living/carbon/human/npc/proc/ChoosePath()
-	stopturf = rand(1, 2)
 	var/turf/north_steps = CreateWay(NORTH)
 	var/turf/south_steps = CreateWay(SOUTH)
 	var/turf/west_steps = CreateWay(WEST)
@@ -94,37 +88,51 @@
 			else
 				return pick(north_steps, south_steps, west_steps)
 
-/mob/living/carbon/human/npc/proc/WalkTo(var/mindistance = 0)
-	iswalking = TRUE
-	set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
-	var/walkshit = mindistance
-	if(get_dist(walktarget, src) > mindistance)
-		walkshit = get_dist(walktarget, src)-1
-	if(is_talking)
-		spawn(total_multiplicative_slowdown())
-			WalkTo(mindistance)
-		return
+/mob/living/carbon/human/npc/proc/CheckMove()
 	if(stat >= 2)
-		iswalking = FALSE
-		return
+		return TRUE
 	if(IsSleeping())
-		iswalking = FALSE
+		return TRUE
+	if(is_talking)
+		return TRUE
+	if(pulledby && last_grab+30 > world.time)
+		return TRUE
+
+/mob/living/carbon/human/npc/proc/juststep()
+	if(!walktarget || !isturf(loc) || CheckMove())
 		return
-	if(danger_source)
-		iswalking = FALSE
-		return
-	if(pulledby && last_grab+30 >= world.time)
-		iswalking = FALSE
-		return
-	walk_to(src, walktarget, walkshit, total_multiplicative_slowdown())
-	if(get_dist(walktarget, src) > mindistance)
-		spawn(total_multiplicative_slowdown())
-			WalkTo(mindistance)
-	else
-		walktarget = ChoosePath()
-		WalkTo(stopturf)
+	set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
+
+	step_to(src,walktarget,0)
+	face_atom(walktarget)
 
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
+	if(CheckMove())
+		return
+	if(!walktarget)
+		walktarget = ChoosePath()
+		face_atom(walktarget)
+		stopturf = rand(1, 2)
+	if(get_dist(walktarget, src) <= stopturf)
+		walktarget = ChoosePath()
+		face_atom(walktarget)
+		stopturf = rand(1, 2)
+	if(isturf(loc))
+		if(danger_source)
+			a_intent = INTENT_HARM
+			if(m_intent == MOVE_INTENT_WALK)
+				toggle_move_intent(src)
+				set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
+			walk_away(src,danger_source,9,total_multiplicative_slowdown())
+			if(last_danger_meet+300 <= world.time)
+				danger_source = null
+				a_intent = INTENT_HELP
+		else if(walktarget)
+			var/datum/cb = CALLBACK(src,.proc/juststep)
+			for(var/i in 1 to SShumannpcpool.wait)
+				addtimer(cb, (i - 1)*total_multiplicative_slowdown())
+
+/*
 	if(danger_source)
 		a_intent = INTENT_HARM
 		if(m_intent == MOVE_INTENT_WALK)
@@ -134,17 +142,26 @@
 		if(last_danger_meet+300 <= world.time)
 			danger_source = null
 			a_intent = INTENT_HELP
+		goto Skip
 //			if(!range_weapon && !melee_weapon)
 
-	if(myloc != src.loc)
-		myloc = src.loc
-		last_tupik = world.time
-	if(!IsSleeping() && !is_talking && !danger_source)
-		if(!iswalking)
-			walktarget = ChoosePath()
-			WalkTo(stopturf)
-		else if(src.loc == myloc && last_tupik+50 < world.time)
-			walktarget = ChoosePath()
-			WalkTo(stopturf)
+	if(lastgo+total_multiplicative_slowdown() > world.time)
+		goto Skip
+	if(pulledby && last_grab+30 > world.time)
+		goto Skip
+	if(!walktarget)
+		walktarget = ChoosePath()
+		face_atom(walktarget)
+		stopturf = rand(1, 2)
+	if(get_dist(walktarget, src) <= stopturf)
+		walktarget = ChoosePath()
+		face_atom(walktarget)
+		stopturf = rand(1, 2)
+	lastgo = world.time
+	var/walkshit = max(stopturf-1, get_dist(walktarget, src)-2)
+	walk_to(src, walktarget, walkshit, total_multiplicative_slowdown())
+	Skip
+*/
+
 //			walk_to(src, walktarget, stopturf, total_multiplicative_slowdown())
 //			walk_to(src, walktarget, stopturf, total_multiplicative_slowdown())

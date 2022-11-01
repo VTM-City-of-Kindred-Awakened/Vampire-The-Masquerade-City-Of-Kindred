@@ -16,9 +16,8 @@
 	..()
 	if(iskindred(src))
 		SEND_SOUND(src, sound('code/modules/ziggers/final_death.ogg', 0, 0, 50))
-		set_light(2, 2, "#feb716")
 		spawn(5)
-			dust(0, 1)
+			dust(1, 1)
 
 /mob/living/carbon/human/toggle_move_intent(mob/living/user)
 	if(blocking && m_intent == MOVE_INTENT_WALK)
@@ -233,17 +232,11 @@
 					LV.say("*scream")
 				var/list/seenby = list()
 				for(var/mob/living/carbon/human/npc/CPN in viewers(5, src))
-					seenby += CPN
-					CPN.danger_source = BD
-				seenby -= LV
+					if(LV != CPN)
+						seenby += CPN
+						CPN.danger_source = BD
 				if(length(seenby))
-					if(BD.client)
-						if(BD.client.prefs.masquerade >= 1)
-							BD.client.prefs.masquerade = max(0, BD.client.prefs.masquerade-1)
-							BD.client.prefs.save_preferences()
-							BD.client.prefs.save_character()
-							SEND_SOUND(BD, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
-							to_chat(BD, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
+					AdjustMasquerade(BD, -1)
 				BD.drinksomeblood(LV)
 				LV.SetSleeping(95)
 	..()
@@ -277,12 +270,7 @@
 			if(ishuman(mob))
 				SEND_SOUND(src, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
 				to_chat(src, "<span class='warning'>This sad sacrifice for your own pleasure affects something deep in your mind.</span>")
-				if(client)
-					if(client.prefs.humanity > 4)
-						client.prefs.humanity = max(4, client.prefs.humanity-1)
-						client.prefs.save_preferences()
-						client.prefs.save_character()
-						to_chat(src, "<span class='userdanger'><b>HUMANITY DECREASES</b></span>")
+				AdjustHumanity(src, -1, 3)
 			return
 		if(grab_state > GRAB_PASSIVE)
 			drinksomeblood(mob)

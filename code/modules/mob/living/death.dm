@@ -53,6 +53,7 @@
 		buckled.unbuckle_mob(src, force = TRUE)
 
 	dust_animation()
+	alpha = 0
 	spawn_dust(just_ash)
 	QDEL_IN(src,5) // since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play. Looks much nicer and doesn't cause multiple runtimes.
 

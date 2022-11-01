@@ -19,12 +19,7 @@
 			NPC.danger_source = caster
 			theysawsomeshit += NPC
 		if(caster.client && length(theysawsomeshit))
-			if(caster.client.prefs.masquerade >= 1)
-				caster.client.prefs.masquerade = max(0, caster.client.prefs.masquerade-1)
-				caster.client.prefs.save_preferences()
-				caster.client.prefs.save_character()
-				SEND_SOUND(caster, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
-				to_chat(caster, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
+			AdjustMasquerade(caster, -1)
 //	if(!target)
 //		var/choice = input(caster, "Choose your target", "Available Targets") as mob in oviewers(4, caster)
 //		if(choice)

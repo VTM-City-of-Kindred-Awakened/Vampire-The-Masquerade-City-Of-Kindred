@@ -285,6 +285,7 @@
 
 /obj/effect/temp_visual/dust_animation/Initialize(mapload, dust_icon)
 	icon_state = dust_icon // Before ..() so the correct icon is flick()'d
+	set_light(2, 2, "#feb716")
 	. = ..()
 
 /obj/effect/temp_visual/mummy_animation

@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(humannpcpool)
 	var/list/currentrun = list()
 
 /datum/controller/subsystem/humannpcpool/stat_entry(msg)
-	var/list/activelist = GLOB.simple_animals[AI_ON]
+	var/list/activelist = GLOB.npc_list
 	msg = "NPCS:[length(activelist)]"
 	return ..()
 

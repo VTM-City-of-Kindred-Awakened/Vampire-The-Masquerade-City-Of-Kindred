@@ -292,6 +292,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Masquerade:</b> [masquerade]/5<BR>"
 				dat += "<b>Clane:</b> <a href='?_src_=prefs;preference=clane;task=input'>[clane.name]</a><BR>"
 				dat += "<b>Clane description:</b> [clane.desc]<BR>"
+				dat += "<b>Clane curse:</b> [clane.curse]<BR>"
 //			dat += "<a href='?_src_=prefs;preference=species;task=random'>Random Species</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SPECIES]'>Always Random Species: [(randomise[RANDOM_SPECIES]) ? "Yes" : "No"]</A><br>"
 
@@ -839,7 +840,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		dat += "<a href='?_src_=prefs;preference=save'>Save Character</a> "
 //	dat += "<a href='?_src_=prefs;preference=save_pref'>Save Preferences</a> "
 
-	dat += "<a href='?_src_=prefs;preference=reset_all'>Reset Setup</a>"
+	if(istype(user, /mob/dead/new_player))
+		dat += "<a href='?_src_=prefs;preference=reset_all'>Reset Setup</a>"
 	dat += "</center>"
 
 	winshow(user, "preferences_window", TRUE)
@@ -1056,6 +1058,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/SetQuirks(mob/user)
 	if(!SSquirks)
 		to_chat(user, "<span class='danger'>The quirk subsystem is still initializing! Try again in a minute.</span>")
+		return
+
+	if(slotlocked)
 		return
 
 	var/list/dat = list()
@@ -1461,6 +1466,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(result)
 						var/newtype = GLOB.clanes_list[result]
 						clane = new newtype()
+						humanity = clane.start_humanity
 						if(clane.no_hair)
 							hairstyle = "Bald"
 							facial_hairstyle = "Shaved"
@@ -1951,7 +1957,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("reset_all")
 					slotlocked = 0
-					humanity = initial(humanity)
+					humanity = clane.start_humanity
 					masquerade = initial(masquerade)
 					generation = initial(generation)
 					qdel(clane)
