@@ -43,11 +43,24 @@
  * * drop_items - Should the mob drop their items before dusting?
  * * force - Should this mob be FORCABLY dusted?
 */
+
+/mob/living/proc/unequip_epic()
+	var/list/items = list()
+	items |= get_equipped_items(TRUE)
+	for(var/obj/item/I in items)
+		dropItemToGround(I)
+		var/atom/tothrow = get_step_rand(src)
+		I.throw_at(target = tothrow, range = 1, speed = 1, thrower = src, spin = TRUE, gentle = TRUE)
+		if(prob(25))
+			I.burn()
+	drop_all_held_items()
+
 /mob/living/proc/dust(just_ash, drop_items, force)
-	death(TRUE)
+	if(stat != DEAD)
+		death(TRUE)
 
 	if(drop_items)
-		unequip_everything()
+		unequip_epic()
 
 	if(buckled)
 		buckled.unbuckle_mob(src, force = TRUE)

@@ -35,3 +35,5 @@
 				H.frenzy_hardness = 1
 			else
 				H.frenzy_hardness = min(10, H.frenzy_hardness+1)
+	else
+		H.last_frenzy_check = world.time

@@ -399,11 +399,11 @@
 	last_grab = world.time
 
 /mob/living/carbon/human/npc/proc/EmoteAction()
-	var/shitemote = pick("*sigh", "*smile", "*stare", "*look", "*spin", "*giggle", "*blink", "*blush", "*nod", "*sniff", "*shrug", "*cough", "*yawn")
+	var/shitemote = pick("sigh", "smile", "stare", "look", "spin", "giggle", "blink", "blush", "nod", "sniff", "shrug", "cough", "yawn")
 	if(!is_talking)
 		is_talking = TRUE
 		spawn(rand(5, 10))
-			say(shitemote)
+			emote(shitemote)
 			is_talking = FALSE
 
 /mob/living/carbon/human/npc/proc/StareAction()

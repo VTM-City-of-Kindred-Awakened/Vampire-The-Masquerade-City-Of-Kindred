@@ -229,7 +229,7 @@
 				playsound(BD, 'code/modules/ziggers/drinkblood1.ogg', 50, TRUE)
 				LV.visible_message("<span class='warning'><b>[BD] bites [LV]'s neck!</b></span>", "<span class='warning'><b>[BD] bites your neck!</b></span>")
 				if(ishuman(LV))
-					LV.say("*scream")
+					LV.emote("scream")
 				if(CheckEyewitness(LV, BD, 7, FALSE))
 					AdjustMasquerade(BD, -1)
 				BD.drinksomeblood(LV)
