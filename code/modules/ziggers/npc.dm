@@ -13,8 +13,6 @@
 
 	var/last_grab = 0
 
-	var/last_m_intent_change = 0
-
 	var/stopturf = 1
 
 	var/obj/item/melee/melee_weapon

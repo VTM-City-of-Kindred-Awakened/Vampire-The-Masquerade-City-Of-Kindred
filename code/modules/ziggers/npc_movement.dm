@@ -32,10 +32,6 @@
 				EmoteAction()
 			if(3)
 				SpeechAction()
-	if(last_m_intent_change+150 <= world.time && !danger_source)
-		last_m_intent_change = world.time
-		if(prob(50))
-			toggle_move_intent(src)
 	..()
 
 /mob/living/carbon/human/npc/proc/CreateWay(var/direction)
@@ -106,6 +102,15 @@
 	step_to(src,walktarget,0)
 	face_atom(walktarget)
 
+/mob/living/carbon/human/npc/proc/awaystep()
+	if(!danger_source || !isturf(loc) || CheckMove())
+		return
+	set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
+
+	var/atom/toface = get_step_away(src, danger_source, 3)
+	step_away(src,danger_source,0)
+	face_atom(toface)
+
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
 	if(CheckMove())
 		return
@@ -122,14 +127,19 @@
 			a_intent = INTENT_HARM
 			if(m_intent == MOVE_INTENT_WALK)
 				toggle_move_intent(src)
-				set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
-			walk_away(src,danger_source,9,total_multiplicative_slowdown())
+			var/datum/cb = CALLBACK(src,.proc/awaystep)
+			var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
+			for(var/i in 1 to reqsteps)
+				addtimer(cb, (i - 1)*total_multiplicative_slowdown())
 			if(last_danger_meet+300 <= world.time)
 				danger_source = null
 				a_intent = INTENT_HELP
 		else if(walktarget)
+			if(prob(25))
+				toggle_move_intent(src)
 			var/datum/cb = CALLBACK(src,.proc/juststep)
-			for(var/i in 1 to SShumannpcpool.wait)
+			var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
+			for(var/i in 1 to reqsteps)
 				addtimer(cb, (i - 1)*total_multiplicative_slowdown())
 
 /*
