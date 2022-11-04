@@ -99,17 +99,24 @@
 		return
 	set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
 
+	var/turf/T = get_turf(src)
 	step_to(src,walktarget,0)
 	face_atom(walktarget)
+	if(get_turf(src) == T)
+		tupik_steps += 1
+	if(tupik_steps > 3)
+		tupik_steps = 0
+		walktarget = ChoosePath()
 
 /mob/living/carbon/human/npc/proc/awaystep()
 	if(!danger_source || !isturf(loc) || CheckMove())
 		return
 	set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
 
-	var/atom/toface = get_step_away(src, danger_source, 3)
+	var/turf/toface = get_turf(src)
 	step_away(src,danger_source,0)
-	face_atom(toface)
+	if(get_turf(src) != toface)
+		dir = get_dir(toface, get_turf(src))
 
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
 	if(CheckMove())
@@ -133,6 +140,7 @@
 				addtimer(cb, (i - 1)*total_multiplicative_slowdown())
 			if(last_danger_meet+300 <= world.time)
 				danger_source = null
+				walktarget = ChoosePath()
 				a_intent = INTENT_HELP
 		else if(walktarget)
 			if(prob(25))

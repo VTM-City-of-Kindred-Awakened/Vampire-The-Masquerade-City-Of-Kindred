@@ -230,20 +230,18 @@
 				LV.visible_message("<span class='warning'><b>[BD] bites [LV]'s neck!</b></span>", "<span class='warning'><b>[BD] bites your neck!</b></span>")
 				if(ishuman(LV))
 					LV.say("*scream")
-				var/list/seenby = list()
-				for(var/mob/living/carbon/human/npc/CPN in viewers(5, src))
-					if(LV != CPN)
-						seenby += CPN
-						CPN.danger_source = BD
-				if(length(seenby))
+				if(CheckEyewitness(LV, BD, 7, FALSE))
 					AdjustMasquerade(BD, -1)
 				BD.drinksomeblood(LV)
-				LV.SetSleeping(95)
 	..()
 
 /mob/living/carbon/human/proc/drinksomeblood(var/mob/living/mob)
 	last_drinkblood_use = world.time
 	SEND_SOUND(src, sound('code/modules/ziggers/drinkblood2.ogg'))
+	mob.SetSleeping(95)
+	if(isnpc(mob))
+		var/mob/living/carbon/human/npc/NPC = mob
+		NPC.danger_source = null
 	to_chat(src, "<span class='warning'>You sip some <b>BLOOD</b> from your victim. It feels good.</span>")
 	if(mob.bloodamount == 1 && mob.maxbloodamount > 1)
 //		if(alert("This action will kill your victim. Are you sure?",,"Yes","No")!="Yes")

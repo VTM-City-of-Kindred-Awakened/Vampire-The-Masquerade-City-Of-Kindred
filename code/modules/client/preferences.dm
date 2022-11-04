@@ -188,7 +188,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	update_preview_icon()
 	var/list/dat = list("<center>")
 
-	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a>"
+	if(istype(user, /mob/dead/new_player))
+		dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>Game Preferences</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>OOC Preferences</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=3' [current_tab == 3 ? "class='linkOn'" : ""]>Custom Keybindings</a>"
@@ -1688,6 +1689,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(unlock_content)
 						toggles ^= MEMBER_PUBLIC
 				if("gender")
+					if(slotlocked)
+						return
 					var/list/friendlyGenders = list("Male" = "male", "Female" = "female")
 					var/pickedGender = input(user, "Choose your gender.", "Character Preference", gender) as null|anything in friendlyGenders
 					if(pickedGender && friendlyGenders[pickedGender] != gender)
@@ -1698,6 +1701,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						facial_hairstyle = random_facial_hairstyle(gender)
 						hairstyle = random_hairstyle(gender)
 				if("body_type")
+					if(slotlocked)
+						return
 					if(body_type == MALE)
 						body_type = FEMALE
 					else
@@ -1957,11 +1962,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("reset_all")
 					slotlocked = 0
-					humanity = clane.start_humanity
 					masquerade = initial(masquerade)
 					generation = initial(generation)
 					qdel(clane)
 					clane = new /datum/vampire_clane/brujah()
+					humanity = clane.start_humanity
 					random_species()
 					random_character()
 					real_name = random_unique_name(gender)
@@ -1983,6 +1988,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					to_chat(user, "<span class='notice'>OOC Commendation Heart disabled</span>")
 					save_preferences()
 
+	save_preferences()
+	save_character()
 	ShowChoices(user)
 	return 1
 

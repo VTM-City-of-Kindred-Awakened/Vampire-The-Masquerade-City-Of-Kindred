@@ -14,11 +14,7 @@
 		return
 	caster.bloodpool -= cost
 	if(violates_masquerade)
-		var/list/theysawsomeshit = list()
-		for(var/mob/living/carbon/human/npc/NPC in viewers(7, target))
-			NPC.danger_source = caster
-			theysawsomeshit += NPC
-		if(caster.client && length(theysawsomeshit))
+		if(CheckEyewitness(target, caster, 5, TRUE))
 			AdjustMasquerade(caster, -1)
 //	if(!target)
 //		var/choice = input(caster, "Choose your target", "Available Targets") as mob in oviewers(4, caster)
@@ -45,6 +41,9 @@
 
 /datum/discipline/animalism/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
+	var/damagemod = 1
+	if(caster.client)
+		damagemod = max(1, round((13-caster.client.prefs.generation)/2))
 	var/antidir = NORTH
 	switch(target.dir)
 		if(NORTH)
@@ -58,13 +57,14 @@
 	var/obj/effect/spectral_wolf/W = new(get_step(target, antidir))
 	W.dir = target.dir
 	W.set_light(2, 2, "#6eeeff")
-	target.Stun(5)
-	W.do_attack_animation(target)
+	target.Stun(10)
+	spawn(10)
+	target.Knockdown(5)
+	W.forceMove(target.loc)
 	playsound(W, 'code/modules/ziggers/volk.ogg', 80, TRUE)
-	target.apply_damage(50, BRUTE, BODY_ZONE_CHEST)
+	target.apply_damage(25*damagemod, BRUTE, BODY_ZONE_CHEST)
 	target.visible_message("<span class='warning'><b>[W] bites [target]!</b></span>", "<span class='warning'><b>[W] bites you!</b></span>")
 	spawn(5)
-		W.set_light(0)
 		qdel(W)
 
 /datum/discipline/auspex
