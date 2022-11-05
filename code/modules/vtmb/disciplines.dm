@@ -248,7 +248,9 @@ proc/dancesecond(mob/living/M)
 		if(H != caster)
 			H.emote("laugh")
 			H.Stun(30)
-			if(prob(50))
-				dancefirst(H)
-			else
-				dancesecond(H)
+			target.drop_all_held_items()
+			if(stat <= 2 && !IsSleeping() && !IsUnconscious() && !IsParalyzed() && !IsKnockdown() && !HAS_TRAIT(src, TRAIT_RESTRAINED))
+				if(prob(50))
+					dancefirst(H)
+				else
+					dancesecond(H)

@@ -6,13 +6,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	/datum/hallucination/sounds = 50,
 	/datum/hallucination/battle = 20,
 	/datum/hallucination/dangerflash = 15,
-	/datum/hallucination/hudscrew = 12,
-	/datum/hallucination/fake_alert = 12,
 	/datum/hallucination/weird_sounds = 8,
-	/datum/hallucination/stationmessage = 7,
-	/datum/hallucination/fake_flood = 7,
 	/datum/hallucination/stray_bullet = 7,
-	/datum/hallucination/bolts = 7,
 	/datum/hallucination/items_other = 7,
 	/datum/hallucination/husks = 7,
 	/datum/hallucination/items = 4,
@@ -24,6 +19,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	/datum/hallucination/oh_yeah = 1
 	))
 
+//Tut nekotoroe runtime sret
 
 /mob/living/carbon/proc/handle_hallucinations()
 	if(!hallucination)
@@ -821,7 +817,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/radio_messages = list("[pick_list_replacements(HAL_LINES_FILE, "people")] - [pick_list_replacements(HAL_LINES_FILE, "accusations")]!",\
 		"Помогите!",\
 		"[pick_list_replacements(HAL_LINES_FILE, "threat")] [pick_list_replacements(HAL_LINES_FILE, "location")][prob(50)?"!":"!!"]",\
-		"[pick("Куда подевался [target.first_name()]?", "Поставьте на [target.first_name()] аррест!")]",\
+		"[pick("Куда малкавианин подевался?", "Поставьте на малкавианина аррест!")]",\
 		"Убегаем отсюда!",\
 		"Князь [pick("предатель", "мёртв")]!!")
 
