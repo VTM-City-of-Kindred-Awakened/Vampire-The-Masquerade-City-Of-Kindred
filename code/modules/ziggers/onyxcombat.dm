@@ -15,6 +15,8 @@
 /mob/living/carbon/human/death()
 	..()
 	if(iskindred(src))
+		if(in_frenzy)
+			exit_frenzymod()
 		SEND_SOUND(src, sound('code/modules/ziggers/final_death.ogg', 0, 0, 50))
 		spawn(5)
 			dust(1, 1)
@@ -459,9 +461,9 @@
 			BD.toggled = src
 			icon_state = "[main_state]-on"
 		else if(!dscpln.ranged)
-			dscpln.activate(BD, BD)
 			last_discipline_use = world.time
 			icon_state = "[main_state]-on"
+			dscpln.activate(BD, BD)
 			spawn(dscpln.delay)
 				icon_state = main_state
 

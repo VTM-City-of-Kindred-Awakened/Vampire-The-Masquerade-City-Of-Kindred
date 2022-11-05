@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(humannpcpool)
 
 		if (QDELETED(NPC)) // Some issue causes nulls to get into this list some times. This keeps it running, but the bug is still there.
 			GLOB.npc_list -= NPC
-			log_world("Found a null in simple_animals list!")
+			log_world("Found a null in npc list!")
 			continue
 
 		if(!NPC.ckey && NPC.stat <= 2)

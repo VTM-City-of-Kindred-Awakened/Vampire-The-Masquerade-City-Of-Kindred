@@ -55,6 +55,12 @@ proc/CheckEyewitness(var/mob/living/source, var/mob/attacker, var/range = 0, var
 			seenby += NPC
 			NPC.danger_source = attacker
 			NPC.last_danger_meet = world.time
+	var/turf/T = get_turf(attacker)
+	if(T.lighting_object && T.lighting_object.invisibility <= source.see_invisible && T.is_softly_lit())
+		if(affects_source && !in_range(T,source))
+			return FALSE
+		else if(!affects_source)
+			return FALSE
 	if(length(seenby) >= 1)
 		return TRUE
 	return FALSE
@@ -71,19 +77,19 @@ proc/vampireroll(var/dices_num = 1, var/hardness = 1, var/atom/rollviewer)
 			brokes += 1
 		else if(roll >= hardness)
 			wins += 1
-	if(crits-brokes > 0)
+	if(crits > brokes)
 		if(rollviewer)
 			to_chat(rollviewer, "<b>Critical <span class='nicegreen'>hit</span>!</b>")
 			return DICE_CRIT_WIN
-	else if(crits-brokes < 0)
+	if(crits < brokes)
 		if(rollviewer)
 			to_chat(rollviewer, "<b>Critical <span class='danger'>failure</span>!</b>")
 			return DICE_CRIT_FAILURE
-	else if(wins < 1)
+	if(crits == brokes && !wins)
 		if(rollviewer)
 			to_chat(rollviewer, "<span class='danger'>Failed</span>")
 			return DICE_FAILURE
-	else
+	if(wins)
 		switch(wins)
 			if(1)
 				to_chat(rollviewer, "<span class='tinynotice'>Maybe</span>")

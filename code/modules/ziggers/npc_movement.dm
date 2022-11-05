@@ -89,6 +89,16 @@
 		return TRUE
 	if(IsSleeping())
 		return TRUE
+	if(IsUnconscious())
+		return TRUE
+	if(IsParalyzed())
+		return TRUE
+	if(IsKnockdown())
+		return TRUE
+	if(IsStun())
+		return TRUE
+	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
+		return TRUE
 	if(is_talking)
 		return TRUE
 	if(pulledby && last_grab+30 > world.time)
@@ -107,6 +117,10 @@
 	if(tupik_steps > 3)
 		tupik_steps = 0
 		walktarget = ChoosePath()
+	if(get_dist(walktarget, src) <= stopturf)
+		walktarget = ChoosePath()
+		face_atom(walktarget)
+		stopturf = rand(1, 2)
 
 /mob/living/carbon/human/npc/proc/awaystep()
 	if(!danger_source || !isturf(loc) || CheckMove())
@@ -122,10 +136,6 @@
 	if(CheckMove())
 		return
 	if(!walktarget)
-		walktarget = ChoosePath()
-		face_atom(walktarget)
-		stopturf = rand(1, 2)
-	if(get_dist(walktarget, src) <= stopturf)
 		walktarget = ChoosePath()
 		face_atom(walktarget)
 		stopturf = rand(1, 2)

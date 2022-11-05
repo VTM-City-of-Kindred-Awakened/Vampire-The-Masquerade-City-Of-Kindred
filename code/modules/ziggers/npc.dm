@@ -390,8 +390,7 @@
 
 /mob/living/carbon/human/npc/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	..()
-	var/obj/item/thrown_item = AM
-	danger_source = thrown_item.thrownby
+	danger_source = throwingdatum.thrower
 	last_danger_meet = world.time
 
 /mob/living/carbon/human/npc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
