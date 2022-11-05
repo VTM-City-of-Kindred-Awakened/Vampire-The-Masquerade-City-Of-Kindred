@@ -43,8 +43,8 @@ GLOBAL_LIST_EMPTY(clanes_list)	//>:3
 		GLOB.species_list[S.id] = spath
 	sortList(GLOB.species_list, /proc/cmp_typepaths_asc)
 
-	for(var/spath in subtypesof(/datum/vampire_clane))
-		var/datum/vampire_clane/S = new spath()
+	for(var/spath in subtypesof(/datum/vampireclane))
+		var/datum/vampireclane/S = new spath()
 		GLOB.clanes_list[S.name] = spath
 	sortList(GLOB.clanes_list, /proc/cmp_typepaths_asc)
 

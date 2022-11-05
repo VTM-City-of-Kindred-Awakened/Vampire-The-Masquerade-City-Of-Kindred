@@ -38,7 +38,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///Whether emotes will be displayed on runechat. Requires chat_on_map to have effect. Boolean.
 	var/see_rc_emotes = TRUE
 	//Клан вампиров
-	var/datum/vampire_clane/clane = new /datum/vampire_clane/brujah()
+	var/datum/vampireclane/clane = new /datum/vampireclane/brujah()
 	// Custom Keybindings
 	var/list/key_bindings = list()
 
@@ -145,7 +145,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/masquerade = 5
 
 	var/humanity = 7
-//	var/datum/vampire_clane/Clane
+//	var/datum/vampireclane/Clane
 /datum/preferences/New(client/C)
 	parent = C
 
@@ -1965,7 +1965,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					masquerade = initial(masquerade)
 					generation = initial(generation)
 					qdel(clane)
-					clane = new /datum/vampire_clane/brujah()
+					clane = new /datum/vampireclane/brujah()
 					humanity = clane.start_humanity
 					random_species()
 					random_character()

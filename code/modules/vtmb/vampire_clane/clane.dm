@@ -1,11 +1,11 @@
 /mob/living/carbon/human
-	var/datum/vampire_clane/clane
+	var/datum/vampireclane/clane
 //Дополнительная игровая логика должна храниться в компоненте
 GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюда написать основные дисциплины когда я их сделаю
 /*
 В этом датуме хранится декларативное описание кланов, для того чтобы из этой реализации делать в рантайме инстанс компонента клана
 А также это помогает для панельки чарсетапа*/
-/datum/vampire_clane
+/datum/vampireclane
 	var/name = "каитиф лол))))))" //в нейм только дефайны
 	var/desc = "Ну описание клана"
 	var/list/clane_disciplines = list() //датумы дисциплин
@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 //	if(Pref.clane.clane_curse)
 //		SEND_SIGNAL(src, Pref.clane.clane_curse)
 
-/datum/vampire_clane/proc/on_gain(var/mob/living/carbon/human/H)
+/datum/vampireclane/proc/on_gain(var/mob/living/carbon/human/H)
 	if(alt_sprite)
 		H.dna.species.limbs_id = "nosferatu"
 		H.update_body_parts()

@@ -24,7 +24,7 @@ proc/AdjustHumanity(var/mob/living/carbon/human/H, var/value, var/limit)
 			H.client.prefs.masquerade = initial(H.client.prefs.masquerade)
 			H.client.prefs.generation = initial(H.client.prefs.generation)
 			qdel(H.client.prefs.clane)
-			H.client.prefs.clane = new /datum/vampire_clane/brujah()
+			H.client.prefs.clane = new /datum/vampireclane/brujah()
 			H.client.prefs.humanity = H.client.prefs.clane.start_humanity
 			H.client.prefs.random_species()
 			H.client.prefs.random_character()
