@@ -258,11 +258,12 @@
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			H.blood_volume = max(H.blood_volume-10, 150)
-		if(clane.name == "Ventrue")
-			vomit(0, FALSE, TRUE, 1, TRUE)
-			to_chat(src, "<span class='warning'>You are too privileged to drink that awful <b>BLOOD</b>. Go get something better.</span>")
-			return
-		bloodpool += 1*max(1, mob.bloodquality+1)
+		if(clane)
+			if(clane.name == "Ventrue")
+				vomit(0, FALSE, TRUE, 1, TRUE)
+				to_chat(src, "<span class='warning'>You are too privileged to drink that awful <b>BLOOD</b>. Go get something better.</span>")
+				return
+		bloodpool += 1*max(1, mob.bloodquality-1)
 		bloodpool = min(maxbloodpool, bloodpool)
 		adjustBruteLoss(-5, TRUE)
 		adjustFireLoss(-5, TRUE)

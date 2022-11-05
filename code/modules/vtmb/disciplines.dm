@@ -21,6 +21,8 @@
 			var/mob/living/carbon/human/npc/NPC = target
 			NPC.danger_source = caster
 			NPC.last_danger_meet = world.time
+	else
+		caster = target
 	caster.bloodpool -= cost
 	if(violates_masquerade)
 		if(CheckEyewitness(target, caster, 7, TRUE))
@@ -356,7 +358,14 @@ proc/dancesecond(mob/living/M)
 
 /datum/discipline/protean/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/mod = round(max(1, caster.generation-3)/2.5)
+	var/mod = 1
+	switch(caster.generation)
+		if(9 to 11)
+			mod = 2
+		if(6 to 8)
+			mod = 3
+		if(3 to 5)
+			mod = 4
 	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
 	switch(mod)
 		if(1)
@@ -368,10 +377,11 @@ proc/dancesecond(mob/living/M)
 			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
 			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay)
-				caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
-				caster.dna.species.punchdamagelow -= 10
-				caster.dna.species.punchdamagehigh -= 10
-				caster.remove_overlay(PROTEAN_LAYER)
+				if(caster)
+					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
+					caster.dna.species.punchdamagelow -= 10
+					caster.dna.species.punchdamagehigh -= 10
+					caster.remove_overlay(PROTEAN_LAYER)
 		if(2)
 			target.drop_all_held_items()
 			caster.dna.species.attack_verb = "slash"
@@ -382,11 +392,12 @@ proc/dancesecond(mob/living/M)
 			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
 			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay)
-				caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
-				caster.dna.species.punchdamagelow -= 10
-				caster.dna.species.punchdamagehigh -= 10
-				target.remove_movespeed_modifier(/datum/movespeed_modifier/protean2)
-				caster.remove_overlay(PROTEAN_LAYER)
+				if(caster)
+					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
+					caster.dna.species.punchdamagelow -= 10
+					caster.dna.species.punchdamagehigh -= 10
+					target.remove_movespeed_modifier(/datum/movespeed_modifier/protean2)
+					caster.remove_overlay(PROTEAN_LAYER)
 		if(3)
 			target.drop_all_held_items()
 			caster.dna.species.attack_verb = "slash"
@@ -397,11 +408,12 @@ proc/dancesecond(mob/living/M)
 			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
 			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay)
-				caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
-				caster.dna.species.punchdamagelow -= 20
-				caster.dna.species.punchdamagehigh -= 20
-				target.remove_movespeed_modifier(/datum/movespeed_modifier/protean3)
-				caster.remove_overlay(PROTEAN_LAYER)
+				if(caster)
+					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
+					caster.dna.species.punchdamagelow -= 20
+					caster.dna.species.punchdamagehigh -= 20
+					target.remove_movespeed_modifier(/datum/movespeed_modifier/protean3)
+					caster.remove_overlay(PROTEAN_LAYER)
 		if(4)
 			target.drop_all_held_items()
 			caster.dna.species.attack_verb = "slash"
@@ -412,11 +424,12 @@ proc/dancesecond(mob/living/M)
 			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
 			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay)
-				caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
-				caster.dna.species.punchdamagelow -= 20
-				caster.dna.species.punchdamagehigh -= 20
-				target.remove_movespeed_modifier(/datum/movespeed_modifier/protean4)
-				caster.remove_overlay(PROTEAN_LAYER)
+				if(caster)
+					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
+					caster.dna.species.punchdamagelow -= 20
+					caster.dna.species.punchdamagehigh -= 20
+					target.remove_movespeed_modifier(/datum/movespeed_modifier/protean4)
+					caster.remove_overlay(PROTEAN_LAYER)
 
 /obj/effect/projectile/tracer/thaumaturgy
 	name = "blood beam"
@@ -455,7 +468,7 @@ proc/dancesecond(mob/living/M)
 		if(isliving(target))
 			var/mob/living/VL = target
 			if(!iskindred(target))
-				if(VL.bloodamount >= 1)
+				if(VL.bloodamount >= 1 && VL.stat != DEAD)
 					var/sucked = min(VL.bloodamount, 2)
 					VL.bloodamount -= sucked
 					VH.blood_volume = max(VH.blood_volume-10, 150)

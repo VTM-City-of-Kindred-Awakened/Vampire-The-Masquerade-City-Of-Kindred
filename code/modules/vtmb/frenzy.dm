@@ -37,52 +37,6 @@
 	remove_client_colour(/datum/client_colour/glass_colour/red)
 	GLOB.frenzy_list -= src
 
-/mob/living/carbon/human/proc/CreateFrenzyWay(var/direction)
-	var/turf/location = get_turf(src)
-	for(var/distance = 1 to 50)
-		location = get_step(location, direction)
-		if(iswallturf(location))
-			return location
-		for(var/atom/A in location)
-			if(A.density)
-				return location
-
-/mob/living/carbon/human/proc/ChooseFrenzyPath()
-	var/turf/north_steps = CreateFrenzyWay(NORTH)
-	var/turf/south_steps = CreateFrenzyWay(SOUTH)
-	var/turf/west_steps = CreateFrenzyWay(WEST)
-	var/turf/east_steps = CreateFrenzyWay(EAST)
-
-	if(dir == NORTH || dir == SOUTH)
-		if(get_dist(src, west_steps) >= 7 && get_dist(src, east_steps) >= 7)
-			return(pick(west_steps, east_steps))
-		if(get_dist(src, west_steps) > get_dist(src, east_steps))
-			if(prob(75))
-				return west_steps
-		else if(get_dist(src, east_steps) > get_dist(src, west_steps))
-			if(prob(75))
-				return east_steps
-		else
-			if(dir == NORTH)
-				return pick(west_steps, east_steps, south_steps)
-			else
-				return pick(west_steps, east_steps, north_steps)
-
-	if(dir == WEST || dir == EAST)
-		if(get_dist(src, north_steps) >= 7 && get_dist(src, south_steps) >= 7)
-			return pick(north_steps, south_steps)
-		if(get_dist(src, north_steps) > get_dist(src, south_steps))
-			if(prob(75))
-				return north_steps
-		else if(get_dist(src, south_steps) > get_dist(src, north_steps))
-			if(prob(75))
-				return south_steps
-		else
-			if(dir == WEST)
-				return pick(north_steps, south_steps, east_steps)
-			else
-				return pick(north_steps, south_steps, west_steps)
-
 /mob/living/carbon/human/proc/CheckFrenzyMove()
 	if(stat >= 2)
 		return TRUE
@@ -121,7 +75,6 @@
 	else
 		step_to(src,frenzy_target,0)
 		face_atom(frenzy_target)
-		frenzy_target = get_frenzy_targets()
 
 /mob/living/carbon/human/proc/get_frenzy_targets()
 	var/list/targets = list()
@@ -132,18 +85,20 @@
 				return L
 	if(length(targets) > 0)
 		return pick(targets)
-	if(get_dist(frenzy_target, src) <= 1)
-		return ChooseFrenzyPath()
+	else
+		return null
 
 /mob/living/carbon/human/proc/handle_automated_frenzy()
 	if(isturf(loc))
-		if(!frenzy_target)
-			frenzy_target = get_frenzy_targets()
+		frenzy_target = get_frenzy_targets()
 		if(frenzy_target)
 			var/datum/cb = CALLBACK(src,.proc/frenzystep)
 			var/reqsteps = SSfrenzypool.wait/total_multiplicative_slowdown()
 			for(var/i in 1 to reqsteps)
 				addtimer(cb, (i - 1)*total_multiplicative_slowdown())
+		else
+			if(!CheckFrenzyMove())
+				Move(direct = pick(NORTH, SOUTH, WEST, EAST))
 
 /datum/species/kindred/spec_life(mob/living/carbon/human/H)
 	..()

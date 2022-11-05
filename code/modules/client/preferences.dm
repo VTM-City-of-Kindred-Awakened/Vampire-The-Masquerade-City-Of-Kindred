@@ -2079,6 +2079,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_body()
 		character.update_hair()
 		character.update_body_parts()
+	if(!character_setup)
+		parent << browse(null, "window=preferences_window")
+		parent << browse(null, "window=preferences_browser")
 
 /mob/living/carbon/human/proc/create_disciplines()
 	client.prefs.slotlocked = 1
