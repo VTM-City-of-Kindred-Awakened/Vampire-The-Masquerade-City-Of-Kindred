@@ -51,7 +51,7 @@
 		dropItemToGround(I)
 		var/atom/tothrow = get_step_rand(src)
 		I.throw_at(target = tothrow, range = 1, speed = 1, thrower = src, spin = TRUE, gentle = TRUE)
-		if(prob(25))
+		if(prob(50))
 			I.burn()
 	drop_all_held_items()
 

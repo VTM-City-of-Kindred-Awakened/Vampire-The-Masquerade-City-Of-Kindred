@@ -3333,6 +3333,7 @@
 #include "code\modules\vtmb\_signals.dm"
 #include "code\modules\vtmb\disciplines.dm"
 #include "code\modules\vtmb\frenzy.dm"
+#include "code\modules\vtmb\jobs.dm"
 #include "code\modules\vtmb\kindred_species.dm"
 #include "code\modules\vtmb\vampire_clane\bruja.dm"
 #include "code\modules\vtmb\vampire_clane\clane.dm"
