@@ -2027,7 +2027,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.clane = clane
 	character.maxbloodpool = 10+(13-generation)
-	character.bloodpool = rand(1, character.maxbloodpool)
+	character.bloodpool = rand(2, character.maxbloodpool)
 
 	character.gender = gender
 	character.age = age
