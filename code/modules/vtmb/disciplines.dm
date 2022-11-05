@@ -13,6 +13,10 @@
 	if(caster.bloodpool < cost)
 		return
 	if(ranged)
+		to_chat(caster, "<span class='notice'>You activate the [name] on [target].</span>")
+	else
+		to_chat(caster, "<span class='notice'>You activate the [name].</span>")
+	if(ranged)
 		if(isnpc(target))
 			var/mob/living/carbon/human/npc/NPC = target
 			NPC.danger_source = caster
@@ -47,8 +51,7 @@
 /datum/discipline/animalism/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	var/damagemod = 1
-	if(caster.client)
-		damagemod = max(1, round((13-caster.client.prefs.generation)/2))
+	damagemod = max(1, round((13-caster.generation)/2))
 	var/antidir = NORTH
 	switch(target.dir)
 		if(NORTH)
@@ -69,7 +72,7 @@
 	playsound(W, 'code/modules/ziggers/volk.ogg', 80, TRUE)
 	target.apply_damage(25*damagemod, BRUTE, BODY_ZONE_CHEST)
 	target.visible_message("<span class='warning'><b>[W] bites [target]!</b></span>", "<span class='warning'><b>[W] bites you!</b></span>")
-	spawn(10)
+	spawn(20)
 		qdel(W)
 
 /datum/discipline/auspex
@@ -80,14 +83,12 @@
 	ranged = FALSE
 	delay = 100
 
-//Smooth sdelai auspex, eto wallhack na auri
-
 /datum/discipline/auspex/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	ADD_TRAIT(target, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
 	target.update_sight()
 	target.add_client_colour(/datum/client_colour/glass_colour/blue)
-	spawn(10 SECONDS)
+	spawn(delay)
 		REMOVE_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
 		target.remove_client_colour(/datum/client_colour/glass_colour/blue)
 		target.update_sight()
@@ -127,7 +128,7 @@
 	..()
 	target.add_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
 	caster.celerity_visual = TRUE
-	spawn(14 SECONDS)
+	spawn(delay)
 		target.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
 		caster.celerity_visual = FALSE
 
@@ -137,20 +138,25 @@
 	icon_state = "dominate"
 	cost = 2
 	ranged = TRUE
+	delay = 50
 
 /datum/discipline/dominate/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
+	var/damagemod = 1
+	damagemod = max(1, 13-caster.generation)
 	to_chat(target, "<span class='userdanger'><b>YOU SHOULD KILL YOURSELF NOW</b></span>")
 	if(iskindred(target))
-		target.Knockdown(30)
+		target.Knockdown(10*damagemod)
+		target.apply_damage(5*damagemod, BRUTE, BODY_ZONE_HEAD)
 		return
 	target.drop_all_held_items()
 	target.Stun(10)
-	spawn(10)
-		target.visible_message("<span class='warning'><b>[target] wrings \his neck!</b></span>", "<span class='warning'><b>You wring your own neck!</b></span>")
-		playsound(target, 'code/modules/ziggers/suicide.ogg', 80, TRUE)
-		target.apply_damage(50, BRUTE, BODY_ZONE_HEAD)
-		target.death()
+	if(prob(min(90, 10*damagemod)))
+		spawn(10)
+			target.visible_message("<span class='warning'><b>[target] wrings \his neck!</b></span>", "<span class='warning'><b>You wring your own neck!</b></span>")
+			playsound(target, 'code/modules/ziggers/suicide.ogg', 80, TRUE)
+			target.death()
+	target.apply_damage(10*damagemod, BRUTE, BODY_ZONE_HEAD)
 
 /datum/discipline/dementation
 	name = "Dementation"
@@ -249,8 +255,243 @@ proc/dancesecond(mob/living/M)
 			H.emote("laugh")
 			H.Stun(30)
 			target.drop_all_held_items()
-			if(stat <= 2 && !IsSleeping() && !IsUnconscious() && !IsParalyzed() && !IsKnockdown() && !HAS_TRAIT(src, TRAIT_RESTRAINED))
+			if(H.stat <= 2 && !H.IsSleeping() && !H.IsUnconscious() && !H.IsParalyzed() && !H.IsKnockdown() && !HAS_TRAIT(H, TRAIT_RESTRAINED))
 				if(prob(50))
 					dancefirst(H)
 				else
 					dancesecond(H)
+
+/datum/discipline/potence
+	name = "Potence"
+	desc = "Boosts melee and unarmed damage."
+	icon_state = "potence"
+	cost = 1
+	ranged = FALSE
+	delay = 250
+
+/datum/discipline/potence/activate(mob/living/target, mob/living/carbon/human/caster)
+	..()
+	caster.dna.species.punchdamagelow += 10
+	caster.dna.species.punchdamagehigh += 10
+	caster.dna.species.meleemod += 1
+	spawn(delay)
+		caster.dna.species.punchdamagelow -= 10
+		caster.dna.species.punchdamagehigh -= 10
+		caster.dna.species.meleemod -= 1
+
+/datum/discipline/fortitude
+	name = "Fortitude"
+	desc = "Boosts armor."
+	icon_state = "fortitude"
+	cost = 1
+	ranged = FALSE
+	delay = 250
+
+/datum/discipline/fortitude/activate(mob/living/target, mob/living/carbon/human/caster)
+	..()
+	var/mod = min(3, max(1, round((13-caster.generation)/3)))
+	caster.physiology.armor.melee += 25*mod
+	caster.physiology.armor.bullet += 25*mod
+	spawn(delay)
+		caster.physiology.armor.melee -= 25*mod
+		caster.physiology.armor.bullet -= 25*mod
+
+/datum/discipline/obfuscate
+	name = "Obfuscate"
+	desc = "Makes you less noticable."
+	icon_state = "obfuscate"
+	cost = 1
+	ranged = FALSE
+	delay = 200
+
+/datum/discipline/obfuscate/activate(mob/living/target, mob/living/carbon/human/caster)
+	..()
+	for(var/mob/living/carbon/human/npc/NPC in GLOB.npc_list)
+		if(NPC.danger_source == caster)
+			NPC.danger_source = null
+	caster.alpha = 128
+	spawn(20 SECONDS)
+		caster.alpha = 255
+
+/datum/discipline/presence
+	name = "Presence"
+	desc = "Makes targets in radius more vulnerable to damages, can hypnotize."
+	icon_state = "presence"
+	cost = 1
+	ranged = FALSE
+	delay = 50
+
+/datum/discipline/presence/activate(mob/living/target, mob/living/carbon/human/caster)
+	..()
+	var/mod = max(0.25, (13-caster.generation)/2)
+	for(var/mob/living/L in viewers(5, src))
+		if(L != caster)
+			if(prob(25))
+				L.Stun(delay)
+			if(ishuman(L))
+				var/mob/living/carbon/human/H = L
+				H.dna.species.brutemod += mod
+				H.dna.species.burnmod += mod
+				spawn(delay)
+					H.dna.species.brutemod -= mod
+					H.dna.species.burnmod -= mod
+
+/datum/discipline/protean
+	name = "Protean"
+	desc = "Lets your beast out, making you stronger and faster."
+	icon_state = "protean"
+	cost = 1
+	ranged = FALSE
+	delay = 250
+	violates_masquerade = TRUE
+
+/datum/movespeed_modifier/protean2
+	multiplicative_slowdown = -0.15
+
+/datum/movespeed_modifier/protean3
+	multiplicative_slowdown = -0.30
+
+/datum/movespeed_modifier/protean4
+	multiplicative_slowdown = -0.45
+
+/datum/discipline/protean/activate(mob/living/target, mob/living/carbon/human/caster)
+	..()
+	var/mod = round(max(1, caster.generation-3)/2.5)
+	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
+	switch(mod)
+		if(1)
+			target.drop_all_held_items()
+			caster.dna.species.attack_verb = "slash"
+			caster.dna.species.punchdamagelow += 10
+			caster.dna.species.punchdamagehigh += 10
+			caster.remove_overlay(PROTEAN_LAYER)
+			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
+			caster.apply_overlay(PROTEAN_LAYER)
+			spawn(delay)
+				caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
+				caster.dna.species.punchdamagelow -= 10
+				caster.dna.species.punchdamagehigh -= 10
+				caster.remove_overlay(PROTEAN_LAYER)
+		if(2)
+			target.drop_all_held_items()
+			caster.dna.species.attack_verb = "slash"
+			caster.dna.species.punchdamagelow += 10
+			caster.dna.species.punchdamagehigh += 10
+			target.add_movespeed_modifier(/datum/movespeed_modifier/protean2)
+			caster.remove_overlay(PROTEAN_LAYER)
+			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
+			caster.apply_overlay(PROTEAN_LAYER)
+			spawn(delay)
+				caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
+				caster.dna.species.punchdamagelow -= 10
+				caster.dna.species.punchdamagehigh -= 10
+				target.remove_movespeed_modifier(/datum/movespeed_modifier/protean2)
+				caster.remove_overlay(PROTEAN_LAYER)
+		if(3)
+			target.drop_all_held_items()
+			caster.dna.species.attack_verb = "slash"
+			caster.dna.species.punchdamagelow += 20
+			caster.dna.species.punchdamagehigh += 20
+			target.add_movespeed_modifier(/datum/movespeed_modifier/protean3)
+			caster.remove_overlay(PROTEAN_LAYER)
+			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
+			caster.apply_overlay(PROTEAN_LAYER)
+			spawn(delay)
+				caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
+				caster.dna.species.punchdamagelow -= 20
+				caster.dna.species.punchdamagehigh -= 20
+				target.remove_movespeed_modifier(/datum/movespeed_modifier/protean3)
+				caster.remove_overlay(PROTEAN_LAYER)
+		if(4)
+			target.drop_all_held_items()
+			caster.dna.species.attack_verb = "slash"
+			caster.dna.species.punchdamagelow += 20
+			caster.dna.species.punchdamagehigh += 20
+			target.add_movespeed_modifier(/datum/movespeed_modifier/protean4)
+			caster.remove_overlay(PROTEAN_LAYER)
+			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
+			caster.apply_overlay(PROTEAN_LAYER)
+			spawn(delay)
+				caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
+				caster.dna.species.punchdamagelow -= 20
+				caster.dna.species.punchdamagehigh -= 20
+				target.remove_movespeed_modifier(/datum/movespeed_modifier/protean4)
+				caster.remove_overlay(PROTEAN_LAYER)
+
+/obj/effect/projectile/tracer/thaumaturgy
+	name = "blood beam"
+	icon_state = "cult"
+
+/obj/effect/projectile/muzzle/thaumaturgy
+	name = "blood beam"
+	icon_state = "muzzle_cult"
+
+/obj/effect/projectile/impact/thaumaturgy
+	name = "blood beam"
+	icon_state = "impact_cult"
+
+/obj/projectile/thaumaturgy
+	name = "blood beam"
+	icon_state = "thaumaturgy"
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	damage = 10
+	damage_type = BRUTE
+	hitsound = 'code/modules/ziggers/drinkblood1.ogg'
+	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
+	flag = BULLET
+	light_system = MOVABLE_LIGHT
+	light_range = 1
+	light_power = 1
+	light_color = COLOR_SOFT_RED
+	ricochets_max = 0
+	ricochet_chance = 0
+	tracer_type = /obj/effect/projectile/tracer/thaumaturgy
+	muzzle_type = /obj/effect/projectile/muzzle/thaumaturgy
+	impact_type = /obj/effect/projectile/impact/thaumaturgy
+
+/obj/projectile/thaumaturgy/on_hit(atom/target, blocked = FALSE, pierce_hit)
+	if(ishuman(firer))
+		var/mob/living/carbon/human/VH = firer
+		if(isliving(target))
+			var/mob/living/VL = target
+			if(!iskindred(target))
+				if(VL.bloodamount >= 1)
+					var/sucked = min(VL.bloodamount, 2)
+					VL.bloodamount -= sucked
+					VH.blood_volume = max(VH.blood_volume-10, 150)
+					if(ishuman(VL))
+						var/mob/living/carbon/human/VHL = VL
+						VHL.blood_volume = max(VH.blood_volume-10*sucked, 150)
+						if(VL.bloodamount == 0)
+							VHL.blood_volume = 0
+							VL.death()
+							AdjustHumanity(VH, -1, 0)
+					else
+						if(VL.bloodamount == 0)
+							VL.death()
+					VH.bloodpool += sucked*max(1, VH.bloodquality-1)
+					VH.bloodpool = min(VH.bloodpool, VH.maxbloodpool)
+					VH.update_blood_hud()
+			else
+				if(VL.bloodpool >= 1)
+					var/sucked = min(VL.bloodpool, 3)
+					VL.bloodpool -= sucked
+					VH.bloodpool += sucked
+					VH.bloodpool = min(VH.maxbloodpool, VH.bloodpool)
+
+/datum/discipline/thaumaturgy
+	name = "Thaumaturgy"
+	desc = "Sucks blood from your victim in distance. Even from your own kind."
+	icon_state = "thaumaturgy"
+	cost = 1
+	ranged = TRUE
+	delay = 10
+	violates_masquerade = TRUE
+
+/datum/discipline/thaumaturgy/activate(mob/living/target, mob/living/carbon/human/caster)
+	..()
+	var/turf/start = get_turf(caster)
+	var/obj/projectile/thaumaturgy/H = new(start)
+	H.firer = caster
+	H.preparePixelProjectile(target, start)
+	H.fire(direct_target = target)

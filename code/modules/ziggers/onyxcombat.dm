@@ -185,10 +185,12 @@
 /mob/living
 	var/bloodamount = 1
 	var/maxbloodamount = 1
+	var/bloodquality = BLOOD_QUALITY_LOW
 
 /mob/living/carbon/human
 	bloodamount = 5
 	maxbloodamount = 5
+	bloodquality = BLOOD_QUALITY_NORMAL
 
 /atom/movable/screen/drinkblood/Click()
 	if(ishuman(usr))
@@ -256,7 +258,12 @@
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			H.blood_volume = max(H.blood_volume-10, 150)
-		bloodpool = min(maxbloodpool, bloodpool+1)
+		if(clane.name == "Ventrue")
+			vomit(0, FALSE, TRUE, 1, TRUE)
+			to_chat(src, "<span class='warning'>You are too privileged to drink that awful <b>BLOOD</b>. Go get something better.</span>")
+			return
+		bloodpool += 1*max(1, mob.bloodquality+1)
+		bloodpool = min(maxbloodpool, bloodpool)
 		adjustBruteLoss(-5, TRUE)
 		adjustFireLoss(-5, TRUE)
 		update_damage_overlays()
@@ -328,29 +335,25 @@
 			BD.bloodpool -= 3
 			icon_state = "[initial(icon_state)]-on"
 			to_chat(BD, "<span class='notice'>You use blood to become more powerful.</span>")
-			BD.dna.species.punchdamagelow += 10
-			BD.dna.species.punchdamagehigh += 10
+			BD.dna.species.punchdamagehigh += 5
 			BD.physiology.armor.melee += 15
 			BD.physiology.armor.bullet += 15
-			BD.dna.species.speedmod -= 1
 			if(!HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
 				ADD_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
+			BD.update_blood_hud()
+			addtimer(CALLBACK(src, .proc/end_bloodpower), 100)
 		else
 			SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
 			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to become more powerful.</span>")
-		BD.update_blood_hud()
-		addtimer(CALLBACK(src, .proc/end_bloodpower), 100)
 
 /atom/movable/screen/bloodpower/proc/end_bloodpower()
 	if(ishuman(usr))
 		var/mob/living/carbon/human/BD = usr
 		to_chat(BD, "<span class='warning'>You feel like your <b>BLOOD</b>-powers slowly decrease.</span>")
 		if(BD.dna.species)
-			BD.dna.species.punchdamagelow = initial(BD.dna.species.punchdamagelow)
-			BD.dna.species.punchdamagehigh = initial(BD.dna.species.punchdamagehigh)
-			BD.physiology.armor.melee = initial(BD.physiology.armor.melee)
-			BD.physiology.armor.bullet = initial(BD.physiology.armor.bullet)
-			BD.dna.species.speedmod = initial(BD.dna.species.speedmod)
+			BD.dna.species.punchdamagehigh -= 5
+			BD.physiology.armor.melee -= 15
+			BD.physiology.armor.bullet -= 15
 			if(HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
 				REMOVE_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
 	icon_state = initial(icon_state)
@@ -482,6 +485,7 @@
 /mob/living
 	var/bloodpool = 7
 	var/maxbloodpool = 10
+	var/generation = 13
 
 /mob/living/carbon/human/Life()
 	update_blood_hud()
@@ -491,7 +495,7 @@
 /mob/living/proc/update_blood_hud()
 	if(!client || !hud_used)
 		return
-	maxbloodpool = 10+(13-client.prefs.generation)
+	maxbloodpool = 10+((13-generation)*2)
 	if(hud_used.blood_icon)
 		var/emm = round((bloodpool/maxbloodpool)*10)
 		if(emm > 10)

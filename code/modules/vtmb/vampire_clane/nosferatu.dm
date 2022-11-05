@@ -4,4 +4,6 @@
 	curse = "Masquerade-violating appearance."
 	alt_sprite = "nosferatu"
 	no_hair = TRUE
-	clane_disciplines = list(/datum/discipline/animalism = 1)
+	clane_disciplines = list(/datum/discipline/animalism = 1,
+														/datum/discipline/potence = 2,
+														/datum/discipline/obfuscate = 3)

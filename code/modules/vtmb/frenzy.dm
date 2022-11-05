@@ -156,10 +156,3 @@
 		for(var/mob/living/carbon/human/npc/NPC in viewers(5, src))
 			NPC.danger_source = H
 			NPC.last_danger_meet = world.time
-
-/atom/movable/screen/Click()
-	if(ishuman(usr))
-		var/mob/living/carbon/human/FC = usr
-		if(FC.in_frenzy)
-			return
-	..()

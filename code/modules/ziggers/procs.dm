@@ -17,9 +17,8 @@ proc/AdjustHumanity(var/mob/living/carbon/human/H, var/value, var/limit)
 				H.client.prefs.save_character()
 //				SEND_SOUND(H, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
 				to_chat(H, "<span class='userhelp'><b>HUMANITY INCREASES</b></span>")
-	if(iskindred(H) && H.client.prefs.humanity < 1)
+	if(iskindred(H) && H.client.prefs.humanity < 1 && !H.in_frenzy)
 		H.enter_frenzymod()
-		H.ghostize()
 		H.client.prefs.slotlocked = 0
 		H.client.prefs.masquerade = initial(H.client.prefs.masquerade)
 		H.client.prefs.generation = initial(H.client.prefs.generation)
@@ -49,8 +48,9 @@ proc/AdjustMasquerade(var/mob/living/carbon/human/H, var/value)
 				to_chat(H, "<span class='userhelp'><b>MASQUERADE RESTORED</b></span>")
 
 proc/CheckEyewitness(var/mob/living/source, var/mob/attacker, var/range = 0, var/affects_source = FALSE)
+	var/actual_range = max(1, round(range*(255/attacker.alpha)))
 	var/list/seenby = list()
-	for(var/mob/living/carbon/human/npc/NPC in viewers(range, source))
+	for(var/mob/living/carbon/human/npc/NPC in viewers(actual_range, source))
 		if(source != NPC || affects_source)
 			seenby += NPC
 			NPC.danger_source = attacker

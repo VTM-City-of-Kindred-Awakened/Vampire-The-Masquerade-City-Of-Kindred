@@ -97,8 +97,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///Highest possible punch damage this species can give.
 	var/punchdamagehigh = 10
 	///Damage at which punches from this race will stun
-	var/punchstunthreshold = 10 //yes it should be to the attacked race but it's not useful that way even if it's logical
+	var/punchstunthreshold = 20 //yes it should be to the attacked race but it's not useful that way even if it's logical
 	///Base electrocution coefficient.  Basically a multiplier for damage from electrocutions.
+	var/meleemod = 1
+	//For melee damage
 	var/siemens_coeff = 1
 	///What kind of damage overlays (if any) appear on our species when wounded? If this is "", does not add an overlay.
 	var/damage_overlay_type = "human"
@@ -1450,6 +1452,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
+	var/modifikator = 1
+	if(ishuman(user))
+		var/mob/living/carbon/human/USR = user
+		if(USR.dna)
+			if(USR.dna.species)
+				modifikator = USR.dna.species.meleemod
 	if(user != H)
 		if(H.check_shields(I, I.force, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
 			return FALSE
@@ -1477,7 +1485,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	H.send_item_attack_message(I, user, hit_area, affecting)
 
-	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H, wound_bonus = Iwound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
+	apply_damage((I.force*modifikator) * weakness, I.damtype, def_zone, armor_block, H, wound_bonus = Iwound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
 
 	if(!I.force)
 		return FALSE //item force is zero
