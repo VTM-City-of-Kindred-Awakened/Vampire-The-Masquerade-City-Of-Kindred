@@ -50,7 +50,7 @@ proc/AdjustMasquerade(var/mob/living/carbon/human/H, var/value)
 //				SEND_SOUND(H, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
 				to_chat(H, "<span class='userhelp'><b>MASQUERADE RESTORED</b></span>")
 
-proc/CheckEyewitness(var/mob/living/source, var/mob/attacker, var/range = 0, var/affects_source = FALSE)
+/proc/CheckEyewitness(var/mob/living/source, var/mob/attacker, var/range = 0, var/affects_source = FALSE)
 	var/actual_range = max(1, round(range*(255/attacker.alpha)))
 	var/list/seenby = list()
 	for(var/mob/living/carbon/human/npc/NPC in viewers(actual_range, source))
@@ -68,7 +68,7 @@ proc/CheckEyewitness(var/mob/living/source, var/mob/attacker, var/range = 0, var
 		return TRUE
 	return FALSE
 
-proc/vampireroll(var/dices_num = 1, var/hardness = 1, var/atom/rollviewer)
+/proc/vampireroll(var/dices_num = 1, var/hardness = 1, var/atom/rollviewer)
 	var/wins = 0
 	var/crits = 0
 	var/brokes = 0
