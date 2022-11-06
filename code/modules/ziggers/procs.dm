@@ -1,4 +1,4 @@
-proc/AdjustHumanity(var/mob/living/carbon/human/H, var/value, var/limit)
+/proc/AdjustHumanity(var/mob/living/carbon/human/H, var/value, var/limit)
 	if(H.client)
 		if(!H.in_frenzy)
 			var/mod = 1
@@ -33,7 +33,7 @@ proc/AdjustHumanity(var/mob/living/carbon/human/H, var/value, var/limit)
 			H.client.prefs.save_preferences()
 			H.ghostize()
 
-proc/AdjustMasquerade(var/mob/living/carbon/human/H, var/value)
+/proc/AdjustMasquerade(var/mob/living/carbon/human/H, var/value)
 	if(H.client)
 		if(value < 0)
 			if(H.client.prefs.masquerade > 0)
