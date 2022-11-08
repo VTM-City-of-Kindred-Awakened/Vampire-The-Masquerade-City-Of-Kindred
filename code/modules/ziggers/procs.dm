@@ -49,22 +49,36 @@
 				SEND_SOUND(H, sound('code/modules/ziggers/general_good.ogg', 0, 0, 75))
 				to_chat(H, "<span class='userhelp'><b>MASQUERADE REINFORCEMENT</b></span>")
 
+/mob/living/carbon/human/npc/proc/backinvisible(var/atom/A)
+	switch(dir)
+		if(NORTH)
+			if(A.y > y)
+				return TRUE
+		if(SOUTH)
+			if(A.y < y)
+				return TRUE
+		if(EAST)
+			if(A.x > x)
+				return TRUE
+		if(WEST)
+			if(A.x < x)
+				return TRUE
+	return FALSE
+
 /proc/CheckEyewitness(var/mob/living/source, var/mob/attacker, var/range = 0, var/affects_source = FALSE)
-	var/actual_range = max(1, round(range*(255/attacker.alpha)))
+	var/actual_range = max(1, round(range*(attacker.alpha/255)))
 	var/list/seenby = list()
 	for(var/mob/living/carbon/human/npc/NPC in viewers(actual_range, source))
 		if(source != NPC || affects_source)
 			if(!NPC.pulledby)
-				seenby += NPC
-				NPC.emote("scream")
-				NPC.danger_source = attacker
-				NPC.last_danger_meet = world.time
+				var/turf/LC = get_turf(attacker)
+				if(LC.get_lumcount() > 0.5 || get_dist(NPC, attacker <= 1))
+					if(!NPC.backinvisible(attacker))
+						seenby += NPC
+						NPC.emote("scream")
+						NPC.danger_source = attacker
+						NPC.last_danger_meet = world.time
 	var/turf/T = get_turf(attacker)
-	if(T.lighting_object && T.lighting_object.invisibility <= source.see_invisible && T.is_softly_lit())
-		if(affects_source && !in_range(T,source))
-			return FALSE
-		else if(!affects_source)
-			return FALSE
 	if(length(seenby) >= 1)
 		return TRUE
 	return FALSE

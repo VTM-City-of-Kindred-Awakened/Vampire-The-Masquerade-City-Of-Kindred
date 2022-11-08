@@ -310,6 +310,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "<a href='?_src_=prefs;preference=discipline1;task=input'>Learn</a><BR>"
 					else
 						dat += "<BR>"
+					dat += "[AD.desc]<BR>"
 				if(length(clane.clane_disciplines) >= 2)
 					var/datype = clane.clane_disciplines[2]
 					var/datum/discipline/AD = new datype()
@@ -318,6 +319,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "<a href='?_src_=prefs;preference=discipline2;task=input'>Learn</a><BR>"
 					else
 						dat += "<BR>"
+					dat += "[AD.desc]<BR>"
 				if(length(clane.clane_disciplines) >= 3)
 					var/datype = clane.clane_disciplines[3]
 					var/datum/discipline/AD = new datype()
@@ -326,6 +328,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "<a href='?_src_=prefs;preference=discipline3;task=input'>Learn</a><BR>"
 					else
 						dat += "<BR>"
+					dat += "[AD.desc]<BR>"
 //			dat += "<a href='?_src_=prefs;preference=species;task=random'>Random Species</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SPECIES]'>Always Random Species: [(randomise[RANDOM_SPECIES]) ? "Yes" : "No"]</A><br>"
 
@@ -1530,6 +1533,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						humanity = clane.start_humanity
 						if(clane.no_hair)
 							hairstyle = "Bald"
+							facial_hairstyle = "Shaved"
+						if(clane.no_facial)
 							facial_hairstyle = "Shaved"
 //						real_name = clane.random_name(gender)		//potom sdelat
 

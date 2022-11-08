@@ -100,12 +100,15 @@
 				addtimer(cb, (i - 1)*total_multiplicative_slowdown())
 		else
 			if(!CheckFrenzyMove())
-				Move(direct = pick(NORTH, SOUTH, WEST, EAST))
+				if(isturf(loc))
+					var/turf/T = get_step(loc, pick(NORTH, SOUTH, WEST, EAST))
+					face_atom(T)
+					Move(T)
 
 /datum/species/kindred/spec_life(mob/living/carbon/human/H)
 	..()
 	var/skipface = (H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE))
-	if(!skipface && clane.violating_appearance)
+	if(!skipface && H.clane.violating_appearance)
 		if(CheckEyewitness(H, H, 5, FALSE))
 			AdjustMasquerade(H, -1)
 	if(H.client && H.stat <= 2)

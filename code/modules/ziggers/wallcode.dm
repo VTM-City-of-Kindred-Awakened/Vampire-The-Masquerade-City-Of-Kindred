@@ -29,11 +29,12 @@
 
 /turf/closed/wall/vampwall/Initialize()
 	..()
-	addwall = new(get_step(src, NORTH))
-	addwall.icon_state = icon_state
-	addwall.update_icon()
-	addwall.name = name
-	addwall.desc = desc
+	spawn(20)	//Shitty solution, but nothing better
+		addwall = new(get_step(src, NORTH))
+		addwall.icon_state = icon_state
+		addwall.update_icon()
+		addwall.name = name
+		addwall.desc = desc
 
 /turf/closed/wall/vampwall/update_icon_state()
 	..()
