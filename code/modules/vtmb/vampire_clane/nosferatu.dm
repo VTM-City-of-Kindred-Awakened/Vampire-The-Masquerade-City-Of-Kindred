@@ -7,3 +7,4 @@
 	clane_disciplines = list(/datum/discipline/animalism = 1,
 														/datum/discipline/potence = 2,
 														/datum/discipline/obfuscate = 3)
+	s_tones = list()

@@ -6,6 +6,7 @@
 	var/ranged = FALSE
 	var/delay = 5
 	var/violates_masquerade = FALSE
+	var/level = 1
 
 /datum/discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	if(!target)
@@ -16,13 +17,12 @@
 		to_chat(caster, "<span class='notice'>You activate the [name] on [target].</span>")
 	else
 		to_chat(caster, "<span class='notice'>You activate the [name].</span>")
+		caster = target
 	if(ranged)
 		if(isnpc(target))
 			var/mob/living/carbon/human/npc/NPC = target
 			NPC.danger_source = caster
 			NPC.last_danger_meet = world.time
-	else
-		caster = target
 	caster.bloodpool -= cost
 	if(violates_masquerade)
 		if(CheckEyewitness(target, caster, 7, TRUE))
@@ -52,8 +52,6 @@
 
 /datum/discipline/animalism/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/damagemod = 1
-	damagemod = max(1, round((13-caster.generation)/2))
 	var/antidir = NORTH
 	switch(target.dir)
 		if(NORTH)
@@ -69,13 +67,13 @@
 	W.set_light(2, 2, "#6eeeff")
 	target.Stun(20)
 	spawn(20)
-	target.Knockdown(10)
-	W.forceMove(target.loc)
-	playsound(W, 'code/modules/ziggers/volk.ogg', 80, TRUE)
-	target.apply_damage(25*damagemod, BRUTE, BODY_ZONE_CHEST)
-	target.visible_message("<span class='warning'><b>[W] bites [target]!</b></span>", "<span class='warning'><b>[W] bites you!</b></span>")
-	spawn(20)
-		qdel(W)
+		target.Knockdown(20)
+		W.forceMove(target.loc)
+		playsound(W, 'code/modules/ziggers/volk.ogg', 80, TRUE)
+		target.apply_damage(25*level, BRUTE, BODY_ZONE_CHEST)
+		target.visible_message("<span class='warning'><b>[W] bites [target]!</b></span>", "<span class='warning'><b>[W] bites you!</b></span>")
+		spawn(20)
+			qdel(W)
 
 /datum/discipline/auspex
 	name = "Auspex"
@@ -83,14 +81,14 @@
 	icon_state = "auspex"
 	cost = 1
 	ranged = FALSE
-	delay = 100
+	delay = 50
 
 /datum/discipline/auspex/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	ADD_TRAIT(target, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
 	target.update_sight()
 	target.add_client_colour(/datum/client_colour/glass_colour/blue)
-	spawn(delay)
+	spawn(delay*level)
 		REMOVE_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
 		target.remove_client_colour(/datum/client_colour/glass_colour/blue)
 		target.update_sight()
@@ -101,7 +99,7 @@
 	icon_state = "celerity"
 	cost = 1
 	ranged = FALSE
-	delay = 140
+	delay = 50
 	violates_masquerade = TRUE
 
 /obj/effect/celerity
@@ -130,7 +128,7 @@
 	..()
 	target.add_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
 	caster.celerity_visual = TRUE
-	spawn(delay)
+	spawn(delay*level)
 		target.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
 		caster.celerity_visual = FALSE
 
@@ -144,21 +142,19 @@
 
 /datum/discipline/dominate/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/damagemod = 1
-	damagemod = max(1, 13-caster.generation)
 	to_chat(target, "<span class='userdanger'><b>YOU SHOULD KILL YOURSELF NOW</b></span>")
 	if(iskindred(target))
-		target.Knockdown(10*damagemod)
-		target.apply_damage(5*damagemod, BRUTE, BODY_ZONE_HEAD)
+		target.Knockdown(20*level)
+		target.apply_damage(10*level, BRUTE, BODY_ZONE_HEAD)
 		return
 	target.drop_all_held_items()
 	target.Stun(10)
-	if(prob(min(90, 10*damagemod)))
+	if(prob(min(90, 20*level)))
 		spawn(10)
 			target.visible_message("<span class='warning'><b>[target] wrings \his neck!</b></span>", "<span class='warning'><b>You wring your own neck!</b></span>")
 			playsound(target, 'code/modules/ziggers/suicide.ogg', 80, TRUE)
 			target.death()
-	target.apply_damage(10*damagemod, BRUTE, BODY_ZONE_HEAD)
+	target.apply_damage(20*level, BRUTE, BODY_ZONE_HEAD)
 
 /datum/discipline/dementation
 	name = "Dementation"
@@ -255,7 +251,7 @@ proc/dancesecond(mob/living/M)
 	for(var/mob/living/carbon/human/H in viewers(5, caster))
 		if(H != caster)
 			H.emote("laugh")
-			H.Stun(30)
+			H.Stun(10*level)
 			target.drop_all_held_items()
 			if(H.stat <= 2 && !H.IsSleeping() && !H.IsUnconscious() && !H.IsParalyzed() && !H.IsKnockdown() && !HAS_TRAIT(H, TRAIT_RESTRAINED))
 				if(prob(50))
@@ -269,14 +265,14 @@ proc/dancesecond(mob/living/M)
 	icon_state = "potence"
 	cost = 1
 	ranged = FALSE
-	delay = 250
+	delay = 50
 
 /datum/discipline/potence/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	caster.dna.species.punchdamagelow += 10
 	caster.dna.species.punchdamagehigh += 10
 	caster.dna.species.meleemod += 1
-	spawn(delay)
+	spawn(delay*level)
 		caster.dna.species.punchdamagelow -= 10
 		caster.dna.species.punchdamagehigh -= 10
 		caster.dna.species.meleemod -= 1
@@ -287,14 +283,14 @@ proc/dancesecond(mob/living/M)
 	icon_state = "fortitude"
 	cost = 1
 	ranged = FALSE
-	delay = 250
+	delay = 50
 
 /datum/discipline/fortitude/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/mod = min(3, max(1, round((13-caster.generation)/3)))
+	var/mod = min(3, level)
 	caster.physiology.armor.melee += 25*mod
 	caster.physiology.armor.bullet += 25*mod
-	spawn(delay)
+	spawn(delay*level)
 		caster.physiology.armor.melee -= 25*mod
 		caster.physiology.armor.bullet -= 25*mod
 
@@ -304,15 +300,21 @@ proc/dancesecond(mob/living/M)
 	icon_state = "obfuscate"
 	cost = 1
 	ranged = FALSE
-	delay = 200
+	delay = 100
 
 /datum/discipline/obfuscate/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	for(var/mob/living/carbon/human/npc/NPC in GLOB.npc_list)
 		if(NPC.danger_source == caster)
 			NPC.danger_source = null
-	caster.alpha = 128
-	spawn(20 SECONDS)
+	switch(level)
+		if(1)
+			caster.alpha = 192
+		if(2)
+			caster.alpha = 128
+		else
+			caster.alpha = 64
+	spawn(delay*level)
 		caster.alpha = 255
 
 /datum/discipline/presence
@@ -325,10 +327,10 @@ proc/dancesecond(mob/living/M)
 
 /datum/discipline/presence/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/mod = max(0.25, (13-caster.generation)/2)
+	var/mod = level/2
 	for(var/mob/living/L in viewers(5, src))
 		if(L != caster)
-			if(prob(25))
+			if(prob(10*level))
 				L.Stun(delay)
 			if(ishuman(L))
 				var/mob/living/carbon/human/H = L
@@ -344,7 +346,7 @@ proc/dancesecond(mob/living/M)
 	icon_state = "protean"
 	cost = 1
 	ranged = FALSE
-	delay = 250
+	delay = 100
 	violates_masquerade = TRUE
 
 /datum/movespeed_modifier/protean2
@@ -358,78 +360,83 @@ proc/dancesecond(mob/living/M)
 
 /datum/discipline/protean/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/mod = 1
-	switch(caster.generation)
-		if(9 to 11)
-			mod = 2
-		if(6 to 8)
-			mod = 3
-		if(3 to 5)
-			mod = 4
+	var/mod = min(4, level)
 	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
 	switch(mod)
 		if(1)
-			target.drop_all_held_items()
+			caster.drop_all_held_items()
 			caster.dna.species.attack_verb = "slash"
 			caster.dna.species.punchdamagelow += 10
 			caster.dna.species.punchdamagehigh += 10
 			caster.remove_overlay(PROTEAN_LAYER)
 			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
 			caster.apply_overlay(PROTEAN_LAYER)
-			spawn(delay)
+			spawn(delay*level)
 				if(caster)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
 					caster.dna.species.punchdamagelow -= 10
 					caster.dna.species.punchdamagehigh -= 10
 					caster.remove_overlay(PROTEAN_LAYER)
 		if(2)
-			target.drop_all_held_items()
+			caster.drop_all_held_items()
 			caster.dna.species.attack_verb = "slash"
 			caster.dna.species.punchdamagelow += 10
 			caster.dna.species.punchdamagehigh += 10
-			target.add_movespeed_modifier(/datum/movespeed_modifier/protean2)
+			caster.add_movespeed_modifier(/datum/movespeed_modifier/protean2)
 			caster.remove_overlay(PROTEAN_LAYER)
 			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
 			caster.apply_overlay(PROTEAN_LAYER)
-			spawn(delay)
+			spawn(delay*level)
 				if(caster)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
 					caster.dna.species.punchdamagelow -= 10
 					caster.dna.species.punchdamagehigh -= 10
-					target.remove_movespeed_modifier(/datum/movespeed_modifier/protean2)
+					caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean2)
 					caster.remove_overlay(PROTEAN_LAYER)
 		if(3)
-			target.drop_all_held_items()
+			caster.drop_all_held_items()
 			caster.dna.species.attack_verb = "slash"
 			caster.dna.species.punchdamagelow += 20
 			caster.dna.species.punchdamagehigh += 20
-			target.add_movespeed_modifier(/datum/movespeed_modifier/protean3)
+			caster.add_movespeed_modifier(/datum/movespeed_modifier/protean3)
 			caster.remove_overlay(PROTEAN_LAYER)
 			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
 			caster.apply_overlay(PROTEAN_LAYER)
-			spawn(delay)
+			spawn(delay*level)
 				if(caster)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
 					caster.dna.species.punchdamagelow -= 20
 					caster.dna.species.punchdamagehigh -= 20
-					target.remove_movespeed_modifier(/datum/movespeed_modifier/protean3)
+					caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean3)
 					caster.remove_overlay(PROTEAN_LAYER)
 		if(4)
-			target.drop_all_held_items()
+			caster.drop_all_held_items()
 			caster.dna.species.attack_verb = "slash"
 			caster.dna.species.punchdamagelow += 20
 			caster.dna.species.punchdamagehigh += 20
-			target.add_movespeed_modifier(/datum/movespeed_modifier/protean4)
+			caster.add_movespeed_modifier(/datum/movespeed_modifier/protean4)
 			caster.remove_overlay(PROTEAN_LAYER)
 			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
 			caster.apply_overlay(PROTEAN_LAYER)
-			spawn(delay)
+			spawn(delay*level)
 				if(caster)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
 					caster.dna.species.punchdamagelow -= 20
 					caster.dna.species.punchdamagehigh -= 20
-					target.remove_movespeed_modifier(/datum/movespeed_modifier/protean4)
+					caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean4)
 					caster.remove_overlay(PROTEAN_LAYER)
+
+
+/mob/living/proc/tremere_gib()
+	Stun(50)
+	new /obj/effect/temp_visual/gib_animation/tremere(loc)
+	animate(src, pixel_z = 16, color = "ff0000", time = 50)
+	if(stat != DEAD)
+		death(TRUE)
+
+	spawn(50)
+		spawn_gibs()
+		qdel(src)
 
 /obj/effect/projectile/tracer/thaumaturgy
 	name = "blood beam"
@@ -461,9 +468,20 @@ proc/dancesecond(mob/living/M)
 	tracer_type = /obj/effect/projectile/tracer/thaumaturgy
 	muzzle_type = /obj/effect/projectile/muzzle/thaumaturgy
 	impact_type = /obj/effect/projectile/impact/thaumaturgy
+	var/returned_blood = 0
+
+/obj/projectile/thaumaturgy/backwards
+	damage = 0
 
 /obj/projectile/thaumaturgy/on_hit(atom/target, blocked = FALSE, pierce_hit)
-	if(ishuman(firer))
+	if(returned_blood)
+		if(iskindred(target))
+			var/mob/living/carbon/human/H = target
+			H.bloodpool += returned_blood
+			H.bloodpool = min(H.maxbloodpool, H.bloodpool)
+			H.update_blood_hud()
+		return
+	else if(ishuman(firer))
 		var/mob/living/carbon/human/VH = firer
 		if(isliving(target))
 			var/mob/living/VL = target
@@ -478,19 +496,24 @@ proc/dancesecond(mob/living/M)
 						if(VL.bloodamount == 0)
 							VHL.blood_volume = 0
 							VL.death()
-							AdjustHumanity(VH, -1, 0)
+							if(isnpc(VL))
+								AdjustHumanity(VH, -1, 3)
 					else
 						if(VL.bloodamount == 0)
 							VL.death()
-					VH.bloodpool += sucked*max(1, VH.bloodquality-1)
-					VH.bloodpool = min(VH.bloodpool, VH.maxbloodpool)
-					VH.update_blood_hud()
+					var/turf/start = get_turf(target)
+					var/obj/projectile/thaumaturgy/backwards/H = new(start)
+					H.returned_blood = sucked*max(1, VH.bloodquality-1)
+					H.preparePixelProjectile(target, start)
+					H.fire(direct_target = firer)
 			else
 				if(VL.bloodpool >= 1)
-					var/sucked = min(VL.bloodpool, 3)
-					VL.bloodpool -= sucked
-					VH.bloodpool += sucked
-					VH.bloodpool = min(VH.maxbloodpool, VH.bloodpool)
+					var/sucked = min(VL.bloodpool, 1*(round((13-VH.generation)/2)))
+					var/turf/start = get_turf(target)
+					var/obj/projectile/thaumaturgy/backwards/H = new(start)
+					H.returned_blood = sucked
+					H.preparePixelProjectile(target, start)
+					H.fire(direct_target = firer)
 
 /datum/discipline/thaumaturgy
 	name = "Thaumaturgy"
@@ -503,8 +526,55 @@ proc/dancesecond(mob/living/M)
 
 /datum/discipline/thaumaturgy/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/turf/start = get_turf(caster)
-	var/obj/projectile/thaumaturgy/H = new(start)
-	H.firer = caster
-	H.preparePixelProjectile(target, start)
-	H.fire(direct_target = target)
+	switch(level)
+		if(1)
+			var/turf/start = get_turf(caster)
+			var/obj/projectile/thaumaturgy/H = new(start)
+			H.firer = caster
+			H.preparePixelProjectile(target, start)
+			H.fire(direct_target = target)
+		if(2)
+			var/turf/start = get_turf(caster)
+			var/obj/projectile/thaumaturgy/H = new(start)
+			H.firer = caster
+			H.damage = 20
+			H.preparePixelProjectile(target, start)
+			H.fire(direct_target = target)
+		if(3)
+			var/turf/start = get_turf(caster)
+			var/obj/projectile/thaumaturgy/H = new(start)
+			H.firer = caster
+			H.damage = 30
+			H.preparePixelProjectile(target, start)
+			H.fire(direct_target = target)
+		else
+			if(iskindred(target))
+				var/turf/start = get_turf(caster)
+				var/obj/projectile/thaumaturgy/H = new(start)
+				H.firer = caster
+				H.damage = 10*level
+				H.preparePixelProjectile(target, start)
+				H.fire(direct_target = target)
+			else
+				caster.bloodpool += target.bloodamount
+				caster.bloodpool = min(caster.maxbloodpool, caster.bloodpool)
+				if(isnpc(target))
+					AdjustHumanity(caster, -1, 0)
+				target.tremere_gib()
+
+/datum/discipline/bloodshield
+	name = "Blood shield"
+	desc = "Boosts armor."
+	icon_state = "bloodshield"
+	cost = 2
+	ranged = FALSE
+	delay = 50
+
+/datum/discipline/bloodshield/activate(mob/living/target, mob/living/carbon/human/caster)
+	..()
+	var/mod = min(3, level)
+	caster.physiology.armor.melee += 25*mod
+	caster.physiology.armor.bullet += 25*mod
+	spawn(delay*level)
+		caster.physiology.armor.melee -= 25*mod
+		caster.physiology.armor.bullet -= 25*mod

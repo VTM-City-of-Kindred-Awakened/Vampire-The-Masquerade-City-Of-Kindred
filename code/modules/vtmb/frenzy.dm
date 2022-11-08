@@ -8,11 +8,12 @@
 	var/frenzy_hardness = 1
 	var/last_frenzy_check = 0
 	var/atom/frenzy_target = null
+	var/last_experience = 0
 
 /mob/living/carbon/human/proc/rollfrenzy()
 	if(clane && client)
 		to_chat(src, "The beast is calling. Rolling...")
-		var/check = vampireroll(max(1, round(client.prefs.humanity/2)), frenzy_hardness, src)
+		var/check = vampireroll(max(1, round(humanity/2)), frenzy_hardness, src)
 		switch(check)
 			if(DICE_FAILURE)
 				enter_frenzymod()
@@ -28,6 +29,7 @@
 				frenzy_hardness = min(10, frenzy_hardness+1)
 
 /mob/living/carbon/human/proc/enter_frenzymod()
+	SEND_SOUND(src, sound('code/modules/ziggers/frenzy.ogg', 0, 0, 50))
 	in_frenzy = TRUE
 	add_client_colour(/datum/client_colour/glass_colour/red)
 	GLOB.frenzy_list += src
@@ -102,6 +104,19 @@
 
 /datum/species/kindred/spec_life(mob/living/carbon/human/H)
 	..()
+	if(H.client && H.stat <= 2)
+		if(H.client.prefs)
+			if(H.client.prefs.humanity != H.humanity)
+				H.client.prefs.humanity = H.humanity
+				H.client.prefs.save_preferences()
+				H.client.prefs.save_character()
+			if(H.client.prefs.masquerade != H.masquerade)
+				H.client.prefs.masquerade = H.masquerade
+				H.client.prefs.save_preferences()
+				H.client.prefs.save_character()
+			if(H.last_experience+600 <= world.time)
+				H.client.prefs.exper = min(1440, H.client.prefs.exper+1)
+				H.last_experience = world.time
 	if(H.bloodpool <= 1 && !H.in_frenzy)
 		if(H.last_frenzy_check+400 <= world.time)
 			H.last_frenzy_check = world.time

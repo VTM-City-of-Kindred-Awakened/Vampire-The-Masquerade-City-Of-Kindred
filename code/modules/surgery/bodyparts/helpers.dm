@@ -218,6 +218,28 @@
 			. = "fff4e6"
 		if("orange")
 			. = "ffc905"
+		if("vamp1")
+			. = "decdc4"
+		if("vamp2")
+			. = "cdb0a1"
+		if("vamp3")
+			. = "a59085"
+		if("vamp4")
+			. = "978073"
+		if("vamp5")
+			. = "7a6c64"
+		if("vamp6")
+			. = "ceceb1"
+		if("vamp7")
+			. = "a6a67f"
+		if("vamp8")
+			. = "7e7e62"
+		if("vamp9")
+			. = "6f6553"
+		if("vamp10")
+			. = "4c4136"
+		if("vamp11")
+			. = "2b2722"
 
 /mob/living/carbon/proc/Digitigrade_Leg_Swap(swap_back)
 	var/body_plan_changed = FALSE

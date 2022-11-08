@@ -17,6 +17,7 @@
 	if(iskindred(src))
 		if(in_frenzy)
 			exit_frenzymod()
+		playsound(src, 'code/modules/ziggers/burning_death.ogg', 50, TRUE)
 		SEND_SOUND(src, sound('code/modules/ziggers/final_death.ogg', 0, 0, 50))
 		spawn(5)
 			dust(1, 1)
@@ -52,11 +53,16 @@
 /mob/living/carbon/human/attackby(obj/item/W, mob/living/user, params)
 	if(user.blocking)
 		return
+	if(getStaminaLoss() >= 50 && blocking)
+		SwitchBlocking()
+	if(CheckFrenzyMove() && blocking)
+		SwitchBlocking()
 	if(user.a_intent == INTENT_GRAB && ishuman(user))
 		var/mob/living/carbon/human/ZIG = user
-		ZIG.parry_class = W.w_class
-		ZIG.Parry(src)
-		return
+		if(ZIG.getStaminaLoss() < 50 && !ZIG.CheckFrenzyMove())
+			ZIG.parry_class = W.w_class
+			ZIG.Parry(src)
+			return
 	if(user == parrying && user != src)
 		if(W.w_class == parry_class)
 			user.apply_damage(60, STAMINA)
@@ -105,6 +111,10 @@
 	..()
 
 /mob/living/carbon/human/attack_hand(mob/user)
+	if(getStaminaLoss() >= 50 && blocking)
+		SwitchBlocking()
+	if(CheckFrenzyMove() && blocking)
+		SwitchBlocking()
 	if(user.a_intent == INTENT_HARM && blocking)
 		playsound(src, 'sound/weapons/tap.ogg', 70, TRUE)
 		apply_damage(10, STAMINA)
@@ -193,6 +203,7 @@
 	bloodquality = BLOOD_QUALITY_NORMAL
 
 /atom/movable/screen/drinkblood/Click()
+	SEND_SOUND(usr, sound('code/modules/ziggers/highlight.ogg', 0, 0, 50))
 	if(ishuman(usr))
 		var/mob/living/carbon/human/BD = usr
 		BD.update_blood_hud()
@@ -258,11 +269,15 @@
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			H.blood_volume = max(H.blood_volume-10, 150)
-		if(clane.name == "Ventrue" && mob.bloodquality != BLOOD_QUALITY_HIGH)
-			vomit(0, FALSE, TRUE, 1, TRUE)
-			to_chat(src, "<span class='warning'>You are too privileged to drink that awful <b>BLOOD</b>. Go get something better.</span>")
-			return
-		bloodpool += 1*max(1, mob.bloodquality-1)
+		if(clane)
+			if(clane.name == "Ventrue" && mob.bloodquality < BLOOD_QUALITY_NORMAL)	//Ventrue mozhet sosat norm, no ne bomzhei i zhivotnih. BLOOD_QUALITY_LOW - 1, BLOOD_QUALITY_NORMAL - 2, BLOOD_QUALITY_HIGH - 3. Golubaya krov daet +1 k otsosu
+				to_chat(src, "<span class='warning'>You are too privileged to drink that awful <b>BLOOD</b>. Go get something better.</span>")
+				visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
+				playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
+				if(isturf(loc))
+					add_splatter_floor(loc)
+				return
+		bloodpool += 1*max(1, mob.bloodquality-1)	//Vot zdes bonus k otsosu, i eshe chto-to pohozhee u tremerov v discipline
 		bloodpool = min(maxbloodpool, bloodpool)
 		adjustBruteLoss(-5, TRUE)
 		adjustFireLoss(-5, TRUE)
@@ -290,6 +305,7 @@
 	plane = HUD_PLANE
 
 /atom/movable/screen/bloodheal/Click()
+	SEND_SOUND(usr, sound('code/modules/ziggers/highlight.ogg', 0, 0, 50))
 	if(ishuman(usr))
 		var/mob/living/carbon/human/BD = usr
 		if(world.time < BD.last_bloodheal_use+30)
@@ -323,6 +339,7 @@
 	plane = HUD_PLANE
 
 /atom/movable/screen/bloodpower/Click()
+	SEND_SOUND(usr, sound('code/modules/ziggers/highlight.ogg', 0, 0, 50))
 	if(ishuman(usr))
 		var/mob/living/carbon/human/BD = usr
 		if(world.time < BD.last_bloodpower_use+110)
@@ -436,6 +453,7 @@
 	var/atom/movable/screen/disciplines/toggled
 
 /atom/movable/screen/disciplines/Click()
+	SEND_SOUND(usr, sound('code/modules/ziggers/highlight.ogg', 0, 0, 50))
 	if(ishuman(usr))
 		var/mob/living/carbon/human/BD = usr
 		if(world.time < last_discipline_click+5)
@@ -455,11 +473,10 @@
 		if(dscpln.ranged)
 			for(var/atom/movable/screen/disciplines/DISCP in BD.hud_used.static_inventory)
 				if(DISCP)
-					if(DISCP.active && DISCP != src)
+					if(DISCP.active && DISCP != src && DISCP.dscpln.ranged)
 						DISCP.active = FALSE
 						BD.toggled = null
-						DISCP.icon_state = main_state
-						return
+						DISCP.icon_state = DISCP.main_state
 			active = TRUE
 			BD.toggled = src
 			icon_state = "[main_state]-on"
@@ -486,6 +503,9 @@
 	var/bloodpool = 7
 	var/maxbloodpool = 10
 	var/generation = 13
+	var/humanity = 7
+	var/masquerade = 5
+	var/last_masquerade_violation = 0
 
 /mob/living/carbon/human/Life()
 	update_blood_hud()

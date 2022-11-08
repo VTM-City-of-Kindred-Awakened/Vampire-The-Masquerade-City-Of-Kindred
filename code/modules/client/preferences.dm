@@ -145,6 +145,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/masquerade = 5
 
 	var/humanity = 7
+
+	var/exper = 0	//Urovni
+
+	var/discipline1level = 1
+	var/discipline2level = 1
+	var/discipline3level = 1
+
 //	var/datum/vampireclane/Clane
 /datum/preferences/New(client/C)
 	parent = C
@@ -294,6 +301,31 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Clane:</b> <a href='?_src_=prefs;preference=clane;task=input'>[clane.name]</a><BR>"
 				dat += "<b>Clane description:</b> [clane.desc]<BR>"
 				dat += "<b>Clane curse:</b> [clane.curse]<BR>"
+				dat += "<b>Disciplines</b> [exper]/1440<BR>"
+				if(length(clane.clane_disciplines) >= 1)
+					var/datype = clane.clane_disciplines[1]
+					var/datum/discipline/AD = new datype()
+					dat += "[AD.name]: (x)([discipline1level > 1 ? "x" : " "])([discipline1level > 2 ? "x" : " "])([discipline1level > 3 ? "x" : " "])([discipline1level > 4 ? "x" : " "])"
+					if(exper == 1440 && discipline1level != 5)
+						dat += "<a href='?_src_=prefs;preference=discipline1;task=input'>Learn</a><BR>"
+					else
+						dat += "<BR>"
+				if(length(clane.clane_disciplines) >= 2)
+					var/datype = clane.clane_disciplines[2]
+					var/datum/discipline/AD = new datype()
+					dat += "[AD.name]: (x)([discipline2level > 1 ? "x" : " "])([discipline2level > 2 ? "x" : " "])([discipline2level > 3 ? "x" : " "])([discipline2level > 4 ? "x" : " "])"
+					if(exper == 1440 && discipline2level != 5)
+						dat += "<a href='?_src_=prefs;preference=discipline2;task=input'>Learn</a><BR>"
+					else
+						dat += "<BR>"
+				if(length(clane.clane_disciplines) >= 3)
+					var/datype = clane.clane_disciplines[3]
+					var/datum/discipline/AD = new datype()
+					dat += "[AD.name]: (x)([discipline3level > 1 ? "x" : " "])([discipline3level > 2 ? "x" : " "])([discipline3level > 3 ? "x" : " "])([discipline3level > 4 ? "x" : " "])"
+					if(exper == 1440 && discipline3level != 5)
+						dat += "<a href='?_src_=prefs;preference=discipline3;task=input'>Learn</a><BR>"
+					else
+						dat += "<BR>"
 //			dat += "<a href='?_src_=prefs;preference=species;task=random'>Random Species</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SPECIES]'>Always Random Species: [(randomise[RANDOM_SPECIES]) ? "Yes" : "No"]</A><br>"
 
@@ -1473,6 +1505,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							facial_hairstyle = "Shaved"
 //						real_name = clane.random_name(gender)		//potom sdelat
 
+				if("discipline1")
+					discipline1level = min(5, discipline1level+1)
+					exper = 0
+
+				if("discipline2")
+					discipline2level = min(5, discipline2level+1)
+					exper = 0
+
+				if("discipline3")
+					discipline3level = min(5, discipline3level+1)
+					exper = 0
+
 				if("species")
 					if(slotlocked)
 						return
@@ -1962,6 +2006,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("reset_all")
 					slotlocked = 0
+					exper = 0
+					discipline1level = 1
+					discipline2level = 1
+					discipline3level = 1
 					masquerade = initial(masquerade)
 					generation = initial(generation)
 					qdel(clane)
@@ -2025,10 +2073,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.real_name = real_name
 	character.name = character.real_name
 
-	character.clane = clane
+	var/datum/vampireclane/CLN = new clane.type()
+	character.clane = CLN
 	character.maxbloodpool = 10+((13-generation)*2)
 	character.bloodpool = rand(2, character.maxbloodpool)
 	character.generation = generation
+	character.humanity = humanity
+	character.masquerade = masquerade
 
 	character.gender = gender
 	character.age = age
@@ -2045,6 +2096,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		organ_eyes.old_eye_color = eye_color
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
+
 
 	character.skin_tone = skin_tone
 	character.hairstyle = hairstyle
@@ -2092,6 +2144,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/datum/discipline/D = clane.clane_disciplines[1]
 			hud_used.discipline1_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline1_icon.dscpln = new D()
+			hud_used.discipline1_icon.dscpln.level = client.prefs.discipline1level
 			hud_used.discipline1_icon.name = hud_used.discipline1_icon.dscpln.name
 			hud_used.discipline1_icon.desc = hud_used.discipline1_icon.dscpln.desc
 			hud_used.discipline1_icon.icon_state = hud_used.discipline1_icon.dscpln.icon_state
@@ -2100,6 +2153,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/datum/discipline/D = clane.clane_disciplines[2]
 			hud_used.discipline2_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline2_icon.dscpln = new D()
+			hud_used.discipline2_icon.dscpln.level = client.prefs.discipline2level
 			hud_used.discipline2_icon.name = hud_used.discipline2_icon.dscpln.name
 			hud_used.discipline2_icon.desc = hud_used.discipline2_icon.dscpln.desc
 			hud_used.discipline2_icon.icon_state = hud_used.discipline2_icon.dscpln.icon_state
@@ -2108,6 +2162,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/datum/discipline/D = clane.clane_disciplines[3]
 			hud_used.discipline3_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline3_icon.dscpln = new D()
+			hud_used.discipline3_icon.dscpln.level = client.prefs.discipline3level
 			hud_used.discipline3_icon.name = hud_used.discipline3_icon.dscpln.name
 			hud_used.discipline3_icon.desc = hud_used.discipline3_icon.dscpln.desc
 			hud_used.discipline3_icon.icon_state = hud_used.discipline3_icon.dscpln.icon_state
@@ -2116,6 +2171,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/datum/discipline/D = clane.clane_disciplines[4]
 			hud_used.discipline4_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline4_icon.dscpln = new D()
+			hud_used.discipline4_icon.name = hud_used.discipline4_icon.dscpln.name
+			hud_used.discipline4_icon.desc = hud_used.discipline4_icon.dscpln.desc
+			hud_used.discipline4_icon.icon_state = hud_used.discipline4_icon.dscpln.icon_state
+			hud_used.discipline4_icon.main_state = hud_used.discipline4_icon.dscpln.icon_state
+		if(clane.name == "Tremere" && hud_used.discipline3_icon.dscpln.level >= 3 && length(clane.clane_disciplines) < 4)
+			hud_used.discipline4_icon.icon = 'code/modules/ziggers/disciplines.dmi'
+			hud_used.discipline4_icon.dscpln = new /datum/discipline/bloodshield()
+			hud_used.discipline4_icon.dscpln.level = client.prefs.discipline3level
 			hud_used.discipline4_icon.name = hud_used.discipline4_icon.dscpln.name
 			hud_used.discipline4_icon.desc = hud_used.discipline4_icon.dscpln.desc
 			hud_used.discipline4_icon.icon_state = hud_used.discipline4_icon.dscpln.icon_state

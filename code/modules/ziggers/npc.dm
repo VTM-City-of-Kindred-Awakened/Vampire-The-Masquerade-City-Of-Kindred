@@ -534,6 +534,7 @@
 
 /mob/living/carbon/human/npc/nigger
 	name = "Nigger"
+	bloodquality = BLOOD_QUALITY_LOW
 
 /mob/living/carbon/human/npc/nigger/Initialize()
 	..()

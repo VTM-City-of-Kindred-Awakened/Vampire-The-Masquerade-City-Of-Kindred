@@ -5,22 +5,22 @@
 			if(H.clane)
 				mod = H.clane.humanitymod
 			if(value < 0)
-				if(H.client.prefs.humanity > limit)
-					H.client.prefs.humanity = max(limit, H.client.prefs.humanity+(value*mod))
-					H.client.prefs.save_preferences()
-					H.client.prefs.save_character()
-					SEND_SOUND(H, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
+				if(H.humanity > limit)
+					H.humanity = max(limit, H.humanity+(value*mod))
+					SEND_SOUND(H, sound('code/modules/ziggers/humanity_loss.ogg', 0, 0, 75))
 					to_chat(H, "<span class='userdanger'><b>HUMANITY DECREASES</b></span>")
 			if(value > 0)
-				if(H.client.prefs.humanity < limit)
-					H.client.prefs.humanity = min(limit, H.client.prefs.humanity+(value*mod))
-					H.client.prefs.save_preferences()
-					H.client.prefs.save_character()
-//				SEND_SOUND(H, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
+				if(H.humanity < limit)
+					H.humanity = min(limit, H.humanity+(value*mod))
+					SEND_SOUND(H, sound('code/modules/ziggers/humanity_gain.ogg', 0, 0, 75))
 					to_chat(H, "<span class='userhelp'><b>HUMANITY INCREASES</b></span>")
 		if(iskindred(H) && H.client.prefs.humanity < 1 && !H.in_frenzy)
 			H.enter_frenzymod()
 			H.client.prefs.slotlocked = 0
+			H.client.prefs.exper = 0
+			H.client.prefs.discipline1level = 1
+			H.client.prefs.discipline2level = 1
+			H.client.prefs.discipline3level = 1
 			H.client.prefs.masquerade = initial(H.client.prefs.masquerade)
 			H.client.prefs.generation = initial(H.client.prefs.generation)
 			qdel(H.client.prefs.clane)
@@ -35,20 +35,19 @@
 
 /proc/AdjustMasquerade(var/mob/living/carbon/human/H, var/value)
 	if(H.client)
+		if(H.last_masquerade_violation+300 > world.time)
+			return
+		H.last_masquerade_violation = world.time
 		if(value < 0)
-			if(H.client.prefs.masquerade > 0)
-				H.client.prefs.masquerade = max(0, H.client.prefs.masquerade+value)
-				H.client.prefs.save_preferences()
-				H.client.prefs.save_character()
-				SEND_SOUND(H, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
+			if(H.masquerade > 0)
+				H.masquerade = max(0, H.masquerade+value)
+				SEND_SOUND(H, sound('code/modules/ziggers/masquerade_violation.ogg', 0, 0, 75))
 				to_chat(H, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
 		if(value > 0)
-			if(H.client.prefs.masquerade < 5)
-				H.client.prefs.masquerade = min(5, H.client.prefs.masquerade+value)
-				H.client.prefs.save_preferences()
-				H.client.prefs.save_character()
-//				SEND_SOUND(H, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
-				to_chat(H, "<span class='userhelp'><b>MASQUERADE RESTORED</b></span>")
+			if(H.masquerade < 5)
+				H.masquerade = min(5, H.masquerade+value)
+				SEND_SOUND(H, sound('code/modules/ziggers/general_good.ogg', 0, 0, 75))
+				to_chat(H, "<span class='userhelp'><b>MASQUERADE REINFORCEMENT</b></span>")
 
 /proc/CheckEyewitness(var/mob/living/source, var/mob/attacker, var/range = 0, var/affects_source = FALSE)
 	var/actual_range = max(1, round(range*(255/attacker.alpha)))

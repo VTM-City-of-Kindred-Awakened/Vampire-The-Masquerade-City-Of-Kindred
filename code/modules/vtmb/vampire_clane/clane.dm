@@ -19,6 +19,17 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 	var/humanitymod = 1
 	var/frenzymod = 1
 	var/start_humanity = 7
+	var/s_tones = list("caucasian1" = "vamp1",
+											"caucasian2" = "vamp2",
+											"caucasian3" = "vamp3",
+											"latino" = "vamp4",
+											"mediterranean" = "vamp5",
+											"asian1" = "vamp6",
+											"asian2" = "vamp7",
+											"arab" = "vamp8",
+											"indian" = "vamp9",
+											"african1" = "vamp10",
+											"african2" = "vamp11")
 //	var/datum/action/innate/drink_blood/sosalka = new
 //Дополнительная игровая логика должна храниться в компоненте
 /datum/species/kindred/on_species_gain(mob/living/carbon/human/C)
@@ -27,6 +38,7 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 //		C.clane = new C.client.prefs.clane()
 	C.skin_tone = "albino"
 	C.update_body(0)
+	C.last_experience = world.time+3000
 //	if(Pref.clane.clane_outfit)
 //		C.equipOutfit(Pref.clane.clane_outfit)
 //	if(Pref.clane.clane_disciplines && Pref.clane.name && Pref.clane.desc)
@@ -35,8 +47,14 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 //		SEND_SIGNAL(src, Pref.clane.clane_curse)
 
 /datum/vampireclane/proc/on_gain(var/mob/living/carbon/human/H)
+	if(s_tones[H.skin_tone])
+		H.skin_tone = s_tones[H.skin_tone]
+		H.update_body_parts()
+		H.update_body()
+		H.update_icon()
 	if(alt_sprite)
-		H.dna.species.limbs_id = "nosferatu"
+		H.skin_tone = "albino"
+		H.dna.species.limbs_id = alt_sprite
 		H.update_body_parts()
 		H.update_body()
 		H.update_icon()
