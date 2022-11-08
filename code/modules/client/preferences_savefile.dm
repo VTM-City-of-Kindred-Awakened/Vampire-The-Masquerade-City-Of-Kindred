@@ -364,7 +364,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Character
 	READ_FILE(S["slotlocked"], slotlocked)
 	READ_FILE(S["humanity"], humanity)
-	READ_FILE(S["exp"], exp)
+	READ_FILE(S["exper"], exper)
 	READ_FILE(S["discipline1level"], discipline1level)
 	READ_FILE(S["discipline2level"], discipline2level)
 	READ_FILE(S["discipline3level"], discipline3level)
@@ -476,7 +476,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	slotlocked			= sanitize_integer(slotlocked, 0, 1, initial(slotlocked))
 	humanity				= sanitize_integer(humanity, 0, 10, initial(humanity))
-	exp				= sanitize_integer(exp, 0, 1440, initial(exp))
+	exper				= sanitize_integer(exper, 0, 1440, initial(exper))
 	discipline1level				= sanitize_integer(discipline1level, 1, 5, initial(discipline1level))
 	discipline2level				= sanitize_integer(discipline2level, 1, 5, initial(discipline2level))
 	discipline3level				= sanitize_integer(discipline3level, 1, 5, initial(discipline3level))
@@ -532,7 +532,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Character
 	WRITE_FILE(S["slotlocked"]			, slotlocked)
 	WRITE_FILE(S["humanity"]			, humanity)
-	WRITE_FILE(S["exp"]			, exp)
+	WRITE_FILE(S["exper"]			, exper)
 	WRITE_FILE(S["discipline1level"]			, discipline1level)
 	WRITE_FILE(S["discipline2level"]			, discipline2level)
 	WRITE_FILE(S["discipline3level"]			, discipline3level)

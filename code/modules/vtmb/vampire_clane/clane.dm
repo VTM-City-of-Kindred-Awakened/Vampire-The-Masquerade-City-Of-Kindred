@@ -50,11 +50,12 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 //		SEND_SIGNAL(src, Pref.clane.clane_curse)
 
 /datum/vampireclane/proc/on_gain(var/mob/living/carbon/human/H)
-	if(s_tones[H.skin_tone])
-		H.skin_tone = s_tones[H.skin_tone]
-		H.update_body_parts()
-		H.update_body()
-		H.update_icon()
+	if(s_tones)
+		if(s_tones[H.skin_tone])
+			H.skin_tone = s_tones[H.skin_tone]
+			H.update_body_parts()
+			H.update_body()
+			H.update_icon()
 	if(alt_sprite)
 		H.skin_tone = "albino"
 		H.dna.species.limbs_id = alt_sprite
