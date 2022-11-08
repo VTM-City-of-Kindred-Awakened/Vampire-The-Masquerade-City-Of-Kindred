@@ -54,9 +54,11 @@
 	var/list/seenby = list()
 	for(var/mob/living/carbon/human/npc/NPC in viewers(actual_range, source))
 		if(source != NPC || affects_source)
-			seenby += NPC
-			NPC.danger_source = attacker
-			NPC.last_danger_meet = world.time
+			if(!NPC.pulledby)
+				seenby += NPC
+				NPC.emote("scream")
+				NPC.danger_source = attacker
+				NPC.last_danger_meet = world.time
 	var/turf/T = get_turf(attacker)
 	if(T.lighting_object && T.lighting_object.invisibility <= source.see_invisible && T.is_softly_lit())
 		if(affects_source && !in_range(T,source))

@@ -41,15 +41,15 @@
 "aO" = (/obj/machinery/atmospherics/components/binary/pump/on{dir = 4},/turf/open/floor/plasteel,/area/engine/atmos)
 "aP" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 4},/turf/open/floor/plating,/area/engine/atmos)
 "aQ" = (/obj/machinery/light{dir = 4},/mob/living/carbon/human,/turf/open/floor/plasteel/dark,/area/science/nanite)
-"aR" = (/turf/open/floor/plasteel,/area/science/nanite)
+"aR" = (/turf/open/floor/plating/sidewalk/full,/area/science/nanite)
 "aS" = (/obj/structure/table,/obj/item/flashlight{pixel_y = 5},/obj/item/storage/toolbox/syndicate,/obj/item/stock_parts/cell/infinite,/turf/open/floor/plasteel,/area/engine/engineering)
 "aT" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 8},/obj/structure/cable,/turf/open/floor/plasteel,/area/engine/engineering)
 "aU" = (/obj/machinery/door/airlock/engineering/glass{name = "Gravity Generator"},/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 4},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/cable,/turf/open/floor/plasteel,/area/engine/gravity_generator)
 "aV" = (/obj/effect/turf_decal/stripes/line{dir = 8},/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8},/obj/structure/cable,/turf/open/floor/plasteel,/area/engine/gravity_generator)
-"aW" = (/obj/effect/landmark/npcbeacon,/turf/open/floor/plasteel,/area/hallway/secondary/entry)
+"aW" = (/turf/closed/wall/vampwall,/area/hallway/secondary/entry)
 "aX" = (/obj/machinery/door/airlock/engineering/glass{name = "Gravity Generator"},/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 8},/turf/open/floor/plasteel/dark,/area/engine/gravity_generator)
 "aY" = (/obj/machinery/light{dir = 4},/turf/open/floor/plasteel/dark,/area/engine/gravity_generator)
-"aZ" = (/obj/machinery/door/airlock/external{name = "Transport Airlock"},/turf/open/floor/plasteel,/area/hallway/secondary/entry)
+"aZ" = (/turf/open/floor/plating/sidewalk/full,/area/hallway/secondary/entry)
 "ba" = (/obj/machinery/atmospherics/components/unary/vent_pump/on,/turf/open/floor/plating,/area/engine/atmos)
 "bb" = (/obj/machinery/atmospherics/components/unary/portables_connector/visible{dir = 4},/obj/machinery/portable_atmospherics/canister,/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/engine/atmos)
 "bc" = (/obj/machinery/atmospherics/components/binary/pump/on{dir = 8},/turf/open/floor/plasteel,/area/engine/atmos)
@@ -59,11 +59,11 @@
 "bg" = (/obj/effect/turf_decal/stripes/line{dir = 8},/obj/machinery/power/apc{dir = 8; name = "Gravity Generator APC"; pixel_x = -25},/obj/structure/cable,/turf/open/floor/plasteel,/area/engine/gravity_generator)
 "bh" = (/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel,/area/engine/gravity_generator)
 "bi" = (/obj/machinery/gravity_generator/main/station,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/engine/gravity_generator)
-"bj" = (/obj/effect/turf_decal/bot_white,/turf/open/floor/engine,/area/hallway/secondary/entry)
+"bj" = (/obj/machinery/door/airlock/external{name = "Transport Airlock"},/turf/open/floor/plating/sidewalk/full,/area/hallway/secondary/entry)
 "bk" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/door/airlock,/obj/structure/cable,/turf/open/floor/plating,/area/engine/atmos)
 "bl" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/meter,/turf/open/floor/plating,/area/engine/atmos)
 "bm" = (/obj/machinery/atmospherics/components/binary/valve/on{dir = 4},/turf/open/floor/plating,/area/engine/atmos)
-"bn" = (/obj/machinery/light{dir = 1},/turf/open/floor/plating,/area/hallway/secondary/entry)
+"bn" = (/turf/open/floor/plating/sidewalk{icon_state = "sidewalk"; dir = 6},/area/hallway/secondary/entry)
 "bo" = (/obj/structure/table,/obj/item/screwdriver/power,/obj/item/crowbar/power,/turf/open/floor/plasteel,/area/engine/engineering)
 "bp" = (/obj/machinery/light,/obj/structure/tank_dispenser,/turf/open/floor/plasteel,/area/engine/engineering)
 "bq" = (/obj/effect/turf_decal/stripes/line{dir = 10},/obj/machinery/light,/obj/machinery/telecomms/allinone{network = "tcommsat"},/turf/open/floor/plasteel,/area/engine/gravity_generator)
@@ -75,7 +75,7 @@
 "bw" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/security/brig)
 "bx" = (/obj/machinery/door/airlock,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/cable,/turf/open/floor/plating,/area/engine/engineering)
 "by" = (/turf/closed/wall/r_wall,/area/medical/medbay)
-"bz" = (/obj/effect/landmark/npcbeacon,/turf/open/floor/plasteel,/area/space)
+"bz" = (/obj/machinery/light{dir = 1; pixel_y = 24},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
 "bA" = (/turf/closed/wall/r_wall,/area/science)
 "bB" = (/obj/machinery/mecha_part_fabricator,/turf/open/floor/plasteel,/area/science)
 "bC" = (/obj/machinery/computer/prisoner/gulag_teleporter_computer{dir = 4},/turf/open/floor/plasteel,/area/security/brig)
@@ -103,8 +103,8 @@
 "bY" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/maintenance/department/bridge)
 "bZ" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/hallway/primary/central)
 "ca" = (/obj/machinery/autolathe/hacked,/turf/open/floor/plasteel,/area/science)
-"cb" = (/obj/machinery/light,/turf/open/floor/plating,/area/hallway/secondary/entry)
-"cc" = (/obj/machinery/light{dir = 4},/turf/open/floor/plasteel,/area/hallway/secondary/entry)
+"cb" = (/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
+"cc" = (/obj/effect/landmark/npcbeacon,/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
 "cd" = (/obj/machinery/door/airlock,/obj/structure/cable,/turf/open/floor/plating,/area/bridge)
 "ce" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/structure/cable,/turf/open/floor/plasteel,/area/bridge)
 "cf" = (/obj/structure/cable,/turf/open/floor/plasteel,/area/bridge)
@@ -115,15 +115,15 @@
 "ck" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/medical/medbay)
 "cl" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/structure/cable,/turf/open/floor/plasteel/white/corner{dir = 1},/area/medical/medbay)
 "cm" = (/turf/open/floor/plasteel,/area/medical/medbay)
-"cn" = (/obj/machinery/light{dir = 8},/turf/open/floor/plating,/area/hallway/secondary/entry)
+"cn" = (/turf/open/floor/plating/sidewalk{icon_state = "sidewalk"; dir = 10},/area/hallway/secondary/entry)
 "co" = (/obj/machinery/light{dir = 4},/obj/machinery/ore_silo,/turf/open/floor/plasteel,/area/science)
 "cp" = (/obj/machinery/light,/obj/structure/closet/secure_closet/engineering_chief{locked = 0},/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel,/area/bridge)
 "cq" = (/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/machinery/atmospherics/components/unary/vent_pump/on,/turf/open/floor/plasteel,/area/bridge)
 "cr" = (/obj/machinery/light,/obj/structure/closet/secure_closet/hos{locked = 0},/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel,/area/bridge)
-"cs" = (/obj/machinery/light{dir = 8},/turf/open/floor/engine,/area/hallway/secondary/entry)
+"cs" = (/obj/machinery/light{dir = 1; pixel_y = 24},/turf/open/floor/plating/sidewalk/full,/area/hallway/secondary/entry)
 "ct" = (/obj/machinery/light{dir = 8},/turf/open/floor/plasteel,/area/medical/chemistry)
 "cu" = (/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/white/corner{dir = 1},/area/medical/medbay)
-"cv" = (/obj/machinery/light{dir = 4},/turf/open/floor/engine,/area/hallway/secondary/entry)
+"cv" = (/turf/open/floor/plating/sidewalk{icon_state = "sidewalk"; dir = 4},/area/hallway/secondary/entry)
 "cw" = (/obj/machinery/door/airlock,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plasteel,/area/bridge)
 "cx" = (/obj/machinery/door/airlock/public/glass,/turf/open/floor/plasteel,/area/medical/medbay)
 "cy" = (/obj/effect/turf_decal/loading_area{dir = 8},/turf/open/floor/plasteel,/area/medical/medbay)
@@ -140,12 +140,15 @@
 "cJ" = (/obj/machinery/computer/operating{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/cafeteria,/area/medical/medbay)
 "cK" = (/obj/machinery/light,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/structure/table/glass,/obj/item/storage/box/monkeycubes{pixel_x = 6; pixel_y = 1},/obj/item/storage/box/monkeycubes{pixel_x = -6; pixel_y = 2},/turf/open/floor/plasteel/white/corner,/area/medical/medbay)
 "cL" = (/obj/item/storage/backpack/duffelbag/syndie/surgery,/obj/item/disk/surgery/debug,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/structure/table/glass,/turf/open/floor/plasteel/white/corner,/area/medical/medbay)
-"cM" = (/obj/machinery/light,/turf/open/floor/engine,/area/hallway/secondary/entry)
+"cM" = (/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
 "cN" = (/turf/closed/wall/r_wall,/area/construction)
-"cO" = (/obj/effect/landmark/npcbeacon,/obj/machinery/light{dir = 8},/turf/open/floor/plasteel,/area/hallway/secondary/entry)
+"cO" = (/obj/effect/decal/crosswalk{icon_state = "crosswalk1"; dir = 1},/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
 "cP" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/closed/wall/r_wall,/area/construction)
+"cQ" = (/turf/open/floor/plating/sidewalk{icon_state = "sidewalk"; dir = 8},/area/hallway/secondary/entry)
+"cR" = (/turf/open/floor/plating/sidewalk/alt/corner{icon_state = "sidewalk_alt_corner"; dir = 8},/area/hallway/secondary/entry)
 "cS" = (/turf/closed/wall/r_wall,/area/storage/primary)
 "cT" = (/obj/effect/spawner/structure/window/reinforced,/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,/turf/open/floor/plasteel,/area/medical/chemistry)
+"cU" = (/obj/machinery/light/small{dir = 1; icon_state = "bulb"; pixel_y = 24},/turf/open/floor/plating/sidewalk/full,/area/hallway/secondary/entry)
 "cV" = (/obj/machinery/door/airlock/public/glass,/turf/open/floor/plasteel,/area/storage/primary)
 "cW" = (/obj/machinery/airalarm/unlocked{pixel_y = 23},/obj/machinery/power/apc{dir = 8; pixel_x = -25},/obj/effect/turf_decal/stripes/corner,/obj/structure/cable,/turf/open/floor/plasteel,/area/construction)
 "cX" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 1},/obj/effect/turf_decal/stripes/line,/obj/structure/cable,/turf/open/floor/plasteel,/area/construction)
@@ -156,6 +159,7 @@
 "dc" = (/obj/effect/turf_decal/stripes/corner{dir = 8},/obj/structure/cable,/turf/open/floor/plasteel,/area/storage/primary)
 "dd" = (/obj/machinery/airalarm/unlocked{pixel_y = 23},/obj/machinery/power/apc{dir = 8; pixel_x = -25},/obj/effect/turf_decal/stripes/line,/obj/structure/cable,/turf/open/floor/plasteel,/area/storage/primary)
 "de" = (/obj/machinery/gulag_teleporter,/turf/open/floor/plasteel,/area/security/brig)
+"df" = (/turf/open/floor/plating/sidewalk/alt{icon_state = "sidewalk_alt"; dir = 1},/area/hallway/secondary/entry)
 "dg" = (/obj/machinery/airalarm/directional/east,/turf/open/floor/plasteel,/area/security/brig)
 "dh" = (/turf/closed/wall,/area/hallway/secondary/entry)
 "di" = (/obj/machinery/door/airlock/external{name = "Labor Camp Shuttle Airlock"},/obj/structure/fans/tiny,/turf/open/floor/plasteel/dark,/area/security/brig)
@@ -206,6 +210,7 @@
 "eb" = (/obj/docking_port/stationary{dir = 8; dwidth = 2; height = 5; id = "laborcamp_home"; name = "fore bay 1"; roundstart_template = /datum/map_template/shuttle/labour/box; width = 9},/turf/open/space/basic,/area/space)
 "ec" = (/obj/docking_port/stationary{dir = 8; dwidth = 3; height = 15; id = "arrivals_stationary"; name = "arrivals"; roundstart_template = /datum/map_template/shuttle/arrival/box; width = 7},/turf/open/floor/engine,/area/hallway/secondary/entry)
 "ed" = (/obj/structure/sign/warning/pods,/turf/closed/wall/r_wall,/area/hallway/secondary/entry)
+"ee" = (/obj/effect/landmark/npcbeacon,/turf/open/floor/plating/sidewalk/alt/corner{icon_state = "sidewalk_alt_corner"; dir = 1},/area/hallway/secondary/entry)
 "ef" = (/obj/machinery/door/airlock,/turf/open/floor/plasteel,/area/construction)
 "eg" = (/obj/machinery/door/airlock,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/cable,/turf/open/floor/plasteel,/area/security/brig)
 "eh" = (/turf/open/floor/plasteel,/area/hallway/secondary/entry)
@@ -215,8 +220,10 @@
 "el" = (/obj/structure/fans/tiny/invisible,/turf/open/floor/engine,/area/hallway/secondary/entry)
 "em" = (/turf/closed/wall/r_wall,/area/quartermaster/miningoffice)
 "en" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/hallway/secondary/entry)
+"eo" = (/obj/effect/decal/crosswalk{icon_state = "crosswalk1"; dir = 8},/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
 "ep" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 8},/obj/structure/cable,/turf/open/floor/plasteel,/area/hallway/secondary/entry)
 "eq" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/cable,/turf/open/floor/plasteel,/area/hallway/secondary/entry)
+"er" = (/obj/effect/landmark/npcbeacon,/turf/open/floor/plating/sidewalk/alt/corner{icon_state = "sidewalk_alt_corner"; dir = 8},/area/hallway/secondary/entry)
 "es" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/machinery/dna_scannernew,/obj/effect/turf_decal/tile/blue{dir = 4},/turf/open/floor/plasteel/white/corner,/area/medical/medbay)
 "et" = (/turf/closed/wall/r_wall,/area/quartermaster/storage)
 "eu" = (/turf/open/floor/plasteel,/area/quartermaster/storage)
@@ -226,16 +233,20 @@
 "ey" = (/obj/machinery/status_display/supply,/turf/closed/wall,/area/quartermaster/storage)
 "ez" = (/obj/machinery/camera/autoname{dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/effect/turf_decal/stripes/line{dir = 1},/obj/structure/cable,/turf/open/floor/plasteel,/area/storage/primary)
 "eA" = (/obj/machinery/conveyor{dir = 1; id = "cargounload"},/turf/open/floor/plasteel,/area/quartermaster/storage)
+"eB" = (/turf/open/floor/plating/sidewalk/alt/corner{icon_state = "sidewalk_alt_corner"; dir = 1},/area/hallway/secondary/entry)
 "eC" = (/obj/machinery/conveyor{dir = 8; id = "cargounload"},/obj/structure/plasticflaps,/turf/open/floor/plating,/area/quartermaster/storage)
+"eD" = (/obj/effect/decal/asphaltline{icon_state = "line"; dir = 1},/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
 "eE" = (/obj/docking_port/stationary{dir = 8; dwidth = 2; height = 13; id = "ferry_home"; name = "port bay 2"; width = 5},/turf/open/space/basic,/area/space)
 "eF" = (/obj/machinery/power/apc{dir = 4; pixel_x = 24},/obj/structure/cable,/turf/open/floor/plasteel,/area/hallway/secondary/entry)
 "eG" = (/obj/machinery/airalarm/unlocked{pixel_x = -32},/turf/open/floor/plasteel,/area/quartermaster/storage)
 "eH" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/effect/turf_decal/stripes/line{dir = 4},/obj/structure/cable,/turf/open/floor/plasteel,/area/storage/primary)
+"eI" = (/obj/machinery/light/small{pixel_y = 16},/turf/open/floor/plating/sidewalk/full,/area/hallway/secondary/entry)
 "eJ" = (/obj/docking_port/stationary{dir = 4; dwidth = 4; height = 7; id = "supply_home"; name = "Cargo Bay"; width = 12},/turf/open/space/basic,/area/space)
 "eK" = (/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,/obj/effect/turf_decal/stripes/corner{dir = 4},/obj/structure/cable,/turf/open/floor/plasteel,/area/storage/primary)
 "eL" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plasteel,/area/hallway/secondary/entry)
 "eM" = (/obj/machinery/airalarm/directional/east,/turf/open/floor/plasteel,/area/hallway/secondary/entry)
 "eN" = (/obj/machinery/conveyor{dir = 9; id = "cargounload"},/turf/open/floor/plasteel,/area/quartermaster/storage)
+"eO" = (/obj/effect/landmark/npcbeacon/directed{icon_state = "npc"; dir = 8},/turf/open/floor/plating/sidewalk{icon_state = "sidewalk"; dir = 4},/area/hallway/secondary/entry)
 "eP" = (/obj/machinery/power/apc{dir = 8; pixel_x = -25},/obj/structure/cable,/turf/open/floor/plasteel,/area/quartermaster/storage)
 "eQ" = (/obj/machinery/conveyor_switch/oneway{dir = 8; id = "cargounload"},/turf/open/floor/plasteel,/area/quartermaster/storage)
 "eR" = (/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 4},/obj/machinery/door/airlock/external{name = "Supply Dock Airlock"},/obj/effect/turf_decal/stripes/line{dir = 8},/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel,/area/quartermaster/storage)
@@ -244,6 +255,7 @@
 "eU" = (/obj/structure/sign/warning/vacuum/external{pixel_x = 32},/turf/open/floor/plasteel,/area/medical/medbay)
 "eV" = (/obj/machinery/light{dir = 8},/turf/open/floor/plasteel,/area/hallway/secondary/entry)
 "eW" = (/obj/effect/turf_decal/stripes/corner{dir = 1},/turf/open/floor/plasteel,/area/storage/primary)
+"eX" = (/turf/open/floor/plating/sidewalk/alt{icon_state = "sidewalk_alt"; dir = 8},/area/hallway/secondary/entry)
 "eY" = (/obj/machinery/conveyor{dir = 8; id = "cargounload"},/obj/machinery/door/poddoor{id = "cargounload"; name = "supply dock unloading door"},/turf/open/floor/plating,/area/quartermaster/storage)
 "eZ" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/cable,/turf/open/floor/plasteel,/area/quartermaster/storage)
 "fa" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8},/turf/open/floor/plasteel,/area/quartermaster/storage)
@@ -256,6 +268,7 @@
 "fh" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/quartermaster/storage)
 "fi" = (/obj/docking_port/stationary{dwidth = 1; height = 4; roundstart_template = /datum/map_template/shuttle/escape_pod/default; width = 3},/turf/open/floor/plating,/area/hallway/secondary/entry)
 "fj" = (/obj/structure/sign/warning/docking,/turf/closed/wall/r_wall,/area/hallway/secondary/entry)
+"fk" = (/turf/closed/wall/vampwall/rich,/area/hallway/secondary/entry)
 "fl" = (/obj/machinery/conveyor{dir = 4; id = "cargoload"},/obj/structure/plasticflaps,/turf/open/floor/plating,/area/quartermaster/storage)
 "fm" = (/obj/machinery/conveyor{dir = 1; id = "cargoload"},/turf/open/floor/plasteel,/area/quartermaster/storage)
 "fn" = (/obj/effect/spawner/structure/window/reinforced,/obj/structure/sign/warning/vacuum/external,/turf/open/floor/plating,/area/hallway/secondary/entry)
@@ -265,6 +278,7 @@
 "fr" = (/obj/machinery/light{dir = 8},/obj/machinery/computer/cargo/express{dir = 4},/turf/open/floor/plasteel,/area/quartermaster/storage)
 "fs" = (/obj/machinery/door/airlock/external{name = "Transport Airlock"},/obj/structure/fans/tiny,/turf/open/floor/plating,/area/hallway/secondary/entry)
 "ft" = (/obj/machinery/door/airlock,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/cable,/turf/open/floor/plating,/area/hallway/primary/central)
+"fu" = (/turf/open/floor/plating/sidewalk/alt/full,/area/hallway/secondary/entry)
 "fv" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 4},/obj/structure/cable,/turf/open/floor/plasteel,/area/hallway/primary/central)
 "fw" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/effect/turf_decal/stripes/corner,/obj/structure/cable,/turf/open/floor/plasteel,/area/storage/primary)
 "fx" = (/obj/effect/turf_decal/plaque{icon_state = "L1"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/cable,/turf/open/floor/plasteel,/area/storage/primary)
@@ -276,9 +290,12 @@
 "fD" = (/obj/machinery/light{dir = 1},/obj/machinery/camera/autoname,/obj/effect/turf_decal/plaque{icon_state = "L11"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/cable,/turf/open/floor/plasteel,/area/storage/primary)
 "fE" = (/obj/effect/turf_decal/plaque{icon_state = "L13"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/cable,/turf/open/floor/plasteel,/area/storage/primary)
 "fF" = (/obj/effect/turf_decal/stripes/line,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/effect/turf_decal/caution/stand_clear,/obj/structure/fans/tiny,/turf/open/floor/plasteel,/area/quartermaster/storage)
+"fG" = (/turf/open/floor/plating/sidewalk/alt{icon_state = "sidewalk_alt"; dir = 4},/area/hallway/secondary/entry)
 "fH" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/effect/turf_decal/stripes/corner{dir = 4},/obj/structure/cable,/turf/open/floor/plasteel,/area/storage/primary)
 "fI" = (/obj/machinery/door/airlock,/turf/open/floor/plating,/area/maintenance/aft)
+"fJ" = (/turf/closed/wall/vampwall/rich/old,/area/hallway/secondary/entry)
 "fK" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/obj/structure/cable,/turf/open/floor/plasteel,/area/storage/primary)
+"fL" = (/turf/closed/wall/vampwall/old,/area/hallway/secondary/entry)
 "fM" = (/obj/structure/sign/directions/supply{dir = 4; pixel_x = 32},/obj/structure/sign/directions/engineering{dir = 1; pixel_x = 32; pixel_y = 7},/obj/structure/sign/directions/evac{pixel_x = 32; pixel_y = -7},/turf/open/floor/plasteel,/area/hallway/secondary/entry)
 "fN" = (/obj/machinery/door/airlock,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/cable,/turf/open/floor/plating,/area/storage/primary)
 "fO" = (/turf/open/floor/plasteel,/area/hallway/secondary/exit/departure_lounge)
@@ -286,6 +303,7 @@
 "fQ" = (/obj/machinery/computer/communications,/obj/machinery/status_display/evac{pixel_y = 32},/turf/open/floor/plasteel,/area/hallway/secondary/exit/departure_lounge)
 "fR" = (/obj/machinery/door/airlock,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/cable,/turf/open/floor/plating,/area/storage/primary)
 "fS" = (/obj/machinery/power/apc{dir = 1; pixel_y = 23},/obj/structure/cable,/turf/open/floor/plasteel,/area/hallway/secondary/exit/departure_lounge)
+"fT" = (/obj/machinery/light{dir = 4},/turf/open/floor/plating/sidewalk/full,/area/hallway/secondary/entry)
 "fU" = (/obj/machinery/airalarm/unlocked{pixel_y = 23},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 6},/obj/structure/cable,/turf/open/floor/plasteel,/area/hallway/secondary/exit/departure_lounge)
 "fV" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/cable,/turf/open/floor/plasteel,/area/hallway/secondary/exit/departure_lounge)
 "fW" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 9},/obj/structure/cable,/turf/open/floor/plasteel,/area/hallway/secondary/exit/departure_lounge)
@@ -299,7 +317,9 @@
 "ge" = (/obj/structure/lattice,/turf/closed/wall/r_wall,/area/hallway/secondary/entry)
 "gf" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/hallway/secondary/exit/departure_lounge)
 "gg" = (/obj/structure/sign/directions/supply{dir = 4; pixel_x = 32},/obj/structure/sign/directions/engineering{dir = 1; pixel_x = 32; pixel_y = 7},/obj/structure/sign/directions/evac{pixel_x = 32; pixel_y = -7},/turf/open/floor/plating,/area/storage/primary)
+"gh" = (/obj/machinery/light/small{dir = 8},/turf/open/floor/plating/sidewalk/full,/area/hallway/secondary/entry)
 "gi" = (/obj/machinery/power/apc{dir = 1; pixel_y = 23},/obj/machinery/airalarm/unlocked{pixel_x = 32},/obj/structure/cable,/obj/machinery/computer/shuttle/mining,/turf/open/floor/plasteel,/area/quartermaster/miningoffice)
+"gj" = (/obj/machinery/light{dir = 4},/turf/open/floor/plating/sidewalk/alt{icon_state = "sidewalk_alt"; dir = 8},/area/hallway/secondary/entry)
 "gk" = (/obj/structure/sign/departments/evac,/turf/closed/wall/r_wall,/area/hallway/secondary/exit/departure_lounge)
 "gl" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 4},/obj/effect/turf_decal/stripes/line{dir = 8},/turf/open/floor/plasteel,/area/quartermaster/miningoffice)
 "gm" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/obj/structure/cable,/turf/open/floor/plasteel,/area/quartermaster/miningoffice)
@@ -309,6 +329,7 @@
 "gq" = (/obj/machinery/atmospherics/components/unary/vent_pump/on,/turf/open/floor/plasteel,/area/hallway/secondary/entry)
 "gr" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/obj/structure/cable,/turf/open/floor/plasteel,/area/hallway/secondary/entry)
 "gs" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden,/obj/structure/cable,/turf/open/floor/plasteel,/area/hallway/secondary/entry)
+"gt" = (/obj/machinery/light{dir = 8},/turf/open/floor/plating/sidewalk/alt/full,/area/hallway/secondary/entry)
 "gu" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 4},/obj/structure/cable,/turf/open/floor/plasteel,/area/hallway/secondary/entry)
 "gv" = (/obj/machinery/light,/turf/open/floor/plasteel,/area/hallway/secondary/entry)
 "gw" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 4},/obj/machinery/light,/turf/open/floor/plasteel,/area/hallway/secondary/entry)
@@ -325,8 +346,55 @@
 "gH" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/camera/autoname,/obj/structure/cable,/turf/open/floor/plasteel,/area/hallway/secondary/exit/departure_lounge)
 "gI" = (/obj/machinery/light{dir = 1},/obj/machinery/camera/autoname,/turf/open/floor/plasteel,/area/hallway/secondary/entry)
 "gJ" = (/obj/structure/table,/obj/item/storage/box/prisoner,/obj/item/paper/guides/jobs/security/labor_camp,/turf/open/floor/plasteel,/area/security/brig)
+"gK" = (/obj/machinery/light{dir = 4},/turf/open/floor/plating/sidewalk/alt/full,/area/hallway/secondary/entry)
+"gL" = (/obj/machinery/light{dir = 8},/turf/open/floor/plating/sidewalk/alt{icon_state = "sidewalk_alt"; dir = 4},/area/hallway/secondary/entry)
+"gM" = (/obj/machinery/light{dir = 1; pixel_y = 24},/obj/effect/landmark/npcbeacon/directed{icon_state = "npc"; dir = 4},/turf/open/floor/plating/sidewalk/full,/area/hallway/secondary/entry)
+"gN" = (/obj/machinery/light{pixel_y = 16},/turf/open/floor/plating/sidewalk/alt{icon_state = "sidewalk_alt"; dir = 1},/area/hallway/secondary/entry)
+"gO" = (/obj/machinery/light{dir = 1; pixel_y = 24},/turf/open/floor/plating/sidewalk/alt/full,/area/hallway/secondary/entry)
+"gP" = (/obj/effect/landmark/npcbeacon,/turf/open/floor/plating/sidewalk/corner{icon_state = "sidewalk_corner"; dir = 4},/area/hallway/secondary/entry)
+"gQ" = (/turf/open/floor/plating/sidewalk/alt/corner,/area/hallway/secondary/entry)
+"gR" = (/turf/open/floor/plating/sidewalk/alt,/area/hallway/secondary/entry)
+"gS" = (/obj/effect/landmark/npcbeacon,/turf/open/floor/plating/sidewalk/alt/corner{icon_state = "sidewalk_alt_corner"; dir = 4},/area/hallway/secondary/entry)
+"gT" = (/obj/effect/landmark/npcbeacon,/turf/open/floor/plating/sidewalk/alt/corner,/area/hallway/secondary/entry)
+"gU" = (/obj/effect/landmark/npcbeacon,/turf/open/floor/plating/sidewalk/corner,/area/hallway/secondary/entry)
+"gV" = (/turf/closed/wall/vampwall/brick,/area/hallway/secondary/entry)
+"gW" = (/obj/effect/decal/crosswalk,/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
+"gX" = (/obj/machinery/light{dir = 8},/obj/effect/decal/asphaltline/alt{icon_state = "line_alt"; dir = 8},/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
 "gY" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8},/obj/structure/cable,/turf/open/floor/plasteel,/area/science)
+"gZ" = (/obj/effect/decal/asphaltline/alt{icon_state = "line_alt"; dir = 8},/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
+"ha" = (/obj/machinery/light{dir = 4},/obj/effect/decal/asphaltline/alt{icon_state = "line_alt"; dir = 8},/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
+"hb" = (/turf/open/floor/plating/sidewalk{icon_state = "sidewalk"; dir = 1},/area/hallway/secondary/entry)
+"hc" = (/obj/effect/landmark/npcbeacon,/turf/open/floor/plating/sidewalk/corner{icon_state = "sidewalk_corner"; dir = 1},/area/hallway/secondary/entry)
+"hd" = (/obj/effect/decal/crosswalk{icon_state = "crosswalk1"; dir = 4},/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
+"he" = (/obj/effect/landmark/npcbeacon,/turf/open/floor/plating/sidewalk/alt{icon_state = "sidewalk_alt"; dir = 1},/area/hallway/secondary/entry)
+"hf" = (/obj/effect/landmark/npcbeacon,/turf/open/floor/plating/sidewalk/corner{icon_state = "sidewalk_corner"; dir = 8},/area/hallway/secondary/entry)
+"hg" = (/obj/effect/landmark/npcbeacon,/turf/open/floor/plating/sidewalk{icon_state = "sidewalk"; dir = 1},/area/hallway/secondary/entry)
+"hh" = (/obj/effect/decal/asphaltline,/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
+"hi" = (/obj/machinery/light{pixel_y = 16},/turf/open/floor/plating/sidewalk/full,/area/hallway/secondary/entry)
+"hj" = (/obj/machinery/light{pixel_y = 16},/turf/open/floor/plating/sidewalk/alt/full,/area/hallway/secondary/entry)
+"hk" = (/turf/closed/wall/vampwall/market,/area/hallway/secondary/entry)
+"hl" = (/turf/closed/wall/vampwall/junk/alt,/area/hallway/secondary/entry)
+"hm" = (/turf/closed/wall/vampwall/junk,/area/hallway/secondary/entry)
+"hn" = (/obj/machinery/light{pixel_y = 16},/turf/open/floor/plating/sidewalk/alt{icon_state = "sidewalk_alt"; dir = 4},/area/hallway/secondary/entry)
+"ho" = (/turf/open/floor/plating/sidewalk/alt{icon_state = "sidewalk_alt"; dir = 9},/area/hallway/secondary/entry)
+"hp" = (/obj/machinery/light{dir = 8},/turf/open/floor/plating/sidewalk{icon_state = "sidewalk"; dir = 4},/area/hallway/secondary/entry)
+"hq" = (/obj/effect/landmark/npcbeacon/directed{icon_state = "npc"; dir = 1},/turf/open/floor/plating/sidewalk/full,/area/hallway/secondary/entry)
+"hr" = (/obj/machinery/light{dir = 1; pixel_y = 24},/turf/open/floor/plating/sidewalk/alt,/area/hallway/secondary/entry)
+"hs" = (/obj/effect/landmark/npcbeacon,/turf/open/floor/plating/sidewalk{icon_state = "sidewalk"; dir = 8},/area/hallway/secondary/entry)
+"ht" = (/obj/effect/decal/asphaltline{icon_state = "line"; dir = 8},/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
+"hu" = (/turf/open/floor/plating/sidewalk{icon_state = "sidewalk"; dir = 5},/area/hallway/secondary/entry)
+"hv" = (/obj/machinery/light{pixel_y = 16},/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
+"hw" = (/turf/open/floor/plating/sidewalk{icon_state = "sidewalk"; dir = 9},/area/hallway/secondary/entry)
+"hx" = (/obj/machinery/light{pixel_y = 16},/turf/open/floor/plating/sidewalk{icon_state = "sidewalk"; dir = 1},/area/hallway/secondary/entry)
+"hy" = (/obj/machinery/light{dir = 1; pixel_y = 24},/obj/effect/landmark/npcbeacon/directed{icon_state = "npc"; dir = 8},/turf/open/floor/plating/sidewalk/full,/area/hallway/secondary/entry)
+"hz" = (/obj/machinery/light{pixel_y = 16},/obj/effect/landmark/npcbeacon/directed{icon_state = "npc"; dir = 4},/turf/open/floor/plating/sidewalk/full,/area/hallway/secondary/entry)
+"hA" = (/obj/effect/landmark/npcbeacon/directed,/turf/open/floor/plating/sidewalk/full,/area/hallway/secondary/entry)
+"hB" = (/obj/machinery/light{pixel_y = 16},/obj/effect/landmark/npcbeacon/directed{icon_state = "npc"; dir = 8},/turf/open/floor/plating/sidewalk/full,/area/hallway/secondary/entry)
+"hC" = (/obj/machinery/light{dir = 8},/obj/effect/landmark/npcbeacon,/turf/open/floor/plating/sidewalk{icon_state = "sidewalk"; dir = 4},/area/hallway/secondary/entry)
 "hD" = (/obj/structure/closet/secure_closet/chemical/heisenberg{locked = 0},/turf/open/floor/plasteel,/area/medical/chemistry)
+"hE" = (/obj/effect/landmark/npcbeacon/directed{icon_state = "npc"; dir = 4},/turf/open/floor/plating/sidewalk{icon_state = "sidewalk"; dir = 8},/area/hallway/secondary/entry)
+"hF" = (/obj/effect/decal/stock{icon_state = "stock"; dir = 1},/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
+"hG" = (/obj/effect/decal/stock,/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
 "ii" = (/obj/effect/turf_decal/stripes/line{dir = 4},/obj/machinery/light_switch{pixel_x = -20},/turf/open/floor/plasteel,/area/construction)
 "jb" = (/obj/machinery/door/airlock,/obj/structure/cable,/turf/open/floor/plasteel,/area/science)
 "jE" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 8},/turf/open/floor/plating,/area/engine/atmos)
@@ -477,52 +545,52 @@ aaaaaaaaaaaaaaaaaaaaaadYehehehgIehehehgBekekekgCekekekfZsrenvmZPkpZPaQwUbLbLbLRb
 aaaaaaaaaaaaaaaaaaaaaadYehehehehehehehehehehehehehehehehehdYuQZPXNZPNbwUfgfgfgfgfgfggafOfOfOfOfOfOfOfOfOfOfOfOfOgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaadYdYgcgcenenendYendYendYdYdYdYdYdYgegeOvZPYmZPCTwUaaaaaaaaaaaagagffbgffbgfgagkgagffbgffbgfgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaffaaaaaaaaaaaaaaaaaaaaaaaaaaaadYIraRIrIrIrwUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafpaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYdYdYdYdYdYdYaZdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYehejehehehehehehehehehehaWehejehaWehehehehehehehehehehejehehehehehehehehehejehehehehehejdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYehlclclclclclclclclclclcbjlclclcbjlclclclclclclclclclclclclclclclclclclclclclclclclcehehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaadYdYdYdYdYdYdYdYdYdYdYdYdYehlclclclclclclclclclclcbjlclclcbjlclclclclclclclclclclclclclclclclclclclclclclclclcehehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaadYdVbndVdVdVdVdVdVdVdVdVbnehlclcehgvehehehehehgvehaWbjbjbjaWehgvehehehehehehehehgvehehehehehehehehehgvehlclclcehehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaadYdVdVdVcbdVdVdVdVdVdVdVcbaWlclcehdYdYdYdYdYdYdYehehlclclcehehdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYehlclclcehehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaadYdVdVdVdYdYdYdYdYdYdYdYdYehlclcehdYaaaaaaaaaadYehehlclclcehehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYehlclclcehccdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaadYcndVdVdYaaaaaaaaaaaaaadYehlclcehdYaaaaaaaaaadYehehlclclcehehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYehlclclcehehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaadYdVdVdVdYaaaaaaaaaaaaaadYehlclcccdYaaaaaaaaaadYeVehlclclcehccdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYeVlclclcehehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaadYdVdVdVdYaaaaaaaaaadYdYdYehlclcehdYaaaaaaaaaadYehehlclclcehehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYehlclclcehehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaadYdVdVdVdYaaaaaaaaaadYehejehlclcehdYaaaaaaaaaadYehehlclclcehehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYehlclclcehehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaadYdYdYdYdYdYdYdYdYdYdYdVdVdVdYdYdYdYdYdYdYehehehlclcehdYdYdYdYdYdYdYehehlclclcehehdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYehlclclcehehdYdYdYdYdYdYdYdYdYdYaaaaaaaaaaaaaaaaaaaaaa
-aaaadYejehehehehehehehehejehaWehejehehehehehejehehehlclcehejehehehehehejehehlclclcehehejehehehehehehehehehejehehehehehehehehejehlclclcehehejehehehehehehehejdYaaaaaaaaaaaaaaaaaaaaaa
-aaaadYehehehehehehaWehehehaWehehehehehehehehehehehaWbjbjehehehehehehehehehaWbjbjbjaWehehehehehehehehehehehehehehehehehehehehehaWbjbjbjaWehehehehehehehehehehdYaaaaaaaaaaaaaaaaaaaaaa
-aaaadYlclclclclclcbjlclclcbjlclclclclclclclclclclcbjlclclclclclclclclclclcbjlclclcbjlclclclclclclclclclclclclclclclclclclclclcbjlclclcbjlclclclclclclclclclcdYaaaaaaaaaaaaaaaaaaaaaa
-aaaadYlclclclclclcbjlclclcbjlclclclclclclclclclclcbjlclclclclclclclclclclcbjlclclcbjlclclclclclclclclclclclclclclclclclclclclcbjlclclcbjlclclclclclclclclclcdYaaaaaaaaaaaaaaaaaaaaaa
-aaaadYcslclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclclccvdYaaaaaaaaaaaaaaaaaaaaaa
-aaaadYlclclclclclcbjlclclcbjlclclclclclclclclclclcbjlclclclclclclclclclclcbjlclclcbjlclclclclclclclclclclclclclclclclclclclclcbjlclclcbjlclclclclclclclclclcdYaaaaaaaaaaaaaaaaaaaaaa
-aaaadYlclclclclclcbjlclclcbjlclclclclclclclclclclcbjlclclclclclclclclclclcbjlclclcbjlclclclclclclclclclclclclclclclclclclclclcbjlclclcbjlclclclclclclclclclcdYaaaaaaaaaaaaaaaaaaaaaa
-aaaadYehehehehehehaWbjbjbjaWehehehehehehehehehehehaWehehlclclclclclclclcehaWbjbjbjaWehehehehehehehehehehehehehehehehehehehehehaWehehehaWehehehehehehehehehehdYaaaaaaaaaaaaaaaaaaaaaa
-aaaadYgvehehehehgvehlclclcehehgvehehehehehehehehehehehgvlclclclclclclclcehehlclclcehehgvehehehehehehehehehehgvehaWehgvehehehehehehehgvehaWgvehehehehehehehgvdYaaaaaaaaaaaaaaaaaaaaaa
-aaaadYdYdYdYdYdYdYehlclclcehehdYdYdYdYdYdYdYdYdYdYdYdYdYlclclclclclclclcehehlclclcehehdYdYdYdYdYdYdYdYdYdYdYdYdVdVdVdYdYdYdYdYdYdYdYdYdVdVdYdYdYdYdYdYdYdYdYdYaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadYehlclclcehehdYaaaaaaaaaaaaaaaaaaaaaadYlclclclclclclclcehehlclclcehehdYaaaaaaaaaaaaaaaaaaaadYdVdVdVdYaaaaaaaaaaaaaadYdVdVdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadYehlclclcehehdYaaaaaaaaaaaaaaaaaaaaaadYlclclclclclclccMehehlclclcehehdYaaaaaaaaaaaaaaaaaaaadYdVdVdVdYaaaaaaaaaaaaaadYdVdVdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadYehlclclcehehdYaaaaaaaaaaaaaaaaaaaaaadYdYdYdYdYdYdYdYdYehehlclclcehehdYaaaaaaaaaaaaaaaaaaaadYdVdVdVdYaaaaaaaaaaaaaadYdVdVdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadYehlclclcehehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYehehlclclcehehdYaaaaaaaaaaaaaaaaaaaadYcndVdVdYaaaaaaaaaaaaaadYcndVdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadYehlclclcehehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYehehlclclcehehdYaaaaaaaaaaaaaaaaaaaadYdVdVdVdYaaaaaaaaaaaaaadYdVdVdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadYeVlclclcehccdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYehehlclclcehehdYaaaaaaaaaaaaaaaaaaaadYdVdVdVdYaaaaaaaaaaaaaadYdVdVdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadYehlclclcehehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYeVehlclclcehccdYaaaaaadYdYdYdYdYdYdYdYdVdVdVdYaaaaaaaaaaaaaadYdVdVdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadYehlclclcehehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYehehlclclcehehdYaaaaaadYbndVdVdVdVdVbndVdVdVdYdYdYdYdYdYdYdYdYdVdVdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadYehlclclcehehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYehehlclclcehehdYaaaaaadYdVdVdVdVdVdVdVdVdVdVbndVdVdVdVdVdVdVdVdVdVdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadYehlclclcehehdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadYehehlclclcehehdYaaaaaadYdVdVcbdVdVdVdVdVcbdVdVdVdVdVdVdVdVdVdVcbdVdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadYehlclclcehehdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYehehlclclcehehdYaaaaaadYdVdVdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadYcObjbjbjaWehejehehehehehejehehehehehehehehejehehehehejehbzbjbjbjaWehdYaaaaaadYdVdVdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadYehlclclcbjlclclclclclclclclclclclclclclclclclclclclclclcbjlclclcehehdYaaaaaadYdVdVdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadYehlclclcbjlclclclclclclclclclclclclclclclclclclclclclclcbjlclclcehccdYdYdYdYdYdVdVdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadYehlclclcbjlclclclclclclclclclclclclclclclclclclclclclclcbjlclclcehaWdVdVdVdVbndVdVdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadYehehehehaWehehehehehehehgvehehehehehehehehgvehehehehehehaWehehehehehcbdVdVdVdVdVdVdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadYehgvehdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadYdYdYdYdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaWaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaWaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaWaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaWaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaWaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaWaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaWaWaWaWaWaWaWbjaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaWbnbzcbcbcbcbcbcbcbcbcbcbcccbbzcbcccbcbcbcbcbcbcbcbcbcbbzcbcbcbcbcbcbcbcbcbbzcbcbcbcbcncsaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaWcvcMhFcMcMcMcMcMcMcMcMcMcOcMcMcMcOcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMhFcMcQaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaWaWaWaWaWaWaWaWaWaWaWaWaWcvcMcMcMcMcMcMcMcMcMcMcMcOcMcMcMcOcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcQaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaWaZcUaZaZaZaZaZaZaZaZaZcUcvcMcMcRgNdfdfdfdfdfgNdfeeeoeoeoerdfgNdfdfdfdfdfdfdfdfgNdfdfdfdfdfdfdfdfdfgNeBcMeDcMcQaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaWaZaZaZeIaZaZaZaZaZaZaZeIeOcMcMeXfkfkfkfkfkfkfkfufGcMeDcMeXfufJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfGcMeDcMcQaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaWaZaZaZfLfLfLfLfLfLfLfLfLcvcMcMeXfkaaaaaaaaaafkfufGcMeDcMeXfufJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafJfGcMeDcMcQfTaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaWghaZaZfLaaaaaaaaaaaaaafLcvcMcMeXfkaaaaaaaaaafkfufGcMeDcMeXfufJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafJfGcMeDcMcQaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaWaZaZaZfLaaaaaaaaaaaaaafLcvcMcMgjfkaaaaaaaaaafkgtfGcMeDcMeXgKfJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafJgLcMeDcMcQaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaWaZaZaZfLaaaaaaaaaafLfLfLcvcMcMeXfkaaaaaaaaaafkfufGcMeDcMeXfufJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafJfGcMeDcMcQaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaWaZaZaZfLaaaaaaaaaafLaZcscvcMcMeXfkaaaaaaaaaafkfufGcMeDcMeXfufJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafJfGcMeDcMcQaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaWaWaWaWaWaWaWaWaWaWaWaZaZaZfLfLfLfLfLfLfLaZaZcvcMcMeXfkfkfkfkfkfkfkfufGcMeDcMeXfufJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfGcMeDcMcQaZaWaWaWaWaWaWaWaWaWaWaaaaaaaaaaaaaaaaaaaaaa
+aaaaaWgMaZaZaZaZaZaZaZaZcsaZhqaZcsaZaZaZaZaZcsaZaZcvcMcMeXgOfufufufufugOfufGcMeDcMeXfugOfufufufufufufufufugOfufufufufufufufugOfGcMeDcMcQaZcsaZaZaZaZaZaZaZhyaWaaaaaaaaaaaaaaaaaaaaaa
+aaaaaWcbcbcbcbcbcbcccbcbcbcccbcbcbcbcbcbcbcbcbcbcbgPeoeogQgRgRgRgRgRgRgRgRgSeoeoeogTgRgRgRgRgRgRgRgRgRgRgRgRgRgRgRgRgRgRgRgRgRgSeoeoeogUcbcbcbcbcbcbcbcbcbcbaWaaaaaaaaaaaaaaaaaaaaaa
+aaaagVhFcMcMcMcMcMgWcMcMcMgWcMcMcMcMcMhFcMcMcMcMcMgWcMcMcMcMcMcMhFcMcMcMcMcOcMcMcMcOcMcMcMcMcMcMcMcMcMcMcMhFcMcMcMcMcMcMcMcMcMgWcMcMcMgWcMcMcMcMcMcMcMcMcMhFgVaaaaaaaaaaaaaaaaaaaaaa
+aaaagVcMcMcMcMcMcMgWcMcMcMgWcMcMcMcMcMcMcMcMcMcMcMgWcMcMcMcMcMcMcMcMcMcMcMcOcMcMcMcOcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMgWcMcMcMgWcMcMcMcMcMcMcMcMcMcMgVaaaaaaaaaaaaaaaaaaaaaa
+aaaagVgXgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZhagVaaaaaaaaaaaaaaaaaaaaaa
+aaaagVcMcMcMcMcMcMgWcMcMcMgWcMcMcMcMcMcMcMcMcMcMcMgWcMcMcMcMcMcMcMcMcMcMcMcOcMcMcMgWcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMgWcMcMcMgWcMcMcMcMcMcMcMcMcMcMgVaaaaaaaaaaaaaaaaaaaaaa
+aaaagVhGcMcMcMcMcMgWcMcMcMgWcMcMcMcMcMhGcMcMcMcMcMgWcMcMcMcMcMcMcMcMcMcMcMcOcMcMcMgWcMcMcMcMcMcMcMcMcMcMhGcMcMcMcMcMcMcMcMcMcMgWcMcMcMgWcMcMcMcMcMcMcMcMcMhGgVaaaaaaaaaaaaaaaaaaaaaa
+aaaaaWhbhbhbhbhbhbhchdhdhderdfdfdfdfdfdfdfdfdfdfdfhedfeBcMcMcMcMcMcMcMcMcReeeoeoeohfhbhbhbhbhbhbhbhbhbhbhbhbhbhbhbhbhbhbhbhbhbhghbhbhbhghbhbhbhbhbhbhbhbhbhbaWaaaaaaaaaaaaaaaaaaaaaa
+aaaaaWhzaZaZaZaZhicvcMhhcMeXfuhjfufufufufufufufufufufuhncMcMcMcMcMcMcMcMeXfGcMeDcMcQaZhiaZaZaZaZaZaZaZaZaZaZhiaZhAaZhiaZaZaZaZaZaZaZhiaZhAhiaZaZaZaZaZaZaZhBaWaaaaaaaaaaaaaaaaaaaaaa
+aaaaaWaWaWaWaWaWaWcvcMhhcMeXfuhkhkhkhkhkhkhkhkhkhkhkhkhkcMcMcMcMcMcMcMcMeXfGcMeDcMcQaZhlhlhlhlhlhlhlhlhlhlhlhlaZaZaZhmhmhmhmhmhmhmhmhmaZaZaWaWaWaWaWaWaWaWaWaWaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWcvcMhhcMeXfuhkaaaaaaaaaaaaaaaaaaaaaahkcMcMcMcMcMcMcMcMeXfGcMeDcMcQaZhlaaaaaaaaaaaaaaaaaaaahlaZaZaZhmaaaaaaaaaaaaaahmaZaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWcvcMhhcMeXfuhkaaaaaaaaaaaaaaaaaaaaaahkcMcMcMcMcMcMcMhveXfGcMeDcMcQaZhlaaaaaaaaaaaaaaaaaaaahlaZaZaZhmaaaaaaaaaaaaaahmaZaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWcvcMhhcMeXfuhkaaaaaaaaaaaaaaaaaaaaaahkhkhkhkhkhkhkhkhkhofGcMeDcMcQaZhlaaaaaaaaaaaaaaaaaaaahlaZaZaZhmaaaaaaaaaaaaaahmaZaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWcvcMhhcMeXfuhkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahkfufGcMeDcMcQaZhlaaaaaaaaaaaaaaaaaaaahlghaZaZhmaaaaaaaaaaaaaahmghaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWcvcMhhcMeXfuhkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahkfufGcMeDcMcQaZhlaaaaaaaaaaaaaaaaaaaahlaZaZaZhmaaaaaaaaaaaaaahmaZaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWhpcMhhcMeXgKhkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahkfufGcMeDcMcQaZhlaaaaaaaaaaaaaaaaaaaahlaZaZaZhmaaaaaaaaaaaaaahmaZaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWcvcMhhcMeXfuhkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahkgtfGcMeDcMcQfThlaaaaaahlhlhlhlhlhlhlhlaZaZaZhmaaaaaaaaaaaaaahmaZaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWcvcMhhcMeXfuhkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahkfufGcMeDcMcQaZhlaaaaaahlcUaZaZaZaZaZcUaZaZaZhmhmhmhmhmhmhmhmhmaZaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWcvcMhhcMeXfuhkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahkfufGcMeDcMcQaZhlaaaaaahlaZaZaZaZaZaZaZaZaZaZcUaZaZaZaZaZaZaZaZaZaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWcvcMhhcMeXfuhkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahkfufGcMeDcMcQaZhlaaaaaahlaZaZeIaZaZaZaZaZeIaZaZaZaZaZaZaZaZaZaZeIaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWcvcMhhcMeXfuhkhkhkhkhkhkhkhkhkhkhkhkhkhkhkhkhkhkhkhkhkfufGcMeDcMcQaZhlaaaaaahlaZaZaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWhChdhdhdgTgRhrgRgRgRgRgRhrgRgRgRgRgRgRgRgRhrgRgRgRgRhrgRgSeoeoeohsaZhlaaaaaahlaZaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWcvcMcMcMcOcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcOcMcMcMcQaZhlaaaaaahlaZaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWcvcMcMcMcOhththththththththththththththththththththththtcOcMcMcMcQaZhlhlhlhlhlaZaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWcvcMhGcMcOcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcOcMhGcMhEaZcUaZaZaZcUaZaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWhuhbhbhbhghbhbhbhbhbhbhbhxhbhbhbhbhbhbhbhbhxhbhbhbhbhbhbhghbhbhbhwaZaZaZaZaZaZaZaZaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWaZhiaZaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWaWaWaWaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

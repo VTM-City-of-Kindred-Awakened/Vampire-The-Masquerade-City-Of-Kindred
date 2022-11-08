@@ -1,5 +1,14 @@
 /obj/effect/landmark/npcbeacon
 	name = "NPC beacon"
+	var/directionwalk
+
+/obj/effect/landmark/npcbeacon/directed
+	name = "NPC traffic"
+	icon_state = "npc"
+
+/obj/effect/landmark/npcbeacon/directed/Initialize()
+	..()
+	directionwalk = dir
 
 /mob/living/carbon/human/npc/Initialize()
 	..()
@@ -49,6 +58,11 @@
 				return get_step(location, direction)
 
 /mob/living/carbon/human/npc/proc/ChoosePath()
+	for(var/obj/effect/landmark/npcbeacon/BEAC in loc)
+		if(BEAC)
+			if(BEAC.directionwalk)
+				var/turf/myway = CreateWay(BEAC.directionwalk)
+				return myway
 	var/turf/north_steps = CreateWay(NORTH)
 	var/turf/south_steps = CreateWay(SOUTH)
 	var/turf/west_steps = CreateWay(WEST)

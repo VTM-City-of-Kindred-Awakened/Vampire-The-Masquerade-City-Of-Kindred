@@ -779,6 +779,10 @@
 	name = "Wisp"
 	icon_state = "hair_wisp"
 
+/datum/sprite_accessory/hair/pyotr
+	name = "Pyotr"
+	icon_state = "hair_pyotr"
+
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////
