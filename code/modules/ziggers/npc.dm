@@ -223,6 +223,10 @@
 																	"Наверное.",
 																	"Точно.",
 																	"Ага...")
+	var/list/help_phrases = list("На помощь!",
+																"Помогите!!",
+																"Что же это такое творится?!",
+																"Чёрт!!")
 
 /mob/living/carbon/human/npc/proc/AssignSocialRole(var/datum/socialrole/S, var/dont_random = FALSE)
 	if(!S)
@@ -375,26 +379,19 @@
 	if(user.a_intent == INTENT_HELP)
 		Annoy(user)
 	if(user.a_intent == INTENT_DISARM)
-		danger_source = user
-		last_danger_meet = world.time
+		Aggro(user)
 	if(user.a_intent == INTENT_HARM)
 		for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
-			NEPIC.danger_source = user
-			NEPIC.last_danger_meet = world.time
-			NEPIC.emote("scream")
+			NEPIC.Aggro(user)
 	..()
 
 /mob/living/carbon/human/npc/on_hit(obj/projectile/P)
 	..()
-	danger_source = P.firer
-	last_danger_meet = world.time
-	emote("scream")
+	Aggro(P.firer)
 
 /mob/living/carbon/human/npc/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	..()
-	danger_source = throwingdatum.thrower
-	last_danger_meet = world.time
-	emote("scream")
+	Aggro(throwingdatum.thrower)
 
 /mob/living/carbon/human/npc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
 	..()

@@ -21,8 +21,7 @@
 	if(ranged)
 		if(isnpc(target))
 			var/mob/living/carbon/human/npc/NPC = target
-			NPC.danger_source = caster
-			NPC.last_danger_meet = world.time
+			NPC.Aggro(caster)
 	caster.bloodpool -= cost
 	if(violates_masquerade)
 		if(CheckEyewitness(target, caster, 7, TRUE))

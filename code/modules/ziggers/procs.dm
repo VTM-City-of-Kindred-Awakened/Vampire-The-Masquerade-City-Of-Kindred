@@ -75,10 +75,7 @@
 				if(LC.get_lumcount() > 0.5 || get_dist(NPC, attacker <= 1))
 					if(!NPC.backinvisible(attacker))
 						seenby += NPC
-						NPC.emote("scream")
-						NPC.danger_source = attacker
-						NPC.last_danger_meet = world.time
-	var/turf/T = get_turf(attacker)
+						NPC.Aggro(attacker)
 	if(length(seenby) >= 1)
 		return TRUE
 	return FALSE

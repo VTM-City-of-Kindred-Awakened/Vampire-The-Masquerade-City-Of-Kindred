@@ -133,5 +133,4 @@
 	else
 		H.last_frenzy_check = world.time
 		for(var/mob/living/carbon/human/npc/NPC in viewers(5, src))
-			NPC.danger_source = H
-			NPC.last_danger_meet = world.time
+			NPC.Aggro(H)
