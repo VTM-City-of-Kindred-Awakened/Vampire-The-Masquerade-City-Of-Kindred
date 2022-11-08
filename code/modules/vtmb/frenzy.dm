@@ -116,6 +116,8 @@
 				H.client.prefs.save_character()
 			if(H.last_experience+600 <= world.time)
 				H.client.prefs.exper = min(1440, H.client.prefs.exper+1)
+				H.client.prefs.save_preferences()
+				H.client.prefs.save_character()
 				H.last_experience = world.time
 	if(H.bloodpool <= 1 && !H.in_frenzy)
 		if(H.last_frenzy_check+400 <= world.time)
