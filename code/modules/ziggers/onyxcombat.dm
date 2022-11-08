@@ -17,7 +17,13 @@
 	if(iskindred(src))
 		if(in_frenzy)
 			exit_frenzymod()
-		playsound(src, 'code/modules/ziggers/burning_death.ogg', 50, TRUE)
+		if(client)
+			if(client.prefs)
+				client.prefs.humanity = humanity
+				client.prefs.masquerade = masquerade
+				client.prefs.save_character()
+				client.prefs.save_preferences()
+		playsound(src, 'code/modules/ziggers/burning_death.ogg', 80, TRUE)
 		SEND_SOUND(src, sound('code/modules/ziggers/final_death.ogg', 0, 0, 50))
 		spawn(5)
 			dust(1, 1)
