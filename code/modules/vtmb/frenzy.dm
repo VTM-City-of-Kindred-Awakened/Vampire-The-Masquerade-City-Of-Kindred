@@ -10,6 +10,14 @@
 	var/atom/frenzy_target = null
 	var/last_experience = 0
 
+/client/Click(object,location,control,params)
+	if(isatom(object))
+		if(ishuman(mob))
+			var/mob/living/carbon/human/H = mob
+			if(H.in_frenzy)
+				return
+	..()
+
 /mob/living/carbon/human/proc/rollfrenzy()
 	if(clane && client)
 		to_chat(src, "The beast is calling. Rolling...")
@@ -121,7 +129,7 @@
 				H.client.prefs.masquerade = H.masquerade
 				H.client.prefs.save_preferences()
 				H.client.prefs.save_character()
-			if(H.last_experience+600 <= world.time)
+			if(H.last_experience+1200 <= world.time)
 				H.client.prefs.exper = min(1440, H.client.prefs.exper+1)
 				H.client.prefs.save_preferences()
 				H.client.prefs.save_character()

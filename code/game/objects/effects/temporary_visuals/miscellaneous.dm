@@ -283,11 +283,11 @@
 	icon = 'icons/mob/mob.dmi'
 	duration = 16
 
-/obj/effect/temp_visual/gib_animation/tremere
+/obj/effect/temp_visual/tremere
 	icon = 'code/modules/ziggers/48x48.dmi'
 	icon_state = "gib"
 	pixel_w = -8
-	duration = 16
+	duration = 50
 
 /obj/effect/temp_visual/dust_animation/Initialize(mapload, dust_icon)
 	icon_state = dust_icon // Before ..() so the correct icon is flick()'d

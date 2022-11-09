@@ -23,6 +23,12 @@
 			var/mob/living/carbon/human/npc/NPC = target
 			NPC.Aggro(caster)
 	caster.bloodpool -= cost
+	if(caster.client)
+		if(caster.client.prefs)
+			caster.client.prefs.exper = min(1440, caster.client.prefs.exper+1)
+			caster.client.prefs.save_preferences()
+			caster.client.prefs.save_character()
+			caster.last_experience = world.time
 	if(violates_masquerade)
 		if(CheckEyewitness(target, caster, 7, TRUE))
 			AdjustMasquerade(caster, -1)
@@ -428,8 +434,8 @@ proc/dancesecond(mob/living/M)
 
 /mob/living/proc/tremere_gib()
 	Stun(50)
-	new /obj/effect/temp_visual/gib_animation/tremere(loc)
-	animate(src, pixel_z = 16, color = "ff0000", time = 50)
+	new /obj/effect/temp_visual/tremere(loc, "gib")
+	animate(src, pixel_z = 16, color = "#ff0000", time = 50, loop = 1)
 	if(stat != DEAD)
 		death(TRUE)
 
@@ -467,7 +473,8 @@ proc/dancesecond(mob/living/M)
 	tracer_type = /obj/effect/projectile/tracer/thaumaturgy
 	muzzle_type = /obj/effect/projectile/muzzle/thaumaturgy
 	impact_type = /obj/effect/projectile/impact/thaumaturgy
-	var/returned_blood = 0
+	var/level = 1
+	var/returned_blood
 
 /obj/projectile/thaumaturgy/backwards
 	damage = 0
@@ -475,15 +482,16 @@ proc/dancesecond(mob/living/M)
 /obj/projectile/thaumaturgy/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	if(returned_blood)
 		if(iskindred(target))
-			var/mob/living/carbon/human/H = target
-			H.bloodpool += returned_blood
-			H.bloodpool = min(H.maxbloodpool, H.bloodpool)
-			H.update_blood_hud()
+			var/mob/living/carbon/human/HUM = target
+			HUM.bloodpool += returned_blood
+			HUM.bloodpool = min(HUM.maxbloodpool, HUM.bloodpool)
+			HUM.update_blood_hud()
 		return
 	else if(ishuman(firer))
 		var/mob/living/carbon/human/VH = firer
 		if(isliving(target))
 			var/mob/living/VL = target
+			var/turf/backstart = get_turf(VL)
 			if(!iskindred(target))
 				if(VL.bloodamount >= 1 && VL.stat != DEAD)
 					var/sucked = min(VL.bloodamount, 2)
@@ -500,19 +508,18 @@ proc/dancesecond(mob/living/M)
 					else
 						if(VL.bloodamount == 0)
 							VL.death()
-					var/turf/start = get_turf(target)
-					var/obj/projectile/thaumaturgy/backwards/H = new(start)
-					H.returned_blood = sucked*max(1, VH.bloodquality-1)
-					H.preparePixelProjectile(target, start)
-					H.fire(direct_target = firer)
+					var/obj/projectile/thaumaturgy/backwards/BACK = new(backstart)
+					BACK.firer = VL
+					BACK.returned_blood = sucked*max(1, VH.bloodquality-1)
+					BACK.preparePixelProjectile(VH, backstart)
+					BACK.fire(direct_target = VH)
 			else
 				if(VL.bloodpool >= 1)
-					var/sucked = min(VL.bloodpool, 1*(round((13-VH.generation)/2)))
-					var/turf/start = get_turf(target)
-					var/obj/projectile/thaumaturgy/backwards/H = new(start)
-					H.returned_blood = sucked
-					H.preparePixelProjectile(target, start)
-					H.fire(direct_target = firer)
+					var/sucked = min(VL.bloodpool, 1*level)
+					var/obj/projectile/thaumaturgy/backwards/BACK = new(backstart)
+					BACK.returned_blood = sucked
+					BACK.preparePixelProjectile(VH, backstart)
+					BACK.fire(direct_target = VH)
 
 /datum/discipline/thaumaturgy
 	name = "Thaumaturgy"
@@ -538,6 +545,7 @@ proc/dancesecond(mob/living/M)
 			H.firer = caster
 			H.damage = 20
 			H.preparePixelProjectile(target, start)
+			H.level = 2
 			H.fire(direct_target = target)
 		if(3)
 			var/turf/start = get_turf(caster)
@@ -545,6 +553,7 @@ proc/dancesecond(mob/living/M)
 			H.firer = caster
 			H.damage = 30
 			H.preparePixelProjectile(target, start)
+			H.level = 2
 			H.fire(direct_target = target)
 		else
 			if(iskindred(target))
@@ -553,6 +562,7 @@ proc/dancesecond(mob/living/M)
 				H.firer = caster
 				H.damage = 10*level
 				H.preparePixelProjectile(target, start)
+				H.level = round(level/2)
 				H.fire(direct_target = target)
 			else
 				caster.bloodpool += target.bloodamount

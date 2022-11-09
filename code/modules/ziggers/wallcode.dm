@@ -34,9 +34,9 @@
 	addwall.name = name
 	addwall.desc = desc
 
-/turf/closed/wall/vampwall/update_icon_state()
-	icon_state = "[base_icon_state]-[smoothing_junction]"
-	addwall.icon_state = "[base_icon_state]-[smoothing_junction]"
+/turf/closed/wall/vampwall/set_smoothed_icon_state(new_junction)
+	..()
+	addwall.icon_state = icon_state
 
 /turf/closed/wall/vampwall/Destroy()
 	..()
@@ -159,7 +159,9 @@
 	gender = PLURAL
 	name = "sidewalk"
 	icon = 'code/modules/ziggers/tiles.dmi'
-	icon_state = "sidewalk"
+	icon_state = "sidewalk1"
+	var/number_of_variations = 3
+	var/based_icon_state = "sidewalk"
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
@@ -168,17 +170,23 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
-/turf/open/floor/plating/sidewalk/corner
-	icon_state = "sidewalk_corner"
+/turf/open/floor/plating/sidewalk/Initialize()
+	..()
+	icon_state = "[based_icon_state][rand(1, number_of_variations)]"
 
-/turf/open/floor/plating/sidewalk/full
-	icon_state = "sidewalk_full"
+/turf/open/floor/plating/sidewalk/poor
+	icon_state = "sidewalk_poor1"
+	based_icon_state = "sidewalk_poor"
 
-/turf/open/floor/plating/sidewalk/alt
-	icon_state = "sidewalk_alt"
+/turf/open/floor/plating/sidewalk/rich
+	icon_state = "sidewalk_rich1"
+	number_of_variations = 6
+	based_icon_state = "sidewalk_rich"
 
-/turf/open/floor/plating/sidewalk/alt/corner
-	icon_state = "sidewalk_alt_corner"
+/obj/effect/decal/bordur
+	name = "sidewalk"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "border"
 
-/turf/open/floor/plating/sidewalk/alt/full
-	icon_state = "sidewalk_alt_full"
+/obj/effect/decal/bordur/corner
+	icon_state = "border_corner"

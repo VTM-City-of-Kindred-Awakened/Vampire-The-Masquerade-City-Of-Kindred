@@ -2130,8 +2130,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
 
-
-	character.skin_tone = skin_tone
+	if(clane.alt_sprite)
+		character.skin_tone = "albino"
+	else
+		character.skin_tone = get_vamp_skin_color(skin_tone)
 	character.hairstyle = hairstyle
 	character.facial_hairstyle = facial_hairstyle
 	character.underwear = underwear

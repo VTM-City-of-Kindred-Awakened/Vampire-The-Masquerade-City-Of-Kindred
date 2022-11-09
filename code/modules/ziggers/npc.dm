@@ -362,11 +362,28 @@
 	RealisticSay(phrase)
 
 /mob/living/carbon/human/Move(NewLoc, direct)
+	update_shadow()
 	var/mob/living/carbon/human/npc/NPC = locate() in NewLoc
 	if(NPC)
 		if(a_intent != INTENT_HELP)
 			NPC.Annoy(src)
 	..()
+
+
+/mob/living/carbon/human/toggle_resting()
+	..()
+	update_shadow()
+
+/mob/living/carbon/human/proc/update_shadow()
+	if(body_position != LYING_DOWN)
+		if(!overlays_standing[UNDERSHADOW_LAYER])
+			var/mutable_appearance/lying_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "shadow", -UNDERSHADOW_LAYER)
+			lying_overlay.pixel_z = -4
+			lying_overlay.alpha = 64
+			overlays_standing[UNDERSHADOW_LAYER] = lying_overlay
+			apply_overlay(UNDERSHADOW_LAYER)
+	else if(overlays_standing[UNDERSHADOW_LAYER])
+		remove_overlay(UNDERSHADOW_LAYER)
 
 /mob/living/carbon/human/npc/Move(NewLoc, direct)
 	var/mob/living/carbon/human/npc/NPC = locate() in NewLoc

@@ -20,17 +20,6 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 	var/humanitymod = 1
 	var/frenzymod = 1
 	var/start_humanity = 7
-	var/s_tones = list("caucasian1" = "vamp1",
-											"caucasian2" = "vamp2",
-											"caucasian3" = "vamp3",
-											"latino" = "vamp4",
-											"mediterranean" = "vamp5",
-											"asian1" = "vamp6",
-											"asian2" = "vamp7",
-											"arab" = "vamp8",
-											"indian" = "vamp9",
-											"african1" = "vamp10",
-											"african2" = "vamp11")
 	var/haircuts
 	var/violating_appearance
 //	var/datum/action/innate/drink_blood/sosalka = new
@@ -39,7 +28,7 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 	..()
 //		var/datum/preferences/Pref = C.client.prefs
 //		C.clane = new C.client.prefs.clane()
-	C.skin_tone = "albino"
+//	C.skin_tone = "albino"
 	C.update_body(0)
 	C.last_experience = world.time+3000
 //	if(Pref.clane.clane_outfit)
@@ -50,12 +39,6 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 //		SEND_SIGNAL(src, Pref.clane.clane_curse)
 
 /datum/vampireclane/proc/on_gain(var/mob/living/carbon/human/H)
-	if(s_tones)
-		if(s_tones[H.skin_tone])
-			H.skin_tone = s_tones[H.skin_tone]
-			H.update_body_parts()
-			H.update_body()
-			H.update_icon()
 	if(alt_sprite)
 		H.skin_tone = "albino"
 		H.dna.species.limbs_id = alt_sprite
