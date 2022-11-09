@@ -143,6 +143,7 @@
 		update_icon()
 	if(prob(25))
 		new /obj/effect/decal/asphalt(src)
+	set_light(1, 0.25, "#a4b7ff")
 
 /turf/open/floor/plating/asphalt/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
@@ -173,6 +174,7 @@
 /turf/open/floor/plating/sidewalk/Initialize()
 	..()
 	icon_state = "[based_icon_state][rand(1, number_of_variations)]"
+	set_light(1, 0.25, "#a4b7ff")
 
 /turf/open/floor/plating/sidewalk/poor
 	icon_state = "sidewalk_poor1"
@@ -190,3 +192,101 @@
 
 /obj/effect/decal/bordur/corner
 	icon_state = "border_corner"
+
+//STRUCTURES
+
+/obj/structure/lamppost
+	name = "lamppost"
+	desc = "Gives some light to the streets."
+	icon = 'code/modules/ziggers/lamppost.dmi'
+	base_icon_state = "base"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	var/number_of_lamps
+	pixel_w = -32
+	anchored = TRUE
+	density = TRUE
+
+/obj/effect/decal/lamplight
+	alpha = 0
+
+/obj/effect/decal/lamplight/Initialize()
+	..()
+	set_light(4, 1, "#ffde9b")
+
+/obj/structure/lamppost/Initialize()
+	..()
+	switch(number_of_lamps)
+		if(1)
+			switch(dir)
+				if(NORTH)
+					new /obj/effect/decal/lamplight(get_step(loc, NORTH))
+				if(SOUTH)
+					new /obj/effect/decal/lamplight(get_step(loc, SOUTH))
+				if(EAST)
+					new /obj/effect/decal/lamplight(get_step(loc, EAST))
+				if(WEST)
+					new /obj/effect/decal/lamplight(get_step(loc, WEST))
+		if(2)
+			switch(dir)
+				if(NORTH)
+					new /obj/effect/decal/lamplight(get_step(loc, NORTH))
+					new /obj/effect/decal/lamplight(get_step(loc, SOUTH))
+				if(SOUTH)
+					new /obj/effect/decal/lamplight(get_step(loc, NORTH))
+					new /obj/effect/decal/lamplight(get_step(loc, SOUTH))
+				if(EAST)
+					new /obj/effect/decal/lamplight(get_step(loc, EAST))
+					new /obj/effect/decal/lamplight(get_step(loc, WEST))
+				if(WEST)
+					new /obj/effect/decal/lamplight(get_step(loc, EAST))
+					new /obj/effect/decal/lamplight(get_step(loc, WEST))
+		if(3)
+			switch(dir)
+				if(NORTH)
+					new /obj/effect/decal/lamplight(get_step(loc, NORTH))
+					new /obj/effect/decal/lamplight(get_step(loc, EAST))
+					new /obj/effect/decal/lamplight(get_step(loc, WEST))
+				if(SOUTH)
+					new /obj/effect/decal/lamplight(get_step(loc, SOUTH))
+					new /obj/effect/decal/lamplight(get_step(loc, EAST))
+					new /obj/effect/decal/lamplight(get_step(loc, WEST))
+				if(EAST)
+					new /obj/effect/decal/lamplight(get_step(loc, EAST))
+					new /obj/effect/decal/lamplight(get_step(loc, NORTH))
+					new /obj/effect/decal/lamplight(get_step(loc, SOUTH))
+				if(WEST)
+					new /obj/effect/decal/lamplight(get_step(loc, WEST))
+					new /obj/effect/decal/lamplight(get_step(loc, NORTH))
+					new /obj/effect/decal/lamplight(get_step(loc, SOUTH))
+		if(4)
+			new /obj/effect/decal/lamplight(get_step(loc, NORTH))
+			new /obj/effect/decal/lamplight(get_step(loc, SOUTH))
+			new /obj/effect/decal/lamplight(get_step(loc, EAST))
+			new /obj/effect/decal/lamplight(get_step(loc, WEST))
+
+/obj/structure/lamppost/one
+	icon_state = "one"
+	number_of_lamps = 1
+
+/obj/structure/lamppost/two
+	icon_state = "two"
+	number_of_lamps = 2
+
+/obj/structure/lamppost/three
+	icon_state = "three"
+	number_of_lamps = 3
+
+/obj/structure/lamppost/four
+	icon_state = "four"
+	number_of_lamps = 4
+
+/obj/structure/trafficlight
+	name = "traffic light"
+	desc = "Shows when road is free or not."
+	icon = 'code/modules/ziggers/lamppost.dmi'
+	base_icon_state = "traffic"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	pixel_w = -32
+	anchored = TRUE

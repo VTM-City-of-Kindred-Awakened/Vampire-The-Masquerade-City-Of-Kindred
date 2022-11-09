@@ -133,7 +133,7 @@
 				H.client.prefs.masquerade = H.masquerade
 				H.client.prefs.save_preferences()
 				H.client.prefs.save_character()
-			if(H.last_experience+1200 <= world.time)
+			if(H.last_experience+600 <= world.time)
 				H.client.prefs.exper = min(1440, H.client.prefs.exper+1)
 				H.client.prefs.save_preferences()
 				H.client.prefs.save_character()

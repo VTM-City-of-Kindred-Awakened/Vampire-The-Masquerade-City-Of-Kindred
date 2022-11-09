@@ -63,7 +63,7 @@
 "bk" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/door/airlock,/obj/structure/cable,/turf/open/floor/plating,/area/engine/atmos)
 "bl" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/meter,/turf/open/floor/plating,/area/engine/atmos)
 "bm" = (/obj/machinery/atmospherics/components/binary/valve/on{dir = 4},/turf/open/floor/plating,/area/engine/atmos)
-"bn" = (/obj/machinery/light{dir = 1; pixel_y = 24},/obj/effect/decal/bordur,/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
+"bn" = (/obj/structure/lamppost/one{icon_state = "one"; dir = 8},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
 "bo" = (/obj/structure/table,/obj/item/screwdriver/power,/obj/item/crowbar/power,/turf/open/floor/plasteel,/area/engine/engineering)
 "bp" = (/obj/machinery/light,/obj/structure/tank_dispenser,/turf/open/floor/plasteel,/area/engine/engineering)
 "bq" = (/obj/effect/turf_decal/stripes/line{dir = 10},/obj/machinery/light,/obj/machinery/telecomms/allinone{network = "tcommsat"},/turf/open/floor/plasteel,/area/engine/gravity_generator)
@@ -75,7 +75,7 @@
 "bw" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/security/brig)
 "bx" = (/obj/machinery/door/airlock,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/cable,/turf/open/floor/plating,/area/engine/engineering)
 "by" = (/turf/closed/wall/r_wall,/area/medical/medbay)
-"bz" = (/obj/machinery/light{dir = 1; pixel_y = 24},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
+"bz" = (/obj/effect/decal/bordur{icon_state = "border"; dir = 1},/obj/structure/lamppost/one{icon_state = "one"; dir = 1},/turf/open/floor/plating/sidewalk/rich,/area/hallway/secondary/entry)
 "bA" = (/turf/closed/wall/r_wall,/area/science)
 "bB" = (/obj/machinery/mecha_part_fabricator,/turf/open/floor/plasteel,/area/science)
 "bC" = (/obj/machinery/computer/prisoner/gulag_teleporter_computer{dir = 4},/turf/open/floor/plasteel,/area/security/brig)
@@ -223,7 +223,7 @@
 "eo" = (/obj/effect/decal/crosswalk{icon_state = "crosswalk1"; dir = 8},/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
 "ep" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 8},/obj/structure/cable,/turf/open/floor/plasteel,/area/hallway/secondary/entry)
 "eq" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/cable,/turf/open/floor/plasteel,/area/hallway/secondary/entry)
-"er" = (/obj/machinery/light{pixel_y = 16},/obj/effect/decal/bordur{icon_state = "border"; dir = 1},/turf/open/floor/plating/sidewalk/rich,/area/hallway/secondary/entry)
+"er" = (/obj/effect/decal/bordur{icon_state = "border"; dir = 8},/obj/structure/lamppost/one{icon_state = "one"; dir = 8},/turf/open/floor/plating/sidewalk/rich,/area/hallway/secondary/entry)
 "es" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/machinery/dna_scannernew,/obj/effect/turf_decal/tile/blue{dir = 4},/turf/open/floor/plasteel/white/corner,/area/medical/medbay)
 "et" = (/turf/closed/wall/r_wall,/area/quartermaster/storage)
 "eu" = (/turf/open/floor/plasteel,/area/quartermaster/storage)
@@ -346,23 +346,23 @@
 "gH" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/camera/autoname,/obj/structure/cable,/turf/open/floor/plasteel,/area/hallway/secondary/exit/departure_lounge)
 "gI" = (/obj/machinery/light{dir = 1},/obj/machinery/camera/autoname,/turf/open/floor/plasteel,/area/hallway/secondary/entry)
 "gJ" = (/obj/structure/table,/obj/item/storage/box/prisoner,/obj/item/paper/guides/jobs/security/labor_camp,/turf/open/floor/plasteel,/area/security/brig)
-"gK" = (/obj/machinery/light{dir = 4},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
+"gK" = (/obj/effect/decal/bordur{icon_state = "border"; dir = 4},/obj/structure/lamppost/one{icon_state = "one"; dir = 4},/turf/open/floor/plating/sidewalk/rich,/area/hallway/secondary/entry)
 "gL" = (/obj/machinery/light/small{dir = 8},/turf/open/floor/plating/sidewalk/poor,/area/hallway/secondary/entry)
-"gM" = (/obj/machinery/light{dir = 4},/obj/effect/decal/bordur{icon_state = "border"; dir = 8},/turf/open/floor/plating/sidewalk/rich,/area/hallway/secondary/entry)
-"gN" = (/obj/machinery/light{dir = 8},/turf/open/floor/plating/sidewalk/rich,/area/hallway/secondary/entry)
-"gO" = (/obj/machinery/light{dir = 4},/turf/open/floor/plating/sidewalk/rich,/area/hallway/secondary/entry)
-"gP" = (/obj/machinery/light{dir = 8},/obj/effect/decal/bordur{icon_state = "border"; dir = 4},/turf/open/floor/plating/sidewalk/rich,/area/hallway/secondary/entry)
+"gM" = (/obj/structure/lamppost/one,/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
+"gN" = (/obj/structure/lamppost/three,/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
+"gO" = (/obj/structure/lamppost/one,/turf/open/floor/plating/sidewalk/rich,/area/hallway/secondary/entry)
+"gP" = (/obj/structure/lamppost/one{icon_state = "one"; dir = 1},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
 "gQ" = (/obj/effect/decal/bordur,/turf/open/floor/plating/sidewalk/poor,/area/hallway/secondary/entry)
 "gR" = (/obj/effect/landmark/npcbeacon/directed{icon_state = "npc"; dir = 4},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
 "gS" = (/obj/effect/landmark/npcbeacon/directed{icon_state = "npc"; dir = 1},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
-"gT" = (/obj/machinery/light{dir = 1; pixel_y = 24},/turf/open/floor/plating/sidewalk/rich,/area/hallway/secondary/entry)
+"gT" = (/obj/structure/lamppost/three{icon_state = "three"; dir = 8},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
 "gU" = (/obj/effect/landmark/npcbeacon/directed{icon_state = "npc"; dir = 8},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
 "gV" = (/turf/closed/wall/vampwall/brick,/area/hallway/secondary/entry)
 "gW" = (/obj/effect/decal/crosswalk,/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
-"gX" = (/obj/machinery/light{dir = 8},/obj/effect/decal/asphaltline/alt{icon_state = "line_alt"; dir = 8},/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
+"gX" = (/obj/effect/decal/bordur{icon_state = "border"; dir = 4},/obj/structure/lamppost/three{icon_state = "three"; dir = 4},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
 "gY" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8},/obj/structure/cable,/turf/open/floor/plasteel,/area/science)
 "gZ" = (/obj/effect/decal/asphaltline/alt{icon_state = "line_alt"; dir = 8},/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
-"ha" = (/obj/machinery/light{dir = 4},/obj/effect/decal/asphaltline/alt{icon_state = "line_alt"; dir = 8},/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
+"ha" = (/obj/effect/decal/bordur{icon_state = "border"; dir = 8},/obj/structure/lamppost/four,/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
 "hb" = (/obj/effect/landmark/npcbeacon,/obj/effect/decal/bordur/corner{icon_state = "border_corner"; dir = 4},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
 "hc" = (/obj/effect/decal/bordur/corner,/turf/open/floor/plating/sidewalk/rich,/area/hallway/secondary/entry)
 "hd" = (/obj/effect/decal/crosswalk{icon_state = "crosswalk1"; dir = 4},/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
@@ -380,16 +380,14 @@
 "hp" = (/obj/effect/landmark/npcbeacon,/obj/effect/decal/bordur{icon_state = "border"; dir = 1},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
 "hq" = (/obj/effect/decal/bordur/corner{icon_state = "border_corner"; dir = 1},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
 "hr" = (/obj/effect/decal/bordur/corner{icon_state = "border_corner"; dir = 8},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
-"hs" = (/obj/machinery/light{pixel_y = 16},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
+"hs" = (/obj/effect/decal/bordur{icon_state = "border"; dir = 4},/obj/structure/lamppost/one{icon_state = "one"; dir = 4},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
 "ht" = (/obj/effect/decal/asphaltline{icon_state = "line"; dir = 8},/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
-"hu" = (/obj/machinery/light{pixel_y = 16},/obj/effect/decal/bordur{icon_state = "border"; dir = 4},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
-"hv" = (/obj/machinery/light{pixel_y = 16},/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
+"hu" = (/obj/structure/lamppost/one{icon_state = "one"; dir = 4},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
+"hv" = (/obj/effect/landmark/npcbeacon,/obj/effect/decal/bordur{icon_state = "border"; dir = 4},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
 "hw" = (/obj/effect/landmark/npcbeacon/directed,/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
 "hx" = (/obj/effect/decal/bordur{icon_state = "border"; dir = 1},/turf/open/floor/plating/sidewalk/poor,/area/hallway/secondary/entry)
 "hy" = (/obj/effect/decal/bordur{icon_state = "border"; dir = 9},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
-"hz" = (/obj/machinery/light{dir = 8},/obj/effect/decal/bordur{icon_state = "border"; dir = 4},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
-"hA" = (/obj/machinery/light{dir = 8},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
-"hB" = (/obj/machinery/light{dir = 8},/obj/effect/landmark/npcbeacon,/obj/effect/decal/bordur{icon_state = "border"; dir = 4},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
+"hz" = (/obj/effect/decal/bordur{icon_state = "border"; dir = 1},/obj/structure/lamppost/one{icon_state = "one"; dir = 1},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
 "hC" = (/obj/effect/landmark/npcbeacon,/obj/effect/decal/bordur{icon_state = "border"; dir = 8},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
 "hD" = (/obj/structure/closet/secure_closet/chemical/heisenberg{locked = 0},/turf/open/floor/plasteel,/area/medical/chemistry)
 "hE" = (/obj/effect/landmark/npcbeacon/directed{icon_state = "npc"; dir = 4},/obj/effect/decal/bordur{icon_state = "border"; dir = 8},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
@@ -397,7 +395,6 @@
 "hG" = (/obj/effect/decal/stock,/turf/open/floor/plating/asphalt,/area/hallway/secondary/entry)
 "hH" = (/obj/machinery/light/small{dir = 1; icon_state = "bulb"; pixel_y = 24},/obj/effect/decal/bordur{icon_state = "border"; dir = 8},/turf/open/floor/plating/sidewalk/poor,/area/hallway/secondary/entry)
 "hI" = (/obj/effect/decal/bordur{icon_state = "border"; dir = 5},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
-"hJ" = (/obj/machinery/light{pixel_y = 16},/obj/effect/decal/bordur{icon_state = "border"; dir = 1},/turf/open/floor/plating/sidewalk,/area/hallway/secondary/entry)
 "hK" = (/obj/effect/decal/bordur{icon_state = "border"; dir = 8},/turf/open/floor/plating/sidewalk/poor,/area/hallway/secondary/entry)
 "ii" = (/obj/effect/turf_decal/stripes/line{dir = 4},/obj/machinery/light_switch{pixel_x = -20},/turf/open/floor/plasteel,/area/construction)
 "jb" = (/obj/machinery/door/airlock,/obj/structure/cable,/turf/open/floor/plasteel,/area/science)
@@ -556,44 +553,44 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaWcbaWaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaWcbaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaWcbaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaWaWaWaWaWaWaWaZaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaWbjbncccccccccccccccccccccnccbncccnccccccccccccccccccccbnccccccccccccccccccbncccccccccsbzaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaWcvcMhFcMcMcMcMcMcMcMcMcMcOcMcMcMcOcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMhFcMcQcbaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaWbjcccccccccccccccccccccccncccccccncccccccccccccccccccccccccccccccccccccccccccccccccccscbaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaWcvcMhFcMcMcMcMcMcMcMcMcMcOcMcMcMcOcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMhFcMcQbnaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaWaWaWaWaWaWaWaWaWaWaWaWaWcvcMcMcMcMcMcMcMcMcMcMcMcOcMcMcMcOcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcQcbaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaWcRcUcRcRcRcRcRcRcRcRcRdfcvcMcMeeereBeBeBeBeBereBeIeoeoeoeOeBereBeBeBeBeBeBeBeBereBeBeBeBeBeBeBeBeBereXcMeDcMcQcbaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaWcRcUcRcRcRcRcRcRcRcRcRdfcvcMcMeeeBeBeBbzeBeBeBeBeIeoeoeoeOeBeBeBeBeBeBeBeBbzeBeBeBeBeBeBeBeBeBbzeBeBeXcMeDcMcQcbaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaWcRcRcRfucRcRcRcRcRcRcRfGfTcMcMghfkfkfkfkfkfkfkgjgtcMeDcMghgjfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJgtcMeDcMcQcbaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaWcRcRcRfLfLfLfLfLfLfLfLfLcvcMcMghfkaaaaaaaaaafkgjgtcMeDcMghgjfJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafJgtcMeDcMcQgKaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaWcRcRcRfLfLfLfLfLfLfLfLfLcvcMcMghfkaaaaaaaaaafkgjgtcMeDcMghgjfJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafJgtcMeDcMcQcbaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaWgLcRcRfLaaaaaaaaaaaaaafLcvcMcMghfkaaaaaaaaaafkgjgtcMeDcMghgjfJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafJgtcMeDcMcQcbaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaWcRcRcRfLaaaaaaaaaaaaaafLcvcMcMgMfkaaaaaaaaaafkgNgtcMeDcMghgOfJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafJgPcMeDcMcQcbaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaWcRcRcRfLaaaaaaaaaaaaaafLcvcMcMerfkaaaaaaaaaafkgjgKcMeDcMergjfJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafJgtcMeDcMcQbnaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaWcRcRcRfLaaaaaaaaaafLfLfLcvcMcMghfkaaaaaaaaaafkgjgtcMeDcMghgjfJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafJgtcMeDcMcQcbaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaWcRcRcRfLaaaaaaaaaafLcbbzcvcMcMghfkaaaaaaaaaafkgjgtcMeDcMghgjfJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafJgtcMeDcMcQcbaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaWcRcRcRfLaaaaaaaaaafLcbcbcvcMcMghfkaaaaaaaaaafkgjgtcMeDcMghgjfJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafJgtcMeDcMcQcbaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaWaWaWaWaWaWaWaWaWaWaWgQgQgQfLfLfLfLfLfLfLcbcbcvcMcMghfkfkfkfkfkfkfkgjgtcMeDcMghgjfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJfJgtcMeDcMcQcbaWaWaWaWaWaWaWaWaWaWaaaaaaaaaaaaaaaaaaaaaa
-aaaaaWbzgRcbcbcbcbcbcbcbbzcbgScbbzcbcbcbcbcbbzcbcbcvcMcMghgTgjgjgjgjgjgTgjgtcMeDcMghgjgTgjgjgjgjgjgjgjgjgjgTgjgjgjgjgjgjgjgjgTgtcMeDcMcQcbbzcbcbcbcbcbcbgUbzaWaaaaaaaaaaaaaaaaaaaaaa
+aaaaaWgMgRcbcbcbcbcbgMcbcbcbgScbcbgMcbcbcbcbcbcbgNcvcMcMghgjgjgjgOgjgjgjgjgtcMeDcMghgjgjgjgjgjgjgjgjgOgjgjgjgjgjgjgjgjgjgOgjgjgtcMeDcMcQcbcbgMcbcbcbcbcbgUgMaWaaaaaaaaaaaaaaaaaaaaaa
 aaaaaWcccccccccccccncccccccncccccccccccccccccccccchbeoeohchehehehehehehehehfeoeoeohghehehehehehehehehehehehehehehehehehehehehehfeoeoeohiccccccccccccccccccccaWaaaaaaaaaaaaaaaaaaaaaa
 aaaagVhFcMcMcMcMcMgWcMcMcMgWcMcMcMcMcMhFcMcMcMcMcMgWcMcMcMcMcMcMhFcMcMcMcMcOcMcMcMcOcMcMcMcMcMcMcMcMcMcMcMhFcMcMcMcMcMcMcMcMcMgWcMcMcMgWcMcMcMcMcMcMcMcMcMhFgVaaaaaaaaaaaaaaaaaaaaaa
 aaaagVcMcMcMcMcMcMgWcMcMcMgWcMcMcMcMcMcMcMcMcMcMcMgWcMcMcMcMcMcMcMcMcMcMcMcOcMcMcMcOcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMgWcMcMcMgWcMcMcMcMcMcMcMcMcMcMgVaaaaaaaaaaaaaaaaaaaaaa
-aaaagVgXgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZhagVaaaaaaaaaaaaaaaaaaaaaa
+aaaagVgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgZgVaaaaaaaaaaaaaaaaaaaaaa
 aaaagVcMcMcMcMcMcMgWcMcMcMgWcMcMcMcMcMcMcMcMcMcMcMgWcMcMcMcMcMcMcMcMcMcMcMcOcMcMcMgWcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMgWcMcMcMgWcMcMcMcMcMcMcMcMcMcMgVaaaaaaaaaaaaaaaaaaaaaa
 aaaagVhGcMcMcMcMcMgWcMcMcMgWcMcMcMcMcMhGcMcMcMcMcMgWcMcMcMcMcMcMcMcMcMcMcMcOcMcMcMgWcMcMcMcMcMcMcMcMcMcMhGcMcMcMcMcMcMcMcMcMcMgWcMcMcMgWcMcMcMcMcMcMcMcMcMhGgVaaaaaaaaaaaaaaaaaaaaaa
 aaaaaWhjhjhjhjhjhjhnhdhdhdhohjhjhjhjhjhjhjhjhjhjhjhphjhqcMcMcMcMcMcMcMcMhrhneoeoeohohjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhphjhjhjhphjhjhjhjhjhjhjhjhjhjaWaaaaaaaaaaaaaaaaaaaaaa
-aaaaaWhsgRcbcbcbhscvcMhhcMcQcbhscbcbcbcbcbcbcbcbcbcbcbhucMcMcMcMcMcMcMcMcQcvcMeDcMcQcbhscbcbcbcbcbcbcbcbcbcbhscbhwcbhscbcbcbcbcbcbcbhscbhwhscbcbcbcbcbcbgUhsaWaaaaaaaaaaaaaaaaaaaaaa
+aaaaaWgPgRcbcbcbcbcvcMhhcMcQgTcbcbcbcbcbcbcbcbcbcbcbcbgXcMcMcMcMcMcMcMcMhacvcMeDcMcQgTcbcbcbcbcbcbcbgPcbcbcbcbcbhwcbcbcbgPcbcbcbcbcbcbcbhwcbgPcbcbcbcbcbgUgPaWaaaaaaaaaaaaaaaaaaaaaa
 aaaaaWaWaWaWaWaWaWcvcMhhcMcQcbhkhkhkhkhkhkhkhkhkhkhkhkhkcMcMcMcMcMcMcMcMcQcvcMeDcMcQcbhlhlhlhlhlhlhlhlhlhlhlhlhxhxhxhmhmhmhmhmhmhmhmhmhxhxaWaWaWaWaWaWaWaWaWaWaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaWcvcMhhcMcQcbhkaaaaaaaaaaaaaaaaaaaaaahkcMcMcMcMcMcMcMcMcQcvcMeDcMcQcbhlaaaaaaaaaaaaaaaaaaaahlcRcRcRhmaaaaaaaaaaaaaahmcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaWcvcMhhcMcQcbhkaaaaaaaaaaaaaaaaaaaaaahkhvcMcMcMcMcMcMhvcQcvcMeDcMcQcbhlaaaaaaaaaaaaaaaaaaaahlcRcRcRhmaaaaaaaaaaaaaahmcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaWcvcMhhcMcQcbhkaaaaaaaaaaaaaaaaaaaaaahkhkhkhkhkhkhkhkhkhycvcMeDcMcQcbhlaaaaaaaaaaaaaaaaaaaahlcRcRcRhmaaaaaaaaaaaaaahmcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWcvcMhhcMcQcbhkaaaaaaaaaaaaaaaaaaaaaahkcMcMcMcMcMcMcMcMcQcvcMeDcMcQcbhlaaaaaaaaaaaaaaaaaaaahlcRcRcRhmaaaaaaaaaaaaaahmcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWhscMhhcMcQcbhkaaaaaaaaaaaaaaaaaaaaaahkhkhkhkhkhkhkhkhkhycvcMeDcMcQcbhlaaaaaaaaaaaaaaaaaaaahlcRcRcRhmaaaaaaaaaaaaaahmcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaWcvcMhhcMcQcbhkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahkcbcvcMeDcMcQcbhlaaaaaaaaaaaaaaaaaaaahlgLcRcRhmaaaaaaaaaaaaaahmgLcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaWcvcMhhcMcQcbhkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahkcbcvcMeDcMcQcbhlaaaaaaaaaaaaaaaaaaaahlcRcRcRhmaaaaaaaaaaaaaahmcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaWhzcMhhcMcQgKhkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahkcbcvcMeDcMcQcbhlaaaaaaaaaaaaaaaaaaaahlcRcRcRhmaaaaaaaaaaaaaahmcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaWcvcMhhcMcQcbhkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahkhAcvcMeDcMcQgKhlaaaaaahlhlhlhlhlhlhlhlcRcRcRhmaaaaaaaaaaaaaahmcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWcvcMhhcMcQcbhkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahkcbcvcMeDcMcQcbhlaaaaaaaaaaaaaaaaaaaahlcRcRcRhmaaaaaaaaaaaaaahmcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWcvcMhhcMcQcbhkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahkhucvcMeDcMcQbnhlaaaaaahlhlhlhlhlhlhlhlcRcRcRhmaaaaaaaaaaaaaahmcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaWcvcMhhcMcQcbhkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahkcbcvcMeDcMcQcbhlaaaaaahlcUcRcRcRcRcRcUcRcRcRhmhmhmhmhmhmhmhmhmcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaWcvcMhhcMcQcbhkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahkcbcvcMeDcMcQcbhlaaaaaahlcRcRcRcRcRcRcRcRcRcRcUcRcRcRcRcRcRcRcRcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWcvcMhhcMcQbnhkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahkcbcvcMeDcMcQcbhlaaaaaahlcRcRcRcRcRcRcRcRcRcRcUcRcRcRcRcRcRcRcRcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaWcvcMhhcMcQcbhkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahkcbcvcMeDcMcQcbhlaaaaaahlcRcRfucRcRcRcRcRfucRcRcRcRcRcRcRcRcRcRfucRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaWcvcMhhcMcQcbhkhkhkhkhkhkhkhkhkhkhkhkhkhkhkhkhkhkhkhkhkcbcvcMeDcMcQcbhlaaaaaahlcRcRaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaWhBhdhdhdhiccbnccccccccccbnccccccccccccccccbnccccccccbncchbeoeoeohCcbhlaaaaaahlcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWhvhdhdhdhicccccccccccccccccccccccccccccccccccccccccccccchbeoeoeohCcbhlaaaaaahlcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaWcvcMcMcMcOcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcOcMcMcMcQcbhlaaaaaahlcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaWcvcMcMcMcOhththththththththththththththththththththththtcOcMcMcMcQcbhlhlhlhlhlcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaWcvcMhGcMcOcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcMcOcMhGcMhEcbhHcRcRcRcUcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaWhIhjhjhjhphjhjhjhjhjhjhjhJhjhjhjhjhjhjhjhjhJhjhjhjhjhjhjhphjhjhjhycbhKcRcRcRcRcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaWcbhscbaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWhIhjhjhjhphjhjhjhjhzhjhjhjhjhjhjhjhzhjhjhjhjhjhjhzhjhjhjhphjhjhjhycbhKcRcRcRcRcRcRaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaWcbgPcbaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaWaWaWaWaWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

@@ -41,7 +41,7 @@
 
 /datum/discipline/animalism
 	name = "Animalism"
-	desc = "Summons Spectral Wolf over your targets."
+	desc = "Summons Spectral Animals over your targets. Violates Masquerade."
 	icon_state = "animalism"
 	cost = 2
 	ranged = TRUE
@@ -100,7 +100,7 @@
 
 /datum/discipline/celerity
 	name = "Celerity"
-	desc = "Boosts your speed."
+	desc = "Boosts your speed. Violates Masquerade."
 	icon_state = "celerity"
 	cost = 1
 	ranged = FALSE
@@ -347,7 +347,7 @@ proc/dancesecond(mob/living/M)
 
 /datum/discipline/protean
 	name = "Protean"
-	desc = "Lets your beast out, making you stronger and faster."
+	desc = "Lets your beast out, making you stronger and faster. Violates Masquerade."
 	icon_state = "protean"
 	cost = 1
 	ranged = FALSE
@@ -460,10 +460,10 @@ proc/dancesecond(mob/living/M)
 	icon_state = "thaumaturgy"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 10
-	damage_type = BRUTE
+	damage_type = BURN
 	hitsound = 'code/modules/ziggers/drinkblood1.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
-	flag = BULLET
+	flag = LASER
 	light_system = MOVABLE_LIGHT
 	light_range = 1
 	light_power = 1
@@ -506,7 +506,7 @@ proc/dancesecond(mob/living/M)
 
 /datum/discipline/thaumaturgy
 	name = "Thaumaturgy"
-	desc = "Sucks blood from your victim in distance. Even from your own kind."
+	desc = "Sucks blood from your victim in distance. Even from your own kind. On higher levels boils blood of victims and unlocks blood shield. Violates Masquerade."
 	icon_state = "thaumaturgy"
 	cost = 1
 	ranged = TRUE

@@ -517,6 +517,7 @@
 
 /mob/living/carbon/human/Life()
 	update_blood_hud()
+	update_shadow()
 	..()
 
 

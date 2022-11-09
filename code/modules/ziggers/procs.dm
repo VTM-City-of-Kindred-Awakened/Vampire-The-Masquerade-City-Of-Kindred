@@ -31,7 +31,7 @@
 			H.client.prefs.real_name = random_unique_name(H.client.prefs.gender)
 			H.client.prefs.save_character()
 			H.client.prefs.save_preferences()
-			H.ghostize()
+			H.ghostize(FALSE)
 
 /proc/AdjustMasquerade(var/mob/living/carbon/human/H, var/value)
 	if(H.client)
