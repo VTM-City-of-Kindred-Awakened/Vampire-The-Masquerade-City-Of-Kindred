@@ -491,8 +491,8 @@ proc/dancesecond(mob/living/M)
 						if(VL.bloodamount == 0)
 							VHL.blood_volume = 0
 							VL.death()
-							if(isnpc(VL))
-								AdjustHumanity(VH, -1, 3)
+//							if(isnpc(VL))
+//								AdjustHumanity(VH, -1, 3)
 					else
 						if(VL.bloodamount == 0)
 							VL.death()

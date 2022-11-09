@@ -332,9 +332,10 @@
 		overlays_standing[FIGHT_LAYER] = parry_overlay
 		apply_overlay(FIGHT_LAYER)
 		spawn(delay)
-			remove_overlay(FIGHT_LAYER)
-			say(message)
-			is_talking = FALSE
+			if(stat != DEAD)
+				remove_overlay(FIGHT_LAYER)
+				say(message)
+				is_talking = FALSE
 
 /mob/living/carbon/human/npc/proc/Annoy(var/atom/source)
 	if(client)

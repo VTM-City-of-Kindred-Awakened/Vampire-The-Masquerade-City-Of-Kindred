@@ -81,6 +81,7 @@
 					AdjustMasquerade(src, -1)
 				playsound(src, 'code/modules/ziggers/drinkblood1.ogg', 50, TRUE)
 				L.visible_message("<span class='warning'><b>[src] bites [L]'s neck!</b></span>", "<span class='warning'><b>[src] bites your neck!</b></span>")
+				face_atom(L)
 				drinksomeblood(L)
 	else
 		step_to(src,frenzy_target,0)
@@ -99,6 +100,8 @@
 		return null
 
 /mob/living/carbon/human/proc/handle_automated_frenzy()
+	for(var/mob/living/carbon/human/npc/NPC in viewers(5, src))
+		NPC.Aggro(src)
 	if(isturf(loc))
 		frenzy_target = get_frenzy_targets()
 		if(frenzy_target)
@@ -116,9 +119,10 @@
 /datum/species/kindred/spec_life(mob/living/carbon/human/H)
 	..()
 	var/skipface = (H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE))
-	if(!skipface && H.clane.violating_appearance)
-		if(CheckEyewitness(H, H, 5, FALSE))
-			AdjustMasquerade(H, -1)
+	if(clane)
+		if(!skipface && H.clane.violating_appearance)
+			if(CheckEyewitness(H, H, 5, FALSE))
+				AdjustMasquerade(H, -1)
 	if(H.client && H.stat <= 2)
 		if(H.client.prefs)
 			if(H.client.prefs.humanity != H.humanity)
@@ -138,7 +142,5 @@
 		if(H.last_frenzy_check+400 <= world.time)
 			H.last_frenzy_check = world.time
 			H.rollfrenzy()
-	else
+	if(H.in_frenzy || H.bloodpool > 1)
 		H.last_frenzy_check = world.time
-		for(var/mob/living/carbon/human/npc/NPC in viewers(5, src))
-			NPC.Aggro(H)
