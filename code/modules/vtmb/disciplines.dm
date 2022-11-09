@@ -435,11 +435,11 @@ proc/dancesecond(mob/living/M)
 /mob/living/proc/tremere_gib()
 	Stun(50)
 	new /obj/effect/temp_visual/tremere(loc, "gib")
-	animate(src, pixel_z = 16, color = "#ff0000", time = 50, loop = 1)
-	if(stat != DEAD)
-		death(TRUE)
+	animate(src, pixel_y = 16, color = "#ff0000", time = 50, loop = 1)
 
 	spawn(50)
+		if(stat != DEAD)
+			death()
 		spawn_gibs()
 		qdel(src)
 
@@ -474,24 +474,12 @@ proc/dancesecond(mob/living/M)
 	muzzle_type = /obj/effect/projectile/muzzle/thaumaturgy
 	impact_type = /obj/effect/projectile/impact/thaumaturgy
 	var/level = 1
-	var/returned_blood
-
-/obj/projectile/thaumaturgy/backwards
-	damage = 0
 
 /obj/projectile/thaumaturgy/on_hit(atom/target, blocked = FALSE, pierce_hit)
-	if(returned_blood)
-		if(iskindred(target))
-			var/mob/living/carbon/human/HUM = target
-			HUM.bloodpool += returned_blood
-			HUM.bloodpool = min(HUM.maxbloodpool, HUM.bloodpool)
-			HUM.update_blood_hud()
-		return
-	else if(ishuman(firer))
+	if(ishuman(firer))
 		var/mob/living/carbon/human/VH = firer
 		if(isliving(target))
 			var/mob/living/VL = target
-			var/turf/backstart = get_turf(VL)
 			if(!iskindred(target))
 				if(VL.bloodamount >= 1 && VL.stat != DEAD)
 					var/sucked = min(VL.bloodamount, 2)
@@ -508,18 +496,13 @@ proc/dancesecond(mob/living/M)
 					else
 						if(VL.bloodamount == 0)
 							VL.death()
-					var/obj/projectile/thaumaturgy/backwards/BACK = new(backstart)
-					BACK.firer = VL
-					BACK.returned_blood = sucked*max(1, VH.bloodquality-1)
-					BACK.preparePixelProjectile(VH, backstart)
-					BACK.fire(direct_target = VH)
+					VH.bloodpool += sucked*max(1, VL.bloodquality-1)
+					VH.bloodpool = min(VH.maxbloodpool, VH.bloodpool)
 			else
 				if(VL.bloodpool >= 1)
 					var/sucked = min(VL.bloodpool, 1*level)
-					var/obj/projectile/thaumaturgy/backwards/BACK = new(backstart)
-					BACK.returned_blood = sucked
-					BACK.preparePixelProjectile(VH, backstart)
-					BACK.fire(direct_target = VH)
+					VH.bloodpool += sucked
+					VH.bloodpool = min(VH.maxbloodpool, VH.bloodpool)
 
 /datum/discipline/thaumaturgy
 	name = "Thaumaturgy"
@@ -567,8 +550,8 @@ proc/dancesecond(mob/living/M)
 			else
 				caster.bloodpool += target.bloodamount
 				caster.bloodpool = min(caster.maxbloodpool, caster.bloodpool)
-				if(isnpc(target))
-					AdjustHumanity(caster, -1, 0)
+//				if(isnpc(target))
+//					AdjustHumanity(caster, -1, 0)
 				target.tremere_gib()
 
 /datum/discipline/bloodshield
