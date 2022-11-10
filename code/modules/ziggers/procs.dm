@@ -52,16 +52,16 @@
 /mob/living/carbon/human/npc/proc/backinvisible(var/atom/A)
 	switch(dir)
 		if(NORTH)
-			if(A.y > y)
+			if(A.y >= y)
 				return TRUE
 		if(SOUTH)
-			if(A.y < y)
+			if(A.y <= y)
 				return TRUE
 		if(EAST)
-			if(A.x > x)
+			if(A.x >= x)
 				return TRUE
 		if(WEST)
-			if(A.x < x)
+			if(A.x <= x)
 				return TRUE
 	return FALSE
 
@@ -72,8 +72,8 @@
 		if(source != NPC || affects_source)
 			if(!NPC.pulledby)
 				var/turf/LC = get_turf(attacker)
-				if(LC.get_lumcount() > 0.5 || get_dist(NPC, attacker <= 1))
-					if(!NPC.backinvisible(attacker))
+				if(LC.get_lumcount() > 0.25 || get_dist(NPC, attacker <= 1))
+					if(NPC.backinvisible(attacker))
 						seenby += NPC
 						NPC.Aggro(attacker)
 	if(length(seenby) >= 1)

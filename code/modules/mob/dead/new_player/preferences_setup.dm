@@ -24,10 +24,10 @@
 	if(randomise[RANDOM_JUMPSUIT_STYLE])
 		jumpsuit_style = pick(GLOB.jumpsuitlist)
 	if(randomise[RANDOM_HAIRSTYLE])
-		if(clane.haircuts)
-			hairstyle = pick(clane.haircuts)
 		if(clane.no_hair)
 			hairstyle = "Bald"
+		else if(clane.haircuts)
+			hairstyle = pick(clane.haircuts)
 		else
 			hairstyle = random_hairstyle(gender)
 	if(randomise[RANDOM_FACIAL_HAIRSTYLE])

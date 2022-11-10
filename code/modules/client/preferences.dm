@@ -1373,11 +1373,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						hair_color = sanitize_hexcolor(new_hair)
 
 				if("hairstyle")
-					if(clane.no_hair)
-						hairstyle = "Bald"
-						return
 					if(slotlocked)
 						return
+					if(clane.no_hair)
+						hairstyle = "Bald"
 					else
 						var/new_hairstyle
 						if(clane.haircuts)
@@ -1393,12 +1392,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							hairstyle = new_hairstyle
 
 				if("next_hairstyle")
-					if(clane.no_hair)
-						hairstyle = "Bald"
-						return
 					if(slotlocked)
 						return
-					if(clane.haircuts)
+					if(clane.no_hair)
+						hairstyle = "Bald"
+					else if(clane.haircuts)
 						hairstyle = next_list_item(hairstyle, clane.haircuts)
 					else
 						if (gender == MALE)
@@ -1409,12 +1407,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							hairstyle = next_list_item(hairstyle, GLOB.hairstyles_list)
 
 				if("previous_hairstyle")
-					if(clane.no_hair)
-						hairstyle = "Bald"
-						return
 					if(slotlocked)
 						return
-					if(clane.haircuts)
+					if(clane.no_hair)
+						hairstyle = "Bald"
+					else if(clane.haircuts)
 						hairstyle = previous_list_item(hairstyle, clane.haircuts)
 					else
 						if (gender == MALE)
@@ -1432,14 +1429,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						facial_hair_color = sanitize_hexcolor(new_facial)
 
 				if("facial_hairstyle")
-					if(clane.no_hair)
-						facial_hairstyle = "Shaved"
+					if(slotlocked)
 						return
 					if(clane.no_facial)
 						facial_hairstyle = "Shaved"
-						return
-					if(slotlocked)
-						return
 					else
 						var/new_facial_hairstyle
 						if(gender == MALE)
@@ -1452,36 +1445,30 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							facial_hairstyle = new_facial_hairstyle
 
 				if("next_facehairstyle")
-					if(clane.no_hair)
-						facial_hairstyle = "Shaved"
+					if(slotlocked)
 						return
 					if(clane.no_facial)
 						facial_hairstyle = "Shaved"
-						return
-					if(slotlocked)
-						return
-					if (gender == MALE)
-						facial_hairstyle = next_list_item(facial_hairstyle, GLOB.facial_hairstyles_male_list)
-					else if(gender == FEMALE)
-						facial_hairstyle = next_list_item(facial_hairstyle, GLOB.facial_hairstyles_female_list)
 					else
-						facial_hairstyle = next_list_item(facial_hairstyle, GLOB.facial_hairstyles_list)
+						if (gender == MALE)
+							facial_hairstyle = next_list_item(facial_hairstyle, GLOB.facial_hairstyles_male_list)
+						else if(gender == FEMALE)
+							facial_hairstyle = next_list_item(facial_hairstyle, GLOB.facial_hairstyles_female_list)
+						else
+							facial_hairstyle = next_list_item(facial_hairstyle, GLOB.facial_hairstyles_list)
 
 				if("previous_facehairstyle")
-					if(clane.no_hair)
-						facial_hairstyle = "Shaved"
+					if(slotlocked)
 						return
 					if(clane.no_facial)
 						facial_hairstyle = "Shaved"
-						return
-					if(slotlocked)
-						return
-					if (gender == MALE)
-						facial_hairstyle = previous_list_item(facial_hairstyle, GLOB.facial_hairstyles_male_list)
-					else if (gender == FEMALE)
-						facial_hairstyle = previous_list_item(facial_hairstyle, GLOB.facial_hairstyles_female_list)
 					else
-						facial_hairstyle = previous_list_item(facial_hairstyle, GLOB.facial_hairstyles_list)
+						if (gender == MALE)
+							facial_hairstyle = previous_list_item(facial_hairstyle, GLOB.facial_hairstyles_male_list)
+						else if (gender == FEMALE)
+							facial_hairstyle = previous_list_item(facial_hairstyle, GLOB.facial_hairstyles_female_list)
+						else
+							facial_hairstyle = previous_list_item(facial_hairstyle, GLOB.facial_hairstyles_list)
 
 				if("underwear")
 					var/new_underwear
@@ -1533,7 +1520,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						humanity = clane.start_humanity
 						if(clane.no_hair)
 							hairstyle = "Bald"
-							facial_hairstyle = "Shaved"
 						if(clane.no_facial)
 							facial_hairstyle = "Shaved"
 //						real_name = clane.random_name(gender)		//potom sdelat

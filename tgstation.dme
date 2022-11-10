@@ -3348,6 +3348,7 @@
 #include "code\modules\ziggers\npc_aggression.dm"
 #include "code\modules\ziggers\npc_movement.dm"
 #include "code\modules\ziggers\onyxcombat.dm"
+#include "code\modules\ziggers\phones.dm"
 #include "code\modules\ziggers\pigs.dm"
 #include "code\modules\ziggers\procs.dm"
 #include "code\modules\ziggers\wallcode.dm"

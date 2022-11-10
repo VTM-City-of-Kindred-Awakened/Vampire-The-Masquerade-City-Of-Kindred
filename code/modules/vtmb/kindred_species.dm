@@ -27,8 +27,16 @@
 
 /datum/action/vampireinfo/Trigger()
 	if(host)
-		var/dat = "<center>"
-		dat += "<h2>Memories</h2><BR></center>"
+		var/dat = {"
+			<style type="text/css">
+
+			body {
+				background-color: #090909; color: white;
+			}
+
+			</style>
+			"}
+		dat += "<center><h2>Memories</h2><BR></center>"
 		dat += "[icon2html(getFlatIcon(host), host)]I am "
 		if(host.real_name)
 			dat += "[host.real_name],"
@@ -54,7 +62,7 @@
 			if(2)
 				masquerade_level = " provoked a moderate Masquerade breach."
 			if(1)
-				masquerade_level = " seriously violated the Masquerade Tradition."
+				masquerade_level = " almost ruined the Masquerade."
 			if(0)
 				masquerade_level = "'m danger to the Masquerade and my own kind."
 		dat += "Camarilla thinks I[masquerade_level]<BR>"
