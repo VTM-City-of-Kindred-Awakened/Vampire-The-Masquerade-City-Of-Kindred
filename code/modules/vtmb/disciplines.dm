@@ -21,7 +21,7 @@
 	if(ranged)
 		if(isnpc(target))
 			var/mob/living/carbon/human/npc/NPC = target
-			NPC.Aggro(caster)
+			NPC.Aggro(caster, TRUE)
 	caster.bloodpool -= cost
 	if(caster.client)
 		if(caster.client.prefs)

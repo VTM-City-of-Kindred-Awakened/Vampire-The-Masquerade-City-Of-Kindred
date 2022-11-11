@@ -8,6 +8,7 @@
 
 	var/last_danger_meet = 0
 	var/mob/danger_source
+	var/mob/last_attacker
 
 	var/turf/walktarget	//dlya movementa
 
@@ -397,10 +398,12 @@
 	if(user.a_intent == INTENT_HELP)
 		Annoy(user)
 	if(user.a_intent == INTENT_DISARM)
-		Aggro(user)
+		Aggro(user, TRUE)
 	if(user.a_intent == INTENT_HARM)
 		for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
 			NEPIC.Aggro(user)
+			if(NEPIC == src)
+				NEPIC.Aggro(user, TRUE)
 	..()
 
 /mob/living/carbon/human/npc/on_hit(obj/projectile/P)

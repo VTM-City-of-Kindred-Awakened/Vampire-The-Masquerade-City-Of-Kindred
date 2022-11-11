@@ -1,5 +1,7 @@
-/mob/living/carbon/human/npc/proc/Aggro(var/mob/M)
+/mob/living/carbon/human/npc/proc/Aggro(var/mob/M, var/attacked = FALSE)
 	danger_source = M
+	if(attacked)
+		last_attacker = M
 	if(last_danger_meet+50 < world.time)
 		last_danger_meet = world.time
 		if(!melee_weapon && !range_weapon)

@@ -296,11 +296,14 @@
 			if(ishuman(mob))
 				var/mob/living/carbon/human/K = mob
 				K.blood_volume = 0
-			mob.death()
 			if(ishuman(mob))
+				if(isnpc(mob))
+					var/mob/living/carbon/human/npc/Npc = mob
+					Npc.last_attacker = null
 				SEND_SOUND(src, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
 				to_chat(src, "<span class='warning'>This sad sacrifice for your own pleasure affects something deep in your mind.</span>")
 				AdjustHumanity(src, -1, 3)
+			mob.death()
 			return
 		if(grab_state > GRAB_PASSIVE)
 			drinksomeblood(mob)

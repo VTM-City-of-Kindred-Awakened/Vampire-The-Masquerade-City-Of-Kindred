@@ -16,8 +16,9 @@
 
 /mob/living/carbon/human/npc/death()
 	..()
-	if(ishuman(danger_source))
-		AdjustHumanity(danger_source, -1, 0)
+	if(ishuman(last_attacker))
+		AdjustHumanity(last_attacker, -1, 0)
+	remove_overlay(FIGHT_LAYER)
 	GLOB.npc_list -= src
 
 /mob/living/carbon/human/npc/Destroy()

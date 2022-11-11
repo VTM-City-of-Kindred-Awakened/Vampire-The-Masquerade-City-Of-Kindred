@@ -70,12 +70,14 @@
 	var/list/seenby = list()
 	for(var/mob/living/carbon/human/npc/NPC in viewers(actual_range, source))
 		if(source != NPC || affects_source)
+			if(NPC == source)
+				NPC.Aggro(attacker, TRUE)
 			if(!NPC.pulledby)
 				var/turf/LC = get_turf(attacker)
 				if(LC.get_lumcount() > 0.25 || get_dist(NPC, attacker <= 1))
 					if(NPC.backinvisible(attacker))
 						seenby += NPC
-						NPC.Aggro(attacker)
+						NPC.Aggro(attacker, FALSE)
 	if(length(seenby) >= 1)
 		return TRUE
 	return FALSE

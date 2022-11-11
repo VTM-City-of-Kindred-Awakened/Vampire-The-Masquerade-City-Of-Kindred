@@ -1,3 +1,6 @@
+/mob/living/carbon/human
+	var/phonevoicetag = 10
+
 /proc/create_unique_phone_number(var/exchange = 513)
 	if(length(GLOB.subscribers_numbers_list) < 1)
 		create_subscribers_numbers()
@@ -32,6 +35,7 @@
 	lefthand_file = 'code/modules/ziggers/lefthand.dmi'
 	righthand_file = 'code/modules/ziggers/righthand.dmi'
 	item_flags = NOBLUDGEON
+	flags_1 = HEAR_1
 	w_class = WEIGHT_CLASS_TINY
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -46,8 +50,25 @@
 	var/last_call = 0
 	var/call_sound = 'code/modules/ziggers/call.ogg'
 
+/obj/phonevoice
+	name = "unknown voice"
+	speech_span = SPAN_ROBOT
+	anchored = FALSE
+	density = FALSE
+	opacity = FALSE
+
+/obj/phonevoice/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	if(message == "" || !message)
+		return
+	spans |= speech_span
+	if(!language)
+		language = get_selected_language()
+	send_speech(message, 2, src, , spans, message_language=language)
+//	speech_span = initial(speech_span)
+
 /obj/item/vamp/phone/Initialize()
 	..()
+	RegisterSignal(src, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 	number = create_unique_phone_number(exchange_num)
 	GLOB.phone_numbers_list += number
 	GLOB.phones_list += src
@@ -55,6 +76,7 @@
 /obj/item/vamp/phone/Destroy()
 	GLOB.phone_numbers_list -= number
 	GLOB.phones_list -= src
+	UnregisterSignal(src, COMSIG_MOVABLE_HEAR)
 	..()
 
 /obj/item/vamp/phone/attack_self(mob/user)
@@ -63,11 +85,17 @@
 		closed = FALSE
 		icon_state = "phone2"
 	else
+		user << browse(null, "window=phone")
 		closed = TRUE
 		icon_state = "phone0"
+		talking = FALSE
+		if(online)
+			online.online = null
+			online.talking = FALSE
+			online = null
 
 /obj/item/vamp/phone/attack_hand(mob/user)
-	if(!closed && !isturf(loc))
+	if(!closed && user.get_inactive_held_item() == src)
 		OpenMenu(user)
 	else
 		..()
@@ -122,10 +150,6 @@
 /obj/item/vamp/phone/Topic(href, href_list)
 	..()
 	var/mob/living/U = usr
-	if(last_call+100 < world.time && !talking)
-		if(online)
-			online.online = null
-			online = null
 	if(usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && !href_list["close"] && !closed)
 		switch(href_list["choice"])
 			if("hang")
@@ -168,19 +192,23 @@
 				else
 					if(choosed_number == "#111")
 						call_sound = 'code/modules/ziggers/call.ogg'
+						to_chat(usr, "<span class='notice'>Settings are now reset to default.</span>")
 					else if(choosed_number == "#228")
 						call_sound = 'code/modules/ziggers/nokia.ogg'
+						to_chat(usr, "<span class='notice'>Code activated.</span>")
 					else if(choosed_number == "#666")
 						call_sound = 'sound/voice/human/malescream_6.ogg'
+						to_chat(usr, "<span class='notice'>Code activated.</span>")
 					else if(choosed_number == "#34")
 						usr << link("https://rule34.xxx/index.php?page=post&s=list&tags=werewolf")
+						to_chat(usr, "<span class='notice'>Code activated.</span>")
 					else
 						to_chat(usr, "<span class='notice'>Invalid number.</span>")
 			if("contacts")
 				var/list/shit = list()
 				for(var/datum/phonecontact/CNTCT in contacts)
 					if(CNTCT)
-						CNTCT.name += shit
+						shit += CNTCT.name
 				if(length(shit) >= 1)
 					var/result = input(usr, "Select a contact", "Contact Selection") as null|anything in shit
 					if(result)
@@ -231,10 +259,25 @@
 	else
 		U << browse(null, "window=phone")
 
-/obj/item/vamp/phone/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list())
-	. = ..()
-	if(isliving(speaker))
-		to_chat(world, "Услышано")
-		if(online && talking)
-			to_chat(world, "Передано")
-			online.say("[message]")
+/obj/item/vamp/phone/proc/handle_hearing(datum/source, list/hearing_args)
+	var/message = hearing_args[HEARING_RAW_MESSAGE]
+	if(online && talking)
+		if(hearing_args[HEARING_SPEAKER])
+			if(isliving(hearing_args[HEARING_SPEAKER]))
+				var/voice_saying = "unknown voice"
+				var/spchspn = SPAN_ROBOT
+				switch(get_dist(src, hearing_args[HEARING_SPEAKER]))
+					if(3 to INFINITY)
+						return
+					if(1 to 2)
+						spchspn = SPAN_SMALLPHONE
+					else
+						spchspn = SPAN_PHONE
+				if(ishuman(hearing_args[HEARING_SPEAKER]))
+					var/mob/living/carbon/human/SPK = hearing_args[HEARING_SPEAKER]
+					voice_saying = "[age2agedescription(SPK.age)] [SPK.gender] voice ([SPK.phonevoicetag])"
+				var/obj/phonevoice/VOIC = new(online)
+				VOIC.name = voice_saying
+				VOIC.speech_span = spchspn
+				VOIC.say("[message]")
+				qdel(VOIC)
