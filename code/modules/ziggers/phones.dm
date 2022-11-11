@@ -270,9 +270,9 @@
 					if(3 to INFINITY)
 						return
 					if(1 to 2)
-						spchspn = SPAN_SMALLPHONE
+						spchspn = "small"
 					else
-						spchspn = SPAN_PHONE
+						spchspn = SPAN_ROBOT
 				if(ishuman(hearing_args[HEARING_SPEAKER]))
 					var/mob/living/carbon/human/SPK = hearing_args[HEARING_SPEAKER]
 					voice_saying = "[age2agedescription(SPK.age)] [SPK.gender] voice ([SPK.phonevoicetag])"
