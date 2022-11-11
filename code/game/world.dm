@@ -29,10 +29,10 @@ GLOBAL_VAR(restart_counter)
  *			All atoms in both compiled and uncompiled maps are initialized()
  */
 /world/New()
-	var/extools = world.GetConfig("env", "EXTOOLS_DLL") || (world.system_type == MS_WINDOWS ? "./byond-extools.dll" : "./libbyond-extools.so")
-	if (fexists(extools))
-		call(extools, "maptick_initialize")()
-	enable_debugger()
+	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
+	if (debug_server)
+		call(debug_server, "auxtools_init")()
+		enable_debugging()
 #ifdef REFERENCE_TRACKING
 	enable_reference_tracking()
 #endif
