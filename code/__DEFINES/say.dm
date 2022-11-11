@@ -62,7 +62,7 @@
 #define SPAN_CLOWN "clown"
 #define SPAN_SINGING "singing"
 
-#define SPAN_PHONE "smallphone"
+#define SPAN_PHONE "phone"
 #define SPAN_SMALLPHONE "smallphone"
 
 //bitflag #defines for return value of the radio() proc.
