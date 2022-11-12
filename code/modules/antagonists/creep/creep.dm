@@ -167,11 +167,11 @@
 		chosen_department = "engineering"
 	if(oldmind.assigned_role in GLOB.medical_positions)
 		chosen_department = "medical"
-	if(oldmind.assigned_role in GLOB.science_positions)
+	if(oldmind.assigned_role in GLOB.anarch_positions)
 		chosen_department = "science"
 	if(oldmind.assigned_role in GLOB.supply_positions)
 		chosen_department = "supply"
-	if(oldmind.assigned_role in GLOB.service_positions)
+	if(oldmind.assigned_role in GLOB.neutral_positions)
 		chosen_department = "service"
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(!H.mind)
@@ -186,11 +186,11 @@
 			their_chosen_department = "engineering"
 		if(H.mind.assigned_role in GLOB.medical_positions)
 			their_chosen_department = "medical"
-		if(H.mind.assigned_role in GLOB.science_positions)
+		if(H.mind.assigned_role in GLOB.anarch_positions)
 			their_chosen_department = "science"
 		if(H.mind.assigned_role in GLOB.supply_positions)
 			their_chosen_department = "supply"
-		if(H.mind.assigned_role in GLOB.service_positions)
+		if(H.mind.assigned_role in GLOB.neutral_positions)
 			their_chosen_department = "service"
 		if(their_chosen_department != chosen_department)
 			continue

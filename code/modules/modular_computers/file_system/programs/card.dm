@@ -299,10 +299,10 @@
 			CARDCON_DEPARTMENT_COMMAND = list("Captain"),//lol
 			CARDCON_DEPARTMENT_ENGINEERING = GLOB.engineering_positions,
 			CARDCON_DEPARTMENT_MEDICAL = GLOB.medical_positions,
-			CARDCON_DEPARTMENT_SCIENCE = GLOB.science_positions,
+			CARDCON_DEPARTMENT_SCIENCE = GLOB.anarch_positions,
 			CARDCON_DEPARTMENT_SECURITY = GLOB.security_positions,
 			CARDCON_DEPARTMENT_SUPPLY = GLOB.supply_positions,
-			CARDCON_DEPARTMENT_SERVICE = GLOB.service_positions
+			CARDCON_DEPARTMENT_SERVICE = GLOB.neutral_positions
 		)
 	data["jobs"] = list()
 	for(var/department in departments)

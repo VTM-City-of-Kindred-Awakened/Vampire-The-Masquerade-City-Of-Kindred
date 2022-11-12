@@ -142,7 +142,7 @@
 
 /obj/item/banner/science/Initialize()
 	. = ..()
-	job_loyalties = GLOB.science_positions
+	job_loyalties = GLOB.anarch_positions
 
 /obj/item/banner/science/mundane
 	inspiration_available = FALSE

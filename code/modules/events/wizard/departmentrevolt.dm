@@ -65,13 +65,13 @@
 			jobs_to_revolt = GLOB.engineering_positions
 			nation_name = pick("Atomo", "Engino", "Power", "Teleco")
 		if("Science")
-			jobs_to_revolt = GLOB.science_positions
+			jobs_to_revolt = GLOB.anarch_positions
 			nation_name = pick("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno", "Nani", "Cyto")
 		if("Supply")
 			jobs_to_revolt = GLOB.supply_positions
 			nation_name = pick("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
 		if("Service") //the few, the proud, the technically aligned
-			jobs_to_revolt = GLOB.service_positions.Copy() - list("Assistant", "Prisoner")
+			jobs_to_revolt = GLOB.neutral_positions.Copy() - list("Assistant", "Prisoner")
 			nation_name = pick("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
 		if("Security")
 			jobs_to_revolt = GLOB.security_positions

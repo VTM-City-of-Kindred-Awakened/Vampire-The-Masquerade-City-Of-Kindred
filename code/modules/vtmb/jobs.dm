@@ -4,7 +4,7 @@
 	title = "Prince"
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	department_head = list("Justicar")
-	faction = "Station"
+	faction = "Vampire"
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the Camarilla and the Traditions"
@@ -13,7 +13,7 @@
 	minimal_player_age = 14
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
-	exp_type_department = EXP_TYPE_COMMAND
+	exp_type_department = EXP_TYPE_CAMARILLIA
 
 	outfit = /datum/outfit/job/prince
 
@@ -64,7 +64,7 @@
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	department_head = list("Prince")
 	head_announce = list(RADIO_CHANNEL_SECURITY)
-	faction = "Station"
+	faction = "Vampire"
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the prince"
@@ -126,7 +126,7 @@
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("Prince")
 	head_announce = list(RADIO_CHANNEL_SUPPLY, RADIO_CHANNEL_SERVICE)
-	faction = "Station"
+	faction = "Vampire"
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the prince"
@@ -135,7 +135,7 @@
 	minimal_player_age = 10
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
-	exp_type_department = EXP_TYPE_SERVICE
+	exp_type_department = EXP_TYPE_NEUTRALS
 
 	outfit = /datum/outfit/job/clerk
 
@@ -180,9 +180,9 @@
 	title = "Camarilla Agent"
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list("Prince")
-	faction = "Station"
-	total_positions = 5
-	spawn_positions = 5
+	faction = "Vampire"
+	total_positions = 2
+	spawn_positions = 2
 	supervisors = "the prince"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
@@ -232,7 +232,7 @@
 /datum/job/graveyard
 	title = "Graveyard Keeper"
 	department_head = list("Clerk")
-	faction = "Station"
+	faction = "Vampire"
 	total_positions = 3
 	spawn_positions = 3
 	supervisors = "the Camarilla or the Anarchs"
@@ -275,7 +275,7 @@
 /datum/job/vdoctor
 	title = "Doctor"
 	department_head = list("Clerk")
-	faction = "Station"
+	faction = "Vampire"
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the Camarilla or the Anarchs"
@@ -317,7 +317,7 @@
 /datum/job/vjanitor
 	title = "Street Janitor"
 	department_head = list("Barkeeper")
-	faction = "Station"
+	faction = "Vampire"
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the Camarilla or the Anarchs"
@@ -344,7 +344,7 @@
 /datum/job/archivist
 	title = "Archivist"
 	department_head = list("Barkeeper")
-	faction = "Station"
+	faction = "Vampire"
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the Camarilla or the Anarchs"
@@ -390,7 +390,7 @@
 /datum/job/barkeeper
 	title = "Barkeeper"
 	department_head = list("Justicar")
-	faction = "Station"
+	faction = "Vampire"
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the Anarchs and the Traditions"
@@ -420,7 +420,7 @@
 /datum/job/bouncer
 	title = "Bouncer"
 	department_head = list("Barkeeper")
-	faction = "Station"
+	faction = "Vampire"
 	total_positions = 3
 	spawn_positions = 3
 	supervisors = "the barkeeper"
@@ -456,7 +456,7 @@
 /datum/job/dealer
 	title = "Dealer"
 	department_head = list("Justicar")
-	faction = "Station"
+	faction = "Vampire"
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the Anarchs and the Traditions"
@@ -492,7 +492,7 @@
 /datum/job/supply
 	title = "Supply Technician"
 	department_head = list("Dealer")
-	faction = "Station"
+	faction = "Vampire"
 	total_positions = 3
 	spawn_positions = 3
 	supervisors = "the dealer"
@@ -521,7 +521,7 @@
 
 /datum/job/citizen
 	title = "Citizen"
-	faction = "Station"
+	faction = "Vampire"
 	total_positions = -1
 	spawn_positions = -1
 	supervisors = "the Traditions"

@@ -155,9 +155,9 @@
 		"Security" = GLOB.security_positions,
 		"Engineering" = GLOB.engineering_positions,
 		"Medical" = GLOB.medical_positions,
-		"Science" = GLOB.science_positions,
+		"Science" = GLOB.anarch_positions,
 		"Supply" = GLOB.supply_positions,
-		"Service" = GLOB.service_positions,
+		"Service" = GLOB.neutral_positions,
 		"Silicon" = GLOB.nonhuman_positions
 	)
 	for(var/datum/data/record/t in GLOB.data_core.general)
