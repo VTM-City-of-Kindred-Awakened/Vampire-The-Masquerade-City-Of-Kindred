@@ -138,6 +138,7 @@
 	if(last_call+100 <= world.time && !talking)
 		last_call = 0
 		if(online)
+			playsound(src, 'code/modules/ziggers/phonestop.ogg', 25, FALSE)
 			online.online = null
 			online = null
 	if(!talking && online)
@@ -159,6 +160,7 @@
 					if(online)
 						online.talking = FALSE
 				if(online)
+					playsound(online, 'code/modules/ziggers/phonestop.ogg', 25, FALSE)
 					online.online = null
 					online = null
 			if("accept")
@@ -172,6 +174,7 @@
 			if("decline")
 				talking = FALSE
 				if(online)
+					playsound(online, 'code/modules/ziggers/phonestop.ogg', 25, FALSE)
 					online.online = null
 					online.talking = FALSE
 					online = null
@@ -280,4 +283,5 @@
 				VOIC.name = voice_saying
 				VOIC.speech_span = spchspn
 				VOIC.say("[message]")
+				playsound(online, 'code/modules/ziggers/phonetalk.ogg', 50, FALSE)
 				qdel(VOIC)
