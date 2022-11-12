@@ -1,89 +1,65 @@
 GLOBAL_LIST_INIT(command_positions, list(
-	"Captain",
-	"Head of Personnel",
-	"Head of Security",
-	"Chief Engineer",
-	"Research Director",
-	"Chief Medical Officer"))
+	"Prince",
+	"Clerk",
+	"Sheriff",
+	"Camarilla Agent"))
 
 
 GLOBAL_LIST_INIT(engineering_positions, list(
-	"Chief Engineer",
+
 	"Station Engineer",
 	"Atmospheric Technician"))
 
 
 GLOBAL_LIST_INIT(medical_positions, list(
-	"Chief Medical Officer",
-	"Medical Doctor",
-	"Paramedic",
-	"Virologist",
-	"Chemist"))
+	))
 
 
-GLOBAL_LIST_INIT(science_positions, list(
-	"Research Director",
-	"Scientist",
-	"Geneticist",
-	"Roboticist"))
+GLOBAL_LIST_INIT(anarch_positions, list(
+	"Barkeeper",
+	"Bouncer",
+	"Dealer",
+	"Supply Technician"
+	))
 
 
 GLOBAL_LIST_INIT(supply_positions, list(
-	"Quartermaster",
-	"Cargo Technician",
-	"Shaft Miner"))
+	))
+GLOBAL_LIST_INIT(citizen_positions, list(
+	"Citizen"
+))
 
-
-GLOBAL_LIST_INIT(service_positions, list(
-	"Head of Personnel",
-	"Bartender",
-	"Botanist",
-	"Cook",
-	"Janitor",
-	"Curator",
-	"Psychologist",
-	"Lawyer",
-	"Chaplain",
-	"Clown",
-	"Mime",
-	"Prisoner",
-	"Assistant"))
+GLOBAL_LIST_INIT(neutral_positions, list(
+	"Graveyard Keeper",
+	"Archivist",
+	"Street Janitor",
+	"Doctor"))
 
 
 GLOBAL_LIST_INIT(security_positions, list(
-	"Head of Security",
-	"Warden",
-	"Detective",
-	"Security Officer"))
+	))
 
 
-GLOBAL_LIST_INIT(nonhuman_positions, list(
-	"AI",
-	"Cyborg",
-	ROLE_PAI))
+GLOBAL_LIST_INIT(nonhuman_positions, list())
 
 // job categories for rendering the late join menu
 GLOBAL_LIST_INIT(position_categories, list(
-	EXP_TYPE_COMMAND = list("jobs" = command_positions, "color" = "#ccccff"),
-	EXP_TYPE_ENGINEERING = list("jobs" = engineering_positions, "color" = "#ffeeaa"),
-	EXP_TYPE_SUPPLY = list("jobs" = supply_positions, "color" = "#ddddff"),
-	EXP_TYPE_SILICON = list("jobs" = nonhuman_positions - "pAI", "color" = "#ccffcc"),
-	EXP_TYPE_SERVICE = list("jobs" = service_positions, "color" = "#bbe291"),
-	EXP_TYPE_MEDICAL = list("jobs" = medical_positions, "color" = "#ffddf0"),
-	EXP_TYPE_SCIENCE = list("jobs" = science_positions, "color" = "#ffddff"),
-	EXP_TYPE_SECURITY = list("jobs" = security_positions, "color" = "#ffdddd")
-))
+	EXP_TYPE_CAMARILLIA = list("jobs" = command_positions, "color" = "#3a0303"),
+	EXP_TYPE_NEUTRALS = list("jobs" = neutral_positions, "color" = "#84ff01"),
+	EXP_TYPE_ANARCH = list("jobs" = anarch_positions, "color" = "#a3063a"),
+	EXP_TYPE_OTHER_CITIZEN = list("jobs" = citizen_positions, "color" = "#6e9494")))
+
 
 GLOBAL_LIST_INIT(exp_jobsmap, list(
-	EXP_TYPE_CREW = list("titles" = command_positions | engineering_positions | medical_positions | science_positions | supply_positions | security_positions | service_positions | list("AI","Cyborg")), // crew positions
-	EXP_TYPE_COMMAND = list("titles" = command_positions),
+	EXP_TYPE_CREW = list("titles" = command_positions | engineering_positions | medical_positions | anarch_positions | supply_positions | security_positions | neutral_positions | list("AI","Cyborg")), // crew positions
+	EXP_TYPE_CAMARILLIA = list("titles" = command_positions),
 	EXP_TYPE_ENGINEERING = list("titles" = engineering_positions),
 	EXP_TYPE_MEDICAL = list("titles" = medical_positions),
-	EXP_TYPE_SCIENCE = list("titles" = science_positions),
+	EXP_TYPE_ANARCH = list("titles" = anarch_positions),
 	EXP_TYPE_SUPPLY = list("titles" = supply_positions),
 	EXP_TYPE_SECURITY = list("titles" = security_positions),
 	EXP_TYPE_SILICON = list("titles" = list("AI","Cyborg")),
-	EXP_TYPE_SERVICE = list("titles" = service_positions)
+	EXP_TYPE_NEUTRALS = list("titles" = neutral_positions)
 ))
 
 GLOBAL_LIST_INIT(exp_specialmap, list(
