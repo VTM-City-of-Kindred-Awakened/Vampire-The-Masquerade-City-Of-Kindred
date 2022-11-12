@@ -408,11 +408,11 @@
 
 /mob/living/carbon/human/npc/on_hit(obj/projectile/P)
 	..()
-	Aggro(P.firer)
+	Aggro(P.firer, TRUE)
 
 /mob/living/carbon/human/npc/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	..()
-	Aggro(throwingdatum.thrower)
+	Aggro(throwingdatum.thrower, TRUE)
 
 /mob/living/carbon/human/npc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
 	..()
