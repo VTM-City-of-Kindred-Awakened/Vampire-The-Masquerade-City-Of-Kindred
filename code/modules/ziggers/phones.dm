@@ -138,6 +138,7 @@
 	if(last_call+100 <= world.time && !talking)
 		last_call = 0
 		if(online)
+			playsound(src, 'code/modules/ziggers/phonestop.ogg', 25, FALSE)
 			online.online = null
 			online = null
 	if(!talking && online)
@@ -159,6 +160,7 @@
 					if(online)
 						online.talking = FALSE
 				if(online)
+					playsound(online, 'code/modules/ziggers/phonestop.ogg', 25, FALSE)
 					online.online = null
 					online = null
 			if("accept")
@@ -172,6 +174,7 @@
 			if("decline")
 				talking = FALSE
 				if(online)
+					playsound(online, 'code/modules/ziggers/phonestop.ogg', 25, FALSE)
 					online.online = null
 					online.talking = FALSE
 					online = null
@@ -270,9 +273,9 @@
 					if(3 to INFINITY)
 						return
 					if(1 to 2)
-						spchspn = SPAN_SMALLPHONE
+						spchspn = "small"
 					else
-						spchspn = SPAN_PHONE
+						spchspn = SPAN_ROBOT
 				if(ishuman(hearing_args[HEARING_SPEAKER]))
 					var/mob/living/carbon/human/SPK = hearing_args[HEARING_SPEAKER]
 					voice_saying = "[age2agedescription(SPK.age)] [SPK.gender] voice ([SPK.phonevoicetag])"
@@ -280,4 +283,5 @@
 				VOIC.name = voice_saying
 				VOIC.speech_span = spchspn
 				VOIC.say("[message]")
+				playsound(online, 'code/modules/ziggers/phonetalk.ogg', 50, FALSE)
 				qdel(VOIC)
