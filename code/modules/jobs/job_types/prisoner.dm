@@ -9,7 +9,7 @@
 	paycheck = PAYCHECK_PRISONER
 	outfit = /datum/outfit/job/prisoner
 
-	display_order = JOB_DISPLAY_ORDER_PRISONER
+//	display_order = JOB_DISPLAY_ORDER_PRISONER
 
 /datum/outfit/job/prisoner
 	name = "Prisoner"

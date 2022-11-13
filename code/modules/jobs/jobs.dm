@@ -1,3 +1,7 @@
+GLOBAL_LIST_INIT(leader_positions, list(
+	"Prince",
+	"Barkeeper"))
+
 GLOBAL_LIST_INIT(command_positions, list(
 	"Prince",
 	"Clerk",
@@ -44,10 +48,10 @@ GLOBAL_LIST_INIT(nonhuman_positions, list())
 
 // job categories for rendering the late join menu
 GLOBAL_LIST_INIT(position_categories, list(
-	EXP_TYPE_CAMARILLIA = list("jobs" = command_positions, "color" = "#3a0303"),
-	EXP_TYPE_NEUTRALS = list("jobs" = neutral_positions, "color" = "#84ff01"),
-	EXP_TYPE_ANARCH = list("jobs" = anarch_positions, "color" = "#a3063a"),
-	EXP_TYPE_OTHER_CITIZEN = list("jobs" = citizen_positions, "color" = "#6e9494")))
+	EXP_TYPE_CAMARILLIA = list("jobs" = command_positions, "color" = "#9f1111"),
+	EXP_TYPE_NEUTRALS = list("jobs" = neutral_positions, "color" = "#e3e3e3"),
+	EXP_TYPE_ANARCH = list("jobs" = anarch_positions, "color" = "#313131"),
+	EXP_TYPE_OTHER_CITIZEN = list("jobs" = citizen_positions, "color" = "#7e7e7e")))
 
 
 GLOBAL_LIST_INIT(exp_jobsmap, list(

@@ -24,7 +24,40 @@
 
 /datum/phonecontact
 	var/name = "Unknown"
-	var/number
+	var/number = ""
+
+/datum/phonecontact/proc/check_global_contacts()
+	return
+
+/datum/phonecontact/prince
+	name = "Prince"
+
+/datum/phonecontact/prince/check_global_contacts()
+	number = GLOB.princenumber
+
+/datum/phonecontact/sheriff
+	name = "Sheriff"
+
+/datum/phonecontact/sheriff/check_global_contacts()
+	number = GLOB.sheriffnumber
+
+/datum/phonecontact/clerk
+	name = "Clerk"
+
+/datum/phonecontact/clerk/check_global_contacts()
+	number = GLOB.clerknumber
+
+/datum/phonecontact/barkeeper
+	name = "Barkeeper"
+
+/datum/phonecontact/barkeeper/check_global_contacts()
+	number = GLOB.barkeepernumber
+
+/datum/phonecontact/dealer
+	name = "Dealer"
+
+/datum/phonecontact/dealer/check_global_contacts()
+	number = GLOB.dealernumber
 
 /obj/item/vamp/phone
 	name = "\improper phone"
@@ -69,7 +102,8 @@
 /obj/item/vamp/phone/Initialize()
 	..()
 	RegisterSignal(src, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
-	number = create_unique_phone_number(exchange_num)
+	if(!number || number == "")
+		number = create_unique_phone_number(exchange_num)
 	GLOB.phone_numbers_list += number
 	GLOB.phones_list += src
 
@@ -217,6 +251,10 @@
 					if(result)
 						for(var/datum/phonecontact/CNTCT in contacts)
 							if(CNTCT.name == result)
+								if(CNTCT.number == "")
+									CNTCT.check_global_contacts()
+									if(CNTCT.number == "")
+										to_chat(usr, "<span class='notice'>Sorry, [CNTCT.name] still got no actual number.</span>")
 								choosed_number = CNTCT.number
 			if("add")
 				var/new_contact = input(usr, "Input phone number", "Add Contact")  as text|null

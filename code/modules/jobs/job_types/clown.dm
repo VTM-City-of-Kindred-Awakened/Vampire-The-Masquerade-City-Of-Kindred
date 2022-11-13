@@ -16,7 +16,7 @@
 
 	liver_traits = list(TRAIT_COMEDY_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_CLOWN
+//	display_order = JOB_DISPLAY_ORDER_CLOWN
 
 
 /datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)

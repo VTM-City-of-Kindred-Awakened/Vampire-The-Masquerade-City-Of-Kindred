@@ -1,6 +1,6 @@
 //CAMARILLA
 
-/datum/job/prince
+/datum/job/vamp/prince
 	title = "Prince"
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	department_head = list("Justicar")
@@ -8,7 +8,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the Camarilla and the Traditions"
-	selection_color = "#ccccff"
+	selection_color = "#bd3327"
 	req_admin_notify = 1
 	minimal_player_age = 14
 	exp_requirements = 180
@@ -24,7 +24,7 @@
 
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_CAPTAIN
+	display_order = JOB_DISPLAY_ORDER_PRINCE
 
 /datum/job/prince/get_access()
 	return get_all_accesses()
@@ -59,7 +59,7 @@
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/captain)
 
-/datum/job/sheriff
+/datum/job/vamp/sheriff
 	title = "Sheriff"
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	department_head = list("Prince")
@@ -68,7 +68,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the prince"
-	selection_color = "#ffdddd"
+	selection_color = "#bd3327"
 	req_admin_notify = 1
 	minimal_player_age = 14
 	exp_requirements = 300
@@ -91,12 +91,12 @@
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SEC
 
-	display_order = JOB_DISPLAY_ORDER_HEAD_OF_SECURITY
+	display_order = JOB_DISPLAY_ORDER_SHERIFF
 	bounty_types = CIV_JOB_SEC
 
 /datum/outfit/job/sheriff
 	name = "Sheriff"
-	jobtype = /datum/job/sheriff
+	jobtype = /datum/job/vamp/sheriff
 
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/hos
@@ -121,7 +121,7 @@
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun/hos, /obj/item/stamp/hos)
 
-/datum/job/clerk
+/datum/job/vamp/clerk
 	title = "Clerk"
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("Prince")
@@ -130,7 +130,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the prince"
-	selection_color = "#ddddff"
+	selection_color = "#bd3327"
 	req_admin_notify = 1
 	minimal_player_age = 10
 	exp_requirements = 180
@@ -159,11 +159,11 @@
 
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL
+	display_order = JOB_DISPLAY_ORDER_CLERK
 
 /datum/outfit/job/clerk
 	name = "Clerk"
-	jobtype = /datum/job/clerk
+	jobtype = /datum/job/vamp/clerk
 
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/hop
@@ -176,15 +176,15 @@
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/hop)
 
-/datum/job/agent
+/datum/job/vamp/agent
 	title = "Camarilla Agent"
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list("Prince")
 	faction = "Vampire"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 5
+	spawn_positions = 5
 	supervisors = "the prince"
-	selection_color = "#ffeeee"
+	selection_color = "#bd3327"
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
@@ -199,12 +199,12 @@
 	mind_traits = list(TRAIT_DONUT_LOVER)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_SECURITY_OFFICER
+	display_order = JOB_DISPLAY_ORDER_AGENT
 	bounty_types = CIV_JOB_SEC
 
 /datum/outfit/job/agent
 	name = "Camarilla Agent"
-	jobtype = /datum/job/agent
+	jobtype = /datum/job/vamp/agent
 
 	belt = /obj/item/pda/security
 	ears = /obj/item/radio/headset/headset_sec
@@ -229,14 +229,14 @@
 
 //NEUTRALS
 
-/datum/job/graveyard
+/datum/job/vamp/graveyard
 	title = "Graveyard Keeper"
 	department_head = list("Clerk")
 	faction = "Vampire"
 	total_positions = 3
 	spawn_positions = 3
 	supervisors = "the Camarilla or the Anarchs"
-	selection_color = "#dcba97"
+	selection_color = "#e3e3e3"
 
 	outfit = /datum/outfit/job/graveyard
 
@@ -245,12 +245,12 @@
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_CAR
 
-	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
+	display_order = JOB_DISPLAY_ORDER_GRAVEYARD
 	bounty_types = CIV_JOB_MINE
 
 /datum/outfit/job/graveyard
 	name = "Graveyard Keeper"
-	jobtype = /datum/job/graveyard
+	jobtype = /datum/job/vamp/graveyard
 
 	belt = /obj/item/pda/shaftminer
 	ears = /obj/item/radio/headset/headset_cargo/mining
@@ -272,14 +272,14 @@
 
 	chameleon_extras = /obj/item/gun/energy/kinetic_accelerator
 
-/datum/job/vdoctor
+/datum/job/vamp/vdoctor
 	title = "Doctor"
 	department_head = list("Clerk")
 	faction = "Vampire"
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the Camarilla or the Anarchs"
-	selection_color = "#ffeef0"
+	selection_color = "#e3e3e3"
 
 	outfit = /datum/outfit/job/vdoctor
 
@@ -290,12 +290,12 @@
 
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_MEDICAL_DOCTOR
+	display_order = JOB_DISPLAY_ORDER_DOCTOR
 	bounty_types = CIV_JOB_MED
 
 /datum/outfit/job/vdoctor
 	name = "Doctor"
-	jobtype = /datum/job/vdoctor
+	jobtype = /datum/job/vamp/vdoctor
 
 	belt = /obj/item/pda/medical
 	ears = /obj/item/radio/headset/headset_med
@@ -314,14 +314,14 @@
 
 	chameleon_extras = /obj/item/gun/syringe
 
-/datum/job/vjanitor
+/datum/job/vamp/vjanitor
 	title = "Street Janitor"
 	department_head = list("Barkeeper")
 	faction = "Vampire"
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the Camarilla or the Anarchs"
-	selection_color = "#bbe291"
+	selection_color = "#e3e3e3"
 
 	outfit = /datum/outfit/job/vjanitor
 
@@ -330,25 +330,25 @@
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 
-	display_order = JOB_DISPLAY_ORDER_JANITOR
+	display_order = JOB_DISPLAY_ORDER_STREETJAN
 
 /datum/outfit/job/vjanitor
 	name = "Street Janitor"
-	jobtype = /datum/job/vjanitor
+	jobtype = /datum/job/vamp/vjanitor
 
 	belt = /obj/item/pda/janitor
 	ears = /obj/item/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/civilian/janitor
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)
 
-/datum/job/archivist
+/datum/job/vamp/archivist
 	title = "Archivist"
 	department_head = list("Barkeeper")
 	faction = "Vampire"
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the Camarilla or the Anarchs"
-	selection_color = "#bbe291"
+	selection_color = "#e3e3e3"
 
 	outfit = /datum/outfit/job/archivist
 
@@ -357,11 +357,11 @@
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 
-	display_order = JOB_DISPLAY_ORDER_CURATOR
+	display_order = JOB_DISPLAY_ORDER_ARCHIVIST
 
 /datum/outfit/job/archivist
 	name = "Archivist"
-	jobtype = /datum/job/archivist
+	jobtype = /datum/job/vamp/archivist
 
 	shoes = /obj/item/clothing/shoes/laceup
 	belt = /obj/item/pda/curator
@@ -387,14 +387,14 @@
 
 //ANARCHS
 
-/datum/job/barkeeper
+/datum/job/vamp/barkeeper
 	title = "Barkeeper"
 	department_head = list("Justicar")
 	faction = "Vampire"
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the Anarchs and the Traditions"
-	selection_color = "#bbe291"
+	selection_color = "#434343"
 
 	outfit = /datum/outfit/job/barkeeper
 
@@ -402,12 +402,12 @@
 	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
-	display_order = JOB_DISPLAY_ORDER_BARTENDER
+	display_order = JOB_DISPLAY_ORDER_BARKEEPER
 	bounty_types = CIV_JOB_DRINK
 
 /datum/outfit/job/barkeeper
 	name = "Barkeeper"
-	jobtype = /datum/job/barkeeper
+	jobtype = /datum/job/vamp/barkeeper
 
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	belt = /obj/item/pda/bar
@@ -417,14 +417,14 @@
 	backpack_contents = list(/obj/item/storage/box/beanbag=1)
 	shoes = /obj/item/clothing/shoes/laceup
 
-/datum/job/bouncer
+/datum/job/vamp/bouncer
 	title = "Bouncer"
 	department_head = list("Barkeeper")
 	faction = "Vampire"
 	total_positions = 3
 	spawn_positions = 3
 	supervisors = "the barkeeper"
-	selection_color = "#bbe291"
+	selection_color = "#434343"
 
 	outfit = /datum/outfit/job/bouncer
 
@@ -436,11 +436,11 @@
 	mind_traits = list(TRAIT_DONUT_LOVER)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_LAWYER
+	display_order = JOB_DISPLAY_ORDER_BOUNCER
 
 /datum/outfit/job/bouncer
 	name = "Bouncer"
-	jobtype = /datum/job/bouncer
+	jobtype = /datum/job/vamp/bouncer
 
 	belt = /obj/item/pda/lawyer
 	ears = /obj/item/radio/headset/headset_srvsec
@@ -453,14 +453,14 @@
 
 	chameleon_extras = /obj/item/stamp/law
 
-/datum/job/dealer
+/datum/job/vamp/dealer
 	title = "Dealer"
 	department_head = list("Justicar")
 	faction = "Vampire"
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the Anarchs and the Traditions"
-	selection_color = "#d7b088"
+	selection_color = "#434343"
 	exp_type_department = EXP_TYPE_SUPPLY // This is so the jobs menu can work properly
 
 	outfit = /datum/outfit/job/dealer
@@ -472,12 +472,12 @@
 
 	liver_traits = list(TRAIT_PRETENDER_ROYAL_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_QUARTERMASTER
+	display_order = JOB_DISPLAY_ORDER_DEALER
 	bounty_types = CIV_JOB_RANDOM
 
 /datum/outfit/job/dealer
 	name = "Dealer"
-	jobtype = /datum/job/dealer
+	jobtype = /datum/job/vamp/dealer
 
 	belt = /obj/item/pda/quartermaster
 	ears = /obj/item/radio/headset/headset_cargo
@@ -489,14 +489,14 @@
 
 	chameleon_extras = /obj/item/stamp/qm
 
-/datum/job/supply
+/datum/job/vamp/supply
 	title = "Supply Technician"
 	department_head = list("Dealer")
 	faction = "Vampire"
 	total_positions = 3
 	spawn_positions = 3
 	supervisors = "the dealer"
-	selection_color = "#dcba97"
+	selection_color = "#434343"
 
 	outfit = /datum/outfit/job/supply
 
@@ -504,12 +504,12 @@
 	minimal_access = list(ACCESS_MAINT_TUNNELS, ACCESS_CARGO, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM, ACCESS_MECH_MINING)
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_CAR
-	display_order = JOB_DISPLAY_ORDER_CARGO_TECHNICIAN
+	display_order = JOB_DISPLAY_ORDER_SUPPLY
 	bounty_types = CIV_JOB_RANDOM
 
 /datum/outfit/job/supply
 	name = "Supply Technician"
-	jobtype = /datum/job/supply
+	jobtype = /datum/job/vamp/supply
 
 	belt = /obj/item/pda/cargo
 	ears = /obj/item/radio/headset/headset_cargo
@@ -519,13 +519,13 @@
 
 //ASS ISTANTS
 
-/datum/job/citizen
+/datum/job/vamp/citizen
 	title = "Citizen"
 	faction = "Vampire"
 	total_positions = -1
 	spawn_positions = -1
 	supervisors = "the Traditions"
-	selection_color = "#dddddd"
+	selection_color = "#7e7e7e"
 	access = list()			//See /datum/job/assistant/get_access()
 	minimal_access = list()	//See /datum/job/assistant/get_access()
 	outfit = /datum/outfit/job/citizen
@@ -536,11 +536,11 @@
 	liver_traits = list(TRAIT_GREYTIDE_METABOLISM)
 
 	paycheck_department = ACCOUNT_CIV
-	display_order = JOB_DISPLAY_ORDER_ASSISTANT
+	display_order = JOB_DISPLAY_ORDER_CITIZEN
 
 /datum/outfit/job/citizen
 	name = "Citizen"
-	jobtype = /datum/job/citizen
+	jobtype = /datum/job/vamp/citizen
 
 /datum/outfit/job/citizen/pre_equip(mob/living/carbon/human/H)
 	..()

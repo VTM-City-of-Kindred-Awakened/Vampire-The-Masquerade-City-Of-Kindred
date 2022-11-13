@@ -18,7 +18,7 @@
 	mind_traits = list(TRAIT_DONUT_LOVER)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_LAWYER
+//	display_order = JOB_DISPLAY_ORDER_LAWYER
 
 /datum/outfit/job/lawyer
 	name = "Lawyer"
