@@ -37,7 +37,7 @@
 	name = "Prince"
 
 /datum/phonecontact/prince/check_global_contacts()
-	if(number != GLOB.princenumber
+	if(number != GLOB.princenumber)
 		number = GLOB.princenumber
 		return TRUE
 	..()
