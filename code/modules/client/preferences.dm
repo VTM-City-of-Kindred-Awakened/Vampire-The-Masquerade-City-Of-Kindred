@@ -969,6 +969,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/available_in_days = job.available_in_days(user.client)
 				HTML += "<font color=red>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
 				continue
+			if(generation > job.minimal_generation)
+				HTML += "<font color=red>[rank]</font></td><td><font color=red> \[FROM [job.minimal_generation] GENERATION AND OLDER\]</font></td></tr>"
+				continue
 			if((job_preferences[SSjob.overflow_role] == JP_LOW) && (rank != SSjob.overflow_role) && !is_banned_from(user.ckey, SSjob.overflow_role))
 				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 				continue

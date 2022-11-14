@@ -26,6 +26,11 @@
 
 	display_order = JOB_DISPLAY_ORDER_PRINCE
 
+	my_contact_is_important = TRUE
+	known_contacts = list("Sheriff",
+												"Clerk",
+												"Barkeeper")
+
 /datum/job/prince/get_access()
 	return get_all_accesses()
 
@@ -46,6 +51,7 @@
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	head = /obj/item/clothing/head/caphat
+	l_pocket = /obj/item/vamp/phone/prince
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/station_charter=1)
 
 	skillchips = list(/obj/item/skillchip/disk_verifier)
@@ -94,6 +100,9 @@
 	display_order = JOB_DISPLAY_ORDER_SHERIFF
 	bounty_types = CIV_JOB_SEC
 
+	my_contact_is_important = TRUE
+	known_contacts = list("Prince")
+
 /datum/outfit/job/sheriff
 	name = "Sheriff"
 	jobtype = /datum/job/vamp/sheriff
@@ -108,8 +117,8 @@
 	head = /obj/item/clothing/head/hos/beret
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	suit_store = /obj/item/gun/energy/e_gun
-	r_pocket = /obj/item/assembly/flash/handheld
-	l_pocket = /obj/item/restraints/handcuffs
+	r_pocket = /obj/item/restraints/handcuffs
+	l_pocket = /obj/item/vamp/phone/sheriff
 	backpack_contents = list(/obj/item/melee/baton/loaded=1, /obj/item/modular_computer/tablet/preset/advanced/command=1)
 
 	backpack = /obj/item/storage/backpack/security
@@ -161,6 +170,9 @@
 
 	display_order = JOB_DISPLAY_ORDER_CLERK
 
+	my_contact_is_important = TRUE
+	known_contacts = list("Prince")
+
 /datum/outfit/job/clerk
 	name = "Clerk"
 	jobtype = /datum/job/vamp/clerk
@@ -171,6 +183,7 @@
 	uniform = /obj/item/clothing/under/rank/civilian/head_of_personnel
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	head = /obj/item/clothing/head/hopcap
+	l_pocket = /obj/item/vamp/phone/clerk
 	backpack_contents = list(/obj/item/storage/box/ids=1,\
 		/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced/command = 1)
 
@@ -201,6 +214,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_AGENT
 	bounty_types = CIV_JOB_SEC
+	known_contacts = list("Prince")
 
 /datum/outfit/job/agent
 	name = "Camarilla Agent"
@@ -213,8 +227,8 @@
 	head = /obj/item/clothing/head/helmet/sec
 	suit = /obj/item/clothing/suit/armor/vest/alt
 	shoes = /obj/item/clothing/shoes/jackboots
-	l_pocket = /obj/item/restraints/handcuffs
-	r_pocket = /obj/item/assembly/flash/handheld
+	r_pocket = /obj/item/restraints/handcuffs
+	l_pocket = /obj/item/vamp/phone/camarilla
 	suit_store = /obj/item/gun/energy/disabler
 	backpack_contents = list(/obj/item/melee/baton/loaded=1)
 
@@ -257,7 +271,7 @@
 	shoes = /obj/item/clothing/shoes/workboots/mining
 	gloves = /obj/item/clothing/gloves/color/black
 	uniform = /obj/item/clothing/under/rank/cargo/miner/lavaland
-	l_pocket = /obj/item/reagent_containers/hypospray/medipen/survival
+	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/storage/bag/ore	//causes issues if spawned in backpack
 	backpack_contents = list(
 		/obj/item/flashlight/seclite=1,\
@@ -304,6 +318,7 @@
 	suit =  /obj/item/clothing/suit/toggle/labcoat
 	l_hand = /obj/item/storage/firstaid/medical
 	suit_store = /obj/item/flashlight/pen
+	l_pocket = /obj/item/vamp/phone
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
@@ -339,6 +354,7 @@
 	belt = /obj/item/pda/janitor
 	ears = /obj/item/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/civilian/janitor
+	l_pocket = /obj/item/vamp/phone
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)
 
 /datum/job/vamp/archivist
@@ -368,8 +384,8 @@
 	ears = /obj/item/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/civilian/curator
 	l_hand = /obj/item/storage/bag/books
-	r_pocket = /obj/item/key/displaycase
-	l_pocket = /obj/item/laser_pointer
+	r_pocket = /obj/item/laser_pointer
+	l_pocket = /obj/item/vamp/phone
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack_contents = list(
 		/obj/item/choice_beacon/hero = 1,
@@ -405,6 +421,10 @@
 	display_order = JOB_DISPLAY_ORDER_BARKEEPER
 	bounty_types = CIV_JOB_DRINK
 
+	my_contact_is_important = TRUE
+	known_contacts = list("Prince",
+												"Dealer")
+
 /datum/outfit/job/barkeeper
 	name = "Barkeeper"
 	jobtype = /datum/job/vamp/barkeeper
@@ -416,6 +436,7 @@
 	suit = /obj/item/clothing/suit/armor/vest
 	backpack_contents = list(/obj/item/storage/box/beanbag=1)
 	shoes = /obj/item/clothing/shoes/laceup
+	l_pocket = /obj/item/vamp/phone/barkeeper
 
 /datum/job/vamp/bouncer
 	title = "Bouncer"
@@ -437,6 +458,7 @@
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_BOUNCER
+	known_contacts = list("Barkeeper")
 
 /datum/outfit/job/bouncer
 	name = "Bouncer"
@@ -448,8 +470,8 @@
 	suit = /obj/item/clothing/suit/toggle/lawyer
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/storage/briefcase/lawyer
-	l_pocket = /obj/item/laser_pointer
-	r_pocket = /obj/item/clothing/accessory/lawyers_badge
+	r_pocket = /obj/item/laser_pointer
+	l_pocket = /obj/item/vamp/phone/anarch
 
 	chameleon_extras = /obj/item/stamp/law
 
@@ -475,6 +497,9 @@
 	display_order = JOB_DISPLAY_ORDER_DEALER
 	bounty_types = CIV_JOB_RANDOM
 
+	my_contact_is_important = TRUE
+	known_contacts = list("Barkeeper")
+
 /datum/outfit/job/dealer
 	name = "Dealer"
 	jobtype = /datum/job/vamp/dealer
@@ -485,6 +510,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_hand = /obj/item/clipboard
+	l_pocket = /obj/item/vamp/phone/dealer
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo=1)
 
 	chameleon_extras = /obj/item/stamp/qm
@@ -506,6 +532,7 @@
 	paycheck_department = ACCOUNT_CAR
 	display_order = JOB_DISPLAY_ORDER_SUPPLY
 	bounty_types = CIV_JOB_RANDOM
+	known_contacts = list("Barkeeper")
 
 /datum/outfit/job/supply
 	name = "Supply Technician"
@@ -515,6 +542,7 @@
 	ears = /obj/item/radio/headset/headset_cargo
 	uniform = /obj/item/clothing/under/rank/cargo/tech
 	l_hand = /obj/item/export_scanner
+	l_pocket = /obj/item/vamp/phone/anarch
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo=1)
 
 //ASS ISTANTS
@@ -541,6 +569,7 @@
 /datum/outfit/job/citizen
 	name = "Citizen"
 	jobtype = /datum/job/vamp/citizen
+	l_pocket = /obj/item/vamp/phone
 
 /datum/outfit/job/citizen/pre_equip(mob/living/carbon/human/H)
 	..()

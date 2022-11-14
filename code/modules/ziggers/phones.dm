@@ -26,38 +26,57 @@
 	var/name = "Unknown"
 	var/number = ""
 
+/datum/phonecontact/New()
+	..()
+	check_global_contacts()
+
 /datum/phonecontact/proc/check_global_contacts()
-	return
+	return FALSE
 
 /datum/phonecontact/prince
 	name = "Prince"
 
 /datum/phonecontact/prince/check_global_contacts()
-	number = GLOB.princenumber
+	if(number != GLOB.princenumber
+		number = GLOB.princenumber
+		return TRUE
+	..()
 
 /datum/phonecontact/sheriff
 	name = "Sheriff"
 
 /datum/phonecontact/sheriff/check_global_contacts()
-	number = GLOB.sheriffnumber
+	if(number != GLOB.sheriffnumber)
+		number = GLOB.sheriffnumber
+		return TRUE
+	..()
 
 /datum/phonecontact/clerk
 	name = "Clerk"
 
 /datum/phonecontact/clerk/check_global_contacts()
-	number = GLOB.clerknumber
+	if(number != GLOB.clerknumber)
+		number = GLOB.clerknumber
+		return TRUE
+	..()
 
 /datum/phonecontact/barkeeper
 	name = "Barkeeper"
 
 /datum/phonecontact/barkeeper/check_global_contacts()
-	number = GLOB.barkeepernumber
+	if(number != GLOB.barkeepernumber)
+		number = GLOB.barkeepernumber
+		return TRUE
+	..()
 
 /datum/phonecontact/dealer
 	name = "Dealer"
 
 /datum/phonecontact/dealer/check_global_contacts()
-	number = GLOB.dealernumber
+	if(number != GLOB.dealernumber)
+		number = GLOB.dealernumber
+		return TRUE
+	..()
 
 /obj/item/vamp/phone
 	name = "\improper phone"
@@ -83,6 +102,16 @@
 	var/last_call = 0
 	var/call_sound = 'code/modules/ziggers/call.ogg'
 
+/obj/item/vamp/phone/proc/add_important_contacts()
+	var/mob/living/L
+	if(isliving(loc))
+		L = loc
+	for(var/datum/phonecontact/PHNCNTCT in contacts)
+		if(PHNCNTCT)
+			if(PHNCNTCT.check_global_contacts())
+				if(L)
+					to_chat(L, "<span class='notice'>Some important contacts in your phone work again.</span>")
+
 /obj/phonevoice
 	name = "unknown voice"
 	speech_span = SPAN_ROBOT
@@ -106,6 +135,68 @@
 		number = create_unique_phone_number(exchange_num)
 	GLOB.phone_numbers_list += number
 	GLOB.phones_list += src
+
+/obj/item/vamp/phone/prince
+
+/obj/item/vamp/phone/prince/Initialize()
+	..()
+	GLOB.princenumber = number
+	var/datum/phonecontact/sheriff/SHERIFF = new()
+	contacts += SHERIFF
+	var/datum/phonecontact/clerk/CLERK = new()
+	contacts += CLERK
+	var/datum/phonecontact/barkeeper/BARKEEPER = new()
+	contacts += BARKEEPER
+
+/obj/item/vamp/phone/sheriff
+
+/obj/item/vamp/phone/sheriff/Initialize()
+	..()
+	GLOB.sheriffnumber = number
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+
+/obj/item/vamp/phone/clerk
+
+/obj/item/vamp/phone/clerk/Initialize()
+	..()
+	GLOB.clerknumber = number
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+
+/obj/item/vamp/phone/barkeeper
+
+/obj/item/vamp/phone/barkeeper/Initialize()
+	..()
+	GLOB.barkeepernumber = number
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+	var/datum/phonecontact/dealer/DEALER = new()
+	contacts += DEALER
+
+/obj/item/vamp/phone/dealer
+
+/obj/item/vamp/phone/dealer/Initialize()
+	..()
+	GLOB.dealernumber = number
+	var/datum/phonecontact/barkeeper/BARKEEPER = new()
+	contacts += BARKEEPER
+
+/obj/item/vamp/phone/camarilla
+
+/obj/item/vamp/phone/camarilla/Initialize()
+	..()
+	GLOB.dealernumber = number
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+
+/obj/item/vamp/phone/anarch
+
+/obj/item/vamp/phone/anarch/Initialize()
+	..()
+	GLOB.dealernumber = number
+	var/datum/phonecontact/barkeeper/BARKEEPER = new()
+	contacts += BARKEEPER
 
 /obj/item/vamp/phone/Destroy()
 	GLOB.phone_numbers_list -= number
@@ -131,11 +222,13 @@
 /obj/item/vamp/phone/attack_hand(mob/user)
 	if(!closed && user.get_inactive_held_item() == src)
 		OpenMenu(user)
+	else if(anchored)
+		OpenMenu(user)
 	else
 		..()
 
 /obj/item/vamp/phone/proc/OpenMenu(var/mob/mobila)
-	var/dat = "<center><h2>Phone</h2><BR>"
+	var/dat = "<body><center><h2>Phone</h2><BR>"
 	if(last_call+100 > world.time && !talking)
 		dat += "Calling...<BR>"
 		dat += "<a href='byond://?src=[REF(src)];choice=hang'><b>Hang up</b></a><BR>"
@@ -165,6 +258,9 @@
 			dat += "<a href='byond://?src=[REF(src)];choice=contacts'><b>Contacts</b></a><BR>"
 			dat += "<a href='byond://?src=[REF(src)];choice=add'><b>Add contact</b></a><BR>"
 	dat += "</center>"
+	dat += "Ambulance number is: 911<BR>"
+	dat += "Cleaning services number is: 700 4424<BR>"
+	dat += "</body>"
 	mobila << browse(dat, "window=phone;size=250x350;border=1;can_resize=0;can_minimize=0")
 	onclose(mobila, "phone", src)
 

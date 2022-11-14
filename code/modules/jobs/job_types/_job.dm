@@ -69,7 +69,15 @@
 	var/bounty_types = CIV_JOB_BASIC
 
 	/// Should this job be allowed to be picked for the bureaucratic error event?
-	var/allow_bureaucratic_error = TRUE
+	var/allow_bureaucratic_error = FALSE
+
+	// Fuck thin blood
+	var/minimal_generation = 13
+
+	// List for phone shit
+	var/my_contact_is_important = FALSE
+	// Only for display in memories
+	var/list/known_contacts = list()
 
 /datum/job/New()
 	. = ..()
@@ -117,6 +125,14 @@
 		for(var/i in roundstart_experience)
 			experiencer.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
+	if(my_contact_is_important)
+		for(var/obj/item/vamp/phone/PHONE in GLOB.phones_list)
+			if(PHONE)
+				PHONE.add_important_contacts()
+
+	if(length(known_contacts) > 0)
+		H.knowscontacts = known_contacts
+
 /datum/job/proc/announce(mob/living/carbon/human/H)
 	if(head_announce)
 		announce_head(H, head_announce)
@@ -137,10 +153,13 @@
 /datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, client/preference_source)
 	if(!H)
 		return FALSE
+/*
 	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
 		if(H.dna.species.id != "human")
 			H.set_species(/datum/species/human)
 			H.apply_pref_name("human", preference_source)
+*/
+//No need to humanize fucking furries, since there is no fucking furries
 	if(!visualsOnly)
 		var/datum/bank_account/bank_account = new(H.real_name, src, H.dna.species.payday_modifier)
 		bank_account.payday(STARTING_PAYCHECKS, TRUE)
