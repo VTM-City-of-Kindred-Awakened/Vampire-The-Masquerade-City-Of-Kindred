@@ -202,6 +202,36 @@
 	icon_state = "rock-0"
 	base_icon_state = "rock"
 
+/turf/closed/wall/vampwall/city
+	name = "wall"
+	desc = "A huge chunk of concrete and bricks used to separate rooms."
+	icon_state = "city-0"
+	base_icon_state = "city"
+
+/turf/closed/wall/vampwall/city/low
+	icon = 'code/modules/ziggers/lowwalls.dmi'
+	opacity = FALSE
+	low = TRUE
+
+/turf/closed/wall/vampwall/city/low/window
+	icon_state = "city-window"
+	window = /obj/structure/window/fulltile
+
+/turf/closed/wall/vampwall/bar
+	name = "dark brick wall"
+	desc = "A huge chunk of bricks used to separate rooms."
+	icon_state = "bar-0"
+	base_icon_state = "bar"
+
+/turf/closed/wall/vampwall/bar/low
+	icon = 'code/modules/ziggers/lowwalls.dmi'
+	opacity = FALSE
+	low = TRUE
+
+/turf/closed/wall/vampwall/bar/low/window
+	icon_state = "bar-window"
+	window = /obj/structure/window/fulltile
+
 //TURFS
 
 /obj/effect/decal/asphalt
@@ -405,6 +435,8 @@
 	pixel_w = -32
 	anchored = TRUE
 
+//OTHER TURFS
+
 /turf/open/floor/plating/parquetry
 	gender = PLURAL
 	name = "parquetry"
@@ -417,6 +449,9 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/parquetry/old
+	icon_state = "parquet-old"
 
 /turf/open/floor/plating/granite
 	gender = PLURAL
@@ -431,11 +466,14 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
+/turf/open/floor/plating/granite/black
+	icon_state = "granite-black"
+
 /turf/open/floor/plating/concrete
 	gender = PLURAL
 	name = "concrete"
 	icon = 'code/modules/ziggers/tiles.dmi'
-	icon_state = "concrete"
+	icon_state = "concrete1"
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
@@ -443,6 +481,9 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/concrete/Initialize()
+	icon_state = "concrete[rand(1, 4)]"
 
 /turf/open/floor/plating/vampgrass
 	gender = PLURAL
@@ -457,14 +498,140 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
-/turf/open/floor/plating/grass/Initialize()
+/turf/open/floor/plating/vampcarpet
+	gender = PLURAL
+	name = "carpet"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "carpet_black"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/vampdirt
+	gender = PLURAL
+	name = "dirt"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "dirt"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/vampplating
+	gender = PLURAL
+	name = "plating"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "plating"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/vampplating/mono
+	icon_state = "plating-mono"
+
+/turf/open/floor/plating/vampplating/stone
+	icon_state = "plating-stone"
+
+/turf/open/floor/plating/rough
+	gender = PLURAL
+	name = "rough floor"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "rough"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/toilet
+	gender = PLURAL
+	name = "plating"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "toilet1"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/toilet/Initialize()
 	..()
-	icon_state = "grass[rand(1, 5)]"
+	icon_state = "toilet[rand(1, 9)]"
+
+/turf/open/floor/plating/circled
+	gender = PLURAL
+	name = "fancy plating"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "circle1"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/circled/Initialize()
+	..()
+	icon_state = "circle[rand(1, 8)]"
+
+/turf/open/floor/plating/church
+	gender = PLURAL
+	name = "fancy plating"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "church1"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/church/Initialize()
+	..()
+	icon_state = "church[rand(1, 4)]"
+
+/turf/open/floor/plating/saint
+	gender = PLURAL
+	name = "fancy plating"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "saint1"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/saint/Initialize()
+	..()
+	icon_state = "saint[rand(1, 2)]"
+
+//OBOI
 
 /obj/effect/decal/wallpaper
 	name = "wall paint"
 	icon = 'code/modules/ziggers/tiles.dmi'
 	icon_state = "wallpaper"
+	plane = GAME_PLANE
+	layer = ABOVE_NORMAL_TURF_LAYER	//WALLPAPER_LAYER dont work
 
 /obj/effect/decal/wallpaper/grey
 	icon_state = "wallpaper-grey"
