@@ -13,39 +13,40 @@
 #define REVERSE_DIR(dir) ( ((dir & 85) << 1) | ((dir & 170) >> 1) )
 
 //Human Overlays Indexes/////////
-#define UNDERSHADOW_LAYER			32
-#define MUTATIONS_LAYER			31		//mutations. Tk headglows, cold resistance glow, etc
-#define BODY_BEHIND_LAYER		30		//certain mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODYPARTS_LAYER			29		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
-#define BODY_ADJ_LAYER			28		//certain mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_LAYER				27		//underwear, undershirts, socks, eyes, lips(makeup)
-#define FRONT_MUTATIONS_LAYER	26		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define DAMAGE_LAYER			25		//damage indicators (cuts and burns)
-#define UNIFORM_LAYER			24
-#define ID_LAYER				23 //lmao at the idiot who put both ids and hands on the same layer
-#define HANDS_PART_LAYER		22
-#define GLOVES_LAYER			21
-#define SHOES_LAYER				20
-#define EARS_LAYER				19
-#define SUIT_LAYER				18
-#define GLASSES_LAYER			17
-#define BELT_LAYER				16		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		15
-#define NECK_LAYER				14
-#define BACK_LAYER				13
-#define HAIR_LAYER				12		//TODO: make part of head layer?
-#define UPPER_EARS_LAYER				11
-#define FACEMASK_LAYER			10
-#define HEAD_LAYER				9
-#define HANDCUFF_LAYER			8
-#define LEGCUFF_LAYER			7
-#define HANDS_LAYER				6
-#define BODY_FRONT_LAYER		5
-#define PROTEAN_LAYER		4
-#define HALO_LAYER				3		//blood cult ascended halo, because there's currently no better solution for adding/removing
-#define FIRE_LAYER				2		//If you're on fire
+#define UNDERSHADOW_LAYER			33
+#define MUTATIONS_LAYER			32		//mutations. Tk headglows, cold resistance glow, etc
+#define BODY_BEHIND_LAYER		31		//certain mutantrace features (tail when looking south) that must appear behind the body parts
+#define BODYPARTS_LAYER			30		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
+#define BODY_ADJ_LAYER			29		//certain mutantrace features (snout, body markings) that must appear above the body parts
+#define BODY_LAYER				28		//underwear, undershirts, socks, eyes, lips(makeup)
+#define FRONT_MUTATIONS_LAYER	27		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
+#define DAMAGE_LAYER			26		//damage indicators (cuts and burns)
+#define UNIFORM_LAYER			25
+#define ID_LAYER				24 //lmao at the idiot who put both ids and hands on the same layer
+#define HANDS_PART_LAYER		23
+#define GLOVES_LAYER			22
+#define SHOES_LAYER				21
+#define EARS_LAYER				20
+#define SUIT_LAYER				19
+#define GLASSES_LAYER			18
+#define BELT_LAYER				17		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		16
+#define NECK_LAYER				15
+#define BACK_LAYER				14
+#define HAIR_LAYER				13		//TODO: make part of head layer?
+#define UPPER_EARS_LAYER				12
+#define FACEMASK_LAYER			11
+#define HEAD_LAYER				10
+#define HANDCUFF_LAYER			9
+#define LEGCUFF_LAYER			8
+#define HANDS_LAYER				7
+#define BODY_FRONT_LAYER		6
+#define PROTEAN_LAYER		5
+#define HALO_LAYER				4		//blood cult ascended halo, because there's currently no better solution for adding/removing
+#define FIRE_LAYER				3		//If you're on fire
+#define BITE_LAYER				2
 #define FIGHT_LAYER				1
-#define TOTAL_LAYERS			32		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			33		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"

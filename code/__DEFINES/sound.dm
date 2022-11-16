@@ -7,6 +7,8 @@
 #define CHANNEL_AMBIENCE 1019
 #define CHANNEL_BUZZ 1018
 #define CHANNEL_BICYCLE 1017
+#define CHANNEL_BLOOD 1016
+#define CHANNEL_DISCIPLINES 1015
 
 ///Default range of a sound.
 #define SOUND_RANGE 17
@@ -47,7 +49,7 @@
 #define AMBIENCE_AWAY "away"
 #define AMBIENCE_REEBE "reebe" //unused
 #define AMBIENCE_CREEPY "creepy" //not to be confused with spooky
- 
+
 //default byond sound environments
 #define SOUND_ENVIRONMENT_NONE -1
 #define SOUND_ENVIRONMENT_GENERIC 0

@@ -208,6 +208,15 @@
 	maxbloodamount = 5
 	bloodquality = BLOOD_QUALITY_NORMAL
 
+/proc/add_bite_animation(var/mob/living/carbon/human/H)
+	H.remove_overlay(BITE_LAYER)
+	var/mutable_appearance/bite_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "bite", -BITE_LAYER)
+	H.overlays_standing[BITE_LAYER] = bite_overlay
+	H.apply_overlay(BITE_LAYER)
+	spawn(13)
+		if(H)
+			H.remove_overlay(BITE_LAYER)
+
 /atom/movable/screen/drinkblood/Click()
 	SEND_SOUND(usr, sound('code/modules/ziggers/highlight.ogg', 0, 0, 50))
 	if(ishuman(usr))
@@ -249,6 +258,8 @@
 					return
 				var/skipface = (BD.wear_mask && (BD.wear_mask.flags_inv & HIDEFACE)) || (BD.head && (BD.head.flags_inv & HIDEFACE))
 				if(!skipface)
+					if(ishuman(LV))
+						add_bite_animation(LV)
 					playsound(BD, 'code/modules/ziggers/drinkblood1.ogg', 50, TRUE)
 					LV.visible_message("<span class='warning'><b>[BD] bites [LV]'s neck!</b></span>", "<span class='warning'><b>[BD] bites your neck!</b></span>")
 					if(ishuman(LV))
@@ -260,7 +271,8 @@
 
 /mob/living/carbon/human/proc/drinksomeblood(var/mob/living/mob)
 	last_drinkblood_use = world.time
-	SEND_SOUND(src, sound('code/modules/ziggers/drinkblood2.ogg'))
+	var/sound/heartbeat = sound('code/modules/ziggers/drinkblood2.ogg', repeat = TRUE)
+	playsound_local(src, heartbeat, 75, 0, channel = CHANNEL_BLOOD, use_reverb = FALSE)
 	mob.SetSleeping(95)
 	if(isnpc(mob))
 		var/mob/living/carbon/human/npc/NPC = mob
@@ -284,6 +296,7 @@
 				playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
 				if(isturf(loc))
 					add_splatter_floor(loc)
+				stop_sound_channel(CHANNEL_BLOOD)
 				return
 		bloodpool += 1*max(1, mob.bloodquality-1)	//Vot zdes bonus k otsosu, i eshe chto-to pohozhee u tremerov v discipline
 		bloodpool = min(maxbloodpool, bloodpool)
@@ -304,9 +317,13 @@
 				to_chat(src, "<span class='warning'>This sad sacrifice for your own pleasure affects something deep in your mind.</span>")
 				AdjustHumanity(src, -1, 3)
 			mob.death()
+			stop_sound_channel(CHANNEL_BLOOD)
 			return
 		if(grab_state > GRAB_PASSIVE)
+			stop_sound_channel(CHANNEL_BLOOD)
 			drinksomeblood(mob)
+	else
+		stop_sound_channel(CHANNEL_BLOOD)
 
 /atom/movable/screen/bloodheal
 	name = "Bloodheal"

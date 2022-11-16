@@ -20,7 +20,8 @@
 
 /mob/living/carbon/human/proc/rollfrenzy()
 	if(clane && client)
-		to_chat(src, "The beast is calling. Rolling...")
+		to_chat(src, "I need <span class='danger'><b>BLOOD</b></span>. The <span class='danger'><b>BEAST</b></span> is calling. Rolling...")
+		SEND_SOUND(src, sound('code/modules/ziggers/bloodneed.ogg', 0, 0, 50))
 		var/check = vampireroll(max(1, round(humanity/2)), frenzy_hardness, src)
 		switch(check)
 			if(DICE_FAILURE)
@@ -77,6 +78,7 @@
 				L.grabbedby(src)
 				if(ishuman(L))
 					L.emote("scream")
+					add_bite_animation(L)
 				if(CheckEyewitness(L, src, 7, FALSE))
 					AdjustMasquerade(src, -1)
 				playsound(src, 'code/modules/ziggers/drinkblood1.ogg', 50, TRUE)
