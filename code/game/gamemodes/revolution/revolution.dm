@@ -27,7 +27,7 @@
 
 	var/finished = 0
 	var/max_headrevs = 3
-	var/datum/team/revolution/revolution
+	var/datum/team/sabbat/revolution
 	var/list/datum/mind/headrev_candidates = list()
 	var/end_when_heads_dead = TRUE
 

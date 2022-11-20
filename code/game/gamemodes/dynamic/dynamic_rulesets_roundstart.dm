@@ -382,7 +382,7 @@
 	minimum_players = 35
 	/// How much threat should be injected when the revolution wins?
 	var/revs_win_threat_injection = 20
-	var/datum/team/revolution/revolution
+	var/datum/team/sabbat/revolution
 	var/finished = FALSE
 
 /datum/dynamic_ruleset/roundstart/revs/pre_execute()
