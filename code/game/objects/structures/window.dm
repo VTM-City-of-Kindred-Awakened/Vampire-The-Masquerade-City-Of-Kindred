@@ -601,6 +601,8 @@
 	icon_state = "window-0"
 	base_icon_state = "window"
 	max_integrity = 50
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	smoothing_flags = SMOOTH_BITMASK
@@ -632,6 +634,8 @@
 	base_icon_state = "rplasma_window"
 	state = RWINDOW_SECURE
 	max_integrity = 1000
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	smoothing_flags = SMOOTH_BITMASK

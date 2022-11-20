@@ -212,11 +212,11 @@
 /obj/machinery/light
 	name = "light fixture"
 	icon = 'icons/obj/lighting.dmi'
-	var/overlayicon = 'icons/obj/lighting_overlay.dmi'
+//	var/overlayicon = 'icons/obj/lighting_overlay.dmi'
 	var/base_state = "tube"		// base description and icon_state
 	icon_state = "tube"
 	desc = "A lighting fixture."
-	layer = WALL_OBJ_LAYER
+	layer = ABOVE_ALL_MOB_LAYERS_LAYER
 	max_integrity = 100
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 2
@@ -400,15 +400,15 @@
 
 /obj/machinery/light/update_overlays()
 	. = ..()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	if(on && status == LIGHT_OK)
-		var/area/A = get_area(src)
-		if(emergency_mode || (A?.fire))
-			SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_emergency", layer, plane, dir)
-		else if (nightshift_enabled)
-			SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_nightshift", layer, plane, dir)
-		else
-			SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, plane, dir)
+//	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+//	if(on && status == LIGHT_OK)
+//		var/area/A = get_area(src)
+//		if(emergency_mode || (A?.fire))
+//			SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_emergency", layer, plane, dir)
+//		else if (nightshift_enabled)
+//			SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_nightshift", layer, plane, dir)
+//		else
+//			SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, plane, dir)
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)

@@ -12,6 +12,8 @@
 /datum/discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	if(!target)
 		return
+	if(!caster)
+		return
 	if(caster.bloodpool < cost)
 		return
 	if(!target.stat)
@@ -21,13 +23,13 @@
 	else
 		to_chat(caster, "<span class='notice'>You activate the [name].</span>")
 		caster = target
+	caster.bloodpool -= cost
 	if(ranged)
 		if(isnpc(target))
 			var/mob/living/carbon/human/npc/NPC = target
 			NPC.Aggro(caster, TRUE)
-	caster.bloodpool -= cost
 	if(activate_sound)
-		playsound(caster, activate_sound, 75, FALSE)
+		playsound(caster, activate_sound, 50, FALSE)
 	if(caster.client)
 		if(caster.client.prefs)
 			caster.client.prefs.exper = min(1440, caster.client.prefs.exper+1)
@@ -115,11 +117,12 @@
 	target.update_sight()
 	target.add_client_colour(/datum/client_colour/glass_colour/blue)
 	spawn(delay*level)
-		caster.stop_sound_channel(CHANNEL_DISCIPLINES)
-		playsound(caster, 'code/modules/ziggers/auspex_deactivate.ogg', 75, FALSE)
-		REMOVE_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
-		target.remove_client_colour(/datum/client_colour/glass_colour/blue)
-		target.update_sight()
+		if(caster)
+			caster.stop_sound_channel(CHANNEL_DISCIPLINES)
+			playsound(caster, 'code/modules/ziggers/auspex_deactivate.ogg', 50, FALSE)
+			REMOVE_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
+			target.remove_client_colour(/datum/client_colour/glass_colour/blue)
+			target.update_sight()
 
 /datum/discipline/celerity
 	name = "Celerity"
@@ -158,9 +161,10 @@
 	target.add_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
 	caster.celerity_visual = TRUE
 	spawn(delay*level)
-		playsound(caster, 'code/modules/ziggers/celerity_deactivate.ogg', 75, FALSE)
-		target.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
-		caster.celerity_visual = FALSE
+		if(caster)
+			playsound(caster, 'code/modules/ziggers/celerity_deactivate.ogg', 50, FALSE)
+			target.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
+			caster.celerity_visual = FALSE
 
 /datum/discipline/dominate
 	name = "Dominate"
@@ -333,10 +337,11 @@
 	caster.dna.species.punchdamagehigh += 10
 	caster.dna.species.meleemod += 1
 	spawn(delay*level)
-		playsound(caster, 'code/modules/ziggers/potence_deactivate.ogg', 75, TRUE)
-		caster.dna.species.punchdamagelow -= 10
-		caster.dna.species.punchdamagehigh -= 10
-		caster.dna.species.meleemod -= 1
+		if(caster)
+			playsound(caster, 'code/modules/ziggers/potence_deactivate.ogg', 50, FALSE)
+			caster.dna.species.punchdamagelow -= 10
+			caster.dna.species.punchdamagehigh -= 10
+			caster.dna.species.meleemod -= 1
 
 /datum/discipline/fortitude
 	name = "Fortitude"
@@ -353,9 +358,10 @@
 	caster.physiology.armor.melee += 25*mod
 	caster.physiology.armor.bullet += 25*mod
 	spawn(delay*level)
-		playsound(caster, 'code/modules/ziggers/fortitude_deactivate.ogg', 75, TRUE)
-		caster.physiology.armor.melee -= 25*mod
-		caster.physiology.armor.bullet -= 25*mod
+		if(caster)
+			playsound(caster, 'code/modules/ziggers/fortitude_deactivate.ogg', 50, FALSE)
+			caster.physiology.armor.melee -= 25*mod
+			caster.physiology.armor.bullet -= 25*mod
 
 /datum/discipline/obfuscate
 	name = "Obfuscate"
@@ -379,8 +385,9 @@
 		else
 			caster.alpha = 64
 	spawn(delay*level)
-		playsound(caster, 'code/modules/ziggers/obfuscate_deactivate.ogg', 75, TRUE)
-		caster.alpha = 255
+		if(caster)
+			playsound(caster, 'code/modules/ziggers/obfuscate_deactivate.ogg', 50, FALSE)
+			caster.alpha = 255
 
 /datum/discipline/presence
 	name = "Presence"
@@ -403,9 +410,11 @@
 				H.dna.species.brutemod += mod
 				H.dna.species.burnmod += mod
 				spawn(delay)
-					playsound(caster, 'code/modules/ziggers/presence_deactivate.ogg', 75, TRUE)
-					H.dna.species.brutemod -= mod
-					H.dna.species.burnmod -= mod
+					if(H)
+						H.dna.species.brutemod -= mod
+						H.dna.species.burnmod -= mod
+	if(caster)
+		playsound(caster, 'code/modules/ziggers/presence_deactivate.ogg', 50, FALSE)
 
 /datum/discipline/protean
 	name = "Protean"
@@ -441,7 +450,7 @@
 			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay*level)
 				if(caster)
-					playsound(caster, 'code/modules/ziggers/protean_deactivate.ogg', 75, TRUE)
+					playsound(caster, 'code/modules/ziggers/protean_deactivate.ogg', 50, FALSE)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
 					caster.dna.species.punchdamagelow -= 10
 					caster.dna.species.punchdamagehigh -= 10
@@ -457,7 +466,7 @@
 			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay*level)
 				if(caster)
-					playsound(caster, 'code/modules/ziggers/protean_deactivate.ogg', 75, TRUE)
+					playsound(caster, 'code/modules/ziggers/protean_deactivate.ogg', 50, FALSE)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
 					caster.dna.species.punchdamagelow -= 10
 					caster.dna.species.punchdamagehigh -= 10
@@ -474,7 +483,7 @@
 			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay*level)
 				if(caster)
-					playsound(caster, 'code/modules/ziggers/protean_deactivate.ogg', 75, TRUE)
+					playsound(caster, 'code/modules/ziggers/protean_deactivate.ogg', 50, FALSE)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
 					caster.dna.species.punchdamagelow -= 20
 					caster.dna.species.punchdamagehigh -= 20
@@ -491,7 +500,7 @@
 			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay*level)
 				if(caster)
-					playsound(caster, 'code/modules/ziggers/protean_deactivate.ogg', 75, TRUE)
+					playsound(caster, 'code/modules/ziggers/protean_deactivate.ogg', 50, FALSE)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
 					caster.dna.species.punchdamagelow -= 20
 					caster.dna.species.punchdamagehigh -= 20
@@ -507,6 +516,11 @@
 	spawn(50)
 		if(stat != DEAD)
 			death()
+		var/list/items = list()
+		items |= get_equipped_items(TRUE)
+		for(var/obj/item/I in items)
+			dropItemToGround(I)
+		drop_all_held_items()
 		spawn_gibs()
 		spawn_gibs()
 		spawn_gibs()
@@ -638,6 +652,11 @@
 	var/mod = min(3, level)
 	caster.physiology.armor.melee += 25*mod
 	caster.physiology.armor.bullet += 25*mod
+	animate(caster, color = "#ff0000", time = 10, loop = 1)
+//	caster.color = "#ff0000"
 	spawn(delay*level)
-		caster.physiology.armor.melee -= 25*mod
-		caster.physiology.armor.bullet -= 25*mod
+		if(caster)
+			playsound(caster, 'code/modules/ziggers/thaum.ogg', 50, FALSE)
+			caster.physiology.armor.melee -= 25*mod
+			caster.physiology.armor.bullet -= 25*mod
+			caster.color = initial(caster.color)

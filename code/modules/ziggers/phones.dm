@@ -137,6 +137,7 @@
 	GLOB.phones_list += src
 
 /obj/item/vamp/phone/prince
+	exchange_num = 267
 
 /obj/item/vamp/phone/prince/Initialize()
 	..()
@@ -149,6 +150,7 @@
 	contacts += BARKEEPER
 
 /obj/item/vamp/phone/sheriff
+	exchange_num = 267
 
 /obj/item/vamp/phone/sheriff/Initialize()
 	..()
@@ -157,6 +159,7 @@
 	contacts += PRINCE
 
 /obj/item/vamp/phone/clerk
+	exchange_num = 267
 
 /obj/item/vamp/phone/clerk/Initialize()
 	..()
@@ -165,6 +168,7 @@
 	contacts += PRINCE
 
 /obj/item/vamp/phone/barkeeper
+	exchange_num = 485
 
 /obj/item/vamp/phone/barkeeper/Initialize()
 	..()
@@ -175,6 +179,7 @@
 	contacts += DEALER
 
 /obj/item/vamp/phone/dealer
+	exchange_num = 485
 
 /obj/item/vamp/phone/dealer/Initialize()
 	..()
@@ -183,6 +188,7 @@
 	contacts += BARKEEPER
 
 /obj/item/vamp/phone/camarilla
+	exchange_num = 267
 
 /obj/item/vamp/phone/camarilla/Initialize()
 	..()
@@ -191,6 +197,7 @@
 	contacts += PRINCE
 
 /obj/item/vamp/phone/anarch
+	exchange_num = 485
 
 /obj/item/vamp/phone/anarch/Initialize()
 	..()

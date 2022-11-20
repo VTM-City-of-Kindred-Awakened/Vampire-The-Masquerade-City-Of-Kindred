@@ -26,6 +26,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_PRINCE
 
+	minimal_generation = 10
+
 	my_contact_is_important = TRUE
 	known_contacts = list("Sheriff",
 												"Clerk",
@@ -100,6 +102,8 @@
 	display_order = JOB_DISPLAY_ORDER_SHERIFF
 	bounty_types = CIV_JOB_SEC
 
+	minimal_generation = 11
+
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
 
@@ -169,6 +173,8 @@
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_CLERK
+
+	minimal_generation = 12
 
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
@@ -421,6 +427,8 @@
 	display_order = JOB_DISPLAY_ORDER_BARKEEPER
 	bounty_types = CIV_JOB_DRINK
 
+	minimal_generation = 11
+
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince",
 												"Dealer")
@@ -496,6 +504,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_DEALER
 	bounty_types = CIV_JOB_RANDOM
+
+	minimal_generation = 12
 
 	my_contact_is_important = TRUE
 	known_contacts = list("Barkeeper")
