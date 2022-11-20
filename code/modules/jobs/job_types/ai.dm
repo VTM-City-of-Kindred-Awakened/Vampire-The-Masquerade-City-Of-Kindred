@@ -11,7 +11,7 @@
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_SILICON
-	display_order = JOB_DISPLAY_ORDER_AI
+//	display_order = JOB_DISPLAY_ORDER_AI
 	allow_bureaucratic_error = FALSE
 	var/do_special_check = TRUE
 

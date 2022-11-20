@@ -17,7 +17,7 @@
 
 	liver_traits = list(TRAIT_CULINARY_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_COOK
+//	display_order = JOB_DISPLAY_ORDER_COOK
 	bounty_types = CIV_JOB_CHEF
 
 /datum/outfit/job/cook

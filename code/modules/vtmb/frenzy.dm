@@ -20,7 +20,8 @@
 
 /mob/living/carbon/human/proc/rollfrenzy()
 	if(clane && client)
-		to_chat(src, "The beast is calling. Rolling...")
+		to_chat(src, "I need <span class='danger'><b>BLOOD</b></span>. The <span class='danger'><b>BEAST</b></span> is calling. Rolling...")
+		SEND_SOUND(src, sound('code/modules/ziggers/bloodneed.ogg', 0, 0, 50))
 		var/check = vampireroll(max(1, round(humanity/2)), frenzy_hardness, src)
 		switch(check)
 			if(DICE_FAILURE)
@@ -77,6 +78,8 @@
 				L.grabbedby(src)
 				if(ishuman(L))
 					L.emote("scream")
+					var/mob/living/carbon/human/BT = L
+					BT.add_bite_animation()
 				if(CheckEyewitness(L, src, 7, FALSE))
 					AdjustMasquerade(src, -1)
 				playsound(src, 'code/modules/ziggers/drinkblood1.ogg', 50, TRUE)
@@ -138,6 +141,24 @@
 				H.client.prefs.save_preferences()
 				H.client.prefs.save_character()
 				H.last_experience = world.time
+			if(iskindred(H) && H.client.prefs.humanity < 1)
+				H.enter_frenzymod()
+				H.client.prefs.slotlocked = 0
+				H.client.prefs.exper = 0
+				H.client.prefs.discipline1level = 1
+				H.client.prefs.discipline2level = 1
+				H.client.prefs.discipline3level = 1
+				H.client.prefs.masquerade = initial(H.client.prefs.masquerade)
+				H.client.prefs.generation = initial(H.client.prefs.generation)
+				qdel(H.client.prefs.clane)
+				H.client.prefs.clane = new /datum/vampireclane/brujah()
+				H.client.prefs.humanity = H.client.prefs.clane.start_humanity
+				H.client.prefs.random_species()
+				H.client.prefs.random_character()
+				H.client.prefs.real_name = random_unique_name(H.client.prefs.gender)
+				H.client.prefs.save_character()
+				H.client.prefs.save_preferences()
+				H.ghostize(FALSE)
 	if(H.bloodpool <= 1 && !H.in_frenzy)
 		if(H.last_frenzy_check+400 <= world.time)
 			H.last_frenzy_check = world.time

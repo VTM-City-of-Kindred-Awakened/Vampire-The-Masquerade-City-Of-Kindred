@@ -14,7 +14,7 @@
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 
-	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
+//	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
 
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)

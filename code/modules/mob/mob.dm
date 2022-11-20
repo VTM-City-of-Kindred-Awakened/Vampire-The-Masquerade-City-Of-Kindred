@@ -699,6 +699,15 @@
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
 
+	if(respawntimeofdeath+12000 > world.time)
+		var/timetoresp = round(((respawntimeofdeath+12000)-world.time)/10)
+		to_chat(usr, "<span class='notice'>You need to wait [timetoresp] seconds before respawn</span>")
+		if(check_rights_for(usr.client, R_ADMIN))
+			if(alert(usr, "Do you want to respawn faster than usual player? (only admins can)", "Respawn", "Yes", "No") != "Yes")
+				return
+		else
+			return
+
 	log_game("[key_name(usr)] used abandon mob.")
 
 	to_chat(usr, "<span class='boldnotice'>Please roleplay correctly!</span>")

@@ -18,6 +18,9 @@
 	dust_anim = "dust-h"
 	var/datum/vampireclane/clane
 
+/mob/living
+	var/list/knowscontacts = list()
+
 /datum/action/vampireinfo
 	name = "About Me"
 	desc = "Check assigned role, clane, generation, humanity, masquerade, known disciplines, known contacts etc."
@@ -96,6 +99,10 @@
 					var/datype = host.clane.clane_disciplines[3]
 					var/datum/discipline/AD = new datype()
 					dat += "[AD.name] [host.client.prefs.discipline3level] - [AD.desc]<BR>"
+		if(length(host.knowscontacts) > 0)
+			dat += "<b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
+			for(var/i in host.knowscontacts)
+				dat += "-[i] contact<BR>"
 		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
 		onclose(host, "vampire", src)
 

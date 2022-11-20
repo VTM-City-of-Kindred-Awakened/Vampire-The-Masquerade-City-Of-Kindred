@@ -19,6 +19,8 @@
 	smoothing_flags = SMOOTH_BITMASK
 
 	var/obj/effect/addwall/addwall
+	var/low = FALSE
+	var/window
 
 /turf/closed/wall/vampwall/attack_hand(mob/user)
 	return
@@ -29,18 +31,32 @@
 
 /turf/closed/wall/vampwall/Initialize()
 	..()
-	addwall = new(get_step(src, NORTH))
-	addwall.icon_state = icon_state
-	addwall.name = name
-	addwall.desc = desc
+	if(window)
+		new window(src)
+	else if(!low)
+		addwall = new(get_step(src, NORTH))
+		addwall.icon_state = icon_state
+		addwall.name = name
+		addwall.desc = desc
 
 /turf/closed/wall/vampwall/set_smoothed_icon_state(new_junction)
 	..()
-	addwall.icon_state = icon_state
+	if(addwall)
+		addwall.icon_state = icon_state
 
 /turf/closed/wall/vampwall/Destroy()
 	..()
-	qdel(addwall)
+	if(addwall)
+		qdel(addwall)
+
+/turf/closed/wall/vampwall/low
+	icon = 'code/modules/ziggers/lowwalls.dmi'
+	opacity = FALSE
+	low = TRUE
+
+/turf/closed/wall/vampwall/low/window
+	icon_state = "wall-window"
+	window = /obj/structure/window/fulltile
 
 /turf/closed/wall/vampwall/rich
 	name = "rich-looking wall"
@@ -48,15 +64,46 @@
 	icon_state = "rich-0"
 	base_icon_state = "rich"
 
+/turf/closed/wall/vampwall/rich/low
+	icon = 'code/modules/ziggers/lowwalls.dmi'
+	opacity = FALSE
+	low = TRUE
+
+/turf/closed/wall/vampwall/rich/low/window
+	icon_state = "rich-window"
+	window = /obj/structure/window/fulltile
+
+/turf/closed/wall/vampwall/rich/low/window/reinforced
+	icon_state = "rich-reinforced"
+	window = /obj/structure/window/reinforced/fulltile
+
 /turf/closed/wall/vampwall/junk
 	name = "junk brick wall"
 	desc = "A huge chunk of dirty bricks used to separate rooms."
 	icon_state = "junk-0"
 	base_icon_state = "junk"
 
+/turf/closed/wall/vampwall/junk/low
+	icon = 'code/modules/ziggers/lowwalls.dmi'
+	opacity = FALSE
+	low = TRUE
+
+/turf/closed/wall/vampwall/junk/low/window
+	icon_state = "junk-window"
+	window = /obj/structure/window/fulltile
+
 /turf/closed/wall/vampwall/junk/alt
 	icon_state = "junkalt-0"
 	base_icon_state = "junkalt"
+
+/turf/closed/wall/vampwall/junk/alt/low
+	icon = 'code/modules/ziggers/lowwalls.dmi'
+	opacity = FALSE
+	low = TRUE
+
+/turf/closed/wall/vampwall/junk/alt/low/window
+	icon_state = "junkalt-window"
+	window = /obj/structure/window/fulltile
 
 /turf/closed/wall/vampwall/market
 	name = "concrete wall"
@@ -64,11 +111,37 @@
 	icon_state = "market-0"
 	base_icon_state = "market"
 
+/turf/closed/wall/vampwall/market/low
+	icon = 'code/modules/ziggers/lowwalls.dmi'
+	opacity = FALSE
+	low = TRUE
+
+/turf/closed/wall/vampwall/market/low/window
+	icon_state = "market-window"
+	window = /obj/structure/window/fulltile
+
+/turf/closed/wall/vampwall/market/low/window/reinforced
+	icon_state = "market-reinforced"
+	window = /obj/structure/window/reinforced/fulltile
+
 /turf/closed/wall/vampwall/old
 	name = "old brick wall"
 	desc = "A huge chunk of old bricks used to separate rooms."
 	icon_state = "old-0"
 	base_icon_state = "old"
+
+/turf/closed/wall/vampwall/old/low
+	icon = 'code/modules/ziggers/lowwalls.dmi'
+	opacity = FALSE
+	low = TRUE
+
+/turf/closed/wall/vampwall/old/low/window
+	icon_state = "old-window"
+	window = /obj/structure/window/fulltile
+
+/turf/closed/wall/vampwall/old/low/window/reinforced
+	icon_state = "old-reinforced"
+	window = /obj/structure/window/reinforced/fulltile
 
 /turf/closed/wall/vampwall/painted
 	name = "painted brick wall"
@@ -76,17 +149,88 @@
 	icon_state = "painted-0"
 	base_icon_state = "painted"
 
+/turf/closed/wall/vampwall/painted/low
+	icon = 'code/modules/ziggers/lowwalls.dmi'
+	opacity = FALSE
+	low = TRUE
+
+/turf/closed/wall/vampwall/painted/low/window
+	icon_state = "painted-window"
+	window = /obj/structure/window/fulltile
+
+/turf/closed/wall/vampwall/painted/low/window/reinforced
+	icon_state = "painted-reinforced"
+	window = /obj/structure/window/reinforced/fulltile
+
 /turf/closed/wall/vampwall/rich/old
 	name = "old rich-looking wall"
 	desc = "A huge chunk of old bricks used to separate rooms."
 	icon_state = "theater-0"
 	base_icon_state = "theater"
 
+/turf/closed/wall/vampwall/rich/old/low
+	icon = 'code/modules/ziggers/lowwalls.dmi'
+	opacity = FALSE
+	low = TRUE
+
+/turf/closed/wall/vampwall/rich/old/low/window
+	icon_state = "theater-window"
+	window = /obj/structure/window/fulltile
+
+/turf/closed/wall/vampwall/rich/old/low/window/reinforced
+	icon_state = "theater-reinforced"
+	window = /obj/structure/window/reinforced/fulltile
+
 /turf/closed/wall/vampwall/brick
 	name = "brick wall"
 	desc = "A huge chunk of bricks used to separate rooms."
 	icon_state = "brick-0"
 	base_icon_state = "brick"
+
+/turf/closed/wall/vampwall/brick/low
+	icon = 'code/modules/ziggers/lowwalls.dmi'
+	opacity = FALSE
+	low = TRUE
+
+/turf/closed/wall/vampwall/brick/low/window
+	icon_state = "brick-window"
+	window = /obj/structure/window/fulltile
+
+/turf/closed/wall/vampwall/rock
+	name = "rock wall"
+	desc = "A huge chunk of rocks separating whole territory."
+	icon_state = "rock-0"
+	base_icon_state = "rock"
+
+/turf/closed/wall/vampwall/city
+	name = "wall"
+	desc = "A huge chunk of concrete and bricks used to separate rooms."
+	icon_state = "city-0"
+	base_icon_state = "city"
+
+/turf/closed/wall/vampwall/city/low
+	icon = 'code/modules/ziggers/lowwalls.dmi'
+	opacity = FALSE
+	low = TRUE
+
+/turf/closed/wall/vampwall/city/low/window
+	icon_state = "city-window"
+	window = /obj/structure/window/fulltile
+
+/turf/closed/wall/vampwall/bar
+	name = "dark brick wall"
+	desc = "A huge chunk of bricks used to separate rooms."
+	icon_state = "bar-0"
+	base_icon_state = "bar"
+
+/turf/closed/wall/vampwall/bar/low
+	icon = 'code/modules/ziggers/lowwalls.dmi'
+	opacity = FALSE
+	low = TRUE
+
+/turf/closed/wall/vampwall/bar/low/window
+	icon_state = "bar-window"
+	window = /obj/structure/window/fulltile
 
 //TURFS
 
@@ -290,3 +434,320 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	pixel_w = -32
 	anchored = TRUE
+
+//OTHER TURFS
+
+/turf/open/floor/plating/parquetry
+	gender = PLURAL
+	name = "parquetry"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "parquet"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/parquetry/old
+	icon_state = "parquet-old"
+
+/turf/open/floor/plating/granite
+	gender = PLURAL
+	name = "granite"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "granite"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/granite/black
+	icon_state = "granite-black"
+
+/turf/open/floor/plating/concrete
+	gender = PLURAL
+	name = "concrete"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "concrete1"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/concrete/Initialize()
+	icon_state = "concrete[rand(1, 4)]"
+
+/turf/open/floor/plating/vampgrass
+	gender = PLURAL
+	name = "grass"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "grass1"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/vampcarpet
+	gender = PLURAL
+	name = "carpet"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "carpet_black"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/vampdirt
+	gender = PLURAL
+	name = "dirt"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "dirt"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/vampplating
+	gender = PLURAL
+	name = "plating"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "plating"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/vampplating/mono
+	icon_state = "plating-mono"
+
+/turf/open/floor/plating/vampplating/stone
+	icon_state = "plating-stone"
+
+/turf/open/floor/plating/rough
+	gender = PLURAL
+	name = "rough floor"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "rough"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/toilet
+	gender = PLURAL
+	name = "plating"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "toilet1"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/toilet/Initialize()
+	..()
+	icon_state = "toilet[rand(1, 9)]"
+
+/turf/open/floor/plating/circled
+	gender = PLURAL
+	name = "fancy plating"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "circle1"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/circled/Initialize()
+	..()
+	icon_state = "circle[rand(1, 8)]"
+
+/turf/open/floor/plating/church
+	gender = PLURAL
+	name = "fancy plating"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "church1"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/church/Initialize()
+	..()
+	icon_state = "church[rand(1, 4)]"
+
+/turf/open/floor/plating/saint
+	gender = PLURAL
+	name = "fancy plating"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "saint1"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/saint/Initialize()
+	..()
+	icon_state = "saint[rand(1, 2)]"
+
+//OBOI
+
+/obj/effect/decal/wallpaper
+	name = "wall paint"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "wallpaper"
+	plane = GAME_PLANE
+	layer = ABOVE_NORMAL_TURF_LAYER	//WALLPAPER_LAYER dont work
+
+/obj/effect/decal/wallpaper/grey
+	icon_state = "wallpaper-grey"
+
+/obj/effect/decal/wallpaper/light
+	icon_state = "wallpaper-light"
+
+/obj/effect/decal/wallpaper/red
+	icon_state = "wallpaper-asylum"
+
+/obj/effect/decal/wallpaper/blue
+	icon_state = "wallpaper-club"
+
+/obj/effect/decal/wallpaper/paper
+	name = "wallpapers"
+	icon_state = "wallpaper-cheap"
+
+/obj/effect/decal/wallpaper/paper/green
+	icon_state = "wallpaper-green"
+
+/obj/effect/decal/wallpaper/paper/stripe
+	icon_state = "wallpaper-stripe"
+
+/obj/effect/decal/wallpaper/paper/rich
+	icon_state = "wallpaper-rich"
+
+/obj/effect/decal/wallpaper/stone
+	name = "wall decoration"
+	icon_state = "wallpaper-stone"
+
+/obj/effect/decal/rugs
+	name = "rugs"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "rugs"
+
+/obj/effect/decal/rugs/Initialize()
+	..()
+	icon_state = "rugs[rand(1, 11)]"
+
+/obj/structure/vampdoor
+	name = "\improper door"
+	desc = "It opens and closes."
+	icon = 'code/modules/ziggers/doors.dmi'
+	icon_state = "door-1"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	pixel_w = -16
+	anchored = TRUE
+	density = TRUE
+	opacity = TRUE
+
+	var/baseicon = "door"
+	var/lastclicked = 0
+
+	var/closed = TRUE
+	var/locked = FALSE
+	var/lock_number = 0
+	var/glass = FALSE
+
+	var/open_sound = 'code/modules/ziggers/door_open.ogg'
+	var/close_sound = 'code/modules/ziggers/door_close.ogg'
+	var/lock_sound = 'code/modules/ziggers/door_locked.ogg'
+
+/obj/structure/vampdoor/attack_hand(mob/user)
+	if(lastclicked+20 > world.time)
+		return
+	lastclicked = world.time
+	if(locked)
+		playsound(src, lock_sound, 75, TRUE)
+		to_chat(user, "[src] is locked!")
+		return
+
+	if(closed)
+		playsound(src, open_sound, 75, TRUE)
+		icon_state = "[baseicon]-0"
+		density = FALSE
+		opacity = FALSE
+		to_chat(user, "You open [src].")
+	else
+		playsound(src, close_sound, 75, TRUE)
+		icon_state = "[baseicon]-1"
+		density = TRUE
+		if(!glass)
+			opacity = TRUE
+		to_chat(user, "You close [src].")
+
+/obj/structure/vampdoor/old
+	icon_state = "old-1"
+	baseicon = "old"
+
+/obj/structure/vampdoor/reinf
+	icon_state = "reinf-1"
+	baseicon = "reinf"
+
+/obj/structure/vampdoor/prison
+	icon_state = "prison-1"
+	opacity = FALSE
+	baseicon = "prison"
+	glass = TRUE
+
+/obj/structure/vampdoor/wood
+	icon_state = "wood-1"
+	baseicon = "wood"
+
+/obj/structure/vampdoor/wood/old
+	icon_state = "oldwood-1"
+	baseicon = "oldwood"
+
+/obj/structure/vampdoor/glass
+	icon_state = "glass-1"
+	opacity = FALSE
+	baseicon = "glass"
+	glass = TRUE
+
+/obj/structure/vampdoor/shop
+	icon_state = "shop-1"
+	opacity = FALSE
+	baseicon = "shop"
+	glass = TRUE

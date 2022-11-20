@@ -14,7 +14,7 @@
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 
-	display_order = JOB_DISPLAY_ORDER_CURATOR
+//	display_order = JOB_DISPLAY_ORDER_CURATOR
 
 /datum/outfit/job/curator
 	name = "Curator"

@@ -332,7 +332,7 @@
 		cut_overlay(crack_overlay)
 		if(ratio > 75)
 			return
-		crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
+		crack_overlay = mutable_appearance('code/modules/ziggers/32x48.dmi', "damage[ratio]", -(layer+0.1))
 		. += crack_overlay
 
 /obj/structure/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
@@ -601,6 +601,8 @@
 	icon_state = "window-0"
 	base_icon_state = "window"
 	max_integrity = 50
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	smoothing_flags = SMOOTH_BITMASK
@@ -632,6 +634,8 @@
 	base_icon_state = "rplasma_window"
 	state = RWINDOW_SECURE
 	max_integrity = 1000
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	smoothing_flags = SMOOTH_BITMASK

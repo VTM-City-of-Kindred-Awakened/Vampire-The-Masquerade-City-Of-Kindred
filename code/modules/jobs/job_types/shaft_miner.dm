@@ -14,7 +14,7 @@
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_CAR
 
-	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
+//	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
 	bounty_types = CIV_JOB_MINE
 
 /datum/outfit/job/miner

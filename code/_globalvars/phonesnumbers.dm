@@ -1,0 +1,5 @@
+GLOBAL_VAR_INIT(princenumber, "")
+GLOBAL_VAR_INIT(sheriffnumber, "")
+GLOBAL_VAR_INIT(clerknumber, "")
+GLOBAL_VAR_INIT(barkeepernumber, "")
+GLOBAL_VAR_INIT(dealernumber, "")

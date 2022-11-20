@@ -22,7 +22,7 @@
 
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_CAPTAIN
+//	display_order = JOB_DISPLAY_ORDER_CAPTAIN
 
 /datum/job/captain/get_access()
 	return get_all_accesses()

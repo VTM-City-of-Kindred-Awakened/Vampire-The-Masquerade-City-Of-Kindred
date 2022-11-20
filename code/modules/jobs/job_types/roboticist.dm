@@ -19,7 +19,7 @@
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_SCI
 
-	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
+//	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
 
 /datum/outfit/job/roboticist
 	name = "Roboticist"

@@ -49,10 +49,8 @@
 	items |= get_equipped_items(TRUE)
 	for(var/obj/item/I in items)
 		dropItemToGround(I)
-		var/atom/tothrow = get_step_rand(src)
-		I.throw_at(target = tothrow, range = 1, speed = 1, thrower = src, spin = TRUE, gentle = TRUE)
-		if(prob(50))
-			I.burn()
+		if(prob(80))
+			step(I, pick(GLOB.alldirs))
 	drop_all_held_items()
 
 /mob/living/proc/dust(just_ash, drop_items, force)
@@ -86,6 +84,7 @@
 	set_stat(DEAD)
 	unset_machine()
 	timeofdeath = world.time
+	respawntimeofdeath = timeofdeath
 	tod = station_time_timestamp()
 	var/turf/T = get_turf(src)
 	if(mind && mind.name && mind.active && !istype(T.loc, /area/ctf))

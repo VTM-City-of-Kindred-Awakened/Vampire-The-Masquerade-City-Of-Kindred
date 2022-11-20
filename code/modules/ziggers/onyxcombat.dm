@@ -23,8 +23,12 @@
 				client.prefs.masquerade = masquerade
 				client.prefs.save_character()
 				client.prefs.save_preferences()
+		fire_stacks += 5
+		IgniteMob()
 		playsound(src, 'code/modules/ziggers/burning_death.ogg', 80, TRUE)
 		SEND_SOUND(src, sound('code/modules/ziggers/final_death.ogg', 0, 0, 50))
+		lying_fix()
+		dir = SOUTH
 		spawn(5)
 			dust(1, 1)
 
@@ -213,7 +217,7 @@
 	if(ishuman(usr))
 		var/mob/living/carbon/human/BD = usr
 		BD.update_blood_hud()
-		if(world.time < BD.last_drinkblood_use+95)
+		if(world.time < BD.last_drinkblood_use+30)
 			return
 		if(world.time < BD.last_drinkblood_click+10)
 			return
@@ -237,6 +241,8 @@
 					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
+				PB.add_bite_animation()
+				PB.emote("scream")
 			if(isliving(BD.pulling))
 				var/mob/living/LV = BD.pulling
 				if(LV.bloodamount <= 0)
@@ -251,62 +257,10 @@
 				if(!skipface)
 					playsound(BD, 'code/modules/ziggers/drinkblood1.ogg', 50, TRUE)
 					LV.visible_message("<span class='warning'><b>[BD] bites [LV]'s neck!</b></span>", "<span class='warning'><b>[BD] bites your neck!</b></span>")
-					if(ishuman(LV))
-						LV.emote("scream")
 					if(CheckEyewitness(LV, BD, 7, FALSE))
 						AdjustMasquerade(BD, -1)
 					BD.drinksomeblood(LV)
 	..()
-
-/mob/living/carbon/human/proc/drinksomeblood(var/mob/living/mob)
-	last_drinkblood_use = world.time
-	SEND_SOUND(src, sound('code/modules/ziggers/drinkblood2.ogg'))
-	mob.SetSleeping(95)
-	if(isnpc(mob))
-		var/mob/living/carbon/human/npc/NPC = mob
-		NPC.danger_source = null
-	to_chat(src, "<span class='warning'>You sip some <b>BLOOD</b> from your victim. It feels good.</span>")
-	if(mob.bloodamount == 1 && mob.maxbloodamount > 1)
-//		if(alert("This action will kill your victim. Are you sure?",,"Yes","No")!="Yes")
-//			return
-		to_chat(src, "<span class='warning'>You feel small amount of <b>BLOOD</b> in your victim.</span>")
-	mob.Stun(95)
-	if(do_after(src, 95, target = mob))
-		mob.bloodamount -= 1
-		mob.SetSleeping(95)
-		if(ishuman(mob))
-			var/mob/living/carbon/human/H = mob
-			H.blood_volume = max(H.blood_volume-10, 150)
-		if(clane)
-			if(clane.name == "Ventrue" && mob.bloodquality < BLOOD_QUALITY_NORMAL)	//Ventrue mozhet sosat norm, no ne bomzhei i zhivotnih. BLOOD_QUALITY_LOW - 1, BLOOD_QUALITY_NORMAL - 2, BLOOD_QUALITY_HIGH - 3. Golubaya krov daet +1 k otsosu
-				to_chat(src, "<span class='warning'>You are too privileged to drink that awful <b>BLOOD</b>. Go get something better.</span>")
-				visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
-				playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
-				if(isturf(loc))
-					add_splatter_floor(loc)
-				return
-		bloodpool += 1*max(1, mob.bloodquality-1)	//Vot zdes bonus k otsosu, i eshe chto-to pohozhee u tremerov v discipline
-		bloodpool = min(maxbloodpool, bloodpool)
-		adjustBruteLoss(-5, TRUE)
-		adjustFireLoss(-5, TRUE)
-		update_damage_overlays()
-		update_health_hud()
-		update_blood_hud()
-		if(mob.bloodamount <= 0)
-			if(ishuman(mob))
-				var/mob/living/carbon/human/K = mob
-				K.blood_volume = 0
-			if(ishuman(mob))
-				if(isnpc(mob))
-					var/mob/living/carbon/human/npc/Npc = mob
-					Npc.last_attacker = null
-				SEND_SOUND(src, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
-				to_chat(src, "<span class='warning'>This sad sacrifice for your own pleasure affects something deep in your mind.</span>")
-				AdjustHumanity(src, -1, 3)
-			mob.death()
-			return
-		if(grab_state > GRAB_PASSIVE)
-			drinksomeblood(mob)
 
 /atom/movable/screen/bloodheal
 	name = "Bloodheal"
@@ -325,6 +279,7 @@
 			return
 		BD.last_bloodheal_click = world.time
 		if(BD.bloodpool >= 1)
+			playsound(usr, 'code/modules/ziggers/bloodhealing.ogg', 50, FALSE)
 			BD.last_bloodheal_use = world.time
 			BD.bloodpool -= 1
 			icon_state = "[initial(icon_state)]-on"
@@ -359,6 +314,7 @@
 			return
 		BD.last_bloodpower_click = world.time
 		if(BD.bloodpool >= 3)
+			playsound(usr, 'code/modules/ziggers/bloodhealing.ogg', 50, FALSE)
 			BD.last_bloodpower_use = world.time
 			BD.bloodpool -= 3
 			icon_state = "[initial(icon_state)]-on"
