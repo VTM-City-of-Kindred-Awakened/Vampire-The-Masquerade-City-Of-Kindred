@@ -4,17 +4,17 @@
 #define HEAD_UPDATE_PERIOD 300
 
 /datum/antagonist/rev
-	name = "Revolutionary"
-	roundend_category = "revolutionaries" // if by some miracle revolutionaries without revolution happen
-	antagpanel_category = "Revolution"
+	name = "Kamut"
+	roundend_category = "sabbattites" // if by some miracle revolutionaries without revolution happen
+	antagpanel_category = "Sabbat"
 	job_rank = ROLE_REV
 	antag_moodlet = /datum/mood_event/revolution
 	antag_hud_type = ANTAG_HUD_REV
 	antag_hud_name = "rev"
-	var/datum/team/revolution/rev_team
+	var/datum/team/sabbat/sab_team
 
 	/// What message should the player receive when they are being demoted, and the revolution has won?
-	var/victory_message = "The revolution has overpowered the command staff! Viva la revolution! Execute any head of staff and security should you find them alive."
+	var/victory_message = "The Kamut destroyed Camarillia in San-Francisco."
 
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
 	. = ..()
@@ -50,38 +50,38 @@
 	. = ..()
 
 /datum/antagonist/rev/greet()
-	to_chat(owner, "<span class='userdanger'>You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</span>")
+	to_chat(owner, "<span class='userdanger'>You are now part of Sabbat! </span>")
 	owner.announce_objectives()
 
-/datum/antagonist/rev/create_team(datum/team/revolution/new_team)
+/datum/antagonist/rev/create_team(datum/team/sabbat/new_team)
 	if(!new_team)
 		//For now only one revolution at a time
 		for(var/datum/antagonist/rev/head/H in GLOB.antagonists)
 			if(!H.owner)
 				continue
-			if(H.rev_team)
-				rev_team = H.rev_team
+			if(H.sab_team)
+				sab_team = H.sab_team
 				return
-		rev_team = new /datum/team/revolution
-		rev_team.update_objectives()
-		rev_team.update_heads()
+		sab_team = new /datum/team/sabbat
+		sab_team.update_objectives()
+		sab_team.update_heads()
 		return
 	if(!istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
-	rev_team = new_team
+	sab_team = new_team
 
 /datum/antagonist/rev/get_team()
-	return rev_team
+	return sab_team
 
 /datum/antagonist/rev/proc/create_objectives()
-	objectives |= rev_team.objectives
+	objectives |= sab_team.objectives
 
 /datum/antagonist/rev/proc/remove_objectives()
-	objectives -= rev_team.objectives
+	objectives -= sab_team.objectives
 
 //Bump up to head_rev
 /datum/antagonist/rev/proc/promote()
-	var/old_team = rev_team
+	var/old_team = sab_team
 	var/datum/mind/old_owner = owner
 	silent = TRUE
 	owner.remove_antag_datum(/datum/antagonist/rev)
@@ -89,7 +89,7 @@
 	new_revhead.silent = TRUE
 	old_owner.add_antag_datum(new_revhead,old_team)
 	new_revhead.silent = FALSE
-	to_chat(old_owner, "<span class='userdanger'>You have proved your devotion to revolution! You are a head revolutionary now!</span>")
+	to_chat(old_owner, "<span class='userdanger'>You are a Ductus now!</span>")
 
 /datum/antagonist/rev/get_admin_commands()
 	. = ..()
@@ -154,7 +154,7 @@
 	demote()
 
 /datum/antagonist/rev/head
-	name = "Head Revolutionary"
+	name = "Ductus"
 	antag_hud_name = "rev_head"
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
@@ -190,13 +190,13 @@
 			carbon_mob.silent = max(carbon_mob.silent, 5)
 			carbon_mob.flash_act(1, 1)
 		rev_mind.current.Stun(100)
-	rev_mind.add_antag_datum(/datum/antagonist/rev,rev_team)
+	rev_mind.add_antag_datum(/datum/antagonist/rev,sab_team)
 	rev_mind.special_role = ROLE_REV
 	return TRUE
 
 /datum/antagonist/rev/head/proc/demote()
 	var/datum/mind/old_owner = owner
-	var/old_team = rev_team
+	var/old_team = sab_team
 	silent = TRUE
 	owner.remove_antag_datum(/datum/antagonist/rev/head)
 	var/datum/antagonist/rev/new_rev = new /datum/antagonist/rev()
@@ -207,7 +207,7 @@
 
 /// Checks if the revolution succeeded, and lets them know.
 /datum/antagonist/rev/proc/announce_victorious()
-	. = rev_team.check_rev_victory()
+	. = sab_team.check_rev_victory()
 
 	if (!.)
 		return
@@ -244,14 +244,7 @@
 
 //blunt trauma deconversions call this through species.dm spec_attacked_by()
 /datum/antagonist/rev/proc/remove_revolutionary(borged, deconverter)
-	log_attack("[key_name(owner.current)] has been deconverted from the revolution by [ismob(deconverter) ? key_name(deconverter) : deconverter]!")
-	if(borged)
-		message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been borged while being a [name]")
-	owner.special_role = null
-	if(iscarbon(owner.current) && deconverter != DECONVERTER_REVS_WIN)
-		var/mob/living/carbon/C = owner.current
-		C.Unconscious(100)
-	owner.remove_antag_datum(type)
+	return
 
 /datum/antagonist/rev/head/remove_revolutionary(borged,deconverter)
 	if(borged || deconverter == DECONVERTER_STATION_WIN || deconverter == DECONVERTER_REVS_WIN)
@@ -295,13 +288,13 @@
 
 	return ..()
 
-/datum/team/revolution
+/datum/team/sabbat
 	name = "Revolution"
 	var/max_headrevs = 3
 	var/list/ex_headrevs = list() // Dynamic removes revs on loss, used to keep a list for the roundend report.
 	var/list/ex_revs = list()
 
-/datum/team/revolution/proc/update_objectives(initial = FALSE)
+/datum/team/sabbat/proc/update_objectives(initial = FALSE)
 	var/untracked_heads = SSjob.get_all_heads()
 	for(var/datum/objective/mutiny/O in objectives)
 		untracked_heads -= O.target
@@ -317,13 +310,13 @@
 
 	addtimer(CALLBACK(src,.proc/update_objectives),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
 
-/datum/team/revolution/proc/head_revolutionaries()
+/datum/team/sabbat/proc/head_revolutionaries()
 	. = list()
 	for(var/datum/mind/M in members)
 		if(M.has_antag_datum(/datum/antagonist/rev/head))
 			. += M
 
-/datum/team/revolution/proc/update_heads()
+/datum/team/sabbat/proc/update_heads()
 	if(SSticker.HasRoundStarted())
 		var/list/datum/mind/head_revolutionaries = head_revolutionaries()
 		var/list/datum/mind/heads = SSjob.get_all_heads()
@@ -349,19 +342,19 @@
 
 	addtimer(CALLBACK(src,.proc/update_heads),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
 
-/datum/team/revolution/proc/save_members()
+/datum/team/sabbat/proc/save_members()
 	ex_headrevs = get_antag_minds(/datum/antagonist/rev/head, TRUE)
 	ex_revs = get_antag_minds(/datum/antagonist/rev, TRUE)
 
 /// Checks if revs have won
-/datum/team/revolution/proc/check_rev_victory()
+/datum/team/sabbat/proc/check_rev_victory()
 	for(var/datum/objective/mutiny/objective in objectives)
 		if(!(objective.check_completion()))
 			return FALSE
 	return TRUE
 
 /// Checks if heads have won
-/datum/team/revolution/proc/check_heads_victory()
+/datum/team/sabbat/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries())
 		var/turf/rev_turf = get_turf(rev_mind.current)
 		if(!considered_afk(rev_mind) && considered_alive(rev_mind) && is_station_level(rev_turf.z))
@@ -372,7 +365,7 @@
 /// Updates the state of the world depending on if revs won or loss.
 /// Returns who won, at which case this method should no longer be called.
 /// If revs_win_injection_amount is passed, then that amount of threat will be added if the revs win.
-/datum/team/revolution/proc/process_victory(revs_win_injection_amount)
+/datum/team/sabbat/proc/process_victory(revs_win_injection_amount)
 	if (check_rev_victory())
 		. = REVOLUTION_VICTORY
 	else if (check_heads_victory())
@@ -439,7 +432,7 @@
 		[pick(world.file2list("strings/anti_union_propaganda.txt"))]", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
 
 /// Mutates the ticker to report that the revs have won
-/datum/team/revolution/proc/round_result(finished)
+/datum/team/sabbat/proc/round_result(finished)
 	if (finished == REVOLUTION_VICTORY)
 		SSticker.mode_result = "win - heads killed"
 		SSticker.news_report = REVS_WIN
@@ -447,7 +440,7 @@
 		SSticker.mode_result = "loss - rev heads killed"
 		SSticker.news_report = REVS_LOSE
 
-/datum/team/revolution/roundend_report()
+/datum/team/sabbat/roundend_report()
 	if(!members.len && !ex_headrevs.len)
 		return
 
@@ -508,7 +501,7 @@
 
 	return result.Join()
 
-/datum/team/revolution/antag_listing_entry()
+/datum/team/sabbat/antag_listing_entry()
 	var/common_part = ""
 	var/list/parts = list()
 	parts += "<b>[antag_listing_name()]</b><br>"
@@ -539,7 +532,7 @@
 	heads_report += "</table>"
 	return common_part + heads_report
 
-/datum/team/revolution/is_gamemode_hero()
+/datum/team/sabbat/is_gamemode_hero()
 	return SSticker.mode.name == "revolution"
 
 #undef DECONVERTER_STATION_WIN

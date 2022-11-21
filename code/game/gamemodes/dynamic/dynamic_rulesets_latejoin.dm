@@ -88,7 +88,7 @@
 	var/finished = FALSE
 	/// How much threat should be injected when the revolution wins?
 	var/revs_win_threat_injection = 20
-	var/datum/team/revolution/revolution
+	var/datum/team/sabbat/revolution
 
 /datum/dynamic_ruleset/latejoin/provocateur/ready(forced=FALSE)
 	if (forced)
