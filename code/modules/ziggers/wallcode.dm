@@ -707,3 +707,64 @@
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYERS_LAYER
 	anchored = TRUE
+
+/turf/open/floor/plating/vampwood
+	gender = PLURAL
+	name = "wood"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "bwood"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/vampwood/Initialize()
+	..()
+	set_light(1, 0.5, "#a4b7ff")
+
+/turf/open/floor/plating/vampbeach
+	gender = PLURAL
+	name = "sand"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "sand1"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/vampbeach/Initialize()
+	..()
+	icon_state = "sand[rand(1, 4)]"
+	set_light(1, 0.5, "#a4b7ff")
+
+/turf/open/floor/plating/vampocean
+	gender = PLURAL
+	name = "water"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "ocean"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	density = TRUE
+
+/turf/open/floor/plating/vampocean/Initialize()
+	..()
+	set_light(1, 0.5, "#a4b7ff")
+
+/obj/effect/decal/coastline
+	name = "water"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "coastline"
+
+/obj/effect/decal/coastline/corner
+	icon_state = "coastline_corner"
