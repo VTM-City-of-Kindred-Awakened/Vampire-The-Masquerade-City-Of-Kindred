@@ -88,9 +88,10 @@
 	righthand_file = 'code/modules/ziggers/righthand.dmi'
 	item_flags = NOBLUDGEON
 	flags_1 = HEAR_1
-	w_class = WEIGHT_CLASS_TINY
+	w_class = WEIGHT_CLASS_SMALL
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 
 	var/exchange_num = 513
 	var/list/contacts = list()

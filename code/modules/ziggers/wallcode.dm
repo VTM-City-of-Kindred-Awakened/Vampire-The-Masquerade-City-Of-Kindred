@@ -498,6 +498,10 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
+/turf/open/floor/plating/vampgrass/Initialize()
+	..()
+	set_light(1, 0.25, "#a4b7ff")
+
 /turf/open/floor/plating/vampcarpet
 	gender = PLURAL
 	name = "carpet"
@@ -523,6 +527,10 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/vampdirt/Initialize()
+	..()
+	set_light(1, 0.25, "#a4b7ff")
 
 /turf/open/floor/plating/vampplating
 	gender = PLURAL
@@ -671,83 +679,31 @@
 	..()
 	icon_state = "rugs[rand(1, 11)]"
 
-/obj/structure/vampdoor
-	name = "\improper door"
-	desc = "It opens and closes."
-	icon = 'code/modules/ziggers/doors.dmi'
-	icon_state = "door-1"
+/obj/structure/vampfence
+	name = "\improper fence"
+	desc = "Protects places from walking in."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "fence"
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER
-	pixel_w = -16
 	anchored = TRUE
 	density = TRUE
-	opacity = TRUE
 
-	var/baseicon = "door"
-	var/lastclicked = 0
+/obj/structure/vampfence/corner
+	icon_state = "fence_corner"
 
-	var/closed = TRUE
-	var/locked = FALSE
-	var/lock_number = 0
-	var/glass = FALSE
+/obj/structure/vampfence/rich
+	icon = 'code/modules/ziggers/32x48.dmi'
 
-	var/open_sound = 'code/modules/ziggers/door_open.ogg'
-	var/close_sound = 'code/modules/ziggers/door_close.ogg'
-	var/lock_sound = 'code/modules/ziggers/door_locked.ogg'
+/obj/structure/vampfence/corner/rich
+	icon = 'code/modules/ziggers/32x48.dmi'
 
-/obj/structure/vampdoor/attack_hand(mob/user)
-	if(lastclicked+20 > world.time)
-		return
-	lastclicked = world.time
-	if(locked)
-		playsound(src, lock_sound, 75, TRUE)
-		to_chat(user, "[src] is locked!")
-		return
-
-	if(closed)
-		playsound(src, open_sound, 75, TRUE)
-		icon_state = "[baseicon]-0"
-		density = FALSE
-		opacity = FALSE
-		to_chat(user, "You open [src].")
-	else
-		playsound(src, close_sound, 75, TRUE)
-		icon_state = "[baseicon]-1"
-		density = TRUE
-		if(!glass)
-			opacity = TRUE
-		to_chat(user, "You close [src].")
-
-/obj/structure/vampdoor/old
-	icon_state = "old-1"
-	baseicon = "old"
-
-/obj/structure/vampdoor/reinf
-	icon_state = "reinf-1"
-	baseicon = "reinf"
-
-/obj/structure/vampdoor/prison
-	icon_state = "prison-1"
-	opacity = FALSE
-	baseicon = "prison"
-	glass = TRUE
-
-/obj/structure/vampdoor/wood
-	icon_state = "wood-1"
-	baseicon = "wood"
-
-/obj/structure/vampdoor/wood/old
-	icon_state = "oldwood-1"
-	baseicon = "oldwood"
-
-/obj/structure/vampdoor/glass
-	icon_state = "glass-1"
-	opacity = FALSE
-	baseicon = "glass"
-	glass = TRUE
-
-/obj/structure/vampdoor/shop
-	icon_state = "shop-1"
-	opacity = FALSE
-	baseicon = "shop"
-	glass = TRUE
+/obj/structure/gargoyle
+	name = "\improper gargoyle"
+	desc = "Some kind of gothic architecture."
+	icon = 'code/modules/ziggers/32x48.dmi'
+	icon_state = "gargoyle"
+	pixel_z = 8
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYERS_LAYER
+	anchored = TRUE

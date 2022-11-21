@@ -69,7 +69,7 @@
 
 	output += "</center>"
 
-	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 250, 265)
+	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>[make_font_cool("NEW PLAYER")]</div>", 250, 265)
 	popup.set_window_options("can_close=0")
 	popup.set_content(output.Join())
 	popup.open(FALSE)

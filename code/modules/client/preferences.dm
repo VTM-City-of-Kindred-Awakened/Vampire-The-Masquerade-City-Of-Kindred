@@ -186,6 +186,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 #define APPEARANCE_CATEGORY_COLUMN "<td valign='top' width='14%'>"
 #define MAX_MUTANT_ROWS 4
 
+/proc/make_font_cool(var/text)
+	if(text)
+		var/coolfont = "<font face='Percolator'>[text]</font>"
+		return coolfont
+
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
 		return
@@ -196,10 +201,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/dat = list("<center>")
 
 	if(istype(user, /mob/dead/new_player))
-		dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a>"
-	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>Game Preferences</a>"
-	dat += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>OOC Preferences</a>"
-	dat += "<a href='?_src_=prefs;preference=tab;tab=3' [current_tab == 3 ? "class='linkOn'" : ""]>Custom Keybindings</a>"
+		dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>[make_font_cool("CHARACTER SETTINGS")]</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>[make_font_cool("GAME PREFERENCES")]</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>[make_font_cool("OOC PREFERENCES")]</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=3' [current_tab == 3 ? "class='linkOn'" : ""]>[make_font_cool("CUSTOM KEYBINDINGS")]</a>"
 
 	if(!path)
 		dat += "<div class='notice'>Please create an account to save your preferences</div>"
@@ -229,13 +234,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							dat += "<a style='white-space:nowrap;' href='?_src_=prefs;preference=changeslot;num=[i];' [i == default_slot ? "class='linkOn'" : ""]>[name]</a> "
 					dat += "</center>"
 
-			dat += "<center><h2>Occupation Choices</h2>"
+			dat += "<center><h2>[make_font_cool("OCCUPATION CHOISES")]</h2>"
 			dat += "<a href='?_src_=prefs;preference=job;task=menu'>Set Occupation Preferences</a><br></center>"
 			if(CONFIG_GET(flag/roundstart_traits))
-				dat += "<center><h2>Quirk Setup</h2>"
+				dat += "<center><h2>[make_font_cool("QUIRK SETUP")]</h2>"
 				dat += "<a href='?_src_=prefs;preference=trait;task=menu'>Configure Quirks</a><br></center>"
 				dat += "<center><b>Current Quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
-			dat += "<h2>Identity</h2>"
+			dat += "<h2>[make_font_cool("IDENTITY")]</h2>"
 			dat += "<table width='100%'><tr><td width='75%' valign='top'>"
 			if(is_banned_from(user.ckey, "Appearance"))
 				dat += "<b>You are banned from using custom names and appearances. You can continue to adjust your characters, but you will be randomised once you join the game.</b><br>"
@@ -286,7 +291,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "</tr></table>"
 
-			dat += "<h2>Body</h2>"
+			dat += "<h2>[make_font_cool("BODY")]</h2>"
 			dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_BODY]'>Always Random Body: [(randomise[RANDOM_BODY]) ? "Yes" : "No"]</A>"
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_BODY_ANTAG]'>When Antagonist: [(randomise[RANDOM_BODY_ANTAG]) ? "Yes" : "No"]</A><br>"
@@ -298,39 +303,43 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(pref_species.name == "Vampire")
 				dat += "<b>Generation:</b> [generation]<BR>"
 				dat += "<b>Masquerade:</b> [masquerade]/5<BR>"
-				dat += "<b>Clane:</b> <a href='?_src_=prefs;preference=clane;task=input'>[clane.name]</a><BR>"
-				dat += "<b>Clane description:</b> [clane.desc]<BR>"
-				dat += "<b>Clane curse:</b> [clane.curse]<BR>"
-				dat += "<b>Disciplines</b> [exper]/1440<BR>"
+				dat += "<h2>[make_font_cool("CLANE")]</h2>"
+				dat += "<b>Clane/Bloodline:</b> <a href='?_src_=prefs;preference=clane;task=input'>[clane.name]</a><BR>"
+				dat += "<b>Description:</b> [clane.desc]<BR>"
+				dat += "<b>Curse:</b> [clane.curse]<BR>"
+				dat += "<h2>[make_font_cool("DISCIPLINES")]</h2>"
+				dat += "Experience rewarded: [exper]/1440<BR>"
 				if(length(clane.clane_disciplines) >= 1)
 					var/datype = clane.clane_disciplines[1]
 					var/datum/discipline/AD = new datype()
-					dat += "[AD.name]: (x)([discipline1level > 1 ? "x" : " "])([discipline1level > 2 ? "x" : " "])([discipline1level > 3 ? "x" : " "])([discipline1level > 4 ? "x" : " "])"
+					dat += "<b>[AD.name]</b>: •[discipline1level > 1 ? "•" : "o"][discipline1level > 2 ? "•" : "o"][discipline1level > 3 ? "•" : "o"][discipline1level > 4 ? "•" : "o"]([discipline1level])"
 					if(exper == 1440 && discipline1level != 5)
 						dat += "<a href='?_src_=prefs;preference=discipline1;task=input'>Learn</a><BR>"
 					else
 						dat += "<BR>"
-					dat += "[AD.desc]<BR>"
+					dat += "-[AD.desc]<BR>"
 				if(length(clane.clane_disciplines) >= 2)
 					var/datype = clane.clane_disciplines[2]
 					var/datum/discipline/AD = new datype()
-					dat += "[AD.name]: (x)([discipline2level > 1 ? "x" : " "])([discipline2level > 2 ? "x" : " "])([discipline2level > 3 ? "x" : " "])([discipline2level > 4 ? "x" : " "])"
+					dat += "<b>[AD.name]</b>: •[discipline2level > 1 ? "•" : "o"][discipline2level > 2 ? "•" : "o"][discipline2level > 3 ? "•" : "o"][discipline2level > 4 ? "•" : "o"]([discipline2level])"
 					if(exper == 1440 && discipline2level != 5)
 						dat += "<a href='?_src_=prefs;preference=discipline2;task=input'>Learn</a><BR>"
 					else
 						dat += "<BR>"
-					dat += "[AD.desc]<BR>"
+					dat += "-[AD.desc]<BR>"
 				if(length(clane.clane_disciplines) >= 3)
 					var/datype = clane.clane_disciplines[3]
 					var/datum/discipline/AD = new datype()
-					dat += "[AD.name]: (x)([discipline3level > 1 ? "x" : " "])([discipline3level > 2 ? "x" : " "])([discipline3level > 3 ? "x" : " "])([discipline3level > 4 ? "x" : " "])"
+					dat += "<b>[AD.name]</b>: •[discipline3level > 1 ? "•" : "o"][discipline3level > 2 ? "•" : "o"][discipline3level > 3 ? "•" : "o"][discipline3level > 4 ? "•" : "o"]([discipline3level])"
 					if(exper == 1440 && discipline3level != 5)
 						dat += "<a href='?_src_=prefs;preference=discipline3;task=input'>Learn</a><BR>"
 					else
 						dat += "<BR>"
-					dat += "[AD.desc]<BR>"
+					dat += "-[AD.desc]<BR>"
 //			dat += "<a href='?_src_=prefs;preference=species;task=random'>Random Species</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SPECIES]'>Always Random Species: [(randomise[RANDOM_SPECIES]) ? "Yes" : "No"]</A><br>"
+
+			dat += "<h2>[make_font_cool("EQUIP")]</h2>"
 
 			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a>"
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_UNDERWEAR]'>[(randomise[RANDOM_UNDERWEAR]) ? "Lock" : "Unlock"]</A>"
@@ -364,7 +373,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += APPEARANCE_CATEGORY_COLUMN
 
-				dat += "<h3>Skin Tone</h3>"
+				dat += "<h3>[make_font_cool("SKIN")]</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a>"
 //				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SKIN_TONE]'>[(randomise[RANDOM_SKIN_TONE]) ? "Lock" : "Unlock"]</A>"
@@ -397,7 +406,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(!use_skintones && !mutant_colors)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
-				dat += "<h3>Eye Color</h3>"
+				dat += "<h3>[make_font_cool("EYES")]</h3>"
 				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a>"
 //				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_EYE_COLOR]'>[(randomise[RANDOM_EYE_COLOR]) ? "Lock" : "Unlock"]</A>"
 
@@ -409,7 +418,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += APPEARANCE_CATEGORY_COLUMN
 
-				dat += "<h3>Hairstyle</h3>"
+				dat += "<h3>[make_font_cool("HAIR")]</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=hairstyle;task=input'>[hairstyle]</a>"
 				dat += "<a href='?_src_=prefs;preference=previous_hairstyle;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_hairstyle;task=input'>&gt;</a>"
@@ -418,7 +427,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<br><span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a>"
 //				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_HAIR_COLOR]'>[(randomise[RANDOM_HAIR_COLOR]) ? "Lock" : "Unlock"]</A>"
 
-				dat += "<BR><h3>Facial Hairstyle</h3>"
+				dat += "<BR><h3>[make_font_cool("FACIAL")]</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=facial_hairstyle;task=input'>[facial_hairstyle]</a>"
 				dat += "<a href='?_src_=prefs;preference=previous_facehairstyle;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_facehairstyle;task=input'>&gt;</a>"
@@ -618,7 +627,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 		if (1) // Game Preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
-			dat += "<h2>General Settings</h2>"
+			dat += "<h2>[make_font_cool("GENERAL")]</h2>"
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;task=input;preference=ui'>[UI_style]</a><br>"
 			dat += "<b>tgui Window Mode:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy (default)" : "Compatible (slower)"]</a><br>"
 			dat += "<b>tgui Window Placement:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary monitor" : "Free (default)"]</a><br>"
@@ -726,7 +735,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
-			dat += "<h2>Special Role Settings</h2>"
+			dat += "<h2>[make_font_cool("SPECIAL ROLE")]</h2>"
 
 			if(is_banned_from(user.ckey, ROLE_SYNDICATE))
 				dat += "<font color=red><b>You are banned from antagonist roles.</b></font><br>"
@@ -752,7 +761,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "</td></tr></table>"
 		if(2) //OOC Preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
-			dat += "<h2>OOC Settings</h2>"
+			dat += "<h2>[make_font_cool("OOC")]</h2>"
 			dat += "<b>Window Flashing:</b> <a href='?_src_=prefs;preference=winflash'>[(windowflashing) ? "Enabled":"Disabled"]</a><br>"
 			dat += "<br>"
 			dat += "<b>Play Admin MIDIs:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Enabled":"Disabled"]</a><br>"
@@ -776,7 +785,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(user.client.holder)
 				dat +="<td width='300px' height='300px' valign='top'>"
 
-				dat += "<h2>Admin Settings</h2>"
+				dat += "<h2>[make_font_cool("ADMIN")]</h2>"
 
 				dat += "<b>Adminhelp Sounds:</b> <a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"Enabled":"Disabled"]</a><br>"
 				dat += "<b>Prayer Sounds:</b> <a href = '?_src_=prefs;preference=hear_prayers'>[(toggles & SOUND_PRAYERS)?"Enabled":"Disabled"]</a><br>"
@@ -793,7 +802,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<b>ASAY Color:</b> <span style='border: 1px solid #161616; background-color: [asaycolor ? asaycolor : "#FF4500"];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=asaycolor;task=input'>Change</a><br>"
 
 				//deadmin
-				dat += "<h2>Deadmin While Playing</h2>"
+				dat += "<h2>[make_font_cool("DEADMIN")]</h2>"
 				var/timegate = CONFIG_GET(number/auto_deadmin_timegate)
 				if(timegate)
 					dat += "<b>Noted roles will automatically deadmin during the first [FLOOR(timegate / 600, 1)] minutes of the round, and will defer to individual preferences after.</b><br>"
@@ -881,7 +890,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	dat += "</center>"
 
 	winshow(user, "preferences_window", TRUE)
-	var/datum/browser/popup = new(user, "preferences_browser", "<div align='center'>Character Setup</div>", 640, 770)
+	var/datum/browser/popup = new(user, "preferences_browser", "<div align='center'>[make_font_cool("CHARACTER")]</div>", 640, 770)
 	popup.set_content(dat.Join())
 	popup.open(FALSE)
 	onclose(user, "preferences_window", src)
