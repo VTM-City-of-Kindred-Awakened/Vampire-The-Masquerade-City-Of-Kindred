@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(mining_ambience,list(
 	'sound/ambience/ambiruin5.ogg', 'sound/ambience/ambiruin6.ogg',
 	'sound/ambience/ambiruin7.ogg', 'sound/ambience/ambidanger.ogg',
 	'sound/ambience/ambidanger2.ogg', 'sound/ambience/ambimaint1.ogg',
-	'sound/ambience/ambilava1.ogg', 'sound/ambience/ambilava2.ogg', 
+	'sound/ambience/ambilava1.ogg', 'sound/ambience/ambilava2.ogg',
 	'sound/ambience/ambilava3.ogg'))
 
 GLOBAL_LIST_INIT(medical_ambience,list('sound/ambience/ambinice.ogg'))
@@ -86,6 +86,18 @@ GLOBAL_LIST_INIT(creepy_ambience,list(
 	'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg',
 	'sound/hallucinations/wail.ogg'))
 
+#define AMBIENCE_CITY "city"
+#define AMBIENCE_BEACH "beach"
+#define AMBIENCE_NATURE "nature"
+#define AMBIENCE_SEWER "sewer"
+#define AMBIENCE_INTERIOR "interior"
+
+GLOBAL_LIST_INIT(city_ambience,list())
+GLOBAL_LIST_INIT(beach_ambience,list())
+GLOBAL_LIST_INIT(nature_ambience,list())
+GLOBAL_LIST_INIT(sewer_ambience,list())
+GLOBAL_LIST_INIT(interior_ambience,list())
+
 GLOBAL_LIST_INIT(ambience_assoc,list(
 	AMBIENCE_GENERIC = GLOB.generic_ambience,
 	AMBIENCE_HOLY = GLOB.holy_ambience,
@@ -99,4 +111,9 @@ GLOBAL_LIST_INIT(ambience_assoc,list(
 	AMBIENCE_MAINT = GLOB.maint_ambience,
 	AMBIENCE_AWAY = GLOB.away_ambience,
 	AMBIENCE_REEBE = GLOB.reebe_ambience,
-	AMBIENCE_CREEPY = GLOB.creepy_ambience))
+	AMBIENCE_CREEPY = GLOB.creepy_ambience,
+	AMBIENCE_CITY = GLOB.city_ambience,
+	AMBIENCE_BEACH = GLOB.beach_ambience,
+	AMBIENCE_NATURE = GLOB.nature_ambience,
+	AMBIENCE_SEWER = GLOB.sewer_ambience,
+	AMBIENCE_INTERIOR = GLOB.interior_ambience))

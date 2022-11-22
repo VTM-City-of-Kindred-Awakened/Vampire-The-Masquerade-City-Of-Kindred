@@ -429,7 +429,7 @@
 	name = "traffic light"
 	desc = "Shows when road is free or not."
 	icon = 'code/modules/ziggers/lamppost.dmi'
-	base_icon_state = "traffic"
+	icon_state = "traffic"
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER
 	pixel_w = -32
