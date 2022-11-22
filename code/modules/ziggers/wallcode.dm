@@ -768,3 +768,13 @@
 
 /obj/effect/decal/coastline/corner
 	icon_state = "coastline_corner"
+
+/obj/effect/decal/shadow
+	name = "shadow"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "shadow"
+
+/obj/effect/decal/support
+	name = "support"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "support"

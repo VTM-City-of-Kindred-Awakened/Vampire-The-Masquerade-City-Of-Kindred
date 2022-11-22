@@ -17,15 +17,18 @@
 /obj/item/vamp/keys/prince
 	accesslocks = list("camarilla",
 											"prince",
-											"clerk")
+											"clerk",
+											"archive")
 
 /obj/item/vamp/keys/sheriff
 	accesslocks = list("camarilla",
-											"prince")
+											"prince",
+											"archive")
 
 /obj/item/vamp/keys/clerk
 	accesslocks = list("camarilla",
-											"clerk")
+											"clerk",
+											"archive")
 
 /obj/item/vamp/keys/graveyard
 	accesslocks = list("graveyard")
@@ -44,7 +47,8 @@
 
 /obj/item/vamp/keys/bar
 	accesslocks = list("bar",
-											"anarch")
+											"anarch",
+											"supply")
 
 /obj/item/vamp/keys/supply
 	accesslocks = list("supply",
