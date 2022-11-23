@@ -6,3 +6,5 @@
 	clane_disciplines = list(/datum/discipline/celerity = 1,
 														/datum/discipline/potence = 2,
 														/datum/discipline/presence = 3)
+	male_clothes = "/obj/item/clothing/under/vampire/brujah"
+	female_clothes = "/obj/item/clothing/under/vampire/brujah/female"

@@ -5,6 +5,8 @@
 	clane_disciplines = list(/datum/discipline/auspex = 1,
 														/datum/discipline/dementation = 2,
 														/datum/discipline/obfuscate = 3)
+	male_clothes = "/obj/item/clothing/under/vampire/malkavian"
+	female_clothes = "/obj/item/clothing/under/vampire/malkavian/female"
 
 /datum/vampireclane/malkavian/on_gain(mob/living/carbon/human/H)
 	..()

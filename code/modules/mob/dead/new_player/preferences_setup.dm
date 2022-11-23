@@ -121,6 +121,10 @@
 		if(job_preferences[job] > highest_pref)
 			previewJob = SSjob.GetJob(job)
 			highest_pref = job_preferences[job]
+		if(job == SSjob.overflow_role)
+			if(job_preferences[SSjob.overflow_role] == JP_LOW)
+				previewJob = SSjob.GetJob(job)
+				highest_pref = job_preferences[job]
 
 	if(previewJob)
 		// Silicons only need a very basic preview since there is no customization for them.

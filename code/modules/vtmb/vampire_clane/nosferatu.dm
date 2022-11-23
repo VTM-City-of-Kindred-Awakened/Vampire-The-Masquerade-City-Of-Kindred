@@ -20,6 +20,8 @@
 									"Cornrow Braid",
 									"Cornrow Tail")
 	violating_appearance = TRUE
+	male_clothes = "/obj/item/clothing/under/vampire/nosferatu"
+	female_clothes = "/obj/item/clothing/under/vampire/nosferatu/female"
 
 /datum/vampireclane/nosferatu/on_gain(mob/living/carbon/human/H)
 	..()

@@ -6,3 +6,5 @@
 														/datum/discipline/fortitude = 2,
 														/datum/discipline/protean = 3)
 	start_humanity = 6
+	male_clothes = "/obj/item/clothing/under/vampire/gangrel"
+	female_clothes = "/obj/item/clothing/under/vampire/gangrel/female"
