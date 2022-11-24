@@ -74,6 +74,10 @@
 		uniform = /obj/item/clothing/under/vampire/prince/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
 
+/obj/effect/landmark/start/prince
+	name = "Prince"
+	icon_state = "Prince"
+
 /datum/job/vamp/sheriff
 	title = "Sheriff"
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
@@ -146,6 +150,10 @@
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/sheriff/female
 
+/obj/effect/landmark/start/sheriff
+	name = "Sheriff"
+	icon_state = "Sheriff"
+
 /datum/job/vamp/clerk
 	title = "Clerk"
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
@@ -214,6 +222,10 @@
 		uniform = /obj/item/clothing/under/vampire/clerk/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
 
+/obj/effect/landmark/start/clerk
+	name = "Clerk"
+	icon_state = "Clerk"
+
 /datum/job/vamp/agent
 	title = "Camarilla Agent"
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
@@ -266,6 +278,10 @@
 
 	chameleon_extras = list(/obj/item/gun/energy/disabler, /obj/item/clothing/glasses/hud/security/sunglasses, /obj/item/clothing/head/helmet)
 
+/obj/effect/landmark/start/camarillaagent
+	name = "Camarilla Agent"
+	icon_state = "Camarilla Agent"
+
 //NEUTRALS
 
 /datum/job/vamp/graveyard
@@ -311,6 +327,10 @@
 
 	chameleon_extras = /obj/item/gun/energy/kinetic_accelerator
 
+/obj/effect/landmark/start/graveyardkeeper
+	name = "Graveyard Keeper"
+	icon_state = "Graveyard Keeper"
+
 /datum/job/vamp/vdoctor
 	title = "Doctor"
 	department_head = list("Clerk")
@@ -355,6 +375,10 @@
 
 	chameleon_extras = /obj/item/gun/syringe
 
+/obj/effect/landmark/start/vdoctor
+	name = "Doctor"
+	icon_state = "Doctor"
+
 /datum/job/vamp/vjanitor
 	title = "Street Janitor"
 	department_head = list("Barkeeper")
@@ -384,6 +408,10 @@
 	r_pocket = /obj/item/vamp/keys/cleaning
 	shoes = /obj/item/clothing/shoes/vampire/jackboots/work
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)
+
+/obj/effect/landmark/start/vjanitor
+	name = "Street Janitor"
+	icon_state = "Street Janitor"
 
 /datum/job/vamp/archivist
 	title = "Archivist"
@@ -435,6 +463,10 @@
 
 	H.grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_CURATOR)
 
+/obj/effect/landmark/start/archivist
+	name = "Archivist"
+	icon_state = "Archivist"
+
 //ANARCHS
 
 /datum/job/vamp/barkeeper
@@ -481,6 +513,10 @@
 		uniform = /obj/item/clothing/under/vampire/bar/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
 
+/obj/effect/landmark/start/barkeeper
+	name = "Barkeeper"
+	icon_state = "Barkeeper"
+
 /datum/job/vamp/bouncer
 	title = "Bouncer"
 	department_head = list("Barkeeper")
@@ -517,6 +553,10 @@
 	l_pocket = /obj/item/vamp/phone/anarch
 
 	chameleon_extras = /obj/item/stamp/law
+
+/obj/effect/landmark/start/bouncer
+	name = "Bouncer"
+	icon_state = "Bouncer"
 
 /datum/job/vamp/dealer
 	title = "Dealer"
@@ -567,6 +607,10 @@
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels/red
 
+/obj/effect/landmark/start/dealer
+	name = "Dealer"
+	icon_state = "Dealer"
+
 /datum/job/vamp/supply
 	title = "Supply Technician"
 	department_head = list("Dealer")
@@ -598,6 +642,10 @@
 	r_pocket = /obj/item/vamp/keys/supply
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo=1)
+
+/obj/effect/landmark/start/supplytechnician
+	name = "Supply Technician"
+	icon_state = "Supply Technician"
 
 //ASS ISTANTS
 
@@ -635,3 +683,7 @@
 		shoes = /obj/item/clothing/shoes/vampire/heels
 		if(H.clane.female_clothes)
 			uniform = text2path(H.clane.female_clothes)
+
+/obj/effect/landmark/start/citizen
+	name = "Citizen"
+	icon_state = "Assistant"
