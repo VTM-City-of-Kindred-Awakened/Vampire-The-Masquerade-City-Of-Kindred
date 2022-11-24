@@ -12,47 +12,65 @@
 	var/list/accesslocks = list("nothing")
 
 /obj/item/vamp/keys/camarilla
+	name = "Camarilla keys"
 	accesslocks = list("camarilla")
+	color = "#bd3327"
 
 /obj/item/vamp/keys/prince
+	name = "Prince's keys"
 	accesslocks = list("camarilla",
 											"prince",
 											"clerk",
 											"archive")
+	color = "#bd3327"
 
 /obj/item/vamp/keys/sheriff
+	name = "Sheriff's keys"
 	accesslocks = list("camarilla",
 											"prince",
 											"archive")
+	color = "#bd3327"
 
 /obj/item/vamp/keys/clerk
+	name = "Clerk's keys"
 	accesslocks = list("camarilla",
 											"clerk",
 											"archive")
+	color = "#bd3327"
 
 /obj/item/vamp/keys/graveyard
+	name = "Graveyard keys"
 	accesslocks = list("graveyard")
 
 /obj/item/vamp/keys/clinic
+	name = "Clinic keys"
 	accesslocks = list("clinic")
 
 /obj/item/vamp/keys/cleaning
+	name = "Cleaning keys"
 	accesslocks = list("cleaning")
 
 /obj/item/vamp/keys/archive
+	name = "Archive keys"
 	accesslocks = list("archive")
 
 /obj/item/vamp/keys/anarch
+	name = "Anarch keys"
 	accesslocks = list("anarch")
+	color = "#434343"
 
 /obj/item/vamp/keys/bar
+	name = "Barkeeper keys"
 	accesslocks = list("bar",
 											"anarch",
 											"supply")
+	color = "#434343"
 
 /obj/item/vamp/keys/supply
+	name = "Supply keys"
 	accesslocks = list("supply",
 											"anarch")
+	color = "#434343"
 
 /obj/structure/vampdoor
 	name = "\improper door"
@@ -94,7 +112,13 @@
 		opacity = FALSE
 		layer = OPEN_DOOR_LAYER
 		to_chat(user, "You open [src].")
+		closed = FALSE
 	else
+		for(var/mob/living/L in src.loc)
+			if(L)
+				playsound(src, lock_sound, 75, TRUE)
+				to_chat(user, "[L] is preventing you from closing [src].")
+				return
 		playsound(src, close_sound, 75, TRUE)
 		icon_state = "[baseicon]-1"
 		density = TRUE
@@ -102,6 +126,7 @@
 			opacity = TRUE
 		layer = ABOVE_ALL_MOB_LAYER
 		to_chat(user, "You close [src].")
+		closed = TRUE
 
 /obj/structure/vampdoor/attackby(obj/item/W, mob/living/user, params)
 	if(lastclicked+20 > world.time)

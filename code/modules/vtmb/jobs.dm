@@ -49,11 +49,12 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	ears = /obj/item/radio/headset/heads/captain/alt
 	gloves = /obj/item/clothing/gloves/color/captain
-	uniform =  /obj/item/clothing/under/rank/captain
+	uniform =  /obj/item/clothing/under/vampire/prince
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace
 	shoes = /obj/item/clothing/shoes/vampire
 	head = /obj/item/clothing/head/caphat
 	l_pocket = /obj/item/vamp/phone/prince
+	r_pocket = /obj/item/vamp/keys/camarilla
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/station_charter=1)
 
 	skillchips = list(/obj/item/skillchip/disk_verifier)
@@ -66,6 +67,12 @@
 	accessory = /obj/item/clothing/accessory/medal/gold/captain
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/captain)
+
+/datum/outfit/job/prince/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.gender == FEMALE)
+		uniform = /obj/item/clothing/under/vampire/prince/female
+		shoes = /obj/item/clothing/shoes/vampire/heels
 
 /datum/job/vamp/sheriff
 	title = "Sheriff"
@@ -114,14 +121,14 @@
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/hos
 	ears = /obj/item/radio/headset/heads/hos/alt
-	uniform = /obj/item/clothing/under/rank/security/head_of_security
+	uniform = /obj/item/clothing/under/vampire/sheriff
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	suit = /obj/item/clothing/suit/armor/hos/trenchcoat
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/hos/beret
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	suit_store = /obj/item/gun/energy/e_gun
-	r_pocket = /obj/item/restraints/handcuffs
+	r_pocket = /obj/item/vamp/keys/sheriff
 	l_pocket = /obj/item/vamp/phone/sheriff
 	backpack_contents = list(/obj/item/melee/baton/loaded=1, /obj/item/modular_computer/tablet/preset/advanced/command=1)
 
@@ -133,6 +140,11 @@
 	implants = list(/obj/item/implant/mindshield)
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun/hos, /obj/item/stamp/hos)
+
+/datum/outfit/job/sheriff/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.gender == FEMALE)
+		uniform = /obj/item/clothing/under/vampire/sheriff/female
 
 /datum/job/vamp/clerk
 	title = "Clerk"
@@ -186,14 +198,21 @@
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/hop
 	ears = /obj/item/radio/headset/heads/hop
-	uniform = /obj/item/clothing/under/rank/civilian/head_of_personnel
+	uniform = /obj/item/clothing/under/vampire/clerk
 	shoes = /obj/item/clothing/shoes/vampire/brown
 	head = /obj/item/clothing/head/hopcap
 	l_pocket = /obj/item/vamp/phone/clerk
+	r_pocket = /obj/item/vamp/keys/clerk
 	backpack_contents = list(/obj/item/storage/box/ids=1,\
 		/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced/command = 1)
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/hop)
+
+/datum/outfit/job/clerk/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.gender == FEMALE)
+		uniform = /obj/item/clothing/under/vampire/clerk/female
+		shoes = /obj/item/clothing/shoes/vampire/heels
 
 /datum/job/vamp/agent
 	title = "Camarilla Agent"
@@ -228,12 +247,12 @@
 
 	belt = /obj/item/pda/security
 	ears = /obj/item/radio/headset/headset_sec
-	uniform = /obj/item/clothing/under/rank/security/officer
+	uniform = /obj/item/clothing/under/vampire/agent
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/helmet/sec
 	suit = /obj/item/clothing/suit/armor/vest/alt
 	shoes = /obj/item/clothing/shoes/vampire
-	r_pocket = /obj/item/restraints/handcuffs
+	r_pocket = /obj/item/vamp/keys/camarilla
 	l_pocket = /obj/item/vamp/phone/camarilla
 	suit_store = /obj/item/gun/energy/disabler
 	backpack_contents = list(/obj/item/melee/baton/loaded=1)
@@ -276,9 +295,9 @@
 	ears = /obj/item/radio/headset/headset_cargo/mining
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	gloves = /obj/item/clothing/gloves/color/black
-	uniform = /obj/item/clothing/under/rank/cargo/miner/lavaland
+	uniform = /obj/item/clothing/under/vampire/graveyard
 	l_pocket = /obj/item/vamp/phone
-	r_pocket = /obj/item/storage/bag/ore	//causes issues if spawned in backpack
+	r_pocket = /obj/item/vamp/keys/graveyard
 	backpack_contents = list(
 		/obj/item/flashlight/seclite=1,\
 		/obj/item/kitchen/knife/combat/survival=1,\
@@ -319,12 +338,13 @@
 
 	belt = /obj/item/pda/medical
 	ears = /obj/item/radio/headset/headset_med
-	uniform = /obj/item/clothing/under/rank/medical/doctor
+	uniform = /obj/item/clothing/under/vampire/nurse
 	shoes = /obj/item/clothing/shoes/vampire/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat
 	l_hand = /obj/item/storage/firstaid/medical
 	suit_store = /obj/item/flashlight/pen
 	l_pocket = /obj/item/vamp/phone
+	r_pocket = /obj/item/vamp/keys/clinic
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -359,8 +379,9 @@
 
 	belt = /obj/item/pda/janitor
 	ears = /obj/item/radio/headset/headset_srv
-	uniform = /obj/item/clothing/under/rank/civilian/janitor
+	uniform = /obj/item/clothing/under/vampire/janitor
 	l_pocket = /obj/item/vamp/phone
+	r_pocket = /obj/item/vamp/keys/cleaning
 	shoes = /obj/item/clothing/shoes/vampire/jackboots/work
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)
 
@@ -389,9 +410,9 @@
 	shoes = /obj/item/clothing/shoes/vampire
 	belt = /obj/item/pda/curator
 	ears = /obj/item/radio/headset/headset_srv
-	uniform = /obj/item/clothing/under/rank/civilian/curator
+	uniform = /obj/item/clothing/under/vampire/archivist
 	l_hand = /obj/item/storage/bag/books
-	r_pocket = /obj/item/laser_pointer
+	r_pocket = /obj/item/vamp/keys/archive
 	l_pocket = /obj/item/vamp/phone
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack_contents = list(
@@ -399,6 +420,12 @@
 		/obj/item/soapstone = 1,
 		/obj/item/barcodescanner = 1
 	)
+
+/datum/outfit/job/archivist/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.gender == FEMALE)
+		uniform = /obj/item/clothing/under/vampire/archivist/female
+		shoes = /obj/item/clothing/shoes/vampire/heels
 
 /datum/outfit/job/archivist/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -441,11 +468,18 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	belt = /obj/item/pda/bar
 	ears = /obj/item/radio/headset/headset_srv
-	uniform = /obj/item/clothing/under/rank/civilian/bartender
+	uniform = /obj/item/clothing/under/vampire/bar
 	suit = /obj/item/clothing/suit/armor/vest
 	backpack_contents = list(/obj/item/storage/box/beanbag=1)
 	shoes = /obj/item/clothing/shoes/vampire
 	l_pocket = /obj/item/vamp/phone/barkeeper
+	r_pocket = /obj/item/vamp/keys/bar
+
+/datum/outfit/job/barkeeper/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.gender == FEMALE)
+		uniform = /obj/item/clothing/under/vampire/bar/female
+		shoes = /obj/item/clothing/shoes/vampire/heels
 
 /datum/job/vamp/bouncer
 	title = "Bouncer"
@@ -475,11 +509,11 @@
 
 	belt = /obj/item/pda/lawyer
 	ears = /obj/item/radio/headset/headset_srvsec
-	uniform = /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
+	uniform = /obj/item/clothing/under/vampire/bouncer
 	suit = /obj/item/clothing/suit/toggle/lawyer
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	l_hand = /obj/item/storage/briefcase/lawyer
-	r_pocket = /obj/item/laser_pointer
+	r_pocket = /obj/item/vamp/keys/anarch
 	l_pocket = /obj/item/vamp/phone/anarch
 
 	chameleon_extras = /obj/item/stamp/law
@@ -517,14 +551,21 @@
 
 	belt = /obj/item/pda/quartermaster
 	ears = /obj/item/radio/headset/headset_cargo
-	uniform = /obj/item/clothing/under/rank/cargo/qm
+	uniform = /obj/item/clothing/under/vampire/suit
 	shoes = /obj/item/clothing/shoes/vampire/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_hand = /obj/item/clipboard
 	l_pocket = /obj/item/vamp/phone/dealer
+	r_pocket = /obj/item/vamp/keys/supply
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo=1)
 
 	chameleon_extras = /obj/item/stamp/qm
+
+/datum/outfit/job/dealer/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.gender == FEMALE)
+		uniform = /obj/item/clothing/under/vampire/suit/female
+		shoes = /obj/item/clothing/shoes/vampire/heels/red
 
 /datum/job/vamp/supply
 	title = "Supply Technician"
@@ -551,9 +592,10 @@
 
 	belt = /obj/item/pda/cargo
 	ears = /obj/item/radio/headset/headset_cargo
-	uniform = /obj/item/clothing/under/rank/cargo/tech
+	uniform = /obj/item/clothing/under/vampire/supply
 	l_hand = /obj/item/export_scanner
 	l_pocket = /obj/item/vamp/phone/anarch
+	r_pocket = /obj/item/vamp/keys/supply
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo=1)
 

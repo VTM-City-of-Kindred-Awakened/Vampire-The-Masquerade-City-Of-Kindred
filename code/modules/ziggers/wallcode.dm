@@ -32,7 +32,9 @@
 /turf/closed/wall/vampwall/Initialize()
 	..()
 	if(window)
-		new window(src)
+		var/obj/W = new window(src)
+		W.plane = GAME_PLANE
+		W.layer = ABOVE_ALL_MOB_LAYER
 	else if(!low)
 		addwall = new(get_step(src, NORTH))
 		addwall.icon_state = icon_state
@@ -337,104 +339,6 @@
 /obj/effect/decal/bordur/corner
 	icon_state = "border_corner"
 
-//STRUCTURES
-
-/obj/structure/lamppost
-	name = "lamppost"
-	desc = "Gives some light to the streets."
-	icon = 'code/modules/ziggers/lamppost.dmi'
-	base_icon_state = "base"
-	plane = GAME_PLANE
-	layer = ABOVE_ALL_MOB_LAYER
-	var/number_of_lamps
-	pixel_w = -32
-	anchored = TRUE
-	density = TRUE
-
-/obj/effect/decal/lamplight
-	alpha = 0
-
-/obj/effect/decal/lamplight/Initialize()
-	..()
-	set_light(4, 1, "#ffde9b")
-
-/obj/structure/lamppost/Initialize()
-	..()
-	switch(number_of_lamps)
-		if(1)
-			switch(dir)
-				if(NORTH)
-					new /obj/effect/decal/lamplight(get_step(loc, NORTH))
-				if(SOUTH)
-					new /obj/effect/decal/lamplight(get_step(loc, SOUTH))
-				if(EAST)
-					new /obj/effect/decal/lamplight(get_step(loc, EAST))
-				if(WEST)
-					new /obj/effect/decal/lamplight(get_step(loc, WEST))
-		if(2)
-			switch(dir)
-				if(NORTH)
-					new /obj/effect/decal/lamplight(get_step(loc, NORTH))
-					new /obj/effect/decal/lamplight(get_step(loc, SOUTH))
-				if(SOUTH)
-					new /obj/effect/decal/lamplight(get_step(loc, NORTH))
-					new /obj/effect/decal/lamplight(get_step(loc, SOUTH))
-				if(EAST)
-					new /obj/effect/decal/lamplight(get_step(loc, EAST))
-					new /obj/effect/decal/lamplight(get_step(loc, WEST))
-				if(WEST)
-					new /obj/effect/decal/lamplight(get_step(loc, EAST))
-					new /obj/effect/decal/lamplight(get_step(loc, WEST))
-		if(3)
-			switch(dir)
-				if(NORTH)
-					new /obj/effect/decal/lamplight(get_step(loc, NORTH))
-					new /obj/effect/decal/lamplight(get_step(loc, EAST))
-					new /obj/effect/decal/lamplight(get_step(loc, WEST))
-				if(SOUTH)
-					new /obj/effect/decal/lamplight(get_step(loc, SOUTH))
-					new /obj/effect/decal/lamplight(get_step(loc, EAST))
-					new /obj/effect/decal/lamplight(get_step(loc, WEST))
-				if(EAST)
-					new /obj/effect/decal/lamplight(get_step(loc, EAST))
-					new /obj/effect/decal/lamplight(get_step(loc, NORTH))
-					new /obj/effect/decal/lamplight(get_step(loc, SOUTH))
-				if(WEST)
-					new /obj/effect/decal/lamplight(get_step(loc, WEST))
-					new /obj/effect/decal/lamplight(get_step(loc, NORTH))
-					new /obj/effect/decal/lamplight(get_step(loc, SOUTH))
-		if(4)
-			new /obj/effect/decal/lamplight(get_step(loc, NORTH))
-			new /obj/effect/decal/lamplight(get_step(loc, SOUTH))
-			new /obj/effect/decal/lamplight(get_step(loc, EAST))
-			new /obj/effect/decal/lamplight(get_step(loc, WEST))
-
-/obj/structure/lamppost/one
-	icon_state = "one"
-	number_of_lamps = 1
-
-/obj/structure/lamppost/two
-	icon_state = "two"
-	number_of_lamps = 2
-
-/obj/structure/lamppost/three
-	icon_state = "three"
-	number_of_lamps = 3
-
-/obj/structure/lamppost/four
-	icon_state = "four"
-	number_of_lamps = 4
-
-/obj/structure/trafficlight
-	name = "traffic light"
-	desc = "Shows when road is free or not."
-	icon = 'code/modules/ziggers/lamppost.dmi'
-	icon_state = "traffic"
-	plane = GAME_PLANE
-	layer = ABOVE_ALL_MOB_LAYER
-	pixel_w = -32
-	anchored = TRUE
-
 //OTHER TURFS
 
 /turf/open/floor/plating/parquetry
@@ -641,6 +545,12 @@
 	plane = GAME_PLANE
 	layer = ABOVE_NORMAL_TURF_LAYER	//WALLPAPER_LAYER dont work
 
+/obj/effect/decal/wallpaper/Initialize()
+	..()
+	if(isclosedturf(loc))
+		forceMove(get_step(src, SOUTH))
+		pixel_y = 32
+
 /obj/effect/decal/wallpaper/grey
 	icon_state = "wallpaper-grey"
 
@@ -670,44 +580,6 @@
 	name = "wall decoration"
 	icon_state = "wallpaper-stone"
 
-/obj/effect/decal/rugs
-	name = "rugs"
-	icon = 'code/modules/ziggers/tiles.dmi'
-	icon_state = "rugs"
-
-/obj/effect/decal/rugs/Initialize()
-	..()
-	icon_state = "rugs[rand(1, 11)]"
-
-/obj/structure/vampfence
-	name = "\improper fence"
-	desc = "Protects places from walking in."
-	icon = 'code/modules/ziggers/props.dmi'
-	icon_state = "fence"
-	plane = GAME_PLANE
-	layer = ABOVE_ALL_MOB_LAYER
-	anchored = TRUE
-	density = TRUE
-
-/obj/structure/vampfence/corner
-	icon_state = "fence_corner"
-
-/obj/structure/vampfence/rich
-	icon = 'code/modules/ziggers/32x48.dmi'
-
-/obj/structure/vampfence/corner/rich
-	icon = 'code/modules/ziggers/32x48.dmi'
-
-/obj/structure/gargoyle
-	name = "\improper gargoyle"
-	desc = "Some kind of gothic architecture."
-	icon = 'code/modules/ziggers/32x48.dmi'
-	icon_state = "gargoyle"
-	pixel_z = 8
-	plane = GAME_PLANE
-	layer = ABOVE_ALL_MOB_LAYERS_LAYER
-	anchored = TRUE
-
 /turf/open/floor/plating/vampwood
 	gender = PLURAL
 	name = "wood"
@@ -723,7 +595,7 @@
 
 /turf/open/floor/plating/vampwood/Initialize()
 	..()
-	set_light(1, 0.5, "#a4b7ff")
+	set_light(1, 0.25, "#a4b7ff")
 
 /turf/open/floor/plating/vampbeach
 	gender = PLURAL
@@ -741,7 +613,7 @@
 /turf/open/floor/plating/vampbeach/Initialize()
 	..()
 	icon_state = "sand[rand(1, 4)]"
-	set_light(1, 0.5, "#a4b7ff")
+	set_light(1, 0.25, "#a4b7ff")
 
 /turf/open/floor/plating/vampocean
 	gender = PLURAL
@@ -759,7 +631,7 @@
 
 /turf/open/floor/plating/vampocean/Initialize()
 	..()
-	set_light(1, 0.5, "#a4b7ff")
+	set_light(1, 0.25, "#a4b7ff")
 
 /obj/effect/decal/coastline
 	name = "water"

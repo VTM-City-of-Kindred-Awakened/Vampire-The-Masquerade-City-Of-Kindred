@@ -3348,6 +3348,7 @@
 #include "code\modules\ziggers\ambient.dm"
 #include "code\modules\ziggers\bloodsucking.dm"
 #include "code\modules\ziggers\clothcode.dm"
+#include "code\modules\ziggers\decor.dm"
 #include "code\modules\ziggers\doorcode.dm"
 #include "code\modules\ziggers\npc.dm"
 #include "code\modules\ziggers\npc_aggression.dm"

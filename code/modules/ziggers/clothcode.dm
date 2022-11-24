@@ -134,6 +134,103 @@
 /obj/item/clothing/under/vampire/homeless/female
 	icon_state = "homeless_f"
 
+//MENTI
+
+/obj/item/clothing/under/vampire/police
+	name = "uniform"
+	desc = "Some law clothes."
+	icon_state = "police"
+
+/obj/item/clothing/under/vampire/guard
+	name = "uniform"
+	desc = "Some law clothes."
+	icon_state = "police"
+
+//JOBS
+
+/obj/item/clothing/under/vampire/janitor
+	name = "uniform"
+	desc = "Some work clothes."
+	icon_state = "janitor"
+
+/obj/item/clothing/under/vampire/nurse
+	name = "scrubs"
+	desc = "Some sterile clothes."
+	icon_state = "nurse"
+
+/obj/item/clothing/under/vampire/graveyard
+	desc = "Some work clothes."
+	icon_state = "graveyard"
+
+/obj/item/clothing/under/vampire/suit
+	name = "suit"
+	desc = "Some business clothes."
+	icon_state = "suit"
+
+/obj/item/clothing/under/vampire/suit/female
+	name = "suitskirt"
+	icon_state = "suit_f"
+
+/obj/item/clothing/under/vampire/sheriff
+	name = "suit"
+	desc = "Some business clothes."
+	icon_state = "sheriff"
+
+/obj/item/clothing/under/vampire/sheriff/female
+	name = "suitskirt"
+	icon_state = "sheriff_f"
+
+/obj/item/clothing/under/vampire/clerk
+	name = "suit"
+	desc = "Some business clothes."
+	icon_state = "clerk"
+
+/obj/item/clothing/under/vampire/clerk/female
+	name = "suitskirt"
+	icon_state = "clerk_f"
+
+/obj/item/clothing/under/vampire/prince
+	name = "suit"
+	desc = "Some business clothes."
+	icon_state = "prince"
+
+/obj/item/clothing/under/vampire/prince/female
+	name = "suitskirt"
+	icon_state = "prince_f"
+
+/obj/item/clothing/under/vampire/agent
+	name = "suit"
+	desc = "Some business clothes."
+	icon_state = "agent"
+
+/obj/item/clothing/under/vampire/archivist
+	name = "suit"
+	desc = "Some old clothes."
+	icon_state = "archivist"
+
+/obj/item/clothing/under/vampire/archivist/female
+	name = "suitskirt"
+	icon_state = "archivist_f"
+
+/obj/item/clothing/under/vampire/bar
+	name = "suit"
+	desc = "Some maid clothes."
+	icon_state = "bar"
+
+/obj/item/clothing/under/vampire/bar/female
+	name = "skirt"
+	icon_state = "bar_f"
+
+/obj/item/clothing/under/vampire/bouncer
+	name = "suit"
+	desc = "Some business clothes."
+	icon_state = "bouncer"
+
+/obj/item/clothing/under/vampire/supply
+	name = "uniform"
+	desc = "Some work clothes."
+	icon_state = "supply"
+
 //SHOES
 
 //SHOES
