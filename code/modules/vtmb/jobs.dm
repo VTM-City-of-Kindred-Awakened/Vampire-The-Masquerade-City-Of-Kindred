@@ -46,7 +46,7 @@
 	name = "Prince"
 	jobtype = /datum/job/prince
 
-	id = /obj/item/card/id/gold
+	id = /obj/item/card/id/prince
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/captain
 	uniform =  /obj/item/clothing/under/vampire/prince
@@ -120,7 +120,7 @@
 	name = "Sheriff"
 	jobtype = /datum/job/vamp/sheriff
 
-	id = /obj/item/card/id/silver
+	id = /obj/item/card/id/sheriff
 	uniform = /obj/item/clothing/under/vampire/sheriff
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	suit = /obj/item/clothing/suit/armor/hos/trenchcoat
@@ -198,7 +198,7 @@
 	name = "Clerk"
 	jobtype = /datum/job/vamp/clerk
 
-	id = /obj/item/card/id/silver
+	id = /obj/item/card/id/clerk
 	uniform = /obj/item/clothing/under/vampire/clerk
 	shoes = /obj/item/clothing/shoes/vampire/brown
 	head = /obj/item/clothing/head/hopcap
@@ -250,6 +250,7 @@
 	name = "Camarilla Agent"
 	jobtype = /datum/job/vamp/agent
 
+	id = /obj/item/card/id/camarilla
 	uniform = /obj/item/clothing/under/vampire/agent
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/helmet/sec
@@ -343,6 +344,7 @@
 	name = "Doctor"
 	jobtype = /datum/job/vamp/vdoctor
 
+	id = /obj/item/card/id/clinic
 	uniform = /obj/item/clothing/under/vampire/nurse
 	shoes = /obj/item/clothing/shoes/vampire/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat
@@ -385,6 +387,7 @@
 	name = "Street Janitor"
 	jobtype = /datum/job/vamp/vjanitor
 
+	id = /obj/item/card/id/cleaning
 	uniform = /obj/item/clothing/under/vampire/janitor
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/cleaning
@@ -419,6 +422,7 @@
 	name = "Archivist"
 	jobtype = /datum/job/vamp/archivist
 
+	id = /obj/item/card/id/archive
 	shoes = /obj/item/clothing/shoes/vampire
 	uniform = /obj/item/clothing/under/vampire/archivist
 	l_hand = /obj/item/storage/bag/books
@@ -473,6 +477,7 @@
 	name = "Barkeeper"
 	jobtype = /datum/job/vamp/barkeeper
 
+	id = /obj/item/card/id/anarch
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	uniform = /obj/item/clothing/under/vampire/bar
 	suit = /obj/item/clothing/suit/armor/vest
@@ -519,6 +524,7 @@
 	name = "Bouncer"
 	jobtype = /datum/job/vamp/bouncer
 
+	id = /obj/item/card/id/anarch
 	uniform = /obj/item/clothing/under/vampire/bouncer
 	suit = /obj/item/clothing/suit/toggle/lawyer
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
@@ -563,6 +569,7 @@
 	name = "Dealer"
 	jobtype = /datum/job/vamp/dealer
 
+	id = /obj/item/card/id/dealer
 	uniform = /obj/item/clothing/under/vampire/suit
 	shoes = /obj/item/clothing/shoes/vampire/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
@@ -606,6 +613,7 @@
 	name = "Supply Technician"
 	jobtype = /datum/job/vamp/supply
 
+	id = /obj/item/card/id/supplytech
 	uniform = /obj/item/clothing/under/vampire/supply
 	l_hand = /obj/item/export_scanner
 	l_pocket = /obj/item/vamp/phone/anarch
@@ -659,3 +667,116 @@
 /obj/effect/landmark/start/citizen
 	name = "Citizen"
 	icon_state = "Assistant"
+
+
+//ID
+
+/obj/item/card/id/prince
+	name = "leader badge"
+	id_type_name = "leader badge"
+	desc = "King in the castle!"
+	icon = 'code/modules/ziggers/items.dmi'
+	icon_state = "id6"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+
+/obj/item/card/id/sheriff
+	name = "head security badge"
+	id_type_name = "head security badge"
+	desc = "A badge which shows honour and dedication."
+	icon = 'code/modules/ziggers/items.dmi'
+	icon_state = "id4"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+
+/obj/item/card/id/camarilla
+	name = "security badge"
+	id_type_name = "security badge"
+	desc = "A badge which shows honour and dedication."
+	icon = 'code/modules/ziggers/items.dmi'
+	icon_state = "id3"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+
+/obj/item/card/id/clerk
+	name = "clerk badge"
+	id_type_name = "clerk badge"
+	desc = "A badge which shows buerocracy qualification."
+	icon = 'code/modules/ziggers/items.dmi'
+	icon_state = "id1"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+
+/obj/item/card/id/anarch
+	name = "biker badge"
+	id_type_name = "biker badge"
+	desc = "A badge which shows protest and anarchy."
+	icon = 'code/modules/ziggers/items.dmi'
+	icon_state = "id5"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+
+/obj/item/card/id/clinic
+	name = "medical badge"
+	id_type_name = "medical badge"
+	desc = "A badge which shows medical qualification."
+	icon = 'code/modules/ziggers/items.dmi'
+	icon_state = "id2"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+
+/obj/item/card/id/archive
+	name = "librarian badge"
+	id_type_name = "librarian badge"
+	desc = "A badge which shows the love to books."
+	icon = 'code/modules/ziggers/items.dmi'
+	icon_state = "id7"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+
+/obj/item/card/id/cleaning
+	name = "janitor badge"
+	id_type_name = "janitor badge"
+	desc = "A badge which shows cleaning employment."
+	icon = 'code/modules/ziggers/items.dmi'
+	icon_state = "id8"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+
+/obj/item/card/id/dealer
+	name = "business badge"
+	id_type_name = "business badge"
+	desc = "A badge which shows business."
+	icon = 'code/modules/ziggers/items.dmi'
+	icon_state = "id9"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+
+/obj/item/card/id/supplytech
+	name = "technician badge"
+	id_type_name = "technician badge"
+	desc = "A badge which shows supply employment."
+	icon = 'code/modules/ziggers/items.dmi'
+	icon_state = "id10"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'

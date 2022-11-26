@@ -221,6 +221,7 @@
 	return
 
 /obj/item/card/id/AltClick(mob/living/user)
+	return
 	if(!alt_click_can_use_id(user))
 		return
 
@@ -330,7 +331,7 @@ update_label()
 
 /obj/item/card/id/proc/update_label()
 	var/blank = !registered_name
-	name = "[blank ? id_type_name : "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
+	name = "[blank ? id_type_name : "[registered_name]'s"] [initial(name)]"
 	update_icon()
 
 /obj/item/card/id/silver
