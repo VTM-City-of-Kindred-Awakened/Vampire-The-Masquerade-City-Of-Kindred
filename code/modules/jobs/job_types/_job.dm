@@ -298,18 +298,19 @@
 
 	var/obj/item/card/id/C = H.wear_id
 	if(istype(C))
-		C.access = J.get_access()
-		shuffle_inplace(C.access) // Shuffle access list to make NTNet passkeys less predictable
-		C.registered_name = H.real_name
-		C.assignment = J.title
-		if(H.age)
-			C.registered_age = H.age
-		C.update_label()
-		var/datum/bank_account/B = SSeconomy.bank_accounts_by_id["[H.account_id]"]
-		if(B && B.account_id == H.account_id)
-			C.registered_account = B
-			B.bank_cards += C
-		H.sec_hud_set_ID()
+		if(C)
+			C.access = J.get_access()
+			shuffle_inplace(C.access) // Shuffle access list to make NTNet passkeys less predictable
+			C.registered_name = H.real_name
+			C.assignment = J.title
+			if(H.age)
+				C.registered_age = H.age
+			C.update_label()
+			var/datum/bank_account/B = SSeconomy.bank_accounts_by_id["[H.account_id]"]
+			if(B && B.account_id == H.account_id)
+				C.registered_account = B
+				B.bank_cards += C
+			H.sec_hud_set_ID()
 
 	var/obj/item/pda/PDA = H.get_item_by_slot(pda_slot)
 	if(istype(PDA))
