@@ -387,6 +387,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/plating/concrete/Initialize()
+	..()
 	icon_state = "concrete[rand(1, 4)]"
 
 /turf/open/floor/plating/vampgrass
