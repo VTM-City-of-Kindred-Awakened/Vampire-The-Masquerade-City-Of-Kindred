@@ -132,7 +132,7 @@
 	pixel_y = -20
 
 /obj/structure/flora/tree/jungle/Initialize()
-	icon_state = "[icon_state][rand(1, 6)]"
+	icon_state = "tree[rand(1, 6)]"
 	. = ..()
 
 /obj/structure/flora/tree/jungle/small

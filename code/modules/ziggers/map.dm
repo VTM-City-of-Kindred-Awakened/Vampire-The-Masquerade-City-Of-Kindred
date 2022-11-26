@@ -1,12 +1,8 @@
 /obj/damap
 	icon = 'code/modules/ziggers/map.dmi'
 	icon_state = "map"
-
-/obj/damap/proc/get_target(var/tx, var/ty)
-	var/mutable_appearance/targeticon = mutable_appearance(icon, "target", ABOVE_MOB_LAYER)
-	targeticon.pixel_w = tx-127
-	targeticon.pixel_z = ty-127
-	add_overlay(targeticon)
+	plane = GAME_PLANE
+	layer = ABOVE_NORMAL_TURF_LAYER
 
 /obj/structure/vampmap
 	name = "\improper map"
@@ -30,8 +26,11 @@
 			</style>
 			"}
 	var/obj/damap/DAMAP = new(user)
-	DAMAP.get_target(user.x, user.y)
-	dat += "[icon2html(getFlatIcon(DAMAP), user)]"
-	user << browse(dat, "window=map;size=275x275;border=1;can_resize=0;can_minimize=0")
+	var/mutable_appearance/targeticon = mutable_appearance(DAMAP.icon, "target", ABOVE_MOB_LAYER)
+	targeticon.pixel_w = user.x-127
+	targeticon.pixel_z = user.y-127
+	DAMAP.add_overlay(targeticon)
+	dat += "<center>[icon2html(getFlatIcon(DAMAP), user)]</center>"
+	user << browse(dat, "window=map;size=400x400;border=1;can_resize=0;can_minimize=0")
 	onclose(user, "map", src)
 	qdel(DAMAP)

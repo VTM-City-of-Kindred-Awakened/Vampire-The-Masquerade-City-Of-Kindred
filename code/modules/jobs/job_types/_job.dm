@@ -79,6 +79,8 @@
 	// Only for display in memories
 	var/list/known_contacts = list()
 
+	var/duty
+
 /datum/job/New()
 	. = ..()
 	var/list/jobs_changes = GetMapChanges()
@@ -249,11 +251,11 @@
 
 	uniform = /obj/item/clothing/under/color/grey
 	id = /obj/item/card/id
-	ears = /obj/item/radio/headset
-	belt = /obj/item/pda
+//	ears = /obj/item/radio/headset
+//	belt = /obj/item/pda
 	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
-	box = /obj/item/storage/box/survival
+//	box = /obj/item/storage/box/survival
 
 	var/backpack = /obj/item/storage/backpack
 	var/satchel  = /obj/item/storage/backpack/satchel

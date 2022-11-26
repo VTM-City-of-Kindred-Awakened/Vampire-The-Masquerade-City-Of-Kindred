@@ -17,9 +17,9 @@
 		return
 	if(caster.bloodpool < cost)
 		return
-	if(!target.stat)
+	if(target.stat == DEAD)
 		return
-	caster.bloodpool -= cost
+	caster.bloodpool = max(0, caster.bloodpool-cost)
 	if(ranged)
 		to_chat(caster, "<span class='notice'>You activate the [name] on [target].</span>")
 	else
