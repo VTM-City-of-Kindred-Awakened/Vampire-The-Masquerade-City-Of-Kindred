@@ -47,22 +47,21 @@
 	jobtype = /datum/job/prince
 
 	id = /obj/item/card/id/prince
-	glasses = /obj/item/clothing/glasses/sunglasses
-	gloves = /obj/item/clothing/gloves/color/captain
+	glasses = /obj/item/clothing/glasses/vampire/sun
+	gloves = /obj/item/clothing/gloves/vampire/latex
 	uniform =  /obj/item/clothing/under/vampire/prince
-	suit = /obj/item/clothing/suit/armor/vest/capcarapace
+	suit = /obj/item/clothing/suit/vampire/trench/alt
 	shoes = /obj/item/clothing/shoes/vampire
-	head = /obj/item/clothing/head/caphat
 	l_pocket = /obj/item/vamp/phone/prince
 	r_pocket = /obj/item/vamp/keys/camarilla
-	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/station_charter=1)
+	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
 	duffelbag = /obj/item/storage/backpack/duffelbag
 
 	implants = list(/obj/item/implant/mindshield)
-	accessory = /obj/item/clothing/accessory/medal/gold/captain
+//	accessory = /obj/item/clothing/accessory/medal/gold/captain
 
 /datum/outfit/job/prince/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -123,14 +122,13 @@
 	id = /obj/item/card/id/sheriff
 	uniform = /obj/item/clothing/under/vampire/sheriff
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
-	suit = /obj/item/clothing/suit/armor/hos/trenchcoat
-	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/hos/beret
-	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	suit_store = /obj/item/gun/energy/e_gun
+	suit = /obj/item/clothing/suit/vampire/vest
+	gloves = /obj/item/clothing/gloves/vampire/leather
+//	head = /obj/item/clothing/head/hos/beret
+	glasses = /obj/item/clothing/glasses/vampire/sun
 	r_pocket = /obj/item/vamp/keys/sheriff
 	l_pocket = /obj/item/vamp/phone/sheriff
-	backpack_contents = list(/obj/item/melee/baton/loaded=1, /obj/item/modular_computer/tablet/preset/advanced/command=1)
+	backpack_contents = list(/obj/item/melee/baton/loaded=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -201,11 +199,10 @@
 	id = /obj/item/card/id/clerk
 	uniform = /obj/item/clothing/under/vampire/clerk
 	shoes = /obj/item/clothing/shoes/vampire/brown
-	head = /obj/item/clothing/head/hopcap
+//	head = /obj/item/clothing/head/hopcap
 	l_pocket = /obj/item/vamp/phone/clerk
 	r_pocket = /obj/item/vamp/keys/clerk
-	backpack_contents = list(/obj/item/storage/box/ids=1,\
-		/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced/command = 1)
+	backpack_contents = list(/obj/item/storage/box/ids=1)
 
 /datum/outfit/job/clerk/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -252,14 +249,12 @@
 
 	id = /obj/item/card/id/camarilla
 	uniform = /obj/item/clothing/under/vampire/agent
-	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/helmet/sec
-	suit = /obj/item/clothing/suit/armor/vest/alt
+	gloves = /obj/item/clothing/gloves/vampire/work
+	suit = /obj/item/clothing/suit/vampire/trench
 	shoes = /obj/item/clothing/shoes/vampire
 	r_pocket = /obj/item/vamp/keys/camarilla
 	l_pocket = /obj/item/vamp/phone/camarilla
-	suit_store = /obj/item/gun/energy/disabler
-	backpack_contents = list(/obj/item/melee/baton/loaded=1)
+//	backpack_contents = list(/obj/item/melee/baton/loaded=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -299,15 +294,13 @@
 	jobtype = /datum/job/vamp/graveyard
 
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
-	gloves = /obj/item/clothing/gloves/color/black
+//	gloves = /obj/item/clothing/gloves/color/black
 	uniform = /obj/item/clothing/under/vampire/graveyard
+	suit = /obj/item/clothing/suit/vampire/trench
+	glasses = /obj/item/clothing/glasses/vampire/yellow
+	gloves = /obj/item/clothing/gloves/vampire/work
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/graveyard
-	backpack_contents = list(
-		/obj/item/flashlight/seclite=1,\
-		/obj/item/kitchen/knife/combat/survival=1,\
-		/obj/item/mining_voucher=1,\
-		/obj/item/stack/marker_beacon/ten=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -347,9 +340,9 @@
 	id = /obj/item/card/id/clinic
 	uniform = /obj/item/clothing/under/vampire/nurse
 	shoes = /obj/item/clothing/shoes/vampire/white
-	suit =  /obj/item/clothing/suit/toggle/labcoat
+	suit =  /obj/item/clothing/suit/vampire/labcoat
+	gloves = /obj/item/clothing/gloves/vampire/latex
 	l_hand = /obj/item/storage/firstaid/medical
-	suit_store = /obj/item/flashlight/pen
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/clinic
 
@@ -392,7 +385,7 @@
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/cleaning
 	shoes = /obj/item/clothing/shoes/vampire/jackboots/work
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)
+	gloves = /obj/item/clothing/gloves/vampire/cleaning
 
 /obj/effect/landmark/start/vjanitor
 	name = "Street Janitor"
@@ -423,17 +416,14 @@
 	jobtype = /datum/job/vamp/archivist
 
 	id = /obj/item/card/id/archive
+	glasses = /obj/item/clothing/glasses/vampire/perception
+	suit = /obj/item/clothing/suit/vampire/trench/archive
 	shoes = /obj/item/clothing/shoes/vampire
+	gloves = /obj/item/clothing/gloves/vampire/latex
 	uniform = /obj/item/clothing/under/vampire/archivist
-	l_hand = /obj/item/storage/bag/books
 	r_pocket = /obj/item/vamp/keys/archive
 	l_pocket = /obj/item/vamp/phone
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
-	backpack_contents = list(
-		/obj/item/choice_beacon/hero = 1,
-		/obj/item/soapstone = 1,
-		/obj/item/barcodescanner = 1
-	)
 
 /datum/outfit/job/archivist/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -478,11 +468,11 @@
 	jobtype = /datum/job/vamp/barkeeper
 
 	id = /obj/item/card/id/anarch
-	glasses = /obj/item/clothing/glasses/sunglasses/reagent
+	glasses = /obj/item/clothing/glasses/vampire/sun
 	uniform = /obj/item/clothing/under/vampire/bar
-	suit = /obj/item/clothing/suit/armor/vest
-	backpack_contents = list(/obj/item/storage/box/beanbag=1)
+	suit = /obj/item/clothing/suit/vampire/jacket/better
 	shoes = /obj/item/clothing/shoes/vampire
+	gloves = /obj/item/clothing/gloves/vampire/work
 	l_pocket = /obj/item/vamp/phone/barkeeper
 	r_pocket = /obj/item/vamp/keys/bar
 
@@ -526,9 +516,8 @@
 
 	id = /obj/item/card/id/anarch
 	uniform = /obj/item/clothing/under/vampire/bouncer
-	suit = /obj/item/clothing/suit/toggle/lawyer
+	suit = /obj/item/clothing/suit/vampire/jacket
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
-	l_hand = /obj/item/storage/briefcase/lawyer
 	r_pocket = /obj/item/vamp/keys/anarch
 	l_pocket = /obj/item/vamp/phone/anarch
 
@@ -572,11 +561,10 @@
 	id = /obj/item/card/id/dealer
 	uniform = /obj/item/clothing/under/vampire/suit
 	shoes = /obj/item/clothing/shoes/vampire/brown
-	glasses = /obj/item/clothing/glasses/sunglasses
-	l_hand = /obj/item/clipboard
+	glasses = /obj/item/clothing/glasses/vampire/sun
 	l_pocket = /obj/item/vamp/phone/dealer
 	r_pocket = /obj/item/vamp/keys/supply
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo=1)
+//	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo=1)
 
 /datum/outfit/job/dealer/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -615,11 +603,10 @@
 
 	id = /obj/item/card/id/supplytech
 	uniform = /obj/item/clothing/under/vampire/supply
-	l_hand = /obj/item/export_scanner
+	gloves = /obj/item/clothing/gloves/vampire/work
 	l_pocket = /obj/item/vamp/phone/anarch
 	r_pocket = /obj/item/vamp/keys/supply
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo=1)
 
 /obj/effect/landmark/start/supplytechnician
 	name = "Supply Technician"
