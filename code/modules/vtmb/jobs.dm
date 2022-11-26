@@ -33,6 +33,8 @@
 												"Clerk",
 												"Barkeeper")
 
+	duty = "Represent interests of Camarilla and maintain Masquerade."
+
 /datum/job/prince/get_access()
 	return get_all_accesses()
 
@@ -45,9 +47,7 @@
 	jobtype = /datum/job/prince
 
 	id = /obj/item/card/id/gold
-	belt = /obj/item/pda/captain
 	glasses = /obj/item/clothing/glasses/sunglasses
-	ears = /obj/item/radio/headset/heads/captain/alt
 	gloves = /obj/item/clothing/gloves/color/captain
 	uniform =  /obj/item/clothing/under/vampire/prince
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace
@@ -57,16 +57,12 @@
 	r_pocket = /obj/item/vamp/keys/camarilla
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/station_charter=1)
 
-	skillchips = list(/obj/item/skillchip/disk_verifier)
-
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
 	duffelbag = /obj/item/storage/backpack/duffelbag
 
 	implants = list(/obj/item/implant/mindshield)
 	accessory = /obj/item/clothing/accessory/medal/gold/captain
-
-	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/captain)
 
 /datum/outfit/job/prince/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -118,13 +114,13 @@
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
 
+	duty = "Protect the Prince at any cost."
+
 /datum/outfit/job/sheriff
 	name = "Sheriff"
 	jobtype = /datum/job/vamp/sheriff
 
 	id = /obj/item/card/id/silver
-	belt = /obj/item/pda/heads/hos
-	ears = /obj/item/radio/headset/heads/hos/alt
 	uniform = /obj/item/clothing/under/vampire/sheriff
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	suit = /obj/item/clothing/suit/armor/hos/trenchcoat
@@ -139,11 +135,8 @@
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
 	duffelbag = /obj/item/storage/backpack/duffelbag
-	box = /obj/item/storage/box/survival/security
 
 	implants = list(/obj/item/implant/mindshield)
-
-	chameleon_extras = list(/obj/item/gun/energy/e_gun/hos, /obj/item/stamp/hos)
 
 /datum/outfit/job/sheriff/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -199,13 +192,13 @@
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
 
+	duty = "Represent interest of the Prince to other kindred."
+
 /datum/outfit/job/clerk
 	name = "Clerk"
 	jobtype = /datum/job/vamp/clerk
 
 	id = /obj/item/card/id/silver
-	belt = /obj/item/pda/heads/hop
-	ears = /obj/item/radio/headset/heads/hop
 	uniform = /obj/item/clothing/under/vampire/clerk
 	shoes = /obj/item/clothing/shoes/vampire/brown
 	head = /obj/item/clothing/head/hopcap
@@ -213,8 +206,6 @@
 	r_pocket = /obj/item/vamp/keys/clerk
 	backpack_contents = list(/obj/item/storage/box/ids=1,\
 		/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced/command = 1)
-
-	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/hop)
 
 /datum/outfit/job/clerk/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -253,12 +244,12 @@
 	bounty_types = CIV_JOB_SEC
 	known_contacts = list("Prince")
 
+	duty = "Work for the Prince and follow orders."
+
 /datum/outfit/job/agent
 	name = "Camarilla Agent"
 	jobtype = /datum/job/vamp/agent
 
-	belt = /obj/item/pda/security
-	ears = /obj/item/radio/headset/headset_sec
 	uniform = /obj/item/clothing/under/vampire/agent
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/helmet/sec
@@ -272,11 +263,8 @@
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
 	duffelbag = /obj/item/storage/backpack/duffelbag
-	box = /obj/item/storage/box/survival/security
 
 	implants = list(/obj/item/implant/mindshield)
-
-	chameleon_extras = list(/obj/item/gun/energy/disabler, /obj/item/clothing/glasses/hud/security/sunglasses, /obj/item/clothing/head/helmet)
 
 /obj/effect/landmark/start/camarillaagent
 	name = "Camarilla Agent"
@@ -303,12 +291,12 @@
 	display_order = JOB_DISPLAY_ORDER_GRAVEYARD
 	bounty_types = CIV_JOB_MINE
 
+	duty = "Protect the Graveyard Gates from the undead."
+
 /datum/outfit/job/graveyard
 	name = "Graveyard Keeper"
 	jobtype = /datum/job/vamp/graveyard
 
-	belt = /obj/item/pda/shaftminer
-	ears = /obj/item/radio/headset/headset_cargo/mining
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	gloves = /obj/item/clothing/gloves/color/black
 	uniform = /obj/item/clothing/under/vampire/graveyard
@@ -323,9 +311,6 @@
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
 	duffelbag = /obj/item/storage/backpack/duffelbag
-	box = /obj/item/storage/box/survival/mining
-
-	chameleon_extras = /obj/item/gun/energy/kinetic_accelerator
 
 /obj/effect/landmark/start/graveyardkeeper
 	name = "Graveyard Keeper"
@@ -352,12 +337,12 @@
 	display_order = JOB_DISPLAY_ORDER_DOCTOR
 	bounty_types = CIV_JOB_MED
 
+	duty = "Collect blood by helping mortals at the Clinic."
+
 /datum/outfit/job/vdoctor
 	name = "Doctor"
 	jobtype = /datum/job/vamp/vdoctor
 
-	belt = /obj/item/pda/medical
-	ears = /obj/item/radio/headset/headset_med
 	uniform = /obj/item/clothing/under/vampire/nurse
 	shoes = /obj/item/clothing/shoes/vampire/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat
@@ -369,11 +354,8 @@
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
 	duffelbag = /obj/item/storage/backpack/duffelbag
-	box = /obj/item/storage/box/survival/medical
 
 	skillchips = list(/obj/item/skillchip/entrails_reader, /obj/item/skillchip/quickcarry)
-
-	chameleon_extras = /obj/item/gun/syringe
 
 /obj/effect/landmark/start/vdoctor
 	name = "Doctor"
@@ -397,12 +379,12 @@
 
 	display_order = JOB_DISPLAY_ORDER_STREETJAN
 
+	duty = "Clean up all traces of Masquerade violations."
+
 /datum/outfit/job/vjanitor
 	name = "Street Janitor"
 	jobtype = /datum/job/vamp/vjanitor
 
-	belt = /obj/item/pda/janitor
-	ears = /obj/item/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/vampire/janitor
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/cleaning
@@ -431,13 +413,13 @@
 
 	display_order = JOB_DISPLAY_ORDER_ARCHIVIST
 
+	duty = "Keep a census of events and provide information to neonates."
+
 /datum/outfit/job/archivist
 	name = "Archivist"
 	jobtype = /datum/job/vamp/archivist
 
 	shoes = /obj/item/clothing/shoes/vampire
-	belt = /obj/item/pda/curator
-	ears = /obj/item/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/vampire/archivist
 	l_hand = /obj/item/storage/bag/books
 	r_pocket = /obj/item/vamp/keys/archive
@@ -454,14 +436,6 @@
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/archivist/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
-
-/datum/outfit/job/archivist/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-
-	if(visualsOnly)
-		return
-
-	H.grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_CURATOR)
 
 /obj/effect/landmark/start/archivist
 	name = "Archivist"
@@ -493,13 +467,13 @@
 	known_contacts = list("Prince",
 												"Dealer")
 
+	duty = "Lead the Anarchs in the City."
+
 /datum/outfit/job/barkeeper
 	name = "Barkeeper"
 	jobtype = /datum/job/vamp/barkeeper
 
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
-	belt = /obj/item/pda/bar
-	ears = /obj/item/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/vampire/bar
 	suit = /obj/item/clothing/suit/armor/vest
 	backpack_contents = list(/obj/item/storage/box/beanbag=1)
@@ -539,20 +513,18 @@
 	display_order = JOB_DISPLAY_ORDER_BOUNCER
 	known_contacts = list("Barkeeper")
 
+	duty = "Work for the Barkeeper."
+
 /datum/outfit/job/bouncer
 	name = "Bouncer"
 	jobtype = /datum/job/vamp/bouncer
 
-	belt = /obj/item/pda/lawyer
-	ears = /obj/item/radio/headset/headset_srvsec
 	uniform = /obj/item/clothing/under/vampire/bouncer
 	suit = /obj/item/clothing/suit/toggle/lawyer
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	l_hand = /obj/item/storage/briefcase/lawyer
 	r_pocket = /obj/item/vamp/keys/anarch
 	l_pocket = /obj/item/vamp/phone/anarch
-
-	chameleon_extras = /obj/item/stamp/law
 
 /obj/effect/landmark/start/bouncer
 	name = "Bouncer"
@@ -585,12 +557,12 @@
 	my_contact_is_important = TRUE
 	known_contacts = list("Barkeeper")
 
+	duty = "Provide weapons to other kindred in the city."
+
 /datum/outfit/job/dealer
 	name = "Dealer"
 	jobtype = /datum/job/vamp/dealer
 
-	belt = /obj/item/pda/quartermaster
-	ears = /obj/item/radio/headset/headset_cargo
 	uniform = /obj/item/clothing/under/vampire/suit
 	shoes = /obj/item/clothing/shoes/vampire/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
@@ -598,8 +570,6 @@
 	l_pocket = /obj/item/vamp/phone/dealer
 	r_pocket = /obj/item/vamp/keys/supply
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo=1)
-
-	chameleon_extras = /obj/item/stamp/qm
 
 /datum/outfit/job/dealer/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -630,12 +600,12 @@
 	bounty_types = CIV_JOB_RANDOM
 	known_contacts = list("Barkeeper")
 
+	duty = "Manage deliveries and supplies for kindred in the City."
+
 /datum/outfit/job/supply
 	name = "Supply Technician"
 	jobtype = /datum/job/vamp/supply
 
-	belt = /obj/item/pda/cargo
-	ears = /obj/item/radio/headset/headset_cargo
 	uniform = /obj/item/clothing/under/vampire/supply
 	l_hand = /obj/item/export_scanner
 	l_pocket = /obj/item/vamp/phone/anarch
@@ -667,6 +637,8 @@
 
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_CITIZEN
+
+	duty = "Follow the Traditions, or other laws provided by the current authority among your kind."
 
 /datum/outfit/job/citizen
 	name = "Citizen"

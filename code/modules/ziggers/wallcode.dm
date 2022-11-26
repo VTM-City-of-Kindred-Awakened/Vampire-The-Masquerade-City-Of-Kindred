@@ -650,3 +650,53 @@
 	name = "support"
 	icon = 'code/modules/ziggers/tiles.dmi'
 	icon_state = "support"
+
+/turf/open/floor/plating/shit
+	gender = PLURAL
+	name = "shit"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "shit"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/shit/border
+	icon_state = "shit_border"
+
+/turf/open/floor/plating/vampcanal
+	gender = PLURAL
+	name = "plating"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "canal1"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/vampcanal/Initialize()
+	..()
+	icon_state = "canal[rand(1, 3)]"
+
+/turf/open/floor/plating/vampcanalplating
+	gender = PLURAL
+	name = "plating"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "canal_plating1"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/vampcanal/Initialize()
+	..()
+	icon_state = "canal_plating[rand(1, 4)]"

@@ -97,12 +97,12 @@
 	var/lock_sound = 'code/modules/ziggers/door_locked.ogg'
 
 /obj/structure/vampdoor/attack_hand(mob/user)
-	if(lastclicked+20 > world.time)
+	if(lastclicked+5 > world.time)
 		return
 	lastclicked = world.time
 	if(locked)
 		playsound(src, lock_sound, 75, TRUE)
-		to_chat(user, "[src] is locked!")
+		to_chat(user, "<span class='warning'>[src] is locked!</span>")
 		return
 
 	if(closed)
@@ -111,13 +111,13 @@
 		density = FALSE
 		opacity = FALSE
 		layer = OPEN_DOOR_LAYER
-		to_chat(user, "You open [src].")
+		to_chat(user, "<span class='notice'>You open [src].</span>")
 		closed = FALSE
 	else
 		for(var/mob/living/L in src.loc)
 			if(L)
 				playsound(src, lock_sound, 75, TRUE)
-				to_chat(user, "[L] is preventing you from closing [src].")
+				to_chat(user, "<span class='warning'>[L] is preventing you from closing [src].</span>")
 				return
 		playsound(src, close_sound, 75, TRUE)
 		icon_state = "[baseicon]-1"
@@ -125,11 +125,11 @@
 		if(!glass)
 			opacity = TRUE
 		layer = ABOVE_ALL_MOB_LAYER
-		to_chat(user, "You close [src].")
+		to_chat(user, "<span class='notice'>You close [src].</span>")
 		closed = TRUE
 
 /obj/structure/vampdoor/attackby(obj/item/W, mob/living/user, params)
-	if(lastclicked+20 > world.time)
+	if(lastclicked+5 > world.time)
 		return
 	lastclicked = world.time
 	if(istype(W, /obj/item/vamp/keys))
