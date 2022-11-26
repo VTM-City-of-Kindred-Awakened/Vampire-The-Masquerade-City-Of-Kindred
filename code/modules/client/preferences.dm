@@ -141,6 +141,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/broadcast_login_logout = TRUE
 //Поколение
 	var/generation = 13
+	var/generation_bonus = 0
 //maskarad
 	var/masquerade = 5
 
@@ -302,8 +303,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Humanity:</b> [humanity]/10<BR>"
 			if(pref_species.name == "Vampire")
 				dat += "<b>Generation:</b> [generation]"
-				if(exper == 1440 && generation > 10)
-					dat += " <a href='?_src_=prefs;preference=generation;task=input'>Change from childe to sire</a><BR>"
+				if(generation_bonus)
+					dat += " (+[generation_bonus]/[min(6, generation-7)])"
+				if(exper == 1440 && generation_bonus < min(6, generation-7))
+					dat += " <a href='?_src_=prefs;preference=generation;task=input'>Claim generation bonus</a><BR>"
 				else
 					dat += "<BR>"
 				dat += "<b>Masquerade:</b> [masquerade]/5<BR>"
@@ -342,6 +345,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "-[AD.desc]<BR>"
 //			dat += "<a href='?_src_=prefs;preference=species;task=random'>Random Species</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SPECIES]'>Always Random Species: [(randomise[RANDOM_SPECIES]) ? "Yes" : "No"]</A><br>"
+
+			if(generation_bonus)
+				dat += "<b>Note: this will wipe your current character and create new with claimed generation bonuses.</b><BR>"
+				dat += "<a href='?_src_=prefs;preference=reset_with_bonus;task=input'>Create new character with generation bonus</a><BR>"
 
 			dat += "<h2>[make_font_cool("EQUIP")]</h2>"
 
@@ -1554,8 +1561,26 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					exper = 0
 
 				if("generation")
-					generation = max(10, generation-1)
+					generation_bonus += 1
 					exper = 0
+
+				if("reset_with_bonus")
+					var/bonus = 13-generation_bonus
+					slotlocked = 0
+					exper = 0
+					discipline1level = 1
+					discipline2level = 1
+					discipline3level = 1
+					masquerade = initial(masquerade)
+					generation = initial(generation)
+					qdel(clane)
+					clane = new /datum/vampireclane/brujah()
+					humanity = clane.start_humanity
+					random_species()
+					random_character()
+					real_name = random_unique_name(gender)
+					save_character()
+					generation = bonus
 
 				if("species")
 					if(slotlocked)
@@ -2047,6 +2072,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("reset_all")
 					slotlocked = 0
 					exper = 0
+					generation_bonus = 0
 					discipline1level = 1
 					discipline2level = 1
 					discipline3level = 1
@@ -2118,6 +2144,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.maxbloodpool = 10+((13-generation)*2)
 	character.bloodpool = rand(2, character.maxbloodpool)
 	character.generation = generation
+	if(generation < 13)
+		character.maxHealth += 30*(13-generation)
+		character.health += 30*(13-generation)
 	character.humanity = humanity
 	character.masquerade = masquerade
 

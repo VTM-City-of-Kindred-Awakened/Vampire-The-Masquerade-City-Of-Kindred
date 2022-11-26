@@ -681,6 +681,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	worn_icon_state = "id6"
 
 /obj/item/card/id/sheriff
 	name = "head security badge"
@@ -692,6 +694,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	worn_icon_state = "id4"
 
 /obj/item/card/id/camarilla
 	name = "security badge"
@@ -703,6 +707,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	worn_icon_state = "id3"
 
 /obj/item/card/id/clerk
 	name = "clerk badge"
@@ -714,6 +720,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	worn_icon_state = "id1"
 
 /obj/item/card/id/anarch
 	name = "biker badge"
@@ -725,6 +733,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	worn_icon_state = "id5"
 
 /obj/item/card/id/clinic
 	name = "medical badge"
@@ -736,6 +746,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	worn_icon_state = "id2"
 
 /obj/item/card/id/archive
 	name = "librarian badge"
@@ -747,6 +759,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	worn_icon_state = "id7"
 
 /obj/item/card/id/cleaning
 	name = "janitor badge"
@@ -758,6 +772,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	worn_icon_state = "id8"
 
 /obj/item/card/id/dealer
 	name = "business badge"
@@ -769,6 +785,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	worn_icon_state = "id9"
 
 /obj/item/card/id/supplytech
 	name = "technician badge"
@@ -780,3 +798,5 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	worn_icon_state = "id10"
