@@ -230,7 +230,7 @@
 
 /obj/structure/hotelsign/Initialize()
 	..()
-	set_light(1, 0.5, "#8e509e")
+	set_light(2, 1, "#8e509e")
 
 /obj/structure/hotelbanner
 	name = "banner"
@@ -253,7 +253,7 @@
 
 /obj/structure/milleniumsign/Initialize()
 	..()
-	set_light(1, 0.5, "#4299bb")
+	set_light(2, 1, "#4299bb")
 
 /obj/structure/anarchsign
 	name = "sign"
@@ -266,7 +266,7 @@
 
 /obj/structure/anarchsign/Initialize()
 	..()
-	set_light(1, 0.5, "#ffffff")
+	set_light(2, 1, "#ffffff")
 
 /obj/structure/hydrant
 	name = "hydrant"
