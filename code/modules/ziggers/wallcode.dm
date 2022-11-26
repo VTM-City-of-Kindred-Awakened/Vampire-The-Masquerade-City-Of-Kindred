@@ -6,7 +6,7 @@
 	icon = 'code/modules/ziggers/addwalls.dmi'
 	base_icon_state = "wall"
 	plane = GAME_PLANE
-	layer = ABOVE_ALL_MOB_LAYER
+	layer = ABOVE_ALL_MOB_LAYERS_LAYER
 
 /turf/closed/wall/vampwall
 	name = "old brick wall"
@@ -387,6 +387,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/plating/concrete/Initialize()
+	..()
 	icon_state = "concrete[rand(1, 4)]"
 
 /turf/open/floor/plating/vampgrass
