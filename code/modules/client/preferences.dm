@@ -301,7 +301,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
 			dat += "<b>Humanity:</b> [humanity]/10<BR>"
 			if(pref_species.name == "Vampire")
-				dat += "<b>Generation:</b> [generation]<BR>"
+				dat += "<b>Generation:</b> [generation]"
+				if(exper == 1440 && generation > 10)
+					dat += " <a href='?_src_=prefs;preference=generation;task=input'>Change from childe to sire</a><BR>"
+				else
+					dat += "<BR>"
 				dat += "<b>Masquerade:</b> [masquerade]/5<BR>"
 				dat += "<h2>[make_font_cool("CLANE")]</h2>"
 				dat += "<b>Clane/Bloodline:</b> <a href='?_src_=prefs;preference=clane;task=input'>[clane.name]</a><BR>"
@@ -1547,6 +1551,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("discipline3")
 					discipline3level = min(5, discipline3level+1)
+					exper = 0
+
+				if("generation")
+					generation = max(10, generation-1)
 					exper = 0
 
 				if("species")
