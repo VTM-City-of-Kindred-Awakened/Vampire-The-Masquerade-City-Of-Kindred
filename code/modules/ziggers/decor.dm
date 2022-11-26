@@ -105,6 +105,8 @@
 			new /obj/effect/decal/lamplight(get_step(loc, SOUTH))
 			new /obj/effect/decal/lamplight(get_step(loc, EAST))
 			new /obj/effect/decal/lamplight(get_step(loc, WEST))
+		else
+			new /obj/effect/decal/lamplight(loc)
 
 /obj/structure/lamppost/one
 	icon_state = "one"
@@ -121,6 +123,10 @@
 /obj/structure/lamppost/four
 	icon_state = "four"
 	number_of_lamps = 4
+
+/obj/structure/lamppost/sidewalk
+	icon_state = "civ"
+	number_of_lamps = 5
 
 /obj/structure/trafficlight
 	name = "traffic light"
@@ -168,7 +174,7 @@
 
 /obj/structure/clothingrack/rand/Initialize()
 	..()
-	icon_state = "rack[rand(1, 3)]"
+	icon_state = "rack[rand(1, 5)]"
 
 /obj/structure/clothinghanger
 	name = "clothing hanger"
@@ -261,3 +267,48 @@
 /obj/structure/anarchsign/Initialize()
 	..()
 	set_light(1, 0.5, "#ffffff")
+
+/obj/structure/hydrant
+	name = "hydrant"
+	desc = "Used for firefighting."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "hydrant"
+	anchored = TRUE
+
+/obj/structure/vampcar
+	name = "car"
+	desc = "It drives."
+	icon = 'code/modules/ziggers/cars.dmi'
+	icon_state = "taxi"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	density = TRUE
+	pixel_w = -16
+
+/obj/structure/vampcar/Initialize()
+	..()
+	var/atom/movable/M = new(get_step(loc, EAST))
+	M.density = TRUE
+	M.anchored = TRUE
+	dir = pick(NORTH, SOUTH, WEST, EAST)
+
+/obj/structure/vampcar/rand
+	icon_state = "1"
+
+/obj/structure/vampcar/rand/Initialize()
+	..()
+	icon_state = "[rand(1, 6)]"
+
+/obj/structure/roadblock
+	name = "\improper road block"
+	desc = "Protects places from walking in."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "roadblock"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	density = TRUE
+
+/obj/structure/roadblock/alt
+	icon_state = "barrier"

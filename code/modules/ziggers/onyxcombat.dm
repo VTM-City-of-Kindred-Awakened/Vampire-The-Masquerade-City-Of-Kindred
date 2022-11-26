@@ -420,12 +420,15 @@
 	var/atom/movable/screen/disciplines/toggled
 
 /atom/movable/screen/disciplines/Click()
+	var/dadelay = dscpln.delay
+	if(dscpln.leveldelay)
+		dadelay = dscpln.delay*dscpln.level
 	SEND_SOUND(usr, sound('code/modules/ziggers/highlight.ogg', 0, 0, 50))
 	if(ishuman(usr))
 		var/mob/living/carbon/human/BD = usr
 		if(world.time < last_discipline_click+5)
 			return
-		if(world.time < last_discipline_use+dscpln.delay+5)
+		if(world.time < last_discipline_use+dadelay+5)
 			return
 		last_discipline_click = world.time
 		if(active)
@@ -451,7 +454,7 @@
 			last_discipline_use = world.time
 			icon_state = "[main_state]-on"
 			dscpln.activate(BD, BD)
-			spawn(dscpln.delay)
+			spawn(dadelay)
 				icon_state = main_state
 
 /atom/movable/screen/disciplines/proc/range_activate(var/mob/living/trgt, var/mob/living/carbon/human/cstr)

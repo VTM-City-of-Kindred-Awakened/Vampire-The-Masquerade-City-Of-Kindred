@@ -8,6 +8,7 @@
 	var/violates_masquerade = FALSE
 	var/level = 1
 	var/activate_sound = 'code/modules/ziggers/bloodhealing.ogg'
+	var/leveldelay = TRUE
 
 /datum/discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	if(!target)
@@ -18,12 +19,11 @@
 		return
 	if(!target.stat)
 		return
+	caster.bloodpool -= cost
 	if(ranged)
 		to_chat(caster, "<span class='notice'>You activate the [name] on [target].</span>")
 	else
 		to_chat(caster, "<span class='notice'>You activate the [name].</span>")
-		caster = target
-	caster.bloodpool -= cost
 	if(ranged)
 		if(isnpc(target))
 			var/mob/living/carbon/human/npc/NPC = target
@@ -113,16 +113,16 @@
 	..()
 	var/sound/auspexbeat = sound('code/modules/ziggers/auspex.ogg', repeat = TRUE)
 	caster.playsound_local(caster, auspexbeat, 75, 0, channel = CHANNEL_DISCIPLINES, use_reverb = FALSE)
-	ADD_TRAIT(target, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
-	target.update_sight()
-	target.add_client_colour(/datum/client_colour/glass_colour/blue)
+	ADD_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
+	caster.update_sight()
+	caster.add_client_colour(/datum/client_colour/glass_colour/blue)
 	spawn(delay*level)
 		if(caster)
 			caster.stop_sound_channel(CHANNEL_DISCIPLINES)
 			playsound(caster, 'code/modules/ziggers/auspex_deactivate.ogg', 50, FALSE)
 			REMOVE_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
-			target.remove_client_colour(/datum/client_colour/glass_colour/blue)
-			target.update_sight()
+			caster.remove_client_colour(/datum/client_colour/glass_colour/blue)
+			caster.update_sight()
 
 /datum/discipline/celerity
 	name = "Celerity"
@@ -158,12 +158,12 @@
 
 /datum/discipline/celerity/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	target.add_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
+	caster.add_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
 	caster.celerity_visual = TRUE
 	spawn(delay*level)
 		if(caster)
 			playsound(caster, 'code/modules/ziggers/celerity_deactivate.ogg', 50, FALSE)
-			target.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
+			caster.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
 			caster.celerity_visual = FALSE
 
 /datum/discipline/dominate
@@ -313,9 +313,10 @@
 	..()
 	for(var/mob/living/carbon/human/H in viewers(5, caster))
 		if(H != caster)
+			if(H.generation > caster.generation)
+				return
 			H.emote("laugh")
 			H.Stun(10*level)
-			target.drop_all_held_items()
 			if(H.stat <= 2 && !H.IsSleeping() && !H.IsUnconscious() && !H.IsParalyzed() && !H.IsKnockdown() && !HAS_TRAIT(H, TRAIT_RESTRAINED))
 				if(prob(50))
 					dancefirst(H)
@@ -379,11 +380,13 @@
 			NPC.danger_source = null
 	switch(level)
 		if(1)
-			caster.alpha = 192
+			caster.alpha = 138
 		if(2)
-			caster.alpha = 128
+			caster.alpha = 106
+		if(3)
+			caster.alpha = 74
 		else
-			caster.alpha = 64
+			caster.alpha = 10
 	spawn(delay*level)
 		if(caster)
 			playsound(caster, 'code/modules/ziggers/obfuscate_deactivate.ogg', 50, FALSE)
@@ -397,6 +400,7 @@
 	ranged = FALSE
 	delay = 50
 	activate_sound = 'code/modules/ziggers/presence_activate.ogg'
+	leveldelay = FALSE
 
 /datum/discipline/presence/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()

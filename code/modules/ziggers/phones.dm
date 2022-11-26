@@ -134,8 +134,8 @@
 	RegisterSignal(src, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 	if(!number || number == "")
 		number = create_unique_phone_number(exchange_num)
-	GLOB.phone_numbers_list += number
-	GLOB.phones_list += src
+		GLOB.phone_numbers_list += number
+		GLOB.phones_list += src
 
 /obj/item/vamp/phone/prince
 	exchange_num = 267
@@ -427,3 +427,9 @@
 				VOIC.say("[message]")
 				playsound(online, 'code/modules/ziggers/phonetalk.ogg', 50, FALSE)
 				qdel(VOIC)
+
+/obj/item/vamp/phone/street
+	icon = 'code/modules/ziggers/onfloor.dmi'
+	icon_state = "streetphone"
+	anchored = TRUE
+	number = 1447
