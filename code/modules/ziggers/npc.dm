@@ -10,8 +10,6 @@
 	var/mob/living/danger_source
 	var/mob/living/last_attacker
 
-	var/obj/effect/landmark/npcbeacon/LASTBEAC
-
 	var/turf/walktarget	//dlya movementa
 
 	var/last_grab = 0

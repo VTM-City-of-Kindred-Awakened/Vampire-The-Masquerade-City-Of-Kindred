@@ -59,12 +59,6 @@
 				return get_step(location, direction)
 
 /mob/living/carbon/human/npc/proc/ChoosePath()
-	for(var/obj/effect/landmark/npcbeacon/BEAC in loc)
-		if(BEAC && BEAC != LASTBEAC)
-			LASTBEAC = BEAC
-			if(BEAC.directionwalk)
-				var/turf/myway = CreateWay(BEAC.directionwalk)
-				return myway
 	var/turf/north_steps = CreateWay(NORTH)
 	var/turf/south_steps = CreateWay(SOUTH)
 	var/turf/west_steps = CreateWay(WEST)
