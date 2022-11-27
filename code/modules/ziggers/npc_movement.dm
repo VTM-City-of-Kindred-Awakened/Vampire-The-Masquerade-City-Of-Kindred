@@ -15,11 +15,11 @@
 	GLOB.npc_list += src
 
 /mob/living/carbon/human/npc/death()
-	..()
 	if(ishuman(last_attacker))
 		AdjustHumanity(last_attacker, -1, 0)
 	remove_overlay(FIGHT_LAYER)
 	GLOB.npc_list -= src
+	..()
 
 /mob/living/carbon/human/npc/Destroy()
 	..()
@@ -60,7 +60,8 @@
 
 /mob/living/carbon/human/npc/proc/ChoosePath()
 	for(var/obj/effect/landmark/npcbeacon/BEAC in loc)
-		if(BEAC)
+		if(BEAC && BEAC != LASTBEAC)
+			LASTBEAC = BEAC
 			if(BEAC.directionwalk)
 				var/turf/myway = CreateWay(BEAC.directionwalk)
 				return myway

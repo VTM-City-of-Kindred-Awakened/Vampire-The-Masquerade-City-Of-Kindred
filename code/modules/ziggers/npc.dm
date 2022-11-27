@@ -7,8 +7,10 @@
 	var/last_annoy = 0
 
 	var/last_danger_meet = 0
-	var/mob/danger_source
-	var/mob/last_attacker
+	var/mob/living/danger_source
+	var/mob/living/last_attacker
+
+	var/obj/effect/landmark/npcbeacon/LASTBEAC
 
 	var/turf/walktarget	//dlya movementa
 

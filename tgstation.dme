@@ -3351,6 +3351,7 @@
 #include "code\modules\ziggers\decor.dm"
 #include "code\modules\ziggers\doorcode.dm"
 #include "code\modules\ziggers\map.dm"
+#include "code\modules\ziggers\melee.dm"
 #include "code\modules\ziggers\npc.dm"
 #include "code\modules\ziggers\npc_aggression.dm"
 #include "code\modules\ziggers\npc_movement.dm"

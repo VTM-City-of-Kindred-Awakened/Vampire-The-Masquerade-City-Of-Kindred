@@ -20,6 +20,7 @@
 	if(target.stat == DEAD)
 		return
 	caster.bloodpool = max(0, caster.bloodpool-cost)
+	caster.update_blood_hud()
 	if(ranged)
 		to_chat(caster, "<span class='notice'>You activate the [name] on [target].</span>")
 	else

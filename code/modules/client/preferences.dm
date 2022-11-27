@@ -1580,6 +1580,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					random_character()
 					real_name = random_unique_name(gender)
 					save_character()
+					generation_bonus = 0
 					generation = bonus
 
 				if("species")

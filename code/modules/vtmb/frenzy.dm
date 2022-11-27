@@ -145,6 +145,7 @@
 				H.enter_frenzymod()
 				H.client.prefs.slotlocked = 0
 				H.client.prefs.exper = 0
+				H.client.prefs.generation_bonus = 0
 				H.client.prefs.discipline1level = 1
 				H.client.prefs.discipline2level = 1
 				H.client.prefs.discipline3level = 1

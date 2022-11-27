@@ -336,6 +336,25 @@
 	icon_state = "vest"
 	armor = list(MELEE = 55, BULLET = 55, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
 
+/obj/item/clothing/suit/vampire/vest/army
+	desc = "Army equipment. Provides great protection against blunt force."
+	icon_state = "vest"
+	w_class = WEIGHT_CLASS_BULKY
+	armor = list(MELEE = 70, BULLET = 70, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
+
+/obj/item/clothing/suit/vampire/eod
+	name = "EOD suit"
+	desc = "Demoman equipment. Provides best protection against nearly everything."
+	icon_state = "eod"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	flags_inv = HIDEJUMPSUIT
+	clothing_flags = THICKMATERIAL
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	slowdown = 2
+	w_class = WEIGHT_CLASS_BULKY
+	armor = list(MELEE = 90, BULLET = 90, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 0, RAD = 0, FIRE = 70, ACID = 90, WOUND = 50)
+
 /obj/item/clothing/suit/vampire/labcoat
 	name = "labcoat"
 	desc = "For medicine and research purposes."
@@ -411,25 +430,49 @@
 	name = "police hat"
 	desc = "Can look dangerous or sexy despite the circumstances. Provides some kind of protection."
 	icon_state = "law"
-	armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 20)
+	armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 
 /obj/item/clothing/head/vampire/cowboy
 	name = "cowboy hat"
 	desc = "Looks cool anyway. Provides some kind of protection."
 	icon_state = "cowboy"
-	armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 20)
+	armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 
 /obj/item/clothing/head/vampire/british
 	name = "british police hat"
 	desc = "Want some tea? Provides some kind of protection."
 	icon_state = "briish"
-	armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 20)
+	armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 
 /obj/item/clothing/head/vampire/helmet
 	name = "police helmet"
 	desc = "Looks dangerous. Provides good protection."
 	icon_state = "helmet"
-	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 40, BOMB = 40, BIO = 0, RAD = 0, FIRE = 40, ACID = 40, WOUND = 40)
+	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 40, BOMB = 20, BIO = 0, RAD = 0, FIRE = 20, ACID = 40, WOUND = 25)
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+
+/obj/item/clothing/head/vampire/army
+	name = "army helmet"
+	desc = "Looks dangerous. Provides great protection against blunt force."
+	icon_state = "helmet"
+	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 40, BIO = 0, RAD = 0, FIRE = 20, ACID = 40, WOUND = 25)
+
+/obj/item/clothing/head/vampire/eod
+	name = "EOD helmet"
+	desc = "Looks dangerous. Provides best protection against nearly everything."
+	icon_state = "bomb"
+	armor = list(MELEE = 70, BULLET = 70, LASER = 90, ENERGY = 90, BOMB = 100, BIO = 0, RAD = 0, FIRE = 50, ACID = 90, WOUND = 40)
+	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT
+	visor_flags_inv = HIDEFACE|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	w_class = WEIGHT_CLASS_BULKY
+
+//GLOVES
+
+//GLOVES
+
+//GLOVES
 
 /obj/item/clothing/gloves/vampire
 	icon = 'code/modules/ziggers/clothing.dmi'
@@ -458,7 +501,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 70, ACID = 30)
+	armor = list(MELEE = 30, BULLET = 15, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 30)
 
 /obj/item/clothing/gloves/vampire/cleaning
 	name = "cleaning gloves"
@@ -471,3 +514,37 @@
 	desc = "Provides acid protection."
 	icon_state = "latex"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 70)
+
+//NECK
+
+//NECK
+
+//NECK
+
+/obj/item/clothing/neck/vampire
+	icon = 'code/modules/ziggers/clothing.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	inhand_icon_state = ""
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/clothing/neck/vampire/scarf
+	name = "black scarf"
+	desc = "Provides protection against cold."
+	icon_state = "scarf"
+
+/obj/item/clothing/neck/vampire/scarf/red
+	name = "red scarf"
+	icon_state = "scarf_red"
+
+/obj/item/clothing/neck/vampire/scarf/blue
+	name = "blue scarf"
+	icon_state = "scarf_blue"
+
+/obj/item/clothing/neck/vampire/scarf/green
+	name = "green scarf"
+	icon_state = "scarf_green"
+
+/obj/item/clothing/neck/vampire/scarf/white
+	name = "white scarf"
+	icon_state = "scarf_white"

@@ -5,11 +5,13 @@
 	. = ..()
 	if(onflooricon)
 		icon = initial(icon)
+		pixel_w = initial(pixel_w)
 
 /obj/item/dropped(mob/M)
 	. = ..()
 	if(onflooricon)
 		icon = onflooricon
+		pixel_w = 0
 
 /obj/item/Initialize()
 	..()
