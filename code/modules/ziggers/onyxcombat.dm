@@ -287,6 +287,8 @@
 			if(BD.getBruteLoss() + BD.getBruteLoss() >= 25)
 				BD.visible_message("<span class='warning'>Some of [BD]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
 			BD.adjustBruteLoss(-10, TRUE)
+			var/datum/wound/W = pick(BD.all_wounds)
+			W.remove_wound()
 			BD.adjustFireLoss(-10, TRUE)
 			BD.update_damage_overlays()
 			BD.update_health_hud()
