@@ -33,7 +33,7 @@
 		client.images += suckbar
 	var/sound/heartbeat = sound('code/modules/ziggers/drinkblood2.ogg', repeat = TRUE)
 	playsound_local(src, heartbeat, 75, 0, channel = CHANNEL_BLOOD, use_reverb = FALSE)
-	mob.SetSleeping(30)
+	mob.Stun(30)
 	if(isnpc(mob))
 		var/mob/living/carbon/human/npc/NPC = mob
 		NPC.danger_source = null
@@ -91,3 +91,4 @@
 			client.images -= suckbar
 		qdel(suckbar)
 		stop_sound_channel(CHANNEL_BLOOD)
+		mob.SetSleeping(50)

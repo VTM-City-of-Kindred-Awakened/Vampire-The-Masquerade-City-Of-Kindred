@@ -312,3 +312,19 @@
 
 /obj/structure/roadblock/alt
 	icon_state = "barrier"
+
+/obj/machinery/light/prince
+	icon = 'code/modules/ziggers/icons.dmi'
+
+/obj/effect/decal/painting
+	name = "painting"
+	icon = 'code/modules/ziggers/icons.dmi'
+	icon_state = "painting1"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+
+/obj/effect/decal/painting/second
+	icon_state = "painting2"
+
+/obj/effect/decal/painting/third
+	icon_state = "painting3"

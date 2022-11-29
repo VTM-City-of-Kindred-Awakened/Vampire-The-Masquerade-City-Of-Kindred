@@ -53,7 +53,7 @@
 	suit = /obj/item/clothing/suit/vampire/trench/alt
 	shoes = /obj/item/clothing/shoes/vampire
 	l_pocket = /obj/item/vamp/phone/prince
-	r_pocket = /obj/item/vamp/keys/camarilla
+	r_pocket = /obj/item/vamp/keys/prince
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1)
 
 	backpack = /obj/item/storage/backpack
@@ -121,6 +121,7 @@
 
 	id = /obj/item/card/id/sheriff
 	uniform = /obj/item/clothing/under/vampire/sheriff
+	belt = /obj/item/melee/vampirearms/katana
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	suit = /obj/item/clothing/suit/vampire/vest
 	gloves = /obj/item/clothing/gloves/vampire/leather
@@ -128,7 +129,7 @@
 	glasses = /obj/item/clothing/glasses/vampire/sun
 	r_pocket = /obj/item/vamp/keys/sheriff
 	l_pocket = /obj/item/vamp/phone/sheriff
-	backpack_contents = list(/obj/item/melee/baton/loaded=1)
+	backpack_contents = list(/obj/item/melee/vampirearms/stake=3)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -254,7 +255,7 @@
 	shoes = /obj/item/clothing/shoes/vampire
 	r_pocket = /obj/item/vamp/keys/camarilla
 	l_pocket = /obj/item/vamp/phone/camarilla
-//	backpack_contents = list(/obj/item/melee/baton/loaded=1)
+	backpack_contents = list(/obj/item/melee/vampirearms/stake=3)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -301,6 +302,7 @@
 	gloves = /obj/item/clothing/gloves/vampire/work
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/graveyard
+	r_hand = /obj/item/melee/vampirearms/shovel
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -520,6 +522,8 @@
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	r_pocket = /obj/item/vamp/keys/anarch
 	l_pocket = /obj/item/vamp/phone/anarch
+	r_hand = /obj/item/melee/vampirearms/baseball
+	backpack_contents = list(/obj/item/melee/vampirearms/stake=3)
 
 /obj/effect/landmark/start/bouncer
 	name = "Bouncer"

@@ -357,6 +357,9 @@
 /turf/open/floor/plating/parquetry/old
 	icon_state = "parquet-old"
 
+/turf/open/floor/plating/parquetry/rich
+	icon_state = "parquet-rich"
+
 /turf/open/floor/plating/granite
 	gender = PLURAL
 	name = "granite"
@@ -552,34 +555,85 @@
 		forceMove(get_step(src, SOUTH))
 		pixel_y = 32
 
+/obj/effect/decal/wallpaper/low
+	icon_state = "wallpaper_low"
+
 /obj/effect/decal/wallpaper/grey
 	icon_state = "wallpaper-grey"
+
+/obj/effect/decal/wallpaper/grey/low
+	icon_state = "wallpaper-grey_low"
 
 /obj/effect/decal/wallpaper/light
 	icon_state = "wallpaper-light"
 
+/obj/effect/decal/wallpaper/light/low
+	icon_state = "wallpaper-light_low"
+
 /obj/effect/decal/wallpaper/red
 	icon_state = "wallpaper-asylum"
 
+/obj/effect/decal/wallpaper/red/low
+	icon_state = "wallpaper-asylum_low"
+
 /obj/effect/decal/wallpaper/blue
 	icon_state = "wallpaper-club"
+
+/obj/effect/decal/wallpaper/blue/low
+	icon_state = "wallpaper-club_low"
 
 /obj/effect/decal/wallpaper/paper
 	name = "wallpapers"
 	icon_state = "wallpaper-cheap"
 
+/obj/effect/decal/wallpaper/paper/low
+	icon_state = "wallpaper-cheap_low"
+
 /obj/effect/decal/wallpaper/paper/green
 	icon_state = "wallpaper-green"
+
+/obj/effect/decal/wallpaper/paper/green/low
+	icon_state = "wallpaper-green_low"
 
 /obj/effect/decal/wallpaper/paper/stripe
 	icon_state = "wallpaper-stripe"
 
+/obj/effect/decal/wallpaper/paper/stripe/low
+	icon_state = "wallpaper-stripe_low"
+
 /obj/effect/decal/wallpaper/paper/rich
 	icon_state = "wallpaper-rich"
+
+/obj/effect/decal/wallpaper/paper/rich/low
+	icon_state = "wallpaper-rich_low"
+
+/obj/effect/decal/wallpaper/paper/darkred
+	icon_state = "wallpaper-dred"
+
+/obj/effect/decal/wallpaper/paper/darkred/low
+	icon_state = "wallpaper-dred_low"
+
+/obj/effect/decal/wallpaper/paper/darkgreen
+	icon_state = "wallpaper-dgreen"
+
+/obj/effect/decal/wallpaper/paper/darkgreen/low
+	icon_state = "wallpaper-dgreen_low"
 
 /obj/effect/decal/wallpaper/stone
 	name = "wall decoration"
 	icon_state = "wallpaper-stone"
+
+/obj/effect/decal/wallpaper/stone/low
+	icon_state = "wallpaper-stone_low"
+
+/obj/effect/decal/wallpaper/gold
+	icon_state = "wallpaper-gold"
+
+/obj/effect/decal/wallpaper/gold/alt
+	icon_state = "wallpaper-gold_alt"
+
+/obj/effect/decal/wallpaper/gold/low
+	icon_state = "wallpaper-gold_low"
 
 /turf/open/floor/plating/vampwood
 	gender = PLURAL

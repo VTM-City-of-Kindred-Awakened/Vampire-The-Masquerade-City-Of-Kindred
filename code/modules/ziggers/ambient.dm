@@ -64,6 +64,12 @@
 	icon_state = "camarilla"
 	ambience_index = AMBIENCE_INTERIOR
 
+/area/vtm/cabinet
+	name = "Prince Cabinet"
+	icon_state = "prince"
+	ambience_index = AMBIENCE_INTERIOR
+	music = /datum/vampiremusic/prince
+
 /area/vtm/clinic
 	name = "Clinic"
 	icon_state = "clinic"
@@ -117,6 +123,7 @@
 /datum/vampiremusic
 	var/length = 30 SECONDS
 	var/sound
+	var/forced = FALSE
 
 /datum/vampiremusic/santamonica
 	length = 304 SECONDS
@@ -138,6 +145,11 @@
 	length = 369 SECONDS
 	sound = 'code/modules/ziggers/chinatown.ogg'
 
+/datum/vampiremusic/prince
+	length = 314 SECONDS
+	sound = 'code/modules/ziggers/clairedelune.ogg'
+	forced = TRUE
+
 /mob/living
 	var/last_vampire_ambience = 0
 	var/wait_for_music = 30
@@ -153,10 +165,15 @@
 	if(istype(get_area(loc), /area/vtm))
 		var/area/vtm/VTM = get_area(loc)
 		if(!VTM.music)
+			client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
 			return
+		var/datum/vampiremusic/VMPMSC = new VTM.music()
+		if(VMPMSC.forced && wait_for_music != VMPMSC.length)
+			client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
+			last_vampire_ambience = 0
+			wait_for_music = 0
 		if(last_vampire_ambience+wait_for_music+10 < world.time)
-			var/datum/vampiremusic/VMPMSC = new VTM.music()
 			wait_for_music = VMPMSC.length
 			client << sound(VMPMSC.sound, 0, 0, CHANNEL_LOBBYMUSIC, 15)
 			last_vampire_ambience = world.time
-			qdel(VMPMSC)
+		qdel(VMPMSC)
