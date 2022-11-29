@@ -580,7 +580,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(istype(get_area(loc), /area/vtm/northbeach))
 		if(!L.client.ambience_playing)
 			L.client.ambience_playing = 1
-			SEND_SOUND(L, sound('code/modules/ziggers/beach.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
+			SEND_SOUND(L, sound('code/modules/ziggers/sounds/beach.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
 	else if(L.client.ambience_playing)
 		L.client.ambience_playing = 0
 		SEND_SOUND(L, sound(null, channel = CHANNEL_BUZZ))

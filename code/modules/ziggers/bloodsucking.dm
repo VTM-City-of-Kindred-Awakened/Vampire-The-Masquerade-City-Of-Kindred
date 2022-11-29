@@ -31,7 +31,7 @@
 	suckbar.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	if(client)
 		client.images += suckbar
-	var/sound/heartbeat = sound('code/modules/ziggers/drinkblood2.ogg', repeat = TRUE)
+	var/sound/heartbeat = sound('code/modules/ziggers/sounds/drinkblood2.ogg', repeat = TRUE)
 	playsound_local(src, heartbeat, 75, 0, channel = CHANNEL_BLOOD, use_reverb = FALSE)
 	mob.Stun(30)
 	if(isnpc(mob))
@@ -72,7 +72,7 @@
 				if(isnpc(mob))
 					var/mob/living/carbon/human/npc/Npc = mob
 					Npc.last_attacker = null
-				SEND_SOUND(src, sound('code/modules/ziggers/feed_failed.ogg', 0, 0, 75))
+				SEND_SOUND(src, sound('code/modules/ziggers/sounds/feed_failed.ogg', 0, 0, 75))
 				to_chat(src, "<span class='warning'>This sad sacrifice for your own pleasure affects something deep in your mind.</span>")
 				AdjustHumanity(src, -1, 3)
 			mob.death()

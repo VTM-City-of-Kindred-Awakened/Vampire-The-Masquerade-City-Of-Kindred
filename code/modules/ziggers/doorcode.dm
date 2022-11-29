@@ -92,9 +92,9 @@
 	var/lock_id = "nothing"
 	var/glass = FALSE
 
-	var/open_sound = 'code/modules/ziggers/door_open.ogg'
-	var/close_sound = 'code/modules/ziggers/door_close.ogg'
-	var/lock_sound = 'code/modules/ziggers/door_locked.ogg'
+	var/open_sound = 'code/modules/ziggers/sounds/door_open.ogg'
+	var/close_sound = 'code/modules/ziggers/sounds/door_close.ogg'
+	var/lock_sound = 'code/modules/ziggers/sounds/door_locked.ogg'
 
 /obj/structure/vampdoor/attack_hand(mob/user)
 	if(lastclicked+5 > world.time)

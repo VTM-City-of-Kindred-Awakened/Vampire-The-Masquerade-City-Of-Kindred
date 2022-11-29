@@ -127,27 +127,27 @@
 
 /datum/vampiremusic/santamonica
 	length = 304 SECONDS
-	sound = 'code/modules/ziggers/santamonica.ogg'
+	sound = 'code/modules/ziggers/sounds/santamonica.ogg'
 
 /datum/vampiremusic/downtown
 	length = 259 SECONDS
-	sound = 'code/modules/ziggers/downtown.ogg'
+	sound = 'code/modules/ziggers/sounds/downtown.ogg'
 
 /datum/vampiremusic/sewer
 	length = 134 SECONDS
-	sound = 'code/modules/ziggers/enterlair.ogg'
+	sound = 'code/modules/ziggers/sounds/enterlair.ogg'
 
 /datum/vampiremusic/hollywood
 	length = 337 SECONDS
-	sound = 'code/modules/ziggers/hollywood.ogg'
+	sound = 'code/modules/ziggers/sounds/hollywood.ogg'
 
 /datum/vampiremusic/chinatown
 	length = 369 SECONDS
-	sound = 'code/modules/ziggers/chinatown.ogg'
+	sound = 'code/modules/ziggers/sounds/chinatown.ogg'
 
 /datum/vampiremusic/prince
 	length = 314 SECONDS
-	sound = 'code/modules/ziggers/clairedelune.ogg'
+	sound = 'code/modules/ziggers/sounds/clairedelune.ogg'
 	forced = TRUE
 
 /mob/living
