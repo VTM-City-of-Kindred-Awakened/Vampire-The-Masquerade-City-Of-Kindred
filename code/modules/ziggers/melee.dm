@@ -77,6 +77,7 @@
 	wound_bonus = 10
 	bare_wound_bonus = 25
 	pixel_w = -8
+	resistance_flags = FIRE_PROOF
 
 /obj/item/melee/vampirearms/baseball
 	name = "baseball bat"
@@ -116,6 +117,7 @@
 	attack_verb_continuous = list("beats", "smacks")
 	attack_verb_simple = list("beat", "smack")
 	w_class = WEIGHT_CLASS_NORMAL
+	resistance_flags = FIRE_PROOF
 
 /obj/item/melee/vampirearms/knife
 	name = "knife"
@@ -131,6 +133,7 @@
 	armour_penetration = 20
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = FIRE_PROOF
 
 /obj/item/melee/vampirearms/chainsaw
 	name = "chainsaw"
@@ -151,6 +154,7 @@
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5
+	resistance_flags = FIRE_PROOF
 	var/on = FALSE
 	var/wielded = FALSE
 
@@ -192,3 +196,52 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
+
+/obj/item/melee/vampirearms/stake
+	name = "stake"
+	desc = "Paralyzes blank-bodies if aimed straight to the heart."
+	icon = 'code/modules/ziggers/weapons.dmi'
+	icon_state = "stake"
+	force = 10
+	wound_bonus = -10
+	throwforce = 10
+	attack_verb_continuous = list("pierces", "cuts")
+	attack_verb_simple = list("pierce", "cut")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	armour_penetration = 50
+	sharpness = SHARP_EDGED
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/melee/vampirearms/stake/attack(mob/living/target, mob/living/user)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		return
+	if(!target.IsParalyzed())
+		visible_message("<span class='warning'>[user] aims [src] straight to the [target]'s heart!</span>", "<span class='warning'>You aim [src] straight to the [target]'s heart!</span>")
+		if(do_after(user, 10, target))
+			user.do_attack_animation(target)
+			visible_message("<span class='warning'>[user] pierces [target]'s torso!</span>", "<span class='warning'>You pierce [target]'s torso!</span>")
+			target.Paralyze(1200)
+			qdel(src)
+
+/obj/item/melee/vampirearms/shovel
+	icon = 'code/modules/ziggers/weapons.dmi'
+	icon_state = "shovel"
+	name = "shovel"
+	desc = "Great weapon against mortal or immortal."
+	force = 15
+	throwforce = 10
+	w_class = WEIGHT_CLASS_BULKY
+	attack_verb_continuous = list("attacks", "chops", "tears", "beats")
+	attack_verb_simple = list("attack", "chop", "tear", "beat")
+	armor = list(MELEE = 25, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	resistance_flags = FIRE_PROOF
+
+/obj/item/melee/vampirearms/shovel/attack(mob/living/target, mob/living/user)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		return
+	if(!target.IsStun() && prob(25))
+		visible_message("<span class='warning'>[user] bonks [src]'s head!</span>", "<span class='warning'>You bonk[target]'s head!</span>")
+		target.Stun(5)
+		target.drop_all_held_items()
