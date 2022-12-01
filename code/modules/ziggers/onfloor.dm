@@ -9,7 +9,7 @@
 
 /obj/item/dropped(mob/M)
 	. = ..()
-	if(onflooricon)
+	if(onflooricon && isturf(src.loc))
 		icon = onflooricon
 		pixel_w = 0
 
