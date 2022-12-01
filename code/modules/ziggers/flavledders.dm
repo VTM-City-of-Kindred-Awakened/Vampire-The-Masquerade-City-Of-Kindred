@@ -1,0 +1,25 @@
+/obj/manholeup
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "ladder"
+	name = "ladder"
+	plane = GAME_PLANE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/manholeup/attack_hand(mob/user)
+	var/turf/destination = get_step_multiz(src, UP)
+	user.forceMove(destination)
+	playsound(src, 'code/modules/ziggers/manhole.ogg', 50, TRUE)
+	..()
+
+/obj/manholedown
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "manhole"
+	name = "manhole"
+	plane = GAME_PLANE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/manholedown/attack_hand(mob/user)
+	var/turf/destination = get_step_multiz(src, DOWN)
+	user.forceMove(destination)
+	playsound(src, 'code/modules/ziggers/manhole.ogg', 50, TRUE)
+	..()

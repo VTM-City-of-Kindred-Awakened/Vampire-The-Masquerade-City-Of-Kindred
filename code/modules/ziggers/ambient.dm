@@ -136,6 +136,7 @@
 /datum/vampiremusic/sewer
 	length = 134 SECONDS
 	sound = 'code/modules/ziggers/enterlair.ogg'
+	forced = TRUE
 
 /datum/vampiremusic/hollywood
 	length = 337 SECONDS
@@ -153,6 +154,7 @@
 /mob/living
 	var/last_vampire_ambience = 0
 	var/wait_for_music = 30
+	var/wasforced
 
 /mob/living/proc/handle_vampire_music()
 	if(!client)
@@ -172,6 +174,14 @@
 			client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
 			last_vampire_ambience = 0
 			wait_for_music = 0
+			wasforced = TRUE
+
+		else if(wasforced && wait_for_music != VMPMSC.length)
+			client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
+			last_vampire_ambience = 0
+			wait_for_music = 0
+			wasforced = FALSE
+
 		if(last_vampire_ambience+wait_for_music+10 < world.time)
 			wait_for_music = VMPMSC.length
 			client << sound(VMPMSC.sound, 0, 0, CHANNEL_LOBBYMUSIC, 15)
