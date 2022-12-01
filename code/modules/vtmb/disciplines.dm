@@ -7,7 +7,7 @@
 	var/delay = 5
 	var/violates_masquerade = FALSE
 	var/level = 1
-	var/activate_sound = 'code/modules/ziggers/bloodhealing.ogg'
+	var/activate_sound = 'code/modules/ziggers/sounds/bloodhealing.ogg'
 	var/leveldelay = TRUE
 
 /datum/discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
@@ -67,7 +67,7 @@
 	cost = 2
 	ranged = TRUE
 	violates_masquerade = TRUE
-	activate_sound = 'code/modules/ziggers/wolves.ogg'
+	activate_sound = 'code/modules/ziggers/sounds/wolves.ogg'
 
 /obj/effect/spectral_wolf
 	name = "Spectral Wolf"
@@ -96,7 +96,7 @@
 	spawn(10)
 		target.Knockdown(20)
 		W.forceMove(target.loc)
-		playsound(W, 'code/modules/ziggers/volk.ogg', 80, TRUE)
+		playsound(W, 'code/modules/ziggers/sounds/volk.ogg', 80, TRUE)
 		target.apply_damage(20*level, BRUTE, BODY_ZONE_CHEST)
 		target.visible_message("<span class='warning'><b>[W] bites [target]!</b></span>", "<span class='warning'><b>[W] bites you!</b></span>")
 		spawn(20)
@@ -112,7 +112,7 @@
 
 /datum/discipline/auspex/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/sound/auspexbeat = sound('code/modules/ziggers/auspex.ogg', repeat = TRUE)
+	var/sound/auspexbeat = sound('code/modules/ziggers/sounds/auspex.ogg', repeat = TRUE)
 	caster.playsound_local(caster, auspexbeat, 75, 0, channel = CHANNEL_DISCIPLINES, use_reverb = FALSE)
 	ADD_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
 	caster.update_sight()
@@ -120,7 +120,7 @@
 	spawn(delay*level)
 		if(caster)
 			caster.stop_sound_channel(CHANNEL_DISCIPLINES)
-			playsound(caster, 'code/modules/ziggers/auspex_deactivate.ogg', 50, FALSE)
+			playsound(caster, 'code/modules/ziggers/sounds/auspex_deactivate.ogg', 50, FALSE)
 			REMOVE_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
 			caster.remove_client_colour(/datum/client_colour/glass_colour/blue)
 			caster.update_sight()
@@ -133,7 +133,7 @@
 	ranged = FALSE
 	delay = 50
 	violates_masquerade = TRUE
-	activate_sound = 'code/modules/ziggers/celerity_activate.ogg'
+	activate_sound = 'code/modules/ziggers/sounds/celerity_activate.ogg'
 
 /obj/effect/celerity
 	name = "Damn"
@@ -163,7 +163,7 @@
 	caster.celerity_visual = TRUE
 	spawn(delay*level)
 		if(caster)
-			playsound(caster, 'code/modules/ziggers/celerity_deactivate.ogg', 50, FALSE)
+			playsound(caster, 'code/modules/ziggers/sounds/celerity_deactivate.ogg', 50, FALSE)
 			caster.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
 			caster.celerity_visual = FALSE
 
@@ -174,7 +174,7 @@
 	cost = 2
 	ranged = TRUE
 	delay = 50
-	activate_sound = 'code/modules/ziggers/dominate.ogg'
+	activate_sound = 'code/modules/ziggers/sounds/dominate.ogg'
 
 /datum/discipline/dominate/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
@@ -206,14 +206,14 @@
 			if(iskindred(target))
 				target.Knockdown(10*level)
 				target.visible_message("<span class='warning'><b>[target] tries to wring \his neck!</b></span>", "<span class='warning'><b>You try to wring your own neck!</b></span>")
-				playsound(target, 'code/modules/ziggers/suicide.ogg', 80, TRUE)
+				playsound(target, 'code/modules/ziggers/sounds/suicide.ogg', 80, TRUE)
 				target.apply_damage(10*level, BRUTE, BODY_ZONE_HEAD)
 			else
 				target.drop_all_held_items()
 				target.Stun(10)
 				spawn(10)
 					target.visible_message("<span class='warning'><b>[target] wrings \his neck!</b></span>", "<span class='warning'><b>You wring your own neck!</b></span>")
-					playsound(target, 'code/modules/ziggers/suicide.ogg', 80, TRUE)
+					playsound(target, 'code/modules/ziggers/sounds/suicide.ogg', 80, TRUE)
 					target.death()
 	spawn(20)
 		if(TRGT)
@@ -226,7 +226,7 @@
 	cost = 2
 	ranged = FALSE
 	delay = 100
-	activate_sound = 'code/modules/ziggers/insanity.ogg'
+	activate_sound = 'code/modules/ziggers/sounds/insanity.ogg'
 
 /proc/dancefirst(mob/living/M)
 	var/matrix/initial_matrix = matrix(M.transform)
@@ -331,7 +331,7 @@
 	cost = 1
 	ranged = FALSE
 	delay = 50
-	activate_sound = 'code/modules/ziggers/potence_activate.ogg'
+	activate_sound = 'code/modules/ziggers/sounds/potence_activate.ogg'
 
 /datum/discipline/potence/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
@@ -340,7 +340,7 @@
 	caster.dna.species.meleemod += 1
 	spawn(delay*level)
 		if(caster)
-			playsound(caster, 'code/modules/ziggers/potence_deactivate.ogg', 50, FALSE)
+			playsound(caster, 'code/modules/ziggers/sounds/potence_deactivate.ogg', 50, FALSE)
 			caster.dna.species.punchdamagelow -= 10
 			caster.dna.species.punchdamagehigh -= 10
 			caster.dna.species.meleemod -= 1
@@ -352,7 +352,7 @@
 	cost = 1
 	ranged = FALSE
 	delay = 50
-	activate_sound = 'code/modules/ziggers/fortitude_activate.ogg'
+	activate_sound = 'code/modules/ziggers/sounds/fortitude_activate.ogg'
 
 /datum/discipline/fortitude/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
@@ -361,7 +361,7 @@
 	caster.physiology.armor.bullet += 25*mod
 	spawn(delay*level)
 		if(caster)
-			playsound(caster, 'code/modules/ziggers/fortitude_deactivate.ogg', 50, FALSE)
+			playsound(caster, 'code/modules/ziggers/sounds/fortitude_deactivate.ogg', 50, FALSE)
 			caster.physiology.armor.melee -= 25*mod
 			caster.physiology.armor.bullet -= 25*mod
 
@@ -372,7 +372,7 @@
 	cost = 1
 	ranged = FALSE
 	delay = 100
-	activate_sound = 'code/modules/ziggers/obfuscate_activate.ogg'
+	activate_sound = 'code/modules/ziggers/sounds/obfuscate_activate.ogg'
 
 /datum/discipline/obfuscate/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
@@ -390,7 +390,7 @@
 			caster.alpha = 10
 	spawn(delay*level)
 		if(caster)
-			playsound(caster, 'code/modules/ziggers/obfuscate_deactivate.ogg', 50, FALSE)
+			playsound(caster, 'code/modules/ziggers/sounds/obfuscate_deactivate.ogg', 50, FALSE)
 			caster.alpha = 255
 
 /datum/discipline/presence
@@ -400,7 +400,7 @@
 	cost = 1
 	ranged = FALSE
 	delay = 50
-	activate_sound = 'code/modules/ziggers/presence_activate.ogg'
+	activate_sound = 'code/modules/ziggers/sounds/presence_activate.ogg'
 	leveldelay = FALSE
 
 /datum/discipline/presence/activate(mob/living/target, mob/living/carbon/human/caster)
@@ -419,7 +419,7 @@
 						H.dna.species.brutemod -= mod
 						H.dna.species.burnmod -= mod
 	if(caster)
-		playsound(caster, 'code/modules/ziggers/presence_deactivate.ogg', 50, FALSE)
+		playsound(caster, 'code/modules/ziggers/sounds/presence_deactivate.ogg', 50, FALSE)
 
 /datum/discipline/protean
 	name = "Protean"
@@ -429,7 +429,7 @@
 	ranged = FALSE
 	delay = 100
 	violates_masquerade = TRUE
-	activate_sound = 'code/modules/ziggers/protean_activate.ogg'
+	activate_sound = 'code/modules/ziggers/sounds/protean_activate.ogg'
 
 /datum/movespeed_modifier/protean2
 	multiplicative_slowdown = -0.15
@@ -455,7 +455,7 @@
 			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay*level)
 				if(caster)
-					playsound(caster, 'code/modules/ziggers/protean_deactivate.ogg', 50, FALSE)
+					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
 					caster.dna.species.punchdamagelow -= 10
 					caster.dna.species.punchdamagehigh -= 10
@@ -471,7 +471,7 @@
 			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay*level)
 				if(caster)
-					playsound(caster, 'code/modules/ziggers/protean_deactivate.ogg', 50, FALSE)
+					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
 					caster.dna.species.punchdamagelow -= 10
 					caster.dna.species.punchdamagehigh -= 10
@@ -488,7 +488,7 @@
 			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay*level)
 				if(caster)
-					playsound(caster, 'code/modules/ziggers/protean_deactivate.ogg', 50, FALSE)
+					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
 					caster.dna.species.punchdamagelow -= 20
 					caster.dna.species.punchdamagehigh -= 20
@@ -505,7 +505,7 @@
 			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay*level)
 				if(caster)
-					playsound(caster, 'code/modules/ziggers/protean_deactivate.ogg', 50, FALSE)
+					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
 					caster.dna.species.punchdamagelow -= 20
 					caster.dna.species.punchdamagehigh -= 20
@@ -549,7 +549,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 10
 	damage_type = BURN
-	hitsound = 'code/modules/ziggers/drinkblood1.ogg'
+	hitsound = 'code/modules/ziggers/sounds/drinkblood1.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 	flag = LASER
 	light_system = MOVABLE_LIGHT
@@ -600,7 +600,7 @@
 	ranged = TRUE
 	delay = 10
 	violates_masquerade = TRUE
-	activate_sound = 'code/modules/ziggers/thaum.ogg'
+	activate_sound = 'code/modules/ziggers/sounds/thaum.ogg'
 
 /datum/discipline/thaumaturgy/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
@@ -650,7 +650,7 @@
 	cost = 2
 	ranged = FALSE
 	delay = 50
-	activate_sound = 'code/modules/ziggers/thaum.ogg'
+	activate_sound = 'code/modules/ziggers/sounds/thaum.ogg'
 
 /datum/discipline/bloodshield/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
@@ -661,7 +661,7 @@
 //	caster.color = "#ff0000"
 	spawn(delay*level)
 		if(caster)
-			playsound(caster, 'code/modules/ziggers/thaum.ogg', 50, FALSE)
+			playsound(caster, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
 			caster.physiology.armor.melee -= 25*mod
 			caster.physiology.armor.bullet -= 25*mod
 			caster.color = initial(caster.color)

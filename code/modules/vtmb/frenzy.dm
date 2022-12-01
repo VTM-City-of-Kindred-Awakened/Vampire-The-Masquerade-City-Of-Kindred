@@ -21,7 +21,7 @@
 /mob/living/carbon/human/proc/rollfrenzy()
 	if(clane && client)
 		to_chat(src, "I need <span class='danger'><b>BLOOD</b></span>. The <span class='danger'><b>BEAST</b></span> is calling. Rolling...")
-		SEND_SOUND(src, sound('code/modules/ziggers/bloodneed.ogg', 0, 0, 50))
+		SEND_SOUND(src, sound('code/modules/ziggers/sounds/bloodneed.ogg', 0, 0, 50))
 		var/check = vampireroll(max(1, round(humanity/2)), frenzy_hardness, src)
 		switch(check)
 			if(DICE_FAILURE)
@@ -38,7 +38,7 @@
 				frenzy_hardness = min(10, frenzy_hardness+1)
 
 /mob/living/carbon/human/proc/enter_frenzymod()
-	SEND_SOUND(src, sound('code/modules/ziggers/frenzy.ogg', 0, 0, 50))
+	SEND_SOUND(src, sound('code/modules/ziggers/sounds/frenzy.ogg', 0, 0, 50))
 	in_frenzy = TRUE
 	add_client_colour(/datum/client_colour/glass_colour/red)
 	GLOB.frenzy_list += src
@@ -82,7 +82,7 @@
 					BT.add_bite_animation()
 				if(CheckEyewitness(L, src, 7, FALSE))
 					AdjustMasquerade(src, -1)
-				playsound(src, 'code/modules/ziggers/drinkblood1.ogg', 50, TRUE)
+				playsound(src, 'code/modules/ziggers/sounds/drinkblood1.ogg', 50, TRUE)
 				L.visible_message("<span class='warning'><b>[src] bites [L]'s neck!</b></span>", "<span class='warning'><b>[src] bites your neck!</b></span>")
 				face_atom(L)
 				drinksomeblood(L)

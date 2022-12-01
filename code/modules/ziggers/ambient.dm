@@ -127,28 +127,28 @@
 
 /datum/vampiremusic/santamonica
 	length = 304 SECONDS
-	sound = 'code/modules/ziggers/santamonica.ogg'
+	sound = 'code/modules/ziggers/sounds/santamonica.ogg'
 
 /datum/vampiremusic/downtown
 	length = 259 SECONDS
-	sound = 'code/modules/ziggers/downtown.ogg'
+	sound = 'code/modules/ziggers/sounds/downtown.ogg'
 
 /datum/vampiremusic/sewer
 	length = 134 SECONDS
-	sound = 'code/modules/ziggers/enterlair.ogg'
+	sound = 'code/modules/ziggers/sounds/enterlair.ogg'
 	forced = TRUE
 
 /datum/vampiremusic/hollywood
 	length = 337 SECONDS
-	sound = 'code/modules/ziggers/hollywood.ogg'
+	sound = 'code/modules/ziggers/sounds/hollywood.ogg'
 
 /datum/vampiremusic/chinatown
 	length = 369 SECONDS
-	sound = 'code/modules/ziggers/chinatown.ogg'
+	sound = 'code/modules/ziggers/sounds/chinatown.ogg'
 
 /datum/vampiremusic/prince
 	length = 314 SECONDS
-	sound = 'code/modules/ziggers/clairedelune.ogg'
+	sound = 'code/modules/ziggers/sounds/clairedelune.ogg'
 	forced = TRUE
 
 /mob/living
@@ -168,6 +168,8 @@
 		var/area/vtm/VTM = get_area(loc)
 		if(!VTM.music)
 			client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
+			last_vampire_ambience = 0
+			wait_for_music = 0
 			return
 		var/datum/vampiremusic/VMPMSC = new VTM.music()
 		if(VMPMSC.forced && wait_for_music != VMPMSC.length)

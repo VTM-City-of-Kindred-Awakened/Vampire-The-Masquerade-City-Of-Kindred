@@ -101,7 +101,7 @@
 	var/talking = FALSE
 	var/choosed_number = ""
 	var/last_call = 0
-	var/call_sound = 'code/modules/ziggers/call.ogg'
+	var/call_sound = 'code/modules/ziggers/sounds/call.ogg'
 
 /obj/item/vamp/phone/proc/add_important_contacts()
 	var/mob/living/L
@@ -276,11 +276,11 @@
 	if(last_call+100 <= world.time && !talking)
 		last_call = 0
 		if(online)
-			playsound(src, 'code/modules/ziggers/phonestop.ogg', 25, FALSE)
+			playsound(src, 'code/modules/ziggers/sounds/phonestop.ogg', 25, FALSE)
 			online.online = null
 			online = null
 	if(!talking && online)
-		playsound(src, 'code/modules/ziggers/phone.ogg', 10, FALSE)
+		playsound(src, 'code/modules/ziggers/sounds/phone.ogg', 10, FALSE)
 		playsound(online, online.call_sound, 25, FALSE)
 		addtimer(CALLBACK(src, .proc/Recall, online, usar), 20)
 //	usar << browse(null, "window=phone")
@@ -298,7 +298,7 @@
 					if(online)
 						online.talking = FALSE
 				if(online)
-					playsound(online, 'code/modules/ziggers/phonestop.ogg', 25, FALSE)
+					playsound(online, 'code/modules/ziggers/sounds/phonestop.ogg', 25, FALSE)
 					online.online = null
 					online = null
 			if("accept")
@@ -312,7 +312,7 @@
 			if("decline")
 				talking = FALSE
 				if(online)
-					playsound(online, 'code/modules/ziggers/phonestop.ogg', 25, FALSE)
+					playsound(online, 'code/modules/ziggers/sounds/phonestop.ogg', 25, FALSE)
 					online.online = null
 					online.talking = FALSE
 					online = null
@@ -332,10 +332,10 @@
 						online.OpenMenu(L)
 				else
 					if(choosed_number == "#111")
-						call_sound = 'code/modules/ziggers/call.ogg'
+						call_sound = 'code/modules/ziggers/sounds/call.ogg'
 						to_chat(usr, "<span class='notice'>Settings are now reset to default.</span>")
 					else if(choosed_number == "#228")
-						call_sound = 'code/modules/ziggers/nokia.ogg'
+						call_sound = 'code/modules/ziggers/sounds/nokia.ogg'
 						to_chat(usr, "<span class='notice'>Code activated.</span>")
 					else if(choosed_number == "#666")
 						call_sound = 'sound/voice/human/malescream_6.ogg'
@@ -425,7 +425,7 @@
 				VOIC.name = voice_saying
 				VOIC.speech_span = spchspn
 				VOIC.say("[message]")
-				playsound(online, 'code/modules/ziggers/phonetalk.ogg', 50, FALSE)
+				playsound(online, 'code/modules/ziggers/sounds/phonetalk.ogg', 50, FALSE)
 				qdel(VOIC)
 
 /obj/item/vamp/phone/street

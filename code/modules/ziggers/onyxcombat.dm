@@ -25,8 +25,8 @@
 				client.prefs.save_preferences()
 		fire_stacks += 5
 		IgniteMob()
-		playsound(src, 'code/modules/ziggers/burning_death.ogg', 80, TRUE)
-		SEND_SOUND(src, sound('code/modules/ziggers/final_death.ogg', 0, 0, 50))
+		playsound(src, 'code/modules/ziggers/sounds/burning_death.ogg', 80, TRUE)
+		SEND_SOUND(src, sound('code/modules/ziggers/sounds/final_death.ogg', 0, 0, 50))
 		lying_fix()
 		dir = SOUTH
 		spawn(5)
@@ -82,7 +82,7 @@
 			user.apply_damage(10, STAMINA)
 		user.do_attack_animation(src)
 		visible_message("<span class='danger'>[src] parries the attack!</span>", "<span class='danger'>You parry the attack!</span>")
-		playsound(src, 'code/modules/ziggers/parried.ogg', 70, TRUE)
+		playsound(src, 'code/modules/ziggers/sounds/parried.ogg', 70, TRUE)
 		clear_parrying()
 		return
 	if(blocking)
@@ -141,7 +141,7 @@
 		if(blocking)
 			SwitchBlocking()
 		visible_message("<span class='warning'>[src] prepares to parry [M]'s next attack.</span>", "<span class='warning'>You prepare to parry [M]'s next attack.</span>")
-		playsound(src, 'code/modules/ziggers/parry.ogg', 70, TRUE)
+		playsound(src, 'code/modules/ziggers/sounds/parry.ogg', 70, TRUE)
 		remove_overlay(FIGHT_LAYER)
 		var/mutable_appearance/parry_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "parry", -FIGHT_LAYER)
 		overlays_standing[FIGHT_LAYER] = parry_overlay
@@ -213,7 +213,7 @@
 	bloodquality = BLOOD_QUALITY_NORMAL
 
 /atom/movable/screen/drinkblood/Click()
-	SEND_SOUND(usr, sound('code/modules/ziggers/highlight.ogg', 0, 0, 50))
+	SEND_SOUND(usr, sound('code/modules/ziggers/sounds/highlight.ogg', 0, 0, 50))
 	if(ishuman(usr))
 		var/mob/living/carbon/human/BD = usr
 		BD.update_blood_hud()
@@ -228,17 +228,17 @@
 //			return
 		if(BD.grab_state > GRAB_PASSIVE)
 			if(iskindred(BD.pulling))
-				SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
+				SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 				to_chat(BD, "<span class='warning'>You can't drink <b>BLOOD</b> of your own kind. <b>THIS IS INSANE!</b></span>")
 				return
 			if(ishuman(BD.pulling))
 				var/mob/living/carbon/human/PB = BD.pulling
 				if(PB.stat == 4)
-					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
+					SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
 					return
 				if(PB.bloodamount <= 0)
-					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
+					SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
 				PB.add_bite_animation()
@@ -246,16 +246,16 @@
 			if(isliving(BD.pulling))
 				var/mob/living/LV = BD.pulling
 				if(LV.bloodamount <= 0)
-					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
+					SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
 				if(LV.stat == 4)
-					SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
+					SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
 					return
 				var/skipface = (BD.wear_mask && (BD.wear_mask.flags_inv & HIDEFACE)) || (BD.head && (BD.head.flags_inv & HIDEFACE))
 				if(!skipface)
-					playsound(BD, 'code/modules/ziggers/drinkblood1.ogg', 50, TRUE)
+					playsound(BD, 'code/modules/ziggers/sounds/drinkblood1.ogg', 50, TRUE)
 					LV.visible_message("<span class='warning'><b>[BD] bites [LV]'s neck!</b></span>", "<span class='warning'><b>[BD] bites your neck!</b></span>")
 					if(CheckEyewitness(LV, BD, 7, FALSE))
 						AdjustMasquerade(BD, -1)
@@ -270,7 +270,7 @@
 	plane = HUD_PLANE
 
 /atom/movable/screen/bloodheal/Click()
-	SEND_SOUND(usr, sound('code/modules/ziggers/highlight.ogg', 0, 0, 50))
+	SEND_SOUND(usr, sound('code/modules/ziggers/sounds/highlight.ogg', 0, 0, 50))
 	if(ishuman(usr))
 		var/mob/living/carbon/human/BD = usr
 		if(world.time < BD.last_bloodheal_use+30)
@@ -279,7 +279,7 @@
 			return
 		BD.last_bloodheal_click = world.time
 		if(BD.bloodpool >= 1)
-			playsound(usr, 'code/modules/ziggers/bloodhealing.ogg', 50, FALSE)
+			playsound(usr, 'code/modules/ziggers/sounds/bloodhealing.ogg', 50, FALSE)
 			BD.last_bloodheal_use = world.time
 			BD.bloodpool -= 1
 			icon_state = "[initial(icon_state)]-on"
@@ -293,7 +293,7 @@
 			BD.update_damage_overlays()
 			BD.update_health_hud()
 		else
-			SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
+			SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to heal your wounds.</span>")
 		BD.update_blood_hud()
 	spawn(15)
@@ -307,7 +307,7 @@
 	plane = HUD_PLANE
 
 /atom/movable/screen/bloodpower/Click()
-	SEND_SOUND(usr, sound('code/modules/ziggers/highlight.ogg', 0, 0, 50))
+	SEND_SOUND(usr, sound('code/modules/ziggers/sounds/highlight.ogg', 0, 0, 50))
 	if(ishuman(usr))
 		var/mob/living/carbon/human/BD = usr
 		if(world.time < BD.last_bloodpower_use+110)
@@ -316,7 +316,7 @@
 			return
 		BD.last_bloodpower_click = world.time
 		if(BD.bloodpool >= 3)
-			playsound(usr, 'code/modules/ziggers/bloodhealing.ogg', 50, FALSE)
+			playsound(usr, 'code/modules/ziggers/sounds/bloodhealing.ogg', 50, FALSE)
 			BD.last_bloodpower_use = world.time
 			BD.bloodpool -= 3
 			icon_state = "[initial(icon_state)]-on"
@@ -329,7 +329,7 @@
 			BD.update_blood_hud()
 			addtimer(CALLBACK(src, .proc/end_bloodpower), 100)
 		else
-			SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
+			SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to become more powerful.</span>")
 
 /atom/movable/screen/bloodpower/proc/end_bloodpower()
@@ -425,7 +425,7 @@
 	var/dadelay = dscpln.delay
 	if(dscpln.leveldelay)
 		dadelay = dscpln.delay*dscpln.level
-	SEND_SOUND(usr, sound('code/modules/ziggers/highlight.ogg', 0, 0, 50))
+	SEND_SOUND(usr, sound('code/modules/ziggers/sounds/highlight.ogg', 0, 0, 50))
 	if(ishuman(usr))
 		var/mob/living/carbon/human/BD = usr
 		if(world.time < last_discipline_click+5)
@@ -439,7 +439,7 @@
 			icon_state = main_state
 			return
 		if(BD.bloodpool < dscpln.cost)
-			SEND_SOUND(BD, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
+			SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to use this discipline.</span>")
 			return
 		if(dscpln.ranged)
@@ -463,7 +463,7 @@
 	if(cstr.bloodpool < dscpln.cost)
 		icon_state = main_state
 		active = FALSE
-		SEND_SOUND(cstr, sound('code/modules/ziggers/need_blood.ogg', 0, 0, 75))
+		SEND_SOUND(cstr, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 		to_chat(cstr, "<span class='warning'>You don't have enough <b>BLOOD</b> to use this discipline.</span>")
 		return
 	dscpln.activate(trgt, cstr)
