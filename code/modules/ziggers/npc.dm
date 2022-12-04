@@ -658,3 +658,17 @@
 /mob/living/carbon/human/npc/usual/Initialize()
 	..()
 	AssignSocialRole(/datum/socialrole/usual)
+
+/mob/living/carbon/human/npc/proc/ghoulificate(mob/owner)
+	set waitfor = FALSE
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]`s Ghoul?", null, null, null, 50, src)
+	if(LAZYLEN(candidates))
+		var/mob/dead/observer/C = pick(candidates)
+		src.key = C.key
+		to_chat(src, "ZXC 1000-7 you are dead inside")
+
+/mob/living/carbon/human/npc/AltClick(mob/user)
+	. = ..()
+	if(iskindred(user))
+		to_chat(user, "<span class='warning'>I give some <b>blood</b> to this mortal</span>")
+		src.ghoulificate(user)

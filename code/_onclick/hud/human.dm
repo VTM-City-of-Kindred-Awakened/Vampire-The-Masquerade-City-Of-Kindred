@@ -316,27 +316,27 @@
 	healths.icon = 'code/modules/ziggers/32x48.dmi'
 	healths.hud = src
 	infodisplay += healths
+	if(iskindred(owner))
+		blood_icon = new /atom/movable/screen/blood()
+//		blood_icon.icon = 'code/modules/ziggers/vamphud.dmi'
+		blood_icon.screen_loc = ui_bloodpool
+		blood_icon.hud = src
+		infodisplay += blood_icon
 
-	blood_icon = new /atom/movable/screen/blood()
-//	blood_icon.icon = 'code/modules/ziggers/vamphud.dmi'
-	blood_icon.screen_loc = ui_bloodpool
-	blood_icon.hud = src
-	infodisplay += blood_icon
+		drinkblood_icon = new /atom/movable/screen/drinkblood()
+		drinkblood_icon.screen_loc = ui_drinkblood
+		drinkblood_icon.hud = src
+		static_inventory += drinkblood_icon
 
-	drinkblood_icon = new /atom/movable/screen/drinkblood()
-	drinkblood_icon.screen_loc = ui_drinkblood
-	drinkblood_icon.hud = src
-	static_inventory += drinkblood_icon
+		bloodheal_icon = new /atom/movable/screen/bloodheal()
+		bloodheal_icon.screen_loc = ui_bloodheal
+		bloodheal_icon.hud = src
+		static_inventory += bloodheal_icon
 
-	bloodheal_icon = new /atom/movable/screen/bloodheal()
-	bloodheal_icon.screen_loc = ui_bloodheal
-	bloodheal_icon.hud = src
-	static_inventory += bloodheal_icon
-
-	bloodpower_icon = new /atom/movable/screen/bloodpower()
-	bloodpower_icon.screen_loc = ui_bloodpower
-	bloodpower_icon.hud = src
-	static_inventory += bloodpower_icon
+		bloodpower_icon = new /atom/movable/screen/bloodpower()
+		bloodpower_icon.screen_loc = ui_bloodpower
+		bloodpower_icon.hud = src
+		static_inventory += bloodpower_icon
 
 //	if(character.dna.species.id == "kindred")
 	discipline1_icon = new /atom/movable/screen/disciplines()
