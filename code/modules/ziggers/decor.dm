@@ -128,6 +128,9 @@
 	icon_state = "civ"
 	number_of_lamps = 5
 
+/obj/structure/lamppost/sidewalk/chinese
+	icon_state = "chinese"
+
 /obj/structure/trafficlight
 	name = "traffic light"
 	desc = "Shows when road is free or not."
@@ -267,6 +270,50 @@
 /obj/structure/anarchsign/Initialize()
 	..()
 	set_light(2, 1, "#ffffff")
+
+/obj/structure/chinesesign
+	name = "sign"
+	desc = "吸阴茎同性恋."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "chinese1"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+
+/obj/structure/chinesesign/alt
+	icon_state = "chinese2"
+
+/obj/structure/chinesesign/alt/alt
+	icon_state = "chinese3"
+
+/obj/structure/arc
+	name = "chinatown arc"
+	desc = "Cool chinese architecture."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "ark1"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+
+/obj/structure/arc/add
+	icon_state = "ark2"
+
+/obj/structure/trad
+	name = "traditional lamp"
+	desc = "Cool chinese lamp."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "trad"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+
+/obj/structure/vampipe
+	name = "pipes"
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "piping1"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
 
 /obj/structure/hydrant
 	name = "hydrant"
