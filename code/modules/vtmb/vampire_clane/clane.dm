@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 	var/desc = "Ну описание клана"
 	var/list/clane_disciplines = list() //датумы дисциплин
 	var/datum/outfit/clane_outfit
-	var/curse = "МОРЛОК ТЫ ГАНДОН ПИДОРАС УБИВАЕШЬ НАС БЕЗ ПРИЧИНЫ ЛИШЬ ПОТОМУ ЧТО МЫ ХОХЛЫ"
+	var/curse = "МОРЛОК ТЫ ГАНДОН ПИДОРАС УБИВАЕШЬ НАС БЕЗ ПРИЧИНЫ ЛИШЬ ПОТОМУ ЧТО МЫ КАИТИФФЫ"
 	var/list/allowed_jobs = list()
 	var/list/denied_jobs = list()
 	var/clane_curse //Здесь должен быть сигнал

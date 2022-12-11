@@ -18,6 +18,7 @@
 /// The caliber used by the Nanotrasen Saber SMG, and Type U3 Uzi. Also used as the default caliber for pistols but only the stechkin APS machine pistol doesn't override it.
 #define CALIBER_9MM			"9mm"
 /// The caliber used as the default for ballistic guns. Only not overridden for the [surplus rifle][/obj/item/gun/ballistic/automatic/surplus].
+#define CALIBER_44			".44"
 #define CALIBER_10MM		"10mm"
 /// The caliber used by most revolver variants.
 #define CALIBER_357			".357"

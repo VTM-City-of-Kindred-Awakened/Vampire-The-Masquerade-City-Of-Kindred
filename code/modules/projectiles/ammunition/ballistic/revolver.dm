@@ -1,9 +1,19 @@
 // .357 (Syndie Revolver)
 
 /obj/item/ammo_casing/a357
-	name = ".357 bullet casing"
-	desc = "A .357 bullet casing."
+	name = ".44 bullet casing"
+	desc = "A .44 bullet casing."
+	icon = 'code/modules/ziggers/ammo.dmi'
+	icon_state = "44"
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	onflooricon_state = "44-1"
 	caliber = CALIBER_357
+	projectile_type = /obj/projectile/bullet/a357
+
+/obj/item/ammo_casing/a357/c44
+	name = ".44 bullet casing"
+	desc = "A .44 bullet casing."
+	caliber = CALIBER_44
 	projectile_type = /obj/projectile/bullet/a357
 
 /obj/item/ammo_casing/a357/match

@@ -72,3 +72,10 @@
 
 /obj/item/ammo_casing/vampire/v9mm/five
 	ammount = 5
+
+/obj/item/ammo_casing/vampire/c44
+	name = ".44 bullet casing"
+	desc = "A .44 bullet casing."
+	caliber = CALIBER_44
+	projectile_type = /obj/item/ammo_casing/a357
+	base_iconstate = "44"
