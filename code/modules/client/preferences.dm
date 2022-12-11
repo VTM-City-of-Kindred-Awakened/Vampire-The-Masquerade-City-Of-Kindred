@@ -142,6 +142,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //Поколение
 	var/generation = 13
 	var/generation_bonus = 0
+	var/datum/archetype/archtype
 //maskarad
 	var/masquerade = 5
 
