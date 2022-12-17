@@ -193,6 +193,21 @@
 	..()
 	icon_state = "hanger[rand(1, 4)]"
 
+/obj/structure/foodrack
+	name = "food rack"
+	desc = "Have some food."
+	icon = 'code/modules/ziggers/64x64.dmi'
+	icon_state = "rack2"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	density = TRUE
+	pixel_w = -16
+
+/obj/structure/foodrack/Initialize()
+	..()
+	icon_state = "rack[rand(1, 5)]"
+
 /obj/structure/trashcan
 	name = "trash can"
 	desc = "Holds garbage inside."

@@ -302,6 +302,19 @@
 	icon = 'code/modules/ziggers/tiles.dmi'
 	icon_state = "stock"
 
+/turf/open/floor/plating/sidewalkalt
+	gender = PLURAL
+	name = "sidewalk"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "sidewalk_alt"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
 /turf/open/floor/plating/sidewalk
 	gender = PLURAL
 	name = "sidewalk"

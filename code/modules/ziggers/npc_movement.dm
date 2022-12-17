@@ -10,6 +10,10 @@
 	..()
 	directionwalk = dir
 
+/obj/effect/landmark/npcwall
+	name = "NPC Wall"
+	icon_state = "x"
+
 /mob/living/carbon/human/npc/Initialize()
 	..()
 	GLOB.npc_list += src
@@ -52,6 +56,8 @@
 			return location
 		for(var/atom/A in location)
 			if(A.density && !ishuman(A) && !istype(A, /obj/structure/lamppost))
+				return location
+			if(istype(A, /obj/effect/landmark/npcwall))
 				return location
 			if(isnpcbeacon(A) && prob(50))
 //				var/opposite_dir = turn(direction, 180)				Nado

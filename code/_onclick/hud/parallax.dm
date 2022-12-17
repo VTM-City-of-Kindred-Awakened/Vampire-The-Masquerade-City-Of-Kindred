@@ -53,8 +53,8 @@
 			pref = PARALLAX_HIGH
 		switch(C.prefs.parallax)
 			if (PARALLAX_INSANE)
-				C.parallax_throttle = FALSE
-				C.parallax_layers_max = 5
+				C.parallax_throttle = PARALLAX_DELAY_MED
+				C.parallax_layers_max = 3
 				return TRUE
 
 			if (PARALLAX_MED)
@@ -63,16 +63,18 @@
 				return TRUE
 
 			if (PARALLAX_LOW)
-				C.parallax_throttle = PARALLAX_DELAY_LOW
-				C.parallax_layers_max = 1
+				C.parallax_throttle = PARALLAX_DELAY_MED
+				C.parallax_layers_max = 3
 				return TRUE
 
 			if (PARALLAX_DISABLE)
-				return FALSE
+				C.parallax_throttle = PARALLAX_DELAY_MED
+				C.parallax_layers_max = 3
+				return TRUE
 
 	//This is high parallax.
-	C.parallax_throttle = PARALLAX_DELAY_DEFAULT
-	C.parallax_layers_max = 4
+	C.parallax_throttle = PARALLAX_DELAY_MED
+	C.parallax_layers_max = 3
 	return TRUE
 
 /datum/hud/proc/update_parallax_pref(mob/viewmob)
