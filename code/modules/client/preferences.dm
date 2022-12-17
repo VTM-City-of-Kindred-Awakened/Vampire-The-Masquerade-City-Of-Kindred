@@ -142,7 +142,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //Поколение
 	var/generation = 13
 	var/generation_bonus = 0
-	var/datum/archetype/archtype
+	var/datum/archetype/player_archetype
 //maskarad
 	var/masquerade = 5
 
@@ -315,6 +315,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Clane/Bloodline:</b> <a href='?_src_=prefs;preference=clane;task=input'>[clane.name]</a><BR>"
 				dat += "<b>Description:</b> [clane.desc]<BR>"
 				dat += "<b>Curse:</b> [clane.curse]<BR>"
+				dat += "<b>Archetype:</b> <a href='?_src_=prefs;preference=archetype;task=input'>[player_archetype.name]</a><BR>"
+				dat += "[player_archetype.desc]<BR>"
 				dat += "<h2>[make_font_cool("DISCIPLINES")]</h2>"
 				dat += "Experience rewarded: [exper]/1440<BR>"
 				if(length(clane.clane_disciplines) >= 1)
@@ -1614,7 +1616,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 						else
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
-
+				if("archetype")
+					var/datum/archetype/new_archetype = input(user, "Choose archetype", "EBALOVKA") as null|anything in subtypesof(/datum/archetype)
+					if(new_archetype)
+						player_archetype = new_archetype
 				if("color_ethereal")
 					var/new_etherealcolor = input(user, "Choose your ethereal color", "Character Preference") as null|anything in GLOB.color_list_ethereal
 					if(new_etherealcolor)
