@@ -672,3 +672,6 @@
 	if(iskindred(user))
 		to_chat(user, "<span class='warning'>I give some <b>blood</b> to this mortal</span>")
 		src.ghoulificate(user)
+/mob/living/carbon/human/npc/Destroy()
+	. = ..()
+	SShumannpcpool.npclost()

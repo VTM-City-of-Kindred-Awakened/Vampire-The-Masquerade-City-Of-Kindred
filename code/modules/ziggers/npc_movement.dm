@@ -1,7 +1,10 @@
 /obj/effect/landmark/npcbeacon
 	name = "NPC beacon"
 	var/directionwalk
-
+/obj/effect/landmark/npc_spawn_point
+/obj/effect/landmark/npc_spawn_point/Initialize()
+	. = ..()
+	GLOB.npc_spawn_points |= src
 /obj/effect/landmark/npcbeacon/directed
 	name = "NPC traffic"
 	icon_state = "npc"

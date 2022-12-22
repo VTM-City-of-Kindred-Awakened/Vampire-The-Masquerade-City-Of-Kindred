@@ -1,3 +1,4 @@
+GLOBAL_LIST_EMPTY(npc_spawn_points)
 SUBSYSTEM_DEF(humannpcpool)
 	name = "Human NPC Pool"
 	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_BACKGROUND
@@ -33,3 +34,8 @@ SUBSYSTEM_DEF(humannpcpool)
 			NPC.handle_automated_movement()
 		if (MC_TICK_CHECK)
 			return
+
+/datum/controller/subsystem/humannpcpool/proc/npclost()
+	var/atom/kal = pick(GLOB.npc_spawn_points)
+	new /mob/living/carbon/human/npc(get_turf(kal))
+	log_world("new npc spawned")
