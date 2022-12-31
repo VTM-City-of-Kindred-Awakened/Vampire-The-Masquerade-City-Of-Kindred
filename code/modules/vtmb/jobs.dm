@@ -643,6 +643,7 @@
 	name = "Citizen"
 	jobtype = /datum/job/vamp/citizen
 	l_pocket = /obj/item/vamp/phone
+	id = null
 
 /datum/outfit/job/citizen/pre_equip(mob/living/carbon/human/H)
 	..()

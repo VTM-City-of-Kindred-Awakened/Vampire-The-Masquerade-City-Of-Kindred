@@ -40,6 +40,7 @@
 													"african2")
 	var/min_age = 18
 	var/max_age = 85
+	var/preferedgender
 	var/list/male_names = list("Jack",
 															"Robert",
 															"Cornelius",
@@ -168,28 +169,18 @@
 															"Volaju")
 
 	//For equiping with random
-	var/list/backpacks = list(/obj/item/storage/backpack,
-														/obj/item/storage/backpack/satchel,
-														/obj/item/storage/backpack/satchel/leather,
-														/obj/item/storage/backpack/duffelbag)
-	var/list/shoes = list(/obj/item/clothing/shoes/sneakers/white,
-												/obj/item/clothing/shoes/sneakers/brown,
-												/obj/item/clothing/shoes/laceup,
-												/obj/item/clothing/shoes/sneakers/black)
-	var/list/uniforms = list(/obj/item/clothing/under/color/grey,
-														/obj/item/clothing/under/rank/security/detective,
-														/obj/item/clothing/under/suit/black,
-														/obj/item/clothing/under/rank/civilian/lawyer/bluesuit)
-	var/list/belts = list(/obj/item/storage/belt/utility/full,
-												/obj/item/storage/belt/medical/paramedic)
-	var/list/suits = list(/obj/item/clothing/suit/armor/vest,
-												/obj/item/clothing/suit/toggle/labcoat)
+	var/list/backpacks = list(/obj/item/storage/backpack/satchel,
+														/obj/item/storage/backpack/satchel/leather)
+	var/list/shoes = list()
+	var/list/uniforms = list()
+	var/list/belts = list()
+	var/list/suits = list()
 	var/list/hats = list()
 	var/list/gloves = list()
 	var/list/masks = list()
 	var/list/neck = list()
 	var/list/ears = list()
-	var/list/glasses = list(/obj/item/clothing/glasses/sunglasses)
+	var/list/glasses = list()
 	var/list/inhand_items = list()
 
 	//For workers and police
@@ -235,6 +226,8 @@
 	socialrole = new S()
 	if(!dont_random)
 		gender = pick(MALE, FEMALE)
+		if(socialrole.preferedgender)
+			gender = socialrole.preferedgender
 		var/list/m_names = list()
 		var/list/f_names = list()
 		var/list/s_names = list()
@@ -459,219 +452,20 @@
 					N.is_talking = FALSE
 					N.RealisticSay(pick(N.socialrole.answer_phrases))
 
-/datum/socialrole/nigger
-	s_tones = list("african1",
-									"african2")
-	min_age = 18
-	max_age = 35
-	male_names = list("Carl",
-										"George",
-										"Jackson",
-										"John",
-										"Ash",
-										"Daniel",
-										"Jacob",
-										"Miles",
-										"Brooks",
-										"Nolan",
-										"Caleb",
-										"Leo",
-										"Luke",
-										"Owen",
-										"Logan",
-										"Ezra")
-	female_names = list("Emma",
-											"Ella",
-											"Chloe",
-											"Layla",
-											"Hazel",
-											"Lily",
-											"Stella",
-											"Lucy",
-											"Zoe",
-											"Ruby",
-											"Quinn",
-											"Cora",
-											"Jade",
-											"Piper",
-											"Eva",
-											"Leah")
-	surnames = list("Johnson",
-									"Floyd",
-									"Morales",
-									"Black",
-									"White",
-									"Smith",
-									"Williams",
-									"Jones",
-									"Brown",
-									"Grey",
-									"Miller")
-
-	hair_colors = list("040404",	//Black
-											"120b05")	//Dark Brown
-
-	male_hair = list("Bald",
-										"Afro",
-										"Afro 2",
-										"Afro (Large)",
-										"Coffee House",
-										"Crewcut",
-										"Father",
-										"Flat Top",
-										"Joestar",
-										"Shaved")
-	male_facial = list("Beard (Chinstrap)",
-											"Beard (Cropped Fullbeard)",
-											"Beard (Hipster)",
-											"Beard (Neckbeard)",
-											"Beard (Three o Clock Shadow)",
-											"Beard (Five o Clock Shadow)",
-											"Beard (Seven o Clock Shadow)",
-											"Moustache (Hulk Hogan)",
-											"Sideburns (Elvis)",
-											"Sideburns",
-											"Shaved")
-	female_hair = list("Long Bedhead",
-											"Afro (Large)",
-											"Bobcurl",
-											"Gentle",
-											"Poofy")
-	neutral_phrases = list("Отвали, нигга.",
-													"Тебе пояснить за район, мазафака?",
-													"Время видел, мазафака?")
-	male_phrases = list("Я похож на белоснежку по твоему, нигга?",
-											"У меня есть ствол, и не только кожанный, мазафака.",
-											"Ты не на того прёшь, нигга!",
-											"Тебе промеж глаз зарядить, мазафака?",
-											"Я сейчас братков позову и глянем, какое из тебя мясо...",
-											"Хочешь сдохнуть, нигга?")
-	female_phrases = list("Я сейчас позову братика, он тебе наваляет.",
-												"Этот район под нами, чумба. Свали.",
-												"Отстань!",
-												"Ты хоть знаешь, кто мой папик?",
-												"Ну и сволочь...",
-												"Я сейчас закричу.")
-
-/mob/living/carbon/human/npc/nigger
-	name = "Nigger"
-	bloodquality = BLOOD_QUALITY_LOW
-
-/mob/living/carbon/human/npc/nigger/Initialize()
-	..()
-	AssignSocialRole(/datum/socialrole/nigger)
-
-/datum/socialrole/usual
-	s_tones = list("caucasian1",
-									"caucasian2",
-									"caucasian3",
-									"asian1",
-									"asian2")
-
-	male_names = null
-	female_names = null
-	surnames = null
-
-	hair_colors = list("040404",	//Black
-											"120b05",	//Dark Brown
-											"342414",	//Brown
-											"554433",	//Light Brown
-											"695c3b",	//Dark Blond
-											"ad924e",	//Blond
-											"dac07f",	//Light Blond
-											"802400",	//Ginger
-											"a5380e")	//Ginger alt
-	male_hair = list("Balding Hair",
-										"Bedhead",
-										"Bedhead 2",
-										"Bedhead 3",
-										"Boddicker",
-										"Business Hair",
-										"Business Hair 2",
-										"Business Hair 3",
-										"Business Hair 4",
-										"Coffee House",
-										"Combover",
-										"Crewcut",
-										"Father",
-										"Flat Top",
-										"Gelled Back",
-										"Joestar",
-										"Keanu Hair",
-										"Oxton",
-										"Volaju")
-	male_facial = list("Beard (Abraham Lincoln)",
-											"Beard (Chinstrap)",
-											"Beard (Full)",
-											"Beard (Cropped Fullbeard)",
-											"Beard (Hipster)",
-											"Beard (Neckbeard)",
-											"Beard (Three o Clock Shadow)",
-											"Beard (Five o Clock Shadow)",
-											"Beard (Seven o Clock Shadow)",
-											"Moustache (Hulk Hogan)",
-											"Moustache (Watson)",
-											"Sideburns (Elvis)",
-											"Sideburns",
-											"Shaved")
-	female_hair = list("Beehive",
-											"Beehive 2",
-											"Bob Hair",
-											"Bob Hair 2",
-											"Bob Hair 3",
-											"Bob Hair 4",
-											"Bobcurl",
-											"Braided",
-											"Braided Front",
-											"Braid (Short)",
-											"Braid (Low)",
-											"Double Bun",
-											"Emo",
-											"Emo Fringe",
-											"Feather",
-											"Gentle",
-											"Long Hair 1",
-											"Long Hair 2",
-											"Long Hair 3",
-											"Long Over Eye",
-											"Long Emo",
-											"Long Fringe",
-											"Ponytail",
-											"Ponytail 2",
-											"Ponytail 3",
-											"Ponytail 4",
-											"Ponytail 5",
-											"Ponytail 6",
-											"Ponytail 7",
-											"Ponytail (High)",
-											"Ponytail (Short)",
-											"Ponytail (Long)",
-											"Ponytail (Country)",
-											"Ponytail (Fringe)",
-											"Short Hair Rosa",
-											"Shoulder-length Hair",
-											"Volaju")
-
-/mob/living/carbon/human/npc/usual
-	name = "Usual"
-
-/mob/living/carbon/human/npc/usual/Initialize()
-	..()
-	AssignSocialRole(/datum/socialrole/usual)
-
 /mob/living/carbon/human/npc/proc/ghoulificate(mob/owner)
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]`s Ghoul?", null, null, null, 50, src)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]`s ghoul?", null, null, null, 50, src)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		src.key = C.key
-		to_chat(src, "ZXC 1000-7 you are dead inside")
+		to_chat(src, "<span class='warning'>You feel blood connection with [owner]...</span>")
 
 /mob/living/carbon/human/npc/AltClick(mob/user)
 	. = ..()
 	if(iskindred(user))
-		to_chat(user, "<span class='warning'>I give some <b>blood</b> to this mortal</span>")
+		to_chat(user, "<span class='warning'>I gave my <b>BLOOD</b> to mortal.</span>")
 		src.ghoulificate(user)
+
 /mob/living/carbon/human/npc/Destroy()
 	. = ..()
 	SShumannpcpool.npclost()

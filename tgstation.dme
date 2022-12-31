@@ -3354,6 +3354,7 @@
 #include "code\modules\ziggers\npc.dm"
 #include "code\modules\ziggers\npc_aggression.dm"
 #include "code\modules\ziggers\npc_movement.dm"
+#include "code\modules\ziggers\npcroles.dm"
 #include "code\modules\ziggers\onfloor.dm"
 #include "code\modules\ziggers\onyxcombat.dm"
 #include "code\modules\ziggers\phones.dm"
