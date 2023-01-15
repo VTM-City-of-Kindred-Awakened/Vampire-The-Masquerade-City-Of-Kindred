@@ -72,6 +72,10 @@
 											"anarch")
 	color = "#434343"
 
+/obj/item/vamp/keys/npc
+	name = "Some keys"
+	accesslocks = list("npc")
+
 /obj/structure/vampdoor
 	name = "\improper door"
 	desc = "It opens and closes."
