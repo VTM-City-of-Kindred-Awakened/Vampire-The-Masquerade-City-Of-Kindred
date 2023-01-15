@@ -3348,6 +3348,7 @@
 #include "code\modules\ziggers\clothcode.dm"
 #include "code\modules\ziggers\decor.dm"
 #include "code\modules\ziggers\doorcode.dm"
+#include "code\modules\ziggers\elevator.dm"
 #include "code\modules\ziggers\flavledders.dm"
 #include "code\modules\ziggers\map.dm"
 #include "code\modules\ziggers\melee.dm"

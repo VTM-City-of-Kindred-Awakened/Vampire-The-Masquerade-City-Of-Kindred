@@ -54,6 +54,16 @@
 	ambience_index = AMBIENCE_CITY
 	music = /datum/vampiremusic/downtown
 
+/area/vtm/prince_elevator
+	name = "Prince Elevator"
+	icon_state = "prince"
+	ambience_index = AMBIENCE_INTERIOR
+
+/area/vtm/city_elevator
+	name = "City Elevator"
+	icon_state = "prince"
+	ambience_index = AMBIENCE_INTERIOR
+
 /area/vtm/prince
 	name = "Prince Tower"
 	icon_state = "prince"
