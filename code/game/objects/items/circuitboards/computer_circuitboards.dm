@@ -557,7 +557,7 @@
 	build_path = /obj/machinery/computer/security/mining
 
 /obj/item/circuitboard/computer/mining_shuttle
-	name = "Mining Shuttle (Computer Board)"
+	name = "Elevator (Computer Board)"
 	icon_state = "supply"
 	build_path = /obj/machinery/computer/shuttle/mining
 

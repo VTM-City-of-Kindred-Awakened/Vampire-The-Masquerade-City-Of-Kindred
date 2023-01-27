@@ -66,8 +66,8 @@
 /**********************Shuttle Computer**************************/
 
 /obj/machinery/computer/shuttle/mining
-	name = "mining shuttle console"
-	desc = "Used to call and send the mining shuttle."
+	name = "elevator control"
+	desc = "Used to call and send the elevator."
 	circuit = /obj/item/circuitboard/computer/mining_shuttle
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public"

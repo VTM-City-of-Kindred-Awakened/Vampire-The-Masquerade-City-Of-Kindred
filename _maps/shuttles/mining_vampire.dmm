@@ -1,6 +1,6 @@
 "a" = (/turf/open/floor/plating/vampplating/mono,/area/shuttle/mining)
 "b" = (/obj/machinery/light{dir = 4},/turf/open/floor/plating/vampplating/mono,/area/shuttle/mining)
-"c" = (/obj/docking_port/mobile{dir = 8; dwidth = 3; height = 5; id = "mining_common"; name = "lavaland shuttle"; port_direction = 4; width = 7},/turf/open/floor/plating/vampplating/mono,/area/shuttle/mining)
+"c" = (/obj/docking_port/mobile{dir = 8; dwidth = 3; height = 5; id = "mining"; name = "elevator"; port_direction = 4; width = 7},/turf/open/floor/plating/vampplating/mono,/area/shuttle/mining)
 "d" = (/obj/machinery/computer/shuttle/mining,/turf/open/floor/plating/vampplating/mono,/area/shuttle/mining)
 
 (1,1,1) = {"

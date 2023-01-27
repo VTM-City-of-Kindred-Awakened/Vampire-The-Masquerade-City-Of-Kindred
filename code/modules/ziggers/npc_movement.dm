@@ -40,6 +40,16 @@
 		last_danger_meet = world.time
 	if(fire_stacks >= 1)
 		resist()
+	if(loc != tupik_loc)
+		tupik_loc = loc
+	if(loc == tupik_loc)
+		tupik_steps += 1
+	if(tupik_steps > 1)
+		if(!CheckMove())
+			var/turf/T = get_step(src, pick(NORTH, SOUTH, WEST, EAST))
+			face_atom(T)
+			step_to(src,T,0)
+			walktarget = ChoosePath()
 	if(prob(5) && !danger_source && stat <= 2 && !IsSleeping())
 		var/activity = rand(1, 3)
 		switch(activity)
@@ -128,14 +138,14 @@
 		return
 	set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
 
-	var/turf/T = get_turf(src)
-	step_to(src,walktarget,0)
+//	var/turf/T = get_turf(src)
 	face_atom(walktarget)
-	if(get_turf(src) == T)
-		tupik_steps += 1
-	if(tupik_steps > 3)
-		tupik_steps = 0
-		walktarget = ChoosePath()
+	step_to(src,walktarget,0)
+//	if(get_turf(src) == T)
+//		tupik_steps += 1
+//	if(tupik_steps > 3)
+//		tupik_steps = 0
+//		walktarget = ChoosePath()
 	if(get_dist(walktarget, src) <= stopturf)
 		walktarget = ChoosePath()
 		face_atom(walktarget)

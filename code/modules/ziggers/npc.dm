@@ -15,6 +15,7 @@
 	var/last_grab = 0
 
 	var/tupik_steps = 0
+	var/tupik_loc
 
 	var/stopturf = 1
 
