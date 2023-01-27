@@ -6,6 +6,10 @@
 #define FOOTSTEP_GRASS "grass"
 #define FOOTSTEP_WATER "water"
 #define FOOTSTEP_LAVA "lava"
+#define FOOTSTEP_PARKET "parket"
+#define FOOTSTEP_ASPHALT "asphalt"
+#define FOOTSTEP_TRAVA "trava"
+#define FOOTSTEP_TROTUAR "trotuar"
 #define FOOTSTEP_MEAT "meat"
 //barefoot sounds
 #define FOOTSTEP_WOOD_BAREFOOT "woodbarefoot"
@@ -81,6 +85,21 @@ GLOBAL_LIST_INIT(footstep, list(
 		'sound/effects/footstep/lava1.ogg',
 		'sound/effects/footstep/lava2.ogg',
 		'sound/effects/footstep/lava3.ogg'), 100, 0),
+	FOOTSTEP_PARKET = list(list(
+		'code/modules/ziggers/sounds/parket1.ogg',
+		'code/modules/ziggers/sounds/parket2.ogg',
+		'code/modules/ziggers/sounds/parket3.ogg'), 75, 1),
+	FOOTSTEP_ASPHALT = list(list(
+		'code/modules/ziggers/sounds/asphalt1.ogg',
+		'code/modules/ziggers/sounds/asphalt2.ogg'), 75, 1),
+	FOOTSTEP_TRAVA = list(list(
+		'code/modules/ziggers/sounds/trava1.ogg',
+		'code/modules/ziggers/sounds/trava2.ogg',
+		'code/modules/ziggers/sounds/trava3.ogg'), 75, 1),
+	FOOTSTEP_TROTUAR = list(list(
+		'code/modules/ziggers/sounds/trotuar1.ogg',
+		'code/modules/ziggers/sounds/trotuar2.ogg',
+		'code/modules/ziggers/sounds/trotuar3.ogg'), 75, 1),
 	FOOTSTEP_MEAT = list(list(
 		'sound/effects/meatslap.ogg'), 100, 0)
 ))
@@ -124,6 +143,28 @@ GLOBAL_LIST_INIT(barefootstep, list(
 		'sound/effects/footstep/lava1.ogg',
 		'sound/effects/footstep/lava2.ogg',
 		'sound/effects/footstep/lava3.ogg'), 100, 0),
+	FOOTSTEP_PARKET = list(list(
+		'sound/effects/footstep/woodbarefoot1.ogg',
+		'sound/effects/footstep/woodbarefoot2.ogg',
+		'sound/effects/footstep/woodbarefoot3.ogg',
+		'sound/effects/footstep/woodbarefoot4.ogg',
+		'sound/effects/footstep/woodbarefoot5.ogg'), 75, 1),
+	FOOTSTEP_ASPHALT = list(list(
+		'sound/effects/footstep/hardbarefoot1.ogg',
+		'sound/effects/footstep/hardbarefoot2.ogg',
+		'sound/effects/footstep/hardbarefoot3.ogg',
+		'sound/effects/footstep/hardbarefoot4.ogg',
+		'sound/effects/footstep/hardbarefoot5.ogg'), 75, 1),
+	FOOTSTEP_TRAVA = list(list(
+		'code/modules/ziggers/sounds/trava1.ogg',
+		'code/modules/ziggers/sounds/trava2.ogg',
+		'code/modules/ziggers/sounds/trava3.ogg'), 75, 1),
+	FOOTSTEP_TROTUAR = list(list(
+		'sound/effects/footstep/hardbarefoot1.ogg',
+		'sound/effects/footstep/hardbarefoot2.ogg',
+		'sound/effects/footstep/hardbarefoot3.ogg',
+		'sound/effects/footstep/hardbarefoot4.ogg',
+		'sound/effects/footstep/hardbarefoot5.ogg'), 75, 1),
 	FOOTSTEP_MEAT = list(list(
 		'sound/effects/meatslap.ogg'), 100, 0),
 ))

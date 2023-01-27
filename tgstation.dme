@@ -3350,6 +3350,7 @@
 #include "code\modules\ziggers\doorcode.dm"
 #include "code\modules\ziggers\elevator.dm"
 #include "code\modules\ziggers\flavledders.dm"
+#include "code\modules\ziggers\guns.dm"
 #include "code\modules\ziggers\map.dm"
 #include "code\modules\ziggers\melee.dm"
 #include "code\modules\ziggers\npc.dm"

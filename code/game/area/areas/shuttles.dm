@@ -117,7 +117,7 @@
 	area_flags = BLOBS_ALLOWED
 
 /area/shuttle/mining
-	name = "Mining Shuttle"
+	name = "Elevator"
 	area_flags = NONE //Set this so it doesn't inherit NO_ALERTS
 
 /area/shuttle/mining/large

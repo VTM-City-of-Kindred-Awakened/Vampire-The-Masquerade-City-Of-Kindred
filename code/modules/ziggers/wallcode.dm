@@ -277,8 +277,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_ASPHALT
+	barefootstep = FOOTSTEP_ASPHALT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
@@ -310,8 +310,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_TROTUAR
+	barefootstep = FOOTSTEP_TROTUAR
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
@@ -325,8 +325,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_TROTUAR
+	barefootstep = FOOTSTEP_TROTUAR
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
@@ -362,8 +362,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_PARKET
+	barefootstep = FOOTSTEP_PARKET
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
@@ -381,8 +381,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_TROTUAR
+	barefootstep = FOOTSTEP_TROTUAR
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
@@ -397,8 +397,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_TROTUAR
+	barefootstep = FOOTSTEP_TROTUAR
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
@@ -414,8 +414,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_TRAVA
+	barefootstep = FOOTSTEP_TRAVA
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
@@ -431,8 +431,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_PARKET
+	barefootstep = FOOTSTEP_PARKET
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
@@ -444,8 +444,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_ASPHALT
+	barefootstep = FOOTSTEP_ASPHALT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
@@ -461,8 +461,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_TROTUAR
+	barefootstep = FOOTSTEP_TROTUAR
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
@@ -480,8 +480,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_TROTUAR
+	barefootstep = FOOTSTEP_TROTUAR
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
@@ -493,8 +493,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_PARKET
+	barefootstep = FOOTSTEP_PARKET
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
@@ -510,8 +510,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_PARKET
+	barefootstep = FOOTSTEP_PARKET
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
@@ -527,8 +527,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_PARKET
+	barefootstep = FOOTSTEP_PARKET
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
@@ -544,8 +544,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_PARKET
+	barefootstep = FOOTSTEP_PARKET
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
@@ -656,8 +656,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_PARKET
+	barefootstep = FOOTSTEP_PARKET
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
@@ -673,8 +673,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
@@ -691,8 +691,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_WATER
+	barefootstep = FOOTSTEP_WATER
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	density = TRUE
@@ -727,8 +727,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_WATER
+	barefootstep = FOOTSTEP_WATER
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
@@ -760,8 +760,8 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	footstep = FOOTSTEP_PARKET
+	barefootstep = FOOTSTEP_PARKET
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 

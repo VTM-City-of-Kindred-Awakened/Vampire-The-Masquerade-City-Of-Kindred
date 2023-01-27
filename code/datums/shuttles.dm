@@ -557,7 +557,7 @@
 	name = "cargo ferry (Box)"
 
 /datum/map_template/shuttle/mining/box
-	suffix = "box"
+	suffix = "vampire"
 	name = "mining shuttle (Box)"
 
 /datum/map_template/shuttle/labour/box
