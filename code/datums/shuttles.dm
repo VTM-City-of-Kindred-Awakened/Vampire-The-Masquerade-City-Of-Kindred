@@ -129,6 +129,7 @@
 /datum/map_template/shuttle/mining
 	port_id = "mining"
 	can_be_bought = FALSE
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 
 /datum/map_template/shuttle/mining_common
 	port_id = "mining_common"

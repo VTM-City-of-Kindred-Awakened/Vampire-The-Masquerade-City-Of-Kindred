@@ -54,7 +54,8 @@
 	shoes = /obj/item/clothing/shoes/vampire
 	l_pocket = /obj/item/vamp/phone/prince
 	r_pocket = /obj/item/vamp/keys/prince
-	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1)
+	backpack_contents = list(/obj/item/gun/ballistic/automatic/vampire/deagle=1, /obj/item/passport=1, /obj/item/cockclock=1)
+
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -129,7 +130,7 @@
 	glasses = /obj/item/clothing/glasses/vampire/sun
 	r_pocket = /obj/item/vamp/keys/sheriff
 	l_pocket = /obj/item/vamp/phone/sheriff
-	backpack_contents = list(/obj/item/melee/vampirearms/stake=3)
+	backpack_contents = list(/obj/item/gun/ballistic/automatic/vampire/deagle=1, /obj/item/melee/vampirearms/stake=3, /obj/item/passport=1, /obj/item/cockclock=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -203,7 +204,7 @@
 //	head = /obj/item/clothing/head/hopcap
 	l_pocket = /obj/item/vamp/phone/clerk
 	r_pocket = /obj/item/vamp/keys/clerk
-	backpack_contents = list(/obj/item/storage/box/ids=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1)
 
 /datum/outfit/job/clerk/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -255,7 +256,7 @@
 	shoes = /obj/item/clothing/shoes/vampire
 	r_pocket = /obj/item/vamp/keys/camarilla
 	l_pocket = /obj/item/vamp/phone/camarilla
-	backpack_contents = list(/obj/item/melee/vampirearms/stake=3)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/melee/vampirearms/stake=3)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -303,6 +304,7 @@
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/graveyard
 	r_hand = /obj/item/melee/vampirearms/shovel
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -347,6 +349,7 @@
 	l_hand = /obj/item/storage/firstaid/medical
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/clinic
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -388,6 +391,7 @@
 	r_pocket = /obj/item/vamp/keys/cleaning
 	shoes = /obj/item/clothing/shoes/vampire/jackboots/work
 	gloves = /obj/item/clothing/gloves/vampire/cleaning
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1)
 
 /obj/effect/landmark/start/vjanitor
 	name = "Street Janitor"
@@ -426,6 +430,7 @@
 	r_pocket = /obj/item/vamp/keys/archive
 	l_pocket = /obj/item/vamp/phone
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1)
 
 /datum/outfit/job/archivist/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -477,6 +482,7 @@
 	gloves = /obj/item/clothing/gloves/vampire/work
 	l_pocket = /obj/item/vamp/phone/barkeeper
 	r_pocket = /obj/item/vamp/keys/bar
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1)
 
 /datum/outfit/job/barkeeper/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -523,7 +529,7 @@
 	r_pocket = /obj/item/vamp/keys/anarch
 	l_pocket = /obj/item/vamp/phone/anarch
 	r_hand = /obj/item/melee/vampirearms/baseball
-	backpack_contents = list(/obj/item/melee/vampirearms/stake=3)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/melee/vampirearms/stake=3)
 
 /obj/effect/landmark/start/bouncer
 	name = "Bouncer"
@@ -568,7 +574,7 @@
 	glasses = /obj/item/clothing/glasses/vampire/sun
 	l_pocket = /obj/item/vamp/phone/dealer
 	r_pocket = /obj/item/vamp/keys/supply
-//	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1)
 
 /datum/outfit/job/dealer/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -611,6 +617,7 @@
 	l_pocket = /obj/item/vamp/phone/anarch
 	r_pocket = /obj/item/vamp/keys/supply
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1)
 
 /obj/effect/landmark/start/supplytechnician
 	name = "Supply Technician"
@@ -643,7 +650,8 @@
 	name = "Citizen"
 	jobtype = /datum/job/vamp/citizen
 	l_pocket = /obj/item/vamp/phone
-	id = null
+	id = /obj/item/cockclock
+	backpack_contents = list(/obj/item/passport=1)
 
 /datum/outfit/job/citizen/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -792,3 +800,16 @@
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 	worn_icon = 'code/modules/ziggers/worn.dmi'
 	worn_icon_state = "id10"
+
+/obj/item/card/id/hunter
+	name = "cross"
+	id_type_name = "cross"
+	desc = "When you come into the land that the Lord your God is giving you, you must not learn to imitate the abhorrent practices of those nations. No one shall be found among you who makes a son or daughter pass through fire, or who practices divination, or is a soothsayer, or an augur, or a sorcerer, or one who casts spells, or who consults ghosts or spirits, or who seeks oracles from the dead. For whoever does these things is abhorrent to the Lord; it is because of such abhorrent practices that the Lord your God is driving them out before you (Deuteronomy 18:9-12)."
+	icon = 'code/modules/ziggers/items.dmi'
+	icon_state = "id11"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	worn_icon_state = "id11"

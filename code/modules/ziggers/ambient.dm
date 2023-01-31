@@ -128,6 +128,11 @@
 	ambience_index = AMBIENCE_SEWER
 	music = /datum/vampiremusic/sewer
 
+/area/vtm/elevator
+	name = "Elevator"
+	icon_state = "prince"
+	music = /datum/vampiremusic/elevator
+
 //MUSIC
 
 /datum/vampiremusic
@@ -159,6 +164,11 @@
 /datum/vampiremusic/prince
 	length = 314 SECONDS
 	sound = 'code/modules/ziggers/sounds/clairedelune.ogg'
+	forced = TRUE
+
+/datum/vampiremusic/elevator
+	length = 157 SECONDS
+	sound = 'code/modules/ziggers/sounds/lift.ogg'
 	forced = TRUE
 
 /mob/living

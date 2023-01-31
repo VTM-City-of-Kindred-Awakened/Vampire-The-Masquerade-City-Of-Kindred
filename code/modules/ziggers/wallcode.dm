@@ -768,3 +768,9 @@
 /turf/open/floor/plating/vampcanal/Initialize()
 	..()
 	icon_state = "canal_plating[rand(1, 4)]"
+
+/turf/closed/indestructible/elevatorshaft
+	name = "elevator shaft"
+	desc = "Floors, floors, floors..."
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "black"
