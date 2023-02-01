@@ -295,17 +295,17 @@ SUBSYSTEM_DEF(ticker)
 	round_start_time = world.time
 	SSdbcore.SetRoundStart()
 
-	to_chat(world, "<span class='notice'><B>Welcome to [station_name()], enjoy your stay!</B></span>")
-	SEND_SOUND(world, sound('sound/ai/welcome.ogg'))
+	to_chat(world, "<span class='notice'><B>[station_name()] is calling you. Farewell, vampire!</B></span>")
+	SEND_SOUND(world, sound('code/modules/ziggers/sounds/announce.ogg'))
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
 
-	if(SSevents.holidays)
-		to_chat(world, "<span class='notice'>and...</span>")
-		for(var/holidayname in SSevents.holidays)
-			var/datum/holiday/holiday = SSevents.holidays[holidayname]
-			to_chat(world, "<h4>[holiday.greet()]</h4>")
+//	if(SSevents.holidays)
+//		to_chat(world, "<span class='notice'>and...</span>")
+//		for(var/holidayname in SSevents.holidays)
+//			var/datum/holiday/holiday = SSevents.holidays[holidayname]
+//			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
 	PostSetup()
 

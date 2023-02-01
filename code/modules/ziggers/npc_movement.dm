@@ -35,30 +35,31 @@
 /mob/living/carbon/human/npc/Life()
 	if(stat == DEAD)
 		return
-	nutrition = 400
-	if(get_dist(danger_source, src) < 7)
-		last_danger_meet = world.time
-	if(fire_stacks >= 1)
-		resist()
-	if(loc != tupik_loc)
-		tupik_loc = loc
-	if(loc == tupik_loc)
-		tupik_steps += 1
-	if(tupik_steps > 1)
-		if(!CheckMove())
-			var/turf/T = get_step(src, pick(NORTH, SOUTH, WEST, EAST))
-			face_atom(T)
-			step_to(src,T,0)
-			walktarget = ChoosePath()
-	if(prob(5) && !danger_source && stat <= 2 && !IsSleeping())
-		var/activity = rand(1, 3)
-		switch(activity)
-			if(1)
-				StareAction()
-			if(2)
-				EmoteAction()
-			if(3)
-				SpeechAction()
+	if(!key)
+		nutrition = 400
+		if(get_dist(danger_source, src) < 7)
+			last_danger_meet = world.time
+		if(fire_stacks >= 1)
+			resist()
+		if(loc != tupik_loc)
+			tupik_loc = loc
+		if(loc == tupik_loc)
+			tupik_steps += 1
+		if(tupik_steps > 1)
+			if(!CheckMove())
+				var/turf/T = get_step(src, pick(NORTH, SOUTH, WEST, EAST))
+				face_atom(T)
+				step_to(src,T,0)
+				walktarget = ChoosePath()
+		if(prob(5) && !danger_source && stat <= 2 && !IsSleeping())
+			var/activity = rand(1, 3)
+			switch(activity)
+				if(1)
+					StareAction()
+				if(2)
+					EmoteAction()
+				if(3)
+					SpeechAction()
 	..()
 
 /mob/living/carbon/human/npc/proc/CreateWay(var/direction)

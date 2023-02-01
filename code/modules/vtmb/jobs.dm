@@ -813,3 +813,221 @@
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 	worn_icon = 'code/modules/ziggers/worn.dmi'
 	worn_icon_state = "id11"
+
+/datum/job/caitiff
+	title = "Caitiff"
+	faction = "Vampire"
+	total_positions = -1
+	spawn_positions = -1
+	supervisors = "your path of Revenge"
+	outfit = /datum/outfit/job/caitiff
+	duty = "Have your revenge."
+
+/datum/job/caitiff/after_spawn(mob/living/H, mob/M)
+	. = ..()
+	var/mob/living/carbon/human/HU = H
+	if(HU.mind)
+		HU.mind.add_antag_datum(/datum/antagonist/caitiff)
+
+/datum/outfit/job/caitiff
+	name = "Caitiff"
+	jobtype = /datum/job/caitiff
+	l_pocket = /obj/item/vamp/phone
+	id = /obj/item/cockclock
+	backpack_contents = list(/obj/item/passport=1, /obj/item/melee/vampirearms/stake=1)
+
+/datum/outfit/job/caitiff/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.gender == MALE)
+		shoes = /obj/item/clothing/shoes/vampire
+		if(H.clane.male_clothes)
+			uniform = text2path(H.clane.male_clothes)
+	else
+		shoes = /obj/item/clothing/shoes/vampire/heels
+		if(H.clane.female_clothes)
+			uniform = text2path(H.clane.female_clothes)
+
+/obj/effect/landmark/start/caitiff
+	name = "Caitiff"
+
+/datum/antagonist/caitiff
+	name = "Caitiff"
+	roundend_category = "caitiffs"
+	antagpanel_category = "Caitiff"
+	job_rank = ROLE_TRAITOR
+	antag_moodlet = /datum/mood_event/focused
+	antag_hud_type = ANTAG_HUD_TRAITOR
+	antag_hud_name = "traitor"
+
+/datum/antagonist/caitiff/on_gain()
+	owner.special_role = src
+	var/datum/objective/assassinate/kill_objective = new
+	kill_objective.owner = owner
+	kill_objective.find_target()
+	objectives += kill_objective
+	owner.current.playsound_local(get_turf(owner.current), 'code/modules/ziggers/sounds/sad_start.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	return ..()
+
+/datum/antagonist/caitiff/on_removal()
+	to_chat(owner.current,"<span class='userdanger'>You are no longer the Caitiff!</span>")
+	owner.special_role = null
+	return ..()
+
+/datum/antagonist/caitiff/greet()
+	to_chat(owner.current, "<span class='alertsyndie'>You are the Caitiff.</span>")
+	owner.announce_objectives()
+
+/datum/job/hunter
+	title = "Hunter"
+	faction = "Inquisition"
+	total_positions = -1
+	spawn_positions = -1
+	supervisors = "the Inquisition"
+	outfit = /datum/outfit/job/hunter
+	duty = "Hunt on vampires, represent the Honor of the Inquisition."
+
+/datum/outfit/job/hunter
+	name = "Hunter"
+	jobtype = /datum/job/hunter
+
+	uniform = /obj/item/clothing/under/rank/civilian/chaplain
+	id = /obj/item/card/id/hunter
+	shoes = /obj/item/clothing/shoes/vampire/jackboots
+	head = /obj/item/clothing/head/vampire/army
+	backpack_contents = list(
+		/obj/item/storage/book/bible/booze = 1,
+		/obj/item/melee/vampirearms/stake = 3,
+		/obj/item/melee/vampirearms/fireaxe = 1,
+		/obj/item/gun/ballistic/automatic/vampire/ar15 = 1,
+		/obj/item/ammo_box/magazine/vamp556 = 2,
+		/obj/item/gun/ballistic/automatic/vampire/deagle = 1
+		)
+
+/datum/job/hunter/after_spawn(mob/living/H, mob/M)
+	. = ..()
+	var/mob/living/carbon/human/HU = H
+	if(HU.clane)
+		qdel(HU.clane)
+	HU.set_species(/datum/species/human)
+	if(HU.mind)
+		HU.mind.add_antag_datum(/datum/antagonist/hunter)
+
+	var/list/loadouts = list("Sniper Rifle", "EOD Suit", "Holy Presence")
+	var/loadout_type = input(H, "Choose the Lord's gift for you:", "Loadout") as anything in loadouts
+	switch(loadout_type)
+		if("Sniper Rifle")
+			HU.equip_to_slot_or_del(new /obj/item/clothing/head/vampire/army(HU), ITEM_SLOT_HEAD)
+			HU.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/vest/army(HU), ITEM_SLOT_OCLOTHING)
+			HU.put_in_r_hand(new /obj/item/gun/ballistic/automatic/vampire/sniper(HU))
+			HU.put_in_l_hand(new /obj/item/gun/ballistic/automatic/vampire/sniper(HU))
+		if("EOD Suit")
+			HU.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/eod(HU), ITEM_SLOT_OCLOTHING)
+			HU.equip_to_slot_or_del(new /obj/item/clothing/head/vampire/eod(HU), ITEM_SLOT_HEAD)
+		if("Holy Presence")
+			HU.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/vest/army(HU), ITEM_SLOT_OCLOTHING)
+			HU.put_in_r_hand(new /obj/item/melee/vampirearms/chainsaw(HU))
+			HU.resistant_to_disciplines = TRUE
+			to_chat(HU, "<b>You are no longer vulnerable to vampire blood powers...</b>")
+
+/obj/effect/landmark/start/hunter
+	name = "Hunter"
+
+/datum/antagonist/hunter
+	name = "Hunter"
+	roundend_category = "hunters"
+	antagpanel_category = "Hunter"
+	job_rank = ROLE_OPERATIVE
+	antag_hud_type = ANTAG_HUD_OPS
+	antag_hud_name = "synd"
+	antag_moodlet = /datum/mood_event/focused
+	show_to_ghosts = TRUE
+
+/datum/antagonist/hunter/on_gain()
+	add_antag_hud(ANTAG_HUD_OPS, "synd", owner)
+	owner.special_role = src
+	var/datum/objective/custom/custom_objective = new
+	custom_objective.owner = owner
+	custom_objective.explanation_text = "Exterminate all evil spirits in the city. Let the Hunt begin!"
+	objectives += custom_objective
+	var/datum/objective/martyr/die_objective = new
+	die_objective.owner = owner
+	objectives += die_objective
+	owner.current.playsound_local(get_turf(owner.current), 'code/modules/ziggers/sounds/orthodox_start.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	return ..()
+
+/datum/antagonist/hunter/on_removal()
+	to_chat(owner.current,"<span class='userdanger'>You are no longer the Hunter!</span>")
+	owner.special_role = null
+	return ..()
+
+/datum/antagonist/hunter/greet()
+	to_chat(owner.current, "<span class='alertsyndie'>You are the Hunter.</span>")
+	owner.announce_objectives()
+
+/datum/job/sabbatist
+	title = "Sabbatist"
+	faction = "Vampire"
+	total_positions = -1
+	spawn_positions = -1
+	supervisors = "the Sabbat"
+	outfit = /datum/outfit/job/caitiff
+	duty = "Shift Camarilla out of the city."
+
+/datum/job/sabbatist/after_spawn(mob/living/H, mob/M)
+	. = ..()
+	var/mob/living/carbon/human/HU = H
+	if(HU.mind)
+		HU.mind.add_antag_datum(/datum/antagonist/sabbatist)
+
+/datum/outfit/job/sabbatist
+	name = "Sabbatist"
+	jobtype = /datum/job/sabbatist
+	l_pocket = /obj/item/vamp/phone
+	suit = /obj/item/clothing/suit/vampire/trench
+	id = /obj/item/cockclock
+	backpack_contents = list(/obj/item/passport=1, /obj/item/melee/vampirearms/stake=3, /obj/item/gun/ballistic/vampire/revolver=1, /obj/item/melee/vampirearms/knife=1)
+
+/datum/outfit/job/sabbatist/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.gender == MALE)
+		shoes = /obj/item/clothing/shoes/vampire
+		if(H.clane.male_clothes)
+			uniform = text2path(H.clane.male_clothes)
+	else
+		shoes = /obj/item/clothing/shoes/vampire/heels
+		if(H.clane.female_clothes)
+			uniform = text2path(H.clane.female_clothes)
+
+/obj/effect/landmark/start/sabbatist
+	name = "Sabbatist"
+
+/datum/antagonist/sabbatist
+	name = "Sabbatist"
+	roundend_category = "sabbattites"
+	antagpanel_category = "Sabbat"
+	job_rank = ROLE_REV
+	antag_moodlet = /datum/mood_event/revolution
+	antag_hud_type = ANTAG_HUD_REV
+	antag_hud_name = "rev"
+
+/datum/antagonist/sabbatist/on_gain()
+	add_antag_hud(ANTAG_HUD_REV, "rev", owner)
+	owner.special_role = src
+	var/datum/objective/custom/custom_objective = new
+	custom_objective.owner = owner
+	custom_objective.explanation_text = "Kill Camarilla's and Anarch's heads. They do not deserve to rule that land. You deserve."
+	objectives += custom_objective
+	var/datum/objective/survive/survive_objective = new
+	survive_objective.owner = owner
+	objectives += survive_objective
+	owner.current.playsound_local(get_turf(owner.current), 'code/modules/ziggers/sounds/evil_start.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	return ..()
+
+/datum/antagonist/sabbatist/on_removal()
+	to_chat(owner.current,"<span class='userdanger'>You are no longer the part of Sabbat!</span>")
+	owner.special_role = null
+	return ..()
+
+/datum/antagonist/sabbatist/greet()
+	to_chat(owner.current, "<span class='alertsyndie'>You are the part of Sabbat.</span>")
+	owner.announce_objectives()

@@ -51,6 +51,11 @@
 	asset_datum.send(client)
 	var/list/output = list("<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>")
 
+	if(src in SSbad_guys_party.candidates)
+		output += "<p>Wait for Threat Party ([length(SSbad_guys_party.candidates)]/[SSbad_guys_party.go_on_next_fire == TRUE ? SSbad_guys_party.max_candidates : "???"]): <a href='byond://?src=[REF(src)];late_party=1'>Yes</a> [round((SSbad_guys_party.next_fire-world.time)/10)]s</p>"
+	else
+		output += "<p>Wait for Threat Party ([length(SSbad_guys_party.candidates)]/[SSbad_guys_party.go_on_next_fire == TRUE ? SSbad_guys_party.max_candidates : "???"]): <a href='byond://?src=[REF(src)];late_party=1'>No</a> [round((SSbad_guys_party.next_fire-world.time)/10)]s</p>"
+
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
 		switch(ready)
 			if(PLAYER_NOT_READY)
@@ -60,9 +65,11 @@
 			if(PLAYER_READY_TO_OBSERVE)
 				output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | <b> Observe </b> \]</p>"
 	else
-		output += "<p><a href='byond://?src=[REF(src)];manifest=1'>View the Crew Manifest</a></p>"
+		output += "<p><a href='byond://?src=[REF(src)];manifest=1'>View the Kindred Population</a></p>"
 		output += "<p><a href='byond://?src=[REF(src)];late_join=1'>Join Game!</a></p>"
 		output += "<p>[LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)]</p>"
+
+	output += "<p><b>[SScity_time.timeofnight]</b></p>"
 
 	if(!IsGuestKey(src.key))
 		output += playerpolls()
@@ -133,6 +140,7 @@
 		return TRUE
 
 	if(href_list["ready"])
+		SSbad_guys_party.candidates -= src
 		var/tready = text2num(href_list["ready"])
 		//Avoid updating ready if we're after PREGAME (they should use latejoin instead)
 		//This is likely not an actual issue but I don't have time to prove that this
@@ -148,6 +156,13 @@
 	if(href_list["refresh"])
 		src << browse(null, "window=playersetup") //closes the player setup window
 		new_player_panel()
+
+	if(href_list["late_party"])
+		ready = PLAYER_NOT_READY
+		if(src in SSbad_guys_party.candidates)
+			SSbad_guys_party.candidates -= src
+		else
+			SSbad_guys_party.candidates += src
 
 	if(href_list["late_join"])
 		if(!SSticker?.IsRoundInProgress())
@@ -193,6 +208,7 @@
 		return
 
 	else if(!href_list["late_join"])
+		SSbad_guys_party.candidates -= src
 		new_player_panel()
 
 	if(href_list["showpoll"])

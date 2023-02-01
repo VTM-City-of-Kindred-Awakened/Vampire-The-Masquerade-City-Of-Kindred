@@ -10,6 +10,9 @@
 	var/activate_sound = 'code/modules/ziggers/sounds/bloodhealing.ogg'
 	var/leveldelay = TRUE
 
+/mob/living
+	var/resistant_to_disciplines = FALSE
+
 /datum/discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	if(!target)
 		return
@@ -40,6 +43,9 @@
 	if(violates_masquerade)
 		if(CheckEyewitness(target, caster, 7, TRUE))
 			AdjustMasquerade(caster, -1)
+	if(target.resistant_to_disciplines)
+		to_chat(caster, "<span class='danger'>You failed to activate the [name].</span>")
+		return
 	switch(caster.generation-target.generation)
 		if(10)
 			if(prob(90))
