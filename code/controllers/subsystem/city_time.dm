@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(city_time)
 	var/hour = 21
 	var/minutes = 0
 
-	var/timeofnight = "23:00"
+	var/timeofnight = "21:00"
 
 /proc/get_next_hour(var/number)
 	if(number == 23)
@@ -29,3 +29,12 @@ SUBSYSTEM_DEF(city_time)
 		minutes = max(0, minutes+1)
 
 	timeofnight = "[get_watch_number(hour)]:[get_watch_number(minutes)]"
+
+	if(hour == 5 && minutes == 30)
+		to_chat(world, "<span class='ghostalert'>The night is ending...</span>")
+
+	if(hour == 5 && minutes == 45)
+		to_chat(world, "<span class='ghostalert'>First rays of the sun illuminate the sky...</span>")
+
+	if(hour == 6 && minutes == 0)
+		to_chat(world, "<span class='ghostalert'>THE NIGHT IS OVER.</span>")
