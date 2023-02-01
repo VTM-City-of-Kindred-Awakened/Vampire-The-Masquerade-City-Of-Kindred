@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(city_time)
 	else
 		return "[number]"
 
-/datum/controller/subsystem/chat/fire()
+/datum/controller/subsystem/city_time/fire()
 	if(minutes == 59)
 		minutes = 0
 		hour =  get_next_hour(hour)
