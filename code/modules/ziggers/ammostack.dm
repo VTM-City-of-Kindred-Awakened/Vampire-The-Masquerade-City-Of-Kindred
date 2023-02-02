@@ -20,6 +20,7 @@
 
 /obj/item/ammo_casing/vampire
 	icon = 'code/modules/ziggers/ammo.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 	var/base_iconstate
 
 /obj/item/ammo_casing/vampire/c9mm

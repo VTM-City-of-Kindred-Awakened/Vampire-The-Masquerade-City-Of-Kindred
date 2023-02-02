@@ -138,7 +138,7 @@
 
 /obj/item/ammo_box/magazine/vamp9mm
 	name = "uzi magazine (9mm)"
-	icon = 'code/modules/ziggers/weapons.dmi'
+	icon = 'code/modules/ziggers/ammo.dmi'
 	lefthand_file = 'code/modules/ziggers/righthand.dmi'
 	righthand_file = 'code/modules/ziggers/lefthand.dmi'
 	worn_icon = 'code/modules/ziggers/worn.dmi'
@@ -165,7 +165,7 @@
 
 /obj/item/ammo_box/magazine/vamp556
 	name = "carbine magazine (5.56mm)"
-	icon = 'code/modules/ziggers/weapons.dmi'
+	icon = 'code/modules/ziggers/ammo.dmi'
 	lefthand_file = 'code/modules/ziggers/righthand.dmi'
 	righthand_file = 'code/modules/ziggers/lefthand.dmi'
 	worn_icon = 'code/modules/ziggers/worn.dmi'
@@ -184,7 +184,7 @@
 	inhand_icon_state = "rifle"
 	worn_icon_state = "rifle"
 	w_class = WEIGHT_CLASS_BULKY
-	mag_type = /obj/item/ammo_box/magazine/m556
+	mag_type = /obj/item/ammo_box/magazine/vamp556
 	burst_size = 5
 	fire_delay = 2
 	spread = 5

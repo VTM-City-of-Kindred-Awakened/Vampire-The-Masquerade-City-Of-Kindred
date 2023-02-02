@@ -879,7 +879,6 @@
 	uniform = /obj/item/clothing/under/rank/civilian/chaplain
 	id = /obj/item/card/id/hunter
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
-	head = /obj/item/clothing/head/vampire/army
 	backpack_contents = list(
 		/obj/item/storage/book/bible/booze = 1,
 		/obj/item/melee/vampirearms/stake = 3,
