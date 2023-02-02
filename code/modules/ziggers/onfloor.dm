@@ -14,10 +14,10 @@
 	if(onflooricon && isturf(loc))
 		icon = onflooricon
 		pixel_w = 0
+		cut_overlays()
 		if(onflooricon_state)
 			icon_state = onflooricon_state
 		update_icon()
-
 /obj/item/Initialize()
 	..()
 	if(isturf(loc) && onflooricon)
