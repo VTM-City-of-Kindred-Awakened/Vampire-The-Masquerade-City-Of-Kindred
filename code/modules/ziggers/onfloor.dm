@@ -18,7 +18,6 @@
 		if(onflooricon_state)
 			icon_state = onflooricon_state
 		update_icon()
-
 /obj/item/Initialize()
 	..()
 	if(isturf(loc) && onflooricon)
