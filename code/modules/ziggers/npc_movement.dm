@@ -41,10 +41,11 @@
 			last_danger_meet = world.time
 		if(fire_stacks >= 1)
 			resist()
-		if(loc != tupik_loc)
-			tupik_loc = loc
 		if(loc == tupik_loc)
 			tupik_steps += 1
+		if(loc != tupik_loc)
+			tupik_loc = loc
+			tupik_steps = 0
 		if(tupik_steps > 1)
 			if(!CheckMove())
 				var/turf/T = get_step(src, pick(NORTH, SOUTH, WEST, EAST))

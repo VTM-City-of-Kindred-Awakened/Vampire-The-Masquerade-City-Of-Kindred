@@ -2,6 +2,7 @@
 
 /mob/dead/new_player
 	var/ready = 0
+	var/late_ready = FALSE
 	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
 
 	flags_1 = NONE
@@ -51,10 +52,10 @@
 	asset_datum.send(client)
 	var/list/output = list("<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>")
 
-	if(src in SSbad_guys_party.candidates)
-		output += "<p>Wait for Threat Party ([length(SSbad_guys_party.candidates)]/[SSbad_guys_party.go_on_next_fire == TRUE ? SSbad_guys_party.max_candidates : "???"]): <a href='byond://?src=[REF(src)];late_party=1'>Yes</a> [round((SSbad_guys_party.next_fire-world.time)/10)]s</p>"
+	if(late_ready)
+		output += "<p>Late Party: <a href='byond://?src=[REF(src)];late_party=1'>Yes</a></p>"
 	else
-		output += "<p>Wait for Threat Party ([length(SSbad_guys_party.candidates)]/[SSbad_guys_party.go_on_next_fire == TRUE ? SSbad_guys_party.max_candidates : "???"]): <a href='byond://?src=[REF(src)];late_party=1'>No</a> [round((SSbad_guys_party.next_fire-world.time)/10)]s</p>"
+		output += "<p>Late Party: <a href='byond://?src=[REF(src)];late_party=1'>No</a></p>"
 
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
 		switch(ready)
@@ -68,8 +69,6 @@
 		output += "<p><a href='byond://?src=[REF(src)];manifest=1'>View the Kindred Population</a></p>"
 		output += "<p><a href='byond://?src=[REF(src)];late_join=1'>Join Game!</a></p>"
 		output += "<p>[LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)]</p>"
-
-	output += "<p><b>[SScity_time.timeofnight]</b></p>"
 
 	if(!IsGuestKey(src.key))
 		output += playerpolls()
@@ -141,6 +140,7 @@
 
 	if(href_list["ready"])
 		SSbad_guys_party.candidates -= src
+		late_ready = FALSE
 		var/tready = text2num(href_list["ready"])
 		//Avoid updating ready if we're after PREGAME (they should use latejoin instead)
 		//This is likely not an actual issue but I don't have time to prove that this
@@ -159,12 +159,16 @@
 
 	if(href_list["late_party"])
 		ready = PLAYER_NOT_READY
-		if(src in SSbad_guys_party.candidates)
+		if(late_ready)
+			late_ready = FALSE
 			SSbad_guys_party.candidates -= src
 		else
+			late_ready = TRUE
 			SSbad_guys_party.candidates += src
 
 	if(href_list["late_join"])
+		SSbad_guys_party.candidates -= src
+		late_ready = FALSE
 		if(!SSticker?.IsRoundInProgress())
 			to_chat(usr, "<span class='boldwarning'>The round is either not ready, or has already finished...</span>")
 			return
@@ -208,7 +212,6 @@
 		return
 
 	else if(!href_list["late_join"])
-		SSbad_guys_party.candidates -= src
 		new_player_panel()
 
 	if(href_list["showpoll"])
@@ -491,8 +494,8 @@
 	new_character = .
 	if(transfer_after)
 		transfer_character()
-	if(client.prefs.archtype)
-		H.__archetype = new client.prefs.archtype
+//	if(client.prefs.archtype)
+//		H.__archetype = new client.prefs.archtype
 /mob/dead/new_player/proc/transfer_character()
 	. = new_character
 	if(.)

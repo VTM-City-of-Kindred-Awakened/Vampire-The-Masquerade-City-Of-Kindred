@@ -43,9 +43,11 @@ SUBSYSTEM_DEF(bad_guys_party)
 		if(length(candidates))
 			var/list/actual_candidates = candidates.Copy
 			if(length(candidates) > max_candidates)
-				for(var/i in max_candidates to length(candidates))
+				for(var/i in 1 to length(candidates)-max_candidates)
 					actual_candidates -= pick(candidates)
 			for(var/mob/dead/new_player/NP in actual_candidates)
+				candidates -= NP
+				NP.late_ready = FALSE
 				NP.AttemptLateSpawn(next_role)
 			go_on_next_fire = FALSE
 		return

@@ -207,7 +207,7 @@ SUBSYSTEM_DEF(ticker)
 				toggle_ooc(TRUE) // Turn it on
 				toggle_dooc(TRUE)
 				declare_completion(force_ending)
-				check_maprotate()
+//				check_maprotate()
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 
 
