@@ -1,5 +1,5 @@
 /proc/AdjustHumanity(var/mob/living/carbon/human/H, var/value, var/limit)
-	if(!H.in_frenzy)
+	if(!H.in_frenzy && !is_special_character(H))
 		var/mod = 1
 		if(H.clane)
 			mod = H.clane.humanitymod
@@ -15,6 +15,8 @@
 				to_chat(H, "<span class='us-erhelp'><b>HUMANITY INCREASES</b></span>")
 
 /proc/AdjustMasquerade(var/mob/living/carbon/human/H, var/value)
+	if(is_special_character(H))
+		return
 	if(H.last_masquerade_violation+300 > world.time)
 		return
 	H.last_masquerade_violation = world.time

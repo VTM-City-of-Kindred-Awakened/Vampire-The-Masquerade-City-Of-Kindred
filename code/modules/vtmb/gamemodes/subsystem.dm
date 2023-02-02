@@ -12,91 +12,102 @@ SUBSYSTEM_DEF(bad_guys_party)
 
 	var/list/candidates = list()
 	var/max_candidates = 0
-	var/next_role = "Caitiff"
+	var/datum/outfit/job/Next = null
 	var/go_on_next_fire = FALSE
+
+	var/setted_up = FALSE
+	var/list/datum/job/jobs = list()
+
+/datum/controller/subsystem/bad_guys_party/proc/setup_occupations()
+	var/list/all_jobs = subtypesof(/datum/job)
+
+	for(var/J in all_jobs)
+		var/datum/job/job = new J()
+		if(!job)
+			continue
+		jobs[job.title] = job
+
+/datum/controller/subsystem/bad_guys_party/proc/GetAntagJob(var/rank)
+	return jobs[rank]
 
 /datum/controller/subsystem/bad_guys_party/proc/get_niggers(var/level)
 	switch(level)
 		if(1)
 			//caitiff
+			if(Next)
+				qdel(Next)
 			threat = min(100, threat+30)
 			max_candidates = 3
 			go_on_next_fire = TRUE
-			next_role = "Caitiff"
+			Next = new /datum/outfit/job/caitiff()
 		if(2)
 			//hunt
+			if(Next)
+				qdel(Next)
 			threat = min(100, threat+60)
 			max_candidates = 5
 			go_on_next_fire = TRUE
-			next_role = "Hunter"
+			Next = new /datum/outfit/job/hunter()
 		if(3)
 			//sabbat
+			if(Next)
+				qdel(Next)
 			threat = min(100, threat+90)
 			max_candidates = 7
 			go_on_next_fire = TRUE
-			next_role = "Sabbatist"
+			Next = new /datum/outfit/job/sabbatist()
 
-/mob/dead/new_player/proc/ForceLateSpawn(rank)
+/mob/dead/new_player/proc/ForceLateSpawn()
 	if(SSticker.late_join_disabled)
 		alert(src, "An administrator has disabled late join spawning.")
 		return FALSE
 
+	//Remove the player from the join queue if he was in one and reset the timer
 	SSticker.queued_players -= src
 	SSticker.queue_delay = 4
 
-	SSjob.AssignRole(src, rank, 1)
+	SSjob.AssignRole(src, "Citizen", 1)
 
 	var/mob/living/character = create_character(TRUE)	//creates the human and transfers vars and mind
-	var/equip = SSjob.EquipRank(character, rank, TRUE)
-	if(isliving(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
-		character = equip
-
-	var/datum/job/job = SSjob.GetJob(rank)
-
-	if(job && !job.override_latejoin_spawn(character))
-		for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
-			if(sloc.name == rank)
-				sloc.JoinPlayerHere(character, FALSE)
-		character.update_parallax_teleport()
+	SSbad_guys_party.Next.equip(H = character, visualsOnly = FALSE)
+	var/atom/movable/screen/splash/Spl = new(character.client, TRUE)
+	Spl.Fade(TRUE)
+	character.update_parallax_teleport()
 
 	SSticker.minds += character.mind
 	character.client.init_verbs() // init verbs for the late join
-	var/mob/living/carbon/human/humanc
-	if(ishuman(character))
-		humanc = character	//Let's retypecast the var to be human,
-		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CREWMEMBER_JOINED, humanc, rank)
-
-	GLOB.joined_player_list += character.ckey
-
-	if(humanc && CONFIG_GET(flag/roundstart_traits))
-		SSquirks.AssignQuirks(humanc, humanc.client, TRUE)
 
 /datum/controller/subsystem/bad_guys_party/fire()
-	threat = max(0, threat-10)
+	if(!setted_up)
+		setup_occupations()
+		setted_up = TRUE
 
-	if(go_on_next_fire)
-		if(length(candidates))
-			var/list/actual_candidates = candidates.Copy()
-			if(length(candidates) > max_candidates)
-				for(var/i in 1 to length(candidates)-max_candidates)
-					actual_candidates -= pick(candidates)
-			for(var/mob/dead/new_player/NP in actual_candidates)
-				candidates -= NP
-				NP.late_ready = FALSE
-				NP.ForceLateSpawn(next_role)
-			go_on_next_fire = FALSE
-		return
-	else
-		switch(threat)
-			if(0 to 10)
-				//ANYONE
-				if(prob(100-threat))
-					get_niggers(rand(1, 3))
-			if(11 to 40)
-				//HUNT OR CAITIFF
-				if(prob(100-threat))
-					get_niggers(rand(1, 2))
-			if(41 to 70)
-				//CAITIFF ONLY
-				if(prob(100-threat))
-					get_niggers(1)
+	if(SSticker.current_state == GAME_STATE_PLAYING)
+		threat = max(0, threat-10)
+
+		if(go_on_next_fire)
+			if(length(candidates))
+				var/list/actual_candidates = candidates.Copy()
+				if(length(candidates) > max_candidates)
+					for(var/i in 1 to length(candidates)-max_candidates)
+						actual_candidates -= pick(candidates)
+				for(var/mob/dead/new_player/NP in actual_candidates)
+					candidates -= NP
+					NP.late_ready = FALSE
+					NP.ForceLateSpawn()
+				go_on_next_fire = FALSE
+			return
+		else
+			switch(threat)
+				if(0 to 10)
+					//ANYONE
+					if(prob(100-threat))
+						get_niggers(rand(1, 3))
+				if(11 to 40)
+					//HUNT OR CAITIFF
+					if(prob(100-threat))
+						get_niggers(rand(1, 2))
+				if(41 to 70)
+					//CAITIFF ONLY
+					if(prob(100-threat))
+						get_niggers(1)

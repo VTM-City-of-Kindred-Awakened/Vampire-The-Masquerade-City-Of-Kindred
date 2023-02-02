@@ -814,24 +814,8 @@
 	worn_icon = 'code/modules/ziggers/worn.dmi'
 	worn_icon_state = "id11"
 
-/datum/job/caitiff
-	title = "Caitiff"
-	faction = "Vampire"
-	total_positions = -1
-	spawn_positions = -1
-	supervisors = "your path of Revenge"
-	outfit = /datum/outfit/job/caitiff
-	duty = "Have your revenge."
-
-/datum/job/caitiff/after_spawn(mob/living/H, mob/M)
-	. = ..()
-	var/mob/living/carbon/human/HU = H
-	if(HU.mind)
-		HU.mind.add_antag_datum(/datum/antagonist/caitiff)
-
 /datum/outfit/job/caitiff
 	name = "Caitiff"
-	jobtype = /datum/job/caitiff
 	l_pocket = /obj/item/vamp/phone
 	id = /obj/item/cockclock
 	backpack_contents = list(/obj/item/passport=1, /obj/item/melee/vampirearms/stake=1)
@@ -847,8 +831,21 @@
 		if(H.clane.female_clothes)
 			uniform = text2path(H.clane.female_clothes)
 
+/datum/outfit/job/caitiff/post_equip(mob/living/carbon/human/H)
+	..()
+	if(H.mind)
+		H.mind.add_antag_datum(/datum/antagonist/caitiff)
+
+	var/list/landmarkslist = list()
+	for(var/obj/effect/landmark/start/S in GLOB.start_landmarks_list)
+		if(S.name == name)
+			landmarkslist += S
+	var/obj/effect/landmark/start/D = pick(landmarkslist)
+	H.forceMove(D.loc)
+
 /obj/effect/landmark/start/caitiff
 	name = "Caitiff"
+	delete_after_roundstart = FALSE
 
 /datum/antagonist/caitiff
 	name = "Caitiff"
@@ -869,27 +866,16 @@
 	return ..()
 
 /datum/antagonist/caitiff/on_removal()
+	..()
 	to_chat(owner.current,"<span class='userdanger'>You are no longer the Caitiff!</span>")
 	owner.special_role = null
-	return ..()
 
 /datum/antagonist/caitiff/greet()
 	to_chat(owner.current, "<span class='alertsyndie'>You are the Caitiff.</span>")
 	owner.announce_objectives()
 
-/datum/job/hunter
-	title = "Hunter"
-	faction = "Inquisition"
-	total_positions = -1
-	spawn_positions = -1
-	supervisors = "the Inquisition"
-	outfit = /datum/outfit/job/hunter
-	duty = "Hunt on vampires, represent the Honor of the Inquisition."
-
 /datum/outfit/job/hunter
 	name = "Hunter"
-	jobtype = /datum/job/hunter
-
 	uniform = /obj/item/clothing/under/rank/civilian/chaplain
 	id = /obj/item/card/id/hunter
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
@@ -903,34 +889,54 @@
 		/obj/item/gun/ballistic/automatic/vampire/deagle = 1
 		)
 
-/datum/job/hunter/after_spawn(mob/living/H, mob/M)
-	. = ..()
-	var/mob/living/carbon/human/HU = H
-	if(HU.clane)
-		qdel(HU.clane)
-	HU.set_species(/datum/species/human)
-	if(HU.mind)
-		HU.mind.add_antag_datum(/datum/antagonist/hunter)
+/datum/outfit/job/hunter/post_equip(mob/living/carbon/human/H)
+	..()
+	if(H.clane)
+		qdel(H.clane)
+	H.set_species(/datum/species/human)
+	H.maxHealth = 100
+	H.health = 100
+	H.generation = 13
+	for(var/atom/movable/screen/blood/B in H.hud_used.infodisplay)
+		qdel(B)
+	for(var/atom/movable/screen/drinkblood/DB in H.hud_used.static_inventory)
+		qdel(DB)
+	for(var/atom/movable/screen/bloodheal/BH in H.hud_used.static_inventory)
+		qdel(BH)
+	for(var/atom/movable/screen/bloodpower/BP in H.hud_used.static_inventory)
+		qdel(BP)
+	for(var/atom/movable/screen/disciplines/DI in H.hud_used.static_inventory)
+		qdel(DI)
+	if(H.mind)
+		H.mind.add_antag_datum(/datum/antagonist/hunter)
+
+	var/list/landmarkslist = list()
+	for(var/obj/effect/landmark/start/S in GLOB.start_landmarks_list)
+		if(S.name == name)
+			landmarkslist += S
+	var/obj/effect/landmark/start/D = pick(landmarkslist)
+	H.forceMove(D.loc)
 
 	var/list/loadouts = list("Sniper Rifle", "EOD Suit", "Holy Presence")
 	var/loadout_type = input(H, "Choose the Lord's gift for you:", "Loadout") as anything in loadouts
 	switch(loadout_type)
 		if("Sniper Rifle")
-			HU.equip_to_slot_or_del(new /obj/item/clothing/head/vampire/army(HU), ITEM_SLOT_HEAD)
-			HU.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/vest/army(HU), ITEM_SLOT_OCLOTHING)
-			HU.put_in_r_hand(new /obj/item/gun/ballistic/automatic/vampire/sniper(HU))
-			HU.put_in_l_hand(new /obj/item/gun/ballistic/automatic/vampire/sniper(HU))
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/vampire/army(H), ITEM_SLOT_HEAD)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/vest/army(H), ITEM_SLOT_OCLOTHING)
+			H.put_in_r_hand(new /obj/item/gun/ballistic/automatic/vampire/sniper(H))
+			H.put_in_l_hand(new /obj/item/gun/ballistic/automatic/vampire/sniper(H))
 		if("EOD Suit")
-			HU.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/eod(HU), ITEM_SLOT_OCLOTHING)
-			HU.equip_to_slot_or_del(new /obj/item/clothing/head/vampire/eod(HU), ITEM_SLOT_HEAD)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/eod(H), ITEM_SLOT_OCLOTHING)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/vampire/eod(H), ITEM_SLOT_HEAD)
 		if("Holy Presence")
-			HU.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/vest/army(HU), ITEM_SLOT_OCLOTHING)
-			HU.put_in_r_hand(new /obj/item/melee/vampirearms/chainsaw(HU))
-			HU.resistant_to_disciplines = TRUE
-			to_chat(HU, "<b>You are no longer vulnerable to vampire blood powers...</b>")
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/vest/army(H), ITEM_SLOT_OCLOTHING)
+			H.put_in_r_hand(new /obj/item/melee/vampirearms/chainsaw(H))
+			H.resistant_to_disciplines = TRUE
+			to_chat(H, "<b>You are no longer vulnerable to vampire blood powers...</b>")
 
 /obj/effect/landmark/start/hunter
 	name = "Hunter"
+	delete_after_roundstart = FALSE
 
 /datum/antagonist/hunter
 	name = "Hunter"
@@ -943,7 +949,7 @@
 	show_to_ghosts = TRUE
 
 /datum/antagonist/hunter/on_gain()
-	add_antag_hud(ANTAG_HUD_OPS, "synd", owner)
+	add_antag_hud(ANTAG_HUD_OPS, "synd", owner.current)
 	owner.special_role = src
 	var/datum/objective/custom/custom_objective = new
 	custom_objective.owner = owner
@@ -956,32 +962,16 @@
 	return ..()
 
 /datum/antagonist/hunter/on_removal()
+	..()
 	to_chat(owner.current,"<span class='userdanger'>You are no longer the Hunter!</span>")
 	owner.special_role = null
-	return ..()
 
 /datum/antagonist/hunter/greet()
 	to_chat(owner.current, "<span class='alertsyndie'>You are the Hunter.</span>")
 	owner.announce_objectives()
 
-/datum/job/sabbatist
-	title = "Sabbatist"
-	faction = "Vampire"
-	total_positions = -1
-	spawn_positions = -1
-	supervisors = "the Sabbat"
-	outfit = /datum/outfit/job/caitiff
-	duty = "Shift Camarilla out of the city."
-
-/datum/job/sabbatist/after_spawn(mob/living/H, mob/M)
-	. = ..()
-	var/mob/living/carbon/human/HU = H
-	if(HU.mind)
-		HU.mind.add_antag_datum(/datum/antagonist/sabbatist)
-
 /datum/outfit/job/sabbatist
 	name = "Sabbatist"
-	jobtype = /datum/job/sabbatist
 	l_pocket = /obj/item/vamp/phone
 	suit = /obj/item/clothing/suit/vampire/trench
 	id = /obj/item/cockclock
@@ -998,8 +988,21 @@
 		if(H.clane.female_clothes)
 			uniform = text2path(H.clane.female_clothes)
 
+/datum/outfit/job/sabbatist/post_equip(mob/living/carbon/human/H)
+	..()
+	if(H.mind)
+		H.mind.add_antag_datum(/datum/antagonist/sabbatist)
+
+	var/list/landmarkslist = list()
+	for(var/obj/effect/landmark/start/S in GLOB.start_landmarks_list)
+		if(S.name == name)
+			landmarkslist += S
+	var/obj/effect/landmark/start/D = pick(landmarkslist)
+	H.forceMove(D.loc)
+
 /obj/effect/landmark/start/sabbatist
 	name = "Sabbatist"
+	delete_after_roundstart = FALSE
 
 /datum/antagonist/sabbatist
 	name = "Sabbatist"
@@ -1011,7 +1014,7 @@
 	antag_hud_name = "rev"
 
 /datum/antagonist/sabbatist/on_gain()
-	add_antag_hud(ANTAG_HUD_REV, "rev", owner)
+	add_antag_hud(ANTAG_HUD_REV, "rev", owner.current)
 	owner.special_role = src
 	var/datum/objective/custom/custom_objective = new
 	custom_objective.owner = owner
@@ -1024,9 +1027,9 @@
 	return ..()
 
 /datum/antagonist/sabbatist/on_removal()
+	..()
 	to_chat(owner.current,"<span class='userdanger'>You are no longer the part of Sabbat!</span>")
 	owner.special_role = null
-	return ..()
 
 /datum/antagonist/sabbatist/greet()
 	to_chat(owner.current, "<span class='alertsyndie'>You are the part of Sabbat.</span>")

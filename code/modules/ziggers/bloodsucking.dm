@@ -82,7 +82,7 @@
 				client.images -= suckbar
 			qdel(suckbar)
 			return
-		if(grab_state > GRAB_PASSIVE)
+		if(grab_state >= GRAB_PASSIVE)
 			stop_sound_channel(CHANNEL_BLOOD)
 			drinksomeblood(mob)
 	else
