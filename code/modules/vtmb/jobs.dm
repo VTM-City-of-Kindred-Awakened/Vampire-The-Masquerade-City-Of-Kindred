@@ -898,6 +898,8 @@
 	H.generation = 13
 	for(var/atom/movable/screen/blood/B in H.hud_used.infodisplay)
 		qdel(B)
+	for(var/atom/movable/screen/healths/HE in H.hud_used.infodisplay)
+		HE.icon = 'code/modules/ziggers/ghoul_health.dmi'
 	for(var/atom/movable/screen/drinkblood/DB in H.hud_used.static_inventory)
 		qdel(DB)
 	for(var/atom/movable/screen/bloodheal/BH in H.hud_used.static_inventory)

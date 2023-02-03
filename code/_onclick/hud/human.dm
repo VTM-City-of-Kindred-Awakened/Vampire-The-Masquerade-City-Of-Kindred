@@ -313,7 +313,10 @@
 	infodisplay += spacesuit
 
 	healths = new /atom/movable/screen/healths()
-	healths.icon = 'code/modules/ziggers/32x48.dmi'
+	if(iskindred(owner))
+		healths.icon = 'code/modules/ziggers/32x48.dmi'
+	else
+		healths.icon = 'code/modules/ziggers/ghoul_health.dmi'
 	healths.hud = src
 	infodisplay += healths
 	if(iskindred(owner))

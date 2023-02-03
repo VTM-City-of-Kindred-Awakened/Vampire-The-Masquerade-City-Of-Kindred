@@ -456,10 +456,13 @@
 /mob/living/carbon/human/npc/proc/ghoulificate(mob/owner)
 	set waitfor = FALSE
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]`s ghoul?", null, null, null, 50, src)
+	for(var/mob/dead/observer/G in GLOB.player_list)
+		if(G.key)
+			to_chat(G, "<span class='ghostalert'>[owner] is ghoulificating [src].</span>")
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		src.key = C.key
-		to_chat(src, "<span class='warning'>You feel blood connection with [owner]...</span>")
+		to_chat(src, "<span class='warning'><b>You feel blood connection with [owner]. Serve your master.</b></span>")
 
 /mob/living/carbon/human/npc/AltClick(mob/user)
 	. = ..()
