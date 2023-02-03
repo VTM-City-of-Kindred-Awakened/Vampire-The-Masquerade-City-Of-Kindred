@@ -26,7 +26,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_PRINCE
 
-	minimal_generation = 10
+//	minimal_generation = 10	//Uncomment when players get exp enough
 
 	my_contact_is_important = TRUE
 	known_contacts = list("Sheriff",
@@ -109,7 +109,7 @@
 	display_order = JOB_DISPLAY_ORDER_SHERIFF
 	bounty_types = CIV_JOB_SEC
 
-	minimal_generation = 11
+//	minimal_generation = 11	//Uncomment when players get exp enough
 
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
@@ -187,7 +187,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_CLERK
 
-	minimal_generation = 12
+//	minimal_generation = 12	//Uncomment when players get exp enough
 
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
@@ -462,7 +462,7 @@
 	display_order = JOB_DISPLAY_ORDER_BARKEEPER
 	bounty_types = CIV_JOB_DRINK
 
-	minimal_generation = 11
+//	minimal_generation = 11	//Uncomment when players get exp enough
 
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince",
@@ -557,7 +557,7 @@
 	display_order = JOB_DISPLAY_ORDER_DEALER
 	bounty_types = CIV_JOB_RANDOM
 
-	minimal_generation = 12
+//	minimal_generation = 12	//Uncomment when players get exp enough
 
 	my_contact_is_important = TRUE
 	known_contacts = list("Barkeeper")

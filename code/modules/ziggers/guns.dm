@@ -5,6 +5,7 @@
 	worn_icon = 'code/modules/ziggers/worn.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 	can_suppress = FALSE
+	recoil = 2
 
 /obj/item/gun/ballistic/automatic/vampire
 	icon = 'code/modules/ziggers/weapons.dmi'
@@ -13,6 +14,7 @@
 	worn_icon = 'code/modules/ziggers/worn.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 	can_suppress = FALSE
+	recoil = 2
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev44
 	name = "revolver cylinder"
@@ -156,7 +158,7 @@
 	inhand_icon_state = "uzi"
 	worn_icon_state = "uzi"
 	mag_type = /obj/item/ammo_box/magazine/vamp9mm
-	burst_size = 3
+	burst_size = 2
 	bolt_type = BOLT_TYPE_OPEN
 	show_bolt_icon = FALSE
 	mag_display = TRUE
@@ -185,7 +187,7 @@
 	worn_icon_state = "rifle"
 	w_class = WEIGHT_CLASS_BULKY
 	mag_type = /obj/item/ammo_box/magazine/vamp556
-	burst_size = 5
+	burst_size = 3
 	fire_delay = 2
 	spread = 5
 	bolt_type = BOLT_TYPE_OPEN
@@ -255,3 +257,4 @@
 	can_be_sawn_off	= FALSE
 	fire_sound = 'code/modules/ziggers/sounds/pomp.ogg'
 	pixel_w = -8
+	recoil = 2

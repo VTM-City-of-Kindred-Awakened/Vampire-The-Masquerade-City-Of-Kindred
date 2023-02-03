@@ -390,3 +390,59 @@
 
 /obj/effect/decal/painting/third
 	icon_state = "painting3"
+
+/obj/structure/jesuscross
+	name = "Jesus Christ on a cross"
+	desc = "Jesus said, “Father, forgive them, for they do not know what they are doing.” And they divided up his clothes by casting lots (Luke 23:34)."
+	icon = 'code/modules/ziggers/64x64.dmi'
+	icon_state = "cross"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	density = TRUE
+	pixel_w = -16
+
+/obj/structure/roadsign
+	name = "road sign"
+	desc = "Do not drive your car cluelessly."
+	icon = 'code/modules/ziggers/32x48.dmi'
+	icon_state = "stop"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+
+/obj/structure/roadsign/stop
+	name = "stop sign"
+	icon_state = "stop"
+
+/obj/structure/roadsign/noparking
+	name = "no parking sign"
+	icon_state = "noparking"
+
+/obj/structure/roadsign/nopedestrian
+	name = "no pedestrian sign"
+	icon_state = "nopedestrian"
+
+/obj/structure/roadsign/busstop
+	name = "bus stop sign"
+	icon_state = "busstop"
+
+/obj/structure/roadsign/speedlimit
+	name = "speed limit sign"
+	icon_state = "speed50"
+
+/obj/structure/roadsign/warningtrafficlight
+	name = "traffic light warning sign"
+	icon_state = "warningtrafficlight"
+
+/obj/structure/roadsign/warningpedestrian
+	name = "pedestrian warning sign"
+	icon_state = "warningpedestrian"
+
+/obj/structure/roadsign/parking
+	name = "parking sign"
+	icon_state = "parking"
+
+/obj/structure/roadsign/crosswalk
+	name = "crosswalk sign"
+	icon_state = "crosswalk"
