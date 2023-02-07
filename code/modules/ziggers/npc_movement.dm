@@ -163,6 +163,14 @@
 	if(get_turf(src) != toface)
 		dir = get_dir(toface, get_turf(src))
 
+/mob/living/carbon/human/npc/proc/enemystep()
+	if(!danger_source || !isturf(loc) || CheckMove())
+		return
+	set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
+
+	face_atom(danger_source)
+	step_to(src,danger_source,0)
+
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
 	if(CheckMove())
 		return
@@ -175,10 +183,17 @@
 			a_intent = INTENT_HARM
 			if(m_intent == MOVE_INTENT_WALK)
 				toggle_move_intent(src)
-			var/datum/cb = CALLBACK(src,.proc/awaystep)
-			var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
-			for(var/i in 1 to reqsteps)
-				addtimer(cb, (i - 1)*total_multiplicative_slowdown())
+			if(!my_weapon)
+				var/datum/cb = CALLBACK(src,.proc/awaystep)
+				var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
+				for(var/i in 1 to reqsteps)
+					addtimer(cb, (i - 1)*total_multiplicative_slowdown())
+			if(my_weapon)
+				var/datum/cb = CALLBACK(src,.proc/enemystep)
+				var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
+				for(var/i in 1 to reqsteps)
+					addtimer(cb, (i - 1)*total_multiplicative_slowdown())
+
 			if(last_danger_meet+300 <= world.time)
 				danger_source = null
 				walktarget = ChoosePath()

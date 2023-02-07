@@ -19,11 +19,13 @@
 
 	var/stopturf = 1
 
-	var/obj/item/melee/melee_weapon
-	var/obj/item/gun/range_weapon
+	var/obj/item/my_weapon
 
 	//Zdes hranim oruzhie
 	var/obj/item/storage/backpack/inventory
+
+	var/ghoulificating = FALSE
+	var/ghoulificated = FALSE
 
 /datum/socialrole
 	//For randomizing
@@ -462,13 +464,20 @@
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		src.key = C.key
+		ghoulificated = TRUE
 		to_chat(src, "<span class='warning'><b>You feel blood connection with [owner]. Serve your master.</b></span>")
 
 /mob/living/carbon/human/npc/AltClick(mob/user)
 	. = ..()
-	if(iskindred(user))
-		to_chat(user, "<span class='warning'>I gave my <b>BLOOD</b> to mortal.</span>")
-		src.ghoulificate(user)
+	if(iskindred(user) && !ghoulificated && !ghoulificating)
+		ghoulificating = TRUE
+		if(do_mob(user, src, 7 SECONDS))
+			to_chat(user, "<span class='warning'>I gave my <b>BLOOD</b> to mortal.</span>")
+			ghoulificating = FALSE
+			if(!ghoulificated)
+				src.ghoulificate(user)
+		else
+			ghoulificating = FALSE
 
 /mob/living/carbon/human/npc/Destroy()
 	. = ..()
