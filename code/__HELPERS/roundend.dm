@@ -205,7 +205,7 @@
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
 
-	to_chat(world, "<BR><BR><BR><span class='big bold'>The round has ended.</span>")
+	to_chat(world, "<BR><BR><BR><span class='big bold'>The dawn is coming.</span>")
 	log_game("The round has ended.")
 
 	for(var/I in round_end_events)
