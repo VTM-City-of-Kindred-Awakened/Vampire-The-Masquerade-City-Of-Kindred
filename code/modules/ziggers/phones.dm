@@ -432,4 +432,15 @@
 	icon = 'code/modules/ziggers/onfloor.dmi'
 	icon_state = "streetphone"
 	anchored = TRUE
-	number = 1447
+	number = "1447"
+
+/obj/item/vamp/phone/clean
+	icon = 'code/modules/ziggers/onfloor.dmi'
+	icon_state = "redphone"
+	anchored = TRUE
+	number = "700 4424"
+
+/obj/item/vamp/phone/clean/Initialize()
+	. = ..()
+	GLOB.phone_numbers_list += number
+	GLOB.phones_list += src

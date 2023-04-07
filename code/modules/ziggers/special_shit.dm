@@ -12,8 +12,8 @@
 	. = ..()
 	if(length(GLOB.masquerade_breakers_list))
 		to_chat(user, "<b>YOU</b>, [get_area_name(user)] X:[user.x] Y:[user.y]")
-		for(var/mob/H in GLOB.masquerade_breakers_list)
-			to_chat(user, "[H.real_name], [get_area_name(H)] X:[H.x] Y:[H.y]")
+		for(var/mob/living/H in GLOB.masquerade_breakers_list)
+			to_chat(user, "[H.real_name], Masquerade: [H.masquerade], [get_area_name(H)] X:[H.x] Y:[H.y]")
 	else
 		to_chat(user, "No available Masquerade breakers in city...")
 
@@ -42,6 +42,7 @@
 					M.ghostize(FALSE)
 				M.death()
 				to_chat(user, "<b>Successfully punished masquerade breaker and restored the Masquerade.</b>")
+				AdjustMasquerade(user, 1)
 				return
 			else
 				to_chat(user, "Target must be in critical condition or torpor.")
