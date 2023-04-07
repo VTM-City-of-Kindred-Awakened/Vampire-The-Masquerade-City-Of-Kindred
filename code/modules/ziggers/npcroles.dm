@@ -763,3 +763,15 @@
 	can_be_held = FALSE
 	footstep_type = FOOTSTEP_MOB_CLAW
 	bloodquality = BLOOD_QUALITY_LOW
+
+/mob/living/simple_animal/pet/rat/Life()
+	for(var/mob/living/carbon/human/H in range(7))
+		if(!H)
+			qdel(src)
+			return
+	..()
+
+/mob/living/simple_animal/pet/rat/death()
+	. = ..()
+	qdel(src)
+	return

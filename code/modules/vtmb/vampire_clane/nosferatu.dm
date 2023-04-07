@@ -29,3 +29,5 @@
 	var/mutable_appearance/ears_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "nosferatu_ears", -UPPER_EARS_LAYER)
 	H.overlays_standing[UPPER_EARS_LAYER] = ears_overlay
 	H.apply_overlay(UPPER_EARS_LAYER)
+	var/obj/item/organ/eyes/night_vision/NV = new()
+	NV.Insert(H, TRUE, FALSE)

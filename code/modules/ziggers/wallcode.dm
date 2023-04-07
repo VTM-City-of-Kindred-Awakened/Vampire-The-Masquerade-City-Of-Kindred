@@ -733,8 +733,8 @@
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_WATER
 	barefootstep = FOOTSTEP_WATER
-	clawfootstep = FOOTSTEP_HARD_CLAW
-	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	clawfootstep = FOOTSTEP_WATER
+	heavyfootstep = FOOTSTEP_WATER
 
 /turf/open/floor/plating/shit/border
 	icon_state = "shit_border"
@@ -752,6 +752,12 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
+/turf/open/floor/plating/vampcanal/Enter(atom/movable/mover, atom/oldloc)
+	. = ..()
+	if(istype(mover, /mob/living/carbon/human))
+		if(prob(10))
+			new /mob/living/simple_animal/pet/rat(oldloc)
+
 /turf/open/floor/plating/vampcanal/Initialize()
 	..()
 	icon_state = "canal[rand(1, 3)]"
@@ -768,6 +774,12 @@
 	barefootstep = FOOTSTEP_PARKET
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/vampcanalplating/Enter(atom/movable/mover, atom/oldloc)
+	. = ..()
+	if(istype(mover, /mob/living/carbon/human))
+		if(prob(10))
+			new /mob/living/simple_animal/pet/rat(oldloc)
 
 /turf/open/floor/plating/vampcanal/Initialize()
 	..()

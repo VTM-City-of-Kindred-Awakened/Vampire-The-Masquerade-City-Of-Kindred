@@ -70,7 +70,7 @@
 		if(iswallturf(location))
 			return location
 		for(var/atom/A in location)
-			if(A.density && !ishuman(A) && !istype(A, /obj/structure/lamppost))
+			if(A.density && !istype(A, /obj/structure/lamppost))
 				return location
 			if(istype(A, /obj/effect/landmark/npcwall))
 				return location
