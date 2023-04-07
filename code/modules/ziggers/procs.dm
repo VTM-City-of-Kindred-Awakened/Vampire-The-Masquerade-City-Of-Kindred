@@ -25,11 +25,13 @@
 			H.masquerade = max(0, H.masquerade+value)
 			SEND_SOUND(H, sound('code/modules/ziggers/sounds/masquerade_violation.ogg', 0, 0, 75))
 			to_chat(H, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
+		SSbad_guys_party.next_fire = max(world.time, SSbad_guys_party.next_fire-1200)
 	if(value > 0)
 		if(H.masquerade < 5)
 			H.masquerade = min(5, H.masquerade+value)
 			SEND_SOUND(H, sound('code/modules/ziggers/sounds/general_good.ogg', 0, 0, 75))
 			to_chat(H, "<span class='userhelp'><b>MASQUERADE REINFORCEMENT</b></span>")
+		SSbad_guys_party.next_fire = max(world.time, SSbad_guys_party.next_fire+1200)
 
 /mob/living/carbon/human/npc/proc/backinvisible(var/atom/A)
 	switch(dir)

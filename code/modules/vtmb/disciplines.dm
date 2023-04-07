@@ -100,10 +100,9 @@
 	W.set_light(2, 2, "#6eeeff")
 	target.Stun(10)
 	spawn(10)
-		target.Knockdown(20)
 		W.forceMove(target.loc)
 		playsound(W, 'code/modules/ziggers/sounds/volk.ogg', 80, TRUE)
-		target.apply_damage(20*level, BRUTE, BODY_ZONE_CHEST)
+		target.apply_damage(10*level, BRUTE, BODY_ZONE_CHEST)
 		target.visible_message("<span class='warning'><b>[W] bites [target]!</b></span>", "<span class='warning'><b>[W] bites you!</b></span>")
 		spawn(20)
 			qdel(W)
@@ -121,6 +120,10 @@
 	var/sound/auspexbeat = sound('code/modules/ziggers/sounds/auspex.ogg', repeat = TRUE)
 	caster.playsound_local(caster, auspexbeat, 75, 0, channel = CHANNEL_DISCIPLINES, use_reverb = FALSE)
 	ADD_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
+	var/loh = FALSE
+	if(!HAS_TRAIT(caster, TRAIT_NIGHT_VISION))
+		ADD_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
+		loh = TRUE
 	caster.update_sight()
 	caster.add_client_colour(/datum/client_colour/glass_colour/blue)
 	spawn(delay*level)
@@ -128,6 +131,8 @@
 			caster.stop_sound_channel(CHANNEL_DISCIPLINES)
 			playsound(caster, 'code/modules/ziggers/sounds/auspex_deactivate.ogg', 50, FALSE)
 			REMOVE_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
+			if(loh)
+				REMOVE_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
 			caster.remove_client_colour(/datum/client_colour/glass_colour/blue)
 			caster.update_sight()
 

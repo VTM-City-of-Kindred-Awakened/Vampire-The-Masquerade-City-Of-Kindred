@@ -41,6 +41,9 @@
 		addwall.name = name
 		addwall.desc = desc
 
+	if(low)
+		AddElement(/datum/element/climbable)
+
 /turf/closed/wall/vampwall/set_smoothed_icon_state(new_junction)
 	..()
 	if(addwall)

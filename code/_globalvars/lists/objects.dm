@@ -50,3 +50,5 @@ GLOBAL_LIST_EMPTY(air_vent_names)			// Name list of all air vents
 GLOBAL_LIST_EMPTY(subscribers_numbers_list)
 GLOBAL_LIST_EMPTY(phone_numbers_list)
 GLOBAL_LIST_EMPTY(phones_list)
+
+GLOBAL_LIST_EMPTY(masquerade_breakers_list)

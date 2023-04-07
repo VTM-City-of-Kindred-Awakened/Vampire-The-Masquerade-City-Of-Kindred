@@ -9,6 +9,9 @@
 	var/labelled = 0
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 
+/obj/item/reagent_containers/blood/canconsume(mob/eater, mob/user)
+	return FALSE
+
 /obj/item/reagent_containers/blood/Initialize()
 	. = ..()
 	if(blood_type != null)

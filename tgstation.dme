@@ -3366,6 +3366,7 @@
 #include "code\modules\ziggers\phones.dm"
 #include "code\modules\ziggers\pigs.dm"
 #include "code\modules\ziggers\procs.dm"
+#include "code\modules\ziggers\special_shit.dm"
 #include "code\modules\ziggers\wallcode.dm"
 #include "code\modules\zombie\items.dm"
 #include "code\modules\zombie\organs.dm"
