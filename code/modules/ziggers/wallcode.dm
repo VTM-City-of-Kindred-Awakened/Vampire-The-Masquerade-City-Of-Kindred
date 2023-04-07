@@ -453,6 +453,10 @@
 	..()
 	set_light(1, 0.25, "#a4b7ff")
 
+/turf/open/floor/plating/vampdirt/rails
+	name = "rails"
+	icon_state = "dirt_rails"
+
 /turf/open/floor/plating/vampplating
 	gender = PLURAL
 	name = "plating"

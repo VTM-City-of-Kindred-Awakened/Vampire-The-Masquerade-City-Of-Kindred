@@ -351,14 +351,9 @@
 
 /obj/item/kirbyplants/proc/generate_states()
 	random_plant_states = list()
-	for(var/i in 1 to 25)
-		var/number
-		if(i < 10)
-			number = "0[i]"
-		else
-			number = "[i]"
-		random_plant_states += "plant-[number]"
-	random_plant_states += "applebush"
+	for(var/i in 1 to 5)
+		random_plant_states += "plant[i]"
+	random_plant_states += "plant0"
 
 
 /obj/item/kirbyplants/dead
