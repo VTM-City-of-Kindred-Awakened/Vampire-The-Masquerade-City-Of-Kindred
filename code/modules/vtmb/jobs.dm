@@ -27,6 +27,7 @@
 	display_order = JOB_DISPLAY_ORDER_PRINCE
 
 //	minimal_generation = 10	//Uncomment when players get exp enough
+	minimal_masquerade = 5
 
 	my_contact_is_important = TRUE
 	known_contacts = list("Sheriff",
@@ -110,6 +111,7 @@
 	bounty_types = CIV_JOB_SEC
 
 //	minimal_generation = 11	//Uncomment when players get exp enough
+	minimal_masquerade = 5
 
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
@@ -188,6 +190,7 @@
 	display_order = JOB_DISPLAY_ORDER_CLERK
 
 //	minimal_generation = 12	//Uncomment when players get exp enough
+	minimal_masquerade = 5
 
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
@@ -244,6 +247,7 @@
 	known_contacts = list("Prince")
 
 	duty = "Work for the Prince and follow orders."
+	minimal_masquerade = 4
 
 /datum/outfit/job/agent
 	name = "Camarilla Agent"
@@ -256,7 +260,7 @@
 	shoes = /obj/item/clothing/shoes/vampire
 	r_pocket = /obj/item/vamp/keys/camarilla
 	l_pocket = /obj/item/vamp/phone/camarilla
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/melee/vampirearms/stake=3, /obj/item/flashlight=1, /obj/item/masquerade_contract=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/melee/vampirearms/stake=3, /obj/item/flashlight=1, /obj/item/masquerade_contract=1, /obj/item/vamp/keys/hack=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -290,6 +294,7 @@
 	bounty_types = CIV_JOB_MINE
 
 	duty = "Protect the Graveyard Gates from the undead."
+	minimal_masquerade = 0
 
 /datum/outfit/job/graveyard
 	name = "Graveyard Keeper"
@@ -309,6 +314,10 @@
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
 	duffelbag = /obj/item/storage/backpack/duffelbag
+
+/datum/outfit/job/graveyard/post_equip(mob/living/carbon/human/H)
+	..()
+	SSgraveyard.graveyarders += src
 
 /obj/effect/landmark/start/graveyardkeeper
 	name = "Graveyard Keeper"
@@ -380,6 +389,7 @@
 	display_order = JOB_DISPLAY_ORDER_STREETJAN
 
 	duty = "Clean up all traces of Masquerade violations."
+	minimal_masquerade = 0
 
 /datum/outfit/job/vjanitor
 	name = "Street Janitor"
@@ -391,7 +401,7 @@
 	r_pocket = /obj/item/vamp/keys/cleaning
 	shoes = /obj/item/clothing/shoes/vampire/jackboots/work
 	gloves = /obj/item/clothing/gloves/vampire/cleaning
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/keys/hack=1)
 
 /obj/effect/landmark/start/vjanitor
 	name = "Street Janitor"
@@ -416,6 +426,7 @@
 	display_order = JOB_DISPLAY_ORDER_ARCHIVIST
 
 	duty = "Keep a census of events and provide information to neonates."
+	minimal_masquerade = 3
 
 /datum/outfit/job/archivist
 	name = "Archivist"
@@ -469,6 +480,7 @@
 												"Dealer")
 
 	duty = "Lead the Anarchs in the City."
+	minimal_masquerade = 3
 
 /datum/outfit/job/barkeeper
 	name = "Barkeeper"
@@ -517,6 +529,7 @@
 	known_contacts = list("Barkeeper")
 
 	duty = "Work for the Barkeeper."
+	minimal_masquerade = 2
 
 /datum/outfit/job/bouncer
 	name = "Bouncer"
@@ -563,6 +576,7 @@
 	known_contacts = list("Barkeeper")
 
 	duty = "Provide weapons to other kindred in the city."
+	minimal_masquerade = 3
 
 /datum/outfit/job/dealer
 	name = "Dealer"
@@ -606,6 +620,7 @@
 	known_contacts = list("Barkeeper")
 
 	duty = "Manage deliveries and supplies for kindred in the City."
+	minimal_masquerade = 2
 
 /datum/outfit/job/supply
 	name = "Supply Technician"
@@ -645,6 +660,7 @@
 	display_order = JOB_DISPLAY_ORDER_CITIZEN
 
 	duty = "Follow the Traditions, or other laws provided by the current authority among your kind."
+	minimal_masquerade = 0
 
 /datum/outfit/job/citizen
 	name = "Citizen"

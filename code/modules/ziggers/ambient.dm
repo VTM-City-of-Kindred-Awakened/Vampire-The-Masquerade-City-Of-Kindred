@@ -6,6 +6,7 @@
 	has_gravity = STANDARD_GRAVITY
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	var/music
+	var/upper = FALSE
 
 /area/vtm/interior
 	name = "Interior"
@@ -17,42 +18,49 @@
 	icon_state = "financialdistrict"
 	ambience_index = AMBIENCE_CITY
 	music = /datum/vampiremusic/downtown
+	upper = TRUE
 
 /area/vtm/ghetto
 	name = "Ghetto"
 	icon_state = "ghetto"
 	ambience_index = AMBIENCE_CITY
 	music = /datum/vampiremusic/downtown
+	upper = TRUE
 
 /area/vtm/pacificheights
 	name = "Pacific Heights"
 	icon_state = "pacificheights"
 	ambience_index = AMBIENCE_NATURE
 	music = /datum/vampiremusic/hollywood
+	upper = TRUE
 
 /area/vtm/chinatown
 	name = "Chinatown"
 	icon_state = "chinatown"
 	ambience_index = AMBIENCE_CITY
 	music = /datum/vampiremusic/chinatown
+	upper = TRUE
 
 /area/vtm/fishermanswharf
 	name = "Fisherman's Wharf"
 	icon_state = "fishermanswharf"
 	ambience_index = AMBIENCE_CITY
 	music = /datum/vampiremusic/santamonica
+	upper = TRUE
 
 /area/vtm/northbeach
 	name = "North Beach"
 	icon_state = "northbeach"
 	ambience_index = AMBIENCE_BEACH
 	music = /datum/vampiremusic/santamonica
+	upper = TRUE
 
 /area/vtm/unionsquare
 	name = "Union Square"
 	icon_state = "unionsquare"
 	ambience_index = AMBIENCE_CITY
 	music = /datum/vampiremusic/downtown
+	upper = TRUE
 
 /area/vtm/prince_elevator
 	name = "Prince Elevator"
@@ -110,12 +118,14 @@
 	icon_state = "graveyard"
 	ambience_index = AMBIENCE_INTERIOR
 	music = /datum/vampiremusic/hollywood
+	upper = TRUE
 
 /area/vtm/park
 	name = "Park"
 	icon_state = "park"
 	ambience_index = AMBIENCE_NATURE
 	music = /datum/vampiremusic/downtown
+	upper = TRUE
 
 /area/vtm/theatre
 	name = "Theatre"

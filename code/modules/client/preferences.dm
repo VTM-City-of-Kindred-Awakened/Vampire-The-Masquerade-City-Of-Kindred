@@ -994,6 +994,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(generation > job.minimal_generation)
 				HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[FROM [job.minimal_generation] GENERATION AND OLDER\]</font></td></tr>"
 				continue
+			if(masquerade < job.minimal_masquerade)
+				HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[job.minimal_masquerade] MASQUERADE POINTS REQUIED\]</font></td></tr>"
+				continue
 			if((job_preferences[SSjob.overflow_role] == JP_LOW) && (rank != SSjob.overflow_role) && !is_banned_from(user.ckey, SSjob.overflow_role))
 				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 				continue

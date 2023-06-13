@@ -73,6 +73,7 @@
 
 	// Fuck thin blood
 	var/minimal_generation = 13
+	var/minimal_masquerade = 1
 
 	// List for phone shit
 	var/my_contact_is_important = FALSE

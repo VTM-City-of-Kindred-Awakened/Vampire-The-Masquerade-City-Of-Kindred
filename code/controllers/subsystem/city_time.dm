@@ -38,3 +38,9 @@ SUBSYSTEM_DEF(city_time)
 
 	if(hour == 6 && minutes == 0)
 		to_chat(world, "<span class='ghostalert'>THE NIGHT IS OVER.</span>")
+		for(var/mob/living/carbon/human/H in world)
+			var/area/vtm/V = get_area(H)
+			if(iskindred(H) && V.upper)
+				H.death()
+		SSticker.force_ending = 1
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "End Round")

@@ -52,6 +52,9 @@
 
 /obj/effect/mob_spawn/human/citizen/Initialize(mapload)
 	. = ..()
+	if(prob(50))
+		qdel(src)
+		return
 	var/arrpee = rand(1,4)
 	switch(arrpee)
 		if(2)

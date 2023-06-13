@@ -4,6 +4,7 @@
 	name = "ladder"
 	plane = GAME_PLANE
 	layer = ABOVE_NORMAL_TURF_LAYER
+	anchored = TRUE
 
 /obj/manholeup/attack_hand(mob/user)
 	var/turf/destination = get_step_multiz(src, UP)
@@ -17,6 +18,7 @@
 	name = "manhole"
 	plane = GAME_PLANE
 	layer = ABOVE_NORMAL_TURF_LAYER
+	anchored = TRUE
 
 /obj/manholedown/attack_hand(mob/user)
 	var/turf/destination = get_step_multiz(src, DOWN)

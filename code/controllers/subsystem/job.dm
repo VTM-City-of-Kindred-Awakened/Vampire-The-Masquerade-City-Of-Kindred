@@ -91,6 +91,8 @@ SUBSYSTEM_DEF(job)
 			return FALSE
 		if(player.client.prefs.generation > job.minimal_generation)
 			return FALSE
+		if(player.client.prefs.masquerade < job.minimal_masquerade)
+			return FALSE
 		var/position_limit = job.total_positions
 		if(!latejoin)
 			position_limit = job.spawn_positions
@@ -118,6 +120,9 @@ SUBSYSTEM_DEF(job)
 			continue
 		if(player.client.prefs.generation > job.minimal_generation)
 			JobDebug("FOC player not enough generation, Player: [player]")
+			continue
+		if(player.client.prefs.masquerade < job.minimal_masquerade)
+			JobDebug("FOC player not enough masquerade, Player: [player]")
 			continue
 		if(flag && (!(flag in player.client.prefs.be_special)))
 			JobDebug("FOC flag failed, Player: [player], Flag: [flag], ")
@@ -160,6 +165,10 @@ SUBSYSTEM_DEF(job)
 
 		if(player.client.prefs.generation > job.minimal_generation)
 			JobDebug("GRJ player not enough generation, Player: [player]")
+			continue
+
+		if(player.client.prefs.masquerade < job.minimal_masquerade)
+			JobDebug("GRJ player not enough masquerade, Player: [player]")
 			continue
 
 		if(player.mind && (job.title in player.mind.restricted_roles))
@@ -344,6 +353,10 @@ SUBSYSTEM_DEF(job)
 
 				if(player.client.prefs.generation > job.minimal_generation)
 					JobDebug("DO player not enough generation, Player: [player]")
+					continue
+
+				if(player.client.prefs.masquerade < job.minimal_masquerade)
+					JobDebug("DO player not enough masquerade, Player: [player]")
 					continue
 
 				if(player.mind && (job.title in player.mind.restricted_roles))

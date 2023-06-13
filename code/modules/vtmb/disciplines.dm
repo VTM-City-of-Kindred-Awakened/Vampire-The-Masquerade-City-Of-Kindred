@@ -102,7 +102,7 @@
 	spawn(10)
 		W.forceMove(target.loc)
 		playsound(W, 'code/modules/ziggers/sounds/volk.ogg', 80, TRUE)
-		target.apply_damage(10*level, BRUTE, BODY_ZONE_CHEST)
+		target.apply_damage(5*level, BRUTE, BODY_ZONE_CHEST)
 		target.visible_message("<span class='warning'><b>[W] bites [target]!</b></span>", "<span class='warning'><b>[W] bites you!</b></span>")
 		spawn(20)
 			qdel(W)
@@ -348,13 +348,13 @@
 	..()
 	caster.dna.species.punchdamagelow += 10
 	caster.dna.species.punchdamagehigh += 10
-	caster.dna.species.meleemod += 1
-	spawn(delay*level)
+	caster.dna.species.meleemod += 0.5*level
+	spawn(delay)
 		if(caster)
 			playsound(caster, 'code/modules/ziggers/sounds/potence_deactivate.ogg', 50, FALSE)
 			caster.dna.species.punchdamagelow -= 10
 			caster.dna.species.punchdamagehigh -= 10
-			caster.dna.species.meleemod -= 1
+			caster.dna.species.meleemod -= 0.5*level
 
 /datum/discipline/fortitude
 	name = "Fortitude"
@@ -368,13 +368,13 @@
 /datum/discipline/fortitude/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	var/mod = min(3, level)
-	caster.physiology.armor.melee += 25*mod
-	caster.physiology.armor.bullet += 25*mod
+	caster.physiology.armor.melee += 20*mod
+	caster.physiology.armor.bullet += 20*mod
 	spawn(delay*level)
 		if(caster)
 			playsound(caster, 'code/modules/ziggers/sounds/fortitude_deactivate.ogg', 50, FALSE)
-			caster.physiology.armor.melee -= 25*mod
-			caster.physiology.armor.bullet -= 25*mod
+			caster.physiology.armor.melee -= 20*mod
+			caster.physiology.armor.bullet -= 20*mod
 
 /datum/discipline/obfuscate
 	name = "Obfuscate"
@@ -394,9 +394,9 @@
 		if(1)
 			caster.alpha = 138
 		if(2)
-			caster.alpha = 106
+			caster.alpha = 96
 		if(3)
-			caster.alpha = 74
+			caster.alpha = 54
 		else
 			caster.alpha = 10
 	spawn(delay*level)
@@ -438,7 +438,7 @@
 	icon_state = "protean"
 	cost = 1
 	ranged = FALSE
-	delay = 100
+	delay = 200
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/ziggers/sounds/protean_activate.ogg'
 
@@ -464,7 +464,7 @@
 			caster.remove_overlay(PROTEAN_LAYER)
 			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
 			caster.apply_overlay(PROTEAN_LAYER)
-			spawn(delay*level)
+			spawn(delay)
 				if(caster)
 					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
@@ -480,7 +480,7 @@
 			caster.remove_overlay(PROTEAN_LAYER)
 			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
 			caster.apply_overlay(PROTEAN_LAYER)
-			spawn(delay*level)
+			spawn(delay)
 				if(caster)
 					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
@@ -497,7 +497,7 @@
 			caster.remove_overlay(PROTEAN_LAYER)
 			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
 			caster.apply_overlay(PROTEAN_LAYER)
-			spawn(delay*level)
+			spawn(delay)
 				if(caster)
 					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
@@ -514,7 +514,7 @@
 			caster.remove_overlay(PROTEAN_LAYER)
 			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
 			caster.apply_overlay(PROTEAN_LAYER)
-			spawn(delay*level)
+			spawn(delay)
 				if(caster)
 					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)

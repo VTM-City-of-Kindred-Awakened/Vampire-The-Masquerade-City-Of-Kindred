@@ -95,6 +95,8 @@
 	var/locked = FALSE
 	var/lock_id = "nothing"
 	var/glass = FALSE
+	var/hackable = TRUE
+	var/hacking = FALSE
 
 	var/open_sound = 'code/modules/ziggers/sounds/door_open.ogg'
 	var/close_sound = 'code/modules/ziggers/sounds/door_close.ogg'
@@ -136,7 +138,31 @@
 	if(lastclicked+5 > world.time)
 		return
 	lastclicked = world.time
-	if(istype(W, /obj/item/vamp/keys))
+	if(istype(W, /obj/item/vamp/keys/hack))
+		if(locked)
+			if(hackable)
+				hacking = TRUE
+				playsound(src, 'code/modules/ziggers/sounds/hack.ogg', 100, TRUE)
+				if(do_mob(user, src, 7 SECONDS))
+					if(prob(50))
+						to_chat(user, "<span class='notice'>You pick the lock.</span>")
+						locked = FALSE
+						hacking = FALSE
+						return
+					else
+						to_chat(user, "<span class='warning'>You failed to pick the lock.</span>")
+						hacking = FALSE
+						return
+				else
+					to_chat(user, "<span class='warning'>You failed to pick the lock.</span>")
+					hacking = FALSE
+					return
+			else
+				to_chat(user, "<span class='warning'>This lock is too complicated to pick.</span>")
+				return
+		else
+			return
+	else if(istype(W, /obj/item/vamp/keys))
 		var/obj/item/vamp/keys/KEY = W
 		if(KEY.accesslocks)
 			for(var/i in KEY.accesslocks)
@@ -149,6 +175,12 @@
 						playsound(src, lock_sound, 75, TRUE)
 						to_chat(user, "[src] is now unlocked.")
 						locked = FALSE
+
+/obj/item/vamp/keys/hack
+	name = "\improper lockpick"
+	desc = "Those can open some doors. Illegaly..."
+	icon_state = "hack"
+	item_flags = NOBLUDGEON
 
 /obj/structure/vampdoor/old
 	icon_state = "old-1"
@@ -193,6 +225,7 @@
 	baseicon = "cam"
 	locked = TRUE
 	lock_id = "camarilla"
+	hackable = FALSE
 
 /obj/structure/vampdoor/clerk
 	icon_state = "shop-1"
@@ -209,6 +242,7 @@
 	glass = TRUE
 	locked = TRUE
 	lock_id = "prince"
+	hackable = FALSE
 
 /obj/structure/vampdoor/graveyard
 	icon_state = "oldwood-1"
@@ -235,6 +269,7 @@
 	baseicon = "old"
 	locked = TRUE
 	lock_id = "archive"
+	hackable = FALSE
 
 /obj/structure/vampdoor/anarch
 	icon_state = "cam-1"
@@ -247,6 +282,7 @@
 	baseicon = "cam"
 	locked = TRUE
 	lock_id = "bar"
+	hackable = FALSE
 
 /obj/structure/vampdoor/supply
 	icon_state = "cam-1"
