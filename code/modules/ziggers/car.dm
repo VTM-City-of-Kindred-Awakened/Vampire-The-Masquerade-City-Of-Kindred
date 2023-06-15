@@ -166,14 +166,14 @@
 	if(health < maxhealth/4)
 		delay = delay+round((maxhealth-health)/20)
 
-	if(world.time < last_speeded+delay)
-		return
-
 	if(driving == BACKWARDS)
 		delay = delay*3
 
 	if(moving_dir != NORTH && moving_dir != SOUTH && moving_dir != EAST && moving_dir != WEST)
 		delay /= 0.75
+
+	if(world.time < last_speeded+delay)
+		return
 
 	if(delay)
 		last_speeded = world.time
