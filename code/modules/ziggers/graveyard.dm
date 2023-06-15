@@ -32,6 +32,7 @@ SUBSYSTEM_DEF(graveyard)
 					lost_points = 0
 
 	if(clear_runs > 3)
+		clear_runs = 0
 		for(var/mob/living/L in graveyarders)
 			if(L)
 				if(L.client)

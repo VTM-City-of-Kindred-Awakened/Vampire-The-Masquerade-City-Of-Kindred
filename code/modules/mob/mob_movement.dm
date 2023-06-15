@@ -116,7 +116,14 @@
 
 	if(isobj(mob.loc) || ismob(mob.loc))	//Inside an object, tell it we moved
 		var/atom/O = mob.loc
-		return O.relaymove(mob, direct)
+		if(istype(O, /obj/vampire_car))
+			var/obj/vampire_car/V = O
+			if(V.driver == mob)
+				return O.relaymove(mob, direct)
+			else
+				return FALSE
+		else
+			return O.relaymove(mob, direct)
 
 	if(!mob.Process_Spacemove(direct))
 		return FALSE
