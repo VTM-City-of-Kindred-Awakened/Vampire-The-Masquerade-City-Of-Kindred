@@ -36,6 +36,17 @@
 	var/health = 100
 	var/maxhealth = 100
 
+/obj/vampire_car/examine(mob/user)
+	. = ..()
+	if(health < maxhealth && health >= maxhealth-(maxhealth/4))
+		. += "It's slightly dented..."
+	if(health < maxhealth-(maxhealth/4) && health >= maxhealth/2)
+		. += "It has some major dents..."
+	if(health < maxhealth/2 && health >= maxhealth/4)
+		. += "It's heavily damaged..."
+	if(health < maxhealth/4)
+		. += "It's falling apart..."
+
 /obj/vampire_car/proc/get_damage(var/cost)
 	if(cost > 0)
 		health = max(0, health-cost)
@@ -188,6 +199,8 @@
 		turf_crossed = min(2, turf_crossed+1)
 		glide_size = (32 / delay) * world.tick_lag// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
 		playsound(src, 'code/modules/ziggers/sounds/work.ogg', 50, TRUE)
+		if(health < maxhealth/2)
+			do_attack_animation(src)
 		for(var/mob/living/L in loc)
 			if(L)
 				L.apply_damage(25, BRUTE, BODY_ZONE_CHEST)
@@ -200,14 +213,14 @@
 	if(driving != BACKWARDS)
 		if(istype(A, /mob/living))
 			var/mob/living/L = A
-			var/atom/throw_target = get_step(get_step(src, dir), dir)
-			L.throw_at(throw_target, 2, 4, src)
+			L.Knockdown(10)
 			L.apply_damage(25, BRUTE, BODY_ZONE_CHEST)
-			get_damage(10)
+			get_damage(5)
 		else
-			get_damage(20)
+			get_damage(10)
+			V.driver.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
 	else
-		get_damage(5)
+		get_damage(1)
 		if(istype(A, /mob/living))
 			var/mob/living/L = A
 			L.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
