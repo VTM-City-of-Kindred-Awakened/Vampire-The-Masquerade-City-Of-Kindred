@@ -826,6 +826,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 		CRASH("Invalid user for this proc")
 
 /obj/machinery/newscaster/proc/print_paper()
+	return
+/*
 	SSblackbox.record_feedback("amount", "newspapers_printed", 1)
 	var/obj/item/newspaper/NEWSPAPER = new /obj/item/newspaper
 	for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
@@ -839,7 +841,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	NEWSPAPER.forceMove(drop_location())
 	NEWSPAPER.creationTime = GLOB.news_network.lastAction
 	paper_remaining--
-
+*/
 
 /obj/machinery/newscaster/proc/remove_alert()
 	alert = FALSE
@@ -870,17 +872,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 	attack_verb_continuous = list("baps")
 	attack_verb_simple = list("bap")
 	resistance_flags = FLAMMABLE
-	var/screen = 0
-	var/pages = 0
-	var/curr_page = 0
-	var/list/datum/newscaster/feed_channel/news_content = list()
-	var/scribble=""
-	var/scribble_page = null
-	var/wantedAuthor
-	var/wantedCriminal
-	var/wantedBody
-	var/wantedPhoto
-	var/creationTime
 
 /obj/item/newspaper/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like [user.p_theyre()] trying to commit sudoku... until [user.p_their()] eyes light up with realization!</span>")
@@ -893,6 +884,16 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 	return(TOXLOSS)
 
+/obj/item/newspaper/examine(mob/user)
+	. = ..()
+	. += "<B>DAILY NEWS!</B><BR>"
+	. += "- Some weird things are happening at the graveyard. Our journalists heard moaning and gunshots... Boo! Wait for it, maybe police could find something there.<BR>"
+	. += "- MILLENIUM Tower is looking for new clerks! Hellish work conditions, most boring offices in the world. Apply today!<BR>"
+	. += "- Jason Coron is missing! Appearance details: teen with black hair and blue eyes almost 5 feet tall. Call 911 if you found something.<BR>"
+	. += "<B>Weather Forecast:</B><BR>"
+	SScityweather.get_forecast(user)
+
+/*
 /obj/item/newspaper/attack_self(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
@@ -974,6 +975,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	else
 		to_chat(user, "<span class='warning'>The paper is full of unintelligible symbols!</span>")
 
+
 /obj/item/newspaper/proc/notContent(list/L)
 	if(!L.len)
 		return FALSE
@@ -1038,3 +1040,5 @@ GLOBAL_LIST_EMPTY(allCasters)
 			add_fingerprint(user)
 	else
 		return ..()
+
+*/

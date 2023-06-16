@@ -88,6 +88,8 @@
 		directional_atom = new()
 		cone = new()
 		cone.transform = cone.transform.Translate(-32, -32)
+		cone.pixel_x = movable_parent.pixel_w
+		cone.pixel_y = movable_parent.pixel_z
 		set_direction(movable_parent.dir)
 	if(!isnull(_range))
 		movable_parent.set_light_range(_range)

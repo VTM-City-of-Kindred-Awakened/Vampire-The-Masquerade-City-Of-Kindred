@@ -88,3 +88,30 @@
 /obj/item/storage/ammostack/Initialize()
 	. = ..()
 */
+
+/obj/item/ammo_box/vampire
+	icon = 'code/modules/ziggers/ammo.dmi'
+
+/obj/item/ammo_box/vampire/c9mm
+	name = "ammo box (9mm)"
+	icon_state = "9box"
+	ammo_type = /obj/projectile/bullet/vamp9mm
+	max_ammo = 60
+
+/obj/item/ammo_box/vampire/c44
+	name = "ammo box (.44)"
+	icon_state = "44box"
+	ammo_type = /obj/projectile/bullet/vamp44
+	max_ammo = 60
+
+/obj/item/ammo_box/vampire/c556
+	name = "ammo box (5.56)"
+	icon_state = "556box"
+	ammo_type = /obj/projectile/bullet/vamp556mm
+	max_ammo = 60
+
+/obj/item/ammo_box/vampire/c12g
+	name = "ammo box (12g)"
+	icon_state = "12box"
+	ammo_type = /obj/projectile/bullet/vamp12g
+	max_ammo = 60

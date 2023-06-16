@@ -12,9 +12,9 @@ SUBSYSTEM_DEF(cityweather)
 	if(SScity_time.hour > 5 && SScity_time.hour < 21)
 		return
 
-	for(var/i in 1 to 9)
-		var/weath = forecast[i]
-		to_chat(world, "DEBUG, [i], [weath]")
+//	for(var/i in 1 to 9)
+//		var/weath = forecast[i]
+//		to_chat(world, "DEBUG, [i], [weath]")
 
 	var/cityhour = 1
 	switch(SScity_time.hour)
@@ -41,10 +41,26 @@ SUBSYSTEM_DEF(cityweather)
 		switch(forecast[cityhour])
 			if("Clear")
 				to_chat(world, "The night sky becomes clear...")
+				for(var/obj/effect/rain/R in world)
+					if(R)
+						qdel(R)
+				for(var/obj/effect/fog/F in world)
+					if(F)
+						qdel(F)
 			if("Rain")
 				to_chat(world, "Clouds are uniting on the sky, small raindrops irrigate the city...")
+				for(var/obj/effect/fog/F in world)
+					if(F)
+						qdel(F)
+				for(var/turf/T in affected_turfs)
+					new /obj/effect/rain(T)
 			if("Fog")
 				to_chat(world, "Visibility range quickly decreases...")
+				for(var/obj/effect/rain/R in world)
+					if(R)
+						qdel(R)
+				for(var/turf/T in affected_turfs)
+					new /obj/effect/fog(T)
 		current_weather = forecast[cityhour]
 
 /datum/controller/subsystem/cityweather/Initialize()
@@ -60,5 +76,51 @@ SUBSYSTEM_DEF(cityweather)
 /datum/controller/subsystem/cityweather/proc/create_forecast()
 	for(var/i in 1 to 9)
 		forecast += i
-		var/weather = pick("Clear", "Rain", "Fog")
+		var/weather = "Clear"
+		if(i != 1 && i != 9)
+			weather = pick("Clear", "Rain", "Fog")
 		forecast[i] = weather
+
+/datum/controller/subsystem/cityweather/proc/get_forecast(mob/user)
+	for(var/i in 1 to 9)
+		var/weath = forecast[i]
+		var/time = "21:00"
+		switch(i)
+			if(1)
+				time = "21:00"
+			if(2)
+				time = "22:00"
+			if(3)
+				time = "23:00"
+			if(4)
+				time = "00:00"
+			if(5)
+				time = "01:00"
+			if(6)
+				time = "02:00"
+			if(7)
+				time = "03:00"
+			if(8)
+				time = "04:00"
+			if(9)
+				time = "05:00"
+		to_chat(user, "[time], [weath]")
+
+/obj/effect/rain
+	name = "rain"
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "rain"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+
+/obj/effect/rain/Initialize()
+	. = ..()
+	for(var/obj/effect/decal/cleanable/B in loc)
+		qdel(B)
+
+/obj/effect/fog
+	name = "fog"
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "fog"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER

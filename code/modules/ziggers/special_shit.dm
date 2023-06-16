@@ -76,6 +76,8 @@
 	. = ..()
 	if(!iskindred(M))
 		return
+	if(empty)
+		return
 	feeding = TRUE
 	if(do_mob(user, src, 3 SECONDS))
 		feeding = FALSE

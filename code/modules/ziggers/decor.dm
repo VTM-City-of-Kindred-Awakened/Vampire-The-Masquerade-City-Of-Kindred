@@ -4,7 +4,7 @@
 	icon_state = "rugs"
 
 /obj/effect/decal/rugs/Initialize()
-	..()
+	. = ..()
 	icon_state = "rugs[rand(1, 11)]"
 
 /obj/structure/vampfence
@@ -52,11 +52,11 @@
 	alpha = 0
 
 /obj/effect/decal/lamplight/Initialize()
-	..()
+	. = ..()
 	set_light(7, 1, "#ffde9b")
 
 /obj/structure/lamppost/Initialize()
-	..()
+	. = ..()
 	switch(number_of_lamps)
 		if(1)
 			switch(dir)
@@ -147,7 +147,7 @@
 	icon_state = "paper1"
 
 /obj/effect/decal/litter/Initialize()
-	..()
+	. = ..()
 	icon_state = "paper[rand(1, 6)]"
 
 /obj/effect/decal/cardboard
@@ -156,7 +156,7 @@
 	icon_state = "cardboard1"
 
 /obj/effect/decal/cardboard/Initialize()
-	..()
+	. = ..()
 	icon_state = "cardboard[rand(1, 5)]"
 	var/matrix/M = matrix()
 	M.Turn(rand(0, 360))
@@ -176,7 +176,7 @@
 	icon_state = "rack2"
 
 /obj/structure/clothingrack/rand/Initialize()
-	..()
+	. = ..()
 	icon_state = "rack[rand(1, 5)]"
 
 /obj/structure/clothinghanger
@@ -190,7 +190,7 @@
 	density = TRUE
 
 /obj/structure/clothinghanger/Initialize()
-	..()
+	. = ..()
 	icon_state = "hanger[rand(1, 4)]"
 
 /obj/structure/foodrack
@@ -205,7 +205,7 @@
 	pixel_w = -16
 
 /obj/structure/foodrack/Initialize()
-	..()
+	. = ..()
 	icon_state = "rack[rand(1, 5)]"
 
 /obj/structure/trashcan
@@ -219,7 +219,7 @@
 	density = TRUE
 
 /obj/structure/trashcan/Initialize()
-	..()
+	. = ..()
 	if(prob(25))
 		icon_state = "garbage_open"
 
@@ -231,7 +231,7 @@
 	anchored = TRUE
 
 /obj/structure/trashbag/Initialize()
-	..()
+	. = ..()
 	var/garbagestate = rand(1, 9)
 	if(garbagestate > 6)
 		density = TRUE
@@ -247,7 +247,7 @@
 	anchored = TRUE
 
 /obj/structure/hotelsign/Initialize()
-	..()
+	. = ..()
 	set_light(2, 1, "#8e509e")
 
 /obj/structure/hotelbanner
@@ -270,7 +270,7 @@
 	anchored = TRUE
 
 /obj/structure/milleniumsign/Initialize()
-	..()
+	. = ..()
 	set_light(2, 1, "#4299bb")
 
 /obj/structure/anarchsign
@@ -283,7 +283,7 @@
 	anchored = TRUE
 
 /obj/structure/anarchsign/Initialize()
-	..()
+	. = ..()
 	set_light(2, 1, "#ffffff")
 
 /obj/structure/chinesesign
@@ -349,18 +349,11 @@
 	pixel_w = -16
 
 /obj/structure/vampcar/Initialize()
-	..()
+	. = ..()
 	var/atom/movable/M = new(get_step(loc, EAST))
 	M.density = TRUE
 	M.anchored = TRUE
 	dir = pick(NORTH, SOUTH, WEST, EAST)
-
-/obj/structure/vampcar/rand
-	icon_state = "1"
-
-/obj/structure/vampcar/rand/Initialize()
-	..()
-	icon_state = "[rand(1, 6)]"
 
 /obj/structure/roadblock
 	name = "\improper road block"
@@ -446,3 +439,48 @@
 /obj/structure/roadsign/crosswalk
 	name = "crosswalk sign"
 	icon_state = "crosswalk"
+
+/obj/structure/barrels
+	name = "barrel"
+	desc = "Storage some liquids."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "barrel1"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	density = TRUE
+
+/obj/structure/barrels/rand
+	icon_state = "barrel2"
+
+/obj/structure/barrels/rand/Initialize()
+	. = ..()
+	icon_state = "barrel[rand(1, 18)]"
+
+/obj/structure/bricks
+	name = "bricks"
+	desc = "Building material."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "bricks"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	density = TRUE
+
+/obj/effect/decal/pallet
+	name = "pallet"
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "under1"
+
+/obj/effect/decal/pallet/Initialize()
+	. = ..()
+	icon_state = "under[rand(1, 2)]"
+
+/obj/effect/decal/trash
+	name = "trash"
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "trash1"
+
+/obj/effect/decal/trash/Initialize()
+	. = ..()
+	icon_state = "trash[rand(1, 30)]"

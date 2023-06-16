@@ -103,7 +103,7 @@
 
 /obj/item/ammo_box/magazine/m44
 	name = "handgun magazine (.44)"
-	icon = 'code/modules/ziggers/weapons.dmi'
+	icon = 'code/modules/ziggers/ammo.dmi'
 	lefthand_file = 'code/modules/ziggers/righthand.dmi'
 	righthand_file = 'code/modules/ziggers/lefthand.dmi'
 	worn_icon = 'code/modules/ziggers/worn.dmi'
@@ -172,7 +172,7 @@
 	righthand_file = 'code/modules/ziggers/lefthand.dmi'
 	worn_icon = 'code/modules/ziggers/worn.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
-	icon_state = "5.56m"
+	icon_state = "rifle"
 	ammo_type = /obj/item/ammo_casing/vampire/c556mm
 	caliber = CALIBER_556
 	max_ammo = 30
