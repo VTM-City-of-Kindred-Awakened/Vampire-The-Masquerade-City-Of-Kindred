@@ -5,6 +5,22 @@
 #define BACKWARDS 0
 #define AHEAD 1
 
+SUBSYSTEM_DEF(cars)
+	name = "Cars"
+	init_order = INIT_ORDER_DEFAULT
+	wait = 10
+	priority = FIRE_PRIORITY_DEFAULT
+
+	var/list/cars = list()
+
+/datum/controller/subsystem/cars/fire()
+	for(var/obj/vampire_car/V in cars)
+		if(V)
+			if(V.on)
+				playsound(V, 'code/modules/ziggers/sounds/work.ogg', 25, TRUE)
+			if(V.last_speeded+20 < world.time)
+				V.speed = 0
+
 /obj/vampire_car
 	name = "car"
 	desc = "Take me home, country roads..."
@@ -15,26 +31,47 @@
 	pixel_w = -32
 	pixel_z = -32
 
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
-	light_range = 6
-	light_power = 2
-	light_on = FALSE
+	var/obj/item/flashlight/FARI
 
 	var/mob/living/driver
 	var/list/passengers = list()
 	var/max_passengers = 3
 
 	var/speed = 1	//Future
+	var/stage = 1
 	var/last_speeded = 0
 	var/turning = NOTURN
 	var/driving = AHEAD
 	var/facing_dir = SOUTH
 	var/moving_dir = SOUTH
+	var/last_dir = SOUTH
 	var/turf_crossed = 0	//For turning
 	var/on = FALSE
 
 	var/health = 100
 	var/maxhealth = 100
+
+/obj/vampire_car/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
+	. = ..()
+	get_damage(5)
+
+/obj/vampire_car/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	get_damage(5)
+
+/obj/vampire_car/Initialize()
+	. = ..()
+	FARI = new(src)
+	SScars.cars += src
+
+/obj/vampire_car/Destroy()
+	. = ..()
+	qdel(FARI)
+	SScars.cars -= src
+	for(var/mob/living/L in src)
+		var/datum/action/carr/exit_car/C = locate() in L.actions
+		if(C)
+			C.Trigger()
 
 /obj/vampire_car/examine(mob/user)
 	. = ..()
@@ -52,6 +89,12 @@
 		health = max(0, health-cost)
 	if(cost < 0)
 		health = min(maxhealth, health+cost)
+
+	if(health == 0)
+		on = FALSE
+	else if(prob(50) && health <= maxhealth/2)
+		on = FALSE
+
 	return
 
 /datum/action/carr/fari_vrubi
@@ -62,13 +105,24 @@
 /datum/action/carr/fari_vrubi/Trigger()
 	if(istype(owner.loc, /obj/vampire_car))
 		var/obj/vampire_car/V = owner.loc
-		if(!V.light_on)
-			V.light_on = TRUE
-			playsound(V, 'sound/weapons/magin.ogg', 50, TRUE)
+		if(V.FARI)
+			V.FARI.on = !V.FARI.on
+			playsound(V, V.FARI.on ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
+			V.FARI.update_brightness(V)
+
+/datum/action/carr/stage
+	name = "Toggle Transmission"
+	desc = "Toggle transmission to 1, 2 or 3."
+	button_icon_state = "stage"
+
+/datum/action/carr/stage/Trigger()
+	if(istype(owner.loc, /obj/vampire_car))
+		var/obj/vampire_car/V = owner.loc
+		if(V.stage < 3)
+			V.stage = V.stage+1
 		else
-			V.light_on = FALSE
-			playsound(V, 'sound/weapons/magout.ogg', 50, TRUE)
-		V.set_light_on(V.light_on)
+			V.stage = 1
+		to_chat(owner, "You enable transmission at [V.stage].")
 
 /datum/action/carr/engine
 	name = "Toggle Engine"
@@ -79,8 +133,12 @@
 	if(istype(owner.loc, /obj/vampire_car))
 		var/obj/vampire_car/V = owner.loc
 		if(!V.on)
-			V.on = TRUE
-			playsound(V, 'code/modules/ziggers/sounds/start.ogg', 50, TRUE)
+			if(V.health == V.maxhealth)
+				V.on = TRUE
+				playsound(V, 'code/modules/ziggers/sounds/start.ogg', 50, TRUE)
+			else if(prob(100*(V.health/V.maxhealth)))
+				V.on = TRUE
+				playsound(V, 'code/modules/ziggers/sounds/start.ogg', 50, TRUE)
 		else
 			V.on = FALSE
 			playsound(V, 'code/modules/ziggers/sounds/stop.ogg', 50, TRUE)
@@ -116,6 +174,8 @@
 				F.Grant(src)
 				var/datum/action/carr/engine/N = new()
 				N.Grant(src)
+				var/datum/action/carr/stage/S = new()
+				S.Grant(src)
 			else if(length(V.passengers) < V.max_passengers)
 				forceMove(over_object)
 				V.passengers += src
@@ -155,11 +215,11 @@
 			if(NOTURN)
 				moving_dir = facing_dir
 			if(TURNLEFT)
-				if(turf_crossed > 1)
+				if(turf_crossed > stage-1)
 					moving_dir = turn(facing_dir, -45)
 					turf_crossed = 0
 			if(TURNRIGHT)
-				if(turf_crossed > 1)
+				if(turf_crossed > stage-1)
 					moving_dir = turn(facing_dir, 45)
 					turf_crossed = 0
 	else
@@ -179,6 +239,8 @@
 
 	if(driving == BACKWARDS)
 		delay = delay*3
+	else
+		delay = delay+(3-stage)
 
 	if(moving_dir != NORTH && moving_dir != SOUTH && moving_dir != EAST && moving_dir != WEST)
 		delay /= 0.75
@@ -186,7 +248,15 @@
 	if(world.time < last_speeded+delay)
 		return
 
+	if(speed < 5 && last_speeded+delay+10 > world.time)
+		if(moving_dir != turn(last_dir, 45) && moving_dir != turn(last_dir, -45) && moving_dir != last_dir)
+			playsound(src, 'code/modules/ziggers/sounds/stopping.ogg', 40, TRUE)
+			speed = 0
+			last_speeded = world.time+5
+			return
+
 	if(delay)
+		speed = delay
 		last_speeded = world.time
 		if(driving == AHEAD)
 			facing_dir = moving_dir
@@ -196,9 +266,10 @@
 		glide_size = (32 / delay) * world.tick_lag// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
 		step(src, moving_dir)
 		dir = facing_dir
-		turf_crossed = min(2, turf_crossed+1)
+		last_dir = moving_dir
+		turf_crossed = min(3, turf_crossed+1)
 		glide_size = (32 / delay) * world.tick_lag// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
-		playsound(src, 'code/modules/ziggers/sounds/work.ogg', 50, TRUE)
+		playsound(src, 'code/modules/ziggers/sounds/work.ogg', 40, TRUE)
 		if(health < maxhealth/2)
 			do_attack_animation(src)
 		for(var/mob/living/L in loc)
@@ -207,6 +278,8 @@
 				do_attack_animation(L)
 
 /obj/vampire_car/Bump(atom/A)
+	if(speed > 5)
+		return
 	playsound(src, 'code/modules/ziggers/sounds/bump.ogg', 50, TRUE)
 	last_speeded = world.time+20
 	do_attack_animation(A)
@@ -218,7 +291,7 @@
 			get_damage(5)
 		else
 			get_damage(10)
-			V.driver.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
+			driver.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
 	else
 		get_damage(1)
 		if(istype(A, /mob/living))
