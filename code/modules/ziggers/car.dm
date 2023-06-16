@@ -252,7 +252,6 @@ SUBSYSTEM_DEF(cars)
 		if(moving_dir != turn(last_dir, 45) && moving_dir != turn(last_dir, -45) && moving_dir != last_dir)
 			playsound(src, 'code/modules/ziggers/sounds/stopping.ogg', 40, TRUE)
 			speed = 0
-			last_speeded = world.time+5
 			return
 
 	if(delay)
