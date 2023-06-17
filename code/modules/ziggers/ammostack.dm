@@ -14,9 +14,31 @@
 
 /obj/projectile/bullet/vamp12g
 	name = "12g shotgun slug"
-	damage = 65
+	damage = 55
+
+/obj/projectile/bullet/vamp12g/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		M.Stun(20)
+
+/obj/projectile/bullet/vamp556mm/incendiary
+	armour_penetration = 0
+	damage = 30
+	var/fire_stacks = 4
+
+/obj/projectile/bullet/vamp556mm/incendiary/on_hit(atom/target, blocked = FALSE)
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		M.adjust_fire_stacks(fire_stacks)
+		M.IgniteMob()
+
+/obj/projectile/bullet/crossbow_bolt
+	name = "bolt"
+	damage = 75
+	armour_penetration = 100
 	sharpness = SHARP_POINTY
-	wound_bonus = 0
+	wound_bonus = 50
 
 /obj/item/ammo_casing/vampire
 	icon = 'code/modules/ziggers/ammo.dmi'
@@ -46,6 +68,9 @@
 	projectile_type = /obj/projectile/bullet/vamp556mm
 	icon_state = "556"
 	base_iconstate = "556"
+
+/obj/item/ammo_casing/vampire/c556mm/incendiary
+	projectile_type = /obj/projectile/bullet/vamp556mm/incendiary
 
 /obj/item/ammo_casing/vampire/c12g
 	name = "12g bullet casing"
@@ -110,8 +135,19 @@
 	ammo_type = /obj/projectile/bullet/vamp556mm
 	max_ammo = 60
 
+/obj/item/ammo_box/vampire/c556/incendiary
+	name = "incendiary ammo box (5.56)"
+	icon_state = "incendiary"
+	ammo_type = /obj/projectile/bullet/vamp556mm/incendiary
+
 /obj/item/ammo_box/vampire/c12g
 	name = "ammo box (12g)"
 	icon_state = "12box"
 	ammo_type = /obj/projectile/bullet/vamp12g
-	max_ammo = 60
+	max_ammo = 30
+
+/obj/item/ammo_box/vampire/arrows
+	name = "ammo box (12g)"
+	icon_state = "arrows"
+	ammo_type = /obj/item/ammo_casing/caseless/bolt
+	max_ammo = 30

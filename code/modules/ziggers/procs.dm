@@ -51,6 +51,8 @@
 
 /proc/CheckEyewitness(var/mob/living/source, var/mob/attacker, var/range = 0, var/affects_source = FALSE)
 	var/actual_range = max(1, round(range*(attacker.alpha/255)))
+	if(SScityweather.fogging)
+		actual_range = round(actual_range/2)
 	var/list/seenby = list()
 	for(var/mob/living/carbon/human/npc/NPC in viewers(actual_range, source))
 		if(source != NPC || affects_source)

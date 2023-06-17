@@ -4,7 +4,7 @@
 
 #ifndef LOWMEMORYMODE
 	#ifdef ALL_MAPS
-		#include "map_files\debug\runtimestation.dmm"
+//		#include "map_files\debug\runtimestation.dmm"
 		#include "map_files\Vampire\KindredCity.dmm"
 		#ifdef CIBUILDING
 			#include "templates.dm"

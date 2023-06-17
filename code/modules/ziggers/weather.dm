@@ -5,8 +5,12 @@ SUBSYSTEM_DEF(cityweather)
 	priority = FIRE_PRIORITY_DEFAULT
 
 	var/list/affected_turfs = list()
+	var/list/weather_effects = list()
 	var/current_weather = "Clear"	//"Clear", "Rain" and "Fog"
 	var/list/forecast = list()
+	var/datum/looping_sound/rain_loop/sound_loop
+	var/raining = FALSE
+	var/fogging = FALSE
 
 /datum/controller/subsystem/cityweather/fire()
 	if(SScity_time.hour > 5 && SScity_time.hour < 21)
@@ -41,22 +45,28 @@ SUBSYSTEM_DEF(cityweather)
 		switch(forecast[cityhour])
 			if("Clear")
 				to_chat(world, "The night sky becomes clear...")
-				for(var/obj/effect/rain/R in world)
+				raining = FALSE
+				fogging = FALSE
+				for(var/obj/effect/rain/R in weather_effects)
 					if(R)
 						qdel(R)
-				for(var/obj/effect/fog/F in world)
+				for(var/obj/effect/fog/F in weather_effects)
 					if(F)
 						qdel(F)
 			if("Rain")
 				to_chat(world, "Clouds are uniting on the sky, small raindrops irrigate the city...")
-				for(var/obj/effect/fog/F in world)
+				raining = TRUE
+				fogging = FALSE
+				for(var/obj/effect/fog/F in weather_effects)
 					if(F)
 						qdel(F)
 				for(var/turf/T in affected_turfs)
 					new /obj/effect/rain(T)
 			if("Fog")
 				to_chat(world, "Visibility range quickly decreases...")
-				for(var/obj/effect/rain/R in world)
+				raining = FALSE
+				fogging = TRUE
+				for(var/obj/effect/rain/R in weather_effects)
 					if(R)
 						qdel(R)
 				for(var/turf/T in affected_turfs)
@@ -72,12 +82,13 @@ SUBSYSTEM_DEF(cityweather)
 				affected_turfs += T
 
 	create_forecast()
+	sound_loop = new(list(), FALSE , TRUE)
 
 /datum/controller/subsystem/cityweather/proc/create_forecast()
 	for(var/i in 1 to 9)
 		forecast += i
 		var/weather = "Clear"
-		if(i != 1 && i != 9)
+		if(i != 9)
 			weather = pick("Clear", "Rain", "Fog")
 		forecast[i] = weather
 
@@ -112,11 +123,17 @@ SUBSYSTEM_DEF(cityweather)
 	icon_state = "rain"
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER
+	alpha = 128
 
 /obj/effect/rain/Initialize()
 	. = ..()
 	for(var/obj/effect/decal/cleanable/B in loc)
 		qdel(B)
+	SScityweather.weather_effects += src
+
+/obj/effect/rain/Destroy()
+	. = ..()
+	SScityweather.weather_effects -= src
 
 /obj/effect/fog
 	name = "fog"
@@ -124,3 +141,16 @@ SUBSYSTEM_DEF(cityweather)
 	icon_state = "fog"
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER
+
+/obj/effect/fog/Initialize()
+	. = ..()
+	SScityweather.weather_effects += src
+
+/obj/effect/fog/Destroy()
+	. = ..()
+	SScityweather.weather_effects -= src
+
+/datum/looping_sound/rain_loop
+	mid_sounds = list('code/modules/ziggers/sounds/rain.ogg'=1)
+	mid_length = 70 // exact length of the music in ticks
+	volume = 100

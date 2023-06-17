@@ -484,3 +484,44 @@
 /obj/effect/decal/trash/Initialize()
 	. = ..()
 	icon_state = "trash[rand(1, 30)]"
+
+/obj/cargocrate
+	name = "cargocrate"
+	desc = "It delivers a lot of things."
+	icon = 'code/modules/ziggers/containers.dmi'
+	icon_state = "1"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+
+/obj/cargocrate/Initialize()
+	. = ..()
+	icon_state = "[rand(1, 5)]"
+	if(icon_state != "1")
+		opacity = TRUE
+	density = TRUE
+	var/atom/movable/M1 = new(get_step(loc, EAST))
+	var/atom/movable/M2 = new(get_step(M1.loc, EAST))
+	var/atom/movable/M3 = new(get_step(M2.loc, EAST))
+	M1.density = TRUE
+	if(icon_state != "1")
+		M1.opacity = TRUE
+	M1.anchored = TRUE
+	M2.density = TRUE
+	if(icon_state != "1")
+		M2.opacity = TRUE
+	M2.anchored = TRUE
+	M3.density = TRUE
+	if(icon_state != "1")
+		M3.opacity = TRUE
+	M3.anchored = TRUE
+
+/obj/structure/fuelstation
+	name = "fuel station"
+	desc = "Fuel your car here."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "fuelstation"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+	density = TRUE

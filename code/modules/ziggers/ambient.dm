@@ -191,31 +191,48 @@
 		return
 	if(stat == DEAD)
 		return
+
+	var/turf/T
+
 	if(!isturf(loc))
-		return
-
-	if(istype(get_area(loc), /area/vtm))
-		var/area/vtm/VTM = get_area(loc)
-		if(!VTM.music)
-			client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
-			last_vampire_ambience = 0
-			wait_for_music = 0
+		var/atom/A = loc
+		if(!isturf(A.loc))
 			return
-		var/datum/vampiremusic/VMPMSC = new VTM.music()
-		if(VMPMSC.forced && wait_for_music != VMPMSC.length)
-			client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
-			last_vampire_ambience = 0
-			wait_for_music = 0
-			wasforced = TRUE
+		T = A.loc
+	else
+		T = loc
 
-		else if(wasforced && wait_for_music != VMPMSC.length)
-			client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
-			last_vampire_ambience = 0
-			wait_for_music = 0
-			wasforced = FALSE
+	if(istype(get_area(T), /area/vtm))
+		var/area/vtm/VTM = get_area(T)
+		if(VTM)
+			if(VTM.upper)
+				if(SScityweather.raining)
+					SScityweather.sound_loop.play(src)
+				else
+					SScityweather.sound_loop.stop(src)
+			if(!VTM.upper)
+				SScityweather.sound_loop.stop(src)
 
-		if(last_vampire_ambience+wait_for_music+10 < world.time)
-			wait_for_music = VMPMSC.length
-			client << sound(VMPMSC.sound, 0, 0, CHANNEL_LOBBYMUSIC, 15)
-			last_vampire_ambience = world.time
-		qdel(VMPMSC)
+			if(!VTM.music)
+				client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
+				last_vampire_ambience = 0
+				wait_for_music = 0
+				return
+			var/datum/vampiremusic/VMPMSC = new VTM.music()
+			if(VMPMSC.forced && wait_for_music != VMPMSC.length)
+				client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
+				last_vampire_ambience = 0
+				wait_for_music = 0
+				wasforced = TRUE
+
+			else if(wasforced && wait_for_music != VMPMSC.length)
+				client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
+				last_vampire_ambience = 0
+				wait_for_music = 0
+				wasforced = FALSE
+
+			if(last_vampire_ambience+wait_for_music+10 < world.time)
+				wait_for_music = VMPMSC.length
+				client << sound(VMPMSC.sound, 0, 0, CHANNEL_LOBBYMUSIC, 15)
+				last_vampire_ambience = world.time
+			qdel(VMPMSC)

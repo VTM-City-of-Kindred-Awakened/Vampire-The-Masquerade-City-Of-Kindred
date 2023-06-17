@@ -17,17 +17,21 @@ map metastation
 	#default
 	minplayers 25
 	#voteweight 0.5
+	disabled
 endmap
 
 map deltastation
 	minplayers 50
+	disabled
 endmap
 
 map kilostation
+	disabled
 endmap
 
 map icebox
 	minplayers 25
+	disabled
 endmap
 
 map kindredcity
@@ -36,7 +40,9 @@ map kindredcity
 endmap
 
 map runtimestation
+	disabled
 endmap
 
 map multiz_debug
+	disabled
 endmap

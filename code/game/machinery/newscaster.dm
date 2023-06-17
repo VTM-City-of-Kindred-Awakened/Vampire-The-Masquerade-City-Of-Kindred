@@ -886,11 +886,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 /obj/item/newspaper/examine(mob/user)
 	. = ..()
-	. += "<B>DAILY NEWS!</B><BR>"
-	. += "- Some weird things are happening at the graveyard. Our journalists heard moaning and gunshots... Boo! Wait for it, maybe police could find something there.<BR>"
-	. += "- MILLENIUM Tower is looking for new clerks! Hellish work conditions, most boring offices in the world. Apply today!<BR>"
-	. += "- Jason Coron is missing! Appearance details: teen with black hair and blue eyes almost 5 feet tall. Call 911 if you found something.<BR>"
-	. += "<B>Weather Forecast:</B><BR>"
+	to_chat(user, "<B>Weather Forecast:</B>")
 	SScityweather.get_forecast(user)
 
 /*

@@ -244,7 +244,7 @@
 /obj/item/gun/ballistic/shotgun/vampire
 	name = "shotgun"
 	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
-	icon = 'code/modules/ziggers/weapons.dmi'
+	icon = 'code/modules/ziggers/48x32weapons.dmi'
 	lefthand_file = 'code/modules/ziggers/righthand.dmi'
 	righthand_file = 'code/modules/ziggers/lefthand.dmi'
 	worn_icon = 'code/modules/ziggers/worn.dmi'
@@ -258,3 +258,32 @@
 	fire_sound = 'code/modules/ziggers/sounds/pomp.ogg'
 	pixel_w = -8
 	recoil = 2
+
+/obj/item/gun/ballistic/shotgun/toy/crossbow/vampire
+	name = "shotgun"
+	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
+	icon = 'code/modules/ziggers/48x32weapons.dmi'
+	lefthand_file = 'code/modules/ziggers/righthand.dmi'
+	righthand_file = 'code/modules/ziggers/lefthand.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	icon_state = "crossbow0"
+	inhand_icon_state = "crossbow0"
+	fire_delay = 16
+	mag_type = /obj/item/ammo_box/magazine/internal/vampcrossbow
+	fire_sound = 'sound/items/syringeproj.ogg'
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/ammo_box/magazine/internal/vampcrossbow
+	ammo_type = /obj/item/ammo_casing/caseless/bolt
+	caliber = CALIBER_FOAM
+	max_ammo = 1
+
+/obj/item/ammo_casing/caseless/bolt
+	name = "bolt"
+	desc = "Welcome to the Middle Ages!"
+	projectile_type = /obj/projectile/bullet/crossbow_bolt
+	caliber = CALIBER_FOAM
+	icon_state = "arrow"
+	icon = 'code/modules/ziggers/ammo.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	harmful = TRUE

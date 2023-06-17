@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(cars)
 	for(var/obj/vampire_car/V in cars)
 		if(V)
 			if(V.on)
-				playsound(V, 'code/modules/ziggers/sounds/work.ogg', 25, TRUE)
+				playsound(V, 'code/modules/ziggers/sounds/work.ogg', 25, FALSE)
 			if(V.last_speeded+20 < world.time)
 				V.speed = 0
 
@@ -29,11 +29,12 @@ SUBSYSTEM_DEF(cars)
 	anchored = TRUE
 	density = TRUE
 	plane = GAME_PLANE
-	layer = ABOVE_ALL_MOB_LAYER
+	layer = CAR_LAYER
 	pixel_w = -32
 	pixel_z = -32
 
-	var/obj/item/flashlight/FARI
+	var/obj/effect/fari/FARI
+	var/fari_on = FALSE
 
 	var/mob/living/driver
 	var/list/passengers = list()
@@ -58,12 +59,57 @@ SUBSYSTEM_DEF(cars)
 
 	var/last_beep = 0
 
+	var/component_type = /datum/component/storage/concrete
+
+/obj/vampire_car/ComponentInitialize()
+	. = ..()
+	AddComponent(component_type)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_combined_w_class = 40
+	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.max_items = 40
+	STR.locked = TRUE
+
 /obj/vampire_car/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
 	. = ..()
 	get_damage(5)
+	for(var/mob/living/L in src)
+		if(prob(50))
+			L.apply_damage(P.damage, P.damage_type, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST))
+
+/obj/vampire_car/AltClick(mob/user)
+	..()
+	if(!repairing)
+		if(locked)
+			to_chat(user, "<span class='warning'>[src] is locked!</span>")
+			return
+		repairing = TRUE
+		if(do_mob(user, src, 10 SECONDS))
+			if(driver)
+				var/datum/action/carr/exit_car/C = locate() in driver.actions
+				to_chat(user, "<span class='notice'>You've managed to get [driver] out of [src].</span>")
+				if(C)
+					C.Trigger()
+				repairing = FALSE
+				return
+			else if(length(passengers))
+				var/mob/living/L = pick(passengers)
+				to_chat(user, "<span class='notice'>You've managed to get [L] out of [src].</span>")
+				var/datum/action/carr/exit_car/C = locate() in L.actions
+				if(C)
+					C.Trigger()
+				repairing = FALSE
+				return
+			else
+				to_chat(user, "<span class='warning'>There is no one in [src].</span>")
+				repairing = FALSE
+				return
+		else
+			to_chat(user, "<span class='warning'>You've failed to get anyone out of [src].</span>")
+			repairing = FALSE
+			return
 
 /obj/vampire_car/attackby(obj/item/I, mob/living/user, params)
-	. = ..()
 	if(istype(I, /obj/item/vamp/keys))
 		var/obj/item/vamp/keys/K = I
 		if(istype(I, /obj/item/vamp/keys/hack))
@@ -77,7 +123,7 @@ SUBSYSTEM_DEF(cars)
 					return
 				else
 					to_chat(user, "<span class='warning'>You've failed to open [src]'s lock.</span>")
-					playsound(src, 'code/modules/ziggers/sounds/signal.ogg', 50, TRUE)
+					playsound(src, 'code/modules/ziggers/sounds/signal.ogg', 50, FALSE)
 					repairing = FALSE
 					return
 				return
@@ -106,13 +152,26 @@ SUBSYSTEM_DEF(cars)
 			return
 		return
 	else
-		get_damage(5)
+		if(I.force)
+			get_damage(round(I.force/2))
+			for(var/mob/living/L in src)
+				if(prob(50))
+					L.apply_damage(round(I.force/2), I.damtype, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST))
+
+		if(!driver && !length(passengers) && last_beep+70 < world.time)
+			last_beep = world.time
+			playsound(src, 'code/modules/ziggers/sounds/signal.ogg', 50, FALSE)
+
+		if(prob(10) && locked && I.force)
+			playsound(src, 'code/modules/ziggers/sounds/open.ogg', 50, TRUE)
+			locked = FALSE
+
+	..()
 
 /obj/vampire_car/Initialize()
 	. = ..()
 	FARI = new(src)
-	FARI.pixel_w = -32
-	FARI.pixel_z = -32
+	FARI.forceMove(get_step(src, facing_dir))
 	SScars.cars += src
 
 /obj/vampire_car/Destroy()
@@ -134,6 +193,10 @@ SUBSYSTEM_DEF(cars)
 		. += "It's heavily damaged..."
 	if(health < maxhealth/4)
 		. += "<span class='warning'>It appears to be falling apart...</span>"
+	if(locked)
+		. += "<span class='warning'>It's locked.</span>"
+	for(var/mob/living/L in src)
+		. += "<span class='notice'>You see [L] inside.</span>"
 
 /obj/vampire_car/proc/get_damage(var/cost)
 	if(cost > 0)
@@ -157,10 +220,16 @@ SUBSYSTEM_DEF(cars)
 	if(istype(owner.loc, /obj/vampire_car))
 		var/obj/vampire_car/V = owner.loc
 		if(V.FARI)
-			V.FARI.on = !V.FARI.on
-			to_chat(owner, "<span class='notice'>You toggle [V]'s lights.</span>")
-			playsound(V, V.FARI.on ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
-			V.FARI.update_brightness(V)
+			if(!V.fari_on)
+				V.fari_on = TRUE
+				V.FARI.set_light(5)
+				to_chat(owner, "<span class='notice'>You toggle [V]'s lights.</span>")
+				playsound(V, 'sound/weapons/magin.ogg', 40, TRUE)
+			else
+				V.fari_on = FALSE
+				V.FARI.set_light(0)
+				to_chat(owner, "<span class='notice'>You toggle [V]'s lights.</span>")
+				playsound(V, 'sound/weapons/magout.ogg', 40, TRUE)
 
 /datum/action/carr/beep
 	name = "Toggle Light"
@@ -187,6 +256,22 @@ SUBSYSTEM_DEF(cars)
 		else
 			V.stage = 1
 		to_chat(owner, "<span class='notice'>You enable [V]'s transmission at [V.stage].</span>")
+
+/datum/action/carr/baggage
+	name = "Lock Baggage"
+	desc = "Lock/Unlock Baggage."
+	button_icon_state = "baggage"
+
+/datum/action/carr/baggage/Trigger()
+	if(istype(owner.loc, /obj/vampire_car))
+		var/obj/vampire_car/V = owner.loc
+		var/datum/component/storage/STR = V.GetComponent(/datum/component/storage)
+		STR.locked = !STR.locked
+		playsound(V, 'code/modules/ziggers/sounds/door.ogg', 50, TRUE)
+		if(STR.locked)
+			to_chat(owner, "<span class='notice'>You lock [V]'s baggage.</span>")
+		else
+			to_chat(owner, "<span class='notice'>You unlock [V]'s baggage.</span>")
 
 /datum/action/carr/engine
 	name = "Toggle Engine"
@@ -254,6 +339,8 @@ SUBSYSTEM_DEF(cars)
 					S.Grant(src)
 					var/datum/action/carr/beep/B = new()
 					B.Grant(src)
+					var/datum/action/carr/baggage/G = new()
+					G.Grant(src)
 				else if(length(V.passengers) < V.max_passengers)
 					forceMove(over_object)
 					V.passengers += src
@@ -269,6 +356,22 @@ SUBSYSTEM_DEF(cars)
 /obj/vampire_car/relaymove(mob, direct)
 	if(!on)
 		return
+	if(istype(mob, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = mob
+		if(H.stat >= 2)
+			return
+		if(H.IsSleeping())
+			return
+		if(H.IsUnconscious())
+			return
+		if(H.IsParalyzed())
+			return
+		if(H.IsKnockdown())
+			return
+		if(H.IsStun())
+			return
+		if(HAS_TRAIT(H, TRAIT_RESTRAINED))
+			return
 	switch(direct)
 		if(NORTH)
 			driving = AHEAD
@@ -347,16 +450,19 @@ SUBSYSTEM_DEF(cars)
 		else
 			facing_dir = turn(moving_dir, 180)
 //		var/target_turf = get_step(src, last_dir)	//Fo futue
+		if(moving_dir != NORTH && moving_dir != SOUTH && moving_dir != WEST && moving_dir != EAST)
+			delay = delay /= 0.75
 		glide_size = (32 / delay) * world.tick_lag// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
 		step(src, moving_dir)
 		dir = facing_dir
-		FARI.dir = facing_dir
+		FARI.forceMove(get_step(src, facing_dir))
 		last_dir = moving_dir
 		turf_crossed = min(3, turf_crossed+1)
 		glide_size = (32 / delay) * world.tick_lag// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
 		playsound(src, 'code/modules/ziggers/sounds/work.ogg', 40, TRUE)
 		if(health < maxhealth/2)
-			do_attack_animation(src)
+			pixel_x = rand(-2, 2)
+			pixel_y = rand(-2, 2)
 		for(var/mob/living/L in loc)
 			if(L)
 				L.apply_damage(25, BRUTE, BODY_ZONE_CHEST)
@@ -365,6 +471,9 @@ SUBSYSTEM_DEF(cars)
 /obj/vampire_car/Bump(atom/A)
 	if(speed > 5)
 		return
+	if(istype(A, /mob/living/carbon/human/npc))
+		var/mob/living/carbon/human/npc/NPC = A
+		NPC.Aggro(driver, TRUE)
 	playsound(src, 'code/modules/ziggers/sounds/bump.ogg', 50, TRUE)
 	last_speeded = world.time+20
 	do_attack_animation(A)
@@ -372,7 +481,7 @@ SUBSYSTEM_DEF(cars)
 		if(istype(A, /mob/living))
 			var/mob/living/L = A
 			L.Knockdown(10)
-			L.apply_damage(25, BRUTE, BODY_ZONE_CHEST)
+			L.apply_damage(15*stage, BRUTE, BODY_ZONE_CHEST)
 			get_damage(5)
 		else
 			get_damage(10)
@@ -433,6 +542,9 @@ SUBSYSTEM_DEF(cars)
 /obj/vampire_car/retro/rand/clinic
 	access = "clinic"
 	icon_state = "5"
+
+/obj/effect/fari
+	invisibility = INVISIBILITY_ABSTRACT
 
 #undef TURNLEFT
 #undef NOTURN

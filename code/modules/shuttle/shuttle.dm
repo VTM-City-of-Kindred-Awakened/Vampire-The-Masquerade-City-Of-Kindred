@@ -193,6 +193,7 @@
 	name = "dock"
 
 	var/last_dock_time
+	var/cargo_fix = FALSE
 
 	var/datum/map_template/shuttle/roundstart_template
 	var/json_key

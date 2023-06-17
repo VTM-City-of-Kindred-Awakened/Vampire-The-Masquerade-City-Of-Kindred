@@ -1,4 +1,4 @@
-"aa" = (/obj/docking_port/stationary{dir = 8; dwidth = 8; height = 4; id = "supply_away"; json_key = "cargo"; name = "CentCom"; roundstart_template = /datum/map_template/shuttle/cargo/box; width = 12},/turf/open/space,/area/space)
+"aa" = (/obj/docking_port/stationary{cargo_fix = 1; dir = 8; dwidth = 8; height = 4; id = "supply_away"; json_key = "cargo_vampire"; name = "CentCom"; roundstart_template = null; width = 12},/turf/open/space,/area/space)
 "ab" = (/turf/closed/indestructible/riveted,/area/space)
 "ac" = (/turf/open/floor/plasteel,/area/tdome/arena_source)
 "ad" = (/turf/open/space,/area/space)
