@@ -13,10 +13,12 @@
 		-Nanotrasen Naval Command"}
 
 /datum/station_goal/bluespace_cannon/on_report()
+	return
+/*
 	//Unlock BSA parts
 	var/datum/supply_pack/engineering/bsa/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/bsa]
 	P.special_enabled = TRUE
-
+*/
 /datum/station_goal/bluespace_cannon/check_completion()
 	if(..())
 		return TRUE

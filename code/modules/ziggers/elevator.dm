@@ -38,6 +38,7 @@
 			B.forceMove(D.loc)
 		for(var/obj/elevator_door/V in D.doors)
 			V.open()
+		D.say("Arrived.")
 		riding = FALSE
 		D.riding = FALSE
 		here = FALSE
@@ -84,6 +85,7 @@
 			B.forceMove(U.loc)
 		for(var/obj/elevator_door/V in U.doors)
 			V.open()
+		U.say("Arrived.")
 		riding = FALSE
 		U.riding = FALSE
 		here = FALSE

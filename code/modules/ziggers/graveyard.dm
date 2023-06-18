@@ -24,19 +24,20 @@ SUBSYSTEM_DEF(graveyard)
 		lost_points = max(0, lost_points+1)
 		clear_runs = 0
 
-	if(lost_points > 6)
+	if(lost_points > 2)
 		for(var/mob/living/L in graveyarders)
 			if(L)
 				if(L.client)
 					AdjustMasquerade(L, -1)
 					lost_points = 0
 
-	if(clear_runs > 3)
+	if(clear_runs > 2)
 		clear_runs = 0
 		for(var/mob/living/L in graveyarders)
 			if(L)
 				if(L.client)
 					AdjustMasquerade(L, 1)
+					L.client.prefs.exper = min(1440, L.client.prefs.exper+50)
 
 /obj/vampgrave
 	icon = 'code/modules/ziggers/props.dmi'

@@ -7,3 +7,9 @@
 														/datum/discipline/presence = 3)
 	male_clothes = "/obj/item/clothing/under/vampire/ventrue"
 	female_clothes = "/obj/item/clothing/under/vampire/ventrue/female"
+
+/*
+/datum/vampireclane/ventrue/on_gain(mob/living/carbon/human/H)
+	..()
+	new /obj/item/stack/dollar/hundred(H.loc)
+*/

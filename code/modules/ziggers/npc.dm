@@ -185,6 +185,7 @@
 	var/list/ears = list()
 	var/list/glasses = list()
 	var/list/inhand_items = list()
+	var/list/pockets = list()
 
 	//For workers and police
 	var/obj/item/card/id/id_type
@@ -307,6 +308,12 @@
 		O.r_hand = pick(socialrole.inhand_items)
 	if(socialrole.id_type)
 		O.id = socialrole.id_type
+	if(O.uniform && length(socialrole.pockets))
+		O.l_pocket = pick(socialrole.pockets)
+		if(length(socialrole.pockets)-1 > 0 && prob(50))
+			var/list/another_pocket = socialrole.pockets.Copy()
+			another_pocket -= O.l_pocket
+			O.r_pocket = pick(another_pocket)
 	equipOutfit(O)
 	qdel(O)
 
@@ -403,15 +410,19 @@
 	..()
 
 /mob/living/carbon/human/npc/on_hit(obj/projectile/P)
-	..()
+	. = ..()
 	Aggro(P.firer, TRUE)
 
 /mob/living/carbon/human/npc/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	..()
+	. = ..()
 	Aggro(throwingdatum.thrower, TRUE)
 
+/mob/living/carbon/human/npc/attackby(obj/item/W, mob/living/user, params)
+	. = ..()
+	Aggro(user, TRUE)
+
 /mob/living/carbon/human/npc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
-	..()
+	. = ..()
 	last_grab = world.time
 
 /mob/living/carbon/human/npc/proc/EmoteAction()

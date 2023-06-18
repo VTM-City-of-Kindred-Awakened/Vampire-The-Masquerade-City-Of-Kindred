@@ -525,3 +525,73 @@
 	layer = CAR_LAYER
 	anchored = TRUE
 	density = TRUE
+
+/obj/structure/bloodextractor
+	name = "blood extractor"
+	desc = "Extract blood in packs."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "bloodextractor"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+	density = TRUE
+	var/last_extracted = 0
+
+/mob/living/carbon/human/MouseDrop(atom/over_object)
+	. = ..()
+	if(iskindred(src))
+		return
+	if(istype(over_object, /obj/structure/bloodextractor))
+		if(get_dist(src, over_object) < 2)
+			var/obj/structure/bloodextractor/V = over_object
+			if(V.last_extracted+300 > world.time)
+				V.visible_message("<span class='warning'>[V] isn't ready!</span>")
+				return
+			V.last_extracted = world.time
+			new /obj/item/drinkable_bloodpack(get_step(V, SOUTH))
+
+GLOBAL_LIST_EMPTY(vampire_computers)
+
+/obj/vampire_computer
+	name = "computer"
+	desc = "See the news of Kindred City."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "computer"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+	var/main = FALSE
+	var/last_message = ""
+
+/obj/vampire_computer/examine(mob/user)
+	. = ..()
+	icon_state = initial(icon_state)
+	. += "Last Message:<BR>"
+	. += "- [last_message]"
+
+/obj/vampire_computer/Initialize()
+	. = ..()
+	GLOB.vampire_computers += src
+
+/obj/vampire_computer/Destroy()
+	. = ..()
+	GLOB.vampire_computers -= src
+
+/obj/vampire_computer/prince
+	icon_state = "computerprince"
+	main = TRUE
+
+/obj/vampire_computer/attack_hand(mob/user)
+	to_chat(user, "Last Message:<BR>")
+	to_chat(user, "- [last_message]")
+	if(!main)
+		return
+	var/announce = input(user, "Type a text to announce:", "Announce")  as text|null
+	if(announce)
+		for(var/obj/vampire_computer/C in GLOB.vampire_computers)
+			C.last_message = "[announce]"
+			if(!C.main)
+				C.say("New announcement from Prince!")
+				C.icon_state = "computermessage"
+			else
+				C.say("Announcement sent.")

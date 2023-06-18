@@ -64,6 +64,15 @@
 		if(4)
 			outfit = /datum/outfit/civillian4
 
+/obj/effect/mob_spawn/human/citizen/special(mob/living/new_spawn)
+	var/my_name = "Tyler"
+	if(new_spawn.gender == MALE)
+		my_name = pick(GLOB.first_names_male)
+	else
+		my_name = pick(GLOB.first_names_female)
+	var/my_surname = pick(GLOB.last_names)
+	new_spawn.fully_replace_character_name(null,"[my_name] [my_surname]")
+
 /datum/outfit/civillian1
 	name = "civillian"
 	uniform = /obj/item/clothing/under/vampire/sport

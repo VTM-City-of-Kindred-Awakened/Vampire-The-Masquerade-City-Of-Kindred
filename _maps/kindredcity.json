@@ -3,12 +3,6 @@
 	"map_name": "San Francisco",
 	"map_path": "map_files/Vampire",
 	"map_file": "KindredCity.dmm",
-	"shuttles": {
-		"cargo": "cargo_vampire",
-		"ferry": "ferry_fancy",
-		"whiteship": "whiteship_meta",
-		"emergency": "emergency_meta"
-	},
 	"traits": [
 		{
 			"Up": 1,

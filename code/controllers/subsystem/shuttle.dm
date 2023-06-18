@@ -73,13 +73,11 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
 
-	for(var/pack in subtypesof(/datum/supply_pack))
-		var/datum/supply_pack/P = new pack()
+	for(var/pack in subtypesof(/datum/supply_pack/vampire))
+		var/datum/supply_pack/vampire/P = new pack()
 		if(!P.contains)
 			continue
 		supply_packs[P.type] = P
-
-	initial_load()
 
 	if(!arrivals)
 		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
@@ -90,6 +88,8 @@ SUBSYSTEM_DEF(shuttle)
 	if(!supply)
 		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
 	return ..()
+
+	initial_load()
 
 /datum/controller/subsystem/shuttle/proc/initial_load()
 	for(var/s in stationary)

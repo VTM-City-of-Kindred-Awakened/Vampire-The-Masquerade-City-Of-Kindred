@@ -459,7 +459,7 @@ SUBSYSTEM_DEF(cars)
 		last_dir = moving_dir
 		turf_crossed = min(3, turf_crossed+1)
 		glide_size = (32 / delay) * world.tick_lag// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
-		playsound(src, 'code/modules/ziggers/sounds/work.ogg', 40, TRUE)
+		playsound(src, 'code/modules/ziggers/sounds/drive.ogg', 5, FALSE)
 		if(health < maxhealth/2)
 			pixel_x = rand(-2, 2)
 			pixel_y = rand(-2, 2)

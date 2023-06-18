@@ -147,7 +147,7 @@
 	max_ammo = 30
 
 /obj/item/ammo_box/vampire/arrows
-	name = "ammo box (12g)"
+	name = "ammo box (arrows)"
 	icon_state = "arrows"
 	ammo_type = /obj/item/ammo_casing/caseless/bolt
 	max_ammo = 30

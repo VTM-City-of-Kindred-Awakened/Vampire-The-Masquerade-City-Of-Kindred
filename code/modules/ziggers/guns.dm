@@ -260,8 +260,8 @@
 	recoil = 2
 
 /obj/item/gun/ballistic/shotgun/toy/crossbow/vampire
-	name = "shotgun"
-	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
+	name = "crossbow"
+	desc = "Welcome to the Middle Ages!"
 	icon = 'code/modules/ziggers/48x32weapons.dmi'
 	lefthand_file = 'code/modules/ziggers/righthand.dmi'
 	righthand_file = 'code/modules/ziggers/lefthand.dmi'

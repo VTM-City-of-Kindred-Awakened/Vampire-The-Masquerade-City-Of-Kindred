@@ -64,6 +64,8 @@
 							/obj/item/clothing/head/vampire/bandana/black,
 							/obj/item/clothing/head/vampire/beanie,
 							/obj/item/clothing/head/vampire/beanie/black)
+	pockets = list(/obj/item/stack/dollar/rand,
+					/obj/item/vamp/keys/hack)
 
 	male_phrases = list("Ну и на что уставился, олух?",
 											"Чмоня, я тебя сейчас не понял. Ты чё домагаешься до меня?",
@@ -174,7 +176,8 @@
 									/obj/item/clothing/under/vampire/sexy,
 									/obj/item/clothing/under/vampire/pimp,
 									/obj/item/clothing/under/vampire/emo)
-	inhand_items = list(/obj/item/vamp/keys/npc)
+	pockets = list(/obj/item/vamp/keys/npc,
+					/obj/item/stack/dollar/rand)
 
 	male_phrases = list("Что тебе нужно, дружище?",
 											"Я не понимаю, что вам от меня нужно?",
@@ -294,7 +297,8 @@
 	uniforms = list(/obj/item/clothing/under/vampire/black,
 									/obj/item/clothing/under/vampire/red,
 									/obj/item/clothing/under/vampire/gothic)
-	inhand_items = list(/obj/item/vamp/keys/npc)
+	pockets = list(/obj/item/vamp/keys/npc,
+					/obj/item/stack/dollar/rand)
 
 	female_phrases = list("Что вы задумали?",
 											"Я не понимаю, что вам от меня нужно?",
@@ -581,7 +585,10 @@
 	shoes = list(/obj/item/clothing/shoes/vampire,
 								/obj/item/clothing/shoes/vampire/white)
 	uniforms = list(/obj/item/clothing/under/vampire/rich)
-	inhand_items = list(/obj/item/vamp/keys/npc, /obj/item/storage/briefcase)
+	inhand_items = list(/obj/item/storage/briefcase)
+	pockets = list(/obj/item/vamp/keys/npc,
+					/obj/item/stack/dollar/fifty,
+					/obj/item/stack/dollar/hundred)
 
 	male_phrases = list("Что тебе нужно, дружище?",
 											"Я не понимаю, что вам от меня нужно?",
@@ -672,7 +679,9 @@
 	shoes = list(/obj/item/clothing/shoes/vampire/heels,
 								/obj/item/clothing/shoes/vampire/heels/red)
 	uniforms = list(/obj/item/clothing/under/vampire/business)
-	inhand_items = list(/obj/item/vamp/keys/npc)
+	pockets = list(/obj/item/vamp/keys/npc,
+					/obj/item/stack/dollar/fifty,
+					/obj/item/stack/dollar/hundred)
 
 	female_phrases = list("Что вы задумали?",
 											"Я не понимаю, что вам от меня нужно?",
@@ -761,6 +770,8 @@
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
 	can_be_held = FALSE
+	density = FALSE
+	anchored = FALSE
 	footstep_type = FOOTSTEP_MOB_CLAW
 	bloodquality = BLOOD_QUALITY_LOW
 

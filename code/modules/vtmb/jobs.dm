@@ -1,3 +1,12 @@
+/datum/outfit/job/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	if(H.clane)
+		if(H.clane.name == "Ventrue")
+			var/obj/item/stack/dollar/hundred/HUN = new(H.loc)
+			for(var/obj/item/storage/backpack/B in H)
+				if(B)
+					HUN.forceMove(B)
+
 //CAMARILLA
 
 /datum/job/vamp/prince
@@ -36,16 +45,16 @@
 
 	duty = "Represent interests of Camarilla and maintain Masquerade."
 
-/datum/job/prince/get_access()
+/datum/job/vamp/prince/get_access()
 	return get_all_accesses()
 
-/datum/job/prince/announce(mob/living/carbon/human/H)
+/datum/job/vamp/prince/announce(mob/living/carbon/human/H)
 	..()
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Prince [H.real_name] in the city!"))
 
 /datum/outfit/job/prince
 	name = "Prince"
-	jobtype = /datum/job/prince
+	jobtype = /datum/job/vamp/prince
 
 	id = /obj/item/card/id/prince
 	glasses = /obj/item/clothing/glasses/vampire/sun
@@ -55,7 +64,7 @@
 	shoes = /obj/item/clothing/shoes/vampire
 	l_pocket = /obj/item/vamp/phone/prince
 	r_pocket = /obj/item/vamp/keys/prince
-	backpack_contents = list(/obj/item/gun/ballistic/automatic/vampire/deagle=1, /obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/masquerade_contract=1)
+	backpack_contents = list(/obj/item/gun/ballistic/automatic/vampire/deagle=1, /obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/masquerade_contract=1, /obj/item/stack/dollar/hundred=3)
 
 
 	backpack = /obj/item/storage/backpack
@@ -132,7 +141,7 @@
 	glasses = /obj/item/clothing/glasses/vampire/sun
 	r_pocket = /obj/item/vamp/keys/sheriff
 	l_pocket = /obj/item/vamp/phone/sheriff
-	backpack_contents = list(/obj/item/gun/ballistic/automatic/vampire/deagle=1, /obj/item/melee/vampirearms/stake=3, /obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/masquerade_contract=1)
+	backpack_contents = list(/obj/item/gun/ballistic/automatic/vampire/deagle=1, /obj/item/melee/vampirearms/stake=3, /obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/masquerade_contract=1, /obj/item/stack/dollar/fifty=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -207,7 +216,7 @@
 //	head = /obj/item/clothing/head/hopcap
 	l_pocket = /obj/item/vamp/phone/clerk
 	r_pocket = /obj/item/vamp/keys/clerk
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/stack/dollar/hundred=1)
 
 /datum/outfit/job/clerk/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -260,7 +269,7 @@
 	shoes = /obj/item/clothing/shoes/vampire
 	r_pocket = /obj/item/vamp/keys/camarilla
 	l_pocket = /obj/item/vamp/phone/camarilla
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/melee/vampirearms/stake=3, /obj/item/flashlight=1, /obj/item/masquerade_contract=1, /obj/item/vamp/keys/hack=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/melee/vampirearms/stake=3, /obj/item/flashlight=1, /obj/item/masquerade_contract=1, /obj/item/vamp/keys/hack=1, /obj/item/stack/dollar/fifty=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -309,7 +318,7 @@
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/graveyard
 	r_hand = /obj/item/melee/vampirearms/shovel
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/stack/dollar/rand=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -358,7 +367,7 @@
 	l_hand = /obj/item/storage/firstaid/medical
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/clinic
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/stack/dollar/fifty=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -401,7 +410,7 @@
 	r_pocket = /obj/item/vamp/keys/cleaning
 	shoes = /obj/item/clothing/shoes/vampire/jackboots/work
 	gloves = /obj/item/clothing/gloves/vampire/cleaning
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/keys/hack=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/keys/hack=1, /obj/item/stack/dollar/rand=1)
 
 /obj/effect/landmark/start/vjanitor
 	name = "Street Janitor"
@@ -441,7 +450,7 @@
 	r_pocket = /obj/item/vamp/keys/archive
 	l_pocket = /obj/item/vamp/phone
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/stack/dollar/rand=1)
 
 /datum/outfit/job/archivist/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -494,7 +503,7 @@
 	gloves = /obj/item/clothing/gloves/vampire/work
 	l_pocket = /obj/item/vamp/phone/barkeeper
 	r_pocket = /obj/item/vamp/keys/bar
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/stack/dollar/hundred=3)
 
 /datum/outfit/job/barkeeper/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -542,7 +551,7 @@
 	r_pocket = /obj/item/vamp/keys/anarch
 	l_pocket = /obj/item/vamp/phone/anarch
 	r_hand = /obj/item/melee/vampirearms/baseball
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/melee/vampirearms/stake=3, /obj/item/flashlight=1, /obj/item/vamp/keys/hack=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/melee/vampirearms/stake=3, /obj/item/flashlight=1, /obj/item/vamp/keys/hack=1, /obj/item/stack/dollar/rand=1)
 
 /obj/effect/landmark/start/bouncer
 	name = "Bouncer"
@@ -588,7 +597,7 @@
 	glasses = /obj/item/clothing/glasses/vampire/sun
 	l_pocket = /obj/item/vamp/phone/dealer
 	r_pocket = /obj/item/vamp/keys/supply
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/stack/dollar/hundred=1)
 
 /datum/outfit/job/dealer/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -632,7 +641,7 @@
 	l_pocket = /obj/item/vamp/phone/anarch
 	r_pocket = /obj/item/vamp/keys/supply
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/stack/dollar/rand=1)
 
 /obj/effect/landmark/start/supplytechnician
 	name = "Supply Technician"
@@ -667,7 +676,7 @@
 	jobtype = /datum/job/vamp/citizen
 	l_pocket = /obj/item/vamp/phone
 	id = /obj/item/cockclock
-	backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/stack/dollar/rand=1)
 
 /datum/outfit/job/citizen/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -686,6 +695,78 @@
 
 
 //ID
+
+/obj/item/card/id/prince/AltClick(mob/user)
+	return
+
+/obj/item/card/id/sheriff/AltClick(mob/user)
+	return
+
+/obj/item/card/id/camarilla/AltClick(mob/user)
+	return
+
+/obj/item/card/id/clerk/AltClick(mob/user)
+	return
+
+/obj/item/card/id/anarch/AltClick(mob/user)
+	return
+
+/obj/item/card/id/clinic/AltClick(mob/user)
+	return
+
+/obj/item/card/id/archive/AltClick(mob/user)
+	return
+
+/obj/item/card/id/cleaning/AltClick(mob/user)
+	return
+
+/obj/item/card/id/dealer/AltClick(mob/user)
+	return
+
+/obj/item/card/id/supplytech/AltClick(mob/user)
+	return
+
+/obj/item/card/id/hunter/AltClick(mob/user)
+	return
+
+/obj/item/card/id/hunter
+	var/last_detonated = 0
+
+/obj/item/card/id/hunter/attack_self(mob/user)
+	. = ..()
+	if(last_detonated+30 > world.time)
+		return
+	last_detonated = world.time
+	do_sparks(rand(5, 9), FALSE, user)
+	playsound(user.loc, 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
+	new /obj/effect/dummy/lighting_obj (user.loc, 6, 4, COLOR_WHITE, 2)
+	for(var/mob/living/M in get_hearers_in_view(4, user.loc))
+		bang(get_turf(M), M)
+
+/obj/item/card/id/hunter/proc/bang(turf/T , mob/living/M)
+	if(M.stat == DEAD)	//They're dead!
+		return
+	for(var/obj/item/card/id/hunter/HUNT in M)
+		if(M)
+			return
+	M.show_message("<span class='warning'><b>GOD SEES YOU</b></span>", MSG_AUDIBLE)
+	var/distance = max(0,get_dist(get_turf(src),T))
+
+//Flash
+	if(M.flash_act(affect_silicon = 1))
+		M.Paralyze(max(20/max(1,distance), 5))
+		M.Knockdown(max(200/max(1,distance), 60))
+
+//Bang
+	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
+		M.Paralyze(20)
+		M.Knockdown(200)
+		M.soundbang_act(1, 200, 10, 15)
+	else
+		if(distance <= 1) // Adds more stun as to not prime n' pull (#45381)
+			M.Paralyze(5)
+			M.Knockdown(30)
+		M.soundbang_act(1, max(200/max(1,distance), 60), rand(0, 5))
 
 /obj/item/card/id/prince
 	name = "leader badge"

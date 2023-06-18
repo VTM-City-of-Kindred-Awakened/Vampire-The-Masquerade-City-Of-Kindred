@@ -127,12 +127,14 @@
 			if(CheckEyewitness(H, H, 5, FALSE))
 				AdjustMasquerade(H, -1)
 
+/*
 	if(!H in GLOB.masquerade_breakers_list)
 		if(H.masquerade < 4)
 			GLOB.masquerade_breakers_list += H
 	else if(H in GLOB.masquerade_breakers_list)
 		if(H.masquerade > 3)
 			GLOB.masquerade_breakers_list -= H
+*/
 
 	if(H.client && H.stat <= 2)
 		if(H.client.prefs)

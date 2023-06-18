@@ -33,6 +33,12 @@
 			to_chat(H, "<span class='userhelp'><b>MASQUERADE REINFORCEMENT</b></span>")
 		SSbad_guys_party.next_fire = max(world.time, SSbad_guys_party.next_fire+1200)
 
+	if(H in GLOB.masquerade_breakers_list)
+		if(H.masquerade > 3)
+			GLOB.masquerade_breakers_list -= H
+	else if(H.masquerade < 4)
+		GLOB.masquerade_breakers_list += H
+
 /mob/living/carbon/human/npc/proc/backinvisible(var/atom/A)
 	switch(dir)
 		if(NORTH)
