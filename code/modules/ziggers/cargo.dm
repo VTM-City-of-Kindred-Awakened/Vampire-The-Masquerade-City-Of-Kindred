@@ -160,7 +160,7 @@
 	crate_name = "ammo crate"
 
 /datum/supply_pack/vampire/armorlight
-	name = "Armor (civilian)"
+	name = "Armor (3 civilian)"
 	desc = "Contains 3 types of body clothing and 3 types of light head protection."
 	cost = 300
 	contains = list(/obj/item/clothing/suit/vampire/trench,
