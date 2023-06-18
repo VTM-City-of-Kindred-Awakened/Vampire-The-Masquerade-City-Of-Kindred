@@ -159,6 +159,42 @@
 	contains = list(/obj/item/ammo_box/vampire/arrows)
 	crate_name = "ammo crate"
 
+/datum/supply_pack/vampire/armorlight
+	name = "Armor (civilian)"
+	desc = "Contains 3 types of body clothing and 3 types of light head protection."
+	cost = 300
+	contains = list(/obj/item/clothing/suit/vampire/trench,
+					/obj/item/clothing/suit/vampire/trench/alt,
+					/obj/item/clothing/suit/vampire/trench/archive,
+					/obj/item/clothing/head/vampire/police,
+					/obj/item/clothing/head/vampire/cowboy,
+					/obj/item/clothing/head/vampire/british)
+	crate_name = "armor crate"
+
+/datum/supply_pack/vampire/armorpolice
+	name = "Armor (police)"
+	desc = "Contains single complect of full police protection."
+	cost = 300
+	contains = list(/obj/item/clothing/suit/vampire/vest,
+					/obj/item/clothing/head/vampire/helmet)
+	crate_name = "armor crate"
+
+/datum/supply_pack/vampire/armorarmy
+	name = "Armor (army)"
+	desc = "Contains single complect of full army protection."
+	cost = 500
+	contains = list(/obj/item/clothing/suit/vampire/vest/army,
+					/obj/item/clothing/head/vampire/army)
+	crate_name = "armor crate"
+
+/datum/supply_pack/vampire/armoreod
+	name = "Armor (EOD)"
+	desc = "Contains single complect of full EOD protection."
+	cost = 700
+	contains = list(/obj/item/clothing/suit/vampire/eod,
+					/obj/item/clothing/head/vampire/eod)
+	crate_name = "armor crate"
+
 /obj/item/stack/dollar
 	name = "dollars"
 	desc = "Wow! With enough of these, you could buy a lot! ...Pssh, yeah right."
