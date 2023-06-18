@@ -419,7 +419,8 @@
 
 /mob/living/carbon/human/npc/attackby(obj/item/W, mob/living/user, params)
 	. = ..()
-	Aggro(user, TRUE)
+	if(W.force)
+		Aggro(user, TRUE)
 
 /mob/living/carbon/human/npc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
 	. = ..()
