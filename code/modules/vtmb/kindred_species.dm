@@ -6,12 +6,13 @@
 	id = "kindred"
 	default_color = "FFFFFF"
 	toxic_food = MEAT | VEGETABLES | RAW | JUNKFOOD | GRAIN | FRUIT | DAIRY | FRIED | ALCOHOL | SUGAR | PINEAPPLE
-	species_traits = list(EYECOLOR, HAIR,FACEHAIR, LIPS, HAS_FLESH, HAS_BONE)
+	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_VIRUSIMMUNE, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_TOXIMMUNE, TRAIT_NOCRITDAMAGE)
 	use_skintones = TRUE
 	limbs_id = "human"
 	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
 	brutemod = 1	//0.8 bilo
+	heatmod = 2		//Sosut ot peregreva
 	burnmod = 2
 	punchdamagelow = 10
 	punchdamagehigh = 20
@@ -50,14 +51,18 @@
 		if(!host.clane)
 			dat += " the caitiff"
 
-		if(host.mind.assigned_role)
-			if(host.mind.special_role)
-				dat += ", carrying the <font color=red>[host.mind.special_role]</font> role."
-			else
-				dat += ", carrying the [host.mind.assigned_role] role."
-		if(!host.mind.assigned_role)
-			dat += "."
-		dat += "<BR>"
+		if(host.mind)
+
+			if(host.mind.assigned_role)
+				if(host.mind.special_role)
+					dat += ", carrying the <font color=red>[host.mind.special_role]</font> role."
+				else
+					dat += ", carrying the [host.mind.assigned_role] role."
+			if(!host.mind.assigned_role)
+				dat += "."
+			dat += "<BR>"
+			if(host.mind.enslaved_to)
+				dat += "My Regnant is [host.mind.enslaved_to], I should obey their wants.<BR>"
 		if(host.generation)
 			dat += "I'm from [host.generation] generation.<BR>"
 		if(host.mind.special_role)
@@ -116,12 +121,59 @@
 		onclose(host, "vampire", src)
 
 /datum/species/kindred/on_species_gain(mob/living/carbon/human/C)
-	..()
+	. = ..()
 	C.update_body(0)
 	C.last_experience = world.time+3000
 	var/datum/action/vampireinfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
+
+/datum/species/kindred/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	. = ..()
+	for(var/datum/action/vampireinfo/VI in C.actions)
+		qdel(VI)
+
+/datum/action/give_vitae
+	name = "Give Vitae"
+	desc = "Give your vitae to someone, make the Blood Bond."
+	button_icon_state = "vitae"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/giving = FALSE
+
+/datum/action/give_vitae/Trigger()
+	if(istype(owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = owner
+		if(istype(H.pulling, /mob/living/carbon/human))
+			var/mob/living/carbon/human/BLOODBONDED = H.pulling
+			if(!BLOODBONDED.client)
+				return
+			if(giving)
+				return
+			giving = TRUE
+			if(do_mob(owner, BLOODBONDED, 10 SECONDS))
+				var/new_master = FALSE
+				BLOODBONDED.adjustBruteLoss(-25, TRUE)
+				if(length(BLOODBONDED.all_wounds))
+					var/datum/wound/W = pick(BLOODBONDED.all_wounds)
+					W.remove_wound()
+				BLOODBONDED.adjustFireLoss(-25, TRUE)
+				giving = FALSE
+				if(istype(H.pulling, /mob/living/carbon/human/npc))
+					var/mob/living/carbon/human/npc/NPC = H.pulling
+					NPC.ghoulificate(owner)
+				if(BLOODBONDED.mind)
+					if(BLOODBONDED.mind.enslaved_to != owner)
+						BLOODBONDED.mind.enslave_mind_to_creator(owner)
+						to_chat(BLOODBONDED, "<span class='userdanger'><b>AS PRECIOUS VITAE ENTER YOUR MOUTH, YOU NOW ARE IN THE BLOODBOND OF [H]. SERVE YOUR REGNANT CORRECTLY, OR YOUR ACTIONS WILL NOT BE TOLERATED.</b></span>")
+						new_master = TRUE
+				if(isghoul(BLOODBONDED))
+					var/datum/species/ghoul/G = BLOODBONDED.dna.species
+					G.master = owner
+					G.last_vitae = world.time
+					if(new_master)
+						G.changed_master = TRUE
+			else
+				giving = FALSE
 
 /datum/species/kindred/check_roundstart_eligible()
 	return TRUE

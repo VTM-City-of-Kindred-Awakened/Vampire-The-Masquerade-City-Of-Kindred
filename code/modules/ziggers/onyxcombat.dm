@@ -13,16 +13,16 @@
 	var/harm_focus = SOUTH
 
 /mob/living/carbon/human/death()
-	..()
+	. = ..()
+	if(client)
+		if(client.prefs)
+			client.prefs.humanity = humanity
+			client.prefs.masquerade = masquerade
+			client.prefs.save_character()
+			client.prefs.save_preferences()
 	if(iskindred(src))
 		if(in_frenzy)
 			exit_frenzymod()
-		if(client)
-			if(client.prefs)
-				client.prefs.humanity = humanity
-				client.prefs.masquerade = masquerade
-				client.prefs.save_character()
-				client.prefs.save_preferences()
 		fire_stacks += 5
 		IgniteMob()
 		playsound(src, 'code/modules/ziggers/sounds/burning_death.ogg', 80, TRUE)

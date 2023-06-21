@@ -120,7 +120,7 @@
 					Move(T)
 
 /datum/species/kindred/spec_life(mob/living/carbon/human/H)
-	..()
+	. = ..()
 	var/skipface = (H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE))
 	if(H.clane)
 		if(!skipface && H.clane.violating_appearance)
@@ -151,7 +151,7 @@
 				H.client.prefs.save_preferences()
 				H.client.prefs.save_character()
 				H.last_experience = world.time
-			if(iskindred(H) && H.client.prefs.humanity < 1)
+			if(H.client.prefs.humanity < 1)
 				H.enter_frenzymod()
 				H.client.prefs.slotlocked = 0
 				H.client.prefs.exper = 0

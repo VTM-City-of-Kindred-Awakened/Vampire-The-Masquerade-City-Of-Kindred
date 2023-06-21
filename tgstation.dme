@@ -3331,6 +3331,7 @@
 #include "code\modules\vtmb\_signals.dm"
 #include "code\modules\vtmb\disciplines.dm"
 #include "code\modules\vtmb\frenzy.dm"
+#include "code\modules\vtmb\ghoul_species.dm"
 #include "code\modules\vtmb\jobs.dm"
 #include "code\modules\vtmb\kindred_species.dm"
 #include "code\modules\vtmb\pyramid.dm"

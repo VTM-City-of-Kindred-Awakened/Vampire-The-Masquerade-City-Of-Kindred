@@ -67,6 +67,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/real_name						//our character's name
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
+	var/total_age = 0
 	var/underwear = "Nude"				//underwear type
 	var/underwear_color = "000"			//underwear color
 	var/undershirt = "Nude"				//undershirt type
@@ -270,7 +271,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //					dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_GENDER]'>Always Random Gender: [(randomise[RANDOM_GENDER]) ? "Yes" : "No"]</A>"
 //					dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_GENDER_ANTAG]'>When Antagonist: [(randomise[RANDOM_GENDER_ANTAG]) ? "Yes" : "No"]</A>"
 
-			dat += "<br><b>Age of the Embrace:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
+			dat += "<br><b>Biological Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
+			dat += "<br><b>Actual Age:</b> <a href='?_src_=prefs;preference=total_age;task=input'>[max(age, total_age)]</a>"
 //			if(randomise[RANDOM_BODY] || randomise[RANDOM_BODY_ANTAG]) //doesn't work unless random body
 //				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_AGE]'>Always Random Age: [(randomise[RANDOM_AGE]) ? "Yes" : "No"]</A>"
 //				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_AGE_ANTAG]'>When Antagonist: [(randomise[RANDOM_AGE_ANTAG]) ? "Yes" : "No"]</A>"
@@ -583,7 +585,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					mutant_category = 0
 
 			if(pref_species.mutant_bodyparts["tail_human"])
-				if(pref_species.id != "kindred")
+				if(pref_species.id != "kindred" && pref_species.id != "ghoul")
 					if(!mutant_category)
 						dat += APPEARANCE_CATEGORY_COLUMN
 
@@ -597,7 +599,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						mutant_category = 0
 
 			if(pref_species.mutant_bodyparts["ears"])
-				if(pref_species.id != "kindred")
+				if(pref_species.id != "kindred" && pref_species.id != "ghoul")
 					if(!mutant_category)
 						dat += APPEARANCE_CATEGORY_COLUMN
 
@@ -1298,6 +1300,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					real_name = pref_species.random_name(gender,1)
 				if("age")
 					age = rand(AGE_MIN, AGE_MAX)
+				if("total_age")
+					var/max_age = 0
+					if(pref_species.name == "Vampire")
+						max_age = 1000
+					if(pref_species.name == "Ghoul")
+						max_age = 500
+					total_age = rand(age, age+max_age)
 				if("hair")
 					hair_color = random_short_color()
 				if("hairstyle")
@@ -1389,9 +1398,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("age")
 					if(slotlocked)
 						return
-					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
+					var/new_age = input(user, "Choose your character's biological age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
 					if(new_age)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
+
+				if("total_age")
+					if(slotlocked)
+						return
+					var/new_age = input(user, "Choose your character's actual age:\n([age]-[age+1000])", "Character Preference") as num|null
+					if(new_age)
+						total_age = max(min(round(text2num(new_age)), age+1000), age)
 
 				if("hair")
 					if(slotlocked)
@@ -2156,7 +2172,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.masquerade = masquerade
 
 	character.gender = gender
-	character.age = age
+	character.age = total_age
 	if(gender == MALE || gender == FEMALE)
 		character.body_type = gender
 	else
