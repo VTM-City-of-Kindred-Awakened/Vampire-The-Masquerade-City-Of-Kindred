@@ -172,6 +172,13 @@
 					G.last_vitae = world.time
 					if(new_master)
 						G.changed_master = TRUE
+				else if(!iskindred(BLOODBONDED))
+					BLOODBONDED.set_species(/datum/species/ghoul)
+					var/datum/species/ghoul/G = BLOODBONDED.dna.species
+					G.master = owner
+					G.last_vitae = world.time
+					if(new_master)
+						G.changed_master = TRUE
 			else
 				giving = FALSE
 

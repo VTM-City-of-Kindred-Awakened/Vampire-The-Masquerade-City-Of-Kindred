@@ -475,6 +475,7 @@
 		var/mob/dead/observer/C = pick(candidates)
 		src.key = C.key
 		ghoulificated = TRUE
+		set_species(/datum/species/ghoul)
 
 /mob/living/carbon/human/npc/Destroy()
 	. = ..()

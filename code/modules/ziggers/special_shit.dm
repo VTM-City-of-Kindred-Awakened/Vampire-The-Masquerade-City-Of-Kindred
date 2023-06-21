@@ -19,9 +19,9 @@
 
 /obj/item/masquerade_contract/attack(mob/living/M, mob/living/user)
 	. = ..()
-	if(iskindred(M))
+	if(iskindred(M) || isghoul(M))
 		if(M in GLOB.masquerade_breakers_list)
-			if(M.stat >= UNCONSCIOUS)
+			if(M.stat >= 2)
 				if(M.client)
 					M.client.prefs.slotlocked = 0
 					M.client.prefs.exper = 0
@@ -51,7 +51,7 @@
 			to_chat(user, "Target must have at least 2 Masquerade violations.")
 			return
 	else
-		to_chat(user, "Target must be kindred.")
+		to_chat(user, "Target must be kindred or ghoul.")
 		return
 
 /obj/item/drinkable_bloodpack
