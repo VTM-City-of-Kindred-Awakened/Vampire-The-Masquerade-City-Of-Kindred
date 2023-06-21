@@ -311,6 +311,8 @@
 		return JOB_UNAVAILABLE_GENERATION
 	if(client.prefs.masquerade < job.minimal_masquerade)
 		return JOB_UNAVAILABLE_MASQUERADE
+	if(!client.prefs.pref_species.id in job.allowed_species)
+		return JOB_UNAVAILABLE_SPECIES
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)

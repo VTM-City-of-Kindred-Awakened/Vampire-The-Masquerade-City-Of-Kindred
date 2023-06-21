@@ -74,6 +74,7 @@
 	// Fuck thin blood
 	var/minimal_generation = 13
 	var/minimal_masquerade = 1
+	var/list/allowed_species = list("kindred", "ghoul")
 
 	// List for phone shit
 	var/my_contact_is_important = FALSE

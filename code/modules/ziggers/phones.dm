@@ -289,7 +289,7 @@
 /obj/item/vamp/phone/Topic(href, href_list)
 	..()
 	var/mob/living/U = usr
-	if(usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && !href_list["close"] && !closed)
+	if(usr.canUseTopic(src, FALSE, FALSE, NO_TK) && !href_list["close"] && !closed)
 		switch(href_list["choice"])
 			if("hang")
 				last_call = 0
