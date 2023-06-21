@@ -37,6 +37,7 @@
 
 //	minimal_generation = 10	//Uncomment when players get exp enough
 	minimal_masquerade = 5
+	allowed_species = list("kindred")
 
 	my_contact_is_important = TRUE
 	known_contacts = list("Sheriff",
@@ -121,6 +122,7 @@
 
 //	minimal_generation = 11	//Uncomment when players get exp enough
 	minimal_masquerade = 5
+	allowed_species = list("kindred")
 
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
@@ -436,6 +438,7 @@
 
 	duty = "Keep a census of events and provide information to neonates."
 	minimal_masquerade = 3
+	allowed_species = list("kindred")
 
 /datum/outfit/job/archivist
 	name = "Archivist"
@@ -490,6 +493,7 @@
 
 	duty = "Lead the Anarchs in the City."
 	minimal_masquerade = 3
+	allowed_species = list("kindred")
 
 /datum/outfit/job/barkeeper
 	name = "Barkeeper"
@@ -586,6 +590,7 @@
 
 	duty = "Provide weapons to other kindred in the city."
 	minimal_masquerade = 3
+	allowed_species = list("kindred")
 
 /datum/outfit/job/dealer
 	name = "Dealer"
@@ -747,9 +752,9 @@
 	if(M.stat == DEAD)	//They're dead!
 		return
 	for(var/obj/item/card/id/hunter/HUNT in M)
-		if(M)
+		if(HUNT)
 			return
-	M.show_message("<span class='warning'><b>GOD SEES YOU</b></span>", MSG_AUDIBLE)
+	M.show_message("<span class='warning'><b>GOD SEES YOU!</b></span>", MSG_AUDIBLE)
 	var/distance = max(0,get_dist(get_turf(src),T))
 
 //Flash
