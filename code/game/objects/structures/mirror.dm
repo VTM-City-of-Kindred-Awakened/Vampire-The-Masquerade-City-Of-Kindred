@@ -8,11 +8,17 @@
 	anchored = TRUE
 	max_integrity = 200
 	integrity_failure = 0.5
+	var/datum/weakref/ref
+	vis_flags = VIS_HIDE
+	var/timerid = null
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
 	if(icon_state == "mirror_broke" && !broken)
 		obj_break(null, mapload)
+	var/obj/effect/reflection/reflection = new(src.loc)
+	reflection.setup_visuals(src)
+	ref = WEAKREF(reflection)
 
 /obj/structure/mirror/attack_hand(mob/user)
 	. = ..()
@@ -61,11 +67,19 @@
 		if(desc == initial(desc))
 			desc = "Oh no, seven years of bad luck!"
 		broken = TRUE
+		var/obj/effect/reflection/reflection = ref.resolve()
+		if(istype(reflection))
+			reflection.alpha_icon_state = "mirror_mask_broken"
+			reflection.update_mirror_filters()
 
 /obj/structure/mirror/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!disassembled)
 			new /obj/item/shard( src.loc )
+	var/obj/effect/reflection/reflection = ref.resolve()
+	if(istype(reflection))
+		qdel(reflection)
+		ref = null
 	qdel(src)
 
 /obj/structure/mirror/welder_act(mob/living/user, obj/item/I)
