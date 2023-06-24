@@ -595,3 +595,136 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 				C.icon_state = "computermessage"
 			else
 				C.say("Announcement sent.")
+
+/obj/structure/rack/tacobell
+	name = "table"
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "tacobell"
+
+/obj/structure/rack/tacobell/attack_hand(mob/living/user)
+	return
+
+/obj/structure/rack/tacobell/horizontal
+	icon_state = "tacobell1"
+
+/obj/structure/rack/tacobell/vertical
+	icon_state = "tacobell2"
+
+/obj/structure/rack/tacobell/south
+	icon_state = "tacobell3"
+
+/obj/structure/rack/tacobell/north
+	icon_state = "tacobell4"
+
+/obj/structure/rack/tacobell/east
+	icon_state = "tacobell5"
+
+/obj/structure/rack/tacobell/west
+	icon_state = "tacobell6"
+
+/obj/structure/rack/bubway
+	name = "table"
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "bubway"
+
+/obj/structure/rack/bubway/attack_hand(mob/living/user)
+	return
+
+/obj/structure/rack/bubway/horizontal
+	icon_state = "bubway1"
+
+/obj/structure/rack/bubway/vertical
+	icon_state = "bubway2"
+
+/obj/structure/rack/bubway/south
+	icon_state = "bubway3"
+
+/obj/structure/rack/bubway/north
+	icon_state = "bubway4"
+
+/obj/structure/rack/bubway/east
+	icon_state = "bubway5"
+
+/obj/structure/rack/bubway/west
+	icon_state = "bubway6"
+
+/obj/bacotell
+	name = "Baco Tell"
+	desc = "Eat some precious tacos and pizza!"
+	icon = 'code/modules/ziggers/fastfood.dmi'
+	icon_state = "bacotell"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+	pixel_w = -16
+
+/obj/bubway
+	name = "BubWay"
+	desc = "Eat some precious burgers and pizza!"
+	icon = 'code/modules/ziggers/fastfood.dmi'
+	icon_state = "bubway"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+	pixel_w = -16
+
+/obj/gummaguts
+	name = "Gumma Guts"
+	desc = "Eat some precious chicken nuggets and donuts!"
+	icon = 'code/modules/ziggers/fastfood.dmi'
+	icon_state = "gummaguts"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+	pixel_w = -16
+
+/obj/underplate
+	name = "underplate"
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "underplate"
+	plane = GAME_PLANE
+	layer = TABLE_LAYER
+	anchored = TRUE
+
+/obj/underplate/stuff
+	icon_state = "stuff"
+
+/obj/order
+	name = "order sign"
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "order"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+
+/obj/order1
+	name = "order screen"
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "order1"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+
+/obj/order2
+	name = "order screen"
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "order2"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+
+/obj/order3
+	name = "order screen"
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "order3"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+
+/obj/order4
+	name = "order screen"
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "order4"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE

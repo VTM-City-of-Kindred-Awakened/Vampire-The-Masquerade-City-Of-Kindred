@@ -22,6 +22,14 @@
 	var/low = FALSE
 	var/window
 
+/turf/closed/wall/vampwall/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(low)
+		if(.)
+			return
+		if(istype(mover) && (mover.pass_flags & PASSTABLE))
+			return TRUE
+
 /turf/closed/wall/vampwall/attack_hand(mob/user)
 	return
 /turf/closed/wall/vampwall/attackby(obj/item/W, mob/user, params)
@@ -793,3 +801,29 @@
 	desc = "Floors, floors, floors..."
 	icon = 'code/modules/ziggers/tiles.dmi'
 	icon_state = "black"
+
+/turf/open/floor/plating/bacotell
+	gender = PLURAL
+	name = "plating"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "bacotell"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_TROTUAR
+	barefootstep = FOOTSTEP_TROTUAR
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/gummaguts
+	gender = PLURAL
+	name = "plating"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "gummaguts"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_TROTUAR
+	barefootstep = FOOTSTEP_TROTUAR
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY

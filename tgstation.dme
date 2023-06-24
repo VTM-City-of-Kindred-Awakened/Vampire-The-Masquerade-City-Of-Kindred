@@ -3358,6 +3358,7 @@
 #include "code\modules\ziggers\doorcode.dm"
 #include "code\modules\ziggers\elevator.dm"
 #include "code\modules\ziggers\flavledders.dm"
+#include "code\modules\ziggers\food.dm"
 #include "code\modules\ziggers\graveyard.dm"
 #include "code\modules\ziggers\guns.dm"
 #include "code\modules\ziggers\map.dm"

@@ -1,6 +1,3 @@
-/* a basic datum базированный датум для расы вампиров. Кланы и дисциплины храняться в другом месте
-*/
-#define DEFAULT_BLOOD_LOSS 0.2
 /datum/species/kindred
 	name = "Vampire"
 	id = "kindred"
@@ -143,15 +140,22 @@
 /datum/action/give_vitae/Trigger()
 	if(istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner
+		if(H.bloodpool < 2)
+			to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
+			return
 		if(istype(H.pulling, /mob/living/carbon/human))
 			var/mob/living/carbon/human/BLOODBONDED = H.pulling
 			if(!BLOODBONDED.client)
+				to_chat(owner, "<span class='warning'>You need [BLOODBONDED]'s attention to do that!</span>")
 				return
 			if(giving)
 				return
 			giving = TRUE
+			to_chat(owner, "<span class='notice'>You started to feed [BLOODBONDED] with your own blood.</span>")
 			if(do_mob(owner, BLOODBONDED, 10 SECONDS))
 				var/new_master = FALSE
+				to_chat(owner, "<span class='notice'>You successfuly fed [BLOODBONDED] with vitae.</span>")
+				H.bloodpool = max(0, H.bloodpool-2)
 				BLOODBONDED.adjustBruteLoss(-25, TRUE)
 				if(length(BLOODBONDED.all_wounds))
 					var/datum/wound/W = pick(BLOODBONDED.all_wounds)

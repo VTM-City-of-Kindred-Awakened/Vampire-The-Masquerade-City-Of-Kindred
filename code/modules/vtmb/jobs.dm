@@ -46,9 +46,6 @@
 
 	duty = "Represent interests of Camarilla and maintain Masquerade."
 
-/datum/job/vamp/prince/get_access()
-	return get_all_accesses()
-
 /datum/job/vamp/prince/announce(mob/living/carbon/human/H)
 	..()
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Prince [H.real_name] in the city!"))
