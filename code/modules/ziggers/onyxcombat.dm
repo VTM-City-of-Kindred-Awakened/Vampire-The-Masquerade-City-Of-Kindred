@@ -16,6 +16,7 @@
 	. = ..()
 	if(client)
 		if(client.prefs)
+			client.prefs.exper = 0
 			client.prefs.humanity = humanity
 			client.prefs.masquerade = masquerade
 			client.prefs.save_character()

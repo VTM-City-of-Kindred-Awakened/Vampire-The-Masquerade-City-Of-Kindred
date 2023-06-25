@@ -35,6 +35,8 @@
 	///Will this food turn into badrecipe on a grill? Don't use this for everything; preferably mostly for food that is made on a grill to begin with so it burns after some time
 	var/burns_on_grill = FALSE
 
+	var/eatsound = 'sound/items/eatfood.ogg'
+
 /obj/item/food/Initialize()
 	. = ..()
 	if(food_reagents)

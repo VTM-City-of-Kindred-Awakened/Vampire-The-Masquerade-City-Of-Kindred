@@ -319,17 +319,29 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/TakeBite(mob/living/eater, mob/living/feeder)
 
 	var/atom/owner = parent
+	var/obj/item/food/F
+
+	if(istype(parent, /obj/item/food))
+		F = parent
 
 	if(!owner?.reagents)
 		return FALSE
 	if(eater.satiety > -200)
 		eater.satiety -= junkiness
-	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
+
+	if(F)
+		playsound(eater.loc,F.eatsound, rand(10,50), TRUE)
+	else
+		playsound(eater.loc,'code/modules/ziggers/sounds/eat.ogg', rand(10,50), TRUE)
+
 	if(owner.reagents.total_volume)
 		SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder, bitecount, bite_consumption)
 		var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
 		owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
 		bitecount++
+		if(istype(parent, /obj/item/food/vampire))
+			var/obj/item/food/vampire/V = parent
+			V.got_biten()
 		if(!owner.reagents.total_volume)
 			On_Consume(eater, feeder)
 		checkLiked(fraction, eater)

@@ -476,6 +476,12 @@
 		src.key = C.key
 		ghoulificated = TRUE
 		set_species(/datum/species/ghoul)
+		if(mind)
+			if(mind.enslaved_to != owner)
+				mind.enslave_mind_to_creator(owner)
+				to_chat(src, "<span class='userdanger'><b>AS PRECIOUS VITAE ENTER YOUR MOUTH, YOU NOW ARE IN THE BLOODBOND OF [owner]. SERVE YOUR REGNANT CORRECTLY, OR YOUR ACTIONS WILL NOT BE TOLERATED.</b></span>")
+				return TRUE
+	return FALSE
 
 /mob/living/carbon/human/npc/Destroy()
 	. = ..()

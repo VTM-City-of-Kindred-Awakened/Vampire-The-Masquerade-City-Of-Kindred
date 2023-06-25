@@ -164,7 +164,8 @@
 				giving = FALSE
 				if(istype(H.pulling, /mob/living/carbon/human/npc))
 					var/mob/living/carbon/human/npc/NPC = H.pulling
-					NPC.ghoulificate(owner)
+					if(NPC.ghoulificate(owner))
+						new_master = TRUE
 				if(BLOODBONDED.mind)
 					if(BLOODBONDED.mind.enslaved_to != owner)
 						BLOODBONDED.mind.enslave_mind_to_creator(owner)

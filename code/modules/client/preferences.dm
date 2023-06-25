@@ -2175,7 +2175,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.masquerade = masquerade
 
 	character.gender = gender
-	character.age = total_age
+	character.age = age
 	if(gender == MALE || gender == FEMALE)
 		character.body_type = gender
 	else
