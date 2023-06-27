@@ -73,7 +73,7 @@
 					if(K.generation < generation)
 						mob.death()
 					else
-						if(prob(20+((K.generation-generation)*10))
+						if(prob(20+((K.generation-generation)*10)))
 							to_chat(src, "<span class='userdanger'><b>[K]'s SOUL OVERCOMES YOURS AND GAIN CONTROL OF YOUR BODY.</b></span>")
 							ghostize()
 							key = K.key
