@@ -2163,14 +2163,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.real_name = real_name
 	character.name = character.real_name
 
-	var/datum/vampireclane/CLN = new clane.type()
-	character.clane = CLN
-	character.maxbloodpool = 10+((13-generation)*2)
-	character.bloodpool = rand(2, character.maxbloodpool)
-	character.generation = generation
-	if(generation < 13)
-		character.maxHealth += 30*(13-generation)
-		character.health += 30*(13-generation)
+	if(pref_species.name == "Vampire")
+		var/datum/vampireclane/CLN = new clane.type()
+		character.clane = CLN
+		character.maxbloodpool = 10+((13-generation)*2)
+		character.bloodpool = rand(2, character.maxbloodpool)
+		character.generation = generation
+		if(generation < 13)
+			character.maxHealth = initial(character.maxHealth)+100*(13-generation)
+			character.health = initial(character.health)+100*(13-generation)
 	character.humanity = humanity
 	character.masquerade = masquerade
 

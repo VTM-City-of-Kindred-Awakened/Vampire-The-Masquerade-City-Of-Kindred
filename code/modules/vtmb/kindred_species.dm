@@ -163,6 +163,7 @@
 					var/datum/wound/W = pick(BLOODBONDED.all_wounds)
 					W.remove_wound()
 				BLOODBONDED.adjustFireLoss(-25, TRUE)
+				BLOODBONDED.bloodpool = min(BLOODBONDED.maxbloodpool, BLOODBONDED.bloodpool+2)
 				giving = FALSE
 				if(istype(H.pulling, /mob/living/carbon/human/npc))
 					var/mob/living/carbon/human/npc/NPC = H.pulling

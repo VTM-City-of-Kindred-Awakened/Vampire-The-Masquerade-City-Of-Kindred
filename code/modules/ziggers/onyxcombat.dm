@@ -204,13 +204,9 @@
 	plane = HUD_PLANE
 
 /mob/living
-	var/bloodamount = 1
-	var/maxbloodamount = 1
 	var/bloodquality = BLOOD_QUALITY_LOW
 
 /mob/living/carbon/human
-	bloodamount = 5
-	maxbloodamount = 5
 	bloodquality = BLOOD_QUALITY_NORMAL
 
 /atom/movable/screen/drinkblood/Click()
@@ -228,10 +224,6 @@
 //			to_chat(BD, "<span class='warning'>You're full of <b>BLOOD</b>.</span>")
 //			return
 		if(BD.grab_state > GRAB_PASSIVE)
-			if(iskindred(BD.pulling))
-				SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
-				to_chat(BD, "<span class='warning'>You can't drink <b>BLOOD</b> of your own kind. <b>THIS IS INSANE!</b></span>")
-				return
 			if(ishuman(BD.pulling))
 				var/mob/living/carbon/human/PB = BD.pulling
 				if(PB.stat == 4)
@@ -246,7 +238,7 @@
 				PB.emote("scream")
 			if(isliving(BD.pulling))
 				var/mob/living/LV = BD.pulling
-				if(LV.bloodamount <= 0)
+				if(LV.bloodpool <= 0)
 					SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
@@ -320,12 +312,12 @@
 		if(BD.bloodpool >= 3)
 			playsound(usr, 'code/modules/ziggers/sounds/bloodhealing.ogg', 50, FALSE)
 			BD.last_bloodpower_use = world.time
-			BD.bloodpool -= 3
+			BD.bloodpool = max(0, BD.bloodpool-3)
 			icon_state = "[initial(icon_state)]-on"
 			to_chat(BD, "<span class='notice'>You use blood to become more powerful.</span>")
-			BD.dna.species.punchdamagehigh += 5
-			BD.physiology.armor.melee += 15
-			BD.physiology.armor.bullet += 15
+			BD.dna.species.punchdamagehigh = BD.dna.species.punchdamagehigh+5
+			BD.physiology.armor.melee = BD.physiology.armor.melee+15
+			BD.physiology.armor.bullet = BD.physiology.armor.bullet+15
 			if(!HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
 				ADD_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
 			BD.update_blood_hud()
@@ -339,9 +331,9 @@
 		var/mob/living/carbon/human/BD = usr
 		to_chat(BD, "<span class='warning'>You feel like your <b>BLOOD</b>-powers slowly decrease.</span>")
 		if(BD.dna.species)
-			BD.dna.species.punchdamagehigh -= 5
-			BD.physiology.armor.melee -= 15
-			BD.physiology.armor.bullet -= 15
+			BD.dna.species.punchdamagehigh = BD.dna.species.punchdamagehigh-5
+			BD.physiology.armor.melee = BD.physiology.armor.melee-15
+			BD.physiology.armor.bullet = BD.physiology.armor.bullet-15
 			if(HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
 				REMOVE_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
 	icon_state = initial(icon_state)
@@ -474,15 +466,16 @@
 	icon_state = main_state
 
 /mob/living
-	var/bloodpool = 7
-	var/maxbloodpool = 10
+	var/bloodpool = 5
+	var/maxbloodpool = 5
 	var/generation = 13
 	var/humanity = 7
 	var/masquerade = 5
 	var/last_masquerade_violation = 0
 
 /mob/living/carbon/human/Life()
-	update_blood_hud()
+	if(iskindred(src))
+		update_blood_hud()
 	update_shadow()
 	handle_vampire_music()
 	..()
