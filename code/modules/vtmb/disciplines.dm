@@ -602,27 +602,27 @@
 		if(isliving(target))
 			var/mob/living/VL = target
 			if(!iskindred(target))
-				if(VL.bloodamount >= 1 && VL.stat != DEAD)
-					var/sucked = min(VL.bloodamount, 2)
-					VL.bloodamount -= sucked
-					VH.blood_volume = max(VH.blood_volume-10, 150)
+				if(VL.bloodpool >= 1 && VL.stat != DEAD)
+					var/sucked = min(VL.bloodpool, 2)
+					VL.bloodpool = VL.bloodpool-sucked
+					VL.blood_volume = max(VL.blood_volume-10, 0)
 					if(ishuman(VL))
 						var/mob/living/carbon/human/VHL = VL
-						VHL.blood_volume = max(VH.blood_volume-10*sucked, 150)
-						if(VL.bloodamount == 0)
+						VHL.blood_volume = max(VHL.blood_volume-10*sucked, 0)
+						if(VL.bloodpool == 0)
 							VHL.blood_volume = 0
 							VL.death()
 //							if(isnpc(VL))
 //								AdjustHumanity(VH, -1, 3)
 					else
-						if(VL.bloodamount == 0)
+						if(VL.bloodpool == 0)
 							VL.death()
-					VH.bloodpool += sucked*max(1, VL.bloodquality-1)
+					VH.bloodpool = VH.bloodpool+(sucked*max(1, VL.bloodquality-1))
 					VH.bloodpool = min(VH.maxbloodpool, VH.bloodpool)
 			else
 				if(VL.bloodpool >= 1)
 					var/sucked = min(VL.bloodpool, 1*level)
-					VH.bloodpool += sucked
+					VH.bloodpool = VH.bloodpool+sucked
 					VH.bloodpool = min(VH.maxbloodpool, VH.bloodpool)
 
 /datum/discipline/thaumaturgy
@@ -670,8 +670,7 @@
 				H.level = round(level/2)
 				H.fire(direct_target = target)
 			else
-				caster.bloodpool += target.bloodamount
-				caster.bloodpool = min(caster.maxbloodpool, caster.bloodpool)
+				caster.bloodpool = min(caster.maxbloodpool, caster.bloodpool+target.bloodpool)
 //				if(isnpc(target))
 //					AdjustHumanity(caster, -1, 0)
 				target.tremere_gib()

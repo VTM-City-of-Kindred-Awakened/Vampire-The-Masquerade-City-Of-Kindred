@@ -74,7 +74,7 @@
 	if(get_dist(frenzy_target, src) <= 1)
 		if(isliving(frenzy_target))
 			var/mob/living/L = frenzy_target
-			if(L.bloodamount && L.stat != DEAD && last_drinkblood_use+95 <= world.time)
+			if(L.bloodpool && L.stat != DEAD && last_drinkblood_use+95 <= world.time)
 				L.grabbedby(src)
 				if(ishuman(L))
 					L.emote("scream")
@@ -93,7 +93,7 @@
 /mob/living/carbon/human/proc/get_frenzy_targets()
 	var/list/targets = list()
 	for(var/mob/living/L in viewers(7, src))
-		if(!iskindred(L) && L.bloodamount && L.stat != DEAD)
+		if(!iskindred(L) && L.bloodpool && L.stat != DEAD)
 			targets += L
 			if(L == frenzy_target)
 				return L
