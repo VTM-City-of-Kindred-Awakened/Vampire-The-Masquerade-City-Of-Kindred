@@ -308,6 +308,7 @@
 	name = "Graveyard Keeper"
 	jobtype = /datum/job/vamp/graveyard
 
+	id = /obj/item/card/id/graveyard
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 //	gloves = /obj/item/clothing/gloves/color/black
 	uniform = /obj/item/clothing/under/vampire/graveyard
@@ -865,6 +866,19 @@
 	name = "janitor badge"
 	id_type_name = "janitor badge"
 	desc = "A badge which shows cleaning employment."
+	icon = 'code/modules/ziggers/items.dmi'
+	icon_state = "id8"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	worn_icon_state = "id8"
+
+/obj/item/card/id/graveyard
+	name = "keeper badge"
+	id_type_name = "keeper badge"
+	desc = "A badge which shows graveyard employment."
 	icon = 'code/modules/ziggers/items.dmi'
 	icon_state = "id8"
 	inhand_icon_state = "card-id"

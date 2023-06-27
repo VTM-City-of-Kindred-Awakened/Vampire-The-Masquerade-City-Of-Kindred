@@ -400,7 +400,7 @@
 				choosed_number = ""
 		U << browse(null, "window=phone")
 		OpenMenu(usr)
-		playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
+		playsound(loc, 'sound/machines/terminal_select.ogg', 15, TRUE)
 	else
 		U << browse(null, "window=phone")
 
@@ -432,12 +432,14 @@
 	icon = 'code/modules/ziggers/onfloor.dmi'
 	icon_state = "streetphone"
 	anchored = TRUE
+	closed = FALSE
 	number = "1447"
 
 /obj/item/vamp/phone/clean
 	icon = 'code/modules/ziggers/onfloor.dmi'
 	icon_state = "redphone"
 	anchored = TRUE
+	closed = FALSE
 	number = "700 4424"
 
 /obj/item/vamp/phone/clean/Initialize()

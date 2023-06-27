@@ -13,6 +13,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	icon_state = "ghost"
 	layer = GHOST_LAYER
 	stat = DEAD
+	alpha = 128
 	density = FALSE
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
@@ -107,14 +108,14 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 		set_suicide(body.suiciding) // Transfer whether they committed suicide.
 
-		if(ishuman(body))
-			var/mob/living/carbon/human/body_human = body
-			if(HAIR in body_human.dna.species.species_traits)
-				hairstyle = body_human.hairstyle
-				hair_color = brighten_color(body_human.hair_color)
-			if(FACEHAIR in body_human.dna.species.species_traits)
-				facial_hairstyle = body_human.facial_hairstyle
-				facial_hair_color = brighten_color(body_human.facial_hair_color)
+//		if(ishuman(body))
+//			var/mob/living/carbon/human/body_human = body
+//			if(HAIR in body_human.dna.species.species_traits)
+//				hairstyle = body_human.hairstyle
+//				hair_color = brighten_color(body_human.hair_color)
+//			if(FACEHAIR in body_human.dna.species.species_traits)
+//				facial_hairstyle = body_human.facial_hairstyle
+//				facial_hair_color = brighten_color(body_human.facial_hair_color)
 
 	update_icon()
 
@@ -134,8 +135,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	if(!fun_verbs)
 		remove_verb(src, /mob/dead/observer/verb/boo)
 		remove_verb(src, /mob/dead/observer/verb/possess)
-
-	animate(src, pixel_y = 2, time = 10, loop = -1)
 
 	add_to_dead_mob_list()
 
@@ -218,24 +217,24 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		updatedir = 0	//stop updating the dir in case we want to show accessories with dirs on a ghost sprite without dirs
 		setDir(2 		)//reset the dir to its default so the sprites all properly align up
 
-	if(ghost_accs == GHOST_ACCS_FULL && (icon_state in GLOB.ghost_forms_with_accessories_list)) //check if this form supports accessories and if the client wants to show them
-		var/datum/sprite_accessory/S
-		if(facial_hairstyle)
-			S = GLOB.facial_hairstyles_list[facial_hairstyle]
-			if(S)
-				facial_hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
-				if(facial_hair_color)
-					facial_hair_overlay.color = "#" + facial_hair_color
-				facial_hair_overlay.alpha = 200
-				add_overlay(facial_hair_overlay)
-		if(hairstyle)
-			S = GLOB.hairstyles_list[hairstyle]
-			if(S)
-				hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
-				if(hair_color)
-					hair_overlay.color = "#" + hair_color
-				hair_overlay.alpha = 200
-				add_overlay(hair_overlay)
+//	if(ghost_accs == GHOST_ACCS_FULL && (icon_state in GLOB.ghost_forms_with_accessories_list)) //check if this form supports accessories and if the client wants to show them
+//		var/datum/sprite_accessory/S
+//		if(facial_hairstyle)
+//			S = GLOB.facial_hairstyles_list[facial_hairstyle]
+//			if(S)
+//				facial_hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
+//				if(facial_hair_color)
+//					facial_hair_overlay.color = "#" + facial_hair_color
+//				facial_hair_overlay.alpha = 200
+//				add_overlay(facial_hair_overlay)
+//		if(hairstyle)
+//			S = GLOB.hairstyles_list[hairstyle]
+//			if(S)
+//				hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
+//				if(hair_color)
+//					hair_overlay.color = "#" + hair_color
+//				hair_overlay.alpha = 200
+//				add_overlay(hair_overlay)
 
 /*
  * Increase the brightness of a color by calculating the average distance between the R, G and B values,

@@ -207,11 +207,11 @@
 		if(VTM)
 			if(VTM.upper)
 				if(SScityweather.raining)
-					SScityweather.sound_loop.play(src)
+					SScityweather.poop.play(src)
 				else
-					SScityweather.sound_loop.stop(src)
+					SScityweather.poop.stop(src)
 			if(!VTM.upper)
-				SScityweather.sound_loop.stop(src)
+				SScityweather.poop.stop(src)
 
 			if(!VTM.music)
 				client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
@@ -233,6 +233,6 @@
 
 			if(last_vampire_ambience+wait_for_music+10 < world.time)
 				wait_for_music = VMPMSC.length
-				client << sound(VMPMSC.sound, 0, 0, CHANNEL_LOBBYMUSIC, 15)
+				client << sound(VMPMSC.sound, 0, 0, CHANNEL_LOBBYMUSIC, 10)
 				last_vampire_ambience = world.time
 			qdel(VMPMSC)

@@ -7,8 +7,8 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
 	stat_attack = HARD_CRIT //braains
-	maxHealth = 100
-	health = 100
+	maxHealth = 50
+	health = 50
 	harm_intent_damage = 5
 	melee_damage_lower = 21
 	melee_damage_upper = 21

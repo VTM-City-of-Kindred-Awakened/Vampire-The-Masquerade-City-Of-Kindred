@@ -124,6 +124,8 @@
 	var/datum/action/vampireinfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
+	var/datum/action/give_vitae/vitae = new()
+	vitae.Grant(C)
 
 /datum/species/kindred/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
@@ -145,7 +147,7 @@
 			return
 		if(istype(H.pulling, /mob/living/carbon/human))
 			var/mob/living/carbon/human/BLOODBONDED = H.pulling
-			if(!BLOODBONDED.client)
+			if(!BLOODBONDED.client && !istype(H.pulling, /mob/living/carbon/human/npc))
 				to_chat(owner, "<span class='warning'>You need [BLOODBONDED]'s attention to do that!</span>")
 				return
 			if(giving)

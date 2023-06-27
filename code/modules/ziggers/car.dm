@@ -232,8 +232,8 @@ SUBSYSTEM_DEF(cars)
 				playsound(V, 'sound/weapons/magout.ogg', 40, TRUE)
 
 /datum/action/carr/beep
-	name = "Toggle Light"
-	desc = "Toggle light on/off."
+	name = "Signal"
+	desc = "Beep-beep."
 	button_icon_state = "beep"
 
 /datum/action/carr/beep/Trigger()

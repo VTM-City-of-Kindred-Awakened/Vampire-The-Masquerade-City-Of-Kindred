@@ -194,7 +194,6 @@
 	show_bolt_icon = FALSE
 	mag_display = TRUE
 	fire_sound = 'code/modules/ziggers/sounds/rifle.ogg'
-	pixel_w = -8
 
 /obj/item/ammo_box/magazine/internal/vampire/sniper
 	name = "sniper rifle internal magazine"
@@ -232,7 +231,6 @@
 	slot_flags = ITEM_SLOT_BACK
 	projectile_damage_multiplier = 1.5
 	actions_types = list()
-	pixel_w = -8
 
 /obj/item/ammo_box/magazine/internal/vampshotgun
 	name = "shotgun internal magazine"
@@ -256,8 +254,9 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/vampshotgun
 	can_be_sawn_off	= FALSE
 	fire_sound = 'code/modules/ziggers/sounds/pomp.ogg'
-	pixel_w = -8
 	recoil = 2
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
 
 /obj/item/gun/ballistic/shotgun/toy/crossbow/vampire
 	name = "crossbow"
@@ -272,6 +271,8 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/vampcrossbow
 	fire_sound = 'sound/items/syringeproj.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
 
 /obj/item/ammo_box/magazine/internal/vampcrossbow
 	ammo_type = /obj/item/ammo_casing/caseless/bolt

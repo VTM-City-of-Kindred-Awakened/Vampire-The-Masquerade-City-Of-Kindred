@@ -7,6 +7,7 @@
 	base_icon_state = "wall"
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYERS_LAYER
+	anchored = TRUE
 
 /turf/closed/wall/vampwall
 	name = "old brick wall"

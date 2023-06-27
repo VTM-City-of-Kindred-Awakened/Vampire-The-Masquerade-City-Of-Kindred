@@ -101,7 +101,7 @@
 	target.Stun(10)
 	spawn(10)
 		W.forceMove(target.loc)
-		playsound(W, 'code/modules/ziggers/sounds/volk.ogg', 80, TRUE)
+		playsound(W.loc, 'code/modules/ziggers/sounds/volk.ogg', 80, TRUE)
 		target.apply_damage(5*level, BRUTE, BODY_ZONE_CHEST)
 		target.visible_message("<span class='warning'><b>[W] bites [target]!</b></span>", "<span class='warning'><b>[W] bites you!</b></span>")
 		spawn(20)
@@ -129,7 +129,7 @@
 	spawn(delay*level)
 		if(caster)
 			caster.stop_sound_channel(CHANNEL_DISCIPLINES)
-			playsound(caster, 'code/modules/ziggers/sounds/auspex_deactivate.ogg', 50, FALSE)
+			playsound(caster.loc, 'code/modules/ziggers/sounds/auspex_deactivate.ogg', 50, FALSE)
 			REMOVE_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
 			if(loh)
 				REMOVE_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
@@ -174,7 +174,7 @@
 	caster.celerity_visual = TRUE
 	spawn(delay*level)
 		if(caster)
-			playsound(caster, 'code/modules/ziggers/sounds/celerity_deactivate.ogg', 50, FALSE)
+			playsound(caster.loc, 'code/modules/ziggers/sounds/celerity_deactivate.ogg', 50, FALSE)
 			caster.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
 			caster.celerity_visual = FALSE
 
@@ -217,14 +217,14 @@
 			if(iskindred(target))
 				target.Knockdown(10*level)
 				target.visible_message("<span class='warning'><b>[target] tries to wring \his neck!</b></span>", "<span class='warning'><b>You try to wring your own neck!</b></span>")
-				playsound(target, 'code/modules/ziggers/sounds/suicide.ogg', 80, TRUE)
+				playsound(target.loc, 'code/modules/ziggers/sounds/suicide.ogg', 80, TRUE)
 				target.apply_damage(10*level, BRUTE, BODY_ZONE_HEAD)
 			else
 				target.drop_all_held_items()
 				target.Stun(10)
 				spawn(10)
 					target.visible_message("<span class='warning'><b>[target] wrings \his neck!</b></span>", "<span class='warning'><b>You wring your own neck!</b></span>")
-					playsound(target, 'code/modules/ziggers/sounds/suicide.ogg', 80, TRUE)
+					playsound(target.loc, 'code/modules/ziggers/sounds/suicide.ogg', 80, TRUE)
 					target.death()
 	spawn(20)
 		if(TRGT)
@@ -341,20 +341,22 @@
 	icon_state = "potence"
 	cost = 1
 	ranged = FALSE
-	delay = 50
+	delay = 100
 	activate_sound = 'code/modules/ziggers/sounds/potence_activate.ogg'
 
 /datum/discipline/potence/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	caster.dna.species.punchdamagelow += 10
-	caster.dna.species.punchdamagehigh += 10
-	caster.dna.species.meleemod += 0.5*level
+	caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+10
+	caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh+10
+	caster.dna.species.meleemod = caster.dna.species.meleemod+(0.5*level)
+	caster.dna.species.attack_sound = 'code/modules/ziggers/sounds/heavypunch.ogg'
 	spawn(delay)
 		if(caster)
-			playsound(caster, 'code/modules/ziggers/sounds/potence_deactivate.ogg', 50, FALSE)
-			caster.dna.species.punchdamagelow -= 10
-			caster.dna.species.punchdamagehigh -= 10
-			caster.dna.species.meleemod -= 0.5*level
+			playsound(caster.loc, 'code/modules/ziggers/sounds/potence_deactivate.ogg', 50, FALSE)
+			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-10
+			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-10
+			caster.dna.species.meleemod = caster.dna.species.meleemod-(0.5*level)
+			caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
 
 /datum/discipline/fortitude
 	name = "Fortitude"
@@ -362,19 +364,19 @@
 	icon_state = "fortitude"
 	cost = 1
 	ranged = FALSE
-	delay = 50
+	delay = 100
 	activate_sound = 'code/modules/ziggers/sounds/fortitude_activate.ogg'
 
 /datum/discipline/fortitude/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	var/mod = min(3, level)
-	caster.physiology.armor.melee += 20*mod
-	caster.physiology.armor.bullet += 20*mod
-	spawn(delay*level)
+	caster.physiology.armor.melee = caster.physiology.armor.melee+(15*mod)
+	caster.physiology.armor.bullet = caster.physiology.armor.bullet+(15*mod)
+	spawn(delay)
 		if(caster)
-			playsound(caster, 'code/modules/ziggers/sounds/fortitude_deactivate.ogg', 50, FALSE)
-			caster.physiology.armor.melee -= 20*mod
-			caster.physiology.armor.bullet -= 20*mod
+			playsound(caster.loc, 'code/modules/ziggers/sounds/fortitude_deactivate.ogg', 50, FALSE)
+			caster.physiology.armor.melee = caster.physiology.armor.melee-(15*mod)
+			caster.physiology.armor.bullet = caster.physiology.armor.bullet-(15*mod)
 
 /datum/discipline/obfuscate
 	name = "Obfuscate"
@@ -382,7 +384,7 @@
 	icon_state = "obfuscate"
 	cost = 1
 	ranged = FALSE
-	delay = 100
+	delay = 200
 	activate_sound = 'code/modules/ziggers/sounds/obfuscate_activate.ogg'
 
 /datum/discipline/obfuscate/activate(mob/living/target, mob/living/carbon/human/caster)
@@ -399,9 +401,9 @@
 			caster.alpha = 54
 		else
 			caster.alpha = 10
-	spawn(delay*level)
+	spawn(delay)
 		if(caster)
-			playsound(caster, 'code/modules/ziggers/sounds/obfuscate_deactivate.ogg', 50, FALSE)
+			playsound(caster.loc, 'code/modules/ziggers/sounds/obfuscate_deactivate.ogg', 50, FALSE)
 			caster.alpha = 255
 
 /datum/discipline/presence
@@ -417,20 +419,23 @@
 /datum/discipline/presence/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	var/mod = level/2
-	for(var/mob/living/L in viewers(5, src))
+	for(var/mob/living/carbon/human/L in viewers(6, caster))
 		if(L != caster)
-			if(prob(10*level))
-				L.Stun(delay)
-			if(ishuman(L))
-				var/mob/living/carbon/human/H = L
-				H.dna.species.brutemod += mod
-				H.dna.species.burnmod += mod
-				spawn(delay)
-					if(H)
-						H.dna.species.brutemod -= mod
-						H.dna.species.burnmod -= mod
+			var/mob/living/carbon/human/H = L
+			H.dna.species.brutemod = H.dna.species.brutemod+mod
+			H.dna.species.burnmod = H.dna.species.burnmod+mod
+			H.remove_overlay(MUTATIONS_LAYER)
+			var/mutable_appearance/presence_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "presence", -MUTATIONS_LAYER)
+			presence_overlay.pixel_z = 1
+			H.overlays_standing[MUTATIONS_LAYER] = presence_overlay
+			H.apply_overlay(MUTATIONS_LAYER)
+			spawn(delay)
+				if(H)
+					H.dna.species.brutemod = H.dna.species.brutemod-mod
+					H.dna.species.burnmod = H.dna.species.burnmod-mod
+					H.remove_overlay(MUTATIONS_LAYER)
 	if(caster)
-		playsound(caster, 'code/modules/ziggers/sounds/presence_deactivate.ogg', 50, FALSE)
+		playsound(caster.loc, 'code/modules/ziggers/sounds/presence_deactivate.ogg', 50, FALSE)
 
 /datum/discipline/protean
 	name = "Protean"
@@ -438,7 +443,7 @@
 	icon_state = "protean"
 	cost = 1
 	ranged = FALSE
-	delay = 200
+	delay = 150
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/ziggers/sounds/protean_activate.ogg'
 
@@ -446,9 +451,12 @@
 	multiplicative_slowdown = -0.15
 
 /datum/movespeed_modifier/protean3
-	multiplicative_slowdown = -0.30
+	multiplicative_slowdown = -0.25
 
 /datum/movespeed_modifier/protean4
+	multiplicative_slowdown = -0.35
+
+/datum/movespeed_modifier/protean5
 	multiplicative_slowdown = -0.45
 
 /datum/discipline/protean/activate(mob/living/target, mob/living/carbon/human/caster)
@@ -459,40 +467,45 @@
 		if(1)
 			caster.drop_all_held_items()
 			caster.dna.species.attack_verb = "slash"
-			caster.dna.species.punchdamagelow += 10
-			caster.dna.species.punchdamagehigh += 10
+			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
+			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+10
+			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh+10
 			caster.remove_overlay(PROTEAN_LAYER)
 			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
 			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay)
 				if(caster)
-					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
+					playsound(caster.loc, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
-					caster.dna.species.punchdamagelow -= 10
-					caster.dna.species.punchdamagehigh -= 10
+					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
+					caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-10
+					caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-10
 					caster.remove_overlay(PROTEAN_LAYER)
 		if(2)
 			caster.drop_all_held_items()
 			caster.dna.species.attack_verb = "slash"
-			caster.dna.species.punchdamagelow += 10
-			caster.dna.species.punchdamagehigh += 10
+			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
+			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+15
+			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh+15
 			caster.add_movespeed_modifier(/datum/movespeed_modifier/protean2)
 			caster.remove_overlay(PROTEAN_LAYER)
 			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
 			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay)
 				if(caster)
-					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
+					playsound(caster.loc, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
-					caster.dna.species.punchdamagelow -= 10
-					caster.dna.species.punchdamagehigh -= 10
+					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
+					caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-15
+					caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-15
 					caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean2)
 					caster.remove_overlay(PROTEAN_LAYER)
 		if(3)
 			caster.drop_all_held_items()
 			caster.dna.species.attack_verb = "slash"
-			caster.dna.species.punchdamagelow += 20
-			caster.dna.species.punchdamagehigh += 20
+			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
+			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+20
+			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh+20
 			caster.add_movespeed_modifier(/datum/movespeed_modifier/protean3)
 			caster.remove_overlay(PROTEAN_LAYER)
 			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
@@ -501,16 +514,21 @@
 				if(caster)
 					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
-					caster.dna.species.punchdamagelow -= 20
-					caster.dna.species.punchdamagehigh -= 20
+					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
+					caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-20
+					caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-20
 					caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean3)
 					caster.remove_overlay(PROTEAN_LAYER)
 		if(4)
 			caster.drop_all_held_items()
 			caster.dna.species.attack_verb = "slash"
-			caster.dna.species.punchdamagelow += 20
-			caster.dna.species.punchdamagehigh += 20
-			caster.add_movespeed_modifier(/datum/movespeed_modifier/protean4)
+			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
+			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+25
+			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagelow+25
+			if(level == 5)
+				caster.add_movespeed_modifier(/datum/movespeed_modifier/protean5)
+			else
+				caster.add_movespeed_modifier(/datum/movespeed_modifier/protean4)
 			caster.remove_overlay(PROTEAN_LAYER)
 			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
 			caster.apply_overlay(PROTEAN_LAYER)
@@ -518,9 +536,13 @@
 				if(caster)
 					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
-					caster.dna.species.punchdamagelow -= 20
-					caster.dna.species.punchdamagehigh -= 20
-					caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean4)
+					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
+					caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-25
+					caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-25
+					if(level == 5)
+						caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean5)
+					else
+						caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean4)
 					caster.remove_overlay(PROTEAN_LAYER)
 
 
@@ -660,19 +682,19 @@
 	icon_state = "bloodshield"
 	cost = 2
 	ranged = FALSE
-	delay = 50
+	delay = 150
 	activate_sound = 'code/modules/ziggers/sounds/thaum.ogg'
 
 /datum/discipline/bloodshield/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/mod = min(3, level)
-	caster.physiology.armor.melee += 25*mod
-	caster.physiology.armor.bullet += 25*mod
+	var/mod = level
+	caster.physiology.armor.melee = caster.physiology.armor.melee+(20*mod)
+	caster.physiology.armor.bullet = caster.physiology.armor.bullet+(20*mod)
 	animate(caster, color = "#ff0000", time = 10, loop = 1)
 //	caster.color = "#ff0000"
-	spawn(delay*level)
+	spawn(delay)
 		if(caster)
-			playsound(caster, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
-			caster.physiology.armor.melee -= 25*mod
-			caster.physiology.armor.bullet -= 25*mod
+			playsound(caster.loc, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
+			caster.physiology.armor.melee = caster.physiology.armor.melee-(20*mod)
+			caster.physiology.armor.bullet = caster.physiology.armor.bullet-(20*mod)
 			caster.color = initial(caster.color)

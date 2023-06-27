@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(cityweather)
 	var/list/weather_effects = list()
 	var/current_weather = "Clear"	//"Clear", "Rain" and "Fog"
 	var/list/forecast = list()
-	var/datum/looping_sound/rain_loop/sound_loop
+	var/datum/looping_sound/rain_loop/poop
 	var/raining = FALSE
 	var/fogging = FALSE
 
@@ -82,13 +82,13 @@ SUBSYSTEM_DEF(cityweather)
 				affected_turfs += T
 
 	create_forecast()
-	sound_loop = new(list(), FALSE , TRUE)
+	poop = new(list(affected_turfs), FALSE , TRUE)
 
 /datum/controller/subsystem/cityweather/proc/create_forecast()
 	for(var/i in 1 to 9)
 		forecast += i
 		var/weather = "Clear"
-		if(i != 9)
+		if(i != 1 && i != 9)
 			weather = pick("Clear", "Rain", "Fog")
 		forecast[i] = weather
 
@@ -123,7 +123,13 @@ SUBSYSTEM_DEF(cityweather)
 	icon_state = "rain"
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER
-	alpha = 128
+	alpha = 98
+	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	move_resist = INFINITY
+	obj_flags = NONE
+	vis_flags = VIS_INHERIT_PLANE
+	mouse_opacity = 0
 
 /obj/effect/rain/Initialize()
 	. = ..()
@@ -133,7 +139,14 @@ SUBSYSTEM_DEF(cityweather)
 
 /obj/effect/rain/Destroy()
 	. = ..()
+	for(var/obj/effect/decal/cleanable/B in loc)
+		qdel(B)
 	SScityweather.weather_effects -= src
+
+/obj/effect/rain/Crossed(atom/movable/AM)
+	. = ..()
+	AM.wash(CLEAN_RAD | CLEAN_TYPE_WEAK) // Clean radiation non-instantly
+	AM.wash(CLEAN_WASH)
 
 /obj/effect/fog
 	name = "fog"
@@ -141,6 +154,13 @@ SUBSYSTEM_DEF(cityweather)
 	icon_state = "fog"
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER
+	alpha = 128
+	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	move_resist = INFINITY
+	obj_flags = NONE
+	vis_flags = VIS_INHERIT_PLANE
+	mouse_opacity = 0
 
 /obj/effect/fog/Initialize()
 	. = ..()
@@ -153,4 +173,4 @@ SUBSYSTEM_DEF(cityweather)
 /datum/looping_sound/rain_loop
 	mid_sounds = list('code/modules/ziggers/sounds/rain.ogg'=1)
 	mid_length = 70 // exact length of the music in ticks
-	volume = 100
+	volume = 50

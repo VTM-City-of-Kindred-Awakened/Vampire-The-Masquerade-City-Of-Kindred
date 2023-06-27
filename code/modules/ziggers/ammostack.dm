@@ -120,30 +120,30 @@
 /obj/item/ammo_box/vampire/c9mm
 	name = "ammo box (9mm)"
 	icon_state = "9box"
-	ammo_type = /obj/projectile/bullet/vamp9mm
+	ammo_type = /obj/item/ammo_casing/vampire/c9mm
 	max_ammo = 60
 
 /obj/item/ammo_box/vampire/c44
 	name = "ammo box (.44)"
 	icon_state = "44box"
-	ammo_type = /obj/projectile/bullet/vamp44
+	ammo_type = /obj/item/ammo_casing/vampire/c44
 	max_ammo = 60
 
 /obj/item/ammo_box/vampire/c556
 	name = "ammo box (5.56)"
 	icon_state = "556box"
-	ammo_type = /obj/projectile/bullet/vamp556mm
+	ammo_type = /obj/item/ammo_casing/vampire/c556mm
 	max_ammo = 60
 
 /obj/item/ammo_box/vampire/c556/incendiary
 	name = "incendiary ammo box (5.56)"
 	icon_state = "incendiary"
-	ammo_type = /obj/projectile/bullet/vamp556mm/incendiary
+	ammo_type = /obj/item/ammo_casing/vampire/c556mm/incendiary
 
 /obj/item/ammo_box/vampire/c12g
 	name = "ammo box (12g)"
 	icon_state = "12box"
-	ammo_type = /obj/projectile/bullet/vamp12g
+	ammo_type = /obj/item/ammo_casing/vampire/c12g
 	max_ammo = 30
 
 /obj/item/ammo_box/vampire/arrows
