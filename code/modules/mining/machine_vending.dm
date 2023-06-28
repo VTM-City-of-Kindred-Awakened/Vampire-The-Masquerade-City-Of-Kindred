@@ -122,7 +122,8 @@
 //	if(C)
 	.["user"] = list()
 	.["user"]["points"] = points
-	.["user"]["name"] = "(Use Alt+Click to remove inserted money)"
+	.["user"]["name"] = "[user.name]"
+	.["user"]["job"] = "(Use Alt+Click to remove inserted money)"
 //		if(C.registered_account)
 //			.["user"]["name"] = C.registered_account.account_holder
 //			if(C.registered_account.account_job)
@@ -163,6 +164,11 @@
 /obj/machinery/mineral/equipment_vendor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/mining_voucher))
 		RedeemVoucher(I, user)
+		return
+	if(istype(I, /obj/item/stack/dollar))
+		var/obj/item/stack/dollar/D = I
+		points = points+D.amount
+		qdel(D)
 		return
 	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
 		return
