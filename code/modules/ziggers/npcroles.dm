@@ -728,6 +728,13 @@
 
 /mob/living/carbon/human/npc/bandit/Initialize()
 	..()
+	if(prob(33))
+		my_weapon = new /obj/item/gun/ballistic/automatic/vampire/deagle(src)
+	else
+		if(prob(50))
+			my_weapon = new /obj/item/melee/vampirearms/baseball(src)
+		else
+			my_weapon = new /obj/item/melee/vampirearms/knife(src)
 	AssignSocialRole(/datum/socialrole/bandit)
 
 /mob/living/carbon/human/npc/walkby
@@ -907,3 +914,186 @@
 /mob/living/carbon/human/npc/gummaguts/Initialize()
 	..()
 	AssignSocialRole(/datum/socialrole/shop/gummaguts)
+
+/datum/socialrole/police
+	s_tones = list("albino",
+								"caucasian1",
+								"caucasian2",
+								"caucasian3")
+
+	min_age = 18
+	max_age = 45
+	preferedgender = MALE
+	male_names = null
+	surnames = null
+
+	hair_colors = list("040404",	//Black
+										"120b05",	//Dark Brown
+										"342414",	//Brown
+										"554433",	//Light Brown
+										"695c3b",	//Dark Blond
+										"ad924e",	//Blond
+										"dac07f",	//Light Blond
+										"802400",	//Ginger
+										"a5380e",	//Ginger alt
+										"ffeace",	//Albino
+										"650b0b",	//Punk Red
+										"14350e",	//Punk Green
+										"080918")	//Punk Blue
+	male_hair = list("Balding Hair",
+										"Bedhead",
+										"Bedhead 2",
+										"Bedhead 3",
+										"Boddicker",
+										"Business Hair",
+										"Business Hair 2",
+										"Business Hair 3",
+										"Business Hair 4",
+										"Coffee House",
+										"Combover",
+										"Crewcut",
+										"Father",
+										"Flat Top",
+										"Gelled Back",
+										"Joestar",
+										"Keanu Hair",
+										"Oxton",
+										"Volaju")
+	male_facial = list("Beard (Abraham Lincoln)",
+											"Beard (Chinstrap)",
+											"Beard (Full)",
+											"Beard (Cropped Fullbeard)",
+											"Beard (Hipster)",
+											"Beard (Neckbeard)",
+											"Beard (Three o Clock Shadow)",
+											"Beard (Five o Clock Shadow)",
+											"Beard (Seven o Clock Shadow)",
+											"Moustache (Hulk Hogan)",
+											"Moustache (Watson)",
+											"Sideburns (Elvis)",
+											"Sideburns",
+											"Shaved")
+
+	shoes = list(/obj/item/clothing/shoes/vampire/jackboots)
+	uniforms = list(/obj/item/clothing/under/vampire/police)
+	hats = list(/obj/item/clothing/head/vampire/police)
+	suits = list(/obj/item/clothing/suit/vampire/vest)
+	pockets = list(/obj/item/vamp/keys/npc,
+					/obj/item/stack/dollar/rand)
+
+	male_phrases = list("Я слежу за каждым твоим шагом.",
+											"Выглядишь подозрительно...",
+											"У меня есть пара лишних патрон, если хочешь податься в криминал.",
+											"Я здесь на службе у закона.")
+	neutral_phrases = list("Я слежу за каждым твоим шагом.",
+											"Выглядишь подозрительно...",
+											"У меня есть пара лишних патрон, если хочешь податься в криминал.",
+											"Я здесь на службе у закона.",
+											"Не мешайте работе полиции.")
+	random_phrases = list("Не видели подозрительного брюнета в чёрном плаще и бледной кожей?",
+												"Подозрительно тихо здесь...",
+												"Хм?")
+	answer_phrases = list("Я всегда готов защитить невиновных.")
+	help_phrases = list("Руки за голову!",
+											"Стоять не двигаться!!",
+											"Брось оружие!",
+											"Приказываю немедленно остановиться!!",
+											"Это полиция, выходите с поднятыми руками!")
+
+/mob/living/carbon/human/npc/police
+
+/mob/living/carbon/human/npc/police/Initialize()
+	..()
+	my_weapon = new /obj/item/gun/ballistic/automatic/vampire/deagle(src)
+	AssignSocialRole(/datum/socialrole/police)
+
+/datum/socialrole/guard
+	s_tones = list("albino",
+								"caucasian1",
+								"caucasian2",
+								"caucasian3")
+
+	min_age = 18
+	max_age = 85
+	preferedgender = MALE
+	male_names = null
+	surnames = null
+
+	hair_colors = list("040404",	//Black
+										"120b05",	//Dark Brown
+										"342414",	//Brown
+										"554433",	//Light Brown
+										"695c3b",	//Dark Blond
+										"ad924e",	//Blond
+										"dac07f",	//Light Blond
+										"802400",	//Ginger
+										"a5380e",	//Ginger alt
+										"ffeace",	//Albino
+										"650b0b",	//Punk Red
+										"14350e",	//Punk Green
+										"080918")	//Punk Blue
+	male_hair = list("Balding Hair",
+										"Bedhead",
+										"Bedhead 2",
+										"Bedhead 3",
+										"Boddicker",
+										"Business Hair",
+										"Business Hair 2",
+										"Business Hair 3",
+										"Business Hair 4",
+										"Coffee House",
+										"Combover",
+										"Crewcut",
+										"Father",
+										"Flat Top",
+										"Gelled Back",
+										"Joestar",
+										"Keanu Hair",
+										"Oxton",
+										"Volaju")
+	male_facial = list("Beard (Abraham Lincoln)",
+											"Beard (Chinstrap)",
+											"Beard (Full)",
+											"Beard (Cropped Fullbeard)",
+											"Beard (Hipster)",
+											"Beard (Neckbeard)",
+											"Beard (Three o Clock Shadow)",
+											"Beard (Five o Clock Shadow)",
+											"Beard (Seven o Clock Shadow)",
+											"Moustache (Hulk Hogan)",
+											"Moustache (Watson)",
+											"Sideburns (Elvis)",
+											"Sideburns",
+											"Shaved")
+
+	shoes = list(/obj/item/clothing/shoes/vampire)
+	uniforms = list(/obj/item/clothing/under/vampire/guard)
+	pockets = list(/obj/item/vamp/keys/npc,
+					/obj/item/stack/dollar/rand)
+
+	male_phrases = list("Я слежу за каждым твоим шагом.",
+											"Выглядишь подозрительно...",
+											"У меня есть пара лишних патрон, если хочешь податься в криминал.",
+											"Я здесь на службе у закона.")
+	neutral_phrases = list("Я слежу за каждым твоим шагом.",
+											"Выглядишь подозрительно...",
+											"У меня есть пара лишних патрон, если хочешь податься в криминал.",
+											"Я здесь на службе у закона.",
+											"Не мешайте работе полиции.")
+	random_phrases = list("Не видели подозрительного брюнета в чёрном плаще и бледной кожей?",
+												"Подозрительно тихо здесь...",
+												"Хм?")
+	answer_phrases = list("Я всегда готов защитить невиновных.")
+	help_phrases = list("Руки за голову!",
+											"Стоять не двигаться!!",
+											"Брось оружие!",
+											"Приказываю немедленно остановиться!!",
+											"Это полиция, выходите с поднятыми руками!")
+
+/mob/living/carbon/human/npc/guard
+	staying = TRUE
+
+/mob/living/carbon/human/npc/guard/Initialize()
+	..()
+	my_weapon = new /obj/item/gun/ballistic/automatic/vampire/deagle(src)
+	AssignSocialRole(/datum/socialrole/guard)

@@ -144,7 +144,7 @@
 /obj/item/clothing/under/vampire/guard
 	name = "uniform"
 	desc = "Some law clothes."
-	icon_state = "police"
+	icon_state = "guard"
 
 //JOBS
 

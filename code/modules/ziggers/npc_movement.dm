@@ -26,6 +26,7 @@
 		AdjustHumanity(last_attacker, -1, 0)
 	remove_overlay(FIGHT_LAYER)
 	GLOB.npc_list -= src
+	SShumannpcpool.npclost()
 	..()
 
 /mob/living/carbon/human/npc/Destroy()
@@ -192,6 +193,15 @@
 				for(var/i in 1 to reqsteps)
 					addtimer(cb, (i - 1)*total_multiplicative_slowdown())
 			if(my_weapon)
+				if(!spawned_weapon)
+					my_weapon.forceMove(loc)
+					drop_all_held_items()
+					put_in_active_hand(my_weapon)
+					spawned_weapon = TRUE
+				else if(get_active_held_item() != my_weapon)
+					my_weapon = null
+					spawned_weapon = FALSE
+				ClickOn(danger_source)
 				var/datum/cb = CALLBACK(src,.proc/enemystep)
 				var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
 				for(var/i in 1 to reqsteps)

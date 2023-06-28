@@ -20,9 +20,8 @@
 	var/stopturf = 1
 
 	var/obj/item/my_weapon
+	var/spawned_weapon = FALSE
 
-	//Zdes hranim oruzhie
-	var/obj/item/storage/backpack/inventory
 	var/ghoulificated = FALSE
 
 	var/staying = FALSE
@@ -405,13 +404,19 @@
 	if(user.a_intent == INTENT_HARM)
 		for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
 			NEPIC.Aggro(user)
-			if(NEPIC == src)
-				NEPIC.Aggro(user, TRUE)
+		Aggro(user, TRUE)
 	..()
 
 /mob/living/carbon/human/npc/on_hit(obj/projectile/P)
 	. = ..()
+	for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
+		NEPIC.Aggro(P.firer)
 	Aggro(P.firer, TRUE)
+
+/mob/living/carbon/human/RangedAttack(atom/A, params)
+	. = ..()
+	for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
+		NEPIC.Aggro(src)
 
 /mob/living/carbon/human/npc/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	. = ..()
@@ -420,6 +425,8 @@
 /mob/living/carbon/human/npc/attackby(obj/item/W, mob/living/user, params)
 	. = ..()
 	if(W.force)
+		for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
+			NEPIC.Aggro(user)
 		Aggro(user, TRUE)
 
 /mob/living/carbon/human/npc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
