@@ -8,6 +8,8 @@
 		last_danger_meet = world.time
 		if(!my_weapon)
 			if(prob(50))
-				RealisticSay(pick(socialrole.help_phrases))
-			else
 				emote("scream")
+			else
+				RealisticSay(pick(socialrole.help_phrases))
+		else
+			RealisticSay(pick(socialrole.help_phrases))

@@ -413,11 +413,6 @@
 		NEPIC.Aggro(P.firer)
 	Aggro(P.firer, TRUE)
 
-/mob/living/carbon/human/RangedAttack(atom/A, params)
-	. = ..()
-	for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
-		NEPIC.Aggro(src)
-
 /mob/living/carbon/human/npc/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	. = ..()
 	Aggro(throwingdatum.thrower, TRUE)

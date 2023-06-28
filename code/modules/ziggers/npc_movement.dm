@@ -202,13 +202,29 @@
 					my_weapon = null
 					spawned_weapon = FALSE
 				ClickOn(danger_source)
+				face_atom(danger_source)
 				var/datum/cb = CALLBACK(src,.proc/enemystep)
 				var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
 				for(var/i in 1 to reqsteps)
 					addtimer(cb, (i - 1)*total_multiplicative_slowdown())
 
+			if(isliving(danger_source))
+				var/mob/living/L = danger_source
+				if(L.stat > 2)
+					danger_source = null
+					if(my_weapon)
+						drop_all_held_items()
+						my_weapon.forceMove(src)
+						spawned_weapon = FALSE
+					walktarget = ChoosePath()
+					a_intent = INTENT_HELP
+
 			if(last_danger_meet+300 <= world.time)
 				danger_source = null
+				if(my_weapon)
+					drop_all_held_items()
+					my_weapon.forceMove(src)
+					spawned_weapon = FALSE
 				walktarget = ChoosePath()
 				a_intent = INTENT_HELP
 		else if(walktarget && !staying)
