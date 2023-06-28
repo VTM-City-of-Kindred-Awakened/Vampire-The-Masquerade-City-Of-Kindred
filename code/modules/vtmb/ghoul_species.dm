@@ -105,6 +105,9 @@
 	var/datum/action/ghoulinfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
+	C.generation = 13
+	C.maxHealth = 100
+	C.health = 100
 
 /datum/species/ghoul/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
@@ -142,11 +145,21 @@
 						H.drop_all_held_items()
 						H.emote("scream")
 		if(last_vitae+6000 < world.time && prob(20))
-			to_chat(H, "<span class='userdanger'><b>I NEED VITAE...</b></span>")
-			H.Stun(10)
+			if(H.bloodpool > 1)
+				H.bloodpool = max(1, H.bloodpool-1)
+			else
+				to_chat(H, "<span class='userdanger'><b>I NEED VITAE...</b></span>")
+				H.Stun(10)
+
+/mob/living
+	var/last_bloodpool_restore = 0
 
 /datum/species/human/spec_life(mob/living/carbon/human/H)
 	. = ..()
+	if(H.last_bloodpool_restore+600 <= world.time)
+		H.last_bloodpool_restore = world.time
+		H.bloodpool = min(H.maxbloodpool, H.bloodpool+1)
+
 	if(H.client && H.stat <= 2)
 		if(H.client.prefs)
 			if(H.client.prefs.humanity != H.humanity)

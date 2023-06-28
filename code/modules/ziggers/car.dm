@@ -172,6 +172,7 @@ SUBSYSTEM_DEF(cars)
 	. = ..()
 	FARI = new(src)
 	FARI.forceMove(get_step(src, facing_dir))
+	FARI.anchored = TRUE
 	SScars.cars += src
 
 /obj/vampire_car/Destroy()
@@ -222,7 +223,7 @@ SUBSYSTEM_DEF(cars)
 		if(V.FARI)
 			if(!V.fari_on)
 				V.fari_on = TRUE
-				V.FARI.set_light(5)
+				V.FARI.set_light(4)
 				to_chat(owner, "<span class='notice'>You toggle [V]'s lights.</span>")
 				playsound(V, 'sound/weapons/magin.ogg', 40, TRUE)
 			else

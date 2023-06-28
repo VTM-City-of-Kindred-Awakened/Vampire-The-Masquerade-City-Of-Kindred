@@ -304,6 +304,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
 			dat += "<b>Humanity:</b> [humanity]/10<BR>"
+			dat += "<b>Masquerade:</b> [masquerade]/5<BR>"
 			if(pref_species.name == "Vampire")
 				dat += "<b>Generation:</b> [generation]"
 				if(generation_bonus)
@@ -312,7 +313,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += " <a href='?_src_=prefs;preference=generation;task=input'>Claim generation bonus</a><BR>"
 				else
 					dat += "<BR>"
-				dat += "<b>Masquerade:</b> [masquerade]/5<BR>"
 				dat += "<h2>[make_font_cool("CLANE")]</h2>"
 				dat += "<b>Clane/Bloodline:</b> <a href='?_src_=prefs;preference=clane;task=input'>[clane.name]</a><BR>"
 				dat += "<b>Description:</b> [clane.desc]<BR>"
@@ -2174,6 +2174,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			character.health = initial(character.health)+100*(13-generation)
 	character.humanity = humanity
 	character.masquerade = masquerade
+	if(!character_setup)
+		if(character in GLOB.masquerade_breakers_list)
+			if(character.masquerade > 3)
+				GLOB.masquerade_breakers_list -= character
+		else if(character.masquerade < 4)
+			GLOB.masquerade_breakers_list += character
 
 	character.gender = gender
 	character.age = age
@@ -2191,10 +2197,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
 
-	if(clane.alt_sprite)
-		character.skin_tone = "albino"
+	if(pref_species.name == "Vampire")
+		if(clane.alt_sprite)
+			character.skin_tone = "albino"
+		else
+			character.skin_tone = get_vamp_skin_color(skin_tone)
 	else
-		character.skin_tone = get_vamp_skin_color(skin_tone)
+		character.skin_tone = skin_tone
 	character.hairstyle = hairstyle
 	character.facial_hairstyle = facial_hairstyle
 	character.underwear = underwear

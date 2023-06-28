@@ -741,7 +741,7 @@
 		return
 	last_detonated = world.time
 	do_sparks(rand(5, 9), FALSE, user)
-	playsound(user.loc, 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
+	playsound(user.loc, 'code/modules/ziggers/sounds/cross.ogg', 100, TRUE, 8, 0.9)
 	new /obj/effect/dummy/lighting_obj (user.loc, 6, 4, COLOR_WHITE, 2)
 	for(var/mob/living/M in get_hearers_in_view(4, user.loc))
 		bang(get_turf(M), M)
@@ -995,7 +995,7 @@
 	id = /obj/item/card/id/hunter
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	backpack_contents = list(
-		/obj/item/storage/book/bible/booze = 1,
+		/obj/item/storage/book/bible = 1,
 		/obj/item/melee/vampirearms/stake = 3,
 		/obj/item/melee/vampirearms/fireaxe = 1,
 		/obj/item/gun/ballistic/automatic/vampire/ar15 = 1,
@@ -1009,9 +1009,9 @@
 	if(H.clane)
 		qdel(H.clane)
 	H.set_species(/datum/species/human)
+	H.generation = 13
 	H.maxHealth = 100
 	H.health = 100
-	H.generation = 13
 	for(var/atom/movable/screen/blood/B in H.hud_used.infodisplay)
 		qdel(B)
 	for(var/atom/movable/screen/healths/HE in H.hud_used.infodisplay)
@@ -1041,7 +1041,6 @@
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/vampire/army(H), ITEM_SLOT_HEAD)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/vest/army(H), ITEM_SLOT_OCLOTHING)
 			H.put_in_r_hand(new /obj/item/gun/ballistic/automatic/vampire/sniper(H))
-			H.put_in_l_hand(new /obj/item/gun/ballistic/automatic/vampire/sniper(H))
 		if("EOD Suit")
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/eod(H), ITEM_SLOT_OCLOTHING)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/vampire/eod(H), ITEM_SLOT_HEAD)
@@ -1066,6 +1065,7 @@
 	show_to_ghosts = TRUE
 
 /datum/antagonist/hunter/on_gain()
+	owner.holy_role = HOLY_ROLE_PRIEST
 	add_antag_hud(ANTAG_HUD_OPS, "synd", owner.current)
 	owner.special_role = src
 	var/datum/objective/custom/custom_objective = new

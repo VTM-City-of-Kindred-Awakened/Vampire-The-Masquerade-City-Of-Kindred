@@ -74,7 +74,27 @@
 /mob/living/carbon/proc/bleed(amt)
 	if(!blood_volume)
 		return
-	blood_volume = max(blood_volume - amt, 0)
+	if(!iskindred(src))
+		blood_volume = max(blood_volume - amt, 0)
+
+	var/timing = 100
+	if(blood_volume >= BLOOD_VOLUME_SURVIVE)
+		timing = 10
+	if(blood_volume >= BLOOD_VOLUME_BAD)
+		timing = 25
+	if(blood_volume >= BLOOD_VOLUME_OKAY)
+		timing = 50
+	if(blood_volume >= BLOOD_VOLUME_SAFE)
+		timing = 100
+
+	if(iskindred(src))
+		timing = 50
+		if(!bloodpool)
+			return
+
+	if(last_bloodpool_restore+timing <= world.time)
+		last_bloodpool_restore = world.time
+		bloodpool = max(0, bloodpool-1)
 
 	//Blood loss still happens in locker, floor stays clean
 	if(isturf(loc) && prob(sqrt(amt)*BLOOD_DRIP_RATE_MOD))

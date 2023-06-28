@@ -2,6 +2,7 @@
 
 /obj/item/radio
 	icon = 'icons/obj/radio.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 	name = "station bounced radio"
 	icon_state = "walkietalkie"
 	inhand_icon_state = "walkietalkie"

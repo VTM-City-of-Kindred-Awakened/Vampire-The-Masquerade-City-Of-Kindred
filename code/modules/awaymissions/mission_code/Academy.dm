@@ -93,12 +93,14 @@
 	var/cooldown = 600
 	var/faction = ROLE_WIZARD
 	var/braindead_check = 0
+	var/decorative = FALSE
 
 /obj/structure/academy_wizard_spawner/New()
-	START_PROCESSING(SSobj, src)
+	if(!decorative)
+		START_PROCESSING(SSobj, src)
 
 /obj/structure/academy_wizard_spawner/Destroy()
-	if(!broken)
+	if(!broken && !decorative)
 		STOP_PROCESSING(SSobj, src)
 	return ..()
 
