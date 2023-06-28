@@ -172,9 +172,11 @@
 	step_to(src,danger_source,0)
 
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
+	if(key)
+		return
 	if(CheckMove())
 		return
-	if(!walktarget)
+	if(!walktarget && !staying)
 		walktarget = ChoosePath()
 		face_atom(walktarget)
 		stopturf = rand(1, 2)
@@ -198,7 +200,7 @@
 				danger_source = null
 				walktarget = ChoosePath()
 				a_intent = INTENT_HELP
-		else if(walktarget)
+		else if(walktarget && !staying)
 			if(prob(25))
 				toggle_move_intent(src)
 			var/datum/cb = CALLBACK(src,.proc/juststep)

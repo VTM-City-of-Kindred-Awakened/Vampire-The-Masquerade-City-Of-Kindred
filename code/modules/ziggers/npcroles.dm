@@ -786,3 +786,124 @@
 	. = ..()
 	qdel(src)
 	return
+
+/datum/socialrole/shop
+	s_tones = list("albino",
+								"caucasian1",
+								"caucasian2",
+								"caucasian3")
+
+	min_age = 18
+	max_age = 45
+	preferedgender = MALE
+	male_names = null
+	surnames = null
+
+	hair_colors = list("040404",	//Black
+										"120b05",	//Dark Brown
+										"342414",	//Brown
+										"554433",	//Light Brown
+										"695c3b",	//Dark Blond
+										"ad924e",	//Blond
+										"dac07f",	//Light Blond
+										"802400",	//Ginger
+										"a5380e",	//Ginger alt
+										"ffeace",	//Albino
+										"650b0b",	//Punk Red
+										"14350e",	//Punk Green
+										"080918")	//Punk Blue
+	male_hair = list("Balding Hair",
+										"Bedhead",
+										"Bedhead 2",
+										"Bedhead 3",
+										"Boddicker",
+										"Business Hair",
+										"Business Hair 2",
+										"Business Hair 3",
+										"Business Hair 4",
+										"Coffee House",
+										"Combover",
+										"Crewcut",
+										"Father",
+										"Flat Top",
+										"Gelled Back",
+										"Joestar",
+										"Keanu Hair",
+										"Oxton",
+										"Volaju")
+	male_facial = list("Beard (Abraham Lincoln)",
+											"Beard (Chinstrap)",
+											"Beard (Full)",
+											"Beard (Cropped Fullbeard)",
+											"Beard (Hipster)",
+											"Beard (Neckbeard)",
+											"Beard (Three o Clock Shadow)",
+											"Beard (Five o Clock Shadow)",
+											"Beard (Seven o Clock Shadow)",
+											"Moustache (Hulk Hogan)",
+											"Moustache (Watson)",
+											"Sideburns (Elvis)",
+											"Sideburns",
+											"Shaved")
+
+	shoes = list(/obj/item/clothing/shoes/vampire/sneakers,
+								/obj/item/clothing/shoes/vampire,
+								/obj/item/clothing/shoes/vampire/brown)
+	uniforms = list(/obj/item/clothing/under/vampire/mechanic)
+	pockets = list(/obj/item/vamp/keys/npc,
+					/obj/item/stack/dollar/rand)
+
+	male_phrases = list("Вы что-то хотите приобрести?",
+											"Я могу чем-нибудь помочь?",
+											"Вы что-то хотели?")
+	neutral_phrases = list("Вы что-то хотите приобрести?",
+											"Я могу чем-нибудь помочь?",
+											"Вы что-то хотели?")
+	random_phrases = list("Вам стоит взглянуть, сегодня у нас скидки!",
+												"Вы что-то хотите приобрести?",
+												"Я могу чем-нибудь помочь?",
+												"Вы что-то хотели?")
+	answer_phrases = list("Я просто здесь работаю...")
+	help_phrases = list("О Боже!",
+											"Уйдите, не подходите ко мне!!",
+											"Что же это такое творится?!",
+											"Прекратите!",
+											"Кто-нибудь, помогите!",
+											"Мамочка!")
+
+/mob/living/carbon/human/npc/shop
+	staying = TRUE
+
+/mob/living/carbon/human/npc/shop/Initialize()
+	..()
+	AssignSocialRole(/datum/socialrole/shop)
+
+/datum/socialrole/shop/bacotell
+	uniforms = list(/obj/item/clothing/under/vampire/bacotell)
+
+/mob/living/carbon/human/npc/bacotell
+	staying = TRUE
+
+/mob/living/carbon/human/npc/bacotell/Initialize()
+	..()
+	AssignSocialRole(/datum/socialrole/shop/bacotell)
+
+/datum/socialrole/shop/bubway
+	uniforms = list(/obj/item/clothing/under/vampire/bubway)
+
+/mob/living/carbon/human/npc/bubway
+	staying = TRUE
+
+/mob/living/carbon/human/npc/bubway/Initialize()
+	..()
+	AssignSocialRole(/datum/socialrole/shop/bubway)
+
+/datum/socialrole/shop/gummaguts
+	uniforms = list(/obj/item/clothing/under/vampire/gummaguts)
+
+/mob/living/carbon/human/npc/gummaguts
+	staying = TRUE
+
+/mob/living/carbon/human/npc/gummaguts/Initialize()
+	..()
+	AssignSocialRole(/datum/socialrole/shop/gummaguts)

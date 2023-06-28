@@ -9,6 +9,7 @@
 	circuit = /obj/item/circuitboard/machine/mining_equipment_vendor
 	var/icon_deny = "mining-deny"
 	var/obj/item/card/id/inserted_id
+	var/points = 0
 	var/list/prize_list = list( //if you add something to this, please, for the love of god, sort it by price/type. use tabs and not spaces.
 		new /datum/data/mining_equipment("1 Marker Beacon",				/obj/item/stack/marker_beacon,										10),
 		new /datum/data/mining_equipment("10 Marker Beacons",			/obj/item/stack/marker_beacon/ten,									100),
@@ -114,19 +115,20 @@
 
 /obj/machinery/mineral/equipment_vendor/ui_data(mob/user)
 	. = list()
-	var/obj/item/card/id/C
-	if(isliving(user))
-		var/mob/living/L = user
-		C = L.get_idcard(TRUE)
-	if(C)
-		.["user"] = list()
-		.["user"]["points"] = C.mining_points
-		if(C.registered_account)
-			.["user"]["name"] = C.registered_account.account_holder
-			if(C.registered_account.account_job)
-				.["user"]["job"] = C.registered_account.account_job.title
-			else
-				.["user"]["job"] = "No Job"
+//	var/obj/item/card/id/C
+//	if(isliving(user))
+//		var/mob/living/L = user
+//		C = L.get_idcard(TRUE)
+//	if(C)
+	.["user"] = list()
+	.["user"]["points"] = points
+	.["user"]["name"] = "(Use Alt+Click to remove inserted money)"
+//		if(C.registered_account)
+//			.["user"]["name"] = C.registered_account.account_holder
+//			if(C.registered_account.account_job)
+//				.["user"]["job"] = C.registered_account.account_job.title
+//			else
+//				.["user"]["job"] = "No Job"
 
 /obj/machinery/mineral/equipment_vendor/ui_act(action, params)
 	. = ..()
@@ -135,24 +137,24 @@
 
 	switch(action)
 		if("purchase")
-			var/obj/item/card/id/I
-			if(isliving(usr))
-				var/mob/living/L = usr
-				I = L.get_idcard(TRUE)
-			if(!istype(I))
-				to_chat(usr, "<span class='alert'>Error: An ID is required!</span>")
-				flick(icon_deny, src)
-				return
+//			var/obj/item/card/id/I
+//			if(isliving(usr))
+//				var/mob/living/L = usr
+//				I = L.get_idcard(TRUE)
+//			if(!istype(I))
+//				to_chat(usr, "<span class='alert'>Error: An ID is required!</span>")
+//				flick(icon_deny, src)
+//				return
 			var/datum/data/mining_equipment/prize = locate(params["ref"]) in prize_list
 			if(!prize || !(prize in prize_list))
 				to_chat(usr, "<span class='alert'>Error: Invalid choice!</span>")
 				flick(icon_deny, src)
 				return
-			if(prize.cost > I.mining_points)
-				to_chat(usr, "<span class='alert'>Error: Insufficient points for [prize.equipment_name] on [I]!</span>")
+			if(prize.cost > points)
+				to_chat(usr, "<span class='alert'>Error: Insufficient points for [prize.equipment_name]!</span>")
 				flick(icon_deny, src)
 				return
-			I.mining_points -= prize.cost
+			points -= prize.cost
 			to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
 			new prize.equipment_path(loc)
 			SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))

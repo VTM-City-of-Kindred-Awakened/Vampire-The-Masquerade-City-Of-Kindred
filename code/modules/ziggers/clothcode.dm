@@ -548,3 +548,15 @@
 /obj/item/clothing/neck/vampire/scarf/white
 	name = "white scarf"
 	icon_state = "scarf_white"
+
+/obj/item/clothing/under/vampire/bacotell
+	desc = "Some BacoTell clothes."
+	icon_state = "bacotell"
+
+/obj/item/clothing/under/vampire/bubway
+	desc = "Some Bubway clothes."
+	icon_state = "bubway"
+
+/obj/item/clothing/under/vampire/gummaguts
+	desc = "Some Gumma Guts clothes."
+	icon_state = "gummaguts"

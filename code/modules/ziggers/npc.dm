@@ -25,6 +25,8 @@
 	var/obj/item/storage/backpack/inventory
 	var/ghoulificated = FALSE
 
+	var/staying = FALSE
+
 /datum/socialrole
 	//For randomizing
 	var/list/s_tones = list("albino",
@@ -340,7 +342,7 @@
 				is_talking = FALSE
 
 /mob/living/carbon/human/npc/proc/Annoy(var/atom/source)
-	if(client)
+	if(key)
 		return
 	if(is_talking)
 		return

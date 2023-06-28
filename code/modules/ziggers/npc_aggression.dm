@@ -1,4 +1,6 @@
 /mob/living/carbon/human/npc/proc/Aggro(var/mob/M, var/attacked = FALSE)
+	if(key)
+		return
 	danger_source = M
 	if(attacked)
 		last_attacker = M
