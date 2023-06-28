@@ -336,6 +336,12 @@
 	icon_state = "vest"
 	armor = list(MELEE = 55, BULLET = 55, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
 
+/obj/item/clothing/suit/vampire/vest/medieval
+	name = "medieval vest"
+	desc = "Probably spanish. Provides good protection."
+	icon_state = "medieval"
+	armor = list(MELEE = 55, BULLET = 55, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
+
 /obj/item/clothing/suit/vampire/vest/army
 	desc = "Army equipment. Provides great protection against blunt force."
 	icon_state = "vest"
@@ -444,10 +450,29 @@
 	icon_state = "briish"
 	armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 
+/obj/item/clothing/head/vampire/top
+	name = "top hat"
+	desc = "Want some tea? Provides some kind of protection."
+	icon_state = "top"
+	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
+
+/obj/item/clothing/head/vampire/skull
+	name = "skull helmet"
+	desc = "Damn... Provides some kind of protection."
+	icon_state = "skull"
+	armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
+
 /obj/item/clothing/head/vampire/helmet
 	name = "police helmet"
 	desc = "Looks dangerous. Provides good protection."
 	icon_state = "helmet"
+	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 40, BOMB = 20, BIO = 0, RAD = 0, FIRE = 20, ACID = 40, WOUND = 25)
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+
+/obj/item/clothing/head/vampire/helmet/spain
+	name = "spain helmet"
+	desc = "Concistador! Provides good protection."
+	icon_state = "spain"
 	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 40, BOMB = 20, BIO = 0, RAD = 0, FIRE = 20, ACID = 40, WOUND = 25)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
@@ -560,3 +585,19 @@
 /obj/item/clothing/under/vampire/gummaguts
 	desc = "Some Gumma Guts clothes."
 	icon_state = "gummaguts"
+
+/obj/item/clothing/mask/vampire
+	name = "respirator"
+	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
+	icon_state = "respirator"
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	icon = 'code/modules/ziggers/clothing.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	inhand_icon_state = ""
+	w_class = WEIGHT_CLASS_NORMAL
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
+	flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
+	resistance_flags = NONE

@@ -275,3 +275,62 @@
 		new /datum/data/mining_equipment("milk",	/obj/item/reagent_containers/food/condiment/vampiremilk,	5),
 		new /datum/data/mining_equipment("beer bottle",	/obj/item/reagent_containers/food/drinks/beer/vampire,	10)
 	)
+
+/obj/machinery/mineral/equipment_vendor/fastfood/clothing
+	prize_list = list(new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/larry,	15),
+		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/bandit,	15),
+		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/biker,	15),
+		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/mechanic,	20),
+		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/sport,	20),
+		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/office,	20),
+		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/emo,	20),
+		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/black,	20),
+		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/red,	20),
+		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/gothic,	20),
+		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/sexy,	25),
+		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/pimp,	25),
+		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/rich,	25),
+		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/business,	25),
+		new /datum/data/mining_equipment("shoes",	/obj/item/clothing/shoes/vampire,	10),
+		new /datum/data/mining_equipment("shoes",	/obj/item/clothing/shoes/vampire/brown,	10),
+		new /datum/data/mining_equipment("shoes",	/obj/item/clothing/shoes/vampire/white,	10),
+		new /datum/data/mining_equipment("shoes",	/obj/item/clothing/shoes/vampire/jackboots,	10),
+		new /datum/data/mining_equipment("shoes",	/obj/item/clothing/shoes/vampire/jackboots/work,	10),
+		new /datum/data/mining_equipment("shoes",	/obj/item/clothing/shoes/vampire/sneakers,	10),
+		new /datum/data/mining_equipment("shoes",	/obj/item/clothing/shoes/vampire/sneakers/red,	10),
+		new /datum/data/mining_equipment("shoes",	/obj/item/clothing/shoes/vampire/heels,	10),
+		new /datum/data/mining_equipment("shoes",	/obj/item/clothing/shoes/vampire/heels/red,	10),
+		new /datum/data/mining_equipment("suit",	/obj/item/clothing/suit/vampire/coat,	15),
+		new /datum/data/mining_equipment("suit",	/obj/item/clothing/suit/vampire/coat/alt,	15),
+		new /datum/data/mining_equipment("suit",	/obj/item/clothing/suit/vampire/jacket,	15),
+		new /datum/data/mining_equipment("suit",	/obj/item/clothing/suit/vampire/trench,	15),
+		new /datum/data/mining_equipment("suit",	/obj/item/clothing/suit/vampire/trench/alt,	15),
+		new /datum/data/mining_equipment("suit",	/obj/item/clothing/suit/vampire/labcoat,	15),
+		new /datum/data/mining_equipment("glasses",	/obj/item/clothing/glasses/vampire/yellow,	20),
+		new /datum/data/mining_equipment("glasses",	/obj/item/clothing/glasses/vampire/sun,	20),
+		new /datum/data/mining_equipment("glasses",	/obj/item/clothing/glasses/vampire/perception,	20),
+		new /datum/data/mining_equipment("hat",	/obj/item/clothing/head/vampire/bandana,	10),
+		new /datum/data/mining_equipment("hat",	/obj/item/clothing/head/vampire/bandana/red,	10),
+		new /datum/data/mining_equipment("hat",	/obj/item/clothing/head/vampire/bandana/black,	10),
+		new /datum/data/mining_equipment("hat",	/obj/item/clothing/head/vampire/beanie,	10),
+		new /datum/data/mining_equipment("hat",	/obj/item/clothing/head/vampire/beanie/black,	10),
+		new /datum/data/mining_equipment("hat",	/obj/item/clothing/head/vampire/beanie/homeless,	10),
+		new /datum/data/mining_equipment("neck",	/obj/item/clothing/neck/vampire/scarf,	10),
+		new /datum/data/mining_equipment("neck",	/obj/item/clothing/neck/vampire/scarf/red,	10),
+		new /datum/data/mining_equipment("neck",	/obj/item/clothing/neck/vampire/scarf/blue,	10),
+		new /datum/data/mining_equipment("neck",	/obj/item/clothing/neck/vampire/scarf/green,	10),
+		new /datum/data/mining_equipment("neck",	/obj/item/clothing/neck/vampire/scarf/white,	10)
+	)
+
+/obj/food_cart
+	name = "food cart"
+	desc = "Ding-aling ding dong. Get your cholesterine!"
+	icon = 'code/modules/ziggers/32x48.dmi'
+	icon_state = "vat1"
+	density = TRUE
+	anchored = TRUE
+	layer = ABOVE_MOB_LAYER
+
+/obj/food_cart/Initialize()
+	. = ..()
+	icon_state = "vat[rand(1, 3)]"
