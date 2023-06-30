@@ -168,9 +168,23 @@
 				H.enter_frenzymod()
 				reset_shit(H)
 				H.ghostize(FALSE)
+
+	if(H.clane)
+		if(H.clane.name == "Banu Haqim")
+			if(H.mind)
+				if(H.mind.enslaved_to)
+					if(get_dist(H, H.mind.enslaved_to) > 10)
+						if(H.last_frenzy_check+400 <= world.time)
+							to_chat(H, "<span class='warning'><b>As you are far from [H.mind.enslaved_to], you feel the desire to drink more vitae!<b></span>")
+							H.last_frenzy_check = world.time
+							H.rollfrenzy()
+					else if(H.bloodpool > 1 || H.in_frenzy)
+						H.last_frenzy_check = world.time
+		else
+			if(H.bloodpool > 1 || H.in_frenzy)
+				H.last_frenzy_check = world.time
+
 	if(H.bloodpool <= 1 && !H.in_frenzy)
 		if(H.last_frenzy_check+400 <= world.time)
 			H.last_frenzy_check = world.time
 			H.rollfrenzy()
-	if(H.in_frenzy || H.bloodpool > 1)
-		H.last_frenzy_check = world.time

@@ -38,6 +38,7 @@
 	if(isnpc(mob))
 		var/mob/living/carbon/human/npc/NPC = mob
 		NPC.danger_source = null
+		NPC.last_attacker = src
 	to_chat(src, "<span class='warning'>You sip some <b>BLOOD</b> from your victim. It feels good.</span>")
 	if(mob.bloodpool == 1 && mob.maxbloodpool > 1)
 //		if(alert("This action will kill your victim. Are you sure?",,"Yes","No")!="Yes")
@@ -51,6 +52,8 @@
 			if(!iskindred(mob))
 				H.blood_volume = max(H.blood_volume-10, 150)
 		if(clane)
+			if(clane.name == "Giovanni")
+				mob.adjustBruteLoss(20, TRUE)
 			if(clane.name == "Ventrue" && mob.bloodquality < BLOOD_QUALITY_NORMAL)	//Ventrue mozhet sosat norm, no ne bomzhei i zhivotnih. BLOOD_QUALITY_LOW - 1, BLOOD_QUALITY_NORMAL - 2, BLOOD_QUALITY_HIGH - 3. Golubaya krov daet +1 k otsosu
 				to_chat(src, "<span class='warning'>You are too privileged to drink that awful <b>BLOOD</b>. Go get something better.</span>")
 				visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")

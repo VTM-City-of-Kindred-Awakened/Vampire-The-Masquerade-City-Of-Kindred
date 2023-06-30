@@ -56,6 +56,9 @@
 	var/obj/urn/urn
 	var/cool_down = 0
 
+/mob/living
+	var/stakeimmune = FALSE
+
 /datum/action/urn/Trigger()
 	if(cool_down+200 >= world.time)
 		return
@@ -71,12 +74,16 @@
 				if(H.dna.species)
 					H.dna.species.inherent_traits |= TRAIT_STUNIMMUNE
 					H.dna.species.inherent_traits |= TRAIT_SLEEPIMMUNE
+					H.dna.species.inherent_traits |= TRAIT_NOSOFTCRIT
+					H.stakeimmune = TRUE
 					new /obj/urn(H.loc, H)
 		else
 			if(H.dna)
 				if(H.dna.species)
 					H.dna.species.inherent_traits -= TRAIT_STUNIMMUNE
 					H.dna.species.inherent_traits -= TRAIT_SLEEPIMMUNE
+					H.dna.species.inherent_traits -= TRAIT_NOSOFTCRIT
+					H.stakeimmune = FALSE
 			urn.own = null
 			qdel(urn)
 
@@ -93,7 +100,7 @@
 			to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 			return
 		H.bloodpool = max(0, H.bloodpool-2)
-		H.Knockdown(600)
+		H.Paralyze(600)
 		if(H.dna)
 			if(H.dna.species)
 				H.dna.species.brutemod = 0

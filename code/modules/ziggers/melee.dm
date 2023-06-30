@@ -214,9 +214,9 @@
 
 /obj/item/melee/vampirearms/stake/attack(mob/living/target, mob/living/user)
 	. = ..()
-	if(HAS_TRAIT(user, TRAIT_PACIFISM) && iskindred(target))
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
-	if(!target.IsParalyzed() && iskindred(target))
+	if(!target.IsParalyzed() && iskindred(target) && !target.stakeimmune)
 		visible_message("<span class='warning'>[user] aims [src] straight to the [target]'s heart!</span>", "<span class='warning'>You aim [src] straight to the [target]'s heart!</span>")
 		if(do_after(user, 10, target))
 			user.do_attack_animation(target)
