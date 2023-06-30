@@ -1,5 +1,5 @@
 /mob/living/carbon/human/npc/proc/Aggro(var/mob/M, var/attacked = FALSE)
-	if(key)
+	if(CheckMove())
 		return
 	danger_source = M
 	if(attacked)

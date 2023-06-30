@@ -728,3 +728,52 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	plane = GAME_PLANE
 	layer = CAR_LAYER
 	anchored = TRUE
+
+/obj/matrix
+	name = "matrix"
+	desc = "Suicide is no exit..."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "matrix"
+	plane = GAME_PLANE
+	layer = ABOVE_NORMAL_TURF_LAYER
+	anchored = TRUE
+	opacity = TRUE
+	density = TRUE
+
+/obj/matrix/attack_hand(mob/user)
+	if(user.client)
+		cryoMob(user, src)
+	return TRUE
+
+/proc/cryoMob(mob/living/mob_occupant, obj/pod)
+	var/list/crew_member = list()
+	crew_member["name"] = mob_occupant.real_name
+
+	if(mob_occupant.mind)
+		// Handle job slot/tater cleanup.
+		var/job = mob_occupant.mind.assigned_role
+		crew_member["job"] = job
+		SSjob.FreeRole(job)
+//		if(LAZYLEN(mob_occupant.mind.objectives))
+//			mob_occupant.mind.objectives.Cut()
+		mob_occupant.mind.special_role = null
+	else
+		crew_member["job"] = "N/A"
+
+	if (pod)
+		pod.visible_message("\The [pod] hums and hisses as it teleports [mob_occupant.real_name].")
+
+	var/list/gear = list()
+	if(ishuman(mob_occupant))		// sorry simp-le-mobs deserve no mercy
+		var/mob/living/carbon/human/C = mob_occupant
+		gear = C.get_all_gear()
+		for(var/obj/item/item_content as anything in gear)
+			item_content.forceMove(pod.loc)
+		for(var/mob/living/L in mob_occupant.GetAllContents() - mob_occupant)
+			L.forceMove(pod.loc)
+		if(mob_occupant.client)
+			mob_occupant.client.screen.Cut()
+//			mob_occupant.client.screen += mob_ocupant.client.void
+			var/mob/dead/new_player/M = new /mob/dead/new_player()
+			M.key = mob_occupant.key
+	QDEL_NULL(mob_occupant)

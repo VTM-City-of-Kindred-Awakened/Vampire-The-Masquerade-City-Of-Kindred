@@ -341,7 +341,7 @@
 				is_talking = FALSE
 
 /mob/living/carbon/human/npc/proc/Annoy(var/atom/source)
-	if(key)
+	if(CheckMove())
 		return
 	if(is_talking)
 		return
@@ -389,40 +389,39 @@
 	else if(overlays_standing[UNDERSHADOW_LAYER])
 		remove_overlay(UNDERSHADOW_LAYER)
 
-/mob/living/carbon/human/npc/Move(NewLoc, direct)
-	var/mob/living/carbon/human/npc/NPC = locate() in NewLoc
-	if(NPC)
-		if(prob(10))
-			NPC.Annoy(src)
-	..()
-
 /mob/living/carbon/human/npc/attack_hand(mob/user)
-	if(user.a_intent == INTENT_HELP)
-		Annoy(user)
-	if(user.a_intent == INTENT_DISARM)
-		Aggro(user, TRUE)
-	if(user.a_intent == INTENT_HARM)
-		for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
-			NEPIC.Aggro(user)
-		Aggro(user, TRUE)
+	if(user)
+		if(user.a_intent == INTENT_HELP)
+			Annoy(user)
+		if(user.a_intent == INTENT_DISARM)
+			Aggro(user, TRUE)
+		if(user.a_intent == INTENT_HARM)
+			for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
+				NEPIC.Aggro(user)
+			Aggro(user, TRUE)
 	..()
 
 /mob/living/carbon/human/npc/on_hit(obj/projectile/P)
 	. = ..()
-	for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
-		NEPIC.Aggro(P.firer)
-	Aggro(P.firer, TRUE)
+	if(P)
+		if(P.firer)
+			for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
+				NEPIC.Aggro(P.firer)
+			Aggro(P.firer, TRUE)
 
 /mob/living/carbon/human/npc/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	. = ..()
-	Aggro(throwingdatum.thrower, TRUE)
+	if(throwingdatum)
+		if(throwingdatum.thrower)
+			Aggro(throwingdatum.thrower, TRUE)
 
 /mob/living/carbon/human/npc/attackby(obj/item/W, mob/living/user, params)
 	. = ..()
-	if(W.force)
-		for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
-			NEPIC.Aggro(user)
-		Aggro(user, TRUE)
+	if(user)
+		if(W.force)
+			for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
+				NEPIC.Aggro(user)
+			Aggro(user, TRUE)
 
 /mob/living/carbon/human/npc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
 	. = ..()
@@ -477,7 +476,7 @@
 			to_chat(G, "<span class='ghostalert'>[owner] is ghoulificating [src].</span>")
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		src.key = C.key
+		key = C.key
 		ghoulificated = TRUE
 		set_species(/datum/species/ghoul)
 		if(mind)

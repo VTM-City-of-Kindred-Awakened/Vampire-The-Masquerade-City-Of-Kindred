@@ -207,11 +207,7 @@
 		if(VTM)
 			if(VTM.upper)
 				if(SScityweather.raining)
-					SScityweather.poop.play(src)
-				else
-					SScityweather.poop.stop(src)
-			if(!VTM.upper)
-				SScityweather.poop.stop(src)
+					SEND_SOUND(src, sound('code/modules/ziggers/sounds/rain.ogg', 0, 0, 25))
 
 			if(!VTM.music)
 				client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)

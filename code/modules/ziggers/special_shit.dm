@@ -23,22 +23,7 @@
 		if(M in GLOB.masquerade_breakers_list)
 			if(M.stat >= 2)
 				if(M.client)
-					M.client.prefs.slotlocked = 0
-					M.client.prefs.exper = 0
-					M.client.prefs.generation_bonus = 0
-					M.client.prefs.discipline1level = 1
-					M.client.prefs.discipline2level = 1
-					M.client.prefs.discipline3level = 1
-					M.client.prefs.masquerade = initial(M.client.prefs.masquerade)
-					M.client.prefs.generation = initial(M.client.prefs.generation)
-					qdel(M.client.prefs.clane)
-					M.client.prefs.clane = new /datum/vampireclane/brujah()
-					M.client.prefs.humanity = M.client.prefs.clane.start_humanity
-					M.client.prefs.random_species()
-					M.client.prefs.random_character()
-					M.client.prefs.real_name = random_unique_name(M.client.prefs.gender)
-					M.client.prefs.save_character()
-					M.client.prefs.save_preferences()
+					reset_shit(M)
 					M.ghostize(FALSE)
 				M.death()
 				to_chat(user, "<b>Successfully punished masquerade breaker and restored the Masquerade.</b>")

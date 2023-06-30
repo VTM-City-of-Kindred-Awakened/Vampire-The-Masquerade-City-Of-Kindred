@@ -58,6 +58,9 @@
 				if(isturf(loc))
 					add_splatter_floor(loc)
 				stop_sound_channel(CHANNEL_BLOOD)
+				if(client)
+					client.images -= suckbar
+				qdel(suckbar)
 				return
 		bloodpool = min(maxbloodpool, bloodpool+1*max(1, mob.bloodquality-1))
 		adjustBruteLoss(-10, TRUE)
@@ -70,11 +73,17 @@
 				var/mob/living/carbon/human/K = mob
 				if(iskindred(mob))
 					if(K.generation < generation)
+						if(K.client)
+							reset_shit(K)
+							K.ghostize(FALSE)
 						mob.death()
+						adjustBruteLoss(-50, TRUE)
+						adjustFireLoss(-50, TRUE)
 					else
 						if(prob(20+((K.generation-generation)*10)))
 							to_chat(src, "<span class='userdanger'><b>[K]'s SOUL OVERCOMES YOURS AND GAIN CONTROL OF YOUR BODY.</b></span>")
-							ghostize()
+							reset_shit(src)
+							ghostize(FALSE)
 							key = K.key
 							generation = K.generation
 							maxHealth = initial(maxHealth)+100*(13-generation)
@@ -84,7 +93,13 @@
 							generation = K.generation
 							maxHealth = initial(maxHealth)+100*(13-generation)
 							health = initial(health)+100*(13-generation)
+							if(K.client)
+								reset_shit(K)
+								K.ghostize(FALSE)
 							mob.death()
+					if(client)
+						client.images -= suckbar
+					qdel(suckbar)
 					return
 				K.blood_volume = 0
 			if(ishuman(mob))

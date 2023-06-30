@@ -8,7 +8,6 @@ SUBSYSTEM_DEF(cityweather)
 	var/list/weather_effects = list()
 	var/current_weather = "Clear"	//"Clear", "Rain" and "Fog"
 	var/list/forecast = list()
-	var/datum/looping_sound/rain_loop/poop
 	var/raining = FALSE
 	var/fogging = FALSE
 
@@ -82,7 +81,6 @@ SUBSYSTEM_DEF(cityweather)
 				affected_turfs += T
 
 	create_forecast()
-	poop = new(list(affected_turfs), FALSE , TRUE)
 
 /datum/controller/subsystem/cityweather/proc/create_forecast()
 	for(var/i in 1 to 9)
@@ -169,8 +167,3 @@ SUBSYSTEM_DEF(cityweather)
 /obj/effect/fog/Destroy()
 	. = ..()
 	SScityweather.weather_effects -= src
-
-/datum/looping_sound/rain_loop
-	mid_sounds = list('code/modules/ziggers/sounds/rain.ogg'=1)
-	mid_length = 70 // exact length of the music in ticks
-	volume = 50

@@ -5,21 +5,10 @@
 #define BACKWARDS 0
 #define AHEAD 1
 
-SUBSYSTEM_DEF(cars)
-	name = "Cars"
-	init_order = INIT_ORDER_DEFAULT
-	wait = 10
-	priority = FIRE_PRIORITY_DEFAULT
-
-	var/list/cars = list()
-
-/datum/controller/subsystem/cars/fire()
-	for(var/obj/vampire_car/V in cars)
-		if(V)
-			if(V.on)
-				playsound(V, 'code/modules/ziggers/sounds/work.ogg', 25, FALSE)
-			if(V.last_speeded+20 < world.time)
-				V.speed = 0
+/datum/looping_sound/car_loop
+	mid_sounds = list('code/modules/ziggers/sounds/work.ogg'=1)
+	mid_length = 10 // exact length of the music in ticks
+	volume = 25
 
 /obj/vampire_car
 	name = "car"
@@ -32,6 +21,8 @@ SUBSYSTEM_DEF(cars)
 	layer = CAR_LAYER
 	pixel_w = -32
 	pixel_z = -32
+
+	var/datum/looping_sound/car_loop/poop
 
 	var/obj/effect/fari/FARI
 	var/fari_on = FALSE
@@ -173,12 +164,11 @@ SUBSYSTEM_DEF(cars)
 	FARI = new(src)
 	FARI.forceMove(get_step(src, facing_dir))
 	FARI.anchored = TRUE
-	SScars.cars += src
+	poop = new(list(src), FALSE, FALSE)
 
 /obj/vampire_car/Destroy()
 	. = ..()
 	qdel(FARI)
-	SScars.cars -= src
 	for(var/mob/living/L in src)
 		var/datum/action/carr/exit_car/C = locate() in L.actions
 		if(C)
@@ -207,8 +197,10 @@ SUBSYSTEM_DEF(cars)
 
 	if(health == 0)
 		on = FALSE
+		poop.stop()
 	else if(prob(50) && health <= maxhealth/2)
 		on = FALSE
+		poop.stop()
 
 	return
 
@@ -287,11 +279,13 @@ SUBSYSTEM_DEF(cars)
 				V.on = TRUE
 				playsound(V, 'code/modules/ziggers/sounds/start.ogg', 50, TRUE)
 				to_chat(owner, "<span class='notice'>You managed to start [V]'s engine.</span>")
+				V.poop.play()
 				return
 			if(prob(100*(V.health/V.maxhealth)))
 				V.on = TRUE
 				playsound(V, 'code/modules/ziggers/sounds/start.ogg', 50, TRUE)
 				to_chat(owner, "<span class='notice'>You managed to start [V]'s engine.</span>")
+				V.poop.play()
 				return
 			else
 				to_chat(owner, "<span class='warning'>You failed to start [V]'s engine.</span>")
@@ -421,6 +415,7 @@ SUBSYSTEM_DEF(cars)
 				turf_crossed = 0
 
 	var/delay = 1
+	var/diagonal = FALSE
 	if(health < maxhealth/4)
 		delay = delay+round((maxhealth-health)/20)
 
@@ -429,8 +424,8 @@ SUBSYSTEM_DEF(cars)
 	else
 		delay = delay+(3-stage)
 
-//	if(moving_dir != NORTH && moving_dir != SOUTH && moving_dir != EAST && moving_dir != WEST)
-//		delay /= 0.75
+	if(moving_dir != NORTH && moving_dir != SOUTH && moving_dir != EAST && moving_dir != WEST)
+		diagonal = TRUE
 
 	if(world.time < last_speeded+delay)
 		return
@@ -453,13 +448,13 @@ SUBSYSTEM_DEF(cars)
 //		var/target_turf = get_step(src, last_dir)	//Fo futue
 		if(moving_dir != NORTH && moving_dir != SOUTH && moving_dir != WEST && moving_dir != EAST)
 			delay = delay /= 0.75
-		glide_size = (32 / delay) * world.tick_lag// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
+		glide_size = (32 / delay) * world.tick_lag / (diagonal ? 0.75 : 1)// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
 		step(src, moving_dir)
 		dir = facing_dir
 		FARI.forceMove(get_step(src, facing_dir))
 		last_dir = moving_dir
 		turf_crossed = min(3, turf_crossed+1)
-		glide_size = (32 / delay) * world.tick_lag// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
+		glide_size = (32 / delay) * world.tick_lag / (diagonal ? 0.75 : 1)// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
 		playsound(src, 'code/modules/ziggers/sounds/drive.ogg', 5, FALSE)
 		if(health < maxhealth/2)
 			pixel_x = rand(-2, 2)

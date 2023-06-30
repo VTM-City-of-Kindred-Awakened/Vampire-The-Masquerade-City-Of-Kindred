@@ -8,7 +8,7 @@
 	use_skintones = TRUE
 	limbs_id = "human"
 	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
-	brutemod = 1	//0.8 bilo
+	brutemod = 0.5	//0.8 bilo
 	heatmod = 2		//Sosut ot peregreva
 	burnmod = 2
 	punchdamagelow = 10
@@ -131,6 +131,8 @@
 	. = ..()
 	for(var/datum/action/vampireinfo/VI in C.actions)
 		qdel(VI)
+	for(var/datum/action/give_vitae/GI in C.actions)
+		qdel(GI)
 
 /datum/action/give_vitae
 	name = "Give Vitae"

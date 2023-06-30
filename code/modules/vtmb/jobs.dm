@@ -37,7 +37,8 @@
 
 //	minimal_generation = 10	//Uncomment when players get exp enough
 	minimal_masquerade = 5
-	allowed_species = list("kindred")
+	kindred_only = TRUE
+	allowed_bloodlines = list("Ventrue")
 
 	my_contact_is_important = TRUE
 	known_contacts = list("Sheriff",
@@ -74,6 +75,7 @@
 
 /datum/outfit/job/prince/pre_equip(mob/living/carbon/human/H)
 	..()
+	H.frakcja = "camarilla"
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/prince/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
@@ -119,7 +121,7 @@
 
 //	minimal_generation = 11	//Uncomment when players get exp enough
 	minimal_masquerade = 5
-	allowed_species = list("kindred")
+	kindred_only = TRUE
 
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
@@ -150,6 +152,7 @@
 
 /datum/outfit/job/sheriff/pre_equip(mob/living/carbon/human/H)
 	..()
+	H.frakcja = "camarilla"
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/sheriff/female
 
@@ -219,6 +222,7 @@
 
 /datum/outfit/job/clerk/pre_equip(mob/living/carbon/human/H)
 	..()
+	H.frakcja = "camarilla"
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/clerk/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
@@ -275,6 +279,10 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag
 
 	implants = list(/obj/item/implant/mindshield)
+
+/datum/outfit/job/agent/pre_equip(mob/living/carbon/human/H)
+	..()
+	H.frakcja = "camarilla"
 
 /obj/effect/landmark/start/camarillaagent
 	name = "Camarilla Agent"
@@ -436,7 +444,8 @@
 
 	duty = "Keep a census of events and provide information to neonates."
 	minimal_masquerade = 3
-	allowed_species = list("kindred")
+	kindred_only = TRUE
+	allowed_bloodlines = list("Tremere", "Nosferatu", "Malkavian")
 
 /datum/outfit/job/archivist
 	name = "Archivist"
@@ -491,7 +500,8 @@
 
 	duty = "Lead the Anarchs in the City."
 	minimal_masquerade = 3
-	allowed_species = list("kindred")
+	kindred_only = TRUE
+	allowed_bloodlines = list("Brujah")
 
 /datum/outfit/job/barkeeper
 	name = "Barkeeper"
@@ -509,6 +519,7 @@
 
 /datum/outfit/job/barkeeper/pre_equip(mob/living/carbon/human/H)
 	..()
+	H.frakcja = "anarch"
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/bar/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
@@ -538,6 +549,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_BOUNCER
 	known_contacts = list("Barkeeper")
+	allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Caitiff")
 
 	duty = "Work for the Barkeeper."
 	minimal_masquerade = 2
@@ -554,6 +566,10 @@
 	l_pocket = /obj/item/vamp/phone/anarch
 	r_hand = /obj/item/melee/vampirearms/baseball
 	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/melee/vampirearms/stake=3, /obj/item/flashlight=1, /obj/item/vamp/keys/hack=1, /obj/item/stack/dollar/rand=1)
+
+/datum/outfit/job/bouncer/pre_equip(mob/living/carbon/human/H)
+	..()
+	H.frakcja = "anarch"
 
 /obj/effect/landmark/start/bouncer
 	name = "Bouncer"
@@ -588,7 +604,7 @@
 
 	duty = "Provide weapons to other kindred in the city."
 	minimal_masquerade = 3
-	allowed_species = list("kindred")
+	kindred_only = TRUE
 
 /datum/outfit/job/dealer
 	name = "Dealer"
@@ -604,6 +620,7 @@
 
 /datum/outfit/job/dealer/pre_equip(mob/living/carbon/human/H)
 	..()
+	H.frakcja = "anarch"
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels/red
@@ -630,6 +647,7 @@
 	display_order = JOB_DISPLAY_ORDER_SUPPLY
 	bounty_types = CIV_JOB_RANDOM
 	known_contacts = list("Barkeeper")
+	allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Caitiff")
 
 	duty = "Manage deliveries and supplies for kindred in the City."
 	minimal_masquerade = 2
@@ -645,6 +663,10 @@
 	r_pocket = /obj/item/vamp/keys/supply
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/stack/dollar/rand=1)
+
+/datum/outfit/job/supply/pre_equip(mob/living/carbon/human/H)
+	..()
+	H.frakcja = "anarch"
 
 /obj/effect/landmark/start/supplytechnician
 	name = "Supply Technician"
@@ -673,6 +695,7 @@
 
 	duty = "Follow the Traditions, or other laws provided by the current authority among your kind."
 	minimal_masquerade = 0
+	allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Caitiff")
 
 /datum/outfit/job/citizen
 	name = "Citizen"
@@ -1097,6 +1120,7 @@
 
 /datum/outfit/job/sabbatist/pre_equip(mob/living/carbon/human/H)
 	..()
+	H.frakcja = "sabbat"
 	if(H.gender == MALE)
 		shoes = /obj/item/clothing/shoes/vampire
 		if(H.clane.male_clothes)

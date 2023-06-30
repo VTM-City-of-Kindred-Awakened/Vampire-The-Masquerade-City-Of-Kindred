@@ -1,0 +1,32 @@
+/datum/vampireclane/banu_haqim
+	name = "Banu Haqim"
+	desc = "Banu Haqim, also known as Assamites, are traditionally seen by Western Kindred as dangerous assassins and diablerists, but in truth they are guardians, warriors, and scholars who seek to distance themselves from the Jyhad."
+	curse = "Blood Addiction."
+	clane_disciplines = list(/datum/discipline/celerity = 1,
+														/datum/discipline/obfuscate = 2,
+														/datum/discipline/quietus = 3)
+	male_clothes = "/obj/item/clothing/under/vampire/bandit"
+	female_clothes = "/obj/item/clothing/under/vampire/bandit"
+
+/datum/action/silence_radius
+	name = "Silence Radius"
+	desc = "Silence nearby location."
+	button_icon_state = "quietus"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/last_silence = 0
+
+/datum/action/silence_radius/Trigger()
+	if(last_silence+300 >= world.time)
+		return
+	if(istype(owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = owner
+		if(H.bloodpool < 2)
+			to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
+			return
+		H.bloodpool = max(0, H.bloodpool-2)
+		last_silence = world.time
+		for(var/turf/T in range(7, src))
+			T.silented = TRUE
+			spawn(300)
+				if(T)
+					T.silented = FALSE

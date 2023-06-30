@@ -37,7 +37,7 @@ SUBSYSTEM_DEF(graveyard)
 			if(L)
 				if(L.client)
 					AdjustMasquerade(L, 1)
-					L.client.prefs.exper = min(1440, L.client.prefs.exper+50)
+					L.client.prefs.exper = min(calculate_mob_max_exper(L), L.client.prefs.exper+300)
 
 /obj/vampgrave
 	icon = 'code/modules/ziggers/props.dmi'

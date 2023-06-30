@@ -4,6 +4,7 @@
 	var/icon_state
 	var/cost = 2
 	var/ranged = FALSE
+	var/range = 8
 	var/delay = 5
 	var/violates_masquerade = FALSE
 	var/level = 1
@@ -22,6 +23,8 @@
 		return
 	if(target.stat == DEAD)
 		return
+	if(get_dist(caster, target) > range)
+		return
 	caster.bloodpool = max(0, caster.bloodpool-cost)
 	caster.update_blood_hud()
 	if(ranged)
@@ -36,7 +39,7 @@
 		playsound(caster, activate_sound, 50, FALSE)
 	if(caster.client)
 		if(caster.client.prefs)
-			caster.client.prefs.exper = min(1440, caster.client.prefs.exper+1)
+			caster.client.prefs.exper = min(1440*((max(1, 13-caster.client.prefs.generation)*max(0, caster.client.prefs.generation_bonus))+caster.client.prefs.discipline1level+caster.client.prefs.discipline2level+caster.client.prefs.discipline3level-3), caster.client.prefs.exper+5)
 			caster.client.prefs.save_preferences()
 			caster.client.prefs.save_character()
 			caster.last_experience = world.time
@@ -116,6 +119,7 @@
 	delay = 50
 
 /datum/discipline/auspex/activate(mob/living/target, mob/living/carbon/human/caster)
+	delay = initial(delay)*level
 	..()
 	var/sound/auspexbeat = sound('code/modules/ziggers/sounds/auspex.ogg', repeat = TRUE)
 	caster.playsound_local(caster, auspexbeat, 75, 0, channel = CHANNEL_DISCIPLINES, use_reverb = FALSE)
@@ -126,7 +130,7 @@
 		loh = TRUE
 	caster.update_sight()
 	caster.add_client_colour(/datum/client_colour/glass_colour/blue)
-	spawn(delay*level)
+	spawn(delay)
 		if(caster)
 			caster.stop_sound_channel(CHANNEL_DISCIPLINES)
 			playsound(caster.loc, 'code/modules/ziggers/sounds/auspex_deactivate.ogg', 50, FALSE)
@@ -169,10 +173,11 @@
 		animate(C, pixel_x = rand(-16, 16), pixel_y = rand(-16, 16), alpha = 0, time = 5)
 
 /datum/discipline/celerity/activate(mob/living/target, mob/living/carbon/human/caster)
+	delay = initial(delay)*level
 	..()
 	caster.add_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
 	caster.celerity_visual = TRUE
-	spawn(delay*level)
+	spawn(delay)
 		if(caster)
 			playsound(caster.loc, 'code/modules/ziggers/sounds/celerity_deactivate.ogg', 50, FALSE)
 			caster.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
@@ -384,23 +389,16 @@
 	icon_state = "obfuscate"
 	cost = 1
 	ranged = FALSE
-	delay = 200
+	delay = 100
 	activate_sound = 'code/modules/ziggers/sounds/obfuscate_activate.ogg'
 
 /datum/discipline/obfuscate/activate(mob/living/target, mob/living/carbon/human/caster)
+	delay = initial(delay)*level
 	..()
 	for(var/mob/living/carbon/human/npc/NPC in GLOB.npc_list)
 		if(NPC.danger_source == caster)
 			NPC.danger_source = null
-	switch(level)
-		if(1)
-			caster.alpha = 138
-		if(2)
-			caster.alpha = 96
-		if(3)
-			caster.alpha = 54
-		else
-			caster.alpha = 10
+	caster.alpha = 10
 	spawn(delay)
 		if(caster)
 			playsound(caster.loc, 'code/modules/ziggers/sounds/obfuscate_deactivate.ogg', 50, FALSE)
@@ -697,3 +695,196 @@
 			caster.physiology.armor.melee = caster.physiology.armor.melee-(20*mod)
 			caster.physiology.armor.bullet = caster.physiology.armor.bullet-(20*mod)
 			caster.color = initial(caster.color)
+
+
+/datum/discipline/serpentis
+	name = "Serpentis"
+	desc = "Act like a cobra, get the powers to stun targets with your gaze and your tongue. On higher levels you can reach the ability to move your heart to the urn or ignore damage in torpor."
+	icon_state = "serpentis"
+	cost = 1
+	ranged = TRUE
+	delay = 50
+	range = 2
+
+/datum/discipline/serpentis/activate(mob/living/target, mob/living/carbon/human/caster)
+	range = initial(range)+level
+	..()
+	if(level == 1)
+		var/antidir = NORTH
+		switch(caster.dir)
+			if(NORTH)
+				antidir = SOUTH
+			if(SOUTH)
+				antidir = NORTH
+			if(WEST)
+				antidir = EAST
+			if(EAST)
+				antidir = WEST
+		if(target.dir == antidir)
+			target.Stun(10)
+			target.visible_message("<span class='warning'><b>[caster] hypnotizes [target] with his eyes!</b></span>", "<span class='warning'><b>[caster] hypnotizes you like a cobra!</b></span>")
+			playsound(target.loc, 'code/modules/ziggers/sounds/serpentis.ogg', 50, TRUE)
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				H.remove_overlay(MUTATIONS_LAYER)
+				var/mutable_appearance/serpentis_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "serpentis", -MUTATIONS_LAYER)
+				H.overlays_standing[MUTATIONS_LAYER] = serpentis_overlay
+				H.apply_overlay(MUTATIONS_LAYER)
+	if(level >= 2)
+		if(get_dist(caster, target) <= 2+level)
+			playsound(target.loc, 'code/modules/ziggers/sounds/serpentis.ogg', 50, TRUE)
+			playsound(caster.loc, 'code/modules/ziggers/sounds/tongue.ogg', 50, TRUE)
+			target.Stun(5*level)
+			target.apply_damage(5*level, BRUTE, BODY_ZONE_HEAD)
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				H.remove_overlay(MUTATIONS_LAYER)
+				var/mutable_appearance/serpentis_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "serpentis2", -MUTATIONS_LAYER)
+				H.overlays_standing[MUTATIONS_LAYER] = serpentis_overlay
+				H.apply_overlay(MUTATIONS_LAYER)
+				spawn(5*level)
+					H.remove_overlay(MUTATIONS_LAYER)
+		else
+			var/antidir = NORTH
+			switch(caster.dir)
+				if(NORTH)
+					antidir = SOUTH
+				if(SOUTH)
+					antidir = NORTH
+				if(WEST)
+					antidir = EAST
+				if(EAST)
+					antidir = WEST
+			if(target.dir == antidir)
+				target.Stun(5*level)
+				target.visible_message("<span class='warning'><b>[caster] hypnotizes [target] with his eyes!</b></span>", "<span class='warning'><b>[caster] hypnotizes you like a cobra!</b></span>")
+				playsound(target.loc, 'code/modules/ziggers/sounds/serpentis.ogg', 50, TRUE)
+				if(ishuman(target))
+					var/mob/living/carbon/human/H = target
+					H.remove_overlay(MUTATIONS_LAYER)
+					var/mutable_appearance/serpentis_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "serpentis", -MUTATIONS_LAYER)
+					H.overlays_standing[MUTATIONS_LAYER] = serpentis_overlay
+					H.apply_overlay(MUTATIONS_LAYER)
+
+/datum/discipline/vicissitude
+	name = "Vicissitude"
+	desc = "It is widely known as their art of flesh and bone shaping."
+	icon_state = "vicissitude"
+	cost = 1
+	ranged = TRUE
+	delay = 100
+	range = 1
+
+/datum/discipline/vicissitude/activate(mob/living/target, mob/living/carbon/human/caster)
+	..()
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		playsound(target.loc, 'code/modules/ziggers/sounds/vicissitude.ogg', 50, TRUE)
+		if(target.stat >= 2)
+			if(istype(target, /mob/living/carbon/human/npc))
+				var/mob/living/carbon/human/npc/NPC = target
+				NPC.last_attacker = null
+			if(!iskindred(target))
+				if(H.stat != DEAD)
+					H.death()
+				switch(level)
+					if(1)
+						new /obj/item/stack/sheet/human_flesh(target.loc)
+						qdel(target)
+					if(2)
+						new /obj/item/stack/sheet/human_flesh/five(target.loc)
+						var/obj/item/bodypart/B = H.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
+						if(B)
+							B.drop_limb()
+						qdel(target)
+					if(3)
+						var/obj/item/bodypart/B1 = H.get_bodypart(BODY_ZONE_R_ARM)
+						var/obj/item/bodypart/B2 = H.get_bodypart(BODY_ZONE_L_ARM)
+						var/obj/item/bodypart/B3 = H.get_bodypart(BODY_ZONE_R_LEG)
+						var/obj/item/bodypart/B4 = H.get_bodypart(BODY_ZONE_L_LEG)
+						if(B1)
+							B1.drop_limb()
+						if(B2)
+							B2.drop_limb()
+						if(B3)
+							B3.drop_limb()
+						if(B4)
+							B4.drop_limb()
+						new /obj/item/stack/sheet/human_flesh/ten(target.loc)
+						qdel(target)
+					if(4)
+						var/obj/item/bodypart/B1 = H.get_bodypart(BODY_ZONE_R_ARM)
+						var/obj/item/bodypart/B2 = H.get_bodypart(BODY_ZONE_L_ARM)
+						var/obj/item/bodypart/B3 = H.get_bodypart(BODY_ZONE_R_LEG)
+						var/obj/item/bodypart/B4 = H.get_bodypart(BODY_ZONE_L_LEG)
+						var/obj/item/bodypart/CH = H.get_bodypart(BODY_ZONE_CHEST)
+						if(B1)
+							B1.drop_limb()
+						if(B2)
+							B2.drop_limb()
+						if(B3)
+							B3.drop_limb()
+						if(B4)
+							B4.drop_limb()
+						if(CH)
+							CH.dismember()
+						new /obj/item/stack/sheet/human_flesh/twenty(target.loc)
+						qdel(target)
+					if(5)
+						var/obj/item/bodypart/B1 = H.get_bodypart(BODY_ZONE_R_ARM)
+						var/obj/item/bodypart/B2 = H.get_bodypart(BODY_ZONE_L_ARM)
+						var/obj/item/bodypart/B3 = H.get_bodypart(BODY_ZONE_R_LEG)
+						var/obj/item/bodypart/B4 = H.get_bodypart(BODY_ZONE_L_LEG)
+						var/obj/item/bodypart/CH = H.get_bodypart(BODY_ZONE_CHEST)
+						var/obj/item/bodypart/HE = H.get_bodypart(BODY_ZONE_HEAD)
+						if(B1)
+							B1.drop_limb()
+						if(B2)
+							B2.drop_limb()
+						if(B3)
+							B3.drop_limb()
+						if(B4)
+							B4.drop_limb()
+						if(CH)
+							CH.dismember()
+						if(HE)
+							HE.dismember()
+						new /obj/item/stack/sheet/human_flesh/fifty(target.loc)
+						qdel(target)
+		else
+			target.emote("scream")
+			target.apply_damage(10*level, BRUTE, BODY_ZONE_CHEST)
+			if(prob(10*level))
+				var/obj/item/bodypart/B = H.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
+				if(B)
+					B.drop_limb()
+
+/turf
+	var/silented = FALSE
+
+/datum/discipline/quietus
+	name = "Quietus"
+	desc = "Grants influence over the blood of others. Can mute the nearby area."
+	icon_state = "quietus"
+	cost = 1
+	ranged = TRUE
+	delay = 50
+	range = 2
+
+/datum/discipline/quietus/activate(mob/living/target, mob/living/carbon/human/caster)
+	..()
+	playsound(target.loc, 'code/modules/ziggers/sounds/quietus.ogg', 50, TRUE)
+	target.Stun(5*level)
+	if(level > 3)
+		if(target.bloodpool > 1)
+			var/transfered = max(1, target.bloodpool-3)
+			caster.bloodpool = min(caster.maxbloodpool, caster.bloodpool+transfered)
+			target.bloodpool = transfered
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		H.remove_overlay(MUTATIONS_LAYER)
+		var/mutable_appearance/quietus_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "quietus", -MUTATIONS_LAYER)
+		H.overlays_standing[MUTATIONS_LAYER] = quietus_overlay
+		H.apply_overlay(MUTATIONS_LAYER)
+		spawn(5*level)
+			H.remove_overlay(MUTATIONS_LAYER)

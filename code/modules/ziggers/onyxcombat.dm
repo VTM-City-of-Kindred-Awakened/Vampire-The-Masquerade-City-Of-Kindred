@@ -274,7 +274,7 @@
 		if(BD.bloodpool >= 1)
 			playsound(usr, 'code/modules/ziggers/sounds/bloodhealing.ogg', 50, FALSE)
 			BD.last_bloodheal_use = world.time
-			BD.bloodpool -= 1
+			BD.bloodpool = max(0, BD.bloodpool-1)
 			icon_state = "[initial(icon_state)]-on"
 			to_chat(BD, "<span class='notice'>You use blood to heal your wounds.</span>")
 			if(BD.getBruteLoss() + BD.getBruteLoss() >= 25)

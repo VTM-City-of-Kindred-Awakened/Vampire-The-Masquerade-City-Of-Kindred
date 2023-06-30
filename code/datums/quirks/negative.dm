@@ -124,6 +124,43 @@
 	if(DT_PROB(0.05, delta_time))
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "depression_mild", /datum/mood_event/depression_mild)
 
+/datum/quirk/ground_heirloom
+	name = "Ground Heirloom"
+	desc = "You are the current owner of an domain, passed down for generations. You have to keep it safe!"
+	value = -2
+	mood_quirk = TRUE
+	var/obj/item/heirloom
+	var/where
+	var/last_notice = 0
+	medical_record_text = "Patient demonstrates an unnatural attachment to a ground."
+	hardcore_value = 1
+
+/datum/quirk/ground_heirloom/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/heirloom_type = /obj/item/ground_heir
+	heirloom = new heirloom_type(get_turf(quirk_holder))
+	var/list/slots = list(
+		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+		LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+		LOCATION_HANDS = ITEM_SLOT_HANDS
+	)
+	where = H.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
+
+/datum/quirk/ground_heirloom/post_add()
+	if(where == LOCATION_BACKPACK)
+		var/mob/living/carbon/human/H = quirk_holder
+		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
+
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a precious [heirloom.name] domain [where]. Keep it safe!</span>")
+
+/datum/quirk/ground_heirloom/on_process()
+	if(!heirloom in quirk_holder.GetAllContents())
+		if(last_notice+300 < world.time)
+			to_chat(quirk_holder, "<span class='warning'>You are missing your domain...</span>")
+			quirk_holder.bloodpool = max(0, quirk_holder.bloodpool-1)
+			last_notice = world.time
+
 /datum/quirk/family_heirloom
 	name = "Family Heirloom"
 	desc = "You are the current owner of an heirloom, passed down for generations. You have to keep it safe!"
@@ -344,6 +381,24 @@
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "nyctophobia", /datum/mood_event/nyctophobia)
 	else
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
+
+/datum/quirk/lightophobia
+	name = "Lightophobia"
+	desc = "As far as you can remember, you've always been afraid of the light. While in the light without a shadow, you instinctually act careful, and constantly feel a sense of dread."
+	value = -3
+	medical_record_text = "Patient demonstrates a fear of the light."
+	hardcore_value = 5
+	mood_quirk = TRUE
+
+/datum/quirk/lightophobia/on_process()
+	var/turf/T = get_turf(quirk_holder)
+	var/lums = T.get_lumcount()
+	if(lums > 0.2)
+		if(quirk_holder.m_intent == MOVE_INTENT_RUN)
+			to_chat(quirk_holder, "<span class='warning'>Easy, easy, take it slow... you're in the light...</span>")
+			quirk_holder.toggle_move_intent()
+			if(prob(10))
+				quirk_holder.apply_damage(5, BURN, BODY_ZONE_HEAD)
 
 /datum/quirk/nonviolent
 	name = "Pacifist"

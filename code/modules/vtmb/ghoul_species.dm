@@ -105,7 +105,11 @@
 	var/datum/action/ghoulinfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
+	var/datum/action/blood_heal/bloodheal = new()
+	bloodheal.Grant(C)
 	C.generation = 13
+	C.bloodpool = 10
+	C.maxbloodpool = 10
 	C.maxHealth = 100
 	C.health = 100
 
@@ -113,6 +117,37 @@
 	. = ..()
 	for(var/datum/action/ghoulinfo/GI in C.actions)
 		qdel(GI)
+	for(var/datum/action/blood_heal/BH in C.actions)
+		qdel(BH)
+
+/datum/action/blood_heal
+	name = "Blood Heal"
+	desc = "Use vitae in your blood to heal your wounds."
+	button_icon_state = "bloodheal"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/last_heal = 0
+	var/level = 1
+
+/datum/action/blood_heal/Trigger()
+	if(istype(owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = owner
+		if(H.bloodpool < 1)
+			to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
+			SEND_SOUND(H, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
+			return
+		if(last_heal+30 >= world.time)
+			return
+		last_heal = world.time
+		H.bloodpool = max(0, H.bloodpool-1)
+		playsound(H, 'code/modules/ziggers/sounds/bloodhealing.ogg', 50, FALSE)
+		H.adjustBruteLoss(-10*level, TRUE)
+		H.adjustFireLoss(-10*level, TRUE)
+		if(length(H.all_wounds))
+			var/datum/wound/W = pick(H.all_wounds)
+			W.remove_wound()
+		H.update_damage_overlays()
+		H.update_health_hud()
+		H.visible_message("<span class='warning'>Some of [H]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
 
 /datum/species/ghoul/check_roundstart_eligible()
 	return TRUE
@@ -130,7 +165,7 @@
 				H.client.prefs.save_preferences()
 				H.client.prefs.save_character()
 			if(H.last_experience+600 <= world.time)
-				H.client.prefs.exper = min(1440, H.client.prefs.exper+1)
+				H.client.prefs.exper = min(calculate_mob_max_exper(H), H.client.prefs.exper+5)
 				H.client.prefs.save_preferences()
 				H.client.prefs.save_character()
 				H.last_experience = world.time
@@ -167,7 +202,7 @@
 				H.client.prefs.save_preferences()
 				H.client.prefs.save_character()
 			if(H.last_experience+600 <= world.time)
-				H.client.prefs.exper = min(1440, H.client.prefs.exper+1)
+				H.client.prefs.exper = min(calculate_mob_max_exper(H), H.client.prefs.exper+5)
 				H.client.prefs.save_preferences()
 				H.client.prefs.save_character()
 				H.last_experience = world.time

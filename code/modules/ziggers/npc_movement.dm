@@ -22,8 +22,9 @@
 	GLOB.npc_list += src
 
 /mob/living/carbon/human/npc/death()
-	if(ishuman(last_attacker))
-		AdjustHumanity(last_attacker, -1, 0)
+	if(last_attacker)
+		if(ishuman(last_attacker))
+			AdjustHumanity(last_attacker, -1, 0)
 	remove_overlay(FIGHT_LAYER)
 	GLOB.npc_list -= src
 	SShumannpcpool.npclost()
@@ -36,7 +37,7 @@
 /mob/living/carbon/human/npc/Life()
 	if(stat == DEAD)
 		return
-	if(!key)
+	if(!CheckMove())
 		nutrition = 400
 		if(get_dist(danger_source, src) < 7)
 			last_danger_meet = world.time
@@ -120,6 +121,10 @@
 /mob/living/carbon/human/npc/proc/CheckMove()
 	if(stat >= 2)
 		return TRUE
+	if(ghoulificated)
+		return TRUE
+	if(key)
+		return TRUE
 	if(IsSleeping())
 		return TRUE
 	if(IsUnconscious())
@@ -134,8 +139,14 @@
 		return TRUE
 	if(is_talking)
 		return TRUE
-	if(pulledby && last_grab+30 > world.time)
+	if(pulledby)
+		if(last_grab+100 > world.time)
+			return TRUE
+		if(pulledby.grab_state >= GRAB_PASSIVE)
+			return TRUE
+	if(last_grab+50 > world.time)
 		return TRUE
+	return FALSE
 
 /mob/living/carbon/human/npc/proc/juststep()
 	if(!walktarget || !isturf(loc) || CheckMove())
@@ -174,8 +185,6 @@
 	step_to(src,danger_source,0)
 
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
-	if(key)
-		return
 	if(CheckMove())
 		return
 	if(!walktarget && !staying)

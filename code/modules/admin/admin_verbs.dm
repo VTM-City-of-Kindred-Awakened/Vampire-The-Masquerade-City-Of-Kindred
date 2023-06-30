@@ -420,7 +420,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Add Exp"
 	set category = "Admin.Game"
 	if(prefs)
-		prefs.exper = 1440
+		prefs.exper = calculate_mob_max_exper(mob)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Exp")
 
 /client/proc/poll_panel()

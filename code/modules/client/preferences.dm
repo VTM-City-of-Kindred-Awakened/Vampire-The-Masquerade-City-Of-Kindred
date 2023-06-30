@@ -149,13 +149,54 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/humanity = 7
 
-	var/exper = 0	//Urovni
+	var/exper = 1440	//Urovni
 
 	var/discipline1level = 1
 	var/discipline2level = 1
 	var/discipline3level = 1
 
+	var/discipline1type
+	var/discipline2type
+	var/discipline3type
+	var/discipline4type
+
 //	var/datum/vampireclane/Clane
+
+/proc/calculate_mob_max_exper(var/mob/M)
+	if(M.client)
+		if(M.client.prefs)
+			return 1440 + 360*((max(1, 13-M.client.prefs.generation)*max(0, M.client.prefs.generation_bonus))+M.client.prefs.discipline1level+M.client.prefs.discipline2level+M.client.prefs.discipline3level-3)
+
+/datum/preferences/proc/calculate_max_exper()
+	return 1440 + 360*((max(1, 13-generation)*max(0, generation_bonus))+discipline1level+discipline2level+discipline3level-3)
+
+/proc/reset_shit(var/mob/M)
+	if(M.client)
+		if(M.client.prefs)
+			M.client.prefs.slotlocked = 0
+			M.client.prefs.exper = 1440
+			M.client.prefs.generation_bonus = 0
+			M.client.prefs.discipline1level = 1
+			M.client.prefs.discipline2level = 1
+			M.client.prefs.discipline3level = 1
+			M.client.prefs.masquerade = initial(M.client.prefs.masquerade)
+			M.client.prefs.generation = initial(M.client.prefs.generation)
+			qdel(M.client.prefs.clane)
+			M.client.prefs.clane = new /datum/vampireclane/brujah()
+			if(length(M.client.prefs.clane.clane_disciplines) >= 1)
+				M.client.prefs.discipline1type = M.client.prefs.clane.clane_disciplines[1]
+			if(length(M.client.prefs.clane.clane_disciplines) >= 2)
+				M.client.prefs.discipline2type = M.client.prefs.clane.clane_disciplines[2]
+			if(length(M.client.prefs.clane.clane_disciplines) >= 3)
+				M.client.prefs.discipline3type = M.client.prefs.clane.clane_disciplines[3]
+			M.client.prefs.discipline4type = null
+			M.client.prefs.humanity = M.client.prefs.clane.start_humanity
+			M.client.prefs.random_species()
+			M.client.prefs.random_character()
+			M.client.prefs.real_name = random_unique_name(M.client.prefs.gender)
+			M.client.prefs.save_character()
+			M.client.prefs.save_preferences()
+
 /datum/preferences/New(client/C)
 	parent = C
 
@@ -203,8 +244,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	update_preview_icon()
 	var/list/dat = list("<center>")
 
-	if(istype(user, /mob/dead/new_player))
-		dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>[make_font_cool("CHARACTER SETTINGS")]</a>"
+//	if(istype(user, /mob/dead/new_player))
+	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>[make_font_cool("CHARACTER SETTINGS")]</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>[make_font_cool("GAME PREFERENCES")]</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>[make_font_cool("OOC PREFERENCES")]</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=3' [current_tab == 3 ? "class='linkOn'" : ""]>[make_font_cool("CUSTOM KEYBINDINGS")]</a>"
@@ -309,7 +350,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Generation:</b> [generation]"
 				if(generation_bonus)
 					dat += " (+[generation_bonus]/[min(6, generation-7)])"
-				if(exper == 1440 && generation_bonus < min(6, generation-7))
+				if(exper == calculate_max_exper())
 					dat += " <a href='?_src_=prefs;preference=generation;task=input'>Claim generation bonus</a><BR>"
 				else
 					dat += "<BR>"
@@ -318,34 +359,39 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Description:</b> [clane.desc]<BR>"
 				dat += "<b>Curse:</b> [clane.curse]<BR>"
 				dat += "<h2>[make_font_cool("DISCIPLINES")]</h2>"
-				dat += "Experience rewarded: [exper]/1440<BR>"
-				if(length(clane.clane_disciplines) >= 1)
-					var/datype = clane.clane_disciplines[1]
-					var/datum/discipline/AD = new datype()
+				dat += "Experience rewarded: [exper]/[calculate_max_exper()]<BR>"
+				if(discipline1type)
+					var/datum/discipline/AD = new discipline1type()
 					dat += "<b>[AD.name]</b>: •[discipline1level > 1 ? "•" : "o"][discipline1level > 2 ? "•" : "o"][discipline1level > 3 ? "•" : "o"][discipline1level > 4 ? "•" : "o"]([discipline1level])"
-					if(exper == 1440 && discipline1level != 5)
+					if(exper == calculate_max_exper() && discipline1level != 5)
 						dat += "<a href='?_src_=prefs;preference=discipline1;task=input'>Learn</a><BR>"
 					else
 						dat += "<BR>"
 					dat += "-[AD.desc]<BR>"
-				if(length(clane.clane_disciplines) >= 2)
-					var/datype = clane.clane_disciplines[2]
-					var/datum/discipline/AD = new datype()
+				if(discipline2type)
+					var/datum/discipline/AD = new discipline2type()
 					dat += "<b>[AD.name]</b>: •[discipline2level > 1 ? "•" : "o"][discipline2level > 2 ? "•" : "o"][discipline2level > 3 ? "•" : "o"][discipline2level > 4 ? "•" : "o"]([discipline2level])"
-					if(exper == 1440 && discipline2level != 5)
+					if(exper == calculate_max_exper() && discipline2level != 5)
 						dat += "<a href='?_src_=prefs;preference=discipline2;task=input'>Learn</a><BR>"
 					else
 						dat += "<BR>"
 					dat += "-[AD.desc]<BR>"
-				if(length(clane.clane_disciplines) >= 3)
-					var/datype = clane.clane_disciplines[3]
-					var/datum/discipline/AD = new datype()
+				if(discipline3type)
+					var/datum/discipline/AD = new discipline3type()
 					dat += "<b>[AD.name]</b>: •[discipline3level > 1 ? "•" : "o"][discipline3level > 2 ? "•" : "o"][discipline3level > 3 ? "•" : "o"][discipline3level > 4 ? "•" : "o"]([discipline3level])"
-					if(exper == 1440 && discipline3level != 5)
+					if(exper == calculate_max_exper() && discipline3level != 5)
 						dat += "<a href='?_src_=prefs;preference=discipline3;task=input'>Learn</a><BR>"
 					else
 						dat += "<BR>"
 					dat += "-[AD.desc]<BR>"
+			if(pref_species.name == "Ghoul")
+				dat += "Experience rewarded: [exper]/[calculate_max_exper()]<BR>"
+				dat += "<b>Blood Heal</b>: •[discipline1level > 1 ? "•" : "o"][discipline1level > 2 ? "•" : "o"][discipline1level > 3 ? "•" : "o"][discipline1level > 4 ? "•" : "o"]([discipline1level])"
+				if(exper == calculate_max_exper() && discipline1level != 5)
+					dat += "<a href='?_src_=prefs;preference=discipline1;task=input'>Learn</a><BR>"
+				else
+					dat += "<BR>"
+				dat += "-Heals wounds by using vitae."
 //			dat += "<a href='?_src_=prefs;preference=species;task=random'>Random Species</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SPECIES]'>Always Random Species: [(randomise[RANDOM_SPECIES]) ? "Yes" : "No"]</A><br>"
 
@@ -999,9 +1045,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(masquerade < job.minimal_masquerade)
 				HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[job.minimal_masquerade] MASQUERADE POINTS REQUIED\]</font></td></tr>"
 				continue
-			if(!pref_species.id in job.allowed_species)
-				HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[pref_species.name] RESTRICTED\]</font></td></tr>"
-				continue
+			if(job.kindred_only)
+				if(pref_species.name != "Vampire")
+					HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[pref_species.name] RESTRICTED\]</font></td></tr>"
+					continue
+			if(pref_species.name == "Vampire")
+				if(clane)
+					var/alloww = FALSE
+					for(var/i in job.allowed_bloodlines)
+						if(i == clane.name)
+							alloww = TRUE
+					if(!alloww)
+						HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[clane.name] RESTRICTED\]</font></td></tr>"
+						continue
 			if((job_preferences[SSjob.overflow_role] == JP_LOW) && (rank != SSjob.overflow_role) && !is_banned_from(user.ckey, SSjob.overflow_role))
 				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 				continue
@@ -1563,7 +1619,30 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/result = input(user, "Select a clane", "Clane Selection") as null|anything in GLOB.clanes_list
 					if(result)
 						var/newtype = GLOB.clanes_list[result]
-						clane = new newtype()
+						var/datum/vampireclane/Clan = new newtype()
+						if(result == "Caitiff")
+							var/list/disc = subtypesof(/datum/discipline)
+							var/discipline1 = input(user, "Select first start discipline", "Discipline Selection") as null|anything in disc
+							if(discipline1)
+								Clan.clane_disciplines |= 1
+								Clan.clane_disciplines[1] = discipline1
+								var/discipline2 = input(user, "Select second start discipline", "Discipline Selection") as null|anything in disc
+								if(discipline2)
+									Clan.clane_disciplines |= 2
+									Clan.clane_disciplines[2] = discipline2
+									var/discipline3 = input(user, "Select third start discipline", "Discipline Selection") as null|anything in disc
+									if(discipline3)
+										Clan.clane_disciplines |= 3
+										Clan.clane_disciplines[3] = discipline3
+						clane = Clan
+						if(length(Clan.clane_disciplines) >= 1)
+							discipline1type = Clan.clane_disciplines[1]
+						if(length(Clan.clane_disciplines) >= 2)
+							discipline2type = Clan.clane_disciplines[2]
+						if(length(Clan.clane_disciplines) >= 3)
+							discipline3type = Clan.clane_disciplines[3]
+//						if(length(Clan.clane_disciplines) >= 4)
+//							discipline4type = Clan.clane_disciplines[4]
 						humanity = clane.start_humanity
 						if(clane.no_hair)
 							hairstyle = "Bald"
@@ -1588,7 +1667,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					exper = 0
 
 				if("reset_with_bonus")
-					var/bonus = 13-generation_bonus
+					var/bonus = generation-generation_bonus
 					slotlocked = 0
 					exper = 0
 					discipline1level = 1
@@ -1598,6 +1677,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					generation = initial(generation)
 					qdel(clane)
 					clane = new /datum/vampireclane/brujah()
+					if(length(clane.clane_disciplines) >= 1)
+						discipline1type = clane.clane_disciplines[1]
+					if(length(clane.clane_disciplines) >= 2)
+						discipline2type = clane.clane_disciplines[2]
+					if(length(clane.clane_disciplines) >= 3)
+						discipline3type = clane.clane_disciplines[3]
+					discipline4type = null
 					humanity = clane.start_humanity
 					random_species()
 					random_character()
@@ -2095,7 +2181,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("reset_all")
 					slotlocked = 0
-					exper = 0
+					exper = 1440
 					generation_bonus = 0
 					discipline1level = 1
 					discipline2level = 1
@@ -2104,6 +2190,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					generation = initial(generation)
 					qdel(clane)
 					clane = new /datum/vampireclane/brujah()
+					if(length(clane.clane_disciplines) >= 1)
+						discipline1type = clane.clane_disciplines[1]
+					if(length(clane.clane_disciplines) >= 2)
+						discipline2type = clane.clane_disciplines[2]
+					if(length(clane.clane_disciplines) >= 3)
+						discipline3type = clane.clane_disciplines[3]
+					discipline4type = null
 					humanity = clane.start_humanity
 					random_species()
 					random_character()
@@ -2244,9 +2337,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	client.prefs.slotlocked = 1
 	client.prefs.save_preferences()
 	client.prefs.save_character()
+	if(dna.species.id == "ghoul")
+		for(var/datum/action/blood_heal/BH in actions)
+			BH.level = client.prefs.discipline1level
 	if(dna.species.id == "kindred")
-		if(length(clane.clane_disciplines) >= 1)
-			var/datum/discipline/D = clane.clane_disciplines[1]
+		if(client.prefs.discipline1type)
+			var/datum/discipline/D = client.prefs.discipline1type
 			hud_used.discipline1_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline1_icon.dscpln = new D()
 			hud_used.discipline1_icon.dscpln.level = client.prefs.discipline1level
@@ -2254,8 +2350,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			hud_used.discipline1_icon.desc = hud_used.discipline1_icon.dscpln.desc
 			hud_used.discipline1_icon.icon_state = hud_used.discipline1_icon.dscpln.icon_state
 			hud_used.discipline1_icon.main_state = hud_used.discipline1_icon.dscpln.icon_state
-		if(length(clane.clane_disciplines) >= 2)
-			var/datum/discipline/D = clane.clane_disciplines[2]
+		if(client.prefs.discipline2type)
+			var/datum/discipline/D = client.prefs.discipline2type
 			hud_used.discipline2_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline2_icon.dscpln = new D()
 			hud_used.discipline2_icon.dscpln.level = client.prefs.discipline2level
@@ -2263,8 +2359,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			hud_used.discipline2_icon.desc = hud_used.discipline2_icon.dscpln.desc
 			hud_used.discipline2_icon.icon_state = hud_used.discipline2_icon.dscpln.icon_state
 			hud_used.discipline2_icon.main_state = hud_used.discipline2_icon.dscpln.icon_state
-		if(length(clane.clane_disciplines) >= 3)
-			var/datum/discipline/D = clane.clane_disciplines[3]
+		if(client.prefs.discipline3type)
+			var/datum/discipline/D = client.prefs.discipline3type
 			hud_used.discipline3_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline3_icon.dscpln = new D()
 			hud_used.discipline3_icon.dscpln.level = client.prefs.discipline3level
@@ -2272,15 +2368,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			hud_used.discipline3_icon.desc = hud_used.discipline3_icon.dscpln.desc
 			hud_used.discipline3_icon.icon_state = hud_used.discipline3_icon.dscpln.icon_state
 			hud_used.discipline3_icon.main_state = hud_used.discipline3_icon.dscpln.icon_state
-		if(length(clane.clane_disciplines) >= 4)
-			var/datum/discipline/D = clane.clane_disciplines[4]
+		if(client.prefs.discipline4type)
+			var/datum/discipline/D = client.prefs.discipline4type
 			hud_used.discipline4_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline4_icon.dscpln = new D()
 			hud_used.discipline4_icon.name = hud_used.discipline4_icon.dscpln.name
 			hud_used.discipline4_icon.desc = hud_used.discipline4_icon.dscpln.desc
 			hud_used.discipline4_icon.icon_state = hud_used.discipline4_icon.dscpln.icon_state
 			hud_used.discipline4_icon.main_state = hud_used.discipline4_icon.dscpln.icon_state
-		if(clane.name == "Tremere" && hud_used.discipline3_icon.dscpln.level >= 3 && length(clane.clane_disciplines) < 4)
+		if(clane.name == "Tremere" && hud_used.discipline3_icon.dscpln.level >= 3 && !client.prefs.discipline4type)
 			hud_used.discipline4_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline4_icon.dscpln = new /datum/discipline/bloodshield()
 			hud_used.discipline4_icon.dscpln.level = client.prefs.discipline3level

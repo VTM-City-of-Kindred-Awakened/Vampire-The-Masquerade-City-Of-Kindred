@@ -311,8 +311,15 @@
 		return JOB_UNAVAILABLE_GENERATION
 	if(client.prefs.masquerade < job.minimal_masquerade)
 		return JOB_UNAVAILABLE_MASQUERADE
-	if(!client.prefs.pref_species.id in job.allowed_species)
-		return JOB_UNAVAILABLE_SPECIES
+	if(job.kindred_only)
+		if(client.prefs.pref_species.name != "Vampire")
+			return JOB_UNAVAILABLE_SPECIES
+	if(client.prefs.pref_species.name == "Vampire")
+		if(client.prefs.clane)
+			for(var/i in job.allowed_bloodlines)
+				if(i == client.prefs.clane.name)
+					return JOB_AVAILABLE
+			return JOB_UNAVAILABLE_CLAN
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)

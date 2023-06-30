@@ -93,10 +93,17 @@
 /mob/living/carbon/human/proc/get_frenzy_targets()
 	var/list/targets = list()
 	for(var/mob/living/L in viewers(7, src))
-		if(!iskindred(L) && L.bloodpool && L.stat != DEAD)
-			targets += L
-			if(L == frenzy_target)
-				return L
+		if(clane)
+			if(clane.name == "Banu Haqim")
+				if(L.bloodpool && L.stat != DEAD)
+					targets += L
+					if(L == frenzy_target)
+						return L
+			else
+				if(!iskindred(L) && L.bloodpool && L.stat != DEAD)
+					targets += L
+					if(L == frenzy_target)
+						return L
 	if(length(targets) > 0)
 		return pick(targets)
 	else
@@ -136,7 +143,7 @@
 			GLOB.masquerade_breakers_list -= H
 */
 
-	if(H.client && H.stat <= 2)
+	if(H.client && H.stat <= 3)
 		if(H.client.prefs)
 			if(H.client.prefs.humanity != H.humanity)
 				H.client.prefs.humanity = H.humanity
@@ -147,28 +154,19 @@
 				H.client.prefs.save_preferences()
 				H.client.prefs.save_character()
 			if(H.last_experience+600 <= world.time)
-				H.client.prefs.exper = min(1440, H.client.prefs.exper+1)
+				H.client.prefs.exper = min(calculate_mob_max_exper(H), H.client.prefs.exper+5)
+				if(H.client.prefs.exper == calculate_mob_max_exper(H))
+					to_chat(H, "You've reached a new level! You can add new points in Character Setup (Lobby screen).")
 				H.client.prefs.save_preferences()
 				H.client.prefs.save_character()
 				H.last_experience = world.time
+			if(H.client.prefs.generation != H.generation)
+				H.client.prefs.generation = H.generation
+				H.client.prefs.save_preferences()
+				H.client.prefs.save_character()
 			if(H.client.prefs.humanity < 1)
 				H.enter_frenzymod()
-				H.client.prefs.slotlocked = 0
-				H.client.prefs.exper = 0
-				H.client.prefs.generation_bonus = 0
-				H.client.prefs.discipline1level = 1
-				H.client.prefs.discipline2level = 1
-				H.client.prefs.discipline3level = 1
-				H.client.prefs.masquerade = initial(H.client.prefs.masquerade)
-				H.client.prefs.generation = initial(H.client.prefs.generation)
-				qdel(H.client.prefs.clane)
-				H.client.prefs.clane = new /datum/vampireclane/brujah()
-				H.client.prefs.humanity = H.client.prefs.clane.start_humanity
-				H.client.prefs.random_species()
-				H.client.prefs.random_character()
-				H.client.prefs.real_name = random_unique_name(H.client.prefs.gender)
-				H.client.prefs.save_character()
-				H.client.prefs.save_preferences()
+				reset_shit(H)
 				H.ghostize(FALSE)
 	if(H.bloodpool <= 1 && !H.in_frenzy)
 		if(H.last_frenzy_check+400 <= world.time)

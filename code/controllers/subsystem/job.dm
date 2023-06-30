@@ -66,6 +66,13 @@ SUBSYSTEM_DEF(job)
 
 	return TRUE
 
+/datum/controller/subsystem/job/proc/FreeRole(rank)
+	if(!rank)
+		return
+	var/datum/job/job = GetJob(rank)
+	if(!job)
+		return FALSE
+	job.current_positions = max(0, job.current_positions - 1)
 
 /datum/controller/subsystem/job/proc/GetJob(rank)
 	if(!occupations.len)
@@ -124,9 +131,19 @@ SUBSYSTEM_DEF(job)
 		if(player.client.prefs.masquerade < job.minimal_masquerade)
 			JobDebug("FOC player not enough masquerade, Player: [player]")
 			continue
-		if(!player.client.prefs.pref_species.id in job.allowed_species)
-			JobDebug("FOC player species not allowed, Player: [player]")
-			continue
+		if(job.kindred_only)
+			if(player.client.prefs.pref_species.name != "Vampire")
+				JobDebug("FOC player species not allowed, Player: [player]")
+				continue
+		if(player.client.prefs.pref_species.name == "Vampire")
+			if(player.client.prefs.clane)
+				var/alloww = FALSE
+				for(var/i in job.allowed_bloodlines)
+					if(i == player.client.prefs.clane.name)
+						alloww = TRUE
+				if(!alloww)
+					JobDebug("FOC player clan not allowed, Player: [player]")
+					continue
 		if(flag && (!(flag in player.client.prefs.be_special)))
 			JobDebug("FOC flag failed, Player: [player], Flag: [flag], ")
 			continue
@@ -174,9 +191,19 @@ SUBSYSTEM_DEF(job)
 			JobDebug("GRJ player not enough masquerade, Player: [player]")
 			continue
 
-		if(!player.client.prefs.pref_species.id in job.allowed_species)
-			JobDebug("GRJ player species not allowed, Player: [player]")
-			continue
+		if(job.kindred_only)
+			if(player.client.prefs.pref_species.name != "Vampire")
+				JobDebug("GRJ player species not allowed, Player: [player]")
+				continue
+		if(player.client.prefs.pref_species.name == "Vampire")
+			if(player.client.prefs.clane)
+				var/alloww = FALSE
+				for(var/i in job.allowed_bloodlines)
+					if(i == player.client.prefs.clane.name)
+						alloww = TRUE
+				if(!alloww)
+					JobDebug("GRJ player clan not allowed, Player: [player]")
+					continue
 
 		if(player.mind && (job.title in player.mind.restricted_roles))
 			JobDebug("GRJ incompatible with antagonist role, Player: [player], Job: [job.title]")
@@ -366,9 +393,19 @@ SUBSYSTEM_DEF(job)
 					JobDebug("DO player not enough masquerade, Player: [player]")
 					continue
 
-				if(!player.client.prefs.pref_species.id in job.allowed_species)
-					JobDebug("DO player species not allowed, Player: [player]")
-					continue
+				if(job.kindred_only)
+					if(player.client.prefs.pref_species.name != "Vampire")
+						JobDebug("DO player species not allowed, Player: [player]")
+						continue
+				if(player.client.prefs.pref_species.name == "Vampire")
+					if(player.client.prefs.clane)
+						var/alloww = FALSE
+						for(var/i in job.allowed_bloodlines)
+							if(i == player.client.prefs.clane.name)
+								alloww = TRUE
+						if(!alloww)
+							JobDebug("DO player clan not allowed, Player: [player]")
+							continue
 
 				if(player.mind && (job.title in player.mind.restricted_roles))
 					JobDebug("DO incompatible with antagonist role, Player: [player], Job:[job.title]")

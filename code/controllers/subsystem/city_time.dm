@@ -38,9 +38,29 @@ SUBSYSTEM_DEF(city_time)
 
 	if(hour == 6 && minutes == 0)
 		to_chat(world, "<span class='ghostalert'>THE NIGHT IS OVER.</span>")
+		var/won
+		if(length(SSfactionwar.marks_camarilla) > length(SSfactionwar.marks_anarch) && length(SSfactionwar.marks_camarilla) > length(SSfactionwar.marks_sabbat))
+			won = "camarilla"
+		if(length(SSfactionwar.marks_anarch) > length(SSfactionwar.marks_camarilla) && length(SSfactionwar.marks_anarch) > length(SSfactionwar.marks_sabbat))
+			won = "anarch"
+		if(length(SSfactionwar.marks_sabbat) > length(SSfactionwar.marks_anarch) && length(SSfactionwar.marks_sabbat) > length(SSfactionwar.marks_camarilla))
+			won = "sabbat"
 		for(var/mob/living/carbon/human/H in world)
 			var/area/vtm/V = get_area(H)
 			if(iskindred(H) && V.upper)
 				H.death()
+			if(won)
+				if(H.frakcja == won)
+					if(H.client)
+						H.client.prefs.exper = min(calculate_mob_max_exper(H), H.client.prefs.exper+300)
+		switch(won)
+			if("camarilla")
+				to_chat(world, "Camarilla takes control over the city...")
+			if("anarch")
+				to_chat(world, "Anarchs take control over the city...")
+			if("sabbat")
+				to_chat(world, "Sabbat takes control over the city...")
+			else
+				to_chat(world, "The city remains neutral...")
 		SSticker.force_ending = 1
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "End Round")
