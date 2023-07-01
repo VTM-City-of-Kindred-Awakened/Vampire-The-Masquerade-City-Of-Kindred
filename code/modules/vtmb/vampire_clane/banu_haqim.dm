@@ -8,8 +8,7 @@
 	male_clothes = "/obj/item/clothing/under/vampire/bandit"
 	female_clothes = "/obj/item/clothing/under/vampire/bandit"
 
-/datum/vampireclane/banu_haqim/on_gain(mob/living/carbon/human/H)
-	..()
+/datum/vampireclane/banu_haqim/post_gain(mob/living/carbon/human/H)
 	if(H.client)
 		if(H.client.prefs)
 			if(H.client.prefs.discipline3level >= 3)
@@ -31,6 +30,7 @@
 		if(H.bloodpool < 2)
 			to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 			return
+		to_chat(owner, "<span class='notice'>You activate the Quietus Silence.</span>")
 		H.bloodpool = max(0, H.bloodpool-2)
 		last_silence = world.time
 		for(var/turf/T in range(7, src))

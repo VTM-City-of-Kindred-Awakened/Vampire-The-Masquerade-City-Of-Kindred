@@ -2337,6 +2337,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	client.prefs.slotlocked = 1
 	client.prefs.save_preferences()
 	client.prefs.save_character()
+	if(H.clane)
+		H.clane.post_gain(src)
 	if(dna.species.id == "ghoul")
 		for(var/datum/action/blood_heal/BH in actions)
 			BH.level = client.prefs.discipline1level

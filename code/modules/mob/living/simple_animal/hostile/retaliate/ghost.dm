@@ -34,33 +34,12 @@
 	light_system = MOVABLE_LIGHT
 	light_range = 1 // same glowing as visible player ghosts
 	light_power = 2
-	var/ghost_hairstyle
-	var/ghost_hair_color
-	var/mutable_appearance/ghost_hair
-	var/ghost_facial_hairstyle
-	var/ghost_facial_hair_color
-	var/mutable_appearance/ghost_facial_hair
-	var/random = TRUE //if you want random names for ghosts or not
+	faction = list("Giovanni")
 
 /mob/living/simple_animal/hostile/retaliate/ghost/Initialize()
 	. = ..()
-	give_hair()
-	if(random)
-		switch(rand(0,1))
-			if(0)
-				name = "ghost of [pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
-			if(1)
-				name = "ghost of [pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
-
-
-/mob/living/simple_animal/hostile/retaliate/ghost/proc/give_hair()
-	if(ghost_hairstyle != null)
-		ghost_hair = mutable_appearance('icons/mob/human_face.dmi', "hair_[ghost_hairstyle]", -HAIR_LAYER)
-		ghost_hair.alpha = 200
-		ghost_hair.color = ghost_hair_color
-		add_overlay(ghost_hair)
-	if(ghost_facial_hairstyle != null)
-		ghost_facial_hair = mutable_appearance('icons/mob/human_face.dmi', "facial_[ghost_facial_hairstyle]", -HAIR_LAYER)
-		ghost_facial_hair.alpha = 200
-		ghost_facial_hair.color = ghost_facial_hair_color
-		add_overlay(ghost_facial_hair)
+	switch(rand(0,1))
+		if(0)
+			name = "ghost of [pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
+		if(1)
+			name = "ghost of [pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"

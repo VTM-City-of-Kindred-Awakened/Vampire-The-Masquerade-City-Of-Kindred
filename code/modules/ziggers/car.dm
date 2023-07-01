@@ -115,6 +115,8 @@
 				else
 					to_chat(user, "<span class='warning'>You've failed to open [src]'s lock.</span>")
 					playsound(src, 'code/modules/ziggers/sounds/signal.ogg', 50, FALSE)
+					for(var/mob/living/carbon/human/npc/police/P in range(7, src))
+						P.Aggro(user)
 					repairing = FALSE
 					return
 				return
@@ -152,6 +154,8 @@
 		if(!driver && !length(passengers) && last_beep+70 < world.time)
 			last_beep = world.time
 			playsound(src, 'code/modules/ziggers/sounds/signal.ogg', 50, FALSE)
+			for(var/mob/living/carbon/human/npc/police/P in range(7, src))
+				P.Aggro(user)
 
 		if(prob(10) && locked && I.force)
 			playsound(src, 'code/modules/ziggers/sounds/open.ogg', 50, TRUE)

@@ -30,6 +30,19 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 
+		if(H.clane)
+			if(H.clane.name == "Lasombra")
+				if(!broken)
+					playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
+					icon_state = "mirror_broke"
+					if(desc == initial(desc))
+						desc = "Oh no, seven years of bad luck!"
+					broken = TRUE
+					var/obj/effect/reflection/reflection = ref.resolve()
+					if(istype(reflection))
+						reflection.alpha_icon_state = "mirror_mask_broken"
+						reflection.update_mirror_filters()
+				return
 		//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
 		//this is largely copypasted from there.
 

@@ -66,7 +66,7 @@
 				NPC.Aggro(attacker, TRUE)
 			if(!NPC.pulledby)
 				var/turf/LC = get_turf(attacker)
-				if(LC.get_lumcount() > 0.25 || get_dist(NPC, attacker <= 1))
+				if(LC.get_lumcount() > 0.25 || get_dist(NPC, attacker) <= 1)
 					if(NPC.backinvisible(attacker))
 						seenby += NPC
 						NPC.Aggro(attacker, FALSE)

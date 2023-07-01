@@ -228,10 +228,18 @@
 			online = null
 
 /obj/item/vamp/phone/attack_hand(mob/user)
+	var/lasombra = FALSE
+	if(iskindred(user))
+		var/mob/living/carbon/human/H = user
+		if(H.clane)
+			if(H.clane.name == "Lasombra")
+				lasombra = TRUE
 	if(!closed && user.get_inactive_held_item() == src)
-		OpenMenu(user)
+		if(!lasombra)
+			OpenMenu(user)
 	else if(anchored)
-		OpenMenu(user)
+		if(!lasombra)
+			OpenMenu(user)
 	else
 		..()
 
@@ -421,6 +429,9 @@
 				if(ishuman(hearing_args[HEARING_SPEAKER]))
 					var/mob/living/carbon/human/SPK = hearing_args[HEARING_SPEAKER]
 					voice_saying = "[age2agedescription(SPK.age)] [SPK.gender] voice ([SPK.phonevoicetag])"
+					if(SPK.clane)
+						if(SPK.clane.name == "Lasombra")
+							return
 				var/obj/phonevoice/VOIC = new(online)
 				VOIC.name = voice_saying
 				VOIC.speech_span = spchspn

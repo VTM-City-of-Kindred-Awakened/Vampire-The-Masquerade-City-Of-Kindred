@@ -328,13 +328,13 @@
 	if(stat >= 2)
 		return
 	is_talking = TRUE
-	var/delay = length_char(message)
-	spawn(rand(5, 10))
+	var/delay = round(length_char(message)/2)
+	spawn(5)
 		remove_overlay(FIGHT_LAYER)
 		var/mutable_appearance/parry_overlay = mutable_appearance('icons/mob/talk.dmi', "default0", -FIGHT_LAYER)
 		overlays_standing[FIGHT_LAYER] = parry_overlay
 		apply_overlay(FIGHT_LAYER)
-		spawn(delay)
+		spawn(max(1, delay))
 			if(stat != DEAD)
 				remove_overlay(FIGHT_LAYER)
 				say(message)

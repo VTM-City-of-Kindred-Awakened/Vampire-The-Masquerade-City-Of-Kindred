@@ -392,13 +392,14 @@
 
 /datum/quirk/lightophobia/on_process()
 	var/turf/T = get_turf(quirk_holder)
-	var/lums = T.get_lumcount()
-	if(lums > 0.2)
-		if(quirk_holder.m_intent == MOVE_INTENT_RUN)
-			to_chat(quirk_holder, "<span class='warning'>Easy, easy, take it slow... you're in the light...</span>")
-			quirk_holder.toggle_move_intent()
-			if(prob(10))
-				quirk_holder.apply_damage(5, BURN, BODY_ZONE_HEAD)
+	if(T)
+		var/lums = T.get_lumcount()
+		if(lums > 0.2)
+			if(quirk_holder.m_intent == MOVE_INTENT_RUN)
+				to_chat(quirk_holder, "<span class='warning'>Easy, easy, take it slow... you're in the light...</span>")
+				quirk_holder.toggle_move_intent()
+				if(prob(10))
+					quirk_holder.apply_damage(5, BURN, BODY_ZONE_HEAD)
 
 /datum/quirk/nonviolent
 	name = "Pacifist"

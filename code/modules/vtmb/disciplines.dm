@@ -23,7 +23,7 @@
 		return
 	if(target.stat == DEAD)
 		return
-	if(get_dist(caster, target) > range)
+	if(ranged && get_dist(caster, target) > range)
 		return
 	caster.bloodpool = max(0, caster.bloodpool-cost)
 	caster.update_blood_hud()
@@ -888,3 +888,84 @@
 		H.apply_overlay(MUTATIONS_LAYER)
 		spawn(5*level)
 			H.remove_overlay(MUTATIONS_LAYER)
+
+/datum/discipline/necromancy
+	name = "Necromancy"
+	desc = "Offers control over another, undead reality."
+	icon_state = "necromancy"
+	cost = 2
+	ranged = FALSE
+	delay = 50
+	violates_masquerade = TRUE
+
+/mob/living/simple_animal/hostile/retaliate/ghost/level1
+	maxHealth = 20
+	health = 20
+/mob/living/simple_animal/hostile/retaliate/ghost/level2
+	maxHealth = 40
+	health = 40
+	melee_damage_lower = 20
+	melee_damage_upper = 20
+/mob/living/simple_animal/hostile/retaliate/ghost/player/level3
+	maxHealth = 60
+	health = 60
+	melee_damage_lower = 30
+	melee_damage_upper = 30
+/mob/living/simple_animal/hostile/retaliate/ghost/player/level4
+	maxHealth = 80
+	health = 80
+	melee_damage_lower = 40
+	melee_damage_upper = 40
+/mob/living/simple_animal/hostile/retaliate/ghost/player/level5
+	maxHealth = 100
+	health = 100
+	melee_damage_lower = 50
+	melee_damage_upper = 50
+
+/mob/living/simple_animal/hostile/retaliate/ghost/player/Initialize()
+	. = ..()
+	give_player()
+
+/mob/living/simple_animal/hostile/retaliate/ghost/player/proc/give_player()
+	set waitfor = FALSE
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as summoned ghost?", null, null, null, 50, src)
+	for(var/mob/dead/observer/G in GLOB.player_list)
+		if(G.key)
+			to_chat(G, "<span class='ghostalert'>Someone is summoning a ghost!</span>")
+	if(LAZYLEN(candidates))
+		var/mob/dead/observer/C = pick(candidates)
+		name = C.name
+		key = C.key
+		return TRUE
+	return FALSE
+
+/datum/discipline/necromancy/activate(mob/living/target, mob/living/carbon/human/caster)
+	..()
+	playsound(target.loc, 'code/modules/ziggers/sounds/necromancy.ogg', 50, TRUE)
+	switch(level)
+		if(1)
+			new /mob/living/simple_animal/hostile/retaliate/ghost/level1(caster.loc)
+		if(2)
+			new /mob/living/simple_animal/hostile/retaliate/ghost/level2(caster.loc)
+		if(3)
+			new /mob/living/simple_animal/hostile/retaliate/ghost/player/level3(caster.loc)
+		if(4)
+			new /mob/living/simple_animal/hostile/retaliate/ghost/player/level4(caster.loc)
+		if(5)
+			new /mob/living/simple_animal/hostile/retaliate/ghost/player/level5(caster.loc)
+
+/datum/discipline/obtenebration
+	name = "Obtenebration"
+	desc = "Controls the darkness around you."
+	icon_state = "obtenebration"
+	cost = 1
+	ranged = FALSE
+	delay = 100
+	violates_masquerade = TRUE
+
+/datum/discipline/obtenebration/activate(mob/living/target, mob/living/carbon/human/caster)
+	..()
+	var/atom/movable/AM = new(caster)
+	AM.set_light(level, -3)
+	spawn(100)
+		AM.set_light(0)

@@ -134,6 +134,10 @@
 			if(CheckEyewitness(H, H, 5, FALSE))
 				AdjustMasquerade(H, -1)
 
+	if(H.hearing_ghosts)
+		H.bloodpool = max(0, H.bloodpool-1)
+		to_chat(H, "<span class='warning'>Necromancy Vision reduces your blood points too sustain itself.</span>")
+
 /*
 	if(!H in GLOB.masquerade_breakers_list)
 		if(H.masquerade < 4)

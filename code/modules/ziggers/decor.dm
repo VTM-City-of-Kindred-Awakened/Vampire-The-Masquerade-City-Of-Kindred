@@ -565,6 +565,11 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 
 /obj/vampire_computer/examine(mob/user)
 	. = ..()
+	if(iskindred(user))
+		var/mob/living/carbon/human/H = user
+		if(H.clane)
+			if(H.clane.name == "Lasombra")
+				return
 	icon_state = initial(icon_state)
 	. += "Last Message:<BR>"
 	. += "- [last_message]"
@@ -582,6 +587,11 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	main = TRUE
 
 /obj/vampire_computer/attack_hand(mob/user)
+	if(iskindred(user))
+		var/mob/living/carbon/human/H = user
+		if(H.clane)
+			if(H.clane.name == "Lasombra")
+				return
 	to_chat(user, "Last Message:<BR>")
 	to_chat(user, "- [last_message]")
 	if(!main)

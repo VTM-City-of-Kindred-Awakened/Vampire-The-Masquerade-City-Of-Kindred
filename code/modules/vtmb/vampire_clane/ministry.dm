@@ -11,6 +11,8 @@
 /datum/vampireclane/ministry/on_gain(mob/living/carbon/human/H)
 	..()
 	H.add_quirk(/datum/quirk/lightophobia)
+
+/datum/vampireclane/ministry/post_gain(mob/living/carbon/human/H)
 	if(H.client)
 		if(H.client.prefs)
 			if(H.client.prefs.discipline3level >= 3)
@@ -68,6 +70,7 @@
 		if(H.bloodpool < 1)
 			to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 			return
+		to_chat(owner, "<span class='notice'>You activate the Serpentis Urn.</span>")
 		H.bloodpool = max(0, H.bloodpool-1)
 		if(!urn)
 			if(H.dna)
@@ -100,6 +103,7 @@
 			to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 			return
 		H.bloodpool = max(0, H.bloodpool-2)
+		to_chat(owner, "<span class='notice'>You activate the Serpentis Mummyfy.</span>")
 		H.Paralyze(600)
 		if(H.dna)
 			if(H.dna.species)
