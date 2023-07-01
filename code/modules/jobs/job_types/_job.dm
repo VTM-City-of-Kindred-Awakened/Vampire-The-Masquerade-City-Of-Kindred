@@ -76,7 +76,7 @@
 	var/minimal_masquerade = 1
 //	var/list/allowed_species = list("kindred")
 	var/kindred_only = FALSE
-	var/list/allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian")
+	var/list/allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry")
 
 	// List for phone shit
 	var/my_contact_is_important = FALSE

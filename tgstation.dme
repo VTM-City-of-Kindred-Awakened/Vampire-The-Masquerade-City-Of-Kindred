@@ -3343,6 +3343,7 @@
 #include "code\modules\vtmb\vampire_clane\caitiff.dm"
 #include "code\modules\vtmb\vampire_clane\clane.dm"
 #include "code\modules\vtmb\vampire_clane\gangrel.dm"
+#include "code\modules\vtmb\vampire_clane\giovanni.dm"
 #include "code\modules\vtmb\vampire_clane\malkavian.dm"
 #include "code\modules\vtmb\vampire_clane\ministry.dm"
 #include "code\modules\vtmb\vampire_clane\nosferatu.dm"
