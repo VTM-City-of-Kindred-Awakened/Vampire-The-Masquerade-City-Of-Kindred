@@ -965,6 +965,7 @@
 
 /datum/discipline/obtenebration/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
+	playsound(target.loc, 'code/modules/ziggers/sounds/necromancy.ogg', 50, TRUE)
 	var/atom/movable/AM = new(caster)
 	AM.set_light(level, -3)
 	spawn(100)

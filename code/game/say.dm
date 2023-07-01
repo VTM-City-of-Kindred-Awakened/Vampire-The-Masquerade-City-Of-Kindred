@@ -48,11 +48,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), face_name = FALSE)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
 	//Basic span
-	var/smallspan = ""
-	var/smallspan_end = ""
-	if(small)
-		smallspan = "<span class='small'>"
-		smallspan_end = "</span>"
 	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
 	//Start name span.
 	var/spanpart2 = "<span class='name'>"
@@ -74,7 +69,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(istype(D) && D.display_icon(src))
 		languageicon = "[D.get_icon()] "
 
-	return "[smallspan][spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart][smallspan_end]"
+	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
 
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
