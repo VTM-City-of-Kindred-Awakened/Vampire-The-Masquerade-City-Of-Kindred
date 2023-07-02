@@ -38,7 +38,10 @@
 	bloodpool = 0
 	maxbloodpool = 0
 
-/mob/living/simple_animal/hostile/retaliate/ghost/Initialize()
+/mob/living/simple_animal/hostile/ghost/hostile
+	faction = list("hostile")
+
+/mob/living/simple_animal/hostile/ghost/Initialize()
 	. = ..()
 	switch(rand(0,1))
 		if(0)

@@ -1021,10 +1021,9 @@
 	backpack_contents = list(
 		/obj/item/storage/book/bible = 1,
 		/obj/item/melee/vampirearms/stake = 3,
-		/obj/item/melee/vampirearms/fireaxe = 1,
-		/obj/item/gun/ballistic/automatic/vampire/ar15 = 1,
-		/obj/item/ammo_box/magazine/vamp556 = 2,
-		/obj/item/gun/ballistic/automatic/vampire/deagle = 1,
+		/obj/item/flashlight/flare/torch = 1,
+		/obj/item/ammo_box/vampire/c44 = 1,
+		/obj/item/gun/ballistic/vampire/revolver = 1,
 		/obj/item/vamp/keys/hack=1
 		)
 
@@ -1062,12 +1061,13 @@
 	var/loadout_type = input(H, "Choose the Lord's gift for you:", "Loadout") as anything in loadouts
 	switch(loadout_type)
 		if("Sniper Rifle")
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/vampire/army(H), ITEM_SLOT_HEAD)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/vest/army(H), ITEM_SLOT_OCLOTHING)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/vampire/helmet(H), ITEM_SLOT_HEAD)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/vest(H), ITEM_SLOT_OCLOTHING)
 			H.put_in_r_hand(new /obj/item/gun/ballistic/automatic/vampire/sniper(H))
 		if("EOD Suit")
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/eod(H), ITEM_SLOT_OCLOTHING)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/vampire/eod(H), ITEM_SLOT_HEAD)
+			H.put_in_r_hand(new /obj/item/melee/vampirearms/fireaxe(H))
 		if("Holy Presence")
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/vest/army(H), ITEM_SLOT_OCLOTHING)
 			H.put_in_r_hand(new /obj/item/melee/vampirearms/chainsaw(H))

@@ -350,6 +350,29 @@
 	var/last_discipline_use = 0
 	var/main_state = ""
 	var/active = FALSE
+	var/obj/overlay/level2
+	var/obj/overlay/level3
+	var/obj/overlay/level4
+	var/obj/overlay/level5
+
+/atom/movable/screen/disciplines/Initialize()
+	. = ..()
+	level2 = new(src)
+	level2.icon = 'code/modules/ziggers/disciplines.dmi'
+	level2.icon_state = "2"
+	level2.layer = ABOVE_HUD_LAYER+5
+	level3 = new(src)
+	level3.icon = 'code/modules/ziggers/disciplines.dmi'
+	level3.icon_state = "3"
+	level3.layer = ABOVE_HUD_LAYER+5
+	level4 = new(src)
+	level4.icon = 'code/modules/ziggers/disciplines.dmi'
+	level4.icon_state = "4"
+	level4.layer = ABOVE_HUD_LAYER+5
+	level5 = new(src)
+	level5.icon = 'code/modules/ziggers/disciplines.dmi'
+	level5.icon_state = "5"
+	level5.layer = ABOVE_HUD_LAYER+5
 
 /atom/MouseEntered(location,control,params)
 	if(isturf(src) || ismob(src) || isobj(src))
@@ -361,7 +384,7 @@
 
 /mob/living/carbon/human/Move(atom/newloc, direct, glide_size_override)
 	..()
-	if(a_intent == INTENT_HARM)
+	if(a_intent == INTENT_HARM && client)
 		setDir(harm_focus)
 	else
 		harm_focus = dir
@@ -433,6 +456,32 @@
 					dscpln.level_casting = 1
 			else
 				dscpln.level_casting = 1
+			switch(dscpln.level_casting)
+				if(1)
+					overlays -= level2
+					overlays -= level3
+					overlays -= level4
+					overlays -= level5
+				if(2)
+					overlays |= level2
+					overlays -= level3
+					overlays -= level4
+					overlays -= level5
+				if(3)
+					overlays -= level2
+					overlays |= level3
+					overlays -= level4
+					overlays -= level5
+				if(4)
+					overlays -= level2
+					overlays -= level3
+					overlays |= level4
+					overlays -= level5
+				if(5)
+					overlays -= level2
+					overlays -= level3
+					overlays -= level4
+					overlays |= level5
 			to_chat(usr, "[dscpln.name] [dscpln.level_casting]/[dscpln.level] - [dscpln.desc]")
 		return
 

@@ -9,6 +9,7 @@
 	gain_text = "<span class='notice'>You feel like you could drink a whole keg!</span>"
 	lose_text = "<span class='danger'>You don't feel as resistant to alcohol anymore. Somehow.</span>"
 	medical_record_text = "Patient demonstrates a high tolerance for alcohol."
+	mood_quirk = TRUE
 
 /datum/quirk/apathetic
 	name = "Apathetic"
@@ -25,6 +26,7 @@
 	gain_text = "<span class='notice'>You can't taste anything!</span>"
 	lose_text = "<span class='notice'>You can taste again!</span>"
 	medical_record_text = "Patient suffers from ageusia and is incapable of tasting food or reagents."
+	mood_quirk = TRUE
 
 /datum/quirk/apathetic/add()
 	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
@@ -45,6 +47,7 @@
 	gain_text = "<span class='notice'>You feel like a drink would do you good.</span>"
 	lose_text = "<span class='danger'>You no longer feel like drinking would ease your pain.</span>"
 	medical_record_text = "Patient has unusually efficient liver metabolism and can slowly regenerate wounds by drinking alcoholic beverages."
+	mood_quirk = TRUE
 
 /datum/quirk/drunkhealing/on_process(delta_time)
 	var/mob/living/carbon/C = quirk_holder
@@ -119,6 +122,7 @@
 	gain_text = "<span class='notice'>You feel lithe on your feet!</span>"
 	lose_text = "<span class='danger'>You feel clumsy again.</span>"
 	medical_record_text = "Patient scored highly on cardio tests."
+	mood_quirk = TRUE
 
 /datum/quirk/friendly
 	name = "Friendly"
@@ -150,6 +154,7 @@
 	gain_text = "<span class='notice'>You walk with a little more litheness.</span>"
 	lose_text = "<span class='danger'>You start tromping around like a barbarian.</span>"
 	medical_record_text = "Patient's dexterity belies a strong capacity for stealth."
+	mood_quirk = TRUE
 
 /datum/quirk/light_step/on_spawn()
 	var/datum/component/footstep/C = quirk_holder.GetComponent(/datum/component/footstep)
@@ -165,6 +170,7 @@
 	gain_text = "<span class='notice'>You know everything about musical instruments.</span>"
 	lose_text = "<span class='danger'>You forget how musical instruments work.</span>"
 	medical_record_text = "Patient brain scans show a highly-developed auditory pathway."
+	mood_quirk = TRUE
 
 /datum/quirk/musician/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -183,6 +189,7 @@
 	gain_text = "<span class='notice'>The shadows seem a little less dark.</span>"
 	lose_text = "<span class='danger'>Everything seems a little darker.</span>"
 	medical_record_text = "Patient's eyes show above-average acclimation to darkness."
+	mood_quirk = TRUE
 
 /datum/quirk/night_vision/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -197,6 +204,7 @@
 	value = 8
 	mob_trait = TRAIT_SELF_AWARE
 	medical_record_text = "Patient demonstrates an uncanny knack for self-diagnosis."
+	mood_quirk = TRUE
 
 /datum/quirk/skittish
 	name = "Skittish"
@@ -204,6 +212,7 @@
 	value = 8
 	mob_trait = TRAIT_SKITTISH
 	medical_record_text = "Patient demonstrates a high aversion to danger and has described hiding in containers out of fear."
+	mood_quirk = TRUE
 
 /datum/quirk/spiritual
 	name = "Spiritual"
@@ -213,6 +222,7 @@
 	gain_text = "<span class='notice'>You have faith in a higher power.</span>"
 	lose_text = "<span class='danger'>You lose faith!</span>"
 	medical_record_text = "Patient reports a belief in a higher power."
+	mood_quirk = TRUE
 
 /datum/quirk/spiritual/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -227,6 +237,7 @@
 	gain_text = "<span class='notice'>You know how to tag walls efficiently.</span>"
 	lose_text = "<span class='danger'>You forget how to tag walls properly.</span>"
 	medical_record_text = "Patient was recently seen for possible paint huffing incident."
+	mood_quirk = TRUE
 
 /datum/quirk/tagger/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder

@@ -1,0 +1,141 @@
+/*
+Experienced Driver
+Bone Key
+Anonymous
+Bloody Lover
+Tough Flesh
+Slowpoke
+\"Blood\" Sucker
+One Handed
+Non Intellectual
+Coffin Therapy
+Not Crossing the Rubicon
+Hungry
+Fenix
+Dwarf
+Homosexual
+Dancer
+*/
+
+/datum/quirk/experienced_driver
+	name = "Experienced Driver"
+	desc = "Driving, repairing and sustaining a car is much easier to you."
+	mob_trait = TRAIT_EXP_DRIVER
+	value = 2
+	gain_text = "<span class='notice'>You feel more experienced about cars.</span>"
+	lose_text = "<span class='warning'>You feel more clueless about cars.</span>"
+
+/datum/quirk/bone_key
+	name = "Bone Key"
+	desc = "You know much more about door locks, and always have a tool for them."
+	mob_trait = TRAIT_BONE_KEY
+	value = 3
+	gain_text = "<span class='notice'>You feel more experienced in lockery.</span>"
+	lose_text = "<span class='warning'>You feel more clueless in lockery.</span>"
+
+/datum/quirk/annonymus
+	name = "Anonymous"
+	desc = "You always bring a mask."
+	value = 1
+	gain_text = "<span class='notice'>You feel more anonymus.</span>"
+	lose_text = "<span class='warning'>You don't feel anonymous anymore.</span>"
+
+/datum/quirk/bloody_lover
+	name = "Bloody Lover"
+	desc = "Your bites feel more like a kiss."
+	mob_trait = TRAIT_BLOODY_LOVER
+	value = 2
+	gain_text = "<span class='notice'>You feel more experienced in love.</span>"
+	lose_text = "<span class='warning'>You feel more clueless in love.</span>"
+
+/datum/quirk/tough_flesh
+	name = "Tough Flesh"
+	desc = "Your flesh is much sturdier than normal."
+	mob_trait = TRAIT_TOUGH_FLESH
+	value = 3
+	gain_text = "<span class='notice'>You feel tough.</span>"
+	lose_text = "<span class='warning'>You feel fragile again.</span>"
+
+/datum/quirk/slowpoke
+	name = "Slowpoke"
+	desc = "You move slower."
+	value = -3
+	gain_text = "<span class='warning'>You feel slo-o-o-o-o-o-o-o-o-o-o-o-ow.</span>"
+	lose_text = "<span class='notice'>You can feel a normal speed again.</span>"
+
+/datum/quirk/bloody_sucker
+	name = "\"Blood\" Sucker"
+	desc = "There is something wrong with sound you make when you are sucking a victim."
+	mob_trait = TRAIT_BLOODY_SUCKER
+	value = -1
+	gain_text = "<span class='warning'>You feel anxious about the way you feed.</span>"
+	lose_text = "<span class='warning'>You can feed normal again.</span>"
+
+/datum/quirk/one_hand
+	name = "One Handed"
+	desc = "You've lost an arm before the embrace, and it's still unhealed."
+	mob_trait = TRAIT_ONE_HAND
+	value = -3
+	gain_text = "<span class='warning'>You don't feel one of your arms.</span>"
+	lose_text = "<span class='notice'>You feel both of your arms again.</span>"
+
+/datum/quirk/non_int
+	name = "Non Intellectual"
+	desc = "You are far more special than another ones from your kind, and you gain experience slower."
+	mob_trait = TRAIT_NON_INT
+	value = -5
+	gain_text = "<span class='warning'>You feel dumb.</span>"
+	lose_text = "<span class='notice'>You don't feel dumb anymore.</span>"
+
+/datum/quirk/coffin_therapy
+	name = "Coffin Therapy"
+	desc = "Your wounds heal only in a coffin."
+	mob_trait = TRAIT_COFFIN_THERAPY
+	value = -2
+	gain_text = "<span class='warning'>You feel like you need a coffin.</span>"
+	lose_text = "<span class='notice'>You don't need a coffin anymore.</span>"
+
+/datum/quirk/rubicon
+	name = "Crossing the Rubicon"
+	desc = "You are afraid of water, so you can't cross it."
+	mob_trait = TRAIT_RUBICON
+	value = -1
+	gain_text = "<span class='warning'>You feel afraid of water.</span>"
+	lose_text = "<span class='notice'>You aren't afraid of water anymore.</span>"
+
+/datum/quirk/hungry
+	name = "Hungry"
+	desc = "You need more food to feed your hunger."
+	mob_trait = TRAIT_HUNGRY
+	value = -3
+	gain_text = "<span class='warning'>You feel extra <b>HUNGRY</b>.</span>"
+	lose_text = "<span class='notice'>You don't feel extra <b>HUNGRY</b> anymore.</span>"
+
+/datum/quirk/phoenix
+	name = "Phoenix"
+	desc = "You don't loose gained experience after the Final Death."
+	mob_trait = TRAIT_PHOENIX
+	value = 5
+	gain_text = "<span class='notice'>You feel like you can burn without permanent consequences.</span>"
+	lose_text = "<span class='warning'>You don't feel like you can burn without consequences anymore.</span>"
+
+/datum/quirk/dancer
+	name = "Dancer"
+	desc = "You know a couple of dance moves."
+	value = 2
+	gain_text = "<span class='notice'>You want to dance.</span>"
+	lose_text = "<span class='warning'>You don't want to dance anymore.</span>"
+
+/datum/quirk/dwarf
+	name = "Dwarf"
+	desc = "You are short."
+	value = 0
+	gain_text = "<span class='notice'>You feel short.</span>"
+	lose_text = "<span class='notice'>You don't feel short anymore.</span>"
+
+/datum/quirk/homosexual
+	name = "Homosexual"
+	desc = "You love your gender more than the opposite."
+	value = 0
+	gain_text = "<span class='notice'>You feel gay.</span>"
+	lose_text = "<span class='notice'>You don't feel gay anymore.</span>"

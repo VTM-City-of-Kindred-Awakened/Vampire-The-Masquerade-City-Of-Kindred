@@ -138,6 +138,10 @@
 	ambience_index = AMBIENCE_SEWER
 	music = /datum/vampiremusic/sewer
 
+/area/vtm/sewer/nosferatu_town
+	name = "Nosferatu Town"
+	icon_state = "hotel"
+
 /area/vtm/elevator
 	name = "Elevator"
 	icon_state = "prince"

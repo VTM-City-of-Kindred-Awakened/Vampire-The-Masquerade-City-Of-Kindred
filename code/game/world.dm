@@ -278,11 +278,11 @@ GLOBAL_VAR(restart_counter)
 
 	var/list/features = list()
 
-	if(GLOB.master_mode)
-		features += GLOB.master_mode
+//	if(GLOB.master_mode)
+//		features += GLOB.master_mode
 
-	if (!GLOB.enter_allowed)
-		features += "closed"
+//	if (!GLOB.enter_allowed)
+//		features += "closed"
 
 	var/s = ""
 	var/hostedby
@@ -290,17 +290,16 @@ GLOBAL_VAR(restart_counter)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
 			s += "<b>[server_name]</b> &#8212; "
-		features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn"
-		if(CONFIG_GET(flag/allow_vote_mode))
-			features += "vote"
-		if(CONFIG_GET(flag/allow_ai))
-			features += "AI allowed"
+//		features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn"
+//		if(CONFIG_GET(flag/allow_vote_mode))
+//			features += "vote"
+//		if(CONFIG_GET(flag/allow_ai))
+//			features += "AI allowed"
 		hostedby = CONFIG_GET(string/hostedby)
-
-	s += "<b>[station_name()]</b>";
+	s += "Fresh roleplaying experience in World of Darkness universe!"
 	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+	s += "<a href=\"https://discord.gg/FeptTFZfsh\">" //Change this to wherever you want the hub to link to.
+	s += "Discord"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
 	s += "</a>"
 	s += ")"
 
@@ -310,6 +309,10 @@ GLOBAL_VAR(restart_counter)
 	var/popcap = max(CONFIG_GET(number/extreme_popcap), CONFIG_GET(number/hard_popcap), CONFIG_GET(number/soft_popcap))
 	if (popcap)
 		popcaptext = "/[popcap]"
+
+	features += "unique mechanics"
+	features += "gothic atmosphere"
+	features += "fresh gameplay"
 
 	if (players > 1)
 		features += "[players][popcaptext] players"

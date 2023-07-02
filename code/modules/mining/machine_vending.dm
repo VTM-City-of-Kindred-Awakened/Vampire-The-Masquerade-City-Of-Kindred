@@ -148,7 +148,7 @@
 
 	if(!my_owner)
 		return
-	if(get_dist(src, my_owner > 4))
+	if(get_dist(src, my_owner) > 4)
 		return
 	if(my_owner.stat >= 2)
 		return

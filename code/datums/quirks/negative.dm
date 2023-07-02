@@ -49,6 +49,7 @@
 	lose_text = "<span class='notice'>You miraculously gain back your vision.</span>"
 	medical_record_text = "Patient has permanent blindness."
 	hardcore_value = 15
+	mood_quirk = TRUE
 
 /datum/quirk/blindness/add()
 	quirk_holder.become_blind(ROUNDSTART_TRAIT)
@@ -108,6 +109,7 @@
 	lose_text = "<span class='notice'>You're able to hear again!</span>"
 	medical_record_text = "Patient's cochlear nerve is incurably damaged."
 	hardcore_value = 12
+	mood_quirk = TRUE
 
 /datum/quirk/depression
 	name = "Depression"
@@ -146,13 +148,12 @@
 		LOCATION_HANDS = ITEM_SLOT_HANDS
 	)
 	where = H.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a precious [heirloom.name] domain [where]. Keep it safe!</span>")
 
 /datum/quirk/ground_heirloom/post_add()
 	if(where == LOCATION_BACKPACK)
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
-
-	to_chat(quirk_holder, "<span class='boldnotice'>There is a precious [heirloom.name] domain [where]. Keep it safe!</span>")
 
 /datum/quirk/ground_heirloom/on_process()
 	if(!heirloom in quirk_holder.GetAllContents())
@@ -300,6 +301,7 @@
 	lose_text = "<span class='notice'>You feel sturdy again.</span>"
 	medical_record_text = "Patient is absurdly easy to injure. Please take all due dilligence to avoid possible malpractice suits."
 	hardcore_value = 4
+	mood_quirk = TRUE
 
 /datum/quirk/heavy_sleeper
 	name = "Heavy Sleeper"
@@ -310,6 +312,7 @@
 	lose_text = "<span class='notice'>You feel awake again.</span>"
 	medical_record_text = "Patient has abnormal sleep study results and is difficult to wake up."
 	hardcore_value = 2
+	mood_quirk = TRUE
 
 /datum/quirk/hypersensitive
 	name = "Hypersensitive"
@@ -341,6 +344,7 @@
 	lose_text = "<span class='danger'>You're no longer severely affected by alcohol.</span>"
 	medical_record_text = "Patient demonstrates a low tolerance for alcohol. (Wimp)"
 	hardcore_value = 3
+	mood_quirk = TRUE
 
 /datum/quirk/nearsighted //t. errorage
 	name = "Nearsighted"
@@ -350,6 +354,7 @@
 	lose_text = "<span class='notice'>You start seeing faraway things normally again.</span>"
 	medical_record_text = "Patient requires prescription glasses in order to counteract nearsightedness."
 	hardcore_value = 5
+	mood_quirk = TRUE
 
 /datum/quirk/nearsighted/add()
 	quirk_holder.become_nearsighted(ROUNDSTART_TRAIT)
@@ -410,6 +415,7 @@
 	lose_text = "<span class='notice'>You think you can defend yourself again.</span>"
 	medical_record_text = "Patient is unusually pacifistic and cannot bring themselves to cause physical harm."
 	hardcore_value = 6
+	mood_quirk = TRUE
 
 /datum/quirk/paraplegic
 	name = "Paraplegic"
@@ -420,6 +426,7 @@
 	lose_text = null
 	medical_record_text = "Patient has an untreatable impairment in motor function in the lower extremities."
 	hardcore_value = 15
+	mood_quirk = TRUE
 
 /datum/quirk/paraplegic/add()
 	var/datum/brain_trauma/severe/paralysis/paraplegic/T = new()
@@ -457,6 +464,7 @@
 	mob_trait = TRAIT_POOR_AIM
 	medical_record_text = "Patient possesses a strong tremor in both hands."
 	hardcore_value = 3
+	mood_quirk = TRUE
 
 /datum/quirk/prosopagnosia
 	name = "Prosopagnosia"
@@ -465,6 +473,7 @@
 	mob_trait = TRAIT_PROSOPAGNOSIA
 	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
 	hardcore_value = 5
+	mood_quirk = TRUE
 
 /datum/quirk/prosthetic_limb
 	name = "Prosthetic Limb"
@@ -510,6 +519,7 @@
 	lose_text = "<span class='notice'>You feel like standing up for yourself.</span>"
 	medical_record_text = "Patient presents a notably unassertive personality and is easy to manipulate."
 	hardcore_value = 4
+	mood_quirk = TRUE
 
 /datum/quirk/insanity
 	name = "Reality Dissociation Syndrome"

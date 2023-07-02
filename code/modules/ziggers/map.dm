@@ -89,23 +89,27 @@
 	var/obj/damap/theatre/TH = new(user)
 	var/obj/damap/bar/BA = new(user)
 	var/obj/damap/hospital/HS = new(user)
-	var/mutable_appearance/targeticon = mutable_appearance('code/modules/ziggers/disciplines.dmi', "target", ABOVE_HUD_LAYER)
-	targeticon.pixel_x = user.x
-	targeticon.pixel_y = user.y
-	DAMAP.add_overlay(targeticon)
+	var/obj/overlay/AM = new(DAMAP)
+	AM.icon = 'code/modules/ziggers/disciplines.dmi'
+	AM.icon_state = "target"
+	AM.layer = ABOVE_HUD_LAYER
+	AM.pixel_x = user.x
+	AM.pixel_y = user.y
+	DAMAP.overlays |= AM
 	dat += "<center>[icon2html(getFlatIcon(DAMAP), user)]</center><BR>"
 	dat += "<center>[icon2html(getFlatIcon(SU), user)] - Railway Station;</center><BR>"
-	dat += "<center>[icon2html(getFlatIcon(CH), user)] - Church;</center><BR>"
-	dat += "<center>[icon2html(getFlatIcon(GR), user)] - Graveyard;</center><BR>"
-	dat += "<center>[icon2html(getFlatIcon(HO), user)] - Hotel;</center><BR>"
+	dat += "<center>[icon2html(getFlatIcon(CH), user)] - Catholic Church;</center><BR>"
+	dat += "<center>[icon2html(getFlatIcon(GR), user)] - City Graveyard;</center><BR>"
+	dat += "<center>[icon2html(getFlatIcon(HO), user)] - Hotel \"Cock Roach\";</center><BR>"
 	dat += "<center>[icon2html(getFlatIcon(TO), user)] - Millenium Tower;</center><BR>"
 	dat += "<center>[icon2html(getFlatIcon(CL), user)] - Cleaning Services;</center><BR>"
-	dat += "<center>[icon2html(getFlatIcon(TH), user)] - Theatre;</center><BR>"
-	dat += "<center>[icon2html(getFlatIcon(BA), user)] - Bar;</center><BR>"
-	dat += "<center>[icon2html(getFlatIcon(HS), user)] - Hospital.</center>"
+	dat += "<center>[icon2html(getFlatIcon(TH), user)] - National Theatre;</center><BR>"
+	dat += "<center>[icon2html(getFlatIcon(BA), user)] - Bar \"Big Shoe\";</center><BR>"
+	dat += "<center>[icon2html(getFlatIcon(HS), user)] - City Hospital.</center>"
 	user << browse(dat, "window=map;size=400x600;border=1;can_resize=0;can_minimize=0")
 	onclose(user, "map", src)
 	qdel(DAMAP)
+	qdel(AM)
 	qdel(SU)
 	qdel(CH)
 	qdel(GR)

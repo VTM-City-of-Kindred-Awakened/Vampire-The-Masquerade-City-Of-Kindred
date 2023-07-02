@@ -28,6 +28,7 @@
 	gain_text = "<span class='notice'>The words being spoken around you don't make any sense."
 	lose_text = "<span class='notice'>You've developed fluency in Galactic Common."
 	medical_record_text = "Patient does not speak Galactic Common and may require an interpreter."
+	mood_quirk = TRUE
 
 /datum/quirk/foreigner/add()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -143,6 +144,7 @@
 	desc = "You suffer from full colorblindness, and perceive nearly the entire world in blacks and whites."
 	value = -1
 	medical_record_text = "Patient is afflicted with almost complete color blindness."
+	mood_quirk = TRUE
 
 /datum/quirk/monochromatic/add()
 	quirk_holder.add_client_colour(/datum/client_colour/monochrome)
@@ -177,6 +179,7 @@
 	desc = "Lacking familiarity with certain stations, you start with a wayfinding pinpointer where available."
 	value = 0
 	medical_record_text = "Patient demonstrates a keen ability to get lost."
+	mood_quirk = TRUE
 
 	var/obj/item/pinpointer/wayfinding/wayfinder
 	var/where
@@ -214,6 +217,7 @@
 	gain_text = "<span class='notice'>Your head is as smooth as can be, it's terrible.</span>"
 	lose_text = "<span class='notice'>Your head itches, could it be... growing hair?!</span>"
 	medical_record_text = "Patient starkly refused to take off headwear during examination."
+	mood_quirk = TRUE
 	///The user's starting hairstyle
 	var/old_hair
 
@@ -268,6 +272,7 @@
 	desc = "Due to a past incident, your ability to communicate has been relegated to your hands."
 	value = 0
 	medical_record_text = "During physical examination, patient's tongue was found to be uniquely damaged."
+	mood_quirk = TRUE
 
 //Adds tongue & gloves
 /datum/quirk/tongue_tied/on_spawn()
@@ -292,6 +297,7 @@
 	gain_text = "<span class='notice'>You know everything about photography.</span>"
 	lose_text = "<span class='danger'>You forget how photo cameras work.</span>"
 	medical_record_text = "Patient mentions photography as a stress-relieving hobby."
+	mood_quirk = TRUE
 
 /datum/quirk/photographer/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
