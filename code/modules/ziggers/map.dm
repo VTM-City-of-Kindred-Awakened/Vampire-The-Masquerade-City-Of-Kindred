@@ -4,6 +4,60 @@
 	plane = GAME_PLANE
 	layer = ABOVE_NORMAL_TURF_LAYER
 
+/obj/damap/supply
+	icon = 'code/modules/ziggers/disciplines.dmi'
+	icon_state = "supply"
+	plane = GAME_PLANE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/damap/church
+	icon = 'code/modules/ziggers/disciplines.dmi'
+	icon_state = "church"
+	plane = GAME_PLANE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/damap/graveyard
+	icon = 'code/modules/ziggers/disciplines.dmi'
+	icon_state = "graveyard"
+	plane = GAME_PLANE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/damap/hotel
+	icon = 'code/modules/ziggers/disciplines.dmi'
+	icon_state = "hotel"
+	plane = GAME_PLANE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/damap/tower
+	icon = 'code/modules/ziggers/disciplines.dmi'
+	icon_state = "tower"
+	plane = GAME_PLANE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/damap/clean
+	icon = 'code/modules/ziggers/disciplines.dmi'
+	icon_state = "clean"
+	plane = GAME_PLANE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/damap/theatre
+	icon = 'code/modules/ziggers/disciplines.dmi'
+	icon_state = "theatre"
+	plane = GAME_PLANE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/damap/bar
+	icon = 'code/modules/ziggers/disciplines.dmi'
+	icon_state = "bar"
+	plane = GAME_PLANE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/damap/hospital
+	icon = 'code/modules/ziggers/disciplines.dmi'
+	icon_state = "hospital"
+	plane = GAME_PLANE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
 /obj/structure/vampmap
 	name = "\improper map"
 	desc = "Locate yourself now."
@@ -25,15 +79,42 @@
 
 			</style>
 			"}
-	var/obj/damap/DAMAP = new(user.loc)
-	var/mutable_appearance/targeticon = mutable_appearance('code/modules/ziggers/disciplines.dmi', "target", ABOVE_ALL_MOB_LAYER)
+	var/obj/damap/DAMAP = new(user)
+	var/obj/damap/supply/SU = new(user)
+	var/obj/damap/church/CH = new(user)
+	var/obj/damap/graveyard/GR = new(user)
+	var/obj/damap/hotel/HO = new(user)
+	var/obj/damap/tower/TO = new(user)
+	var/obj/damap/clean/CL = new(user)
+	var/obj/damap/theatre/TH = new(user)
+	var/obj/damap/bar/BA = new(user)
+	var/obj/damap/hospital/HS = new(user)
+	var/mutable_appearance/targeticon = mutable_appearance('code/modules/ziggers/disciplines.dmi', "target", ABOVE_ALL_HUD_LAYER)
 	targeticon.pixel_x = user.x
 	targeticon.pixel_y = user.y
 	DAMAP.add_overlay(targeticon)
-	dat += "<center>[icon2html(getFlatIcon(DAMAP), user)]</center>"
-	user << browse(dat, "window=map;size=400x400;border=1;can_resize=0;can_minimize=0")
+	dat += "<center>[icon2html(getFlatIcon(DAMAP), user)]</center><BR>"
+	dat += "<center>[icon2html(getFlatIcon(SU), user)] - Railway Station;</center><BR>"
+	dat += "<center>[icon2html(getFlatIcon(CH), user)] - Church;</center><BR>"
+	dat += "<center>[icon2html(getFlatIcon(GR), user)] - Graveyard;</center><BR>"
+	dat += "<center>[icon2html(getFlatIcon(HO), user)] - Hotel;</center><BR>"
+	dat += "<center>[icon2html(getFlatIcon(TO), user)] - Millenium Tower;</center><BR>"
+	dat += "<center>[icon2html(getFlatIcon(CL), user)] - Cleaning Services;</center><BR>"
+	dat += "<center>[icon2html(getFlatIcon(TH), user)] - Theatre;</center><BR>"
+	dat += "<center>[icon2html(getFlatIcon(BA), user)] - Bar;</center><BR>"
+	dat += "<center>[icon2html(getFlatIcon(HS), user)] - Hospital.</center>"
+	user << browse(dat, "window=map;size=400x600;border=1;can_resize=0;can_minimize=0")
 	onclose(user, "map", src)
 	qdel(DAMAP)
+	qdel(SU)
+	qdel(CH)
+	qdel(GR)
+	qdel(HO)
+	qdel(TO)
+	qdel(CL)
+	qdel(TH)
+	qdel(BA)
+	qdel(HS)
 
 
 /obj/effect/mob_spawn/human/citizen

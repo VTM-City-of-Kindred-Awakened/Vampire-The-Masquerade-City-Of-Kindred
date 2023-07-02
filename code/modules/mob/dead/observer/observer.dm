@@ -132,9 +132,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		name = random_unique_name(gender)
 	real_name = name
 
-	if(!fun_verbs)
-		remove_verb(src, /mob/dead/observer/verb/boo)
-		remove_verb(src, /mob/dead/observer/verb/possess)
+//	if(!fun_verbs)
+//		remove_verb(src, /mob/dead/observer/verb/boo)
+//		remove_verb(src, /mob/dead/observer/verb/possess)
 
 	add_to_dead_mob_list()
 
