@@ -89,7 +89,7 @@
 	var/obj/damap/theatre/TH = new(user)
 	var/obj/damap/bar/BA = new(user)
 	var/obj/damap/hospital/HS = new(user)
-	var/mutable_appearance/targeticon = mutable_appearance('code/modules/ziggers/disciplines.dmi', "target", ABOVE_ALL_HUD_LAYER)
+	var/mutable_appearance/targeticon = mutable_appearance('code/modules/ziggers/disciplines.dmi', "target", ABOVE_HUD_LAYER)
 	targeticon.pixel_x = user.x
 	targeticon.pixel_y = user.y
 	DAMAP.add_overlay(targeticon)
