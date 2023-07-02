@@ -24,3 +24,7 @@
 		var/datum/station_goal/G = new T
 		station_goals += G
 		G.on_report()
+
+/datum/game_mode/extended/check_finished(force_ending)
+	if(force_ending)
+		return TRUE

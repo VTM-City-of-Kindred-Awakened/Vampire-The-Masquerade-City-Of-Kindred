@@ -63,4 +63,5 @@ SUBSYSTEM_DEF(city_time)
 			else
 				to_chat(world, "The city remains neutral...")
 	if(hour == 6)
+		SSticker.roundend_check_paused = FALSE
 		SSticker.force_ending = 1
