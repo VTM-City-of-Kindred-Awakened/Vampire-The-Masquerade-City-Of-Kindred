@@ -898,35 +898,35 @@
 	delay = 50
 	violates_masquerade = TRUE
 
-/mob/living/simple_animal/hostile/retaliate/ghost/level1
+/mob/living/simple_animal/hostile/ghost/level1
 	maxHealth = 20
 	health = 20
-/mob/living/simple_animal/hostile/retaliate/ghost/level2
+/mob/living/simple_animal/hostile/ghost/level2
 	maxHealth = 40
 	health = 40
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-/mob/living/simple_animal/hostile/retaliate/ghost/player/level3
+/mob/living/simple_animal/hostile/ghost/player/level3
 	maxHealth = 60
 	health = 60
 	melee_damage_lower = 30
 	melee_damage_upper = 30
-/mob/living/simple_animal/hostile/retaliate/ghost/player/level4
+/mob/living/simple_animal/hostile/ghost/player/level4
 	maxHealth = 80
 	health = 80
 	melee_damage_lower = 40
 	melee_damage_upper = 40
-/mob/living/simple_animal/hostile/retaliate/ghost/player/level5
+/mob/living/simple_animal/hostile/ghost/player/level5
 	maxHealth = 100
 	health = 100
 	melee_damage_lower = 50
 	melee_damage_upper = 50
 
-/mob/living/simple_animal/hostile/retaliate/ghost/player/Initialize()
+/mob/living/simple_animal/hostile/ghost/player/Initialize()
 	. = ..()
 	give_player()
 
-/mob/living/simple_animal/hostile/retaliate/ghost/player/proc/give_player()
+/mob/living/simple_animal/hostile/ghost/player/proc/give_player()
 	set waitfor = FALSE
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as summoned ghost?", null, null, null, 50, src)
 	for(var/mob/dead/observer/G in GLOB.player_list)
@@ -944,15 +944,15 @@
 	playsound(target.loc, 'code/modules/ziggers/sounds/necromancy.ogg', 50, TRUE)
 	switch(level)
 		if(1)
-			new /mob/living/simple_animal/hostile/retaliate/ghost/level1(caster.loc)
+			new /mob/living/simple_animal/hostile/ghost/level1(caster.loc)
 		if(2)
-			new /mob/living/simple_animal/hostile/retaliate/ghost/level2(caster.loc)
+			new /mob/living/simple_animal/hostile/ghost/level2(caster.loc)
 		if(3)
-			new /mob/living/simple_animal/hostile/retaliate/ghost/player/level3(caster.loc)
+			new /mob/living/simple_animal/hostile/ghost/player/level3(caster.loc)
 		if(4)
-			new /mob/living/simple_animal/hostile/retaliate/ghost/player/level4(caster.loc)
+			new /mob/living/simple_animal/hostile/ghost/player/level4(caster.loc)
 		if(5)
-			new /mob/living/simple_animal/hostile/retaliate/ghost/player/level5(caster.loc)
+			new /mob/living/simple_animal/hostile/ghost/player/level5(caster.loc)
 
 /datum/discipline/obtenebration
 	name = "Obtenebration"

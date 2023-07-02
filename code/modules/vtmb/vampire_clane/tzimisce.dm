@@ -15,6 +15,8 @@
 /datum/vampireclane/tzimisce/on_gain(mob/living/carbon/human/H)
 	..()
 	H.add_quirk(/datum/quirk/ground_heirloom)
+	H.teach_crafting_recipe(/datum/crafting_recipe/skeleton_key)
+	faction |= "Tzimisce"
 
 /obj/item/ground_heir
 	name = "bag of ground"

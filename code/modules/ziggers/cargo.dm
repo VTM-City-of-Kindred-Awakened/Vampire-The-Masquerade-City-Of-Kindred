@@ -238,5 +238,6 @@
 
 /obj/item/stack/dollar/rand/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
-	amount = rand(5, 30)
-	update_icon()
+	if(mapload)
+		amount = rand(5, 30)
+		update_icon()

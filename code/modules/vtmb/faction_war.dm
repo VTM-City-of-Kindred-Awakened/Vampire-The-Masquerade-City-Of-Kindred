@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(factionwar)
 	anchored = TRUE
 	pixel_w = -8
 	pixel_z = -8
-	alpha = 150
+	alpha = 128
 	var/repainting = FALSE
 
 /obj/graffiti/Initialize()
@@ -59,6 +59,9 @@ SUBSYSTEM_DEF(factionwar)
 	..()
 	if(isliving(user))
 		var/mob/living/L = user
+		if(!L.frakcja)
+			to_chat(user, "You don't belong to any faction, so you can't repaint it.")
+			return
 		if(L.frakcja != icon_state)
 			if(!repainting)
 				repainting = TRUE
@@ -72,7 +75,4 @@ SUBSYSTEM_DEF(factionwar)
 				else
 					repainting = FALSE
 		else
-			if(L.frakcja)
-				to_chat(user, "Your faction already own this.")
-			else
-				to_chat(user, "You don't belong to any faction, so you can't repaint it.")
+			to_chat(user, "Your faction already own this.")

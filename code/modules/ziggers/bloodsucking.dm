@@ -44,6 +44,13 @@
 //		if(alert("This action will kill your victim. Are you sure?",,"Yes","No")!="Yes")
 //			return
 		to_chat(src, "<span class='warning'>You feel small amount of <b>BLOOD</b> in your victim.</span>")
+		if(iskindred(mob) && !mob.client)
+			last_drinkblood_use = 0
+			if(client)
+				client.images -= suckbar
+			qdel(suckbar)
+			stop_sound_channel(CHANNEL_BLOOD)
+			return
 	if(do_after(src, 30, target = mob, timed_action_flags = NONE, progress = FALSE))
 		mob.bloodpool = max(0, mob.bloodpool-1)
 		suckbar.icon_state = "[round(14*(mob.bloodpool/mob.maxbloodpool))]"

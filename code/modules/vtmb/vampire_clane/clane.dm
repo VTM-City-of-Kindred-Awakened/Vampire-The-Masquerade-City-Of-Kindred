@@ -40,3 +40,4 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 //		H.update_hair()
 
 /datum/vampireclane/proc/post_gain(var/mob/living/carbon/human/H)
+	return

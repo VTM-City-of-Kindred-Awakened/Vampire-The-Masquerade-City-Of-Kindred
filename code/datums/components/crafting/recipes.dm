@@ -27,6 +27,8 @@
 /datum/crafting_recipe/proc/check_requirements(mob/user, list/collected_requirements)
 	return TRUE
 
+/*
+
 /datum/crafting_recipe/improv_explosive
 	name = "IED"
 	result = /obj/item/grenade/iedcasing
@@ -1144,3 +1146,4 @@
 				/obj/item/aquarium_kit = 1
 				)
 	category = CAT_MISC
+*/

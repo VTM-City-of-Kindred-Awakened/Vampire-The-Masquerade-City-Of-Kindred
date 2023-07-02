@@ -24,7 +24,8 @@
 /mob/living/carbon/human/npc/death()
 	if(last_attacker)
 		if(ishuman(last_attacker))
-			AdjustHumanity(last_attacker, -1, 0)
+			if(get_dist(src, last_attacker) < 7)
+				AdjustHumanity(last_attacker, -1, 0)
 	remove_overlay(FIGHT_LAYER)
 	GLOB.npc_list -= src
 	SShumannpcpool.npclost()

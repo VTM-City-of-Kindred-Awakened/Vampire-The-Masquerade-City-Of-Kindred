@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile/retaliate/ghost
+/mob/living/simple_animal/hostile/ghost
 	name = "ghost"
 	desc = "A soul of the dead, spooky."
 	icon = 'icons/mob/mob.dmi'
@@ -35,6 +35,8 @@
 	light_range = 1 // same glowing as visible player ghosts
 	light_power = 2
 	faction = list("Giovanni")
+	bloodpool = 0
+	maxbloodpool = 0
 
 /mob/living/simple_animal/hostile/retaliate/ghost/Initialize()
 	. = ..()

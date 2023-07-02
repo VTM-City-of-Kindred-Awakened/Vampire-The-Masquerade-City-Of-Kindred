@@ -5,11 +5,6 @@
 #define BACKWARDS 0
 #define AHEAD 1
 
-/datum/looping_sound/car_loop
-	mid_sounds = list('code/modules/ziggers/sounds/work.ogg'=1)
-	mid_length = 10 // exact length of the music in ticks
-	volume = 25
-
 /obj/vampire_car
 	name = "car"
 	desc = "Take me home, country roads..."
@@ -22,7 +17,7 @@
 	pixel_w = -32
 	pixel_z = -32
 
-	var/datum/looping_sound/car_loop/poop
+	var/last_vzhzh = 0
 
 	var/obj/effect/fari/FARI
 	var/fari_on = FALSE
@@ -168,7 +163,6 @@
 	FARI = new(src)
 	FARI.forceMove(get_step(src, facing_dir))
 	FARI.anchored = TRUE
-	poop = new(list(src), FALSE, FALSE)
 
 /obj/vampire_car/Destroy()
 	. = ..()
@@ -177,6 +171,15 @@
 		var/datum/action/carr/exit_car/C = locate() in L.actions
 		if(C)
 			C.Trigger()
+
+/obj/vampire_car/process(delta_time)
+	if(last_speeded+15 < world.time)
+		speed = 0
+	if(last_vzhzh+10 < world.time)
+		playsound(src, 'code/modules/ziggers/sounds/work.ogg', 25, TRUE)
+		last_vzhzh = world.time
+		if(turning)
+			playsound(src, 'code/modules/ziggers/sounds/povorotnik.ogg', 50, TRUE)
 
 /obj/vampire_car/examine(mob/user)
 	. = ..()
@@ -201,10 +204,10 @@
 
 	if(health == 0)
 		on = FALSE
-		poop.stop()
+		STOP_PROCESSING(SSobj, src)
 	else if(prob(50) && health <= maxhealth/2)
 		on = FALSE
-		poop.stop()
+		STOP_PROCESSING(SSobj, src)
 
 	return
 
@@ -283,13 +286,13 @@
 				V.on = TRUE
 				playsound(V, 'code/modules/ziggers/sounds/start.ogg', 50, TRUE)
 				to_chat(owner, "<span class='notice'>You managed to start [V]'s engine.</span>")
-				V.poop.play()
+				START_PROCESSING(SSobj, V)
 				return
 			if(prob(100*(V.health/V.maxhealth)))
 				V.on = TRUE
 				playsound(V, 'code/modules/ziggers/sounds/start.ogg', 50, TRUE)
 				to_chat(owner, "<span class='notice'>You managed to start [V]'s engine.</span>")
-				V.poop.play()
+				START_PROCESSING(SSobj, V)
 				return
 			else
 				to_chat(owner, "<span class='warning'>You failed to start [V]'s engine.</span>")
@@ -299,6 +302,7 @@
 			V.on = FALSE
 			playsound(V, 'code/modules/ziggers/sounds/stop.ogg', 50, TRUE)
 			to_chat(owner, "<span class='notice'>You stop [V]'s engine.</span>")
+			STOP_PROCESSING(SSobj, V)
 			return
 
 /datum/action/carr/exit_car
@@ -426,7 +430,10 @@
 	if(driving == BACKWARDS)
 		delay = delay*3
 	else
-		delay = delay+(3-stage)
+		if(speed == 0 && stage > 1)
+			delay = delay*3
+		else
+			delay = delay+(3-stage)
 
 	if(moving_dir != NORTH && moving_dir != SOUTH && moving_dir != EAST && moving_dir != WEST)
 		diagonal = TRUE

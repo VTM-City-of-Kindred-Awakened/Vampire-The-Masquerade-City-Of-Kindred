@@ -11,9 +11,9 @@
 	var/last_bloodpower_click = 0
 	var/last_drinkblood_click = 0
 	var/harm_focus = SOUTH
-
 /mob/living/carbon/human/death()
 	. = ..()
+	GLOB.masquerade_breakers_list -= src
 	if(client)
 		if(client.prefs)
 			client.prefs.exper = 0
