@@ -330,6 +330,12 @@
 	icon_state = "trench3"
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 
+/obj/item/clothing/suit/vampire/trench/tzi
+	name = "fleshcoat"
+	desc = "HUMAN LEATHER JACKET."
+	icon_state = "trench_tzi"
+	armor = list(MELEE = 50, BULLET = 50, LASER = 10, ENERGY = 10, BOMB = 25, BIO = 0, RAD = 0, FIRE = 25, ACID = 10, WOUND = 50)
+
 /obj/item/clothing/suit/vampire/vest
 	name = "bulletproof vest"
 	desc = "Police equipment. Provides good protection."

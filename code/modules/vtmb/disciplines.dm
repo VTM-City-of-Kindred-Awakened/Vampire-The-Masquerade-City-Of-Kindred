@@ -9,7 +9,9 @@
 	var/violates_masquerade = FALSE
 	var/level = 1
 	var/activate_sound = 'code/modules/ziggers/sounds/bloodhealing.ogg'
-	var/leveldelay = TRUE
+	var/leveldelay = FALSE
+
+	var/level_casting = 1	//which level we want to cast
 
 /mob/living
 	var/resistant_to_disciplines = FALSE
@@ -105,7 +107,7 @@
 	spawn(10)
 		W.forceMove(target.loc)
 		playsound(W.loc, 'code/modules/ziggers/sounds/volk.ogg', 80, TRUE)
-		target.apply_damage(5*level, BRUTE, BODY_ZONE_CHEST)
+		target.apply_damage(5*level_casting, BRUTE, BODY_ZONE_CHEST)
 		target.visible_message("<span class='warning'><b>[W] bites [target]!</b></span>", "<span class='warning'><b>[W] bites you!</b></span>")
 		spawn(20)
 			qdel(W)
@@ -117,9 +119,9 @@
 	cost = 1
 	ranged = FALSE
 	delay = 50
+	leveldelay = TRUE
 
 /datum/discipline/auspex/activate(mob/living/target, mob/living/carbon/human/caster)
-	delay = initial(delay)*level
 	..()
 	var/sound/auspexbeat = sound('code/modules/ziggers/sounds/auspex.ogg', repeat = TRUE)
 	caster.playsound_local(caster, auspexbeat, 75, 0, channel = CHANNEL_DISCIPLINES, use_reverb = FALSE)
@@ -130,7 +132,7 @@
 		loh = TRUE
 	caster.update_sight()
 	caster.add_client_colour(/datum/client_colour/glass_colour/blue)
-	spawn(delay)
+	spawn(delay*level_casting)
 		if(caster)
 			caster.stop_sound_channel(CHANNEL_DISCIPLINES)
 			playsound(caster.loc, 'code/modules/ziggers/sounds/auspex_deactivate.ogg', 50, FALSE)
@@ -149,6 +151,7 @@
 	delay = 50
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/ziggers/sounds/celerity_activate.ogg'
+	leveldelay = TRUE
 
 /obj/effect/celerity
 	name = "Damn"
@@ -173,11 +176,10 @@
 		animate(C, pixel_x = rand(-16, 16), pixel_y = rand(-16, 16), alpha = 0, time = 5)
 
 /datum/discipline/celerity/activate(mob/living/target, mob/living/carbon/human/caster)
-	delay = initial(delay)*level
 	..()
 	caster.add_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
 	caster.celerity_visual = TRUE
-	spawn(delay)
+	spawn(delay*level_casting)
 		if(caster)
 			playsound(caster.loc, 'code/modules/ziggers/sounds/celerity_deactivate.ogg', 50, FALSE)
 			caster.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
@@ -202,7 +204,7 @@
 		dominate_overlay.pixel_z = 2
 		TRGT.overlays_standing[MUTATIONS_LAYER] = dominate_overlay
 		TRGT.apply_overlay(MUTATIONS_LAYER)
-	switch(level)
+	switch(level_casting)
 		if(1)
 			target.Stun(5)
 			if(target.body_position == STANDING_UP)
@@ -220,10 +222,10 @@
 		if(4 to 5)
 			to_chat(target, "<span class='userdanger'><b>YOU SHOULD KILL YOURSELF NOW</b></span>")
 			if(iskindred(target))
-				target.Knockdown(10*level)
+				target.Knockdown(5*level_casting)
 				target.visible_message("<span class='warning'><b>[target] tries to wring \his neck!</b></span>", "<span class='warning'><b>You try to wring your own neck!</b></span>")
 				playsound(target.loc, 'code/modules/ziggers/sounds/suicide.ogg', 80, TRUE)
-				target.apply_damage(10*level, BRUTE, BODY_ZONE_HEAD)
+				target.apply_damage(5*level_casting, BRUTE, BODY_ZONE_HEAD)
 			else
 				target.drop_all_held_items()
 				target.Stun(10)
@@ -333,7 +335,7 @@
 			if(H.generation > caster.generation)
 				return
 			H.emote("laugh")
-			H.Stun(10*level)
+			H.Stun(10*level_casting)
 			if(H.stat <= 2 && !H.IsSleeping() && !H.IsUnconscious() && !H.IsParalyzed() && !H.IsKnockdown() && !HAS_TRAIT(H, TRAIT_RESTRAINED))
 				if(prob(50))
 					dancefirst(H)
@@ -353,14 +355,14 @@
 	..()
 	caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+10
 	caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh+10
-	caster.dna.species.meleemod = caster.dna.species.meleemod+(0.5*level)
+	caster.dna.species.meleemod = caster.dna.species.meleemod+(0.5*level_casting)
 	caster.dna.species.attack_sound = 'code/modules/ziggers/sounds/heavypunch.ogg'
 	spawn(delay)
 		if(caster)
 			playsound(caster.loc, 'code/modules/ziggers/sounds/potence_deactivate.ogg', 50, FALSE)
 			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-10
 			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-10
-			caster.dna.species.meleemod = caster.dna.species.meleemod-(0.5*level)
+			caster.dna.species.meleemod = caster.dna.species.meleemod-(0.5*level_casting)
 			caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
 
 /datum/discipline/fortitude
@@ -374,7 +376,7 @@
 
 /datum/discipline/fortitude/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/mod = min(3, level)
+	var/mod = min(3, level_casting)
 	caster.physiology.armor.melee = caster.physiology.armor.melee+(15*mod)
 	caster.physiology.armor.bullet = caster.physiology.armor.bullet+(15*mod)
 	spawn(delay)
@@ -391,15 +393,15 @@
 	ranged = FALSE
 	delay = 100
 	activate_sound = 'code/modules/ziggers/sounds/obfuscate_activate.ogg'
+	leveldelay = TRUE
 
 /datum/discipline/obfuscate/activate(mob/living/target, mob/living/carbon/human/caster)
-	delay = initial(delay)*level
 	..()
 	for(var/mob/living/carbon/human/npc/NPC in GLOB.npc_list)
 		if(NPC.danger_source == caster)
 			NPC.danger_source = null
 	caster.alpha = 10
-	spawn(delay)
+	spawn(delay*level_casting)
 		if(caster)
 			playsound(caster.loc, 'code/modules/ziggers/sounds/obfuscate_deactivate.ogg', 50, FALSE)
 			caster.alpha = 255
@@ -416,7 +418,7 @@
 
 /datum/discipline/presence/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/mod = level/2
+	var/mod = level_casting/2
 	for(var/mob/living/carbon/human/L in viewers(6, caster))
 		if(L != caster)
 			var/mob/living/carbon/human/H = L
@@ -459,7 +461,7 @@
 
 /datum/discipline/protean/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/mod = min(4, level)
+	var/mod = min(4, level_casting)
 	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
 	switch(mod)
 		if(1)
@@ -523,7 +525,7 @@
 			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
 			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+25
 			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagelow+25
-			if(level == 5)
+			if(level_casting == 5)
 				caster.add_movespeed_modifier(/datum/movespeed_modifier/protean5)
 			else
 				caster.add_movespeed_modifier(/datum/movespeed_modifier/protean4)
@@ -537,7 +539,7 @@
 					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
 					caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-25
 					caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-25
-					if(level == 5)
+					if(level_casting == 5)
 						caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean5)
 					else
 						caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean4)
@@ -635,7 +637,7 @@
 
 /datum/discipline/thaumaturgy/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	switch(level)
+	switch(level_casting)
 		if(1)
 			var/turf/start = get_turf(caster)
 			var/obj/projectile/thaumaturgy/H = new(start)
@@ -663,9 +665,9 @@
 				var/turf/start = get_turf(caster)
 				var/obj/projectile/thaumaturgy/H = new(start)
 				H.firer = caster
-				H.damage = 10*level
+				H.damage = 10*level_casting
 				H.preparePixelProjectile(target, start)
-				H.level = round(level/2)
+				H.level = round(level_casting/2)
 				H.fire(direct_target = target)
 			else
 				caster.bloodpool = min(caster.maxbloodpool, caster.bloodpool+target.bloodpool)
@@ -684,7 +686,7 @@
 
 /datum/discipline/bloodshield/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/mod = level
+	var/mod = level_casting
 	caster.physiology.armor.melee = caster.physiology.armor.melee+(20*mod)
 	caster.physiology.armor.bullet = caster.physiology.armor.bullet+(20*mod)
 	animate(caster, color = "#ff0000", time = 10, loop = 1)
@@ -707,9 +709,9 @@
 	range = 2
 
 /datum/discipline/serpentis/activate(mob/living/target, mob/living/carbon/human/caster)
-	range = initial(range)+level
+	range = initial(range)+level_casting
 	..()
-	if(level == 1)
+	if(level_casting == 1)
 		var/antidir = NORTH
 		switch(caster.dir)
 			if(NORTH)
@@ -730,11 +732,11 @@
 				var/mutable_appearance/serpentis_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "serpentis", -MUTATIONS_LAYER)
 				H.overlays_standing[MUTATIONS_LAYER] = serpentis_overlay
 				H.apply_overlay(MUTATIONS_LAYER)
-	if(level >= 2)
-		if(get_dist(caster, target) <= 2+level)
+	if(level_casting >= 2)
+		if(get_dist(caster, target) <= 2+level_casting)
 			playsound(target.loc, 'code/modules/ziggers/sounds/serpentis.ogg', 50, TRUE)
 			playsound(caster.loc, 'code/modules/ziggers/sounds/tongue.ogg', 50, TRUE)
-			target.Stun(5*level)
+			target.Stun(5*level_casting)
 			target.apply_damage(5*level, BRUTE, BODY_ZONE_HEAD)
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
@@ -742,29 +744,8 @@
 				var/mutable_appearance/serpentis_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "serpentis2", -MUTATIONS_LAYER)
 				H.overlays_standing[MUTATIONS_LAYER] = serpentis_overlay
 				H.apply_overlay(MUTATIONS_LAYER)
-				spawn(5*level)
+				spawn(5*level_casting)
 					H.remove_overlay(MUTATIONS_LAYER)
-		else
-			var/antidir = NORTH
-			switch(caster.dir)
-				if(NORTH)
-					antidir = SOUTH
-				if(SOUTH)
-					antidir = NORTH
-				if(WEST)
-					antidir = EAST
-				if(EAST)
-					antidir = WEST
-			if(target.dir == antidir)
-				target.Stun(5*level)
-				target.visible_message("<span class='warning'><b>[caster] hypnotizes [target] with his eyes!</b></span>", "<span class='warning'><b>[caster] hypnotizes you like a cobra!</b></span>")
-				playsound(target.loc, 'code/modules/ziggers/sounds/serpentis.ogg', 50, TRUE)
-				if(ishuman(target))
-					var/mob/living/carbon/human/H = target
-					H.remove_overlay(MUTATIONS_LAYER)
-					var/mutable_appearance/serpentis_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "serpentis", -MUTATIONS_LAYER)
-					H.overlays_standing[MUTATIONS_LAYER] = serpentis_overlay
-					H.apply_overlay(MUTATIONS_LAYER)
 
 /datum/discipline/vicissitude
 	name = "Vicissitude"
@@ -787,12 +768,15 @@
 			if(!iskindred(target))
 				if(H.stat != DEAD)
 					H.death()
-				switch(level)
+				switch(level_casting)
 					if(1)
-						new /obj/item/stack/sheet/human_flesh(target.loc)
+						new /obj/item/stack/human_flesh(target.loc)
+						new /obj/item/guts(target.loc)
 						qdel(target)
 					if(2)
-						new /obj/item/stack/sheet/human_flesh/five(target.loc)
+						new /obj/item/stack/human_flesh/five(target.loc)
+						new /obj/item/guts(target.loc)
+						new /obj/item/spine(target.loc)
 						var/obj/item/bodypart/B = H.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 						if(B)
 							B.drop_limb()
@@ -810,7 +794,9 @@
 							B3.drop_limb()
 						if(B4)
 							B4.drop_limb()
-						new /obj/item/stack/sheet/human_flesh/ten(target.loc)
+						new /obj/item/stack/human_flesh/ten(target.loc)
+						new /obj/item/guts(target.loc)
+						new /obj/item/spine(target.loc)
 						qdel(target)
 					if(4)
 						var/obj/item/bodypart/B1 = H.get_bodypart(BODY_ZONE_R_ARM)
@@ -828,7 +814,7 @@
 							B4.drop_limb()
 						if(CH)
 							CH.dismember()
-						new /obj/item/stack/sheet/human_flesh/twenty(target.loc)
+						new /obj/item/stack/human_flesh/twenty(target.loc)
 						qdel(target)
 					if(5)
 						var/obj/item/bodypart/B1 = H.get_bodypart(BODY_ZONE_R_ARM)
@@ -849,12 +835,14 @@
 							CH.dismember()
 						if(HE)
 							HE.dismember()
-						new /obj/item/stack/sheet/human_flesh/fifty(target.loc)
+						new /obj/item/stack/human_flesh/fifty(target.loc)
+						new /obj/item/guts(target.loc)
+						new /obj/item/spine(target.loc)
 						qdel(target)
 		else
 			target.emote("scream")
-			target.apply_damage(10*level, BRUTE, BODY_ZONE_CHEST)
-			if(prob(10*level))
+			target.apply_damage(10*level_casting, BRUTE, BODY_ZONE_CHEST)
+			if(prob(10*level_casting))
 				var/obj/item/bodypart/B = H.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 				if(B)
 					B.drop_limb()
@@ -874,8 +862,8 @@
 /datum/discipline/quietus/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	playsound(target.loc, 'code/modules/ziggers/sounds/quietus.ogg', 50, TRUE)
-	target.Stun(5*level)
-	if(level > 3)
+	target.Stun(5*level_casting)
+	if(level_casting > 3)
 		if(target.bloodpool > 1)
 			var/transfered = max(1, target.bloodpool-3)
 			caster.bloodpool = min(caster.maxbloodpool, caster.bloodpool+transfered)
@@ -886,7 +874,7 @@
 		var/mutable_appearance/quietus_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "quietus", -MUTATIONS_LAYER)
 		H.overlays_standing[MUTATIONS_LAYER] = quietus_overlay
 		H.apply_overlay(MUTATIONS_LAYER)
-		spawn(5*level)
+		spawn(5*level_casting)
 			H.remove_overlay(MUTATIONS_LAYER)
 
 /datum/discipline/necromancy
@@ -942,7 +930,7 @@
 /datum/discipline/necromancy/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	playsound(target.loc, 'code/modules/ziggers/sounds/necromancy.ogg', 50, TRUE)
-	switch(level)
+	switch(level_casting)
 		if(1)
 			new /mob/living/simple_animal/hostile/ghost/level1(caster.loc)
 		if(2)
@@ -967,6 +955,6 @@
 	..()
 	playsound(target.loc, 'code/modules/ziggers/sounds/necromancy.ogg', 50, TRUE)
 	var/atom/movable/AM = new(caster)
-	AM.set_light(level, -3)
+	AM.set_light(level_casting, -3)
 	spawn(100)
 		AM.set_light(0)

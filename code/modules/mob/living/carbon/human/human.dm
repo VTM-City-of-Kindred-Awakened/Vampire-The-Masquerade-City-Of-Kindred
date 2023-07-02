@@ -667,9 +667,9 @@
 			to_chat(src, "<span class='warning'>Remove [p_their()] mask first!</span>")
 			return FALSE
 
-		if (!getorganslot(ORGAN_SLOT_LUNGS))
-			to_chat(src, "<span class='warning'>You have no lungs to breathe with, so you cannot perform CPR!</span>")
-			return FALSE
+//		if (!getorganslot(ORGAN_SLOT_LUNGS))
+//			to_chat(src, "<span class='warning'>You have no lungs to breathe with, so you cannot perform CPR!</span>")
+//			return FALSE
 
 //		if (HAS_TRAIT(src, TRAIT_NOBREATH))
 //			to_chat(src, "<span class='warning'>You do not breathe, so you cannot perform CPR!</span>")
@@ -689,7 +689,7 @@
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
 		AdjustHumanity(src, 1, 10)
 		if(client)
-			client.prefs.exper = min(calculate_mob_max_exper(src), client.prefs.exper+20)
+			client.prefs.exper = min(calculate_mob_max_exper(src), client.prefs.exper+10)
 		log_combat(src, target, "CPRed")
 
 		if (HAS_TRAIT(target, TRAIT_NOBREATH))

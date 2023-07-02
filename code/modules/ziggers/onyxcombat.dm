@@ -415,11 +415,27 @@
 /mob/living/carbon/human
 	var/atom/movable/screen/disciplines/toggled
 
-/atom/movable/screen/disciplines/Click()
+/atom/movable/screen/disciplines/Initialize()
+	. = ..()
+
+/atom/movable/screen/disciplines/Click(location,control,params)
 	var/dadelay = dscpln.delay
 	if(dscpln.leveldelay)
-		dadelay = dscpln.delay*dscpln.level
+		dadelay = dscpln.delay*dscpln.level_casting
 	SEND_SOUND(usr, sound('code/modules/ziggers/sounds/highlight.ogg', 0, 0, 50))
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, "right"))
+		if(dscpln)
+			if(dscpln.level > 1)
+				if(dscpln.level_casting < dscpln.level)
+					dscpln.level_casting = min(dscpln.level_casting+1, dscpln.level)
+				else
+					dscpln.level_casting = 1
+			else
+				dscpln.level_casting = 1
+			to_chat(usr, "[dscpln.name] [dscpln.level_casting]/[dscpln.level] - [dscpln.desc]")
+		return
+
 	if(ishuman(usr))
 		var/mob/living/carbon/human/BD = usr
 		if(world.time < last_discipline_click+5)

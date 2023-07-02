@@ -109,6 +109,9 @@
 
 	var/stun_cap_amount = 40
 
+/obj/item/organ/cyberimp/brain/anti_stun/tzi
+	icon_state = "heart-tzi"
+
 /obj/item/organ/cyberimp/brain/anti_stun/Remove(mob/living/carbon/M, special = FALSE)
 	. = ..()
 	UnregisterSignal(M, signalCache)

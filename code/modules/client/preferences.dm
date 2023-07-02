@@ -2370,14 +2370,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			hud_used.discipline3_icon.desc = hud_used.discipline3_icon.dscpln.desc
 			hud_used.discipline3_icon.icon_state = hud_used.discipline3_icon.dscpln.icon_state
 			hud_used.discipline3_icon.main_state = hud_used.discipline3_icon.dscpln.icon_state
-		if(client.prefs.discipline4type)
-			var/datum/discipline/D = client.prefs.discipline4type
-			hud_used.discipline4_icon.icon = 'code/modules/ziggers/disciplines.dmi'
-			hud_used.discipline4_icon.dscpln = new D()
-			hud_used.discipline4_icon.name = hud_used.discipline4_icon.dscpln.name
-			hud_used.discipline4_icon.desc = hud_used.discipline4_icon.dscpln.desc
-			hud_used.discipline4_icon.icon_state = hud_used.discipline4_icon.dscpln.icon_state
-			hud_used.discipline4_icon.main_state = hud_used.discipline4_icon.dscpln.icon_state
+//		if(client.prefs.discipline4type)
+//			var/datum/discipline/D = client.prefs.discipline4type
+//			hud_used.discipline4_icon.icon = 'code/modules/ziggers/disciplines.dmi'
+//			hud_used.discipline4_icon.dscpln = new D()
+//			hud_used.discipline4_icon.name = hud_used.discipline4_icon.dscpln.name
+//			hud_used.discipline4_icon.desc = hud_used.discipline4_icon.dscpln.desc
+//			hud_used.discipline4_icon.icon_state = hud_used.discipline4_icon.dscpln.icon_state
+//			hud_used.discipline4_icon.main_state = hud_used.discipline4_icon.dscpln.icon_state
+//	till better times
 		if(clane.name == "Tremere" && hud_used.discipline3_icon.dscpln.level >= 3 && !client.prefs.discipline4type)
 			hud_used.discipline4_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline4_icon.dscpln = new /datum/discipline/bloodshield()
