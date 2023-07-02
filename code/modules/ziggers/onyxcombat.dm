@@ -16,7 +16,8 @@
 	GLOB.masquerade_breakers_list -= src
 	if(client)
 		if(client.prefs)
-			client.prefs.exper = 0
+			if(!HAS_TRAIT(src, TRAIT_PHOENIX))
+				client.prefs.exper = 0
 			client.prefs.humanity = humanity
 			client.prefs.masquerade = masquerade
 			client.prefs.save_character()
@@ -248,10 +249,14 @@
 					return
 				var/skipface = (BD.wear_mask && (BD.wear_mask.flags_inv & HIDEFACE)) || (BD.head && (BD.head.flags_inv & HIDEFACE))
 				if(!skipface)
-					playsound(BD, 'code/modules/ziggers/sounds/drinkblood1.ogg', 50, TRUE)
+					if(!HAS_TRAIT(BD, TRAIT_BLOODY_LOVER))
+						playsound(BD, 'code/modules/ziggers/sounds/drinkblood1.ogg', 50, TRUE)
 					LV.visible_message("<span class='warning'><b>[BD] bites [LV]'s neck!</b></span>", "<span class='warning'><b>[BD] bites your neck!</b></span>")
-					if(CheckEyewitness(LV, BD, 7, FALSE))
-						AdjustMasquerade(BD, -1)
+					if(!HAS_TRAIT(BD, TRAIT_BLOODY_LOVER))
+						if(CheckEyewitness(LV, BD, 7, FALSE))
+							AdjustMasquerade(BD, -1)
+					else
+						playsound(BD, 'code/modules/ziggers/sounds/kiss.ogg', 50, TRUE)
 					BD.drinksomeblood(LV)
 	..()
 
@@ -271,10 +276,17 @@
 		if(world.time < BD.last_bloodheal_click+10)
 			return
 		BD.last_bloodheal_click = world.time
-		if(BD.bloodpool >= 1)
+		var/plus = 0
+		if(HAS_TRAIT(BD, TRAIT_HUNGRY))
+			plus = 1
+		if(HAS_TRAIT(BD, TRAIT_COFFIN_THERAPY))
+			if(!istype(BD.loc, /obj/structure/closet/crate/coffin))
+				to_chat(usr, "<span class='warning'>You need to be in a coffin to use that!</span>")
+				return
+		if(BD.bloodpool >= 1+plus)
 			playsound(usr, 'code/modules/ziggers/sounds/bloodhealing.ogg', 50, FALSE)
 			BD.last_bloodheal_use = world.time
-			BD.bloodpool = max(0, BD.bloodpool-1)
+			BD.bloodpool = max(0, BD.bloodpool-(1+plus))
 			icon_state = "[initial(icon_state)]-on"
 			to_chat(BD, "<span class='notice'>You use blood to heal your wounds.</span>")
 			if(BD.getBruteLoss() + BD.getBruteLoss() >= 25)
@@ -309,10 +321,13 @@
 		if(world.time < BD.last_bloodpower_click+10)
 			return
 		BD.last_bloodpower_click = world.time
-		if(BD.bloodpool >= 3)
+		var/plus = 0
+		if(HAS_TRAIT(BD, TRAIT_HUNGRY))
+			plus = 1
+		if(BD.bloodpool >= 3+plus)
 			playsound(usr, 'code/modules/ziggers/sounds/bloodhealing.ogg', 50, FALSE)
 			BD.last_bloodpower_use = world.time
-			BD.bloodpool = max(0, BD.bloodpool-3)
+			BD.bloodpool = max(0, BD.bloodpool-(3+plus))
 			icon_state = "[initial(icon_state)]-on"
 			to_chat(BD, "<span class='notice'>You use blood to become more powerful.</span>")
 			BD.dna.species.punchdamagehigh = BD.dna.species.punchdamagehigh+5
@@ -497,7 +512,10 @@
 			BD.toggled = null
 			icon_state = main_state
 			return
-		if(BD.bloodpool < dscpln.cost)
+		var/plus = 0
+		if(HAS_TRAIT(BD, TRAIT_HUNGRY))
+			plus = 1
+		if(BD.bloodpool < dscpln.cost+plus)
 			SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to use this discipline.</span>")
 			return

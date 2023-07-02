@@ -245,6 +245,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 
+#define TRAIT_EXP_DRIVER			"experienced_driver"
+#define TRAIT_BONE_KEY			"bone_key"
+#define TRAIT_BLOODY_LOVER			"bloody_lover"
+#define TRAIT_TOUGH_FLESH			"tough_flesh"
+#define TRAIT_BLOODY_SUCKER			"bloody_sucker"
+#define TRAIT_NON_INT			"non_intellectual"
+#define TRAIT_COFFIN_THERAPY			"coffin_therapy"
+#define TRAIT_RUBICON			"rubicon"
+#define TRAIT_HUNGRY			"hungry"
+#define TRAIT_PHOENIX			"phoenix"
+
 // You can stare into the abyss, but it does not stare back.
 // You're immune to the hallucination effect of the supermatter, either
 // through force of will, or equipment. Present on /mob or /datum/mind

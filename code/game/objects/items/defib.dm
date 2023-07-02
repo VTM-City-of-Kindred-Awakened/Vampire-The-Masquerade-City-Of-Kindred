@@ -617,7 +617,10 @@
 					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
 					AdjustHumanity(user, 1, 10)
 					if(user.client)
-						user.client.prefs.exper = min(calculate_mob_max_exper(user), user.client.prefs.exper+100)
+						var/mode = 1
+						if(HAS_TRAIT(user, TRAIT_NON_INT))
+							mode = 2
+						user.client.prefs.exper = min(calculate_mob_max_exper(user), user.client.prefs.exper+100/mode)
 					log_combat(user, H, "revived", defib)
 				if(req_defib)
 					defib.deductcharge(revivecost)

@@ -69,7 +69,10 @@ SUBSYSTEM_DEF(factionwar)
 					icon_state = L.frakcja
 					SSfactionwar.move_mark(src, L.frakcja)
 					if(user.client)
-						user.client.prefs.exper = min(calculate_mob_max_exper(user), user.client.prefs.exper+50)
+						var/mode = 1
+						if(HAS_TRAIT(user, TRAIT_NON_INT))
+							mode = 2
+						user.client.prefs.exper = min(calculate_mob_max_exper(user), user.client.prefs.exper+50/mode)
 						to_chat(user, "Successfuly repainted to [L.frakcja]'s mark.")
 					repainting = FALSE
 				else

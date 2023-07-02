@@ -371,6 +371,9 @@
 	if(NPC)
 		if(a_intent != INTENT_HELP)
 			NPC.Annoy(src)
+	if(HAS_TRAIT(src, TRAIT_RUBICON))
+		if(istype(NewLoc, /turf/open/floor/plating/shit))
+			return
 	..()
 
 

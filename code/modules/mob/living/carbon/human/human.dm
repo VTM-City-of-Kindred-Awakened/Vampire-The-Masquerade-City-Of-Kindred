@@ -689,7 +689,10 @@
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
 		AdjustHumanity(src, 1, 10)
 		if(client)
-			client.prefs.exper = min(calculate_mob_max_exper(src), client.prefs.exper+10)
+			var/mode = 1
+			if(HAS_TRAIT(src, TRAIT_NON_INT))
+				mode = 2
+			client.prefs.exper = min(calculate_mob_max_exper(src), client.prefs.exper+(10/mode))
 		log_combat(src, target, "CPRed")
 
 		if (HAS_TRAIT(target, TRAIT_NOBREATH))

@@ -56,12 +56,19 @@ Dancer
 	gain_text = "<span class='notice'>You feel tough.</span>"
 	lose_text = "<span class='warning'>You feel fragile again.</span>"
 
+/datum/movespeed_modifier/slowpoke
+	multiplicative_slowdown = 1
+
 /datum/quirk/slowpoke
 	name = "Slowpoke"
 	desc = "You move slower."
 	value = -3
 	gain_text = "<span class='warning'>You feel slo-o-o-o-o-o-o-o-o-o-o-o-ow.</span>"
 	lose_text = "<span class='notice'>You can feel a normal speed again.</span>"
+
+/datum/quirk/slowpoke/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.add_movespeed_modifier(/datum/quirk/slowpoke)
 
 /datum/quirk/bloody_sucker
 	name = "\"Blood\" Sucker"
@@ -74,14 +81,24 @@ Dancer
 /datum/quirk/one_hand
 	name = "One Handed"
 	desc = "You've lost an arm before the embrace, and it's still unhealed."
-	mob_trait = TRAIT_ONE_HAND
 	value = -3
 	gain_text = "<span class='warning'>You don't feel one of your arms.</span>"
 	lose_text = "<span class='notice'>You feel both of your arms again.</span>"
 
+/datum/quirk/one_hand/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/bodypart/B1 = H.get_bodypart(BODY_ZONE_R_ARM)
+	var/obj/item/bodypart/B2 = H.get_bodypart(BODY_ZONE_L_ARM)
+	if(prob(50))
+		B1.drop_limb()
+		qdel(B1)
+	else
+		B2.drop_limb()
+		qdel(B2)
+
 /datum/quirk/non_int
 	name = "Non Intellectual"
-	desc = "You are far more special than another ones from your kind, and you gain experience slower."
+	desc = "You are far more special than other beings from your kind, so you gain experience slower."
 	mob_trait = TRAIT_NON_INT
 	value = -5
 	gain_text = "<span class='warning'>You feel dumb.</span>"
@@ -126,12 +143,88 @@ Dancer
 	gain_text = "<span class='notice'>You want to dance.</span>"
 	lose_text = "<span class='warning'>You don't want to dance anymore.</span>"
 
+/datum/quirk/dancer/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/action/dance/DA = new()
+	DA.Grant(H)
+
+/datum/action/dance
+	name = "Dance"
+	desc = "Dance from dusck till dawn!"
+	button_icon_state = "dance"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/last_added_humanity = 0
+
+/datum/action/dance/Trigger()
+	if(prob(50))
+		dancefirst(owner)
+	else
+		dancesecond(owner)
+
+	if(last_added_humanity+6000 < world.time)
+		for(var/obj/machinery/jukebox/J in range(7, owner))
+			if(J)
+				if(J.active)
+					AdjustHumanity(owner, 1, 8)
+					last_added_humanity = world.time
+
 /datum/quirk/dwarf
 	name = "Dwarf"
 	desc = "You are short."
 	value = 0
 	gain_text = "<span class='notice'>You feel short.</span>"
 	lose_text = "<span class='notice'>You don't feel short anymore.</span>"
+
+/datum/quirk/dwarf/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.AddElement(/datum/element/dwarfism, COMSIG_PARENT_PREQDELETED, src)
+
+#define SHORT 4/5
+#define TALL 5/4
+
+///Very similar to squish, but for dwarves and shorties
+/datum/element/dwarfism
+	element_flags = ELEMENT_DETACH|ELEMENT_BESPOKE
+	id_arg_index = 2
+	var/comsig
+	var/list/attached_targets = list()
+
+/datum/element/dwarfism/Attach(datum/target, comsig, comsig_target)
+	. = ..()
+	if(!ishuman(target))
+		return ELEMENT_INCOMPATIBLE
+
+	src.comsig = comsig
+
+	var/mob/living/carbon/human/L = target
+	if(L.lying_angle != 0)
+		L.transform = L.transform.Scale(SHORT, 1)
+		L.transform = L.transform.Translate(L.lying_angle == 90 ? 16*(SHORT-1) : -(16*(SHORT-1)), 0) //Makes sure you stand on the tile no matter the size - sand
+	else
+		L.transform = L.transform.Scale(1, SHORT)
+		L.transform = L.transform.Translate(0, 16*(SHORT-1)) //Makes sure you stand on the tile no matter the size - sand
+	attached_targets[target] = comsig_target
+	RegisterSignal(target, comsig, .proc/check_loss) //Second arg of the signal will be checked against the comsig_target.
+
+/datum/element/dwarfism/proc/check_loss(mob/living/L, comsig_target)
+	if(attached_targets[L] == comsig_target)
+		Detach(L)
+
+/datum/element/dwarfism/Detach(mob/living/L)
+	. = ..()
+	if(QDELETED(L))
+		return
+	if(L.lying_angle != 0)
+		L.transform = L.transform.Scale(TALL, 1)
+		L.transform = L.transform.Translate(L.lying_angle == 90 ? 16*(TALL-1) : -(16*(TALL-1)), 0) //Makes sure you stand on the tile no matter the size - sand
+	else
+		L.transform = L.transform.Scale(1, TALL)
+		L.transform = L.transform.Translate(0, 16*(TALL-1)) //Makes sure you stand on the tile no matter the size - sand
+	UnregisterSignal(L, comsig)
+	attached_targets -= L
+
+#undef SHORT
+#undef TALL
 
 /datum/quirk/homosexual
 	name = "Homosexual"

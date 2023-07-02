@@ -101,12 +101,13 @@
 		if(istype(I, /obj/item/vamp/keys/hack))
 			if(!repairing)
 				repairing = TRUE
-				if(do_mob(user, src, 20 SECONDS) && prob(50))
-					locked = FALSE
-					repairing = FALSE
-					to_chat(user, "<span class='notice'>You've managed to open [src]'s lock.</span>")
-					playsound(src, 'code/modules/ziggers/sounds/open.ogg', 50, TRUE)
-					return
+				if(do_mob(user, src, 20 SECONDS))
+					if(prob(50) || HAS_TRAIT(driver, TRAIT_BONE_KEY))
+						locked = FALSE
+						repairing = FALSE
+						to_chat(user, "<span class='notice'>You've managed to open [src]'s lock.</span>")
+						playsound(src, 'code/modules/ziggers/sounds/open.ogg', 50, TRUE)
+						return
 				else
 					to_chat(user, "<span class='warning'>You've failed to open [src]'s lock.</span>")
 					playsound(src, 'code/modules/ziggers/sounds/signal.ogg', 50, FALSE)
@@ -404,11 +405,11 @@
 			if(NOTURN)
 				moving_dir = facing_dir
 			if(TURNLEFT)
-				if(turf_crossed > stage-1)
+				if(turf_crossed > stage-1 || HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
 					moving_dir = turn(facing_dir, -45)
 					turf_crossed = 0
 			if(TURNRIGHT)
-				if(turf_crossed > stage-1)
+				if(turf_crossed > stage-1 || HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
 					moving_dir = turn(facing_dir, 45)
 					turf_crossed = 0
 	else
@@ -487,11 +488,20 @@
 	if(driving != BACKWARDS)
 		if(istype(A, /mob/living))
 			var/mob/living/L = A
-			L.Knockdown(10)
-			L.apply_damage(15*stage, BRUTE, BODY_ZONE_CHEST)
-			get_damage(5)
+			var/dam2 = 5
+			if(!HAS_TRAIT(L, TRAIT_TOUGH_FLESH))
+				L.Knockdown(10)
+				dam2 = 15
+			L.apply_damage(dam2*stage, BRUTE, BODY_ZONE_CHEST)
+			var/dam = 5
+			if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
+				dam = 1
+			get_damage(dam)
 		else
-			get_damage(10)
+			var/dam = 10
+			if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
+				dam = 5
+			get_damage(dam)
 			driver.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
 	else
 		get_damage(1)

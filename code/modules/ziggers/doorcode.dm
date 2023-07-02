@@ -140,11 +140,11 @@
 	lastclicked = world.time
 	if(istype(W, /obj/item/vamp/keys/hack))
 		if(locked)
-			if(hackable)
+			if(hackable || HAS_TRAIT(user, TRAIT_BONE_KEY))
 				hacking = TRUE
 				playsound(src, 'code/modules/ziggers/sounds/hack.ogg', 100, TRUE)
 				if(do_mob(user, src, 7 SECONDS))
-					if(prob(50))
+					if(prob(50) || HAS_TRAIT(user, TRAIT_BONE_KEY))
 						to_chat(user, "<span class='notice'>You pick the lock.</span>")
 						locked = FALSE
 						hacking = FALSE

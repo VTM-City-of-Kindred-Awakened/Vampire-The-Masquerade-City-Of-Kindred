@@ -131,6 +131,10 @@
 /datum/action/blood_heal/Trigger()
 	if(istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner
+		if(HAS_TRAIT(H, TRAIT_COFFIN_THERAPY))
+			if(!istype(H.loc, /obj/structure/closet/crate/coffin))
+				to_chat(usr, "<span class='warning'>You need to be in a coffin to use that!</span>")
+				return
 		if(H.bloodpool < 1)
 			to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 			SEND_SOUND(H, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))

@@ -1097,3 +1097,14 @@
 	..()
 	my_weapon = new /obj/item/gun/ballistic/automatic/vampire/deagle(src)
 	AssignSocialRole(/datum/socialrole/guard)
+
+/mob/living/carbon/human/npc/walkby/club/Life()
+	. = ..()
+	if(prob(5))
+		if(prob(50))
+			dancefirst(src)
+		else
+			dancesecond(src)
+
+/mob/living/carbon/human/npc/walkby/club
+	staying = TRUE

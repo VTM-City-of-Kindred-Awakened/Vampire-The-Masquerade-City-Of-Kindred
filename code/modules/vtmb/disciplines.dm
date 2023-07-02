@@ -21,13 +21,16 @@
 		return
 	if(!caster)
 		return
-	if(caster.bloodpool < cost)
+	var/plus = 0
+	if(HAS_TRAIT(caster, TRAIT_HUNGRY))
+		plus = 1
+	if(caster.bloodpool < cost+plus)
 		return
 	if(target.stat == DEAD)
 		return
 	if(ranged && get_dist(caster, target) > range)
 		return
-	caster.bloodpool = max(0, caster.bloodpool-cost)
+	caster.bloodpool = max(0, caster.bloodpool-(cost+plus))
 	caster.update_blood_hud()
 	if(ranged)
 		to_chat(caster, "<span class='notice'>You activate the [name] on [target].</span>")
@@ -41,7 +44,8 @@
 		playsound(caster, activate_sound, 50, FALSE)
 	if(caster.client)
 		if(caster.client.prefs)
-			caster.client.prefs.exper = min(1440*((max(1, 13-caster.client.prefs.generation)*max(0, caster.client.prefs.generation_bonus))+caster.client.prefs.discipline1level+caster.client.prefs.discipline2level+caster.client.prefs.discipline3level-3), caster.client.prefs.exper+5)
+			if(!HAS_TRAIT(caster, TRAIT_NON_INT))
+				caster.client.prefs.exper = min(calculate_mob_max_exper(caster), caster.client.prefs.exper+5)
 			caster.client.prefs.save_preferences()
 			caster.client.prefs.save_character()
 			caster.last_experience = world.time
@@ -246,7 +250,13 @@
 	delay = 100
 	activate_sound = 'code/modules/ziggers/sounds/insanity.ogg'
 
+/mob/living
+	var/dancing = FALSE
+
 /proc/dancefirst(mob/living/M)
+	if(M.dancing)
+		return
+	M.dancing = TRUE
 	var/matrix/initial_matrix = matrix(M.transform)
 	for (var/i in 1 to 75)
 		if (!M)
@@ -292,8 +302,12 @@
 				animate(M, transform = initial_matrix, time = 1, loop = 0)
 		sleep(1)
 	M.lying_fix()
+	M.dancing = FALSE
 
 /proc/dancesecond(mob/living/M)
+	if(M.dancing)
+		return
+	M.dancing = TRUE
 	animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
 	var/matrix/initial_matrix = matrix(M.transform)
 	for (var/i in 1 to 60)
@@ -327,6 +341,7 @@
 				animate(M, transform = initial_matrix, time = 1, loop = 0)
 		sleep(1)
 	M.lying_fix()
+	M.dancing = FALSE
 
 /datum/discipline/dementation/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
