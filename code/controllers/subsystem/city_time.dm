@@ -62,5 +62,5 @@ SUBSYSTEM_DEF(city_time)
 				to_chat(world, "Sabbat takes control over the city...")
 			else
 				to_chat(world, "The city remains neutral...")
+	if(hour == 6)
 		SSticker.force_ending = 1
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "End Round")
