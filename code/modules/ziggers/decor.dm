@@ -248,7 +248,7 @@
 
 /obj/structure/hotelsign/Initialize()
 	. = ..()
-	set_light(2, 1, "#8e509e")
+	set_light(3, 2, "#8e509e")
 
 /obj/structure/hotelbanner
 	name = "banner"
@@ -271,7 +271,7 @@
 
 /obj/structure/milleniumsign/Initialize()
 	. = ..()
-	set_light(2, 1, "#4299bb")
+	set_light(3, 2, "#4299bb")
 
 /obj/structure/anarchsign
 	name = "sign"
@@ -284,7 +284,7 @@
 
 /obj/structure/anarchsign/Initialize()
 	. = ..()
-	set_light(2, 1, "#ffffff")
+	set_light(3, 2, "#ffffff")
 
 /obj/structure/chinesesign
 	name = "sign"
@@ -787,3 +787,101 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 			var/mob/dead/new_player/M = new /mob/dead/new_player()
 			M.key = mob_occupant.key
 	QDEL_NULL(mob_occupant)
+
+/obj/structure/billiard_table
+	name = "billiard table"
+	desc = "Come here, play some BALLS. I know you want it so much..."
+	icon = 'code/modules/ziggers/32x48.dmi'
+	icon_state = "billiard1"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+	density = TRUE
+
+/obj/structure/billiard_table/Initialize()
+	. = ..()
+	icon_state = "billiard[rand(1, 3)]"
+
+/obj/police_department
+	name = "San Francisco Police Demartment"
+	desc = "Stop right there you criminal scum! Nobody can break the law in my watch!!"
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "police"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+	pixel_z = 40
+
+/obj/structure/pole
+	name = "stripper pole"
+	desc = "A pole fastened to the ceiling and floor, used to show of ones goods to company."
+	icon = 'code/modules/ziggers/64x64.dmi'
+	icon_state = "pole"
+	density = TRUE
+	anchored = TRUE
+	var/icon_state_inuse
+	layer = 4 //make it the same layer as players.
+	density = 0 //easy to step up on
+
+/obj/structure/pole/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
+	if(obj_flags & IN_USE)
+		to_chat(user, "It's already in use - wait a bit.")
+		return
+	if(user.dancing)
+		return
+	else
+		obj_flags |= IN_USE
+		user.setDir(SOUTH)
+		user.Stun(100)
+		user.forceMove(src.loc)
+		user.visible_message("<B>[user] dances on [src]!</B>")
+		animatepole(user)
+		user.layer = layer //set them to the poles layer
+		obj_flags &= ~IN_USE
+		user.pixel_y = 0
+		icon_state = initial(icon_state)
+
+/obj/structure/pole/proc/animatepole(mob/living/user)
+	return
+
+/obj/structure/pole/animatepole(mob/living/user)
+
+	if (user.loc != src.loc)
+		return
+	animate(user,pixel_x = -6, pixel_y = 0, time = 10)
+	sleep(20)
+	user.dir = 4
+	animate(user,pixel_x = -6,pixel_y = 24, time = 10)
+	sleep(12)
+	src.layer = 4.01 //move the pole infront for now. better to move the pole, because the character moved behind people sitting above otherwise
+	animate(user,pixel_x = 6,pixel_y = 12, time = 5)
+	user.dir = 8
+	sleep(6)
+	animate(user,pixel_x = -6,pixel_y = 4, time = 5)
+	user.dir = 4
+	src.layer = 4 // move it back.
+	sleep(6)
+	user.dir = 1
+	animate(user,pixel_x = 0, pixel_y = 0, time = 3)
+	sleep(6)
+	user.do_jitter_animation()
+	sleep(6)
+	user.dir = 2
+
+/obj/structure/strip_club
+	name = "sign"
+	desc = "It says DO RA. Maybe it's some kind of strip club..."
+	icon = 'code/modules/ziggers/48x48.dmi'
+	icon_state = "dora"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	pixel_w = -8
+	pixel_z = 32
+
+/obj/structure/strip_club/Initialize()
+	. = ..()
+	set_light(3, 2, "#8e509e")

@@ -94,8 +94,12 @@
 	icon_state = "sexy"
 
 /obj/item/clothing/under/vampire/pimp
-	desc = "Some usual clothes."
+	desc = "Some pimp clothes."
 	icon_state = "pimp"
+
+/obj/item/clothing/under/vampire/whore
+	desc = "Some whore clothes."
+	icon_state = "whore"
 
 /obj/item/clothing/under/vampire/emo
 	desc = "Some usual clothes."
@@ -607,3 +611,12 @@
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
+
+/obj/item/clothing/mask/vampire/balaclava
+	name = "balaclava"
+	desc = "LOADSAMONEY"
+	icon_state = "balaclava"
+	inhand_icon_state = "balaclava"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	w_class = WEIGHT_CLASS_SMALL

@@ -40,12 +40,6 @@
 	if(!mirror)
 		return
 
-	for(var/mob/living/carbon/human/H in range(2, src))
-		if(H)
-			if(H.clane)
-				if(H.clane.name == "Lasombra")
-					return
-
 	var/matrix/M = matrix()
 	if(dir == WEST || dir == EAST)
 		M.Scale(-1, 1)

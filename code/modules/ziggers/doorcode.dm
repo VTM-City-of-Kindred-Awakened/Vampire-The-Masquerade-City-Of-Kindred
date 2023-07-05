@@ -76,6 +76,18 @@
 	name = "Some keys"
 	accesslocks = list("npc")
 
+/obj/item/vamp/keys/npc/Initialize()
+	. = ..()
+	accesslocks = list("npc[rand(1, 20)]")
+
+/obj/item/vamp/keys/police
+	name = "Police keys"
+	accesslocks = list("police")
+
+/obj/item/vamp/keys/strip
+	name = "Strip keys"
+	accesslocks = list("strip")
+
 /obj/structure/vampdoor
 	name = "\improper door"
 	desc = "It opens and closes."
@@ -143,6 +155,9 @@
 			if(hackable || HAS_TRAIT(user, TRAIT_BONE_KEY))
 				hacking = TRUE
 				playsound(src, 'code/modules/ziggers/sounds/hack.ogg', 100, TRUE)
+				for(var/mob/living/carbon/human/npc/police/P in range(7, src))
+					if(P)
+						P.Aggro(user)
 				if(do_mob(user, src, 7 SECONDS))
 					if(prob(50) || HAS_TRAIT(user, TRAIT_BONE_KEY))
 						to_chat(user, "<span class='notice'>You pick the lock.</span>")
@@ -295,3 +310,27 @@
 	baseicon = "wood"
 	locked = TRUE
 	lock_id = "npc"
+
+/obj/structure/vampdoor/npc/Initialize()
+	. = ..()
+	lock_id = "npc[rand(1, 20)]"
+
+/obj/structure/vampdoor/police
+	icon_state = "cam-1"
+	baseicon = "cam"
+	locked = TRUE
+	lock_id = "police"
+
+/obj/structure/vampdoor/prison
+	icon_state = "prison-1"
+	baseicon = "prison"
+	locked = TRUE
+	glass = TRUE
+	hackable = FALSE
+	lock_id = "police"
+
+/obj/structure/vampdoor/strip
+	icon_state = "cam-1"
+	baseicon = "cam"
+	locked = TRUE
+	lock_id = "strip"

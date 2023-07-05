@@ -350,7 +350,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Generation:</b> [generation]"
 				if(generation_bonus)
 					dat += " (+[generation_bonus]/[min(6, generation-7)])"
-				if(exper == calculate_max_exper())
+				if(exper == calculate_max_exper() && generation > 7)
 					dat += " <a href='?_src_=prefs;preference=generation;task=input'>Claim generation bonus</a><BR>"
 				else
 					dat += "<BR>"
@@ -2318,7 +2318,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.features = features.Copy()
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
 	character.dna.real_name = character.real_name
-	character.clane.on_gain(character)
+	if(character.clane)
+		character.clane.on_gain(character)
 
 	if(pref_species.mutant_bodyparts["tail_lizard"])
 		character.dna.species.mutant_bodyparts["tail_lizard"] = pref_species.mutant_bodyparts["tail_lizard"]

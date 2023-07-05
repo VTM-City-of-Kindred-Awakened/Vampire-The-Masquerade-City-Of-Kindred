@@ -333,6 +333,11 @@
 	brightness = 1
 	bulb_power = 0.8
 
+/obj/machinery/light/small/pink
+	bulb_colour = "#DE6EE2"
+	no_emergency = TRUE
+	nightshift_allowed = FALSE
+
 /obj/machinery/light/small/blacklight
 	bulb_colour = "#A700FF"
 	nightshift_allowed = FALSE

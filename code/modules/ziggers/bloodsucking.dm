@@ -33,8 +33,8 @@
 		client.images += suckbar
 	var/sound/heartbeat = sound('code/modules/ziggers/sounds/drinkblood2.ogg', repeat = TRUE)
 	if(HAS_TRAIT(src, TRAIT_BLOODY_SUCKER))
-		mob.emote("moan")
-		playsound(src, 'code/modules/ziggers/sounds/kiss.ogg', 50, TRUE)
+		src.emote("moan")
+		Immobilize(30, TRUE)
 	playsound_local(src, heartbeat, 75, 0, channel = CHANNEL_BLOOD, use_reverb = FALSE)
 	if(!iskindred(mob))
 		mob.Stun(30)

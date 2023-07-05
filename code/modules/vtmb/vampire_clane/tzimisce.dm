@@ -18,6 +18,8 @@
 	H.faction |= "Tzimisce"
 
 /datum/vampireclane/tzimisce/post_gain(mob/living/carbon/human/H)
+	var/datum/action/vicissitude/U = new()
+	U.Grant(H)
 	if(H.mind)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_floor)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_stool)
@@ -26,7 +28,7 @@
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_tanker)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_heart)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_eyes)
-		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_med)
+//		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_med)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_trench)
 	var/obj/item/organ/cyberimp/arm/surgery/S = new()
 	S.Insert(H)
@@ -43,6 +45,7 @@
 	always_available = FALSE
 	category = CAT_TZIMISCE
 
+/*
 /datum/crafting_recipe/tzi_med
 	name = "Medical Hand (Healing)"
 	time = 50
@@ -50,6 +53,7 @@
 	result = /obj/item/organ/cyberimp/arm/medibeam
 	always_available = FALSE
 	category = CAT_TZIMISCE
+*/
 
 /datum/crafting_recipe/tzi_heart
 	name = "Second Heart (Antistun)"
@@ -79,6 +83,18 @@
 	name = "gut floor"
 	icon = 'code/modules/ziggers/tiles.dmi'
 	icon_state = "tzimisce_floor"
+
+/datum/action/vicissitude
+	name = "Vicissitude Appearance"
+	desc = "Steal the appearance of your victim."
+	button_icon_state = "vicissitude"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+
+/datum/action/vicissitude/Trigger()
+	. = ..()
+	var/mob/living/carbon/human/H = owner
+	H.put_in_r_hand(new /obj/item/chameleon(H))
+	playsound(get_turf(H), 'code/modules/ziggers/sounds/vicissitude.ogg', 100, TRUE, -6)
 
 /obj/effect/decal/gut_floor/Initialize()
 	. = ..()

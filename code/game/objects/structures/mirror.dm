@@ -1,4 +1,6 @@
 //wip wip wup
+GLOBAL_LIST_EMPTY(las_mirrors)
+
 /obj/structure/mirror
 	name = "mirror"
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
@@ -14,11 +16,40 @@
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
+	var/unique_number = ""
+	if(length(GLOB.las_mirrors))
+		unique_number = "[length(GLOB.las_mirrors)+1]"
+	else
+		unique_number = "1"
+	if(istype(get_area(src), /area/vtm))
+		var/area/A = get_area(src)
+		if(A)
+			name = "mirror ([A.name] [unique_number])"
+			GLOB.las_mirrors += src
 	if(icon_state == "mirror_broke" && !broken)
 		obj_break(null, mapload)
 	var/obj/effect/reflection/reflection = new(src.loc)
 	reflection.setup_visuals(src)
 	ref = WEAKREF(reflection)
+
+/obj/structure/mirror/Crossed(atom/movable/AM)
+	. = ..()
+	if(ishuman(AM) && ref)
+		var/mob/living/carbon/human/H = AM
+		if(H.clane)
+			if(H.clane.name == "Lasombra")
+				var/obj/effect/reflection/reflection = ref.resolve()
+				if(istype(reflection))
+					qdel(reflection)
+					ref = null
+	else if(!ref)
+		var/obj/effect/reflection/reflection = new(src.loc)
+		reflection.setup_visuals(src)
+		ref = WEAKREF(reflection)
+
+/obj/structure/mirror/Destroy()
+	. = ..()
+	GLOB.las_mirrors -= src
 
 /obj/structure/mirror/attack_hand(mob/user)
 	. = ..()
@@ -32,16 +63,23 @@
 
 		if(H.clane)
 			if(H.clane.name == "Lasombra")
-				if(!broken)
-					playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
-					icon_state = "mirror_broke"
-					if(desc == initial(desc))
-						desc = "Oh no, seven years of bad luck!"
-					broken = TRUE
-					var/obj/effect/reflection/reflection = ref.resolve()
-					if(istype(reflection))
-						reflection.alpha_icon_state = "mirror_mask_broken"
-						reflection.update_mirror_filters()
+				if(H.bloodpool > 2)
+					var/new_mirror = input(user, "Choose the mirror to travel:","Enter Mirror",null) as null|anything in GLOB.las_mirrors
+					if(new_mirror)
+						if(istype(new_mirror, /obj/structure/mirror))
+							var/obj/structure/mirror/M = new_mirror
+							H.bloodpool = max(0, H.bloodpool-2)
+							H.Stun(10)
+							animate(H, color = "#000000", time = 10)
+							playsound(user.loc, 'code/modules/ziggers/sounds/necromancy.ogg', 50, FALSE)
+							spawn(10)
+								H.forceMove(M.loc)
+								H.Stun(10)
+								animate(H, color = initial(H.color), time = 10)
+								playsound(user.loc, 'code/modules/ziggers/sounds/necromancy.ogg', 50, FALSE)
+					return
+				else
+					to_chat(H, "<span class='warning'>You need more <b>BLOOD</b> to activate that.</span>")
 				return
 		//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
 		//this is largely copypasted from there.

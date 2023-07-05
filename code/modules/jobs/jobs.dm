@@ -1,6 +1,7 @@
 GLOBAL_LIST_INIT(leader_positions, list(
 	"Prince",
-	"Barkeeper"))
+	"Barkeeper",
+	"Chantry Regent"))
 
 GLOBAL_LIST_INIT(command_positions, list(
 	"Prince",
@@ -35,10 +36,14 @@ GLOBAL_LIST_INIT(citizen_positions, list(
 
 GLOBAL_LIST_INIT(neutral_positions, list(
 	"Graveyard Keeper",
-	"Archivist",
+	"Stripper",
 	"Street Janitor",
 	"Doctor"))
 
+GLOBAL_LIST_INIT(independent_positions, list(
+	"Chantry Regent",
+	"Chantry Archivist",
+	"Giovanni Member"))
 
 GLOBAL_LIST_INIT(security_positions, list(
 	))
@@ -51,11 +56,12 @@ GLOBAL_LIST_INIT(position_categories, list(
 	EXP_TYPE_CAMARILLIA = list("jobs" = command_positions, "color" = "#9f1111"),
 	EXP_TYPE_NEUTRALS = list("jobs" = neutral_positions, "color" = "#e3e3e3"),
 	EXP_TYPE_ANARCH = list("jobs" = anarch_positions, "color" = "#313131"),
+	EXP_TYPE_INDEPENDENT = list("jobs" = independent_positions, "color" = "#cb4aad"),
 	EXP_TYPE_OTHER_CITIZEN = list("jobs" = citizen_positions, "color" = "#7e7e7e")))
 
 
 GLOBAL_LIST_INIT(exp_jobsmap, list(
-	EXP_TYPE_CREW = list("titles" = command_positions | engineering_positions | medical_positions | anarch_positions | supply_positions | security_positions | neutral_positions | list("AI","Cyborg")), // crew positions
+	EXP_TYPE_CREW = list("titles" = command_positions | engineering_positions | medical_positions | anarch_positions | supply_positions | security_positions | neutral_positions | independent_positions | list("AI","Cyborg")), // crew positions
 	EXP_TYPE_CAMARILLIA = list("titles" = command_positions),
 	EXP_TYPE_ENGINEERING = list("titles" = engineering_positions),
 	EXP_TYPE_MEDICAL = list("titles" = medical_positions),
@@ -63,7 +69,8 @@ GLOBAL_LIST_INIT(exp_jobsmap, list(
 	EXP_TYPE_SUPPLY = list("titles" = supply_positions),
 	EXP_TYPE_SECURITY = list("titles" = security_positions),
 	EXP_TYPE_SILICON = list("titles" = list("AI","Cyborg")),
-	EXP_TYPE_NEUTRALS = list("titles" = neutral_positions)
+	EXP_TYPE_NEUTRALS = list("titles" = neutral_positions),
+	EXP_TYPE_INDEPENDENT = list("titles" = independent_positions)
 ))
 
 GLOBAL_LIST_INIT(exp_specialmap, list(

@@ -20,6 +20,8 @@
 	if(((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
 		if(absorb_stun(amount, ignore_canstun))
 			return
+		if(HAS_TRAIT(src, TRAIT_TOUGH_FLESH) && !ignore_canstun)
+			return
 		var/datum/status_effect/incapacitating/stun/S = IsStun()
 		if(S)
 			S.duration = max(world.time + amount, S.duration)

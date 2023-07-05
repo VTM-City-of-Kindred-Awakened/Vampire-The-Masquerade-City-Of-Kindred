@@ -376,18 +376,22 @@
 	level2.icon = 'code/modules/ziggers/disciplines.dmi'
 	level2.icon_state = "2"
 	level2.layer = ABOVE_HUD_LAYER+5
+	level2.plane = HUD_PLANE
 	level3 = new(src)
 	level3.icon = 'code/modules/ziggers/disciplines.dmi'
 	level3.icon_state = "3"
 	level3.layer = ABOVE_HUD_LAYER+5
+	level3.plane = HUD_PLANE
 	level4 = new(src)
 	level4.icon = 'code/modules/ziggers/disciplines.dmi'
 	level4.icon_state = "4"
 	level4.layer = ABOVE_HUD_LAYER+5
+	level4.plane = HUD_PLANE
 	level5 = new(src)
 	level5.icon = 'code/modules/ziggers/disciplines.dmi'
 	level5.icon_state = "5"
 	level5.layer = ABOVE_HUD_LAYER+5
+	level5.plane = HUD_PLANE
 
 /atom/MouseEntered(location,control,params)
 	if(isturf(src) || ismob(src) || isobj(src))

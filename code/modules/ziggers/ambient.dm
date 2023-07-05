@@ -13,6 +13,14 @@
 	icon_state = "interior"
 	ambience_index = AMBIENCE_INTERIOR
 
+/area/vtm/interior/shop
+	name = "Shop"
+	icon_state = "shop"
+
+/area/vtm/interior/strip
+	name = "Strip Club"
+	icon_state = "strip"
+
 /area/vtm/financialdistrict
 	name = "Financial District"
 	icon_state = "financialdistrict"

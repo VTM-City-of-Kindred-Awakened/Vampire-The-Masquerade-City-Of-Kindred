@@ -93,8 +93,8 @@
 	AM.icon = 'code/modules/ziggers/disciplines.dmi'
 	AM.icon_state = "target"
 	AM.layer = ABOVE_HUD_LAYER
-	AM.pixel_x = user.x
-	AM.pixel_y = user.y
+	AM.pixel_x = x-4
+	AM.pixel_y = y-4
 	DAMAP.overlays |= AM
 	dat += "<center>[icon2html(getFlatIcon(DAMAP), user)]</center><BR>"
 	dat += "<center>[icon2html(getFlatIcon(SU), user)] - Railway Station;</center><BR>"

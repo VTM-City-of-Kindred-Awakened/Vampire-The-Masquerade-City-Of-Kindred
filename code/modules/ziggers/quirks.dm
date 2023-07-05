@@ -40,6 +40,10 @@ Dancer
 	gain_text = "<span class='notice'>You feel more anonymus.</span>"
 	lose_text = "<span class='warning'>You don't feel anonymous anymore.</span>"
 
+/datum/quirk/annonymus/on_spawn()
+
+/obj/item/clothing/mask/vampire/balaclava
+
 /datum/quirk/bloody_lover
 	name = "Bloody Lover"
 	desc = "Your bites feel more like a kiss."
@@ -50,7 +54,7 @@ Dancer
 
 /datum/quirk/tough_flesh
 	name = "Tough Flesh"
-	desc = "Your flesh is much sturdier than normal."
+	desc = "Your flesh is much sturdier than normal. You are much better in resisting stuns, bumps and hits."
 	mob_trait = TRAIT_TOUGH_FLESH
 	value = 3
 	gain_text = "<span class='notice'>You feel tough.</span>"
@@ -71,10 +75,18 @@ Dancer
 	H.add_movespeed_modifier(/datum/quirk/slowpoke)
 
 /datum/quirk/bloody_sucker
-	name = "\"Blood\" Sucker"
-	desc = "There is something wrong with sound you make when you are sucking a victim."
+	name = "Addicted"
+	desc = "You just can't stop sucking, before your victim dies."
 	mob_trait = TRAIT_BLOODY_SUCKER
-	value = -1
+	value = -2
+	gain_text = "<span class='warning'>You feel anxious about the way you feed.</span>"
+	lose_text = "<span class='warning'>You can feed normal again.</span>"
+
+/datum/quirk/lazy
+	name = "Lazy"
+	desc = "You do things much more slowly than others."
+	mob_trait = TRAIT_LAZY
+	value = -2
 	gain_text = "<span class='warning'>You feel anxious about the way you feed.</span>"
 	lose_text = "<span class='warning'>You can feed normal again.</span>"
 
@@ -136,6 +148,58 @@ Dancer
 	gain_text = "<span class='notice'>You feel like you can burn without permanent consequences.</span>"
 	lose_text = "<span class='warning'>You don't feel like you can burn without consequences anymore.</span>"
 
+/datum/quirk/acrobatic
+	name = "Acrobatic"
+	desc = "You know a couple of acrobatic moves."
+	value = 3
+	gain_text = "<span class='notice'>You feel like you can jump higher.</span>"
+	lose_text = "<span class='warning'>Now you aren't as agile as you were.</span>"
+
+/datum/quirk/acrobatic/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/action/acrobate/DA = new()
+	DA.Grant(H)
+
+/datum/action/acrobate
+	name = "Dodge"
+	desc = "Jump over something and dodge a projectile."
+	button_icon_state = "acrobate"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/last_acrobate = 0
+
+/datum/action/acrobate/Trigger()
+	if(last_acrobate+15 > world.time)
+		return
+	last_acrobate = world.time
+
+	if(!isturf(owner.loc))
+		return
+
+	if(isclosedturf(get_step(owner, owner.dir)))
+		return
+
+	if(isclosedturf(get_step(get_step(owner, owner.dir), owner.dir)))
+		return
+
+	for(var/atom/movable/A in get_step(owner, owner.dir))
+		if(istype(A, /obj/structure/vampdoor))
+			return
+
+	for(var/atom/movable/A in get_step(get_step(owner, owner.dir), owner.dir))
+		if(istype(A, /obj/structure/vampdoor))
+			return
+
+	var/mob/living/carbon/human/H = owner
+	if(H.dancing)
+		return
+	H.emote("spin")
+	H.emote("flip")
+	H.Immobilize(2, TRUE)
+	animate(H, pixel_z = 32, time = 2)
+	spawn(2)
+		H.forceMove(get_step(get_step(owner, owner.dir), owner.dir))
+		animate(H, pixel_z = 0, time = 2)
+
 /datum/quirk/dancer
 	name = "Dancer"
 	desc = "You know a couple of dance moves."
@@ -168,6 +232,9 @@ Dancer
 					AdjustHumanity(owner, 1, 8)
 					last_added_humanity = world.time
 
+/mob/living
+	var/isdwarfy = FALSE
+
 /datum/quirk/dwarf
 	name = "Dwarf"
 	desc = "You are short."
@@ -178,6 +245,7 @@ Dancer
 /datum/quirk/dwarf/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.AddElement(/datum/element/dwarfism, COMSIG_PARENT_PREQDELETED, src)
+	H.isdwarfy = TRUE
 
 #define SHORT 4/5
 #define TALL 5/4

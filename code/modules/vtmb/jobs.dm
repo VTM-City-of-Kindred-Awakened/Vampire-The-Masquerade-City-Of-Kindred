@@ -424,14 +424,63 @@
 	name = "Street Janitor"
 	icon_state = "Street Janitor"
 
-/datum/job/vamp/archivist
-	title = "Archivist"
-	department_head = list("Barkeeper")
+/datum/job/vamp/regent
+	title = "Regent"
+	department_head = list("Prince")
 	faction = "Vampire"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the Camarilla or the Anarchs"
-	selection_color = "#e3e3e3"
+	supervisors = "the Traditions"
+	selection_color = "#cb4aad"
+
+	outfit = /datum/outfit/job/regent
+
+	access = list(ACCESS_LIBRARY, ACCESS_AUX_BASE, ACCESS_MINING_STATION)
+	minimal_access = list(ACCESS_LIBRARY, ACCESS_AUX_BASE, ACCESS_MINING_STATION)
+	paycheck = PAYCHECK_EASY
+	paycheck_department = ACCOUNT_SRV
+	exp_type_department = EXP_TYPE_INDEPENDENT
+
+	display_order = JOB_DISPLAY_ORDER_REGENT
+
+	duty = "Keep a census of events and provide information to archivists. Lead the Chantry."
+	minimal_masquerade = 4
+	kindred_only = TRUE
+	allowed_bloodlines = list("Tremere")
+
+/datum/outfit/job/regent
+	name = "Chantry Regent"
+	jobtype = /datum/job/vamp/regent
+
+	id = /obj/item/card/id/archive
+	glasses = /obj/item/clothing/glasses/vampire/perception
+	suit = /obj/item/clothing/suit/vampire/trench/archive
+	shoes = /obj/item/clothing/shoes/vampire
+	gloves = /obj/item/clothing/gloves/vampire/latex
+	uniform = /obj/item/clothing/under/vampire/archivist
+	r_pocket = /obj/item/vamp/keys/archive
+	l_pocket = /obj/item/vamp/phone
+	accessory = /obj/item/clothing/accessory/pocketprotector/full
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/stack/dollar/rand=1)
+
+/datum/outfit/job/regent/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.gender == FEMALE)
+		uniform = /obj/item/clothing/under/vampire/archivist/female
+		shoes = /obj/item/clothing/shoes/vampire/heels
+
+/obj/effect/landmark/start/archivist
+	name = "Archivist"
+	icon_state = "Archivist"
+
+/datum/job/vamp/archivist
+	title = "Chantry Archivist"
+	department_head = list("Prince")
+	faction = "Vampire"
+	total_positions = 3
+	spawn_positions = 3
+	supervisors = "the Traditions and the Regent"
+	selection_color = "#cb4aad"
 
 	outfit = /datum/outfit/job/archivist
 
@@ -439,13 +488,14 @@
 	minimal_access = list(ACCESS_LIBRARY, ACCESS_AUX_BASE, ACCESS_MINING_STATION)
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
+	exp_type_department = EXP_TYPE_INDEPENDENT
 
 	display_order = JOB_DISPLAY_ORDER_ARCHIVIST
 
-	duty = "Keep a census of events and provide information to neonates."
+	duty = "Keep a census of events and provide information to neonates. Listen to the Regent Carefully."
 	minimal_masquerade = 3
 	kindred_only = TRUE
-	allowed_bloodlines = list("Tremere", "Nosferatu", "Malkavian")
+	allowed_bloodlines = list("Tremere")
 
 /datum/outfit/job/archivist
 	name = "Archivist"
@@ -453,7 +503,6 @@
 
 	id = /obj/item/card/id/archive
 	glasses = /obj/item/clothing/glasses/vampire/perception
-	suit = /obj/item/clothing/suit/vampire/trench/archive
 	shoes = /obj/item/clothing/shoes/vampire
 	gloves = /obj/item/clothing/gloves/vampire/latex
 	uniform = /obj/item/clothing/under/vampire/archivist
@@ -707,19 +756,67 @@
 
 /datum/outfit/job/citizen/pre_equip(mob/living/carbon/human/H)
 	..()
-	if(H.gender == MALE)
-		shoes = /obj/item/clothing/shoes/vampire
-		if(H.clane.male_clothes)
-			uniform = text2path(H.clane.male_clothes)
+	if(H.clane)
+		if(H.gender == MALE)
+			shoes = /obj/item/clothing/shoes/vampire
+			if(H.clane.male_clothes)
+				uniform = text2path(H.clane.male_clothes)
+		else
+			shoes = /obj/item/clothing/shoes/vampire/heels
+			if(H.clane.female_clothes)
+				uniform = text2path(H.clane.female_clothes)
 	else
-		shoes = /obj/item/clothing/shoes/vampire/heels
-		if(H.clane.female_clothes)
-			uniform = text2path(H.clane.female_clothes)
+		uniform = /obj/item/clothing/under/vampire/emo
+		if(H.gender == MALE)
+			shoes = /obj/item/clothing/shoes/vampire
+		else
+			shoes = /obj/item/clothing/shoes/vampire/heels
 
 /obj/effect/landmark/start/citizen
 	name = "Citizen"
 	icon_state = "Assistant"
 
+/datum/job/vamp/strip
+	title = "Stripper"
+	faction = "Vampire"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "the Camarilla or the Anarchs"
+	selection_color = "#e3e3e3"
+	access = list()
+	minimal_access = list()
+	outfit = /datum/outfit/job/strip
+	antag_rep = 7
+	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
+	exp_type_department = EXP_TYPE_NEUTRALS
+
+	paycheck_department = ACCOUNT_CIV
+	display_order = JOB_DISPLAY_ORDER_STRIP
+
+	duty = "Offer strip club services to humans or undead."
+	minimal_masquerade = 0
+	allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff")
+
+/datum/outfit/job/strip
+	name = "Stripper"
+	jobtype = /datum/job/vamp/citizen
+	l_pocket = /obj/item/vamp/phone
+	r_pocket = /obj/item/vamp/keys/strip
+	id = /obj/item/cockclock
+	backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/stack/dollar/fifty=1)
+
+/datum/outfit/job/strip/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.gender == MALE)
+		shoes = /obj/item/clothing/shoes/vampire/white
+		uniform = /obj/item/clothing/under/vampire/pimp
+	else
+		shoes = /obj/item/clothing/shoes/vampire/heels
+		uniform = /obj/item/clothing/under/vampire/whore
+
+/obj/effect/landmark/start/strip
+	name = "Strip"
+	icon_state = "Assistant"
 
 //ID
 
@@ -1177,3 +1274,47 @@
 /datum/antagonist/sabbatist/greet()
 	to_chat(owner.current, "<span class='alertsyndie'>You are the part of Sabbat.</span>")
 	owner.announce_objectives()
+
+/datum/job/vamp/giovanni
+	title = "Giovanni Member"
+	department_head = list("Justicar")
+	faction = "Vampire"
+	total_positions = 5
+	spawn_positions = 5
+	supervisors = "the Family and the Traditions"
+	selection_color = "#cb4aad"
+
+	outfit = /datum/outfit/job/giovanni
+
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	paycheck = PAYCHECK_EASY
+	paycheck_department = ACCOUNT_SRV
+	display_order = JOB_DISPLAY_ORDER_GIOVANNI
+	exp_type_department = EXP_TYPE_INDEPENDENT
+
+//	minimal_generation = 11	//Uncomment when players get exp enough
+
+	duty = "Protect the Family."
+	minimal_masquerade = 0
+	kindred_only = TRUE
+	allowed_bloodlines = list("Giovanni")
+
+/datum/outfit/job/giovanni
+	name = "Giovanni Member"
+	jobtype = /datum/job/vamp/giovanni
+
+	id = /obj/item/cockclock
+	glasses = /obj/item/clothing/glasses/vampire/sun
+	uniform = /obj/item/clothing/under/vampire/suit
+	suit = /obj/item/clothing/suit/vampire/trench
+	shoes = /obj/item/clothing/shoes/vampire
+	l_pocket = /obj/item/vamp/phone
+//	r_pocket = /obj/item/vamp/keys/giovanni
+	backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/stack/dollar/fifty=1)
+
+/datum/outfit/job/giovanni/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.gender == FEMALE)
+		uniform = /obj/item/clothing/under/vampire/suit/female
+		shoes = /obj/item/clothing/shoes/vampire/heels

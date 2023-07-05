@@ -413,9 +413,10 @@
 /datum/discipline/obfuscate/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	for(var/mob/living/carbon/human/npc/NPC in GLOB.npc_list)
-		if(NPC.danger_source == caster)
-			NPC.danger_source = null
-	caster.alpha = 10
+		if(NPC)
+			if(NPC.danger_source == caster)
+				NPC.danger_source = null
+	caster.alpha = 32
 	spawn(delay*level_casting)
 		if(caster)
 			playsound(caster.loc, 'code/modules/ziggers/sounds/obfuscate_deactivate.ogg', 50, FALSE)

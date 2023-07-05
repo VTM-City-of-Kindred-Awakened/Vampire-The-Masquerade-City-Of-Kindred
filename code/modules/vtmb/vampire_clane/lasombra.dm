@@ -5,5 +5,5 @@
 	clane_disciplines = list(/datum/discipline/potence = 1,
 														/datum/discipline/dominate = 2,
 														/datum/discipline/obtenebration = 3)
-	male_clothes = "/obj/item/clothing/under/vampire/agent"
-	female_clothes = "/obj/item/clothing/under/vampire/agent"
+	male_clothes = "/obj/item/clothing/under/vampire/emo"
+	female_clothes = "/obj/item/clothing/under/vampire/business"

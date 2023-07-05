@@ -85,3 +85,28 @@
 /obj/item/drinkable_bloodpack/elite
 	name = "\improper elite blood pack (full)"
 	amount_of_bloodpoints = 4
+
+/obj/item/blood_hunt
+	name = "Blood Hunt Announcer"
+	desc = "Announce a Blood Hunt to the city."
+	icon = 'code/modules/ziggers/items.dmi'
+	icon_state = "eye"
+	item_flags = NOBLUDGEON
+	w_class = WEIGHT_CLASS_SMALL
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/blood_hunt/attack_self(mob/user)
+	. = ..()
+	var/chosen_name = input(user, "Write the hunted character name:", "Blood Hunt")  as text|null
+	if(chosen_name)
+		var/name_in_list = FALSE
+		for(var/mob/living/carbon/human/H in GLOB.player_list)
+			if(H)
+				if(H.real_name == chosen_name)
+					name_in_list = TRUE
+		if(name_in_list)
+			to_chat(world, "<b>Prince announces the Blood Hunt after <span class='warning'>[chosen_name]</span>!</b>")
+			SEND_SOUND(world, sound('code/modules/ziggers/sounds/announce.ogg'))
+		else
+			to_chat(user, "<span class='warning'>There is no such names in the city!</span>")

@@ -54,10 +54,11 @@
 		if(!host.mind.assigned_role)
 			dat += "."
 		dat += "<BR>"
-		dat += "My Regnant is [G.master.real_name], I should obey their wants.<BR>"
-		if(G.master.clane)
-			if(G.master.clane.name != "Caitiff")
-				dat += "Regnant's clan is [G.master.clane], maybe I can try some of it's disciplines..."
+		if(G.master)
+			dat += "My Regnant is [G.master.real_name], I should obey their wants.<BR>"
+			if(G.master.clane)
+				if(G.master.clane.name != "Caitiff")
+					dat += "Regnant's clan is [G.master.clane], maybe I can try some of it's disciplines..."
 		if(host.mind.special_role)
 			for(var/datum/antagonist/A in host.mind.antag_datums)
 				if(A.objectives)
@@ -107,6 +108,8 @@
 	infor.Grant(C)
 	var/datum/action/blood_heal/bloodheal = new()
 	bloodheal.Grant(C)
+	var/datum/action/take_vitae/TV = new()
+	TV.Grant(C)
 	C.generation = 13
 	C.bloodpool = 10
 	C.maxbloodpool = 10
@@ -119,6 +122,45 @@
 		qdel(GI)
 	for(var/datum/action/blood_heal/BH in C.actions)
 		qdel(BH)
+	for(var/datum/action/take_vitae/TV in C.actions)
+		qdel(TV)
+
+/datum/action/take_vitae
+	name = "Take Vitae"
+	desc = "Take vitae from a Vampire by force."
+	button_icon_state = "ghoul"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/taking = FALSE
+
+/datum/action/take_vitae/Trigger()
+	if(istype(owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = owner
+		if(istype(H.pulling, /mob/living/carbon/human))
+			var/mob/living/carbon/human/VIT = H.pulling
+			if(iskindred(VIT))
+				if(VIT.bloodpool)
+					if(VIT.getBruteLoss() > 30)
+						taking = TRUE
+						if(do_mob(owner, VIT, 10 SECONDS))
+							taking = FALSE
+							H.adjustBruteLoss(-25, TRUE)
+							H.adjustFireLoss(-25, TRUE)
+							VIT.bloodpool = max(0, VIT.bloodpool-1)
+							H.bloodpool = min(H.maxbloodpool, H.bloodpool+1)
+							to_chat(owner, "<span class='warning'>You feel precious <b>VITAE</b> entering your mouth and suspending your addiction.</span>")
+							return
+						else
+							taking = FALSE
+							return
+					else
+						to_chat(owner, "<span class='warning'>Damage [VIT] before taking vitae.</span>")
+						return
+				else
+					to_chat(owner, "<span class='warning'>There is not enough <b>VITAE</b> in [VIT] to feed your addiction.</span>")
+					return
+			else
+				to_chat(owner, "<span class='warning'>You don't sense the <b>VITAE</b> in [VIT].</span>")
+				return
 
 /datum/action/blood_heal
 	name = "Blood Heal"
@@ -183,12 +225,14 @@
 						to_chat(H, "<span class='warning'>You feel the rage rising as your last sins come to your head...</span>")
 						H.drop_all_held_items()
 						H.emote("scream")
-		if(last_vitae+6000 < world.time && prob(20))
+		if(last_vitae+3000 < world.time)
+			last_vitae = world.time
 			if(H.bloodpool > 1)
 				H.bloodpool = max(1, H.bloodpool-1)
 			else
-				to_chat(H, "<span class='userdanger'><b>I NEED VITAE...</b></span>")
-				H.Stun(10)
+				if(prob(20))
+					to_chat(H, "<span class='userdanger'><b>I NEED VITAE...</b></span>")
+					H.Stun(10)
 
 /mob/living
 	var/last_bloodpool_restore = 0

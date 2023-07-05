@@ -781,6 +781,10 @@
 	anchored = FALSE
 	footstep_type = FOOTSTEP_MOB_CLAW
 	bloodquality = BLOOD_QUALITY_LOW
+	bloodpool = 1
+	maxbloodpool = 1
+	maxHealth = 5
+	health = 5
 
 /mob/living/simple_animal/pet/rat/Life()
 	for(var/mob/living/carbon/human/H in range(7))
@@ -978,7 +982,7 @@
 	uniforms = list(/obj/item/clothing/under/vampire/police)
 	hats = list(/obj/item/clothing/head/vampire/police)
 	suits = list(/obj/item/clothing/suit/vampire/vest)
-	pockets = list(/obj/item/vamp/keys/npc,
+	pockets = list(/obj/item/vamp/keys/police,
 					/obj/item/stack/dollar/rand)
 
 	male_phrases = list("Я слежу за каждым твоим шагом.",
@@ -1100,11 +1104,155 @@
 
 /mob/living/carbon/human/npc/walkby/club/Life()
 	. = ..()
-	if(prob(5))
-		if(prob(50))
-			dancefirst(src)
-		else
-			dancesecond(src)
+	if(staying && stat < 2)
+		if(prob(5))
+			var/hasjukebox = FALSE
+			for(var/obj/machinery/jukebox/J in range(7, src))
+				if(J)
+					hasjukebox = TRUE
+					if(J.active)
+						if(prob(50))
+							dancefirst(src)
+						else
+							dancesecond(src)
+			if(!hasjukebox)
+				staying = FALSE
 
 /mob/living/carbon/human/npc/walkby/club
 	staying = TRUE
+
+/datum/socialrole/stripfemale
+	s_tones = list("albino",
+								"caucasian1",
+								"caucasian2",
+								"caucasian3")
+
+	min_age = 18
+	max_age = 30
+	preferedgender = FEMALE
+	female_names = null
+	surnames = null
+
+	hair_colors = list("040404",	//Black
+										"120b05",	//Dark Brown
+										"342414",	//Brown
+										"554433",	//Light Brown
+										"695c3b",	//Dark Blond
+										"ad924e",	//Blond
+										"dac07f",	//Light Blond
+										"802400",	//Ginger
+										"a5380e",	//Ginger alt
+										"ffeace",	//Albino
+										"650b0b",	//Punk Red
+										"14350e",	//Punk Green
+										"080918")	//Punk Blue
+	female_hair = list("Ahoge",
+										"Long Bedhead",
+										"Beehive",
+										"Beehive 2",
+										"Bob Hair",
+										"Bob Hair 2",
+										"Bob Hair 3",
+										"Bob Hair 4",
+										"Bobcurl",
+										"Braided",
+										"Braided Front",
+										"Braid (Short)",
+										"Braid (Low)",
+										"Bun Head",
+										"Bun Head 2",
+										"Bun Head 3",
+										"Bun (Large)",
+										"Bun (Tight)",
+										"Double Bun",
+										"Emo",
+										"Emo Fringe",
+										"Feather",
+										"Gentle",
+										"Long Hair 1",
+										"Long Hair 2",
+										"Long Hair 3",
+										"Long Over Eye",
+										"Long Emo",
+										"Long Fringe",
+										"Ponytail",
+										"Ponytail 2",
+										"Ponytail 3",
+										"Ponytail 4",
+										"Ponytail 5",
+										"Ponytail 6",
+										"Ponytail 7",
+										"Ponytail (High)",
+										"Ponytail (Short)",
+										"Ponytail (Long)",
+										"Ponytail (Country)",
+										"Ponytail (Fringe)",
+										"Poofy",
+										"Short Hair Rosa",
+										"Shoulder-length Hair",
+										"Volaju")
+
+	shoes = list(/obj/item/clothing/shoes/vampire/heels)
+	backpacks = list()
+
+	female_phrases = list("Хочешь поглазеть, пупсик?",
+											"Мм, тебе нравятся эти формы?",
+											"Хочешь поиграть со мной?",
+											"Хи-хи.",
+											"Для тебя любой танец...",
+											"Присаживайся, отдохни.",
+											"Ты такое любишь?",
+											"Ахх...")
+	neutral_phrases = list("Хочешь поглазеть, пупсик?",
+											"Мм, тебе нравятся эти формы?",
+											"Хочешь поиграть со мной?",
+											"Хи-хи.",
+											"Для тебя любой танец...",
+											"Присаживайся, отдохни.",
+											"Ты такое любишь?",
+											"Ахх...")
+	random_phrases = list("Хочешь поглазеть, пупсик?",
+											"Мм, тебе нравятся эти формы?",
+											"Хочешь поиграть со мной?",
+											"Хи-хи.",
+											"Для тебя любой танец...",
+											"Присаживайся, отдохни.",
+											"Ты такое любишь?",
+											"Ахх...")
+	answer_phrases = list("Это будет стоить...",
+												"Хи-хи-хи.",
+												"Двадцать баксов.",
+												"Без проблем, пупсик...")
+	help_phrases = list("О Боже!",
+											"Уйдите, не подходите ко мне!!",
+											"Что же это такое творится?!",
+											"Прекратите!",
+											"Кто-нибудь, помогите!",
+											"На помощь!")
+
+/mob/living/carbon/human/npc/stripper
+	staying = TRUE
+
+/mob/living/carbon/human/npc/stripper/Initialize()
+	..()
+	AssignSocialRole(/datum/socialrole/stripfemale)
+	underwear = "Nude"
+	undershirt = "Nude"
+	socks = "Nude"
+	update_body()
+
+/mob/living/carbon/human/npc/stripper/Life()
+	. = ..()
+	if(stat < 2)
+		if(prob(20))
+			for(var/obj/structure/pole/P in range(1, src))
+				if(P)
+					drop_all_held_items()
+					ClickOn(P)
+
+/mob/living/carbon/human/npc/incel
+	staying = TRUE
+
+/mob/living/carbon/human/npc/incel/Initialize()
+	..()
+	AssignSocialRole(/datum/socialrole/usualmale)

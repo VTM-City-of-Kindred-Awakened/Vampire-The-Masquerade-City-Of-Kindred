@@ -112,7 +112,8 @@
 					to_chat(user, "<span class='warning'>You've failed to open [src]'s lock.</span>")
 					playsound(src, 'code/modules/ziggers/sounds/signal.ogg', 50, FALSE)
 					for(var/mob/living/carbon/human/npc/police/P in range(7, src))
-						P.Aggro(user)
+						if(P)
+							P.Aggro(user)
 					repairing = FALSE
 					return
 				return
@@ -177,10 +178,10 @@
 	if(last_speeded+15 < world.time)
 		speed = 0
 	if(last_vzhzh+10 < world.time)
-		playsound(src, 'code/modules/ziggers/sounds/work.ogg', 25, TRUE)
+		playsound(src, 'code/modules/ziggers/sounds/work.ogg', 25, FALSE)
 		last_vzhzh = world.time
-		if(turning)
-			playsound(src, 'code/modules/ziggers/sounds/povorotnik.ogg', 50, TRUE)
+		if(turning != NOTURN)
+			playsound(src, 'code/modules/ziggers/sounds/povorotnik.ogg', 50, FALSE)
 
 /obj/vampire_car/examine(mob/user)
 	. = ..()
@@ -524,6 +525,8 @@
 /obj/vampire_car/retro/rand/Initialize()
 	. = ..()
 	icon_state = "[pick(1, 3, 5)]"
+	if(access == "none")
+		access = "npc[rand(1, 20)]"
 
 /obj/vampire_car/rand
 	icon_state = "4"
@@ -535,6 +538,8 @@
 /obj/vampire_car/rand/Initialize()
 	. = ..()
 	icon_state = "[pick(2, 4, 6)]"
+	if(access == "none")
+		access = "npc[rand(1, 20)]"
 
 /obj/vampire_car/rand/camarilla
 	access = "camarilla"
