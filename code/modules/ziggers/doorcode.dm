@@ -88,6 +88,10 @@
 	name = "Strip keys"
 	accesslocks = list("strip")
 
+/obj/item/vamp/keys/giovanni
+	name = "Mafia keys"
+	accesslocks = list("giovanni")
+
 /obj/structure/vampdoor
 	name = "\improper door"
 	desc = "It opens and closes."
@@ -334,3 +338,9 @@
 	baseicon = "cam"
 	locked = TRUE
 	lock_id = "strip"
+
+/obj/structure/vampdoor/giovanni
+	icon_state = "wood-1"
+	baseicon = "wood"
+	locked = TRUE
+	lock_id = "giovanni"

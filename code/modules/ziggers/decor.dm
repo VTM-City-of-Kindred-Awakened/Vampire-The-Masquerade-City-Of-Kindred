@@ -885,3 +885,27 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 /obj/structure/strip_club/Initialize()
 	. = ..()
 	set_light(3, 2, "#8e509e")
+
+/obj/structure/fire_barrel
+	name = "barrel"
+	desc = "Some kind of light and warm source..."
+	icon = 'code/modules/ziggers/icons.dmi'
+	icon_state = "barrel"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+	density = TRUE
+
+/obj/structure/fire_barrel/Initialize()
+	. = ..()
+	set_light(3, 2, "#ffa800")
+
+/obj/structure/fountain
+	name = "fountain"
+	desc = "Gothic water structure."
+	icon = 'code/modules/ziggers/icons.dmi'
+	icon_state = "fountain"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+	density = TRUE

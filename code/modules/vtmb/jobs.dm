@@ -425,7 +425,7 @@
 	icon_state = "Street Janitor"
 
 /datum/job/vamp/regent
-	title = "Regent"
+	title = "Chantry Regent"
 	department_head = list("Prince")
 	faction = "Vampire"
 	total_positions = 1
@@ -469,8 +469,8 @@
 		uniform = /obj/item/clothing/under/vampire/archivist/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
 
-/obj/effect/landmark/start/archivist
-	name = "Archivist"
+/obj/effect/landmark/start/regent
+	name = "Regent"
 	icon_state = "Archivist"
 
 /datum/job/vamp/archivist
@@ -794,8 +794,7 @@
 	display_order = JOB_DISPLAY_ORDER_STRIP
 
 	duty = "Offer strip club services to humans or undead."
-	minimal_masquerade = 0
-	allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff")
+	minimal_masquerade = 3
 
 /datum/outfit/job/strip
 	name = "Stripper"
@@ -1310,7 +1309,7 @@
 	suit = /obj/item/clothing/suit/vampire/trench
 	shoes = /obj/item/clothing/shoes/vampire
 	l_pocket = /obj/item/vamp/phone
-//	r_pocket = /obj/item/vamp/keys/giovanni
+	r_pocket = /obj/item/vamp/keys/giovanni
 	backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/stack/dollar/fifty=1)
 
 /datum/outfit/job/giovanni/pre_equip(mob/living/carbon/human/H)
@@ -1318,3 +1317,6 @@
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
+
+/obj/effect/landmark/start/giovanni
+	name = "Giovanni"
