@@ -11,6 +11,7 @@
 /datum/vampireclane/tremere/post_gain(mob/living/carbon/human/H)
 	var/datum/action/thaumaturgy/T = new()
 	T.Grant(H)
+	H.thaumaturgy_knowledge = TRUE
 	H.faction |= "Tremere"
 
 /datum/action/thaumaturgy

@@ -194,15 +194,12 @@ Dancer
 	var/mob/living/carbon/human/H = owner
 	if(H.dancing)
 		return
-	INVOKE_ASYNC(H, .proc/jedi_spin, H)
+	H.dance_flip()
 	H.Immobilize(2, TRUE)
 	animate(H, pixel_z = 32, time = 2)
 	spawn(2)
 		H.forceMove(LO)
 		animate(H, pixel_z = 0, time = 2)
-
-/datum/action/acrobate/proc/jedi_spin(mob/living/user)
-	dance_rotate(user, CALLBACK(user, /mob.proc/dance_flip))
 
 /datum/quirk/dancer
 	name = "Dancer"

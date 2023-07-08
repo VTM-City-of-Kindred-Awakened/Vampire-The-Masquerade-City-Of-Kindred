@@ -25,7 +25,6 @@
 	icon = 'code/modules/ziggers/icons.dmi'
 	icon_state = "rune1"
 	color = rgb(255,0,0)
-	flags_1 = HEAR_1
 	var/word = "IDI NAH"
 	var/activator_bonus = 0
 
