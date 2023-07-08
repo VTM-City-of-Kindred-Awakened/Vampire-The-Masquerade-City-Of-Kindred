@@ -217,9 +217,10 @@
 		activated = TRUE
 
 /obj/ritualrune/curse/attack_hand(mob/user)
+	..()
 	var/cursed
 	if(activated)
-		var/namem = input(user, "Choose x direction:\n(1-255)", "Curse Rune") as num|null
+		var/namem = input(user, "Choose target name:", "Curse Rune") as text|null
 		if(namem)
 			cursed = namem
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
