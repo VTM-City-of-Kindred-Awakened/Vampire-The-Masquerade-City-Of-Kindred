@@ -371,6 +371,24 @@
 /obj/machinery/light/prince
 	icon = 'code/modules/ziggers/icons.dmi'
 
+/obj/machinery/light/prince/ghost
+	var/scary_explode = FALSE
+
+/obj/machinery/light/prince/ghost/Crossed(atom/movable/AM)
+	. = ..()
+	if(ishuman(AM) && scary_explode)
+		var/mob/living/L = AM
+		if(L.client)
+			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+			s.set_up(5, 1, get_turf(src))
+			s.start()
+			playsound(loc, 'code/modules/ziggers/sounds/explode.ogg', 100, TRUE)
+			qdel(src)
+
+/obj/machinery/light/prince/broken
+	status = LIGHT_BROKEN
+	icon_state = "tube-broken"
+
 /obj/effect/decal/painting
 	name = "painting"
 	icon = 'code/modules/ziggers/icons.dmi'
@@ -539,16 +557,23 @@
 
 /mob/living/carbon/human/MouseDrop(atom/over_object)
 	. = ..()
-	if(iskindred(src))
-		return
 	if(istype(over_object, /obj/structure/bloodextractor))
 		if(get_dist(src, over_object) < 2)
 			var/obj/structure/bloodextractor/V = over_object
+			if(!buckled)
+				V.visible_message("<span class='warning'>Buckle [src] fist!</span>")
+			if(bloodpool < 1)
+				V.visible_message("<span class='warning'>[V] can't find enough blood in [src]!</span>")
+				return
 			if(V.last_extracted+300 > world.time)
 				V.visible_message("<span class='warning'>[V] isn't ready!</span>")
 				return
 			V.last_extracted = world.time
-			new /obj/item/drinkable_bloodpack(get_step(V, SOUTH))
+			if(!iskindred(src))
+				new /obj/item/drinkable_bloodpack(get_step(V, SOUTH))
+			else
+				new /obj/item/drinkable_bloodpack/vitae(get_step(V, SOUTH))
+			bloodpool = max(0, bloodpool-1)
 
 GLOBAL_LIST_EMPTY(vampire_computers)
 
@@ -909,3 +934,17 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	layer = CAR_LAYER
 	anchored = TRUE
 	density = TRUE
+
+/obj/structure/coclock
+	name = "clock"
+	desc = "See the time."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "clock"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+	pixel_z = 32
+
+/obj/structure/coclock/examine(mob/user)
+	. = ..()
+	to_chat(user, "<b>[SScity_time.timeofnight]</b>")

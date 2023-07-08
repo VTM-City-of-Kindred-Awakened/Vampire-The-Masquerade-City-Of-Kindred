@@ -4,8 +4,8 @@
 	icon = 'icons/obj/doors/blastdoor.dmi'
 	icon_state = "closed"
 	var/id = 1
-	layer = BLASTDOOR_LAYER
-	closingLayer = CLOSED_BLASTDOOR_LAYER
+	layer = ABOVE_ALL_MOB_LAYER
+	closingLayer = ABOVE_ALL_MOB_LAYER
 	sub_door = TRUE
 	explosion_block = 3
 	heat_proof = TRUE
@@ -37,7 +37,7 @@
 			var/change_id = input("Set the shutters/blast door/blast door controllers ID. It must be a number between 1 and 100.", "ID", id) as num|null
 			if(change_id)
 				id = clamp(round(change_id, 1), 1, 100)
-				to_chat(user, "<span class='notice'>You change the ID to [id].</span>")	
+				to_chat(user, "<span class='notice'>You change the ID to [id].</span>")
 
 		if(W.tool_behaviour == TOOL_CROWBAR && deconstruction == INTACT)
 			to_chat(user, "<span class='notice'>You start to remove the airlock electronics.</span>")

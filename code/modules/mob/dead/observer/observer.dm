@@ -134,7 +134,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 //	if(!fun_verbs)
 //		remove_verb(src, /mob/dead/observer/verb/boo)
-//		remove_verb(src, /mob/dead/observer/verb/possess)
+	remove_verb(src, /mob/dead/observer/verb/possess)
 
 	add_to_dead_mob_list()
 

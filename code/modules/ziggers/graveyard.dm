@@ -40,7 +40,7 @@ SUBSYSTEM_DEF(graveyard)
 					var/mode = 1
 					if(HAS_TRAIT(L, TRAIT_NON_INT))
 						mode = 2
-					L.client.prefs.exper = min(calculate_mob_max_exper(L), L.client.prefs.exper+(100/mode))
+					L.client.prefs.exper = min(calculate_mob_max_exper(L), L.client.prefs.exper+((100+L.experience_plus)/mode))
 
 /obj/vampgrave
 	icon = 'code/modules/ziggers/props.dmi'

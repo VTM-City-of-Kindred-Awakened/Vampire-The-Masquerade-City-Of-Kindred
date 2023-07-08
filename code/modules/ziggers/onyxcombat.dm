@@ -336,7 +336,7 @@
 			if(!HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
 				ADD_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
 			BD.update_blood_hud()
-			addtimer(CALLBACK(src, .proc/end_bloodpower), 100)
+			addtimer(CALLBACK(src, .proc/end_bloodpower), 100+BD.discipline_time_plus+BD.bloodpower_time_plus)
 		else
 			SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to become more powerful.</span>")
@@ -537,7 +537,7 @@
 			last_discipline_use = world.time
 			icon_state = "[main_state]-on"
 			dscpln.activate(BD, BD)
-			spawn(dadelay)
+			spawn(dadelay+BD.discipline_time_plus)
 				icon_state = main_state
 
 /atom/movable/screen/disciplines/proc/range_activate(var/mob/living/trgt, var/mob/living/carbon/human/cstr)

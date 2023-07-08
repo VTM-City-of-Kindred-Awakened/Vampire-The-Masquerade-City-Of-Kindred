@@ -1,8 +1,8 @@
 /obj/structure/extinguisher_cabinet
 	name = "extinguisher cabinet"
 	desc = "A small wall mounted cabinet designed to hold a fire extinguisher."
-	icon = 'icons/obj/wallmounts.dmi'
-	icon_state = "extinguisher_closed"
+	icon = 'code/modules/ziggers/32x48.dmi'
+	icon_state = "firehouse"
 	anchored = TRUE
 	density = FALSE
 	max_integrity = 200
@@ -14,10 +14,7 @@
 	. = ..()
 	if(building)
 		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -27 : 27)
-		pixel_y = (dir & 3)? (dir ==1 ? -30 : 30) : 0
 		opened = TRUE
-		icon_state = "extinguisher_empty"
 	else
 		stored_extinguisher = new /obj/item/extinguisher(src)
 
@@ -122,15 +119,7 @@
 		update_icon()
 
 /obj/structure/extinguisher_cabinet/update_icon_state()
-	if(!opened)
-		icon_state = "extinguisher_closed"
-	else if(stored_extinguisher)
-		if(istype(stored_extinguisher, /obj/item/extinguisher/mini))
-			icon_state = "extinguisher_mini"
-		else
-			icon_state = "extinguisher_full"
-	else
-		icon_state = "extinguisher_empty"
+	icon_state = "firehouse"
 
 /obj/structure/extinguisher_cabinet/obj_break(damage_flag)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))

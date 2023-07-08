@@ -56,11 +56,13 @@
 	var/empty = FALSE
 	var/feeding = FALSE
 	var/amount_of_bloodpoints = 2
+	var/vitae = FALSE
 
 /obj/item/drinkable_bloodpack/attack(mob/living/M, mob/living/user)
 	. = ..()
 	if(!iskindred(M))
-		return
+		if(!vitae)
+			return
 	if(empty)
 		return
 	feeding = TRUE
@@ -75,7 +77,8 @@
 		M.adjustFireLoss(-20, TRUE)
 		M.update_damage_overlays()
 		M.update_health_hud()
-		M.update_blood_hud()
+		if(iskindred(M))
+			M.update_blood_hud()
 		playsound(M.loc,'sound/items/drink.ogg', 50, TRUE)
 		return
 	else
@@ -85,6 +88,11 @@
 /obj/item/drinkable_bloodpack/elite
 	name = "\improper elite blood pack (full)"
 	amount_of_bloodpoints = 4
+
+/obj/item/drinkable_bloodpack/vitae
+	name = "\improper vampire vitae pack (full)"
+	amount_of_bloodpoints = 6
+	vitae = TRUE
 
 /obj/item/blood_hunt
 	name = "Blood Hunt Announcer"

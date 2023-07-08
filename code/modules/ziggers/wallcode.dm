@@ -501,6 +501,13 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
+/turf/open/floor/plating/rough/cave
+	icon_state = "cave1"
+
+/turf/open/floor/plating/rough/cave/Initialize()
+	. = ..()
+	icon_state = "cave[rand(1, 7)]"
+
 /turf/open/floor/plating/toilet
 	gender = PLURAL
 	name = "plating"

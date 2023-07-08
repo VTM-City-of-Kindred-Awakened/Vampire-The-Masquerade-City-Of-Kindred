@@ -189,16 +189,20 @@ Dancer
 		if(istype(A, /obj/structure/vampdoor))
 			return
 
+	var/turf/open/LO = get_step(get_step(owner, owner.dir), owner.dir)
+
 	var/mob/living/carbon/human/H = owner
 	if(H.dancing)
 		return
-	H.emote("spin")
-	H.emote("flip")
+	INVOKE_ASYNC(H, .proc/jedi_spin, H)
 	H.Immobilize(2, TRUE)
 	animate(H, pixel_z = 32, time = 2)
 	spawn(2)
-		H.forceMove(get_step(get_step(owner, owner.dir), owner.dir))
+		H.forceMove(LO)
 		animate(H, pixel_z = 0, time = 2)
+
+/datum/action/acrobate/proc/jedi_spin(mob/living/user)
+	dance_rotate(user, CALLBACK(user, /mob.proc/dance_flip))
 
 /datum/quirk/dancer
 	name = "Dancer"

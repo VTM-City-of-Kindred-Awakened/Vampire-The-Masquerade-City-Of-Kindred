@@ -211,7 +211,7 @@
 				H.client.prefs.save_preferences()
 				H.client.prefs.save_character()
 			if(H.last_experience+600 <= world.time)
-				H.client.prefs.exper = min(calculate_mob_max_exper(H), H.client.prefs.exper+5)
+				H.client.prefs.exper = min(calculate_mob_max_exper(H), H.client.prefs.exper+5+H.experience_plus)
 				H.client.prefs.save_preferences()
 				H.client.prefs.save_character()
 				H.last_experience = world.time
@@ -250,7 +250,7 @@
 				H.client.prefs.save_preferences()
 				H.client.prefs.save_character()
 			if(H.last_experience+600 <= world.time)
-				H.client.prefs.exper = min(calculate_mob_max_exper(H), H.client.prefs.exper+5)
+				H.client.prefs.exper = min(calculate_mob_max_exper(H), H.client.prefs.exper+5+H.experience_plus)
 				H.client.prefs.save_preferences()
 				H.client.prefs.save_character()
 				H.last_experience = world.time

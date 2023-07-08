@@ -18,11 +18,14 @@
 				return
 	..()
 
+/mob/living
+	var/frenzy_chance_boost = 10
+
 /mob/living/carbon/human/proc/rollfrenzy()
 	if(clane && client)
 		to_chat(src, "I need <span class='danger'><b>BLOOD</b></span>. The <span class='danger'><b>BEAST</b></span> is calling. Rolling...")
 		SEND_SOUND(src, sound('code/modules/ziggers/sounds/bloodneed.ogg', 0, 0, 50))
-		var/check = vampireroll(max(1, round(humanity/2)), frenzy_hardness, src)
+		var/check = vampireroll(max(1, round(humanity/2)), min(frenzy_chance_boost, frenzy_hardness), src)
 		switch(check)
 			if(DICE_FAILURE)
 				enter_frenzymod()
@@ -158,7 +161,7 @@
 				H.client.prefs.save_preferences()
 				H.client.prefs.save_character()
 			if(H.last_experience+600 <= world.time)
-				H.client.prefs.exper = min(calculate_mob_max_exper(H), H.client.prefs.exper+5)
+				H.client.prefs.exper = min(calculate_mob_max_exper(H), H.client.prefs.exper+5+H.experience_plus)
 				if(H.client.prefs.exper == calculate_mob_max_exper(H))
 					to_chat(H, "You've reached a new level! You can add new points in Character Setup (Lobby screen).")
 				H.client.prefs.save_preferences()

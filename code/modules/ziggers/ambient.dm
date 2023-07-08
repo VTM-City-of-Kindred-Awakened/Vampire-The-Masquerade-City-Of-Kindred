@@ -21,6 +21,10 @@
 	name = "Strip Club"
 	icon_state = "strip"
 
+/area/vtm/interior/mansion
+	name = "Abandoned Mansion"
+	icon_state = "mansion"
+
 /area/vtm/financialdistrict
 	name = "Financial District"
 	icon_state = "financialdistrict"
