@@ -17,7 +17,7 @@
 /obj/item/arcane_tome/attack_self(mob/user)
 	. = ..()
 	for(var/obj/ritualrune/R in rituals)
-		to_chat(user, "[R.name]([R.word]) - [R.desc]")
+		to_chat(user, "[R.name] - [R.desc]")
 
 /obj/ritualrune
 	name = "Tremere Rune"
@@ -25,9 +25,9 @@
 	icon = 'code/modules/ziggers/icons.dmi'
 	icon_state = "rune1"
 	color = rgb(128,0,0)
-	flags_1 = HEAR_1
 	var/word = "IDI NAH"
 	var/activator_bonus = 0
+	var/activated = FALSE
 
 /mob/living
 	var/thaumaturgy_knowledge = FALSE
@@ -35,15 +35,13 @@
 /obj/ritualrune/proc/complete()
 	return
 
-/obj/ritualrune/proc/handle_hearing(datum/source, list/hearing_args)
-	var/message = hearing_args[HEARING_RAW_MESSAGE]
-	if(hearing_args[HEARING_SPEAKER])
-		if(isliving(hearing_args[HEARING_SPEAKER]))
-			var/mob/living/L = hearing_args[HEARING_SPEAKER]
-			if(L.thaumaturgy_knowledge)
-				if(message == word)
-					complete()
-					activator_bonus = L.thaum_damage_plus
+/obj/ritualrune/attack_hand(mob/user)
+	if(!activated)
+		var/mob/living/L = user
+		if(L.thaumaturgy_knowledge)
+			activator_bonus = L.thaum_damage_plus
+			complete()
+			L.say("[word]")
 
 /obj/ritualrune/blood_guardian
 	name = "Blood Guardian"
@@ -98,7 +96,6 @@
 	desc = "Creates the Blood Trap to protect tremere or his domain."
 	icon_state = "rune2"
 	word = "DUH'K-A'U"
-	var/activated = FALSE
 
 /obj/ritualrune/blood_trap/complete()
 	if(!activated)
@@ -178,7 +175,6 @@
 	desc = "Move your body among the city streets."
 	icon_state = "rune6"
 	word = "POR'TALE"
-	var/activated = FALSE
 
 /obj/ritualrune/teleport/complete()
 	if(!activated)
@@ -187,6 +183,7 @@
 		icon_state = "teleport"
 
 /obj/ritualrune/teleport/attack_hand(mob/user)
+	..()
 	var/x_dir = 1
 	var/y_dir = 1
 	if(activated)
@@ -212,7 +209,6 @@
 	desc = "Curse your enemies in distance."
 	icon_state = "rune7"
 	word = "CUS-RE'S"
-	var/activated = FALSE
 
 /obj/ritualrune/curse/complete()
 	if(!activated)
