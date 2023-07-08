@@ -995,9 +995,9 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	. = ..()
 	if(istype(I, /obj/item/sarcophagus_key))
 		icon_state = "b_sarcophagus-open3"
-		to_chat(world, "<span class='userdanger'><b>UNKNOWN SARCOPHAGUS HAS BEEN OPENED</b></span>"
+		to_chat(world, "<span class='userdanger'><b>UNKNOWN SARCOPHAGUS HAS BEEN OPENED</b></span>")
 		new /turf/open/floor/plating/bloodshit(loc)
 
 /obj/sarcophagus/Initialize()
 	. = ..()
-	to_chat(world, "<span class='userdanger'><b>UNKNOWN SARCOPHAGUS POSITION HAS BEEN LEAKED</b></span>"
+	to_chat(world, "<span class='userdanger'><b>UNKNOWN SARCOPHAGUS POSITION HAS BEEN LEAKED</b></span>")
