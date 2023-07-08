@@ -24,7 +24,8 @@
 	desc = "Learn the secrets of blood, neonate..."
 	icon = 'code/modules/ziggers/icons.dmi'
 	icon_state = "rune1"
-	color = rgb(255,0,0)
+	color = rgb(128,0,0)
+	flags_1 = HEAR_1
 	var/word = "IDI NAH"
 	var/activator_bonus = 0
 
@@ -209,12 +210,14 @@
 /obj/ritualrune/curse
 	name = "Curse Rune"
 	desc = "Curse your enemies in distance."
-	icon_state = "rune6"
+	icon_state = "rune7"
 	word = "CUS-RE'S"
 	var/activated = FALSE
 
 /obj/ritualrune/curse/complete()
 	if(!activated)
+		playsound(loc, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
+		color = rgb(255,0,0)
 		activated = TRUE
 
 /obj/ritualrune/curse/attack_hand(mob/user)

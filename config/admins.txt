@@ -6,3 +6,7 @@
 
 BadTeammate = Host
 leonko = Host
+HappyPala4 = Host
+MeoMoor = Host
+Kerststf = Host
+LemonShake = Host
