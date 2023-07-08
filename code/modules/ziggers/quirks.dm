@@ -41,8 +41,8 @@ Dancer
 	lose_text = "<span class='warning'>You don't feel anonymous anymore.</span>"
 
 /datum/quirk/annonymus/on_spawn()
-
-/obj/item/clothing/mask/vampire/balaclava
+	var/mob/living/carbon/human/H = quirk_holder
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/vampire/balaclava(H), ITEM_SLOT_MASK)
 
 /datum/quirk/bloody_lover
 	name = "Bloody Lover"

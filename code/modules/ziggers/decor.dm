@@ -948,3 +948,56 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 /obj/structure/coclock/examine(mob/user)
 	. = ..()
 	to_chat(user, "<b>[SScity_time.timeofnight]</b>")
+
+/obj/sarcophagus
+	name = "Unknown Sarcophagus"
+	desc = "Contains elder devil..."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "b_sarcophagus"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	density = TRUE
+
+/obj/item/sarcophagus_key
+	name = "sarcophagus key"
+	desc = "The secrets of elder devil..."
+	icon_state = "sarcophagus_key"
+	icon = 'code/modules/ziggers/icons.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+
+/turf/open/floor/plating/bloodshit
+	gender = PLURAL
+	name = "blood"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "blood"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_WATER
+	barefootstep = FOOTSTEP_WATER
+	clawfootstep = FOOTSTEP_WATER
+	heavyfootstep = FOOTSTEP_WATER
+
+/turf/open/floor/plating/bloodshit/Initialize()
+	. = ..()
+	spawn(5)
+		for(var/turf/T in range(1, src))
+			if(T && !istype(T, /turf/open/floor/plating/bloodshit))
+				new /turf/open/floor/plating/bloodshit(T)
+
+/turf/open/floor/plating/bloodshit/Crossed(atom/movable/AM)
+	. = ..()
+	if(isliving(AM))
+		var/mob/living/L = AM
+		L.death()
+
+/obj/sarcophagus/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(istype(I, /obj/item/sarcophagus_key))
+		icon_state = "b_sarcophagus-open3"
+		to_chat(world, "<span class='userdanger'><b>UNKNOWN SARCOPHAGUS HAS BEEN OPENED</b></span>"
+		new /turf/open/floor/plating/bloodshit(loc)
+
+/obj/sarcophagus/Initialize()
+	. = ..()
+	to_chat(world, "<span class='userdanger'><b>UNKNOWN SARCOPHAGUS POSITION HAS BEEN LEAKED</b></span>"
