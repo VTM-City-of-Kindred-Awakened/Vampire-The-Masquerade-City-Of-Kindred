@@ -216,7 +216,7 @@
 			if(m_intent == MOVE_INTENT_WALK)
 				toggle_move_intent(src)
 			if(!my_weapon)
-				if(last_walkin+10 < world.time)
+				if(last_walkin+5 < world.time)
 					last_walkin = world.time
 					var/datum/cb = CALLBACK(src,.proc/awaystep)
 					var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
@@ -237,7 +237,7 @@
 				if(danger_source)
 					ClickOn(danger_source)
 					face_atom(danger_source)
-				if(last_walkin+10 < world.time)
+				if(last_walkin+5 < world.time)
 					last_walkin = world.time
 					var/datum/cb = CALLBACK(src,.proc/enemystep)
 					var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
@@ -266,7 +266,7 @@
 		else if(walktarget && !staying)
 			if(prob(25))
 				toggle_move_intent(src)
-			if(last_walkin+10 < world.time)
+			if(last_walkin+5 < world.time)
 				last_walkin = world.time
 				var/datum/cb = CALLBACK(src,.proc/juststep)
 				var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()

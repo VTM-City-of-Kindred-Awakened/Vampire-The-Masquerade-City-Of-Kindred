@@ -40,10 +40,11 @@
 		eligible_areas += SSmapping.areas_in_z["[z]"]
 	for(var/i in 1 to eligible_areas.len)
 		var/area/place = eligible_areas[i]
-		if(place.outdoors)
-			outside_areas += place
-		else
-			inside_areas += place
+		if(place)
+			if(place.outdoors)
+				outside_areas += place
+			else
+				inside_areas += place
 		CHECK_TICK
 
 	sound_ao.output_atoms = outside_areas

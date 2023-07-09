@@ -704,6 +704,10 @@ SUBSYSTEM_DEF(job)
 
 	if(latejoin_trackers.len)
 		destination = pick(latejoin_trackers)
+		var/mob/living/carbon/human/H = M
+		if(H.clane)
+			if(H.clane.violating_appearance)
+				destination = pick(GLOB.masquerade_latejoin)
 		destination.JoinPlayerHere(M, buckle)
 		return TRUE
 

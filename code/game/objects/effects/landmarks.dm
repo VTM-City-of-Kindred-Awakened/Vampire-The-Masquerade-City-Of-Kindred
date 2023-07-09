@@ -293,8 +293,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "JoinLate"
 
 /obj/effect/landmark/latejoin_masquerade/Initialize(mapload)
-	..()
-	GLOB.masquerade_latejoin |= src
+	. = ..()
+	GLOB.masquerade_latejoin += src
 
 //space carps, magicarps, lone ops, slaughter demons, possibly revenants spawn here
 /obj/effect/landmark/carpspawn
