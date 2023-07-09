@@ -8,8 +8,9 @@
 	..()
 	if(isturf(loc))
 		STOP_PROCESSING(SSobj, src)
-		remove_powers()
-		owner = null
+		if(owner)
+			remove_powers()
+			owner = null
 
 /obj/item/vtm_artifact/process(delta_time)
 	if(owner != loc && owner != loc.loc)

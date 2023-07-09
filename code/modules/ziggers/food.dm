@@ -241,6 +241,7 @@
 	if(points)
 		for(var/i in 1 to points)
 			new /obj/item/stack/dollar(loc)
+		points = 0
 
 /obj/machinery/mineral/equipment_vendor/fastfood/bacotell
 	prize_list = list(new /datum/data/mining_equipment("pizza",	/obj/item/food/vampire/pizza,	15),
@@ -334,3 +335,20 @@
 /obj/food_cart/Initialize()
 	. = ..()
 	icon_state = "vat[rand(1, 3)]"
+
+/obj/machinery/mineral/equipment_vendor/fastfood/america
+	prize_list = list(new /datum/data/mining_equipment("revolver",	/obj/item/gun/ballistic/vampire/revolver,	50),
+		new /datum/data/mining_equipment("desert eagle",	/obj/item/gun/ballistic/automatic/vampire/deagle,	150),
+		new /datum/data/mining_equipment("mini uzi",	/obj/item/gun/ballistic/automatic/vampire/uzi,	250),
+		new /datum/data/mining_equipment("ar-15 carbine",	/obj/item/gun/ballistic/automatic/vampire/ar15,	500),
+		new /datum/data/mining_equipment("9mm ammo",	/obj/item/ammo_box/vampire/c9mm,	150),
+		new /datum/data/mining_equipment(".44 ammo",	/obj/item/ammo_box/vampire/c44,	200),
+		new /datum/data/mining_equipment("5.56 ammo",	/obj/item/ammo_box/vampire/c556,	300),
+		new /datum/data/mining_equipment("mini uzi magazine",/obj/item/ammo_box/magazine/vamp9mm,	25),
+		new /datum/data/mining_equipment("desert eagle magazine",	/obj/item/ammo_box/magazine/m44,	25),
+		new /datum/data/mining_equipment("ar-15 carbine magazine",	/obj/item/ammo_box/magazine/vamp556,	25),
+		new /datum/data/mining_equipment("knife",	/obj/item/melee/vampirearms/knife,	50),
+		new /datum/data/mining_equipment("baseball bat",	/obj/item/melee/vampirearms/baseball,	100),
+		new /datum/data/mining_equipment("real katana",	/obj/item/melee/vampirearms/katana,	500),
+		new /datum/data/mining_equipment("donut",	/obj/item/food/vampire/donut,	10)
+	)

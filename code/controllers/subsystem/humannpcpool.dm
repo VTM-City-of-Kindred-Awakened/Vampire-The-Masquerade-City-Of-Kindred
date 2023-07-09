@@ -30,9 +30,9 @@ SUBSYSTEM_DEF(humannpcpool)
 			log_world("Found a null in npc list!")
 			continue
 
-		if(!NPC.ckey && NPC.stat <= 2)
+		if(!NPC.CheckMove() && !NPC.route_optimisation())
 			NPC.handle_automated_movement()
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
 
 /datum/controller/subsystem/humannpcpool/proc/npclost()

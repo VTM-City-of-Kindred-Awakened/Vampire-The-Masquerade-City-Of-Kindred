@@ -13,6 +13,7 @@
 	H.add_quirk(/datum/quirk/lightophobia)
 
 /datum/vampireclane/ministry/post_gain(mob/living/carbon/human/H)
+	..()
 	if(H.client)
 		if(H.client.prefs)
 			if(H.client.prefs.discipline3level >= 3)

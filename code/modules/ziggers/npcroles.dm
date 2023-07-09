@@ -783,20 +783,16 @@
 	bloodquality = BLOOD_QUALITY_LOW
 	bloodpool = 1
 	maxbloodpool = 1
+	del_on_death = 1
 	maxHealth = 5
 	health = 5
 
 /mob/living/simple_animal/pet/rat/Life()
-	for(var/mob/living/carbon/human/H in range(7))
-		if(!H)
-			qdel(src)
-			return
-	..()
-
-/mob/living/simple_animal/pet/rat/death()
 	. = ..()
-	qdel(src)
-	return
+	for(var/mob/living/carbon/human/H in range(5, src))
+		if(!H)
+			death()
+			return
 
 /datum/socialrole/shop
 	s_tones = list("albino",
@@ -1193,6 +1189,7 @@
 										"Volaju")
 
 	shoes = list(/obj/item/clothing/shoes/vampire/heels)
+	uniforms = list(/obj/item/clothing/under/vampire/whore)
 	backpacks = list()
 
 	female_phrases = list("Хочешь поглазеть, пупсик?",

@@ -10,6 +10,7 @@
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 
 	var/list/accesslocks = list("nothing")
+	var/roundstart_fix = FALSE
 
 /obj/item/vamp/keys/camarilla
 	name = "Camarilla keys"
@@ -79,6 +80,9 @@
 /obj/item/vamp/keys/npc/Initialize()
 	. = ..()
 	accesslocks = list("npc[rand(1, 20)]")
+
+/obj/item/vamp/keys/npc/fix
+	roundstart_fix = TRUE
 
 /obj/item/vamp/keys/police
 	name = "Police keys"
@@ -183,6 +187,9 @@
 			return
 	else if(istype(W, /obj/item/vamp/keys))
 		var/obj/item/vamp/keys/KEY = W
+		if(KEY.roundstart_fix)
+			lock_id = pick(KEY.accesslocks)
+			KEY.roundstart_fix = FALSE
 		if(KEY.accesslocks)
 			for(var/i in KEY.accesslocks)
 				if(i == lock_id)

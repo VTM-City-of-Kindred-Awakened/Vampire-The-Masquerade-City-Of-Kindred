@@ -165,7 +165,7 @@
 	id = /obj/item/cockclock
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/flashlight
-	l_hand = /obj/item/vamp/keys/npc
+	l_hand = /obj/item/vamp/keys/npc/fix
 
 /datum/outfit/civillian2
 	name = "civillian"
@@ -174,7 +174,7 @@
 	id = /obj/item/cockclock
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/flashlight
-	l_hand = /obj/item/vamp/keys/npc
+	l_hand = /obj/item/vamp/keys/npc/fix
 
 /datum/outfit/civillian3
 	name = "civillian"
@@ -183,7 +183,7 @@
 	id = /obj/item/cockclock
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/flashlight
-	l_hand = /obj/item/vamp/keys/npc
+	l_hand = /obj/item/vamp/keys/npc/fix
 
 /datum/outfit/civillian4
 	name = "civillian"
@@ -192,4 +192,4 @@
 	id = /obj/item/cockclock
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/flashlight
-	l_hand = /obj/item/vamp/keys/npc
+	l_hand = /obj/item/vamp/keys/npc/fix

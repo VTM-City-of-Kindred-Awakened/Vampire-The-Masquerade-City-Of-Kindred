@@ -61,6 +61,8 @@
 		actual_range = round(actual_range/2)
 	var/list/seenby = list()
 	for(var/mob/living/carbon/human/npc/NPC in viewers(actual_range, source))
+		if(NPC.CheckMove())
+			return
 		if(source != NPC || affects_source)
 			if(NPC == source)
 				NPC.Aggro(attacker, TRUE)

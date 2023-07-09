@@ -19,6 +19,8 @@
 
 	var/stopturf = 1
 
+	var/last_walkin = 0
+
 	var/obj/item/my_weapon
 	var/spawned_weapon = FALSE
 
@@ -431,6 +433,8 @@
 	last_grab = world.time
 
 /mob/living/carbon/human/npc/proc/EmoteAction()
+	if(CheckMove())
+		return
 	var/shitemote = pick("sigh", "smile", "stare", "look", "spin", "giggle", "blink", "blush", "nod", "sniff", "shrug", "cough", "yawn")
 	if(!is_talking)
 		is_talking = TRUE
@@ -439,6 +443,8 @@
 			is_talking = FALSE
 
 /mob/living/carbon/human/npc/proc/StareAction()
+	if(CheckMove())
+		return
 	if(!is_talking)
 		var/list/interest_persons = list()
 		for(var/mob/living/carbon/human/H in viewers(4, src))
@@ -453,6 +459,8 @@
 					is_talking = FALSE
 
 /mob/living/carbon/human/npc/proc/SpeechAction()
+	if(CheckMove())
+		return
 	if(!is_talking)
 		var/list/interest_persons = list()
 		for(var/mob/living/carbon/human/npc/H in viewers(4, src))

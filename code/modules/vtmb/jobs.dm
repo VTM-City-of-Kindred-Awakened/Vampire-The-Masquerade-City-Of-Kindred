@@ -598,7 +598,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_BOUNCER
 	known_contacts = list("Barkeeper")
-	allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff")
+	allowed_bloodlines = list("Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff")
 
 	duty = "Work for the Barkeeper."
 	minimal_masquerade = 2
@@ -650,7 +650,7 @@
 
 	my_contact_is_important = TRUE
 	known_contacts = list("Barkeeper")
-	allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff")
+	allowed_bloodlines = list("Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff")
 
 	duty = "Provide weapons to other kindred in the city."
 	minimal_masquerade = 3
@@ -697,7 +697,7 @@
 	display_order = JOB_DISPLAY_ORDER_SUPPLY
 	bounty_types = CIV_JOB_RANDOM
 	known_contacts = list("Barkeeper")
-	allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff")
+	allowed_bloodlines = list("Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff")
 
 	duty = "Manage deliveries and supplies for kindred in the City."
 	minimal_masquerade = 2
@@ -857,16 +857,15 @@
 
 /obj/item/card/id/hunter/attack_self(mob/user)
 	. = ..()
-	if(last_detonated+30 > world.time)
+	if(last_detonated+300 > world.time)
 		return
 	last_detonated = world.time
 	do_sparks(rand(5, 9), FALSE, user)
-	playsound(user.loc, 'code/modules/ziggers/sounds/cross.ogg', 100, TRUE, 8, 0.9)
-	new /obj/effect/dummy/lighting_obj (user.loc, 6, 4, COLOR_WHITE, 2)
+	playsound(user.loc, 'code/modules/ziggers/sounds/cross.ogg', 100, FALSE, 8, 0.9)
 	for(var/mob/living/M in get_hearers_in_view(4, user.loc))
 		bang(get_turf(M), M)
 
-/obj/item/card/id/hunter/proc/bang(turf/T , mob/living/M)
+/obj/item/card/id/hunter/proc/bang(turf/T, mob/living/M)
 	if(M.stat == DEAD)	//They're dead!
 		return
 	for(var/obj/item/card/id/hunter/HUNT in M)
@@ -875,21 +874,8 @@
 	M.show_message("<span class='warning'><b>GOD SEES YOU!</b></span>", MSG_AUDIBLE)
 	var/distance = max(0,get_dist(get_turf(src),T))
 
-//Flash
 	if(M.flash_act(affect_silicon = 1))
-		M.Paralyze(max(20/max(1,distance), 5))
-		M.Knockdown(max(200/max(1,distance), 60))
-
-//Bang
-	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
-		M.Paralyze(20)
-		M.Knockdown(200)
-		M.soundbang_act(1, 200, 10, 15)
-	else
-		if(distance <= 1) // Adds more stun as to not prime n' pull (#45381)
-			M.Paralyze(5)
-			M.Knockdown(30)
-		M.soundbang_act(1, max(200/max(1,distance), 60), rand(0, 5))
+		M.Immobilize(max(10/max(1,distance), 5))
 
 /obj/item/card/id/prince
 	name = "leader badge"
@@ -1058,12 +1044,14 @@
 	..()
 	if(H.gender == MALE)
 		shoes = /obj/item/clothing/shoes/vampire
-		if(H.clane.male_clothes)
-			uniform = text2path(H.clane.male_clothes)
+		if(H.clane)
+			if(H.clane.male_clothes)
+				uniform = text2path(H.clane.male_clothes)
 	else
 		shoes = /obj/item/clothing/shoes/vampire/heels
-		if(H.clane.female_clothes)
-			uniform = text2path(H.clane.female_clothes)
+		if(H.clane)
+			if(H.clane.female_clothes)
+				uniform = text2path(H.clane.female_clothes)
 
 /datum/outfit/job/caitiff/post_equip(mob/living/carbon/human/H)
 	..()
@@ -1220,12 +1208,14 @@
 	H.frakcja = "sabbat"
 	if(H.gender == MALE)
 		shoes = /obj/item/clothing/shoes/vampire
-		if(H.clane.male_clothes)
-			uniform = text2path(H.clane.male_clothes)
+		if(H.clane)
+			if(H.clane.male_clothes)
+				uniform = text2path(H.clane.male_clothes)
 	else
 		shoes = /obj/item/clothing/shoes/vampire/heels
-		if(H.clane.female_clothes)
-			uniform = text2path(H.clane.female_clothes)
+		if(H.clane)
+			if(H.clane.female_clothes)
+				uniform = text2path(H.clane.female_clothes)
 
 /datum/outfit/job/sabbatist/post_equip(mob/living/carbon/human/H)
 	..()

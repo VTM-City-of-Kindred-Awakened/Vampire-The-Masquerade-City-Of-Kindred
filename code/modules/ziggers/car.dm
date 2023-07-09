@@ -16,6 +16,7 @@
 	layer = CAR_LAYER
 	pixel_w = -32
 	pixel_z = -32
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 
 	var/last_vzhzh = 0
 
@@ -46,6 +47,8 @@
 	var/last_beep = 0
 
 	var/component_type = /datum/component/storage/concrete
+
+	var/exploded = FALSE
 
 /obj/vampire_car/ComponentInitialize()
 	. = ..()
@@ -108,17 +111,21 @@
 						to_chat(user, "<span class='notice'>You've managed to open [src]'s lock.</span>")
 						playsound(src, 'code/modules/ziggers/sounds/open.ogg', 50, TRUE)
 						return
+					else
+						to_chat(user, "<span class='warning'>You've failed to open [src]'s lock.</span>")
+						playsound(src, 'code/modules/ziggers/sounds/signal.ogg', 50, FALSE)
+						for(var/mob/living/carbon/human/npc/police/P in range(7, src))
+							if(P)
+								P.Aggro(user)
+						repairing = FALSE
+						return
 				else
 					to_chat(user, "<span class='warning'>You've failed to open [src]'s lock.</span>")
-					playsound(src, 'code/modules/ziggers/sounds/signal.ogg', 50, FALSE)
-					for(var/mob/living/carbon/human/npc/police/P in range(7, src))
-						if(P)
-							P.Aggro(user)
 					repairing = FALSE
 					return
 				return
 			return
-		else if(K.accesslocks)
+		if(K.accesslocks)
 			for(var/i in K.accesslocks)
 				if(i == access)
 					to_chat(user, "<span class='notice'>You [locked ? "open" : "close"] [src]'s lock.</span>")
@@ -141,6 +148,7 @@
 				return
 			return
 		return
+
 	else
 		if(I.force)
 			get_damage(round(I.force/2))
@@ -148,15 +156,15 @@
 				if(prob(50))
 					L.apply_damage(round(I.force/2), I.damtype, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST))
 
-		if(!driver && !length(passengers) && last_beep+70 < world.time)
-			last_beep = world.time
-			playsound(src, 'code/modules/ziggers/sounds/signal.ogg', 50, FALSE)
-			for(var/mob/living/carbon/human/npc/police/P in range(7, src))
-				P.Aggro(user)
+			if(!driver && !length(passengers) && last_beep+70 < world.time && locked)
+				last_beep = world.time
+				playsound(src, 'code/modules/ziggers/sounds/signal.ogg', 50, FALSE)
+				for(var/mob/living/carbon/human/npc/police/P in range(7, src))
+					P.Aggro(user)
 
-		if(prob(10) && locked && I.force)
-			playsound(src, 'code/modules/ziggers/sounds/open.ogg', 50, TRUE)
-			locked = FALSE
+			if(prob(10) && locked)
+				playsound(src, 'code/modules/ziggers/sounds/open.ogg', 50, TRUE)
+				locked = FALSE
 
 	..()
 
@@ -170,9 +178,25 @@
 	. = ..()
 	qdel(FARI)
 	for(var/mob/living/L in src)
-		var/datum/action/carr/exit_car/C = locate() in L.actions
-		if(C)
-			C.Trigger()
+		L.forceMove(loc)
+		var/datum/action/carr/exit_car/E = locate() in L.actions
+		if(E)
+			qdel(E)
+		var/datum/action/carr/fari_vrubi/F = locate() in L.actions
+		if(F)
+			qdel(F)
+		var/datum/action/carr/engine/N = locate() in L.actions
+		if(N)
+			qdel(N)
+		var/datum/action/carr/stage/S = locate() in L.actions
+		if(S)
+			qdel(S)
+		var/datum/action/carr/beep/B = locate() in L.actions
+		if(B)
+			qdel(B)
+		var/datum/action/carr/baggage/G = locate() in L.actions
+		if(G)
+			qdel(G)
 
 /obj/vampire_car/process(delta_time)
 	if(last_speeded+15 < world.time)
@@ -207,10 +231,32 @@
 	if(health == 0)
 		on = FALSE
 		STOP_PROCESSING(SSobj, src)
+		if(!exploded && prob(10))
+			exploded = TRUE
+			for(var/mob/living/L in src)
+				L.forceMove(loc)
+				var/datum/action/carr/exit_car/E = locate() in L.actions
+				if(E)
+					qdel(E)
+				var/datum/action/carr/fari_vrubi/F = locate() in L.actions
+				if(F)
+					qdel(F)
+				var/datum/action/carr/engine/N = locate() in L.actions
+				if(N)
+					qdel(N)
+				var/datum/action/carr/stage/S = locate() in L.actions
+				if(S)
+					qdel(S)
+				var/datum/action/carr/beep/B = locate() in L.actions
+				if(B)
+					qdel(B)
+				var/datum/action/carr/baggage/G = locate() in L.actions
+				if(G)
+					qdel(G)
+			explosion(loc,0,1,3,4)
 	else if(prob(50) && health <= maxhealth/2)
 		on = FALSE
 		STOP_PROCESSING(SSobj, src)
-
 	return
 
 /datum/action/carr/fari_vrubi

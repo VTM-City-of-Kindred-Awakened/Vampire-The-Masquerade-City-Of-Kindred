@@ -18,6 +18,7 @@
 	H.faction |= "Tzimisce"
 
 /datum/vampireclane/tzimisce/post_gain(mob/living/carbon/human/H)
+	..()
 	var/datum/action/vicissitude/U = new()
 	U.Grant(H)
 	if(H.mind)
@@ -32,10 +33,6 @@
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_trench)
 	var/obj/item/organ/cyberimp/arm/surgery/S = new()
 	S.Insert(H)
-	if(H.dna)
-		if(H.dna.species)
-			H.dna.species.inherent_traits |= TRAIT_EASYDISMEMBER
-			H.dna.species.inherent_traits |= TRAIT_LIMBATTACHMENT
 
 /datum/crafting_recipe/tzi_trench
 	name = "Leather-Bone Trenchcoat (Armor)"

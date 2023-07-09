@@ -8,6 +8,9 @@
 
 /obj/manholeup/attack_hand(mob/user)
 	var/turf/destination = get_step_multiz(src, UP)
+	var/mob/living/L = user
+	if(L.pulling)
+		L.pulling.forceMove(destination)
 	user.forceMove(destination)
 	playsound(src, 'code/modules/ziggers/sounds/manhole.ogg', 50, TRUE)
 	..()
@@ -22,6 +25,9 @@
 
 /obj/manholedown/attack_hand(mob/user)
 	var/turf/destination = get_step_multiz(src, DOWN)
+	var/mob/living/L = user
+	if(L.pulling)
+		L.pulling.forceMove(destination)
 	user.forceMove(destination)
 	playsound(src, 'code/modules/ziggers/sounds/manhole.ogg', 50, TRUE)
 	..()

@@ -13,9 +13,10 @@
 	pixel_x = rand(-8,8) //MOJAVE SUN EDIT - Blood Sprites
 	pixel_y = rand(-8,8) //MOJAVE SUN EDIT - Blood Sprites
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
-	C.add_blood_DNA(return_blood_DNA())
-	if (bloodiness)
-		C.bloodiness = min((C.bloodiness + bloodiness), BLOOD_AMOUNT_PER_DECAL)
+	if(C)
+		C.add_blood_DNA(return_blood_DNA())
+		if(bloodiness)
+			C.bloodiness = min((C.bloodiness + bloodiness), BLOOD_AMOUNT_PER_DECAL)
 	return ..()
 
 /obj/effect/decal/cleanable/blood/old

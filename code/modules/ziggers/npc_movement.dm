@@ -51,12 +51,11 @@
 				tupik_loc = loc
 				tupik_steps = 0
 			if(tupik_steps > 1)
-				if(!CheckMove())
-					var/turf/T = get_step(src, pick(NORTH, SOUTH, WEST, EAST))
-					face_atom(T)
-					step_to(src,T,0)
-					walktarget = ChoosePath()
-		if(prob(5) && !danger_source && stat <= 2 && !IsSleeping())
+				var/turf/T = get_step(src, pick(NORTH, SOUTH, WEST, EAST))
+				face_atom(T)
+				step_to(src,T,0)
+				walktarget = ChoosePath()
+		if(prob(5) && !danger_source)
 			var/activity = rand(1, 3)
 			switch(activity)
 				if(1)
@@ -149,6 +148,19 @@
 		return TRUE
 	return FALSE
 
+/mob/living/carbon/human/npc
+	var/no_walks = 0
+
+/mob/living/carbon/human/npc/proc/route_optimisation()
+	for(var/mob/M in viewers(10, src))
+		if(M.client)
+			return FALSE
+	if(no_walks >= 10)
+		no_walks = 0
+		return FALSE
+	no_walks = no_walks+1
+	return TRUE
+
 /mob/living/carbon/human/npc/proc/juststep()
 	if(!walktarget || !isturf(loc) || CheckMove())
 		return
@@ -167,6 +179,8 @@
 		face_atom(walktarget)
 		stopturf = rand(1, 2)
 
+	last_walkin = world.time
+
 /mob/living/carbon/human/npc/proc/awaystep()
 	if(!danger_source || !isturf(loc) || CheckMove())
 		return
@@ -177,6 +191,8 @@
 	if(get_turf(src) != toface)
 		dir = get_dir(toface, get_turf(src))
 
+	last_walkin = world.time
+
 /mob/living/carbon/human/npc/proc/enemystep()
 	if(!danger_source || !isturf(loc) || CheckMove())
 		return
@@ -184,6 +200,8 @@
 
 	face_atom(danger_source)
 	step_to(src,danger_source,0)
+
+	last_walkin = world.time
 
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
 	if(CheckMove())
@@ -198,10 +216,12 @@
 			if(m_intent == MOVE_INTENT_WALK)
 				toggle_move_intent(src)
 			if(!my_weapon)
-				var/datum/cb = CALLBACK(src,.proc/awaystep)
-				var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
-				for(var/i in 1 to reqsteps)
-					addtimer(cb, (i - 1)*total_multiplicative_slowdown())
+				if(last_walkin+10 < world.time)
+					last_walkin = world.time
+					var/datum/cb = CALLBACK(src,.proc/awaystep)
+					var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
+					for(var/i in 1 to reqsteps)
+						addtimer(cb, (i - 1)*total_multiplicative_slowdown())
 			if(my_weapon)
 				if(!spawned_weapon)
 					my_weapon.forceMove(loc)
@@ -209,14 +229,20 @@
 					put_in_active_hand(my_weapon)
 					spawned_weapon = TRUE
 				else if(get_active_held_item() != my_weapon)
-					my_weapon = null
-					spawned_weapon = FALSE
-				ClickOn(danger_source)
-				face_atom(danger_source)
-				var/datum/cb = CALLBACK(src,.proc/enemystep)
-				var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
-				for(var/i in 1 to reqsteps)
-					addtimer(cb, (i - 1)*total_multiplicative_slowdown())
+					if(isturf(my_weapon.loc) && get_dist(src, my_weapon) < 2)
+						ClickOn(my_weapon)
+					else
+						my_weapon = null
+						spawned_weapon = FALSE
+				if(danger_source)
+					ClickOn(danger_source)
+					face_atom(danger_source)
+				if(last_walkin+10 < world.time)
+					last_walkin = world.time
+					var/datum/cb = CALLBACK(src,.proc/enemystep)
+					var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
+					for(var/i in 1 to reqsteps)
+						addtimer(cb, (i - 1)*total_multiplicative_slowdown())
 
 			if(isliving(danger_source))
 				var/mob/living/L = danger_source
@@ -240,10 +266,12 @@
 		else if(walktarget && !staying)
 			if(prob(25))
 				toggle_move_intent(src)
-			var/datum/cb = CALLBACK(src,.proc/juststep)
-			var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
-			for(var/i in 1 to reqsteps)
-				addtimer(cb, (i - 1)*total_multiplicative_slowdown())
+			if(last_walkin+10 < world.time)
+				last_walkin = world.time
+				var/datum/cb = CALLBACK(src,.proc/juststep)
+				var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
+				for(var/i in 1 to reqsteps)
+					addtimer(cb, (i - 1)*total_multiplicative_slowdown())
 
 /*
 	if(danger_source)

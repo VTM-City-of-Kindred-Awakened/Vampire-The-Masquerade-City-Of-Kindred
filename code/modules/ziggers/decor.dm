@@ -372,11 +372,10 @@
 	icon = 'code/modules/ziggers/icons.dmi'
 
 /obj/machinery/light/prince/ghost
-	var/scary_explode = FALSE
 
 /obj/machinery/light/prince/ghost/Crossed(atom/movable/AM)
 	. = ..()
-	if(ishuman(AM) && scary_explode)
+	if(ishuman(AM))
 		var/mob/living/L = AM
 		if(L.client)
 			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
@@ -565,7 +564,7 @@
 			if(bloodpool < 1)
 				V.visible_message("<span class='warning'>[V] can't find enough blood in [src]!</span>")
 				return
-			if(V.last_extracted+300 > world.time)
+			if(V.last_extracted+1200 > world.time)
 				V.visible_message("<span class='warning'>[V] isn't ready!</span>")
 				return
 			V.last_extracted = world.time
@@ -803,7 +802,7 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 		var/mob/living/carbon/human/C = mob_occupant
 		gear = C.get_all_gear()
 		for(var/obj/item/item_content as anything in gear)
-			item_content.forceMove(pod.loc)
+			qdel(item_content)
 		for(var/mob/living/L in mob_occupant.GetAllContents() - mob_occupant)
 			L.forceMove(pod.loc)
 		if(mob_occupant.client)
@@ -1001,3 +1000,12 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 /obj/sarcophagus/Initialize()
 	. = ..()
 	to_chat(world, "<span class='userdanger'><b>UNKNOWN SARCOPHAGUS POSITION HAS BEEN LEAKED</b></span>")
+
+/obj/american_flag
+	name = "american flag"
+	desc = "PATRIOTHICC!!!"
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "america"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE

@@ -9,6 +9,7 @@
 	female_clothes = "/obj/item/clothing/under/vampire/bandit"
 
 /datum/vampireclane/banu_haqim/post_gain(mob/living/carbon/human/H)
+	..()
 	if(H.client)
 		if(H.client.prefs)
 			if(H.client.prefs.discipline3level >= 3)

@@ -289,6 +289,13 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	SSjob.latejoin_trackers += loc
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/latejoin_masquerade
+	name = "JoinLate"
+
+/obj/effect/landmark/latejoin_masquerade/Initialize(mapload)
+	..()
+	GLOB.masquerade_latejoin |= src
+
 //space carps, magicarps, lone ops, slaughter demons, possibly revenants spawn here
 /obj/effect/landmark/carpspawn
 	name = "carpspawn"

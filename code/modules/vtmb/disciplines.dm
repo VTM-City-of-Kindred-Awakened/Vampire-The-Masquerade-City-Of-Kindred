@@ -107,7 +107,7 @@
 	var/obj/effect/spectral_wolf/W = new(get_step(target, antidir))
 	W.dir = target.dir
 	W.set_light(2, 2, "#6eeeff")
-	target.Stun(10)
+	target.Immobilize(10)
 	spawn(10)
 		W.forceMove(target.loc)
 		playsound(W.loc, 'code/modules/ziggers/sounds/volk.ogg', 80, TRUE)
@@ -200,6 +200,9 @@
 
 /datum/discipline/dominate/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
+	if(iskindred(target))
+		if(target.generation <= caster.generation)
+			return
 	var/mob/living/carbon/human/TRGT
 	if(ishuman(target))
 		TRGT = target
@@ -210,29 +213,29 @@
 		TRGT.apply_overlay(MUTATIONS_LAYER)
 	switch(level_casting)
 		if(1)
-			target.Stun(5)
+			target.Immobilize(5)
+			to_chat(target, "<span class='userdanger'><b>FORGET ABOUT IT</b></span>")
+		if(2)
+			target.Immobilize(5)
 			if(target.body_position == STANDING_UP)
 				to_chat(target, "<span class='userdanger'><b>GET DOWN</b></span>")
 				target.toggle_resting()
 			else
 				to_chat(target, "<span class='userdanger'><b>STAY DOWN</b></span>")
-		if(2)
-			to_chat(target, "<span class='userdanger'><b>FORGET ABOUT IT</b></span>")
-			target.drop_all_held_items()
-			target.Stun(10)
-		if(3)
+		if(3 to 4)
 			to_chat(target, "<span class='userdanger'><b>FALL ASLEEP</b></span>")
-			target.Sleeping(20)
-		if(4 to 5)
+			target.Sleeping(50*(level_casting-2))
+		if(5)
 			to_chat(target, "<span class='userdanger'><b>YOU SHOULD KILL YOURSELF NOW</b></span>")
 			if(iskindred(target))
-				target.Knockdown(5*level_casting)
+				target.Immobilize(5*level_casting)
+				target.drop_all_held_items()
 				target.visible_message("<span class='warning'><b>[target] tries to wring \his neck!</b></span>", "<span class='warning'><b>You try to wring your own neck!</b></span>")
 				playsound(target.loc, 'code/modules/ziggers/sounds/suicide.ogg', 80, TRUE)
 				target.apply_damage(5*level_casting, BRUTE, BODY_ZONE_HEAD)
 			else
 				target.drop_all_held_items()
-				target.Stun(10)
+				target.Immobilize(10)
 				spawn(10)
 					target.visible_message("<span class='warning'><b>[target] wrings \his neck!</b></span>", "<span class='warning'><b>You wring your own neck!</b></span>")
 					playsound(target.loc, 'code/modules/ziggers/sounds/suicide.ogg', 80, TRUE)
@@ -347,10 +350,10 @@
 	..()
 	for(var/mob/living/carbon/human/H in viewers(5, caster))
 		if(H != caster)
-			if(H.generation > caster.generation)
+			if(H.generation < caster.generation)
 				return
 			H.emote("laugh")
-			H.Stun(10*level_casting)
+			H.Immobilize(10*level_casting)
 			if(H.stat <= 2 && !H.IsSleeping() && !H.IsUnconscious() && !H.IsParalyzed() && !H.IsKnockdown() && !HAS_TRAIT(H, TRAIT_RESTRAINED))
 				if(prob(50))
 					dancefirst(H)
@@ -434,7 +437,7 @@
 
 /datum/discipline/presence/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/mod = level_casting/2
+	var/mod = 0.3*level_casting
 	for(var/mob/living/carbon/human/L in viewers(6, caster))
 		if(L != caster)
 			var/mob/living/carbon/human/H = L
@@ -739,7 +742,7 @@
 			if(EAST)
 				antidir = WEST
 		if(target.dir == antidir)
-			target.Stun(10)
+			target.Immobilize(10)
 			target.visible_message("<span class='warning'><b>[caster] hypnotizes [target] with his eyes!</b></span>", "<span class='warning'><b>[caster] hypnotizes you like a cobra!</b></span>")
 			playsound(target.loc, 'code/modules/ziggers/sounds/serpentis.ogg', 50, TRUE)
 			if(ishuman(target))
@@ -752,8 +755,8 @@
 		if(get_dist(caster, target) <= 2+level_casting)
 			playsound(target.loc, 'code/modules/ziggers/sounds/serpentis.ogg', 50, TRUE)
 			playsound(caster.loc, 'code/modules/ziggers/sounds/tongue.ogg', 50, TRUE)
-			target.Stun(5*level_casting)
-			target.apply_damage(5*level, BRUTE, BODY_ZONE_HEAD)
+			target.Immobilize(5*level_casting)
+			target.apply_damage(5*level_casting, BRUTE, BODY_ZONE_HEAD)
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				H.remove_overlay(MUTATIONS_LAYER)
@@ -858,7 +861,7 @@
 		else
 			target.emote("scream")
 			target.apply_damage(10*level_casting, BRUTE, BODY_ZONE_CHEST)
-			if(prob(10*level_casting))
+			if(prob(5*level_casting))
 				var/obj/item/bodypart/B = H.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 				if(B)
 					B.drop_limb()

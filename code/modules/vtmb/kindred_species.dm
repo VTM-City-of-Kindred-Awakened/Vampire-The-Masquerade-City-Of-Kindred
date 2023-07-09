@@ -4,7 +4,7 @@
 	default_color = "FFFFFF"
 	toxic_food = MEAT | VEGETABLES | RAW | JUNKFOOD | GRAIN | FRUIT | DAIRY | FRIED | ALCOHOL | SUGAR | PINEAPPLE
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, HAS_FLESH, HAS_BONE)
-	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_VIRUSIMMUNE, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_TOXIMMUNE, TRAIT_NOCRITDAMAGE)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_VIRUSIMMUNE, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_TOXIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_LIMBATTACHMENT)
 	use_skintones = TRUE
 	limbs_id = "human"
 	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
@@ -158,8 +158,15 @@
 			to_chat(owner, "<span class='notice'>You started to feed [BLOODBONDED] with your own blood.</span>")
 			if(do_mob(owner, BLOODBONDED, 10 SECONDS))
 				var/new_master = FALSE
-				to_chat(owner, "<span class='notice'>You successfuly fed [BLOODBONDED] with vitae.</span>")
+				if(isdead(BLOODBONDED))
+					if(BLOODBONDED.respawntimeofdeath+600 > world.time)
+						BLOODBONDED.revive(TRUE, FALSE)
+					else
+						to_chat(owner, "<span class='notice'>[BLOODBONDED] is totally <b>DEAD</b>!</span>")
+						giving = FALSE
+						return
 				H.bloodpool = max(0, H.bloodpool-2)
+				to_chat(owner, "<span class='notice'>You successfuly fed [BLOODBONDED] with vitae.</span>")
 				BLOODBONDED.adjustBruteLoss(-25, TRUE)
 				if(length(BLOODBONDED.all_wounds))
 					var/datum/wound/W = pick(BLOODBONDED.all_wounds)
