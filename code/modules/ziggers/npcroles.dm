@@ -790,7 +790,7 @@
 /mob/living/simple_animal/pet/rat/Life()
 	. = ..()
 	var/delete_me = TRUE
-	for(var/mob/living/carbon/human/H in range(5, src))
+	for(var/mob/living/carbon/human/H in viewers(5, src))
 		if(H)
 			delete_me = FALSE
 	if(delete_me)

@@ -216,12 +216,12 @@
 			if(m_intent == MOVE_INTENT_WALK)
 				toggle_move_intent(src)
 			if(!my_weapon)
-				if(last_walkin+5 < world.time)
-					last_walkin = world.time
-					var/datum/cb = CALLBACK(src,.proc/awaystep)
-					var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
-					for(var/i in 1 to reqsteps)
-						addtimer(cb, (i - 1)*total_multiplicative_slowdown())
+//				if(last_walkin+5 < world.time)
+				last_walkin = world.time
+				var/datum/cb = CALLBACK(src,.proc/awaystep)
+				var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
+				for(var/i in 1 to reqsteps)
+					addtimer(cb, (i - 1)*total_multiplicative_slowdown())
 			if(my_weapon)
 				if(!spawned_weapon)
 					my_weapon.forceMove(loc)
@@ -237,12 +237,12 @@
 				if(danger_source)
 					ClickOn(danger_source)
 					face_atom(danger_source)
-				if(last_walkin+5 < world.time)
-					last_walkin = world.time
-					var/datum/cb = CALLBACK(src,.proc/enemystep)
-					var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
-					for(var/i in 1 to reqsteps)
-						addtimer(cb, (i - 1)*total_multiplicative_slowdown())
+//				if(last_walkin+5 < world.time)
+				last_walkin = world.time
+				var/datum/cb = CALLBACK(src,.proc/enemystep)
+				var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
+				for(var/i in 1 to reqsteps)
+					addtimer(cb, (i - 1)*total_multiplicative_slowdown())
 
 			if(isliving(danger_source))
 				var/mob/living/L = danger_source
@@ -266,7 +266,7 @@
 		else if(walktarget && !staying)
 			if(prob(25))
 				toggle_move_intent(src)
-			if(last_walkin+5 < world.time)
+			if(last_walkin+3 < world.time)
 				last_walkin = world.time
 				var/datum/cb = CALLBACK(src,.proc/juststep)
 				var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
