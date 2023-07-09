@@ -152,9 +152,12 @@
 	var/no_walks = 0
 
 /mob/living/carbon/human/npc/proc/route_optimisation()
+	var/sosat = FALSE
 	for(var/mob/M in viewers(10, src))
 		if(M.client)
-			return FALSE
+			sosat = TRUE
+	if(sosat)
+		return FALSE
 	if(no_walks >= 10)
 		no_walks = 0
 		return FALSE
