@@ -789,10 +789,13 @@
 
 /mob/living/simple_animal/pet/rat/Life()
 	. = ..()
+	var/delete_me = TRUE
 	for(var/mob/living/carbon/human/H in range(5, src))
-		if(!H)
-			death()
-			return
+		if(H)
+			delete_me = FALSE
+	if(delete_me)
+		death()
+		return
 
 /datum/socialrole/shop
 	s_tones = list("albino",
