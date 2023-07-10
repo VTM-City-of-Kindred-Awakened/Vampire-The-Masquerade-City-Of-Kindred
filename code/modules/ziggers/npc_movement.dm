@@ -22,18 +22,20 @@
 	GLOB.npc_list += src
 
 /mob/living/carbon/human/npc/death()
+	walk(src,0)
 	if(last_attacker)
 		if(ishuman(last_attacker))
 			if(get_dist(src, last_attacker) < 7)
 				AdjustHumanity(last_attacker, -1, 0)
 	remove_overlay(FIGHT_LAYER)
 	GLOB.npc_list -= src
-	SShumannpcpool.npclost()
+//	SShumannpcpool.npclost()
 	..()
 
 /mob/living/carbon/human/npc/Destroy()
 	..()
 	GLOB.npc_list -= src
+	SShumannpcpool.npclost()
 
 /mob/living/carbon/human/npc/Life()
 	if(stat == DEAD)
@@ -164,52 +166,10 @@
 	no_walks = no_walks+1
 	return TRUE
 
-/mob/living/carbon/human/npc/proc/juststep()
-	if(!walktarget || !isturf(loc) || CheckMove())
-		return
-	set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
-
-//	var/turf/T = get_turf(src)
-	face_atom(walktarget)
-	step_to(src,walktarget,0)
-//	if(get_turf(src) == T)
-//		tupik_steps += 1
-//	if(tupik_steps > 3)
-//		tupik_steps = 0
-//		walktarget = ChoosePath()
-	if(get_dist(walktarget, src) <= stopturf)
-		walktarget = ChoosePath()
-		face_atom(walktarget)
-		stopturf = rand(1, 2)
-
-	last_walkin = world.time
-
-/mob/living/carbon/human/npc/proc/awaystep()
-	if(!danger_source || !isturf(loc) || CheckMove())
-		return
-	set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
-
-	var/turf/toface = get_turf(src)
-	step_away(src,danger_source,0)
-	if(get_turf(src) != toface)
-		dir = get_dir(toface, get_turf(src))
-
-	last_walkin = world.time
-
-/mob/living/carbon/human/npc/proc/enemystep()
-	if(!danger_source || !isturf(loc) || CheckMove())
-		return
-	set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
-
-	face_atom(danger_source)
-	step_to(src,danger_source,0)
-
-	last_walkin = world.time
-
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
 	if(CheckMove())
 		return
-	if(!walktarget && !staying)
+	if(!walktarget && !staying && !danger_source)
 		walktarget = ChoosePath()
 		face_atom(walktarget)
 		stopturf = rand(1, 2)
@@ -220,32 +180,27 @@
 				toggle_move_intent(src)
 			if(!my_weapon)
 //				if(last_walkin+5 < world.time)
-				last_walkin = world.time
-				var/datum/cb = CALLBACK(src,.proc/awaystep)
-				var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
-				for(var/i in 1 to reqsteps)
-					addtimer(cb, (i - 1)*total_multiplicative_slowdown())
+				var/reqsteps = round((SShumannpcpool.next_fire-world.time)/total_multiplicative_slowdown())
+				set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
+				walk_away(src, danger_source, reqsteps, total_multiplicative_slowdown())
 			if(my_weapon)
 				if(!spawned_weapon)
 					my_weapon.forceMove(loc)
 					drop_all_held_items()
 					put_in_active_hand(my_weapon)
 					spawned_weapon = TRUE
-				else if(get_active_held_item() != my_weapon)
-					if(isturf(my_weapon.loc) && get_dist(src, my_weapon) < 2)
+				if(get_active_held_item() != my_weapon)
+					if(isturf(my_weapon.loc) && get_dist(src, my_weapon) < 2 && !get_active_held_item())
 						ClickOn(my_weapon)
 					else
 						my_weapon = null
-						spawned_weapon = FALSE
 				if(danger_source)
 					ClickOn(danger_source)
 					face_atom(danger_source)
 //				if(last_walkin+5 < world.time)
-				last_walkin = world.time
-				var/datum/cb = CALLBACK(src,.proc/enemystep)
-				var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
-				for(var/i in 1 to reqsteps)
-					addtimer(cb, (i - 1)*total_multiplicative_slowdown())
+					var/reqsteps = round((SShumannpcpool.next_fire-world.time)/total_multiplicative_slowdown())
+					set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
+					walk_to(src, danger_source, reqsteps, total_multiplicative_slowdown())
 
 			if(isliving(danger_source))
 				var/mob/living/L = danger_source
@@ -269,12 +224,16 @@
 		else if(walktarget && !staying)
 			if(prob(25))
 				toggle_move_intent(src)
-			if(last_walkin+3 < world.time)
-				last_walkin = world.time
-				var/datum/cb = CALLBACK(src,.proc/juststep)
-				var/reqsteps = SShumannpcpool.wait/total_multiplicative_slowdown()
-				for(var/i in 1 to reqsteps)
-					addtimer(cb, (i - 1)*total_multiplicative_slowdown())
+			var/reqsteps = round((SShumannpcpool.next_fire-world.time)/total_multiplicative_slowdown())
+			set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
+			walk_to(src, walktarget, reqsteps, total_multiplicative_slowdown())
+
+		if(my_weapon)
+			if(spawned_weapon)
+				if(get_active_held_item() == my_weapon)
+					drop_all_held_items()
+					my_weapon.forceMove(src)
+					spawned_weapon = FALSE
 
 /*
 	if(danger_source)

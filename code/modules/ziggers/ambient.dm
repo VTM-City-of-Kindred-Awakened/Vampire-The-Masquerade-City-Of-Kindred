@@ -132,6 +132,10 @@
 	music = /datum/vampiremusic/hollywood
 	upper = TRUE
 
+/area/vtm/graveyard/interior
+	name = "Graveyard Interior"
+	icon_state = "interior"
+
 /area/vtm/park
 	name = "Park"
 	icon_state = "park"

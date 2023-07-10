@@ -105,7 +105,7 @@
 			if(!repairing)
 				repairing = TRUE
 				if(do_mob(user, src, 20 SECONDS))
-					if(prob(50) || HAS_TRAIT(driver, TRAIT_BONE_KEY))
+					if(prob(50) || HAS_TRAIT(user, TRAIT_BONE_KEY))
 						locked = FALSE
 						repairing = FALSE
 						to_chat(user, "<span class='notice'>You've managed to open [src]'s lock.</span>")

@@ -28,7 +28,8 @@ SUBSYSTEM_DEF(graveyard)
 		for(var/mob/living/L in graveyarders)
 			if(L)
 				if(L.client)
-					AdjustMasquerade(L, -1)
+					if(istype(get_area(L), /area/vtm/graveyard))
+						AdjustMasquerade(L, -1)
 					lost_points = 0
 
 	if(clear_runs > 2)

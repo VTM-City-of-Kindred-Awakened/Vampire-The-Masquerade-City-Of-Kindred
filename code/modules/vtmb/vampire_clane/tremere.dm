@@ -38,10 +38,12 @@
 				drawing = FALSE
 				new ritual(H.loc)
 				H.bloodpool = max(0, H.bloodpool-2)
+				if(CheckEyewitness(H, H, 7, FALSE))
+					AdjustMasquerade(H, -1)
 			else
 				drawing = FALSE
 	else
-		var/ritual = input(owner, "Choose rune to draw:", "Thaumaturgy") as anything in list("???")
+		var/ritual = input(owner, "Choose rune to draw:", "Thaumaturgy") as anything in list("???", "???")
 		if(ritual)
 			drawing = TRUE
 			if(do_after(H, 30, H))
@@ -50,5 +52,7 @@
 				var/rune = pick(subtypesof(/obj/ritualrune))
 				new rune(H.loc)
 				H.bloodpool = max(0, H.bloodpool-2)
+				if(CheckEyewitness(H, H, 7, FALSE))
+					AdjustMasquerade(H, -1)
 			else
 				drawing = FALSE

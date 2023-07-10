@@ -494,12 +494,13 @@
 			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
-					playsound(caster.loc, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
-					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
-					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
-					caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-10
-					caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-10
-					caster.remove_overlay(PROTEAN_LAYER)
+					if(caster.dna)
+						playsound(caster.loc, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
+						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
+						caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
+						caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-10
+						caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-10
+						caster.remove_overlay(PROTEAN_LAYER)
 		if(2)
 			caster.drop_all_held_items()
 			caster.dna.species.attack_verb = "slash"
@@ -512,13 +513,14 @@
 			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
-					playsound(caster.loc, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
-					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
-					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
-					caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-15
-					caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-15
-					caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean2)
-					caster.remove_overlay(PROTEAN_LAYER)
+					if(caster.dna)
+						playsound(caster.loc, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
+						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
+						caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
+						caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-15
+						caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-15
+						caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean2)
+						caster.remove_overlay(PROTEAN_LAYER)
 		if(3)
 			caster.drop_all_held_items()
 			caster.dna.species.attack_verb = "slash"
@@ -531,13 +533,14 @@
 			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
-					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
-					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
-					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
-					caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-20
-					caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-20
-					caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean3)
-					caster.remove_overlay(PROTEAN_LAYER)
+					if(caster.dna)
+						playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
+						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
+						caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
+						caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-20
+						caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-20
+						caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean3)
+						caster.remove_overlay(PROTEAN_LAYER)
 		if(4)
 			caster.drop_all_held_items()
 			caster.dna.species.attack_verb = "slash"
@@ -553,16 +556,17 @@
 			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
-					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
-					caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
-					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
-					caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-25
-					caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-25
-					if(level_casting == 5)
-						caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean5)
-					else
-						caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean4)
-					caster.remove_overlay(PROTEAN_LAYER)
+					if(caster.dna)
+						playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
+						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
+						caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
+						caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-25
+						caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-25
+						if(level_casting == 5)
+							caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean5)
+						else
+							caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean4)
+						caster.remove_overlay(PROTEAN_LAYER)
 
 
 /mob/living/proc/tremere_gib()

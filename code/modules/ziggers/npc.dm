@@ -19,7 +19,6 @@
 
 	var/stopturf = 1
 
-	var/last_walkin = 0
 
 	var/obj/item/my_weapon
 	var/spawned_weapon = FALSE
@@ -311,7 +310,7 @@
 		O.id = socialrole.id_type
 	if(O.uniform && length(socialrole.pockets))
 		O.l_pocket = pick(socialrole.pockets)
-		if(length(socialrole.pockets)-1 > 0 && prob(50))
+		if(length(socialrole.pockets) > 1 && prob(50))
 			var/list/another_pocket = socialrole.pockets.Copy()
 			another_pocket -= O.l_pocket
 			O.r_pocket = pick(another_pocket)
@@ -323,6 +322,7 @@
 	return delay
 
 /mob/living/carbon/human/npc/proc/RealisticSay(var/message)
+	walk(src,0)
 	if(!message)
 		return
 	if(is_talking)
@@ -343,6 +343,7 @@
 				is_talking = FALSE
 
 /mob/living/carbon/human/npc/proc/Annoy(var/atom/source)
+	walk(src,0)
 	if(CheckMove())
 		return
 	if(is_talking)
@@ -433,6 +434,7 @@
 	last_grab = world.time
 
 /mob/living/carbon/human/npc/proc/EmoteAction()
+	walk(src,0)
 	if(CheckMove())
 		return
 	var/shitemote = pick("sigh", "smile", "stare", "look", "spin", "giggle", "blink", "blush", "nod", "sniff", "shrug", "cough", "yawn")
@@ -443,6 +445,7 @@
 			is_talking = FALSE
 
 /mob/living/carbon/human/npc/proc/StareAction()
+	walk(src,0)
 	if(CheckMove())
 		return
 	if(!is_talking)
@@ -459,6 +462,7 @@
 					is_talking = FALSE
 
 /mob/living/carbon/human/npc/proc/SpeechAction()
+	walk(src,0)
 	if(CheckMove())
 		return
 	if(!is_talking)
@@ -496,7 +500,3 @@
 				to_chat(src, "<span class='userdanger'><b>AS PRECIOUS VITAE ENTER YOUR MOUTH, YOU NOW ARE IN THE BLOODBOND OF [owner]. SERVE YOUR REGNANT CORRECTLY, OR YOUR ACTIONS WILL NOT BE TOLERATED.</b></span>")
 				return TRUE
 	return FALSE
-
-/mob/living/carbon/human/npc/Destroy()
-	. = ..()
-	SShumannpcpool.npclost()
