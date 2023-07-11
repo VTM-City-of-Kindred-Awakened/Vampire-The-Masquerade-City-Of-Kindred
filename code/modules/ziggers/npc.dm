@@ -374,6 +374,13 @@
 	if(NPC)
 		if(a_intent != INTENT_HELP)
 			NPC.Annoy(src)
+	if(istype(src, /mob/living/carbon/human/npc))
+		var/mob/living/carbon/human/npc/CPN = src
+		if(CPN.CheckMove())
+			walk(src,0)
+		if(get_dist(src, CPN.walktarget) <= CPN.stopturf)
+			walk(src,0)
+			CPN.walktarget = null
 	if(HAS_TRAIT(src, TRAIT_RUBICON))
 		if(istype(NewLoc, /turf/open/floor/plating/shit))
 			return

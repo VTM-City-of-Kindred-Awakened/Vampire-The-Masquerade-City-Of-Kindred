@@ -56,7 +56,7 @@
  * * mutate_stats - If the plant needs to mutate their stats
  * * spread - If the plant is a result of spreading, reduce its stats
  */
-
+/*
 /obj/structure/glowshroom/Initialize(mapload, obj/item/seeds/newseed, mutate_stats, spread)
 	. = ..()
 	if(newseed)
@@ -102,7 +102,7 @@
 /obj/structure/glowshroom/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive)
-
+*/
 /**
  * Causes glowshroom spreading across the floor/walls.
  */

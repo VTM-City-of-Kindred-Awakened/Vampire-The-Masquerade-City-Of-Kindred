@@ -883,6 +883,8 @@
 
 		//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
 		var/list/screenview = getviewsize(world.view)
+		if(user.client)
+			screenview = getviewsize(user.client.view)
 		var/screenviewX = screenview[1] * world.icon_size
 		var/screenviewY = screenview[2] * world.icon_size
 

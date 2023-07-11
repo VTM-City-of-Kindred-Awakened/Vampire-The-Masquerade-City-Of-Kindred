@@ -72,7 +72,7 @@ Dancer
 
 /datum/quirk/slowpoke/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	H.add_movespeed_modifier(/datum/quirk/slowpoke)
+	H.add_movespeed_modifier(/datum/movespeed_modifier/slowpoke)
 
 /datum/quirk/bloody_sucker
 	name = "Addicted"

@@ -52,7 +52,7 @@
 			if(loc != tupik_loc)
 				tupik_loc = loc
 				tupik_steps = 0
-			if(tupik_steps > 1)
+			if(tupik_steps > 3)
 				var/turf/T = get_step(src, pick(NORTH, SOUTH, WEST, EAST))
 				face_atom(T)
 				step_to(src,T,0)
@@ -170,9 +170,9 @@
 	if(CheckMove())
 		return
 	if(!walktarget && !staying && !danger_source)
+		stopturf = rand(1, 2)
 		walktarget = ChoosePath()
 		face_atom(walktarget)
-		stopturf = rand(1, 2)
 	if(isturf(loc))
 		if(danger_source)
 			a_intent = INTENT_HARM
@@ -189,11 +189,12 @@
 					drop_all_held_items()
 					put_in_active_hand(my_weapon)
 					spawned_weapon = TRUE
-				if(get_active_held_item() != my_weapon)
+				else if(get_active_held_item() != my_weapon)
 					if(isturf(my_weapon.loc) && get_dist(src, my_weapon) < 2 && !get_active_held_item())
 						ClickOn(my_weapon)
 					else
 						my_weapon = null
+
 				if(danger_source)
 					ClickOn(danger_source)
 					face_atom(danger_source)
