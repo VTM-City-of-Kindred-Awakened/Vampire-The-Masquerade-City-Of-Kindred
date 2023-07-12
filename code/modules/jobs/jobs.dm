@@ -43,7 +43,8 @@ GLOBAL_LIST_INIT(neutral_positions, list(
 GLOBAL_LIST_INIT(independent_positions, list(
 	"Chantry Regent",
 	"Chantry Archivist",
-	"Giovanni Member"))
+	"Giovanni Member",
+	"Taxi Driver"))
 
 GLOBAL_LIST_INIT(security_positions, list(
 	))

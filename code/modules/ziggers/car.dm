@@ -49,6 +49,7 @@
 	var/component_type = /datum/component/storage/concrete
 
 	var/exploded = FALSE
+	var/beep_sound = 'code/modules/ziggers/sounds/beep.ogg'
 
 /obj/vampire_car/ComponentInitialize()
 	. = ..()
@@ -289,7 +290,7 @@
 		var/obj/vampire_car/V = owner.loc
 		if(V.last_beep+10 < world.time)
 			V.last_beep = world.time
-			playsound(V, 'code/modules/ziggers/sounds/beep.ogg', 60, TRUE)
+			playsound(V, V.beep_sound, 60, TRUE)
 
 /datum/action/carr/stage
 	name = "Toggle Transmission"
@@ -610,6 +611,45 @@
 /obj/vampire_car/retro/rand/clinic
 	access = "clinic"
 	icon_state = "5"
+
+/obj/vampire_car/police
+	icon_state = "police"
+	max_passengers = 3
+	dir = WEST
+	facing_dir = WEST
+	moving_dir = WEST
+	last_dir = WEST
+	beep_sound = 'code/modules/ziggers/sounds/migalka.ogg'
+	access = "police"
+	var/color_blue = FALSE
+	var/last_color_change = 0
+
+/obj/vampire_car/police/process(delta_time)
+	if(fari_on)
+		if(last_color_change+20 <= world.time)
+			last_color_change = world.time
+			if(color_blue)
+				color_blue = FALSE
+				set_light(0)
+				set_light(3, 2, "#ff0000")
+			else
+				color_blue = TRUE
+				set_light(0)
+				set_light(3, 2, "#0000ff")
+	else
+		if(last_color_change+20 <= world.time)
+			last_color_change = world.time
+			set_light(0)
+	..()
+
+/obj/vampire_car/taxi
+	icon_state = "taxi"
+	max_passengers = 3
+	dir = WEST
+	facing_dir = WEST
+	moving_dir = WEST
+	last_dir = WEST
+	access = "taxi"
 
 /obj/effect/fari
 	invisibility = INVISIBILITY_ABSTRACT

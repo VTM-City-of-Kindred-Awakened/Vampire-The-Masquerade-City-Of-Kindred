@@ -96,6 +96,11 @@
 	name = "Mafia keys"
 	accesslocks = list("giovanni")
 
+/obj/item/vamp/keys/taxi
+	name = "Taxi keys"
+	accesslocks = list("taxi")
+	color = "#fffb8b"
+
 /obj/structure/vampdoor
 	name = "\improper door"
 	desc = "It opens and closes."

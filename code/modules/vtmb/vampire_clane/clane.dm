@@ -45,5 +45,5 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 			var/obj/effect/landmark/latejoin_masquerade/LM = pick(GLOB.masquerade_latejoin)
 			if(LM)
 				H.forceMove(LM.loc)
-	if(H.ckey() == "Egorium")
+	if(H.client.ckey == "Egorium")
 		H.put_in_r_hand(new /obj/item/melee/vampirearms/katana/kosa/egorium(H))

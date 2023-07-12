@@ -1309,4 +1309,65 @@
 		shoes = /obj/item/clothing/shoes/vampire/heels
 
 /obj/effect/landmark/start/giovanni
-	name = "Giovanni"
+	name = "Giovanni Member"
+
+/datum/job/vamp/taxi
+	title = "Taxi Driver"
+	department_head = list("Justicar")
+	faction = "Vampire"
+	total_positions = 3
+	spawn_positions = 3
+	supervisors = " the Traditions"
+	selection_color = "#cb4aad"
+
+	outfit = /datum/outfit/job/taxi
+
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	paycheck = PAYCHECK_EASY
+	paycheck_department = ACCOUNT_SRV
+	display_order = JOB_DISPLAY_ORDER_TAXI
+	exp_type_department = EXP_TYPE_INDEPENDENT
+
+//	minimal_generation = 11	//Uncomment when players get exp enough
+
+	duty = "Transfer people in the city."
+	minimal_masquerade = 0
+
+/datum/job/vamp/taxi/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
+	..()
+	new /obj/vampire_car/taxi(H.loc)
+
+/datum/outfit/job/taxi
+	name = "Taxi Driver"
+	jobtype = /datum/job/vamp/taxi
+
+	id = /obj/item/cockclock
+	glasses = /obj/item/clothing/glasses/vampire/sun
+	uniform = /obj/item/clothing/under/vampire/suit
+	shoes = /obj/item/clothing/shoes/vampire
+	l_pocket = /obj/item/vamp/phone
+	r_pocket = /obj/item/vamp/keys/taxi
+	backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/stack/dollar/fifty=1)
+
+/datum/outfit/job/taxi/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.clane)
+		if(H.gender == MALE)
+			shoes = /obj/item/clothing/shoes/vampire
+			if(H.clane.male_clothes)
+				uniform = text2path(H.clane.male_clothes)
+		else
+			shoes = /obj/item/clothing/shoes/vampire/heels
+			if(H.clane.female_clothes)
+				uniform = text2path(H.clane.female_clothes)
+	else
+		if(H.gender == MALE)
+			shoes = /obj/item/clothing/shoes/vampire
+			uniform = /obj/item/clothing/under/vampire/sport
+		else
+			shoes = /obj/item/clothing/shoes/vampire/heels
+			uniform = /obj/item/clothing/under/vampire/red
+
+/obj/effect/landmark/start/taxi
+	name = "Taxi Driver"
