@@ -35,7 +35,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_PRINCE
 
-//	minimal_generation = 10	//Uncomment when players get exp enough
+	minimal_generation = 10	//Uncomment when players get exp enough
 	minimal_masquerade = 5
 	kindred_only = TRUE
 	allowed_bloodlines = list("Ventrue")
@@ -119,7 +119,7 @@
 	display_order = JOB_DISPLAY_ORDER_SHERIFF
 	bounty_types = CIV_JOB_SEC
 
-//	minimal_generation = 11	//Uncomment when players get exp enough
+	minimal_generation = 12	//Uncomment when players get exp enough
 	minimal_masquerade = 5
 	kindred_only = TRUE
 
@@ -166,8 +166,8 @@
 	department_head = list("Prince")
 	head_announce = list(RADIO_CHANNEL_SUPPLY, RADIO_CHANNEL_SERVICE)
 	faction = "Vampire"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 2
+	spawn_positions = 2
 	supervisors = "the prince"
 	selection_color = "#bd3327"
 	req_admin_notify = 1
@@ -236,8 +236,8 @@
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list("Prince")
 	faction = "Vampire"
-	total_positions = 5
-	spawn_positions = 5
+	total_positions = 7
+	spawn_positions = 7
 	supervisors = "the prince"
 	selection_color = "#bd3327"
 	minimal_player_age = 7
@@ -294,8 +294,8 @@
 	title = "Graveyard Keeper"
 	department_head = list("Clerk")
 	faction = "Vampire"
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 6
+	spawn_positions = 6
 	supervisors = "the Camarilla or the Anarchs"
 	selection_color = "#e3e3e3"
 
@@ -326,7 +326,7 @@
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/graveyard
 	r_hand = /obj/item/melee/vampirearms/shovel
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/stack/dollar/rand=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/stack/dollar/rand=1, /obj/item/melee/vampirearms/katana/kosa=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -344,8 +344,8 @@
 	title = "Doctor"
 	department_head = list("Clerk")
 	faction = "Vampire"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 4
+	spawn_positions = 4
 	supervisors = "the Camarilla or the Anarchs"
 	selection_color = "#e3e3e3"
 
@@ -391,8 +391,8 @@
 	title = "Street Janitor"
 	department_head = list("Barkeeper")
 	faction = "Vampire"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 6
+	spawn_positions = 6
 	supervisors = "the Camarilla or the Anarchs"
 	selection_color = "#e3e3e3"
 
@@ -461,7 +461,7 @@
 	r_pocket = /obj/item/vamp/keys/archive
 	l_pocket = /obj/item/vamp/phone
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/arcane_tome=1, /obj/item/stack/dollar/rand=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/arcane_tome=1, /obj/item/stack/dollar/rand=1, /obj/item/melee/vampirearms/katana/kosa=1)
 
 /datum/outfit/job/regent/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -477,8 +477,8 @@
 	title = "Chantry Archivist"
 	department_head = list("Prince")
 	faction = "Vampire"
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 4
+	spawn_positions = 4
 	supervisors = "the Traditions and the Regent"
 	selection_color = "#cb4aad"
 
@@ -509,7 +509,7 @@
 	r_pocket = /obj/item/vamp/keys/archive
 	l_pocket = /obj/item/vamp/phone
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/arcane_tome=1, /obj/item/stack/dollar/rand=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/arcane_tome=1, /obj/item/stack/dollar/rand=1, /obj/item/melee/vampirearms/katana/kosa=1)
 
 /datum/outfit/job/archivist/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -581,8 +581,8 @@
 	title = "Bouncer"
 	department_head = list("Barkeeper")
 	faction = "Vampire"
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 7
+	spawn_positions = 7
 	supervisors = "the barkeeper"
 	selection_color = "#434343"
 
@@ -683,8 +683,8 @@
 	title = "Supply Technician"
 	department_head = list("Dealer")
 	faction = "Vampire"
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 4
+	spawn_positions = 4
 	supervisors = "the dealer"
 	selection_color = "#434343"
 
@@ -779,8 +779,8 @@
 /datum/job/vamp/strip
 	title = "Stripper"
 	faction = "Vampire"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 4
+	spawn_positions = 4
 	supervisors = "the Camarilla or the Anarchs"
 	selection_color = "#e3e3e3"
 	access = list()
@@ -1201,7 +1201,7 @@
 	r_pocket = /obj/item/flashlight
 	suit = /obj/item/clothing/suit/vampire/trench
 	id = /obj/item/cockclock
-	backpack_contents = list(/obj/item/passport=1, /obj/item/melee/vampirearms/stake=3, /obj/item/gun/ballistic/vampire/revolver=1, /obj/item/melee/vampirearms/knife=1, /obj/item/vamp/keys/hack=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/melee/vampirearms/stake=3, /obj/item/gun/ballistic/vampire/revolver=1, /obj/item/melee/vampirearms/knife=1, /obj/item/vamp/keys/hack=1, /obj/item/melee/vampirearms/katana/kosa=1)
 
 /datum/outfit/job/sabbatist/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -1268,8 +1268,8 @@
 	title = "Giovanni Member"
 	department_head = list("Justicar")
 	faction = "Vampire"
-	total_positions = 5
-	spawn_positions = 5
+	total_positions = 10
+	spawn_positions = 10
 	supervisors = "the Family and the Traditions"
 	selection_color = "#cb4aad"
 

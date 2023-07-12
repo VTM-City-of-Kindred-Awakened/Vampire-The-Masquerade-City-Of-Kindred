@@ -245,3 +245,29 @@
 		visible_message("<span class='warning'>[user] bonks [src]'s head!</span>", "<span class='warning'>You bonk[target]'s head!</span>")
 		target.Stun(5)
 		target.drop_all_held_items()
+
+/obj/item/melee/vampirearms/katana/kosa
+	name = "scythe"
+	desc = "More instrument, than a weapon. Instrumentally cuts heads..."
+	icon = 'code/modules/ziggers/weapons.dmi'
+	icon_state = "kosa"
+	force = 35
+	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = null
+	block_chance = 30
+	armour_penetration = 20
+	sharpness = SHARP_EDGED
+	attack_verb_continuous = list("slashes", "cuts")
+	attack_verb_simple = list("slash", "cut")
+	hitsound = 'sound/weapons/rapierhit.ogg'
+	wound_bonus = 5
+	bare_wound_bonus = 10
+	resistance_flags = FIRE_PROOF
+
+/obj/item/melee/vampirearms/katana/kosa/egorium
+	name = "demonic scythe"
+	force = 45
+
+/obj/item/melee/vampirearms/katana/kosa/egorium/Initialize()
+	. = ..()
+	set_light(3, 2, "#ff0000")
