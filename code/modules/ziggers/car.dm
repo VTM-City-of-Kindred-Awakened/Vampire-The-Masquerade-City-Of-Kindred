@@ -290,7 +290,7 @@
 		var/obj/vampire_car/V = owner.loc
 		if(V.last_beep+10 < world.time)
 			V.last_beep = world.time
-			playsound(V, V.beep_sound, 60, TRUE)
+			playsound(V.loc, V.beep_sound, 60, FALSE)
 
 /datum/action/carr/stage
 	name = "Toggle Transmission"
@@ -626,20 +626,20 @@
 
 /obj/vampire_car/police/process(delta_time)
 	if(fari_on)
-		if(last_color_change+20 <= world.time)
+		if(last_color_change+10 <= world.time)
 			last_color_change = world.time
 			if(color_blue)
 				color_blue = FALSE
-				set_light(0)
-				set_light(3, 2, "#ff0000")
+				FARI.set_light(0)
+				FARI.set_light(4, 3, "#ff0000")
 			else
-				color_blue = TRUE
-				set_light(0)
-				set_light(3, 2, "#0000ff")
+				FARI.color_blue = TRUE
+				FARI.set_light(0)
+				FARI.set_light(4, 3, "#0000ff")
 	else
-		if(last_color_change+20 <= world.time)
+		if(last_color_change+10 <= world.time)
 			last_color_change = world.time
-			set_light(0)
+			FARI.set_light(0)
 	..()
 
 /obj/vampire_car/taxi
