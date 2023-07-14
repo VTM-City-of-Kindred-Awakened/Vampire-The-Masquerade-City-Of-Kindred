@@ -266,6 +266,7 @@
 
 /obj/item/melee/vampirearms/katana/kosa/egorium
 	name = "demonic scythe"
+	icon_state = "egorium"
 	force = 45
 
 /obj/item/melee/vampirearms/katana/kosa/egorium/Initialize()
