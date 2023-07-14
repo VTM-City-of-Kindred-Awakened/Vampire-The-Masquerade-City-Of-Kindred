@@ -279,7 +279,7 @@
 			else
 				V.fari_on = FALSE
 				V.FARI.set_light(0)
-				set_light(0)
+				V.set_light(0)
 				to_chat(owner, "<span class='notice'>You toggle [V]'s lights.</span>")
 				playsound(V, 'sound/weapons/magout.ogg', 40, TRUE)
 
@@ -355,7 +355,7 @@
 			playsound(V, 'code/modules/ziggers/sounds/stop.ogg', 50, TRUE)
 			to_chat(owner, "<span class='notice'>You stop [V]'s engine.</span>")
 			STOP_PROCESSING(SSobj, V)
-			set_light(0)
+			V.set_light(0)
 			return
 
 /datum/action/carr/exit_car
