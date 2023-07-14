@@ -341,6 +341,7 @@
 		new /datum/data/mining_equipment("desert eagle",	/obj/item/gun/ballistic/automatic/vampire/deagle,	150),
 		new /datum/data/mining_equipment("mini uzi",	/obj/item/gun/ballistic/automatic/vampire/uzi,	250),
 		new /datum/data/mining_equipment("ar-15 carbine",	/obj/item/gun/ballistic/automatic/vampire/ar15,	500),
+		new /datum/data/mining_equipment("fishing rod",		/obj/item/fishing_rod,	50),
 		new /datum/data/mining_equipment("9mm ammo",	/obj/item/ammo_box/vampire/c9mm,	150),
 		new /datum/data/mining_equipment(".44 ammo",	/obj/item/ammo_box/vampire/c44,	200),
 		new /datum/data/mining_equipment("5.56 ammo",	/obj/item/ammo_box/vampire/c556,	300),

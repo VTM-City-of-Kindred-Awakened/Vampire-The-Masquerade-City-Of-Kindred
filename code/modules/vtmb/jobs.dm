@@ -859,6 +859,10 @@
 	. = ..()
 	if(last_detonated+300 > world.time)
 		return
+	if(!user.mind)
+		return
+	if(user.mind.holy_role != HOLY_ROLE_PRIEST)
+		return
 	last_detonated = world.time
 	do_sparks(rand(5, 9), FALSE, user)
 	playsound(user.loc, 'code/modules/ziggers/sounds/cross.ogg', 100, FALSE, 8, 0.9)
@@ -1336,7 +1340,7 @@
 
 /datum/job/vamp/taxi/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
 	..()
-	new /obj/vampire_car/taxi(H.loc)
+	H.taxist = TRUE
 
 /datum/outfit/job/taxi
 	name = "Taxi Driver"

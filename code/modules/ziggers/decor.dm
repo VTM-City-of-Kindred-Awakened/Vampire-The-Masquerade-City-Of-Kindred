@@ -47,6 +47,7 @@
 	pixel_w = -32
 	anchored = TRUE
 	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 
 /obj/effect/decal/lamplight
 	alpha = 0
@@ -411,6 +412,7 @@
 	anchored = TRUE
 	density = TRUE
 	pixel_w = -16
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 
 /obj/structure/roadsign
 	name = "road sign"
@@ -552,6 +554,7 @@
 	layer = CAR_LAYER
 	anchored = TRUE
 	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	var/last_extracted = 0
 
 /mob/living/carbon/human/MouseDrop(atom/over_object)
@@ -773,6 +776,7 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	anchored = TRUE
 	opacity = TRUE
 	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 
 /obj/matrix/attack_hand(mob/user)
 	if(user.client)

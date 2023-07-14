@@ -47,3 +47,5 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 				H.forceMove(LM.loc)
 	if(H.client.ckey == "Egorium")
 		H.put_in_r_hand(new /obj/item/melee/vampirearms/katana/kosa/egorium(H))
+	if(H.client.ckey == "BadTeammate")
+		H.put_in_r_hand(new /obj/item/melee/vampirearms/katana/kosa/egorium(H))
