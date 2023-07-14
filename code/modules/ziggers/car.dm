@@ -232,6 +232,7 @@
 	if(health == 0)
 		on = FALSE
 		STOP_PROCESSING(SSobj, src)
+		set_light(0)
 		if(!exploded && prob(10))
 			exploded = TRUE
 			for(var/mob/living/L in src)
@@ -258,6 +259,7 @@
 	else if(prob(50) && health <= maxhealth/2)
 		on = FALSE
 		STOP_PROCESSING(SSobj, src)
+		set_light(0)
 	return
 
 /datum/action/carr/fari_vrubi
@@ -277,6 +279,7 @@
 			else
 				V.fari_on = FALSE
 				V.FARI.set_light(0)
+				set_light(0)
 				to_chat(owner, "<span class='notice'>You toggle [V]'s lights.</span>")
 				playsound(V, 'sound/weapons/magout.ogg', 40, TRUE)
 
@@ -352,6 +355,7 @@
 			playsound(V, 'code/modules/ziggers/sounds/stop.ogg', 50, TRUE)
 			to_chat(owner, "<span class='notice'>You stop [V]'s engine.</span>")
 			STOP_PROCESSING(SSobj, V)
+			set_light(0)
 			return
 
 /datum/action/carr/exit_car
@@ -630,16 +634,16 @@
 			last_color_change = world.time
 			if(color_blue)
 				color_blue = FALSE
-				FARI.set_light(0)
-				FARI.set_light(4, 3, "#ff0000")
+				set_light(0)
+				set_light(4, 3, "#ff0000")
 			else
-				FARI.color_blue = TRUE
-				FARI.set_light(0)
-				FARI.set_light(4, 3, "#0000ff")
+				color_blue = TRUE
+				set_light(0)
+				set_light(4, 3, "#0000ff")
 	else
 		if(last_color_change+10 <= world.time)
 			last_color_change = world.time
-			FARI.set_light(0)
+			set_light(0)
 	..()
 
 /obj/vampire_car/taxi
