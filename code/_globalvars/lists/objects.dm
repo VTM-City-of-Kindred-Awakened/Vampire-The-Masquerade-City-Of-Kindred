@@ -53,3 +53,4 @@ GLOBAL_LIST_EMPTY(phones_list)
 
 GLOBAL_LIST_EMPTY(masquerade_breakers_list)
 GLOBAL_LIST_EMPTY(masquerade_latejoin)
+GLOBAL_LIST_EMPTY(niggers)

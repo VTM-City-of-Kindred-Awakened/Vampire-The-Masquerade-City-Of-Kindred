@@ -23,9 +23,9 @@
 
 /mob/living/carbon/human/npc/death()
 	walk(src,0)
-	if(last_attacker)
+	if(last_attacker && key)
 		if(ishuman(last_attacker))
-			if(get_dist(src, last_attacker) < 7)
+			if(get_dist(src, last_attacker) < 20)
 				AdjustHumanity(last_attacker, -1, 0)
 	remove_overlay(FIGHT_LAYER)
 	GLOB.npc_list -= src

@@ -45,6 +45,9 @@
 				log_access("Failed Login: [key] - Not on whitelist")
 				return list("reason"="whitelist", "desc" = "\nReason: You are not on the white list for this server")
 
+	if(ckey in GLOB.niggers)
+		return list("reason"="blacklist", "desc" = "\nReason: You are nigger")
+
 	//Guest Checking
 	if(!real_bans_only && !C && IsGuestKey(key))
 		if (CONFIG_GET(flag/guest_ban))

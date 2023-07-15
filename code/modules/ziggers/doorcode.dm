@@ -112,6 +112,7 @@
 	anchored = TRUE
 	density = TRUE
 	opacity = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 
 	var/baseicon = "door"
 	var/lastclicked = 0

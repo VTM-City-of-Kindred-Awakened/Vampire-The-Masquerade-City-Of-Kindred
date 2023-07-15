@@ -423,6 +423,15 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		prefs.exper = calculate_mob_max_exper(mob)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Exp")
 
+/client/proc/add_nigger()
+	set name = "NIGGER BAN"
+	set category = "Admin.Game"
+	var/nigger = input("Nigger name:") as null|text
+	if(nigger)
+		GLOB.niggers += nigger
+		message_admins("[key_name_admin(usr)] BANNED [nigger] NIGGER.")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "NIGGER BAN")
+
 /client/proc/poll_panel()
 	set name = "Server Poll Management"
 	set category = "Admin"
