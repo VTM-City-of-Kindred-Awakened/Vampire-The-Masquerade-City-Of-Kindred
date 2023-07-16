@@ -166,10 +166,6 @@
 			<label class='inputlabel radio'>Server
 			<input type='radio' id='server' name='radioban' value='server'[role == "Server" ? " checked" : ""][edit_id ? " disabled" : ""]>
 			<div class='inputbox'></div></label>
-			<br>
-			<label class='inputlabel radio'>Role
-			<input type='radio' id='role' name='radioban' value='role'[role == "Server" ? "" : " checked"][edit_id ? " disabled" : ""]>
-			<div class='inputbox'></div></label>
 		</div>
 		<div class='column right'>
 			Severity
@@ -211,99 +207,6 @@
 		<br>
 		When ticked, edits here will also affect bans created with matching ckey, IP, CID and time. Use this to edit all role bans which were made at the same time.
 		"}
-	else
-		output += "<input type='hidden' name='roleban_delimiter' value='1'>"
-		//there's not always a client to use the bancache of so to avoid many individual queries from using is_banned_form we'll build a cache to use here
-		var/banned_from = list()
-		if(player_key)
-			var/datum/db_query/query_get_banned_roles = SSdbcore.NewQuery({"
-				SELECT role
-				FROM [format_table_name("ban")]
-				WHERE
-					ckey = :player_ckey AND
-					role <> 'server'
-					AND unbanned_datetime IS NULL
-					AND (expiration_time IS NULL OR expiration_time > NOW())
-			"}, list("player_ckey" = ckey(player_key)))
-			if(!query_get_banned_roles.warn_execute())
-				qdel(query_get_banned_roles)
-				return
-			while(query_get_banned_roles.NextRow())
-				banned_from += query_get_banned_roles.item[1]
-			qdel(query_get_banned_roles)
-		var/break_counter = 0
-		output += "<div class='row'><div class='column'><label class='rolegroup command'><input type='checkbox' name='Command' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_dep\")'" : ""]>Command</label><div class='content'>"
-		//all heads are listed twice so have a javascript call to toggle both their checkboxes when one is pressed
-		//for simplicity this also includes the captain even though it doesn't do anything
-		for(var/job in GLOB.command_positions)
-			if(break_counter > 0 && (break_counter % 3 == 0))
-				output += "<br>"
-			output += {"<label class='inputlabel checkbox'>[job]
-						<input type='checkbox' id='[job]_com' name='[job]' class='Command' value='1'[usr.client.prefs.tgui_fancy ? " onClick='toggle_head(this, \"_dep\")'" : ""]>
-						<div class='inputbox[(job in banned_from) ? " banned" : ""]'></div></label>
-			"}
-			break_counter++
-		output += "</div></div>"
-		//standard departments all have identical handling
-		var/list/job_lists = list("Security" = GLOB.security_positions,
-							"Engineering" = GLOB.engineering_positions,
-							"Medical" = GLOB.medical_positions,
-							"Science" = GLOB.anarch_positions,
-							"Supply" = GLOB.supply_positions)
-		for(var/department in job_lists)
-			//the first element is the department head so they need the same javascript call as above
-			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
-			output += {"<label class='inputlabel checkbox'>[job_lists[department][1]]
-						<input type='checkbox' id='[job_lists[department][1]]_dep' name='[job_lists[department][1]]' class='[department]' value='1'[usr.client.prefs.tgui_fancy ? " onClick='toggle_head(this, \"_com\")'" : ""]>
-						<div class='inputbox[(job_lists[department][1] in banned_from) ? " banned" : ""]'></div></label>
-			"}
-			break_counter = 1
-			for(var/job in job_lists[department] - job_lists[department][1]) //skip the first element since it's already been done
-				if(break_counter % 3 == 0)
-					output += "<br>"
-				output += {"<label class='inputlabel checkbox'>[job]
-							<input type='checkbox' name='[job]' class='[department]' value='1'>
-							<div class='inputbox[(job in banned_from) ? " banned" : ""]'></div></label>
-				"}
-				break_counter++
-			output += "</div></div>"
-		//departments/groups that don't have command staff would throw a javascript error since there's no corresponding reference for toggle_head()
-		var/list/headless_job_lists = list("Silicon" = GLOB.nonhuman_positions,
-										"Abstract" = list("Appearance", "Emote", "Deadchat", "OOC"))
-		for(var/department in headless_job_lists)
-			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
-			break_counter = 0
-			for(var/job in headless_job_lists[department])
-				if(break_counter > 0 && (break_counter % 3 == 0))
-					output += "<br>"
-				output += {"<label class='inputlabel checkbox'>[job]
-							<input type='checkbox' name='[job]' class='[department]' value='1'>
-							<div class='inputbox[(job in banned_from) ? " banned" : ""]'></div></label>
-				"}
-				break_counter++
-			output += "</div></div>"
-		var/list/long_job_lists = list("Service" = GLOB.neutral_positions,
-									"Ghost and Other Roles" = list(ROLE_BRAINWASHED, ROLE_DEATHSQUAD, ROLE_DRONE, ROLE_LAVALAND, ROLE_MIND_TRANSFER, ROLE_POSIBRAIN, ROLE_SENTIENCE),
-									"Antagonist Positions" = list(ROLE_ABDUCTOR, ROLE_ALIEN, ROLE_BLOB,
-									ROLE_BROTHER, ROLE_CHANGELING, ROLE_CULTIST,
-									ROLE_INTERNAL_AFFAIRS, ROLE_MALF,
-									ROLE_MONKEY, ROLE_NINJA, ROLE_OPERATIVE,
-									ROLE_OVERTHROW, ROLE_REV, ROLE_REVENANT,
-									ROLE_REV_HEAD, ROLE_SYNDICATE,
-									ROLE_TRAITOR, ROLE_WIZARD, ROLE_HIVE , ROLE_HERETIC)) //ROLE_REV_HEAD is excluded from this because rev jobbans are handled by ROLE_REV
-		for(var/department in long_job_lists)
-			output += "<div class='column'><label class='rolegroup long [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
-			break_counter = 0
-			for(var/job in long_job_lists[department])
-				if(break_counter > 0 && (break_counter % 10 == 0))
-					output += "<br>"
-				output += {"<label class='inputlabel checkbox'>[job]
-							<input type='checkbox' name='[job]' class='[department]' value='1'>
-							<div class='inputbox[(job in banned_from) ? " banned" : ""]'></div></label>
-				"}
-				break_counter++
-			output += "</div></div>"
-		output += "</div>"
 	output += "</form>"
 	panel.set_content(jointext(output, ""))
 	panel.open()
