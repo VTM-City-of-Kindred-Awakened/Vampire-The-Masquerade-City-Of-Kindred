@@ -38,6 +38,12 @@ SUBSYSTEM_DEF(city_time)
 
 	if(hour == 6 && minutes == 0)
 		to_chat(world, "<span class='ghostalert'>THE NIGHT IS OVER.</span>")
+		SSticker.force_ending = 1
+		SSticker.current_state = GAME_STATE_FINISHED
+		toggle_ooc(TRUE) // Turn it on
+		toggle_dooc(TRUE)
+		SSticker.declare_completion(SSticker.force_ending)
+		Master.SetRunLevel(RUNLEVEL_POSTGAME)
 		var/won
 		if(length(SSfactionwar.marks_camarilla) > length(SSfactionwar.marks_anarch) && length(SSfactionwar.marks_camarilla) > length(SSfactionwar.marks_sabbat))
 			won = "camarilla"
@@ -65,6 +71,3 @@ SUBSYSTEM_DEF(city_time)
 				to_chat(world, "Sabbat takes control over the city...")
 			else
 				to_chat(world, "The city remains neutral...")
-	if(hour == 6)
-		SSticker.roundend_check_paused = FALSE
-		SSticker.force_ending = 1

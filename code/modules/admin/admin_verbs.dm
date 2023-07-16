@@ -31,6 +31,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/verbs/menu/Admin/verb/playerpanel,
 	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
 	/client/proc/add_exper,				/*Debuging character menu*/
+	/client/proc/add_nigger,
 	/client/proc/check_ai_laws,			/*shows AI and borg laws*/
 	/client/proc/ghost_pool_protection,	/*opens a menu for toggling ghost roles*/
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
@@ -424,12 +425,20 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Exp")
 
 /client/proc/add_nigger()
-	set name = "NIGGER BAN"
-	set category = "Admin.Game"
-	var/nigger = input("Nigger name:") as null|text
+	set name = "A KEY NIGGER BAN"
+	set category = "Admin"
+	var/list/niggerlist = list()
+	for(var/client/C in GLOB.clients)
+		niggerlist |= "[C.ckey]"
+	var/nigger = input("Nigger name:") as anything in niggerlist
 	if(nigger)
-		GLOB.niggers += nigger
-		message_admins("[key_name_admin(usr)] BANNED [nigger] NIGGER.")
+		for(var/client/C in GLOB.clients)
+			if("[C.ckey]" == "[nigger]")
+				qdel(C)
+				GLOB.niggers += "[nigger]"
+				message_admins("[key_name_admin(usr)] BANNED [nigger] NIGGER.")
+			else
+				message_admins("[nigger] ISN'T ACTUAL CKEY, YOU NIGGER [key_name_admin(usr)].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "NIGGER BAN")
 
 /client/proc/poll_panel()
