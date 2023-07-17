@@ -15,6 +15,10 @@ SUBSYSTEM_DEF(cityweather)
 	if(SScity_time.hour > 5 && SScity_time.hour < 21)
 		return
 
+	if(raining)
+		for(var/turf/T in affected_turfs)
+			T.wash(CLEAN_SCRUB)
+
 //	for(var/i in 1 to 9)
 //		var/weath = forecast[i]
 //		to_chat(world, "DEBUG, [i], [weath]")
@@ -121,7 +125,7 @@ SUBSYSTEM_DEF(cityweather)
 	icon_state = "rain"
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER
-	alpha = 98
+	alpha = 50
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	move_resist = INFINITY
@@ -131,14 +135,16 @@ SUBSYSTEM_DEF(cityweather)
 
 /obj/effect/rain/Initialize()
 	. = ..()
-	for(var/obj/effect/decal/cleanable/B in loc)
-		qdel(B)
+	if(isturf(loc))
+		var/turf/T = loc
+		T.wash(CLEAN_SCRUB)
 	SScityweather.weather_effects += src
 
 /obj/effect/rain/Destroy()
 	. = ..()
-	for(var/obj/effect/decal/cleanable/B in loc)
-		qdel(B)
+	if(isturf(loc))
+		var/turf/T = loc
+		T.wash(CLEAN_SCRUB)
 	SScityweather.weather_effects -= src
 
 /obj/effect/rain/Crossed(atom/movable/AM)
