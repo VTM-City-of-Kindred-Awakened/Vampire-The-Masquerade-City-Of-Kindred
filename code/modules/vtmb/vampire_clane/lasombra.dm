@@ -7,3 +7,4 @@
 														/datum/discipline/obtenebration = 3)
 	male_clothes = "/obj/item/clothing/under/vampire/emo"
 	female_clothes = "/obj/item/clothing/under/vampire/business"
+	enlightement = TRUE

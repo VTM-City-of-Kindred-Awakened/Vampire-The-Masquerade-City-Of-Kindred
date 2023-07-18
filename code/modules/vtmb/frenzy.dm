@@ -195,3 +195,6 @@
 		if(H.last_frenzy_check+400 <= world.time)
 			H.last_frenzy_check = world.time
 			H.rollfrenzy()
+			if(H.clane)
+				if(H.clane.enlightement)
+					AdjustHumanity(H, 1, 10)

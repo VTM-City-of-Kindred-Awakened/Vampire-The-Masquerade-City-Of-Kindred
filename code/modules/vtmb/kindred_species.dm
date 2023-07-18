@@ -81,19 +81,41 @@
 					masquerade_level = "'m danger to the Masquerade and my own kind."
 			dat += "Camarilla thinks I[masquerade_level]<BR>"
 			var/humanity = "I'm out of my mind."
-			switch(host.humanity)
-				if(8 to 10)
-					humanity = "I'm the best example of mercy and kindness."
-				if(7)
-					humanity = "I have nothing to complain about my humanity."
-				if(5 to 6)
-					humanity = "I'm slightly above the humane."
-				if(4)
-					humanity = "I don't care about kine."
-				if(2 to 3)
-					humanity = "There's nothing bad in murdering for <b>BLOOD</b>."
-				if(1)
-					humanity = "I'm slowly falling into madness..."
+			var/enlight = FALSE
+			if(host.clane)
+				if(host.clane.enlightement)
+					enlight = TRUE
+
+			if(!enlight)
+				switch(host.humanity)
+					if(8 to 10)
+						humanity = "I'm the best example of mercy and kindness."
+					if(7)
+						humanity = "I have nothing to complain about my humanity."
+					if(5 to 6)
+						humanity = "I'm slightly above the humane."
+					if(4)
+						humanity = "I don't care about kine."
+					if(2 to 3)
+						humanity = "There's nothing bad in murdering for <b>BLOOD</b>."
+					if(1)
+						humanity = "I'm slowly falling into madness..."
+
+			else
+				switch(host.humanity)
+					if(8 to 10)
+						humanity = "I'm <b>ENLIGHTED</b> and in the true harmony with my <b>BEAST</b>."
+					if(7)
+						humanity = "I'm slightly <b>ENLIGHTED</b>."
+					if(5 to 6)
+						humanity = "I'm about to be <b>ENLIGHTED</b>."
+					if(4)
+						humanity = "I'm purely trying to be <b>ENLIGHTED</b>."
+					if(2 to 3)
+						humanity = "My <b>BEAST</b> is calling me to be <b>ENLIGHTED</b>."
+					if(1)
+						humanity = "Am I <b>ENLIGHTED</b> or <b>HUMANE</b>?"
+
 			dat += "[humanity]<BR>"
 		if(host.client)
 			if(host.clane.clane_disciplines)
@@ -158,9 +180,29 @@
 			to_chat(owner, "<span class='notice'>You started to feed [BLOODBONDED] with your own blood.</span>")
 			if(do_mob(owner, BLOODBONDED, 10 SECONDS))
 				var/new_master = FALSE
-				if(isdead(BLOODBONDED))
-					if(BLOODBONDED.respawntimeofdeath+600 > world.time)
-						BLOODBONDED.revive(TRUE, FALSE)
+				if(BLOODBONDED.stat == DEAD && !iskindred(BLOODBONDED))
+					if(BLOODBONDED.respawntimeofdeath+6000 > world.time)
+						if(BLOODBONDED.revive(full_heal = TRUE, admin_revive = TRUE))
+							BLOODBONDED.grab_ghost(force = TRUE)
+							to_chat(BLOODBONDED, "<span class='userdanger'>You rise with a start, you're alive! Or not... You feel your soul going somewhere, as you realize you are embraced by a vampire...</span>")
+						BLOODBONDED.set_species(/datum/species/kindred)
+						BLOODBONDED.generation = H.generation+1
+						if(H.generation < 13)
+							BLOODBONDED.skin_tone = get_vamp_skin_color(BLOODBONDED.skin_tone)
+							BLOODBONDED.update_body()
+							BLOODBONDED.clane = new H.clane.type()
+							BLOODBONDED.clane.on_gain(BLOODBONDED)
+							if(BLOODBONDED.clane.alt_sprite)
+								BLOODBONDED.skin_tone = "albino"
+								BLOODBONDED.update_body()
+							BLOODBONDED.create_disciplines(FALSE, BLOODBONDED.clane.clane_disciplines[1], BLOODBONDED.clane.clane_disciplines[2], BLOODBONDED.clane.clane_disciplines[3])
+							BLOODBONDED.maxbloodpool = 10+((13-BLOODBONDED.generation)*5)
+							BLOODBONDED.clane.enlightement = H.clane.enlightement
+							if(BLOODBONDED.generation < 13)
+								BLOODBONDED.maxHealth = initial(BLOODBONDED.maxHealth)+100*(13-BLOODBONDED.generation)
+								BLOODBONDED.health = initial(BLOODBONDED.health)+100*(13-BLOODBONDED.generation)
+						else
+							BLOODBONDED.clane = new /datum/vampireclane/caitiff()
 					else
 						to_chat(owner, "<span class='notice'>[BLOODBONDED] is totally <b>DEAD</b>!</span>")
 						giving = FALSE

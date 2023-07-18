@@ -336,10 +336,10 @@
 
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 
-	if(magazine && chambered.BB && can_misfire && misfire_probability > 0)
-		if(prob(misfire_probability))
-			if(blow_up(user))
-				to_chat(user, "<span class='userdanger'>[src] misfires!</span>")
+//	if(magazine && chambered.BB && can_misfire && misfire_probability > 0)
+//		if(prob(misfire_probability))
+//			if(blow_up(user))
+//				to_chat(user, "<span class='userdanger'>[src] misfires!</span>")
 
 	if (sawn_off)
 		bonus_spread += SAWN_OFF_ACC_PENALTY

@@ -147,6 +147,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //maskarad
 	var/masquerade = 5
 
+	var/enlightement = FALSE
 	var/humanity = 7
 
 	var/exper = 1440	//Urovni
@@ -190,6 +191,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(length(M.client.prefs.clane.clane_disciplines) >= 3)
 				M.client.prefs.discipline3type = M.client.prefs.clane.clane_disciplines[3]
 			M.client.prefs.discipline4type = null
+			M.client.prefs.enlightement = M.client.prefs.clane.enlightement
 			M.client.prefs.humanity = M.client.prefs.clane.start_humanity
 			M.client.prefs.random_species()
 			M.client.prefs.random_character()
@@ -344,13 +346,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
 			dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
-			dat += "<b>Humanity:</b> [humanity]/10<BR>"
+			dat += "<b>Path of [enlightement == FALSE ? "Humanity" : "Enlightement"]:</b> [humanity]/10<BR>"
+			for(var/i in GLOB.donaters)
+				if(i == "[parent.ckey]")
+					dat += "<a href='?_src_=prefs;preference=pathof;task=input'>Switch Path</a><BR>"
 			dat += "<b>Masquerade:</b> [masquerade]/5<BR>"
 			if(pref_species.name == "Vampire")
 				dat += "<b>Generation:</b> [generation]"
 				if(generation_bonus)
 					dat += " (+[generation_bonus]/[min(6, generation-7)])"
-				if(exper == calculate_max_exper() && generation > 7)
+				if(exper == calculate_max_exper() && generation_bonus < max(0, generation-7))
 					dat += " <a href='?_src_=prefs;preference=generation;task=input'>Claim generation bonus</a><BR>"
 				else
 					dat += "<BR>"
@@ -415,19 +420,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SOCKS]'>[(randomise[RANDOM_SOCKS]) ? "Lock" : "Unlock"]</A>"
 
 
-			dat += "<br><b>Jumpsuit Style:</b><BR><a href ='?_src_=prefs;preference=suit;task=input'>[jumpsuit_style]</a>"
+//			dat += "<br><b>Jumpsuit Style:</b><BR><a href ='?_src_=prefs;preference=suit;task=input'>[jumpsuit_style]</a>"
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_JUMPSUIT_STYLE]'>[(randomise[RANDOM_JUMPSUIT_STYLE]) ? "Lock" : "Unlock"]</A>"
 
 			dat += "<br><b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backpack]</a>"
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_BACKPACK]'>[(randomise[RANDOM_BACKPACK]) ? "Lock" : "Unlock"]</A>"
 
-//			if((HAS_FLESH in pref_species.species_traits) || (HAS_BONE in pref_species.species_traits))
-//				dat += "<BR><b>Temporal Scarring:</b><BR><a href='?_src_=prefs;preference=persistent_scars'>[(persistent_scars) ? "Enabled" : "Disabled"]</A>"
-//				dat += "<a href='?_src_=prefs;preference=clear_scars'>Clear scar slots</A>"
+			if((HAS_FLESH in pref_species.species_traits) || (HAS_BONE in pref_species.species_traits))
+				dat += "<BR><b>Temporal Scarring:</b><BR><a href='?_src_=prefs;preference=persistent_scars'>[(persistent_scars) ? "Enabled" : "Disabled"]</A>"
+				dat += "<a href='?_src_=prefs;preference=clear_scars'>Clear scar slots</A>"
 
-			dat += "<br><b>Antagonist Items Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
-			if (user.client.get_exp_living(TRUE) >= PLAYTIME_VETERAN)
-				dat += "<br><b>Don The Ultimate Gamer Cloak?:</b><BR><a href ='?_src_=prefs;preference=playtime_reward_cloak'>[(playtime_reward_cloak) ? "Enabled" : "Disabled"]</a><BR></td>"
+//			dat += "<br><b>Antagonist Items Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
+//			if (user.client.get_exp_living(TRUE) >= PLAYTIME_VETERAN)
+//				dat += "<br><b>Don The Ultimate Gamer Cloak?:</b><BR><a href ='?_src_=prefs;preference=playtime_reward_cloak'>[(playtime_reward_cloak) ? "Enabled" : "Disabled"]</a><BR></td>"
 			var/use_skintones = pref_species.use_skintones
 			if(use_skintones)
 
@@ -792,7 +797,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						p_map += " (No longer exists)"
 				if(CONFIG_GET(flag/preference_map_voting))
 					dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a><br>"
-
+/*
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
 			dat += "<h2>[make_font_cool("SPECIAL ROLE")]</h2>"
@@ -819,6 +824,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<br>"
 			dat += "<b>Midround Antagonist:</b> <a href='?_src_=prefs;preference=allow_midround_antag'>[(toggles & MIDROUND_ANTAG) ? "Enabled" : "Disabled"]</a><br>"
 			dat += "</td></tr></table>"
+*/
 		if(2) //OOC Preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>[make_font_cool("OOC")]</h2>"
@@ -1644,6 +1650,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //						if(length(Clan.clane_disciplines) >= 4)
 //							discipline4type = Clan.clane_disciplines[4]
 						humanity = clane.start_humanity
+						enlightement = clane.enlightement
 						if(clane.no_hair)
 							hairstyle = "Bald"
 						if(clane.no_facial)
@@ -1662,8 +1669,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					discipline3level = min(5, discipline3level+1)
 					exper = 0
 
+				if("pathof")
+					enlightement = !enlightement
+
 				if("generation")
-					generation_bonus += 1
+					generation_bonus = min(generation_bonus+1, max(0, generation-7))
 					exper = 0
 
 				if("reset_with_bonus")
@@ -1685,6 +1695,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						discipline3type = clane.clane_disciplines[3]
 					discipline4type = null
 					humanity = clane.start_humanity
+					enlightement = clane.enlightement
 					random_species()
 					random_character()
 					real_name = random_unique_name(gender)
@@ -2198,6 +2209,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						discipline3type = clane.clane_disciplines[3]
 					discipline4type = null
 					humanity = clane.start_humanity
+					enlightement = clane.enlightement
 					random_species()
 					random_character()
 					real_name = random_unique_name(gender)
@@ -2259,9 +2271,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(pref_species.name == "Vampire")
 		var/datum/vampireclane/CLN = new clane.type()
 		character.clane = CLN
-		character.maxbloodpool = 10+((13-generation)*2)
+		character.maxbloodpool = 10+((13-generation)*5)
 		character.bloodpool = rand(2, character.maxbloodpool)
 		character.generation = generation
+		character.clane.enlightement = enlightement
 		if(generation < 13)
 			character.maxHealth = initial(character.maxHealth)+100*(13-generation)
 			character.health = initial(character.health)+100*(13-generation)
@@ -2334,39 +2347,65 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		parent << browse(null, "window=preferences_window")
 		parent << browse(null, "window=preferences_browser")
 
-/mob/living/carbon/human/proc/create_disciplines()
-	client.prefs.slotlocked = 1
-	client.prefs.save_preferences()
-	client.prefs.save_character()
+/mob/living/carbon/human/proc/create_disciplines(var/discipline_pref = TRUE, var/discipline1, var/discipline2, var/discipline3)	//EMBRACE BASIC
+	if(client)
+		client.prefs.slotlocked = 1
+		client.prefs.save_preferences()
+		client.prefs.save_character()
 	if(clane)
 		clane.post_gain(src)
 	if(dna.species.id == "ghoul")
 		for(var/datum/action/blood_heal/BH in actions)
 			BH.level = client.prefs.discipline1level
 	if(dna.species.id == "kindred")
-		if(client.prefs.discipline1type)
-			var/datum/discipline/D = client.prefs.discipline1type
+		var/datum/discipline/D1
+		var/datum/discipline/D2
+		var/datum/discipline/D3
+
+		if(discipline1)
+			D1 = discipline1
+		else if(discipline_pref && client.prefs.discipline1type)
+			D1 = client.prefs.discipline1type
+
+		if(discipline2)
+			D2 = discipline2
+		else if(discipline_pref && client.prefs.discipline2type)
+			D2 = client.prefs.discipline2type
+
+		if(discipline3)
+			D3 = discipline3
+		else if(discipline_pref && client.prefs.discipline3type)
+			D3 = client.prefs.discipline3type
+
+		if(D1)
 			hud_used.discipline1_icon.icon = 'code/modules/ziggers/disciplines.dmi'
-			hud_used.discipline1_icon.dscpln = new D()
-			hud_used.discipline1_icon.dscpln.level = client.prefs.discipline1level
+			hud_used.discipline1_icon.dscpln = new D1()
+			if(discipline_pref)
+				hud_used.discipline1_icon.dscpln.level = client.prefs.discipline1level
+			else
+				hud_used.discipline1_icon.dscpln.level = 1
 			hud_used.discipline1_icon.name = hud_used.discipline1_icon.dscpln.name
 			hud_used.discipline1_icon.desc = hud_used.discipline1_icon.dscpln.desc
 			hud_used.discipline1_icon.icon_state = hud_used.discipline1_icon.dscpln.icon_state
 			hud_used.discipline1_icon.main_state = hud_used.discipline1_icon.dscpln.icon_state
-		if(client.prefs.discipline2type)
-			var/datum/discipline/D = client.prefs.discipline2type
+		if(D2)
 			hud_used.discipline2_icon.icon = 'code/modules/ziggers/disciplines.dmi'
-			hud_used.discipline2_icon.dscpln = new D()
-			hud_used.discipline2_icon.dscpln.level = client.prefs.discipline2level
+			hud_used.discipline2_icon.dscpln = new D2()
+			if(discipline_pref)
+				hud_used.discipline2_icon.dscpln.level = client.prefs.discipline2level
+			else
+				hud_used.discipline1_icon.dscpln.level = 1
 			hud_used.discipline2_icon.name = hud_used.discipline2_icon.dscpln.name
 			hud_used.discipline2_icon.desc = hud_used.discipline2_icon.dscpln.desc
 			hud_used.discipline2_icon.icon_state = hud_used.discipline2_icon.dscpln.icon_state
 			hud_used.discipline2_icon.main_state = hud_used.discipline2_icon.dscpln.icon_state
-		if(client.prefs.discipline3type)
-			var/datum/discipline/D = client.prefs.discipline3type
+		if(D3)
 			hud_used.discipline3_icon.icon = 'code/modules/ziggers/disciplines.dmi'
-			hud_used.discipline3_icon.dscpln = new D()
-			hud_used.discipline3_icon.dscpln.level = client.prefs.discipline3level
+			hud_used.discipline3_icon.dscpln = new D3()
+			if(discipline_pref)
+				hud_used.discipline3_icon.dscpln.level = client.prefs.discipline3level
+			else
+				hud_used.discipline1_icon.dscpln.level = 1
 			hud_used.discipline3_icon.name = hud_used.discipline3_icon.dscpln.name
 			hud_used.discipline3_icon.desc = hud_used.discipline3_icon.dscpln.desc
 			hud_used.discipline3_icon.icon_state = hud_used.discipline3_icon.dscpln.icon_state
@@ -2380,7 +2419,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //			hud_used.discipline4_icon.icon_state = hud_used.discipline4_icon.dscpln.icon_state
 //			hud_used.discipline4_icon.main_state = hud_used.discipline4_icon.dscpln.icon_state
 //	till better times
-		if(clane.name == "Tremere" && hud_used.discipline3_icon.dscpln.level >= 3 && !client.prefs.discipline4type)
+		if(clane.name == "Tremere" && hud_used.discipline3_icon.dscpln.level >= 3 && !client.prefs.discipline4type && discipline_pref)
 			hud_used.discipline4_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline4_icon.dscpln = new /datum/discipline/bloodshield()
 			hud_used.discipline4_icon.dscpln.level = client.prefs.discipline3level

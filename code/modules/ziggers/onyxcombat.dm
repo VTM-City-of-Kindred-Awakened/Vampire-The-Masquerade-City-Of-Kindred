@@ -231,7 +231,7 @@
 					SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
 					return
-				if(PB.bloodpool <= 0)
+				if(PB.bloodpool <= 0 && !iskindred(BD.pulling))
 					SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
@@ -239,7 +239,7 @@
 				PB.emote("scream")
 			if(isliving(BD.pulling))
 				var/mob/living/LV = BD.pulling
-				if(LV.bloodpool <= 0)
+				if(LV.bloodpool <= 0 && !iskindred(BD.pulling))
 					SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
@@ -571,7 +571,7 @@
 /mob/living/proc/update_blood_hud()
 	if(!client || !hud_used)
 		return
-	maxbloodpool = 10+((13-generation)*2)
+	maxbloodpool = 10+((13-generation)*5)
 	if(hud_used.blood_icon)
 		var/emm = round((bloodpool/maxbloodpool)*10)
 		if(emm > 10)

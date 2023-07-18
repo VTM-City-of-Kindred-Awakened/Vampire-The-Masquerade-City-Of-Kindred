@@ -24,6 +24,7 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 	var/violating_appearance
 	var/male_clothes
 	var/female_clothes
+	var/enlightement = FALSE
 //	var/datum/action/innate/drink_blood/sosalka = new
 //Дополнительная игровая логика должна храниться в компоненте
 
