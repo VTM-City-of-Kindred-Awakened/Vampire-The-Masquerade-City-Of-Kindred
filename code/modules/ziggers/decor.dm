@@ -54,7 +54,7 @@
 
 /obj/effect/decal/lamplight/Initialize()
 	. = ..()
-	set_light(5, 3, "#ffde9b")
+	set_light(6, 3, "#ffde9b")
 
 /obj/structure/lamppost/Initialize()
 	. = ..()

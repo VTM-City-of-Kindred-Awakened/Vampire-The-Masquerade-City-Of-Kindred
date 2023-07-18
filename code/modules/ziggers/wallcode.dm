@@ -301,7 +301,7 @@
 		update_icon()
 	if(prob(25))
 		new /obj/effect/decal/asphalt(src)
-	set_light(1, 0.25, "#a4b7ff")
+	set_light(1, 1, "#a4b7ff")
 
 /turf/open/floor/plating/asphalt/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
@@ -345,7 +345,7 @@
 /turf/open/floor/plating/sidewalk/Initialize()
 	..()
 	icon_state = "[based_icon_state][rand(1, number_of_variations)]"
-	set_light(1, 0.25, "#a4b7ff")
+	set_light(1, 1, "#a4b7ff")
 
 /turf/open/floor/plating/sidewalk/poor
 	icon_state = "sidewalk_poor1"
@@ -433,7 +433,7 @@
 
 /turf/open/floor/plating/vampgrass/Initialize()
 	..()
-	set_light(1, 0.25, "#a4b7ff")
+	set_light(1, 1, "#a4b7ff")
 
 /turf/open/floor/plating/vampcarpet
 	gender = PLURAL
@@ -463,7 +463,7 @@
 
 /turf/open/floor/plating/vampdirt/Initialize()
 	..()
-	set_light(1, 0.25, "#a4b7ff")
+	set_light(1, 1, "#a4b7ff")
 
 /turf/open/floor/plating/vampdirt/rails
 	name = "rails"
@@ -686,7 +686,7 @@
 
 /turf/open/floor/plating/vampwood/Initialize()
 	..()
-	set_light(1, 0.25, "#a4b7ff")
+	set_light(1, 1, "#a4b7ff")
 
 /turf/open/floor/plating/vampbeach
 	gender = PLURAL
@@ -704,7 +704,7 @@
 /turf/open/floor/plating/vampbeach/Initialize()
 	..()
 	icon_state = "sand[rand(1, 4)]"
-	set_light(1, 0.25, "#a4b7ff")
+	set_light(1, 1, "#a4b7ff")
 
 /turf/open/floor/plating/vampocean
 	gender = PLURAL
@@ -722,7 +722,7 @@
 
 /turf/open/floor/plating/vampocean/Initialize()
 	..()
-	set_light(1, 0.25, "#a4b7ff")
+	set_light(1, 1, "#a4b7ff")
 
 /obj/effect/decal/coastline
 	name = "water"
