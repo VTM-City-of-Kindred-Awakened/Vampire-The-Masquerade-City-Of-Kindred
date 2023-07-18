@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(cityweather)
 	name = "City Weather"
 	init_order = INIT_ORDER_DEFAULT
-	wait = 6000
+	wait = 600
 	priority = FIRE_PRIORITY_DEFAULT
 
 	var/list/affected_turfs = list()
@@ -15,9 +15,9 @@ SUBSYSTEM_DEF(cityweather)
 	if(SScity_time.hour > 5 && SScity_time.hour < 21)
 		return
 
-	if(raining)
-		for(var/turf/T in affected_turfs)
-			T.wash(CLEAN_SCRUB)
+//	if(raining)
+//		var/turf/T = pick(affected_turfs)
+//		T.wash(CLEAN_SCRUB)
 
 //	for(var/i in 1 to 9)
 //		var/weath = forecast[i]
@@ -125,7 +125,7 @@ SUBSYSTEM_DEF(cityweather)
 	icon_state = "rain"
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER
-	alpha = 50
+	alpha = 25
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	move_resist = INFINITY
@@ -135,16 +135,16 @@ SUBSYSTEM_DEF(cityweather)
 
 /obj/effect/rain/Initialize()
 	. = ..()
-	if(isturf(loc))
-		var/turf/T = loc
-		T.wash(CLEAN_SCRUB)
+//	if(isturf(loc))
+//		var/turf/T = loc
+//		T.wash(CLEAN_SCRUB)
 	SScityweather.weather_effects += src
 
 /obj/effect/rain/Destroy()
 	. = ..()
-	if(isturf(loc))
-		var/turf/T = loc
-		T.wash(CLEAN_SCRUB)
+//	if(isturf(loc))
+//		var/turf/T = loc
+//		T.wash(CLEAN_SCRUB)
 	SScityweather.weather_effects -= src
 
 /obj/effect/rain/Crossed(atom/movable/AM)

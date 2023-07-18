@@ -1004,6 +1004,7 @@
 											"Это полиция, выходите с поднятыми руками!")
 
 /mob/living/carbon/human/npc/police
+	fights_anyway = TRUE
 
 /mob/living/carbon/human/npc/police/Initialize()
 	..()
@@ -1095,6 +1096,7 @@
 
 /mob/living/carbon/human/npc/guard
 	staying = TRUE
+	fights_anyway = TRUE
 
 /mob/living/carbon/human/npc/guard/Initialize()
 	..()

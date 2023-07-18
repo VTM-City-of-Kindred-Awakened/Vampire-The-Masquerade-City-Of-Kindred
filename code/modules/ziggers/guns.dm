@@ -187,8 +187,38 @@
 	worn_icon_state = "rifle"
 	w_class = WEIGHT_CLASS_BULKY
 	mag_type = /obj/item/ammo_box/magazine/vamp556
-	burst_size = 3
+	burst_size = 1
 	fire_delay = 2
+	spread = 5
+	bolt_type = BOLT_TYPE_OPEN
+	show_bolt_icon = FALSE
+	mag_display = TRUE
+	fire_sound = 'code/modules/ziggers/sounds/rifle.ogg'
+
+/obj/item/ammo_box/magazine/vampaug
+	name = "AUG magazine (5.56mm)"
+	icon = 'code/modules/ziggers/ammo.dmi'
+	lefthand_file = 'code/modules/ziggers/righthand.dmi'
+	righthand_file = 'code/modules/ziggers/lefthand.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	icon_state = "aug"
+	ammo_type = /obj/item/ammo_casing/vampire/c556mm
+	caliber = CALIBER_556
+	max_ammo = 30
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+
+/obj/item/gun/ballistic/automatic/vampire/aug
+	name = "\improper Steyr AUG-77"
+	desc = "A five-round burst 5.56 toploading carbine, designated 'Steyr AUG-77'."
+	icon = 'code/modules/ziggers/48x32weapons.dmi'
+	icon_state = "aug"
+	inhand_icon_state = "aug"
+	worn_icon_state = "aug"
+	w_class = WEIGHT_CLASS_BULKY
+	mag_type = /obj/item/ammo_box/magazine/vampaug
+	burst_size = 3
+	fire_delay = 1
 	spread = 5
 	bolt_type = BOLT_TYPE_OPEN
 	show_bolt_icon = FALSE

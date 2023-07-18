@@ -23,10 +23,15 @@
 
 /mob/living/carbon/human/npc/death()
 	walk(src,0)
-	if(last_attacker && key)
-		if(ishuman(last_attacker))
-			if(get_dist(src, last_attacker) < 20)
-				AdjustHumanity(last_attacker, -1, 0)
+	if(last_attacker && !key && !hostile)
+		if(get_dist(src, last_attacker) < 30)
+			if(istype(last_attacker, /mob/living/simple_animal/hostile))
+				var/mob/living/simple_animal/hostile/HS = last_attacker
+				if(HS.my_creator)
+					AdjustHumanity(HS.my_creator, -1, 0)
+			else
+				if(ishuman(last_attacker))
+					AdjustHumanity(last_attacker, -1, 0)
 	remove_overlay(FIGHT_LAYER)
 	GLOB.npc_list -= src
 //	SShumannpcpool.npclost()
@@ -78,11 +83,14 @@
 			if(A.density && !istype(A, /obj/structure/lamppost))
 				return location
 			if(istype(A, /obj/effect/landmark/npcwall))
+				stopturf = 2
 				return location
 			if(isnpcbeacon(A) && prob(50))
 //				var/opposite_dir = turn(direction, 180)				Nado
 				stopturf = 1
 				return get_step(location, direction)
+//		if(distance == 50)
+//			return location
 
 /mob/living/carbon/human/npc/proc/ChoosePath()
 	var/turf/north_steps = CreateWay(NORTH)
@@ -178,48 +186,54 @@
 			a_intent = INTENT_HARM
 			if(m_intent == MOVE_INTENT_WALK)
 				toggle_move_intent(src)
-			if(!my_weapon)
+			if(!my_weapon && !fights_anyway)
 //				if(last_walkin+5 < world.time)
 				var/reqsteps = round((SShumannpcpool.next_fire-world.time)/total_multiplicative_slowdown())
 				set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
 				walk_away(src, danger_source, reqsteps, total_multiplicative_slowdown())
-			if(my_weapon)
-				if(!spawned_weapon)
+			if(my_weapon || fights_anyway)
+				if(!spawned_weapon && my_weapon)
 					my_weapon.forceMove(loc)
 					drop_all_held_items()
 					put_in_active_hand(my_weapon)
 					spawned_weapon = TRUE
-				else if(get_active_held_item() != my_weapon)
-					if(isturf(my_weapon.loc) && get_dist(src, my_weapon) < 2 && !get_active_held_item())
-						ClickOn(my_weapon)
-					else
-						my_weapon = null
+				if(spawned_weapon && get_active_held_item() != my_weapon)
+					my_weapon = null
 
 				if(danger_source)
-					ClickOn(danger_source)
-					face_atom(danger_source)
+					if(danger_source == src)
+						danger_source = null
+					else
+						ClickOn(danger_source)
+						face_atom(danger_source)
 //				if(last_walkin+5 < world.time)
-					var/reqsteps = round((SShumannpcpool.next_fire-world.time)/total_multiplicative_slowdown())
-					set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
-					walk_to(src, danger_source, reqsteps, total_multiplicative_slowdown())
+						var/reqsteps = round((SShumannpcpool.next_fire-world.time)/total_multiplicative_slowdown())
+						set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
+						walk_to(src, danger_source, reqsteps, total_multiplicative_slowdown())
 
 			if(isliving(danger_source))
 				var/mob/living/L = danger_source
 				if(L.stat > 2)
 					danger_source = null
 					if(my_weapon)
-						drop_all_held_items()
-						my_weapon.forceMove(src)
-						spawned_weapon = FALSE
+						if(get_active_held_item() == my_weapon)
+							drop_all_held_items()
+							my_weapon.forceMove(src)
+							spawned_weapon = FALSE
+						else
+							my_weapon = null
 					walktarget = ChoosePath()
 					a_intent = INTENT_HELP
 
 			if(last_danger_meet+300 <= world.time)
 				danger_source = null
 				if(my_weapon)
-					drop_all_held_items()
-					my_weapon.forceMove(src)
-					spawned_weapon = FALSE
+					if(get_active_held_item() == my_weapon)
+						drop_all_held_items()
+						my_weapon.forceMove(src)
+						spawned_weapon = FALSE
+					else
+						my_weapon = null
 				walktarget = ChoosePath()
 				a_intent = INTENT_HELP
 		else if(walktarget && !staying)
@@ -229,12 +243,14 @@
 			set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
 			walk_to(src, walktarget, reqsteps, total_multiplicative_slowdown())
 
-		if(my_weapon)
+		if(my_weapon && !danger_source)
 			if(spawned_weapon)
 				if(get_active_held_item() == my_weapon)
 					drop_all_held_items()
 					my_weapon.forceMove(src)
 					spawned_weapon = FALSE
+				else
+					my_weapon = null
 
 /*
 	if(danger_source)

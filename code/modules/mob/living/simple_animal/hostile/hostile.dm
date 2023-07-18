@@ -62,6 +62,7 @@
 	///If the mob is charging, how long will it stun it's target on success, and itself on failure?
 	var/knockdown_time = 3 SECONDS
 	///Declares a cooldown for potential charges right off the bat.
+	var/mob/living/carbon/human/my_creator
 	COOLDOWN_DECLARE(charge_cooldown)
 
 /mob/living/simple_animal/hostile/Initialize()
@@ -80,6 +81,10 @@
 	. = ..()
 	if(!.) //dead
 		walk(src, 0) //stops walking
+	else
+		if(CheckEyewitness(src, src, 7, FALSE))
+			if(my_creator)
+				AdjustMasquerade(my_creator, -1)
 
 /mob/living/simple_animal/hostile/handle_automated_action()
 	if(AIStatus == AI_OFF)

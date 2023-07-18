@@ -184,6 +184,10 @@
 				return ", missing tool."
 			var/list/parts = del_reqs(R, a)
 			var/atom/movable/I = new R.result (get_turf(a.loc))
+			if(istype(I, /mob/living/simple_animal/hostile))
+				var/mob/living/simple_animal/hostile/HS = I
+				if(ishuman(a))
+					HS.my_creator = a
 			I.CheckParts(parts, R)
 			if(send_feedback)
 				SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)

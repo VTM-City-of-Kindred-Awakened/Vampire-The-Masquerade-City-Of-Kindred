@@ -9,6 +9,7 @@
 #define CHANNEL_BICYCLE 1017
 #define CHANNEL_BLOOD 1016
 #define CHANNEL_DISCIPLINES 1015
+#define CHANNEL_RAIN 1014
 
 ///Default range of a sound.
 #define SOUND_RANGE 17

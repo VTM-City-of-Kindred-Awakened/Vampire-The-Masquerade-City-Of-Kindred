@@ -5,7 +5,8 @@
 
 	var/is_talking = FALSE
 	var/last_annoy = 0
-
+	var/hostile = FALSE
+	var/fights_anyway = FALSE
 	var/last_danger_meet = 0
 	var/mob/living/danger_source
 	var/mob/living/last_attacker

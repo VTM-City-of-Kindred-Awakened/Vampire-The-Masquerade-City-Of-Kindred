@@ -47,6 +47,8 @@
 	var/last_beep = 0
 
 	var/component_type = /datum/component/storage/concrete
+	var/baggage_limit = 20
+	var/baggage_max = WEIGHT_CLASS_NORMAL
 
 	var/exploded = FALSE
 	var/beep_sound = 'code/modules/ziggers/sounds/beep.ogg'
@@ -55,9 +57,9 @@
 	. = ..()
 	AddComponent(component_type)
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 40
-	STR.max_w_class = WEIGHT_CLASS_BULKY
-	STR.max_items = 40
+	STR.max_combined_w_class = baggage_limit
+	STR.max_w_class = baggage_max
+	STR.max_items = baggage_limit
 	STR.locked = TRUE
 
 /obj/vampire_car/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
@@ -654,6 +656,26 @@
 	moving_dir = WEST
 	last_dir = WEST
 	access = "taxi"
+
+/obj/vampire_car/track
+	icon_state = "track"
+	max_passengers = 6
+	dir = WEST
+	facing_dir = WEST
+	moving_dir = WEST
+	last_dir = WEST
+	access = "none"
+	baggage_limit = 40
+	baggage_max = WEIGHT_CLASS_BULKY
+
+/obj/vampire_car/track/Initialize()
+	. = ..()
+	if(access == "none")
+		access = "npc[rand(1, 20)]"
+
+/obj/vampire_car/track/ambulance
+	icon_state = "ambulance"
+	access = "clinic"
 
 /obj/effect/fari
 	invisibility = INVISIBILITY_ABSTRACT

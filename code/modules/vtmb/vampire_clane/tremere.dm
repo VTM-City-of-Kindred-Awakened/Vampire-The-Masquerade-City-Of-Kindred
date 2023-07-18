@@ -43,7 +43,7 @@
 			else
 				drawing = FALSE
 	else
-		var/ritual = input(owner, "Choose rune to draw:", "Thaumaturgy") as anything in list("???", "???")
+		var/ritual = input(owner, "Choose rune to draw (You need an Arcane Tome to reduce random):", "Thaumaturgy") as anything in list("???", "???")
 		if(ritual)
 			drawing = TRUE
 			if(do_after(H, 30, H))

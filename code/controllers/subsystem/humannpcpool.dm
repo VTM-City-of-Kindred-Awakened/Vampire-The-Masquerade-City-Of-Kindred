@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(humannpcpool)
 	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_BACKGROUND
 	priority = FIRE_PRIORITY_NPC
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	wait = 10
+	wait = 30
 
 	var/list/currentrun = list()
 
@@ -31,7 +31,9 @@ SUBSYSTEM_DEF(humannpcpool)
 			log_world("Found a null in npc list!")
 			continue
 
-		if(!NPC.CheckMove() && !NPC.route_optimisation())
+//!NPC.route_optimisation()
+
+		if(!NPC.CheckMove())
 			NPC.handle_automated_movement()
 		if(MC_TICK_CHECK)
 			return

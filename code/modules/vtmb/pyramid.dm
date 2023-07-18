@@ -29,6 +29,7 @@
 	var/word = "IDI NAH"
 	var/activator_bonus = 0
 	var/activated = FALSE
+	var/mob/living/last_activator
 
 /mob/living
 	var/thaumaturgy_knowledge = FALSE
@@ -40,6 +41,7 @@
 	if(!activated)
 		var/mob/living/L = user
 		if(L.thaumaturgy_knowledge)
+			last_activator = user
 			activator_bonus = L.thaum_damage_plus
 			complete()
 			L.say("[word]")
@@ -52,6 +54,7 @@
 
 /obj/ritualrune/blood_guardian/complete()
 	var/mob/living/simple_animal/hostile/blood_guard/BG = new(loc)
+	BG.my_creator = last_activator
 	BG.melee_damage_lower = BG.melee_damage_lower+activator_bonus
 	BG.melee_damage_upper = BG.melee_damage_upper+activator_bonus
 	playsound(loc, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)

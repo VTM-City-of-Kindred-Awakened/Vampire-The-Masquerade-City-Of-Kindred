@@ -51,8 +51,10 @@
 	randomdir = 0
 
 /obj/effect/temp_visual/dir_setting/firing_effect
-	icon = 'icons/effects/effects.dmi'
+	icon = 'code/modules/ziggers/64x64.dmi'
 	icon_state = "firing_effect"
+	pixel_w = -16
+	pixel_z = -16
 	duration = 2
 
 /obj/effect/temp_visual/dir_setting/firing_effect/setDir(newdir)

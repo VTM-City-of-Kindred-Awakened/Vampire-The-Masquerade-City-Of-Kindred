@@ -201,7 +201,7 @@
 /datum/discipline/dominate/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	if(iskindred(target))
-		if(target.generation <= caster.generation)
+		if(target.generation < caster.generation)
 			return
 	var/mob/living/carbon/human/TRGT
 	if(ishuman(target))
@@ -755,6 +755,8 @@
 				var/mutable_appearance/serpentis_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "serpentis", -MUTATIONS_LAYER)
 				H.overlays_standing[MUTATIONS_LAYER] = serpentis_overlay
 				H.apply_overlay(MUTATIONS_LAYER)
+				spawn(5)
+					H.remove_overlay(MUTATIONS_LAYER)
 	if(level_casting >= 2)
 		if(get_dist(caster, target) <= 2+level_casting)
 			playsound(target.loc, 'code/modules/ziggers/sounds/serpentis.ogg', 50, TRUE)
@@ -955,15 +957,20 @@
 	playsound(target.loc, 'code/modules/ziggers/sounds/necromancy.ogg', 50, TRUE)
 	switch(level_casting)
 		if(1)
-			new /mob/living/simple_animal/hostile/ghost/level1(caster.loc)
+			var/mob/living/simple_animal/hostile/M = new /mob/living/simple_animal/hostile/ghost/level1(caster.loc)
+			M.my_creator = caster
 		if(2)
-			new /mob/living/simple_animal/hostile/ghost/level2(caster.loc)
+			var/mob/living/simple_animal/hostile/M = new /mob/living/simple_animal/hostile/ghost/level2(caster.loc)
+			M.my_creator = caster
 		if(3)
-			new /mob/living/simple_animal/hostile/ghost/player/level3(caster.loc)
+			var/mob/living/simple_animal/hostile/M = new /mob/living/simple_animal/hostile/ghost/player/level3(caster.loc)
+			M.my_creator = caster
 		if(4)
-			new /mob/living/simple_animal/hostile/ghost/player/level4(caster.loc)
+			var/mob/living/simple_animal/hostile/M = new /mob/living/simple_animal/hostile/ghost/player/level4(caster.loc)
+			M.my_creator = caster
 		if(5)
-			new /mob/living/simple_animal/hostile/ghost/player/level5(caster.loc)
+			var/mob/living/simple_animal/hostile/M = new /mob/living/simple_animal/hostile/ghost/player/level5(caster.loc)
+			M.my_creator = caster
 
 /datum/discipline/obtenebration
 	name = "Obtenebration"

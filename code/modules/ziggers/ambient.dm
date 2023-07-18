@@ -227,7 +227,11 @@
 		if(VTM)
 			if(VTM.upper)
 				if(SScityweather.raining)
-					SEND_SOUND(src, sound('code/modules/ziggers/sounds/rain.ogg', 0, 0, 5))
+					SEND_SOUND(src, sound('code/modules/ziggers/sounds/rain.ogg', 0, 0, CHANNEL_RAIN, 25))
+//					clear_fullscreen("rain")
+//					overlay_fullscreen("rain", /atom/movable/screen/fullscreen/rain, 1)
+//				else
+//					clear_fullscreen("rain")
 
 			if(!VTM.music)
 				client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)

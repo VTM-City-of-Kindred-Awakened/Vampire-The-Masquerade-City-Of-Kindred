@@ -53,7 +53,17 @@
 	if(BB.firer)
 		firing_dir = BB.firer.dir
 	if(!BB.suppressed && firing_effect_type)
-		new firing_effect_type(get_turf(src), firing_dir)
+		var/atom/A = new firing_effect_type(get_turf(src), firing_dir)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.remove_overlay(PROTEAN_LAYER)
+			var/mutable_appearance/firing_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "firing", -PROTEAN_LAYER)
+			H.overlays_standing[PROTEAN_LAYER] = firing_overlay
+			H.apply_overlay(PROTEAN_LAYER)
+			A.set_light(3, 2, "#ffedbb")
+//			animate(firing_overlay, alpha = 0, time = 2)
+			spawn(2)
+				H.remove_overlay(PROTEAN_LAYER)
 
 	var/direct_target
 	if(targloc == curloc)

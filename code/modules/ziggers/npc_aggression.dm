@@ -1,5 +1,7 @@
 /mob/living/carbon/human/npc/proc/Aggro(var/mob/M, var/attacked = FALSE)
 	walk(src,0)
+	if(M == src)
+		return
 	if(stat != DEAD)
 		danger_source = M
 		if(attacked)
