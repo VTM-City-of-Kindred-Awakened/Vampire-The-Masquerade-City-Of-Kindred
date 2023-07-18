@@ -64,6 +64,32 @@
  * * [obj/item/proc/afterattack] (atom,user,adjacent,params) - used both ranged and adjacent
  * * [mob/proc/RangedAttack] (atom,params) - used only ranged, only used for tk and laser eyes but could be changed
  */
+/mob/proc/melee_swing()
+	next_click = world.time+5
+	new /obj/effect/temp_visual/dir_setting/swing_effect(get_turf(src), dir)
+	playsound(loc, 'code/modules/ziggers/sounds/swing.ogg', 50, TRUE)
+	var/atom/M
+	var/turf/T = get_step(src, dir)
+	var/turf/T1 = get_step(T, turn(dir, -90))
+	var/turf/T2 = get_step(T, turn(dir, 90))
+	for(var/mob/living/MB in T)
+		if(MB)
+			M = MB
+	if(!M)
+		for(var/mob/living/MB in T1)
+			if(MB)
+				M = MB
+		for(var/mob/living/MB in T2)
+			if(MB)
+				M = MB
+
+	if(M)
+		return M
+	for(var/obj/OB in T)
+		if(OB)
+			M = OB
+	return M
+
 /mob/proc/ClickOn( atom/A, params )
 	if(world.time <= next_click)
 		return
@@ -150,19 +176,33 @@
 	if(!loc.AllowClick() && !last_locc)
 		return
 
-	//Standard reach turf to turf or reaching inside storage
-	if(CanReach(A,W))
-		if(W)
-			W.melee_attack_chain(src, A, params)
+	if(istype(W, /obj/item/melee))
+		if(A)
+			if(CanReach(A,W))
+				melee_swing()
+				W.melee_attack_chain(src, A, params)
+			else
+				var/atom/B = melee_swing()
+				if(B)
+					W.melee_attack_chain(src, B, params)
 		else
-			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A,1)
+			var/atom/B = melee_swing()
+			if(B)
+				W.melee_attack_chain(src, B, params)
 	else
-		if(W)
-			W.afterattack(A,src,0,params)
+	//Standard reach turf to turf or reaching inside storage
+		if(CanReach(A,W))
+			if(W)
+				W.melee_attack_chain(src, A, params)
+			else
+				if(ismob(A))
+					changeNext_move(CLICK_CD_MELEE)
+				UnarmedAttack(A,1)
 		else
-			RangedAttack(A,params)
+			if(W)
+				W.afterattack(A,src,0,params)
+			else
+				RangedAttack(A,params)
 
 	if(last_locc)
 		forceMove(last_locc)

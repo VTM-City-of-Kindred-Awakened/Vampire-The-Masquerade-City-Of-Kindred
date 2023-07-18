@@ -54,7 +54,7 @@
 
 /obj/effect/decal/lamplight/Initialize()
 	. = ..()
-	set_light(7, 1, "#ffde9b")
+	set_light(5, 3, "#ffde9b")
 
 /obj/structure/lamppost/Initialize()
 	. = ..()
@@ -249,7 +249,7 @@
 
 /obj/structure/hotelsign/Initialize()
 	. = ..()
-	set_light(3, 2, "#8e509e")
+	set_light(3, 4, "#8e509e")
 
 /obj/structure/hotelbanner
 	name = "banner"
@@ -272,7 +272,7 @@
 
 /obj/structure/milleniumsign/Initialize()
 	. = ..()
-	set_light(3, 2, "#4299bb")
+	set_light(3, 4, "#4299bb")
 
 /obj/structure/anarchsign
 	name = "sign"
@@ -285,7 +285,7 @@
 
 /obj/structure/anarchsign/Initialize()
 	. = ..()
-	set_light(3, 2, "#ffffff")
+	set_light(3, 4, "#ffffff")
 
 /obj/structure/chinesesign
 	name = "sign"

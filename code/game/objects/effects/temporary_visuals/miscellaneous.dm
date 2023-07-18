@@ -57,6 +57,13 @@
 	pixel_z = -16
 	duration = 2
 
+/obj/effect/temp_visual/dir_setting/swing_effect
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "swing"
+	pixel_w = -32
+	pixel_z = -32
+	duration = 3
+
 /obj/effect/temp_visual/dir_setting/firing_effect/setDir(newdir)
 	switch(newdir)
 		if(NORTH)

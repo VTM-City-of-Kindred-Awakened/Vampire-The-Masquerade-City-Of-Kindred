@@ -275,7 +275,7 @@
 		if(V.FARI)
 			if(!V.fari_on)
 				V.fari_on = TRUE
-				V.FARI.set_light(4)
+				V.FARI.set_light(6, 4)
 				to_chat(owner, "<span class='notice'>You toggle [V]'s lights.</span>")
 				playsound(V, 'sound/weapons/magin.ogg', 40, TRUE)
 			else
@@ -637,11 +637,11 @@
 			if(color_blue)
 				color_blue = FALSE
 				set_light(0)
-				set_light(4, 3, "#ff0000")
+				set_light(4, 6, "#ff0000")
 			else
 				color_blue = TRUE
 				set_light(0)
-				set_light(4, 3, "#0000ff")
+				set_light(4, 6, "#0000ff")
 	else
 		if(last_color_change+10 <= world.time)
 			last_color_change = world.time

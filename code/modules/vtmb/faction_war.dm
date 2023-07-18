@@ -39,6 +39,7 @@ SUBSYSTEM_DEF(factionwar)
 	pixel_w = -8
 	pixel_z = -8
 	alpha = 128
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	var/repainting = FALSE
 
 /obj/graffiti/Initialize()
