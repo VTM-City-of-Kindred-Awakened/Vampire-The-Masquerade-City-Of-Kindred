@@ -56,16 +56,18 @@
 		for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, user))
 			NEPIC.Aggro(user)
 		var/atom/A = new firing_effect_type(get_turf(src), firing_dir)
+		var/atom/movable/shit = new(A.loc)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.remove_overlay(PROTEAN_LAYER)
 			var/mutable_appearance/firing_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "firing", -PROTEAN_LAYER)
 			H.overlays_standing[PROTEAN_LAYER] = firing_overlay
 			H.apply_overlay(PROTEAN_LAYER)
-			A.set_light(3, 2, "#ffedbb")
+			shit.set_light(3, 2, "#ffedbb")
 //			animate(firing_overlay, alpha = 0, time = 2)
 			spawn(2)
 				H.remove_overlay(PROTEAN_LAYER)
+				qdel(shit)
 
 	var/direct_target
 	if(targloc == curloc)
