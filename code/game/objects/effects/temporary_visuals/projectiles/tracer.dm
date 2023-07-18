@@ -59,6 +59,9 @@
 /obj/effect/projectile/tracer/tracer/beam_rifle
 	icon_state = "tracer_beam"
 
+/obj/effect/projectile/tracer/tracer/beam_rifle/vampire
+	icon_state = "bullet"
+
 /obj/effect/projectile/tracer/tracer/aiming
 	icon_state = "pixelbeam_greyscale"
 	layer = ABOVE_LIGHTING_LAYER

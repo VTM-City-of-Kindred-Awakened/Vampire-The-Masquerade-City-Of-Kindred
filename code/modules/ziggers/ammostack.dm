@@ -1,33 +1,70 @@
-/obj/projectile/bullet/vamp9mm
+/obj/projectile/beam/beam_rifle/vampire
+	name = "bullet"
+	icon = null
+	damage = 20
+	damage_type = BRUTE
+	nodamage = FALSE
+	flag = BULLET
+	hitsound = 'sound/weapons/pierce.ogg'
+	hitsound_wall = "ricochet"
+	sharpness = SHARP_POINTY
+	impact_effect_type = /obj/effect/temp_visual/impact_effect
+	shrapnel_type = /obj/item/shrapnel/bullet
+	embedding = list(embed_chance=15, fall_chance=2, jostle_chance=0, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.5, pain_mult=3, rip_time=10)
+	wound_falloff_tile = -5
+	embed_falloff_tile = -5
+	range = 50
+//	jitter = 10
+	icon_state = ""
+	hitscan = TRUE
+	tracer_type = /obj/effect/projectile/tracer/tracer/beam_rifle/vampire
+
+/obj/projectile/beam/beam_rifle/vampire/generate_hitscan_tracers(cleanup = TRUE, duration = 5, impacting = TRUE, highlander)
+	set waitfor = FALSE
+	if(isnull(highlander))
+		highlander = TRUE
+	if(highlander && istype(gun))
+		QDEL_LIST(gun.current_tracers)
+		for(var/datum/point/p in beam_segments)
+			gun.current_tracers += generate_tracer_between_points(p, beam_segments[p], tracer_type, color, 0, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity)
+	else
+		for(var/datum/point/p in beam_segments)
+			generate_tracer_between_points(p, beam_segments[p], tracer_type, color, duration, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity)
+	if(cleanup)
+		QDEL_LIST(beam_segments)
+		beam_segments = null
+		QDEL_NULL(beam_index)
+
+/obj/projectile/beam/beam_rifle/vampire/vamp9mm
 	name = "9mm bullet"
 	damage = 25
 
-/obj/projectile/bullet/vamp44
+/obj/projectile/beam/beam_rifle/vampire/vamp44
 	name = ".44 bullet"
 	damage = 35
 	armour_penetration = 15
 
-/obj/projectile/bullet/vamp556mm
+/obj/projectile/beam/beam_rifle/vampire/vamp556mm
 	name = "5.56mm bullet"
 	damage = 45
 	armour_penetration = 30
 
-/obj/projectile/bullet/vamp12g
+/obj/projectile/beam/beam_rifle/vampire/vamp12g
 	name = "12g shotgun slug"
 	damage = 55
 
-/obj/projectile/bullet/vamp12g/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/beam/beam_rifle/vampire/vamp12g/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.Stun(20)
 
-/obj/projectile/bullet/vamp556mm/incendiary
+/obj/projectile/beam/beam_rifle/vampire/vamp556mm/incendiary
 	armour_penetration = 0
 	damage = 30
 	var/fire_stacks = 4
 
-/obj/projectile/bullet/vamp556mm/incendiary/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/beam/beam_rifle/vampire/vamp556mm/incendiary/on_hit(atom/target, blocked = FALSE)
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(fire_stacks)
@@ -49,7 +86,7 @@
 	name = "9mm bullet casing"
 	desc = "A 9mm bullet casing."
 	caliber = CALIBER_9MM
-	projectile_type = /obj/projectile/bullet/vamp9mm
+	projectile_type = /obj/projectile/beam/beam_rifle/vampire/vamp9mm
 	icon_state = "9"
 	base_iconstate = "9"
 
@@ -57,7 +94,7 @@
 	name = ".44 bullet casing"
 	desc = "A .44 bullet casing."
 	caliber = CALIBER_44
-	projectile_type = /obj/projectile/bullet/vamp44
+	projectile_type = /obj/projectile/beam/beam_rifle/vampire/vamp44
 	icon_state = "44"
 	base_iconstate = "44"
 
@@ -65,18 +102,18 @@
 	name = "5.56mm bullet casing"
 	desc = "A 5.56mm bullet casing."
 	caliber = CALIBER_556
-	projectile_type = /obj/projectile/bullet/vamp556mm
+	projectile_type = /obj/projectile/beam/beam_rifle/vampire/vamp556mm
 	icon_state = "556"
 	base_iconstate = "556"
 
 /obj/item/ammo_casing/vampire/c556mm/incendiary
-	projectile_type = /obj/projectile/bullet/vamp556mm/incendiary
+	projectile_type = /obj/projectile/beam/beam_rifle/vampire/vamp556mm/incendiary
 
 /obj/item/ammo_casing/vampire/c12g
 	name = "12g bullet casing"
 	desc = "A 12g bullet casing."
 	caliber = CALIBER_12G
-	projectile_type = /obj/projectile/bullet/vamp12g
+	projectile_type = /obj/projectile/beam/beam_rifle/vampire/vamp12g
 	icon_state = "12"
 	base_iconstate = "12"
 

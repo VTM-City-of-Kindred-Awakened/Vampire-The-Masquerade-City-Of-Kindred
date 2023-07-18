@@ -413,7 +413,7 @@
 	damage_type = BURN
 	flag = ENERGY
 	range = 150
-	jitter = 10
+//	jitter = 10
 	var/obj/item/gun/energy/beam_rifle/gun
 	var/structure_pierce_amount = 0				//All set to 0 so the gun can manually set them during firing.
 	var/structure_bleed_coeff = 0
@@ -447,6 +447,7 @@
 			O.take_damage(aoe_structure_damage * get_damage_coeff(O), BURN, LASER, FALSE)
 
 /obj/projectile/beam/beam_rifle/prehit_pierce(atom/A)
+	/*
 	if(isclosedturf(A) && (wall_pierce < wall_pierce_amount))
 		if(prob(wall_devastate))
 			if(iswallturf(A))
@@ -461,6 +462,7 @@
 		var/obj/O = A
 		O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(A), BURN, ENERGY, FALSE)
 		return PROJECTILE_PIERCE_PHASE			// ditto and this could be refactored to on_hit honestly
+	*/
 	return ..()
 
 /obj/projectile/beam/beam_rifle/proc/get_damage_coeff(atom/target)
@@ -471,6 +473,7 @@
 	return 1
 
 /obj/projectile/beam/beam_rifle/proc/handle_impact(atom/target)
+	/*
 	if(isobj(target))
 		var/obj/O = target
 		O.take_damage(impact_structure_damage * get_damage_coeff(target), BURN, LASER, FALSE)
@@ -478,8 +481,11 @@
 		var/mob/living/L = target
 		L.adjustFireLoss(impact_direct_damage)
 		L.emote("scream")
+	*/
+	return
 
 /obj/projectile/beam/beam_rifle/proc/handle_hit(atom/target, piercing_hit = FALSE)
+	/*
 	set waitfor = FALSE
 	if(nodamage)
 		return FALSE
@@ -488,9 +494,11 @@
 		AOE(get_turf(target) || get_turf(src))
 	if(!QDELETED(target))
 		handle_impact(target)
+	*/
+	return FALSE
 
 /obj/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE, piercing_hit = FALSE)
-	handle_hit(target, piercing_hit)
+//	handle_hit(target, piercing_hit)
 	return ..()
 
 /obj/projectile/beam/beam_rifle/hitscan
