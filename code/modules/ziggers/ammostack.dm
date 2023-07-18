@@ -2,9 +2,12 @@
 	name = "bullet"
 	icon = null
 	damage = 20
+	pass_flags = PASSTABLE
 	damage_type = BRUTE
 	nodamage = FALSE
 	flag = BULLET
+	reflectable = NONE
+	ricochets_max = 0
 	hitsound = 'sound/weapons/pierce.ogg'
 	hitsound_wall = "ricochet"
 	sharpness = SHARP_POINTY
@@ -14,6 +17,9 @@
 	wound_falloff_tile = -5
 	embed_falloff_tile = -5
 	range = 50
+	eyeblur = 0
+	light_range = 0
+	light_power = 0
 //	jitter = 10
 	icon_state = ""
 	hitscan = TRUE
