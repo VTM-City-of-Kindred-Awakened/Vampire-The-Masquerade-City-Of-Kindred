@@ -53,6 +53,8 @@
 	if(BB.firer)
 		firing_dir = BB.firer.dir
 	if(!BB.suppressed && firing_effect_type)
+		for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, user))
+			NEPIC.Aggro(user)
 		var/atom/A = new firing_effect_type(get_turf(src), firing_dir)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
