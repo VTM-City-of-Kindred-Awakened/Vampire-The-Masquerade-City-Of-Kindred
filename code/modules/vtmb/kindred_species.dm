@@ -142,6 +142,7 @@
 
 /datum/species/kindred/on_species_gain(mob/living/carbon/human/C)
 	. = ..()
+//	ADD_TRAIT(C, TRAIT_NOBLEED, HIGHLANDER)
 	C.update_body(0)
 	C.last_experience = world.time+3000
 	var/datum/action/vampireinfo/infor = new()

@@ -33,31 +33,32 @@
 
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
-		switch(blood_volume)
-			if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
-				if(prob(15))
-					to_chat(src, "<span class='userdanger'>Blood starts to tear your skin apart. You're going to burst!</span>")
-					inflate_gib()
-			if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
-				if(prob(10))
-					to_chat(src, "<span class='warning'>You feel terribly bloated.</span>")
-			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-				if(prob(5))
-					to_chat(src, "<span class='warning'>You feel [word].</span>")
-				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.01, 1))
-			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
-				if(prob(5))
-					blur_eyes(6)
-					to_chat(src, "<span class='warning'>You feel very [word].</span>")
-			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-				adjustOxyLoss(5)
-				if(prob(15))
-					Unconscious(rand(20,60))
-					to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
-			if(-INFINITY to BLOOD_VOLUME_SURVIVE)
-				if(!HAS_TRAIT(src, TRAIT_NODEATH))
-					death()
+		if(!iskindred(src))
+			switch(blood_volume)
+				if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
+					if(prob(15))
+						to_chat(src, "<span class='userdanger'>Blood starts to tear your skin apart. You're going to burst!</span>")
+						inflate_gib()
+				if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
+					if(prob(10))
+						to_chat(src, "<span class='warning'>You feel terribly bloated.</span>")
+				if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
+					if(prob(5))
+						to_chat(src, "<span class='warning'>You feel [word].</span>")
+					adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.01, 1))
+				if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
+					adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
+					if(prob(5))
+						blur_eyes(6)
+						to_chat(src, "<span class='warning'>You feel very [word].</span>")
+				if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
+					adjustOxyLoss(5)
+					if(prob(15))
+						Unconscious(rand(20,60))
+						to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
+				if(-INFINITY to BLOOD_VOLUME_SURVIVE)
+					if(!HAS_TRAIT(src, TRAIT_NODEATH))
+						death()
 
 		var/temp_bleed = 0
 		//Bleeding out
@@ -72,6 +73,8 @@
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt)
+	if(NOBLOOD in dna.species.species_traits || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+		return
 	if(!blood_volume)
 		return
 	if(!iskindred(src))
@@ -88,7 +91,7 @@
 		timing = 100
 
 	if(iskindred(src))
-		timing = 50
+		timing = 100
 		if(!bloodpool)
 			return
 
@@ -129,6 +132,8 @@
  * * forced-
  */
 /mob/living/carbon/proc/bleed_warn(bleed_amt = 0, forced = FALSE)
+	if(NOBLOOD in dna.species.species_traits || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+		return
 	if(!blood_volume || !client)
 		return
 	if(!COOLDOWN_FINISHED(src, bleeding_message_cd) && !forced)

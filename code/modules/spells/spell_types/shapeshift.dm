@@ -213,8 +213,8 @@
 		var/damapply = stored.maxHealth * damage_percent
 
 		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND)
-	if(source.convert_damage)
-		stored.blood_volume = shape.blood_volume;
+//	if(source.convert_damage)
+//		stored.blood_volume = shape.blood_volume;
 
 	// This guard is important because restore() can also be called on COMSIG_PARENT_QDELETING for shape, as well as on death.
 	// This can happen in, for example, [/proc/wabbajack] where the mob hit is qdel'd.

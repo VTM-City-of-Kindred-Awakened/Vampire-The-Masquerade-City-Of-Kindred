@@ -64,7 +64,7 @@
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			if(!iskindred(mob))
-				H.blood_volume = max(H.blood_volume-10, 150)
+				H.blood_volume = max(H.blood_volume-50, 150)
 				if(H.reagents)
 					if(length(H.reagents.reagent_list))
 						H.reagents.trans_to(src, min(10, H.reagents.total_volume))

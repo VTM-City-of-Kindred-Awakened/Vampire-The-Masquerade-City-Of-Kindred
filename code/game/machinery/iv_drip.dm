@@ -156,6 +156,7 @@
 				visible_message("<span class='hear'>[src] beeps loudly.</span>")
 				playsound(loc, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 			attached.transfer_blood_to(beaker, amount)
+			attached.bloodpool = attached.maxbloodpool
 			update_icon()
 
 /obj/machinery/iv_drip/attack_hand(mob/user)

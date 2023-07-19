@@ -670,7 +670,7 @@
 				if(VL.bloodpool >= 1 && VL.stat != DEAD)
 					var/sucked = min(VL.bloodpool, 2)
 					VL.bloodpool = VL.bloodpool-sucked
-					VL.blood_volume = max(VL.blood_volume-10, 0)
+					VL.blood_volume = max(VL.blood_volume-50, 0)
 					if(ishuman(VL))
 						var/mob/living/carbon/human/VHL = VL
 						VHL.blood_volume = max(VHL.blood_volume-10*sucked, 0)
