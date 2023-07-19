@@ -257,6 +257,8 @@
 							AdjustMasquerade(BD, -1)
 					else
 						playsound(BD, 'code/modules/ziggers/sounds/kiss.ogg', 50, TRUE)
+					if(iskindred(LV))
+						message_admins("[BD]([BD.key]) is diablerizing [LV]([LV.key])!")
 					BD.drinksomeblood(LV)
 	..()
 

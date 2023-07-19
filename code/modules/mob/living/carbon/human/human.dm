@@ -643,6 +643,9 @@
 #define CPR_PANIC_SPEED (0.8 SECONDS)
 
 /// Performs CPR on the target after a delay.
+/mob/living/carbon/human
+	var/last_cpr_exp = 0
+
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/target)
 	if(target == src)
 		return
@@ -687,12 +690,14 @@
 
 		visible_message("<span class='notice'>[src] performs CPR on [target.name]!</span>", "<span class='notice'>You perform CPR on [target.name].</span>")
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
-		AdjustHumanity(src, 1, 10)
-		if(client)
-			var/mode = 1
-			if(HAS_TRAIT(src, TRAIT_NON_INT))
-				mode = 2
-			client.prefs.exper = min(calculate_mob_max_exper(src), client.prefs.exper+(10/mode))
+		if(last_cpr_exp+1200 < world.time)
+			last_cpr_exp = world.time
+			AdjustHumanity(src, 1, 10)
+			if(client)
+				var/mode = 1
+				if(HAS_TRAIT(src, TRAIT_NON_INT))
+					mode = 2
+				client.prefs.exper = min(calculate_mob_max_exper(src), client.prefs.exper+(10/mode))
 		log_combat(src, target, "CPRed")
 
 		if (HAS_TRAIT(target, TRAIT_NOBREATH))

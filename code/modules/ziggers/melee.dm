@@ -129,11 +129,18 @@
 	throwforce = 10
 	attack_verb_continuous = list("slashes", "cuts")
 	attack_verb_simple = list("slash", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/weapons/slash.ogg'
 	armour_penetration = 20
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF
+
+/obj/item/melee/vampirearms/knife/gangrel
+	name = "claws"
+	icon_state = "gangrel"
+	w_class = WEIGHT_CLASS_BULKY
+	armour_penetration = 100	//It's magical damage
+	item_flags = ABSTRACT | NOBLUDGEON | DROPDEL
 
 /obj/item/melee/vampirearms/chainsaw
 	name = "chainsaw"

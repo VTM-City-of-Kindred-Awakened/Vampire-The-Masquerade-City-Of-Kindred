@@ -162,6 +162,10 @@ GENE SCANNER
 	var/brute_loss = M.getBruteLoss()
 	var/mob_status = (M.stat == DEAD ? "<span class='alert'><b>Deceased</b></span>" : "<b>[round(M.health/M.maxHealth,0.01)*100]% healthy</b>")
 
+	if(iskindred(M))
+		mob_status = "<span class='alert'><b>Deceased</b></span>"
+		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss)))
+
 	if(HAS_TRAIT(M, TRAIT_FAKEDEATH) && !advanced)
 		mob_status = "<span class='alert'><b>Deceased</b></span>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
@@ -230,12 +234,15 @@ GENE SCANNER
 				trauma_desc += B.scan_desc
 				trauma_text += trauma_desc
 			render_list += "<span class='alert ml-1'>Cerebral traumas detected: subject appears to be suffering from [english_list(trauma_text)].</span>\n"
-		if(C.roundstart_quirks.len)
-			render_list += "<span class='info ml-1'>Subject Major Disabilities: [C.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY)].</span>\n"
-			if(advanced)
-				render_list += "<span class='info ml-1'>Subject Minor Disabilities: [C.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY)].</span>\n"
+//		if(C.roundstart_quirks.len)
+//			render_list += "<span class='info ml-1'>Subject Major Disabilities: [C.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY)].</span>\n"
+//			if(advanced)
+//				render_list += "<span class='info ml-1'>Subject Minor Disabilities: [C.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY)].</span>\n"
 	if(advanced)
-		render_list += "<span class='info ml-1'>Brain Activity Level: [(200 - M.getOrganLoss(ORGAN_SLOT_BRAIN))/2]%.</span>\n"
+		if(iskindred(M))
+			render_list += "<span class='info ml-1'>Brain Activity Level: 0%.</span>\n"
+		else
+			render_list += "<span class='info ml-1'>Brain Activity Level: [(200 - M.getOrganLoss(ORGAN_SLOT_BRAIN))/2]%.</span>\n"
 
 	if (M.radiation)
 		render_list += "<span class='alert ml-1'>Subject is irradiated.</span>\n"
@@ -324,7 +331,8 @@ GENE SCANNER
 
 			for(var/obj/item/organ/organ in H.internal_organs)
 				var/status = ""
-				if (organ.organ_flags & ORGAN_FAILING) status = "<font color='#E42426'>Non-Functional</font>"
+				if (iskindred(H)) status = "<font color='#E42426'>Non-Functional</font>"
+				else if (organ.organ_flags & ORGAN_FAILING) status = "<font color='#E42426'>Non-Functional</font>"
 				else if (organ.damage > organ.high_threshold) status = "<font color='#EC6224'>Severely Damaged</font>"
 				else if (organ.damage > organ.low_threshold) status = "<font color='#F28F1F'>Mildly Damaged</font>"
 				if (status != "")
@@ -341,8 +349,8 @@ GENE SCANNER
 			render_list += "<span class='info ml-1'>Genetic Stability: [H.dna.stability]%.</span>\n"
 
 		// Species and body temperature
-		var/datum/species/S = H.dna.species
-		var/mutant = H.dna.check_mutation(HULK) \
+//		var/datum/species/S = H.dna.species
+//		var/mutant = H.dna.check_mutation(HULK) \
 			|| S.mutantlungs != initial(S.mutantlungs) \
 			|| S.mutantbrain != initial(S.mutantbrain) \
 			|| S.mutantheart != initial(S.mutantheart) \
@@ -355,7 +363,7 @@ GENE SCANNER
 			|| S.mutantappendix != initial(S.mutantappendix) \
 			|| S.flying_species != initial(S.flying_species)
 
-		render_list += "<span class='info ml-1'>Species: [S.name][mutant ? "-derived mutant" : ""]</span>\n"
+//		render_list += "<span class='info ml-1'>Species: [S.name][mutant ? "-derived mutant" : ""]</span>\n"
 		render_list += "<span class='info ml-1'>Core temperature: [round(H.coretemperature-T0C,0.1)] &deg;C ([round(H.coretemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
 	render_list += "<span class='info ml-1'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
 
@@ -398,7 +406,9 @@ GENE SCANNER
 			if(blood_id != /datum/reagent/blood) // special blood substance
 				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
 				blood_type = R ? R.name : blood_id
-			if(C.blood_volume <= BLOOD_VOLUME_SAFE && C.blood_volume > BLOOD_VOLUME_OKAY)
+			if(iskindred(C))
+				render_list += "<span class='alert ml-1'>Blood level: LOW 0 %, 0 cl,</span> <span class='info'>type: [blood_type]</span>\n"
+			else if(C.blood_volume <= BLOOD_VOLUME_SAFE && C.blood_volume > BLOOD_VOLUME_OKAY)
 				render_list += "<span class='alert ml-1'>Blood level: LOW [blood_percent] %, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>\n"
 			else if(C.blood_volume <= BLOOD_VOLUME_OKAY)
 				render_list += "<span class='alert ml-1'>Blood level: <b>CRITICAL [blood_percent] %</b>, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>\n"

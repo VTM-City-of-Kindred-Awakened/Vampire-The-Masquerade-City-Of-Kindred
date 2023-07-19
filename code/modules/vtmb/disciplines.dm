@@ -215,18 +215,24 @@
 		if(1)
 			target.Immobilize(5)
 			to_chat(target, "<span class='userdanger'><b>FORGET ABOUT IT</b></span>")
+			caster.say("FORGET ABOUT IT!!")
 		if(2)
 			target.Immobilize(5)
 			if(target.body_position == STANDING_UP)
 				to_chat(target, "<span class='userdanger'><b>GET DOWN</b></span>")
 				target.toggle_resting()
+				caster.say("GET DOWN!!")
 			else
 				to_chat(target, "<span class='userdanger'><b>STAY DOWN</b></span>")
+				caster.say("STAY DOWN!!")
 		if(3 to 4)
-			to_chat(target, "<span class='userdanger'><b>FALL ASLEEP</b></span>")
-			target.Sleeping(50*(level_casting-2))
+			to_chat(target, "<span class='userdanger'><b>GO AWAY</b></span>")
+			caster.say("GO AWAY!!")
+			target.set_glide_size(DELAY_TO_GLIDE_SIZE(target.total_multiplicative_slowdown()))
+			walk_away(target,caster,7,target.total_multiplicative_slowdown())
 		if(5)
 			to_chat(target, "<span class='userdanger'><b>YOU SHOULD KILL YOURSELF NOW</b></span>")
+			caster.say("YOU SHOULD KILL YOURSELF NOW!!")
 			if(iskindred(target))
 				target.Immobilize(5*level_casting)
 				target.drop_all_held_items()
@@ -371,6 +377,10 @@
 
 /datum/discipline/potence/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
+	caster.remove_overlay(POTENCE_LAYER)
+	var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "potence", -POTENCE_LAYER)
+	caster.overlays_standing[POTENCE_LAYER] = potence_overlay
+	caster.apply_overlay(POTENCE_LAYER)
 	caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+10
 	caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh+10
 	caster.dna.species.meleemod = caster.dna.species.meleemod+(0.5*level_casting)
@@ -382,6 +392,7 @@
 			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-10
 			caster.dna.species.meleemod = caster.dna.species.meleemod-(0.5*level_casting)
 			caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
+			caster.remove_overlay(POTENCE_LAYER)
 
 /datum/discipline/fortitude
 	name = "Fortitude"
@@ -395,6 +406,10 @@
 /datum/discipline/fortitude/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	var/mod = min(3, level_casting)
+	caster.remove_overlay(FORTITUDE_LAYER)
+	var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "fortitude", -FORTITUDE_LAYER)
+	caster.overlays_standing[FORTITUDE_LAYER] = fortitude_overlay
+	caster.apply_overlay(FORTITUDE_LAYER)
 	caster.physiology.armor.melee = caster.physiology.armor.melee+(15*mod)
 	caster.physiology.armor.bullet = caster.physiology.armor.bullet+(15*mod)
 	spawn(delay+caster.discipline_time_plus)
@@ -402,6 +417,7 @@
 			playsound(caster.loc, 'code/modules/ziggers/sounds/fortitude_deactivate.ogg', 50, FALSE)
 			caster.physiology.armor.melee = caster.physiology.armor.melee-(15*mod)
 			caster.physiology.armor.bullet = caster.physiology.armor.bullet-(15*mod)
+			caster.remove_overlay(FORTITUDE_LAYER)
 
 /datum/discipline/obfuscate
 	name = "Obfuscate"
@@ -469,104 +485,126 @@
 /datum/movespeed_modifier/protean2
 	multiplicative_slowdown = -0.15
 
-/datum/movespeed_modifier/protean3
-	multiplicative_slowdown = -0.25
-
-/datum/movespeed_modifier/protean4
-	multiplicative_slowdown = -0.35
-
-/datum/movespeed_modifier/protean5
-	multiplicative_slowdown = -0.45
+/obj/effect/proc_holder/spell/targeted/shapeshift/gangrel
+	name = "Gangrel Form"
+	desc = "Take on the shape a wolf."
+	charge_max = 50
+	cooldown_min = 50
+	shapeshift_type = /mob/living/simple_animal/hostile/gangrel
 
 /datum/discipline/protean/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	var/mod = min(4, level_casting)
-	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
+//	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/gangrel/GA = new()
 	switch(mod)
 		if(1)
 			caster.drop_all_held_items()
-			caster.dna.species.attack_verb = "slash"
-			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
-			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+10
-			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh+10
-			caster.remove_overlay(PROTEAN_LAYER)
-			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
-			caster.apply_overlay(PROTEAN_LAYER)
+			caster.put_in_r_hand(new /obj/item/melee/vampirearms/knife/gangrel(caster))
+			caster.put_in_l_hand(new /obj/item/melee/vampirearms/knife/gangrel(caster))
+			caster.add_client_colour(/datum/client_colour/glass_colour/red)
+//			caster.dna.species.attack_verb = "slash"
+//			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
+//			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+10
+//			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh+10
+//			caster.remove_overlay(PROTEAN_LAYER)
+//			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
+//			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
-					if(caster.dna)
-						playsound(caster.loc, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
-						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
-						caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
-						caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-10
-						caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-10
-						caster.remove_overlay(PROTEAN_LAYER)
+					for(var/obj/item/melee/vampirearms/knife/gangrel/G in caster)
+						if(G)
+							qdel(G)
+					caster.remove_client_colour(/datum/client_colour/glass_colour/red)
+//					if(caster.dna)
+					playsound(caster.loc, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
+//						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
+//						caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
+//						caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-10
+//						caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-10
+//						caster.remove_overlay(PROTEAN_LAYER)
 		if(2)
 			caster.drop_all_held_items()
-			caster.dna.species.attack_verb = "slash"
-			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
-			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+15
-			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh+15
+			caster.put_in_r_hand(new /obj/item/melee/vampirearms/knife/gangrel(caster))
+			caster.put_in_l_hand(new /obj/item/melee/vampirearms/knife/gangrel(caster))
+			caster.add_client_colour(/datum/client_colour/glass_colour/red)
+//			caster.dna.species.attack_verb = "slash"
+//			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
+//			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+15
+//			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh+15
 			caster.add_movespeed_modifier(/datum/movespeed_modifier/protean2)
-			caster.remove_overlay(PROTEAN_LAYER)
-			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
-			caster.apply_overlay(PROTEAN_LAYER)
+//			caster.remove_overlay(PROTEAN_LAYER)
+//			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
+//			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
-					if(caster.dna)
-						playsound(caster.loc, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
-						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
-						caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
-						caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-15
-						caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-15
-						caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean2)
-						caster.remove_overlay(PROTEAN_LAYER)
+					for(var/obj/item/melee/vampirearms/knife/gangrel/G in caster)
+						if(G)
+							qdel(G)
+					caster.remove_client_colour(/datum/client_colour/glass_colour/red)
+//					if(caster.dna)
+					playsound(caster.loc, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
+//						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
+//						caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
+//						caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-15
+//						caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-15
+					caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean2)
+//						caster.remove_overlay(PROTEAN_LAYER)
 		if(3)
 			caster.drop_all_held_items()
-			caster.dna.species.attack_verb = "slash"
-			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
-			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+20
-			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh+20
-			caster.add_movespeed_modifier(/datum/movespeed_modifier/protean3)
-			caster.remove_overlay(PROTEAN_LAYER)
-			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
-			caster.apply_overlay(PROTEAN_LAYER)
+			GA.cast()
+//			caster.dna.species.attack_verb = "slash"
+//			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
+//			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+20
+//			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh+20
+//			caster.add_movespeed_modifier(/datum/movespeed_modifier/protean3)
+//			caster.remove_overlay(PROTEAN_LAYER)
+//			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
+//			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay+caster.discipline_time_plus)
-				if(caster)
-					if(caster.dna)
-						playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
-						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
-						caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
-						caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-20
-						caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-20
-						caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean3)
-						caster.remove_overlay(PROTEAN_LAYER)
-		if(4)
+				if(caster && caster.stat != DEAD)
+					GA.cast()
+//					if(caster.dna)
+					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
+//						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
+//						caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
+//						caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-20
+//						caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-20
+//						caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean3)
+//						caster.remove_overlay(PROTEAN_LAYER)
+		if(4 to 5)
 			caster.drop_all_held_items()
-			caster.dna.species.attack_verb = "slash"
-			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
-			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+25
-			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagelow+25
+			if(level_casting == 4)
+				GA.shapeshift_type = /mob/living/simple_animal/hostile/gangrel/better
 			if(level_casting == 5)
-				caster.add_movespeed_modifier(/datum/movespeed_modifier/protean5)
-			else
-				caster.add_movespeed_modifier(/datum/movespeed_modifier/protean4)
-			caster.remove_overlay(PROTEAN_LAYER)
-			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
-			caster.apply_overlay(PROTEAN_LAYER)
+				GA.shapeshift_type = /mob/living/simple_animal/hostile/gangrel/best
+			GA.cast()
+//			caster.dna.species.attack_verb = "slash"
+//			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
+//			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+25
+//			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagelow+25
+//			if(level_casting == 5)
+//				caster.add_movespeed_modifier(/datum/movespeed_modifier/protean5)
+//			else
+//				caster.add_movespeed_modifier(/datum/movespeed_modifier/protean4)
+//			caster.remove_overlay(PROTEAN_LAYER)
+//			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
+//			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay+caster.discipline_time_plus)
-				if(caster)
-					if(caster.dna)
-						playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
-						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
-						caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
-						caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-25
-						caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-25
-						if(level_casting == 5)
-							caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean5)
-						else
-							caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean4)
-						caster.remove_overlay(PROTEAN_LAYER)
+				if(caster && caster.stat != DEAD)
+					GA.cast()
+//					if(caster.dna)
+					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
+//						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
+//						caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
+//						caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-25
+//						caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-25
+//						if(level_casting == 5)
+//							caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean5)
+//						else
+//							caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean4)
+//						caster.remove_overlay(PROTEAN_LAYER)
+	qdel(GA)
 
 
 /mob/living/proc/tremere_gib()

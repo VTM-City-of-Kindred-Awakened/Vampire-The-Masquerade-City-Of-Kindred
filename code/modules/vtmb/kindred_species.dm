@@ -7,6 +7,7 @@
 	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_VIRUSIMMUNE, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_TOXIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_LIMBATTACHMENT)
 	use_skintones = TRUE
 	limbs_id = "human"
+	wings_icon = "Dragon"
 	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
 	brutemod = 0.5	//0.8 bilo
 	heatmod = 2		//Sosut ot peregreva

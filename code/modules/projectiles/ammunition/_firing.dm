@@ -59,14 +59,14 @@
 		var/atom/movable/shit = new(A.loc)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			H.remove_overlay(PROTEAN_LAYER)
+			H.remove_overlay(FIRING_EFFECT_LAYER)
 			var/mutable_appearance/firing_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "firing", -PROTEAN_LAYER)
-			H.overlays_standing[PROTEAN_LAYER] = firing_overlay
-			H.apply_overlay(PROTEAN_LAYER)
+			H.overlays_standing[FIRING_EFFECT_LAYER] = firing_overlay
+			H.apply_overlay(FIRING_EFFECT_LAYER)
 			shit.set_light(3, 2, "#ffedbb")
 //			animate(firing_overlay, alpha = 0, time = 2)
 			spawn(2)
-				H.remove_overlay(PROTEAN_LAYER)
+				H.remove_overlay(FIRING_EFFECT_LAYER)
 				qdel(shit)
 
 	var/direct_target

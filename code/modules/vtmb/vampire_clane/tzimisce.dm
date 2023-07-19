@@ -2,16 +2,106 @@
 	name = "Tzimisce"
 	desc = "If someone were to call a Tzimisce inhuman and sadistic, the Tzimisce would probably commend them for their perspicacity, and then demonstrate that their mortal definition of sadism was laughably inadequate. The Tzimisce have left the human condition behind gladly, and now focus on transcending the limitations of the vampiric state. At a casual glance or a brief conversation, a Tzimisce appears to be one of the more pleasant vampires. Polite, intelligent, and inquisitive, they seem a stark contrast to the howling Sabbat mobs or even the apparently more humane Brujah or Nosferatu. However, upon closer inspection, it becomes clear that this is merely a mask hiding something alien and monstrous."
 	curse = "Grounded to material domain."
-	alt_sprite = "tzi"
-	no_hair = TRUE
-	no_facial = TRUE
+//	alt_sprite = "tzi"
+//	no_hair = TRUE
+//	no_facial = TRUE	//FUCK WRONG RULEBOOK
 	clane_disciplines = list(/datum/discipline/auspex = 1,
 														/datum/discipline/dominate = 2,
 														/datum/discipline/vicissitude = 3)
-	violating_appearance = TRUE
+	violating_appearance = FALSE
 	male_clothes = "/obj/item/clothing/under/vampire/sport"
 	female_clothes = "/obj/item/clothing/under/vampire/red"
 	enlightement = TRUE
+	var/hided = FALSE
+	var/additional_hands = FALSE
+	var/additional_wings = FALSE
+	var/additional_centipede = FALSE
+	var/additional_armor = FALSE
+	var/stealing_appearance = FALSE
+
+/datum/action/basic_vicissitude
+	name = "Vicissitude Upgrades"
+	desc = "Upgrade your body..."
+	button_icon_state = "basic"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/used = FALSE
+
+/datum/action/basic_vicissitude/Trigger()
+	. = ..()
+	var/datum/vampireclane/tzimisce/TZ = H.clane
+	if(TZ.hided)
+		return
+	if(used)
+		return
+	var/mob/living/carbon/human/H = owner
+	var/upgrade = input(owner, "Choose basic upgrade:", "Vicissitude Upgrades") as null|anything in list("Skin armor", "Centipede legs", "Second pair of arms", "Leather wings")
+	if(upgrade)
+		H.clane.violating_appearance = TRUE
+		used = TRUE
+		switch(upgrade)
+			if("Skin armor")
+				TZ.additional_armor = TRUE
+				H.dna.species.limbs_id = "tziarmor"
+				H.skin_tone = "albino"
+			if("Centipede legs")
+				TZ.additional_centipede = TRUE
+				H.remove_overlay(PROTEAN_LAYER)
+				var/mutable_appearance/centipede_overlay = mutable_appearance('code/modules/ziggers/64x64.dmi', "centipede", -PROTEAN_LAYER)
+				H.overlays_standing[PROTEAN_LAYER] = centipede_overlay
+				H.apply_overlay(PROTEAN_LAYER)
+			if("Second pair of arms")
+				TZ.additional_hands = TRUE
+				var/limbs = H.held_items.len
+				H.change_number_of_hands(limbs+2)
+				H.remove_overlay(PROTEAN_LAYER)
+				var/mutable_appearance/hands2_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "2hands", -PROTEAN_LAYER)
+				hands2_overlay.color = "#[skintone2hex(H.skin_tone)]"
+				H.overlays_standing[PROTEAN_LAYER] = hands2_overlay
+				H.apply_overlay(PROTEAN_LAYER)
+			if("Leather wings")
+				TZ.additional_wings = TRUE
+				H.dna.species.GiveSpeciesFlight(H)
+
+/datum/vampireclane/tzimisce/proc/switch_masquerade(var/mob/living/carbon/human/H)
+	if(!additional_hands && !additional_wings && !additional_centipede && !additional_armor)
+		return
+	if(stealing_appearance)
+		return
+	if(!hided)
+		hided = TRUE
+		violating_appearance = FALSE
+		if(additional_hands)
+			var/limbs = H.held_items.len
+			H.change_number_of_hands(limbs-2)
+			H.remove_overlay(PROTEAN_LAYER)
+		if(additional_wings)
+			H.dna.species.RemoveSpeciesFlight(H)
+		if(additional_centipede)
+			H.remove_overlay(PROTEAN_LAYER)
+		if(additional_armor)
+			H.dna.species.limbs_id = initial(H.dna.species.limbs_id)
+			H.update_body()
+	else
+		hided = FALSE
+		violating_appearance = TRUE
+		if(additional_hands)
+			var/limbs = H.held_items.len
+			H.change_number_of_hands(limbs+2)
+			H.remove_overlay(PROTEAN_LAYER)
+			var/mutable_appearance/hands2_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "2hands", -PROTEAN_LAYER)
+			hands2_overlay.color = "#[skintone2hex(H.skin_tone)]"
+			H.overlays_standing[PROTEAN_LAYER] = hands2_overlay
+			H.apply_overlay(PROTEAN_LAYER)
+		if(additional_wings)
+			H.dna.species.GiveSpeciesFlight(H)
+		if(additional_centipede)
+			H.remove_overlay(PROTEAN_LAYER)
+			var/mutable_appearance/centipede_overlay = mutable_appearance('code/modules/ziggers/64x64.dmi', "centipede", -PROTEAN_LAYER)
+			H.overlays_standing[PROTEAN_LAYER] = centipede_overlay
+			H.apply_overlay(PROTEAN_LAYER)
+		if(additional_armor)
+			H.dna.species.limbs_id = "tziarmor"
+			H.update_body()
 
 /datum/vampireclane/tzimisce/on_gain(mob/living/carbon/human/H)
 	..()
@@ -22,6 +112,8 @@
 	..()
 	var/datum/action/vicissitude/U = new()
 	U.Grant(H)
+	var/datum/action/basic_vicissitude/BV = new()
+	BV.Grant(H)
 	if(H.mind)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_floor)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_stool)
@@ -87,12 +179,95 @@
 	desc = "Steal the appearance of your victim."
 	button_icon_state = "vicissitude"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/original_hair
+	var/original_facehair
+	var/original_skintone
+	var/original_gender
+	var/original_bodytype
+	var/original_haircolor
+	var/original_facialhaircolor
+	var/original_bodysprite
+	var/original_eyecolor
+	var/original_realname
+	var/original_age
+	var/furry_changed = FALSE
 
 /datum/action/vicissitude/Trigger()
 	. = ..()
 	var/mob/living/carbon/human/H = owner
-	H.put_in_r_hand(new /obj/item/chameleon(H))
-	playsound(get_turf(H), 'code/modules/ziggers/sounds/vicissitude.ogg', 100, TRUE, -6)
+//	H.put_in_r_hand(new /obj/item/chameleon(H))
+	var/list/nibbers = list()
+	for(var/mob/living/carbon/human/HU in oviewers(6, H))
+		if(HU)
+			nibbers += src
+	if(!furry_changed)
+		if(length(nibbers) > 1)
+			var/victim = input(owner, "Choose victim to copy:", "Vicissitude Appearance") as null|mob in nibbers
+			if(victim)
+				var/datum/vampireclane/tzimisce/TZ = H.clane
+				TZ.stealing_appearance = TRUE
+				TZ.switch_masquerade()
+				original_hair = H.hairstyle
+				original_facehair = H.facial_hairstyle
+				original_skintone = H.skin_tone
+				original_gender = H.gender
+				original_bodytype = H.body_type
+				original_haircolor = H.hair_color
+				original_facialhaircolor = H.facial_hair_color
+				original_bodysprite = H.dna.species.limbs_id
+				original_eyecolor = H.eye_color
+				original_realname = H.real_name
+				original_age = H.age
+				playsound(get_turf(H), 'code/modules/ziggers/sounds/vicissitude.ogg', 100, TRUE, -6)
+				H.Stun(10)
+				H.do_jitter_animation(10)
+				var/mob/living/carbon/human/ZV = victim
+				H.hairstyle = ZV.hairstyle
+				H.facial_hairstyle = H.facial_hairstyle
+				H.skin_tone = ZV.skin_tone
+				H.gender = ZV.gender
+				H.body_type = ZV.body_type
+				H.hair_color = ZV.hair_color
+				H.facial_hair_color = ZV.facial_hair_color
+				H.dna.species.limbs_id = ZV.dna.species.limbs_id
+				H.eye_color = ZV.eye_color
+				H.real_name = ZV.real_name
+				H.name = H.real_name
+				H.age = ZV.age
+				H.update_body()
+				H.update_hair()
+				H.update_body_parts()
+				furry_changed = TRUE
+			else
+				return
+		else
+			to_chat(H, "<span class='warning'>You see no soul which can be copied...</span>")
+			return
+		return
+	else
+		var/datum/vampireclane/tzimisce/TZ = H.clane
+		TZ.stealing_appearance = FALSE
+		TZ.switch_masquerade()
+		playsound(get_turf(H), 'code/modules/ziggers/sounds/vicissitude.ogg', 100, TRUE, -6)
+		H.Stun(10)
+		H.do_jitter_animation(10)
+		H.hairstyle = original_hair
+		H.facial_hairstyle = original_facehair
+		H.skin_tone = original_skintone
+		H.gender = original_gender
+		H.body_type = original_bodytype
+		H.hair_color = original_haircolor
+		H.facial_hair_color = original_facialhaircolor
+		H.dna.species.limbs_id = original_bodysprite
+		H.eye_color = original_eyecolor
+		H.real_name = original_realname
+		H.name = H.real_name
+		H.age = original_age
+		H.update_body()
+		H.update_hair()
+		H.update_body_parts()
+		furry_changed = FALSE
+		return
 
 /obj/effect/decal/gut_floor/Initialize()
 	. = ..()
@@ -249,6 +424,43 @@
 	bloodpool = 7
 	maxbloodpool = 7
 
+/mob/living/simple_animal/hostile/gangrel
+	name = "Gangrel Form"
+	desc = "The peak of abominations armor. Unbelievably undamagable..."
+	icon = 'code/modules/ziggers/32x48.dmi'
+	icon_state = "gangrel_f"
+	icon_living = "gangrel_f"
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	speak_chance = 0
+	maxHealth = 300
+	health = 300
+	butcher_results = list(/obj/item/stack/human_flesh = 20)
+	harm_intent_damage = 5
+	melee_damage_lower = 25
+	melee_damage_upper = 25
+	attack_verb_continuous = "slashes"
+	attack_verb_simple = "slash"
+	attack_sound = 'sound/weapons/slash.ogg'
+	a_intent = INTENT_HARM
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	bloodpool = 10
+	maxbloodpool = 10
+
+/mob/living/simple_animal/hostile/gangrel/better
+	maxHealth = 500
+	health = 500
+	melee_damage_lower = 35
+	melee_damage_upper = 35
+
+/mob/living/simple_animal/hostile/gangrel/best
+	icon_state = "gangrel_m"
+	icon_living = "gangrel_m"
+	maxHealth = 700
+	health = 700
+	melee_damage_lower = 50
+	melee_damage_upper = 50
+
 /mob/living/simple_animal/hostile/biter/hostile
 	faction = list("hostile")
 
@@ -312,3 +524,5 @@
 		to_chat(M, "<span class='notice'>You feel more dexterous.</span>")
 		playsound(get_turf(M), 'sound/misc/splort.ogg', 50, 1)
 		desc += "Looks like it's been used up."
+
+//GiveSpeciesFlight(mob/living/carbon/human/H)
