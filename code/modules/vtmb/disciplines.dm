@@ -483,6 +483,7 @@
 	delay = 150
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/ziggers/sounds/protean_activate.ogg'
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/gangrel/GA
 
 /datum/movespeed_modifier/protean2
 	multiplicative_slowdown = -0.15
@@ -498,7 +499,8 @@
 	..()
 	var/mod = min(4, level_casting)
 //	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/gangrel/GA = new(caster)
+	if(!GA)
+	GA = new(caster)
 	GA.owner = caster
 	caster.mind.spell_list += GA
 	switch(mod)
@@ -608,8 +610,6 @@
 //						else
 //							caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean4)
 //						caster.remove_overlay(PROTEAN_LAYER)
-	qdel(GA)
-
 
 /mob/living/proc/tremere_gib()
 	Stun(50)
