@@ -211,7 +211,7 @@
 			if(victim)
 				var/datum/vampireclane/tzimisce/TZ = H.clane
 				TZ.stealing_appearance = TRUE
-				TZ.switch_masquerade()
+				TZ.switch_masquerade(H)
 				original_hair = H.hairstyle
 				original_facehair = H.facial_hairstyle
 				original_skintone = H.skin_tone
@@ -252,7 +252,7 @@
 	else
 		var/datum/vampireclane/tzimisce/TZ = H.clane
 		TZ.stealing_appearance = FALSE
-		TZ.switch_masquerade()
+		TZ.switch_masquerade(H)
 		playsound(get_turf(H), 'code/modules/ziggers/sounds/vicissitude.ogg', 100, TRUE, -6)
 		H.Stun(10)
 		H.do_jitter_animation(10)
