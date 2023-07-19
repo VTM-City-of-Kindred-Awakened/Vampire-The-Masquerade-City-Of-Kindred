@@ -1485,7 +1485,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	H.send_item_attack_message(I, user, hit_area, affecting)
 
-	if(prob(50))
+	if(prob(50) && I.force > 5)
 		for(var/obj/item/vtm_artifact/odious_chalice/OC in user.GetAllContents())
 			if(OC)
 				if(H.bloodpool)
@@ -2065,11 +2065,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return
 	flying_species = FALSE
 	if(fly)
-		qdel(fly)
-	if(H.dna.features["wings"] != null)
-		mutant_bodyparts["wings"] = null
-		H.dna.features["wings"] = null
-		H.update_body()
+		fly = null
+	mutant_bodyparts["wings"] = "None"
+	H.dna.features["wings"] = "None"
+	H.update_body()
 
 /datum/species/proc/HandleFlight(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)

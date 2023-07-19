@@ -38,6 +38,8 @@
 	playsound_local(src, heartbeat, 75, 0, channel = CHANNEL_BLOOD, use_reverb = FALSE)
 	if(!iskindred(mob))
 		mob.Stun(30)
+	if(iskindred(mob))
+		to_chat(src, "<span class='userdanger'><b>YOU TRY TO COMMIT DIABLERIE OVER [mob].</b></span>")
 	if(isnpc(mob))
 		var/mob/living/carbon/human/npc/NPC = mob
 		NPC.danger_source = null
@@ -54,6 +56,8 @@
 			qdel(suckbar)
 			stop_sound_channel(CHANNEL_BLOOD)
 			return
+	if(!HAS_TRAIT(src, TRAIT_BLOODY_SUCKER) && CheckEyewitness(src, src, 7, FALSE))
+		AdjustMasquerade(src, -1)
 	if(do_after(src, 30, target = mob, timed_action_flags = NONE, progress = FALSE))
 		mob.bloodpool = max(0, mob.bloodpool-1)
 		suckbar.icon_state = "[round(14*(mob.bloodpool/mob.maxbloodpool))]"
@@ -88,7 +92,9 @@
 			if(ishuman(mob))
 				var/mob/living/carbon/human/K = mob
 				if(iskindred(mob))
-					if(K.generation < generation)
+					AdjustHumanity(src, -1, 0)
+					AdjustMasquerade(src, -1)
+					if(K.generation > generation)
 						if(K.client)
 							reset_shit(K)
 							K.ghostize(FALSE)
@@ -96,7 +102,7 @@
 						adjustBruteLoss(-50, TRUE)
 						adjustFireLoss(-50, TRUE)
 					else
-						if(prob(20+((K.generation-generation)*10)))
+						if(prob(20+((generation-K.generation)*10)))
 							to_chat(src, "<span class='userdanger'><b>[K]'s SOUL OVERCOMES YOURS AND GAIN CONTROL OF YOUR BODY.</b></span>")
 							reset_shit(src)
 							ghostize(FALSE)

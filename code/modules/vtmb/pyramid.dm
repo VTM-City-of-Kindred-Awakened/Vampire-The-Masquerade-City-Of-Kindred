@@ -135,6 +135,19 @@
 	anchored = TRUE
 	density = TRUE
 
+/obj/structure/fleshwall
+	name = "flesh wall"
+	desc = "Wall from FLESH."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "necro1"
+	plane = GAME_PLANE
+	layer = ABOVE_MOB_LAYER
+	anchored = TRUE
+	density = TRUE
+
+/obj/structure/fleshwall/Initialize()
+	icon_state = "necro[rand(1, 3)]"
+
 /obj/ritualrune/identification
 	name = "Occult Items Identification"
 	desc = "Identificates single occult item"
@@ -197,16 +210,20 @@
 			var/y = input(user, "Choose y direction:\n(1-255)", "Teleportation Rune") as num|null
 			if(y)
 				y_dir = max(min( round(text2num(y)), 255),1)
-				for(var/turf/open/floor/plating/P in world)
-					if(P.z == user.z && P.x == x_dir && P.y == y_dir && istype(get_area(P), /area/vtm))
-						var/area/vtm/V = get_area(P)
-						if(V.name != "San Francisco")
-							playsound(loc, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
-							user.forceMove(P)
-							qdel(src)
-							return
-					else
-						to_chat(user, "<span class='warning'>There is no available teleportation place by this coordinates!</span>")
+				var/atom/movable/AM = new(user.loc)
+				AM.x = x_dir
+				AM.y = y_dir
+				if(istype(get_area(AM), /area/vtm))
+					var/area/vtm/V = get_area(AM)
+					qdel(AM)
+					if(V.name != "San Francisco")
+						playsound(loc, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
+						user.forceMove(AM.loc)
+						qdel(src)
+						return
+				else
+					to_chat(user, "<span class='warning'>There is no available teleportation place by this coordinates!</span>")
+					qdel(AM)
 
 /obj/ritualrune/curse
 	name = "Curse Rune"

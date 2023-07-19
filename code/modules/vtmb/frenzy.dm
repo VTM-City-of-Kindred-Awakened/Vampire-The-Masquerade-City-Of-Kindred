@@ -134,7 +134,7 @@
 	var/skipface = (H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE))
 	if(H.clane)
 		if(!skipface && H.clane.violating_appearance)
-			if(CheckEyewitness(H, H, 5, FALSE))
+			if(CheckEyewitness(H, H, 7, FALSE))
 				AdjustMasquerade(H, -1)
 
 	if(H.hearing_ghosts)

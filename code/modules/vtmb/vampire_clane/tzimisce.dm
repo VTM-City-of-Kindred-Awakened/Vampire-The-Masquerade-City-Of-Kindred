@@ -18,6 +18,63 @@
 	var/additional_centipede = FALSE
 	var/additional_armor = FALSE
 
+/obj/effect/proc_holder/spell/targeted/shapeshift/tzimisce
+	name = "Tzimisce Form"
+	desc = "Take on the shape a beast."
+	charge_max = 50
+	cooldown_min = 50
+	revert_on_death = TRUE
+	die_with_shapeshifted_form = FALSE
+	shapeshift_type = /mob/living/simple_animal/hostile/tzimisce_beast
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler
+	name = "Blood Crawler"
+	desc = "Take on the shape a beast."
+	charge_max = 50
+	cooldown_min = 50
+	revert_on_death = TRUE
+	die_with_shapeshifted_form = FALSE
+	shapeshift_type = /mob/living/simple_animal/hostile/bloodcrawler
+
+/datum/action/vicissitude_blood
+	name = "Vicissitude Blood Form"
+	desc = "Suck blood from the floor."
+	button_icon_state = "tzimisce"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler/BC
+
+/datum/action/vicissitude_blood/Trigger()
+	. = ..()
+	var/mob/living/carbon/human/H = owner
+	if(!BC)
+		BC = new(owner)
+	BC.Shapeshift(H)
+	spawn(50)
+		if(BC && BC.myshape && H)
+			var/mob/living/simple_animal/hostile/bloodcrawler/BD = BC.myshape
+			H.bloodpool = min(H.bloodpool+BD.collected_blood, H.maxbloodpool)
+			if(BD.collected_blood)
+				H.adjustBruteLoss(-5*BD.collected_blood, TRUE)
+				H.adjustFireLoss(-5*BD.collected_blood, TRUE)
+			BC.Shapeshift(BC.myshape)
+
+/datum/action/vicissitude_form
+	name = "Vicissitude Beast Form"
+	desc = "Become a WereTzimisce!"
+	button_icon_state = "tzimisce"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/tzimisce/TE
+
+/datum/action/vicissitude_form/Trigger()
+	. = ..()
+	var/mob/living/carbon/human/H = owner
+	if(!TE)
+		TE = new(owner)
+	TE.Shapeshift(H)
+	spawn(150)
+		if(TE && TE.myshape && H)
+			TE.Shapeshift(TE.myshape)
+
 /datum/action/basic_vicissitude
 	name = "Vicissitude Upgrades"
 	desc = "Upgrade your body..."
@@ -119,18 +176,36 @@
 	U.Grant(H)
 	var/datum/action/basic_vicissitude/BV = new()
 	BV.Grant(H)
+	if(H.client.prefs)
+		if(H.client.prefs.discipline3level >= 2)
+			var/datum/action/vicissitude_blood/VB = new()
+			VB.Grant(H)
+		if(H.client.prefs.discipline3level >= 3)
+			var/datum/action/vicissitude_form/VF = new()
+			VF.Grant(H)
 	if(H.mind)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_floor)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_wall)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_stool)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_biter)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_fister)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_tanker)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_heart)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_eyes)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_stealth)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_implant)
 //		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_med)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_trench)
 	var/obj/item/organ/cyberimp/arm/surgery/S = new()
 	S.Insert(H)
+
+/datum/crafting_recipe/stake
+	name = "Stake"
+	time = 50
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 5)
+	result = /obj/item/melee/vampirearms/stake
+	always_available = TRUE
+	category = CAT_WEAPON
 
 /datum/crafting_recipe/tzi_trench
 	name = "Leather-Bone Trenchcoat (Armor)"
@@ -166,11 +241,35 @@
 	always_available = FALSE
 	category = CAT_TZIMISCE
 
+/datum/crafting_recipe/tzi_stealth
+	name = "Stealth Skin (Invisibility)"
+	time = 50
+	reqs = list(/obj/item/stack/human_flesh = 10, /obj/item/melee/vampirearms/stake = 1, /obj/item/drinkable_bloodpack)
+	result = /obj/item/implanter/stealth
+	always_available = FALSE
+	category = CAT_TZIMISCE
+
+/datum/crafting_recipe/tzi_implant
+	name = "Implanting Flesh Device"
+	time = 50
+	reqs = list(/obj/item/stack/human_flesh = 10, /obj/item/melee/vampirearms/knife = 1, /obj/item/drinkable_bloodpack)
+	result = /obj/item/autosurgeon
+	always_available = FALSE
+	category = CAT_TZIMISCE
+
 /datum/crafting_recipe/tzi_floor
 	name = "Gut Floor"
 	time = 50
 	reqs = list(/obj/item/stack/human_flesh = 1, /obj/item/guts = 1)
 	result = /obj/effect/decal/gut_floor
+	always_available = FALSE
+	category = CAT_TZIMISCE
+
+/datum/crafting_recipe/tzi_wall
+	name = "Flesh Wall"
+	time = 50
+	reqs = list(/obj/item/stack/human_flesh = 2)
+	result = /obj/structure/fleshwall
 	always_available = FALSE
 	category = CAT_TZIMISCE
 
@@ -210,7 +309,20 @@
 	var/furry_changed = FALSE
 
 /datum/movespeed_modifier/centipede
-	multiplicative_slowdown = -0.15
+	multiplicative_slowdown = -0.5
+
+/mob/living/simple_animal/hostile/bloodcrawler
+	var/collected_blood = 0
+
+/mob/living/simple_animal/hostile/bloodcrawler/Move(NewLoc, direct)
+	. = ..()
+	for(var/obj/effect/decal/cleanable/blood/B in NewLoc)
+		if(B)
+			if(B.bloodiness)
+				collected_blood = collected_blood+1
+				to_chat(src, "You sense blood entering your mass...")
+	var/turf/T = get_turf(NewLoc)
+	T.wash(CLEAN_WASH)
 
 /datum/action/vicissitude/Trigger()
 	. = ..()
@@ -323,6 +435,8 @@
 		H.hair_color = original_haircolor
 		H.facial_hair_color = original_facialhaircolor
 		H.dna.species.limbs_id = original_bodysprite
+		if(TZ.additional_armor)
+			H.dna.species.limbs_id = "tziarmor"
 		H.eye_color = original_eyecolor
 		H.real_name = original_realname
 		H.name = H.real_name
@@ -448,8 +562,8 @@
 	health = 50
 	butcher_results = list(/obj/item/stack/human_flesh = 10)
 	harm_intent_damage = 5
-	melee_damage_lower = 21
-	melee_damage_upper = 21
+	melee_damage_lower = 25
+	melee_damage_upper = 25
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -475,8 +589,8 @@
 	health = 300
 	butcher_results = list(/obj/item/stack/human_flesh = 20)
 	harm_intent_damage = 5
-	melee_damage_lower = 21
-	melee_damage_upper = 21
+	melee_damage_lower = 30
+	melee_damage_upper = 30
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
@@ -496,13 +610,13 @@
 	icon_living = "gangrel_f"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
-	speed = 0
+	speed = -1
 	maxHealth = 300
 	health = 300
 	butcher_results = list(/obj/item/stack/human_flesh = 20)
 	harm_intent_damage = 5
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	melee_damage_lower = 40
+	melee_damage_upper = 40
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
@@ -515,16 +629,66 @@
 /mob/living/simple_animal/hostile/gangrel/better
 	maxHealth = 500
 	health = 500
-	melee_damage_lower = 35
-	melee_damage_upper = 35
+	melee_damage_lower = 60
+	melee_damage_upper = 60
 
 /mob/living/simple_animal/hostile/gangrel/best
 	icon_state = "gangrel_m"
 	icon_living = "gangrel_m"
 	maxHealth = 700
 	health = 700
-	melee_damage_lower = 50
-	melee_damage_upper = 50
+	melee_damage_lower = 80
+	melee_damage_upper = 80
+
+/mob/living/simple_animal/hostile/tzimisce_beast
+	name = "Tzimisce Beast Form"
+	desc = "The peak of abominations armor. Unbelievably undamagable..."
+	icon = 'code/modules/ziggers/64x64.dmi'
+	icon_state = "weretzi"
+	icon_living = "weretzi"
+	pixel_w = -16
+	pixel_z = -16
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	speak_chance = 0
+	speed = -1
+	maxHealth = 500
+	health = 500
+	butcher_results = list(/obj/item/stack/human_flesh = 20)
+	harm_intent_damage = 5
+	melee_damage_lower = 60
+	melee_damage_upper = 60
+	attack_verb_continuous = "slashes"
+	attack_verb_simple = "slash"
+	attack_sound = 'sound/weapons/slash.ogg'
+	a_intent = INTENT_HARM
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	bloodpool = 10
+	maxbloodpool = 10
+
+/mob/living/simple_animal/hostile/bloodcrawler
+	name = "Tzimisce Blood Form"
+	desc = "The peak of abominations. Unbelievably undamagable..."
+	icon = 'code/modules/ziggers/mobs.dmi'
+	icon_state = "liquid"
+	icon_living = "liquid"
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	speak_chance = 0
+	speed = -3
+	maxHealth = 100
+	health = 100
+	butcher_results = list(/obj/item/stack/human_flesh = 20)
+	harm_intent_damage = 5
+	melee_damage_lower = 1
+	melee_damage_upper = 1
+	attack_verb_continuous = "slashes"
+	attack_verb_simple = "slash"
+	attack_sound = 'sound/weapons/slash.ogg'
+	a_intent = INTENT_HARM
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	bloodpool = 20
+	maxbloodpool = 20
 
 /mob/living/simple_animal/hostile/biter/hostile
 	faction = list("hostile")

@@ -181,6 +181,7 @@
 			to_chat(owner, "<span class='notice'>You started to feed [BLOODBONDED] with your own blood.</span>")
 			if(do_mob(owner, BLOODBONDED, 10 SECONDS))
 				var/new_master = FALSE
+				BLOODBONDED.faction |= H.faction
 				if(BLOODBONDED.stat == DEAD && !iskindred(BLOODBONDED))
 					if(BLOODBONDED.respawntimeofdeath+6000 > world.time)
 						if(BLOODBONDED.revive(full_heal = TRUE, admin_revive = TRUE))

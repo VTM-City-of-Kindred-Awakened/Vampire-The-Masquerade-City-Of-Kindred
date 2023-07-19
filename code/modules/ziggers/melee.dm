@@ -229,6 +229,7 @@
 			user.do_attack_animation(target)
 			visible_message("<span class='warning'>[user] pierces [target]'s torso!</span>", "<span class='warning'>You pierce [target]'s torso!</span>")
 			target.Paralyze(1200)
+			target.Sleeping(1200)
 			qdel(src)
 
 /obj/item/melee/vampirearms/shovel
