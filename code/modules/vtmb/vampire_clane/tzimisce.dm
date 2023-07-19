@@ -201,9 +201,9 @@
 	var/list/nibbers = list()
 	for(var/mob/living/carbon/human/HU in oviewers(6, H))
 		if(HU)
-			nibbers += src
+			nibbers += HU
 	if(!furry_changed)
-		if(length(nibbers) > 1)
+		if(length(nibbers) >= 1)
 			var/victim = input(owner, "Choose victim to copy:", "Vicissitude Appearance") as null|mob in nibbers
 			if(victim)
 				var/datum/vampireclane/tzimisce/TZ = H.clane
