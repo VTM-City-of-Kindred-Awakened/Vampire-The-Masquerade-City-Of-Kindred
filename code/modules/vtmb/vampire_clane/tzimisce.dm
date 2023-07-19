@@ -17,7 +17,6 @@
 	var/additional_wings = FALSE
 	var/additional_centipede = FALSE
 	var/additional_armor = FALSE
-	var/stealing_appearance = FALSE
 
 /datum/action/basic_vicissitude
 	name = "Vicissitude Upgrades"
@@ -72,14 +71,11 @@
 /datum/vampireclane/tzimisce/proc/switch_masquerade(var/mob/living/carbon/human/H)
 	if(!additional_hands && !additional_wings && !additional_centipede && !additional_armor)
 		return
-	if(stealing_appearance)
-		return
 	if(!hided)
 		hided = TRUE
 		violating_appearance = FALSE
 		if(additional_hands)
 			var/limbs = H.held_items.len
-			H.change_number_of_hands(limbs-2)
 			H.remove_overlay(PROTEAN_LAYER)
 		if(additional_wings)
 			H.dna.species.RemoveSpeciesFlight(H)
@@ -91,9 +87,10 @@
 	else
 		hided = FALSE
 		violating_appearance = TRUE
+		if(!additional_hands && !additional_wings && !additional_centipede && !additional_armor)
+			violating_appearance = FALSE
 		if(additional_hands)
 			var/limbs = H.held_items.len
-			H.change_number_of_hands(limbs+2)
 			H.remove_overlay(PROTEAN_LAYER)
 			var/mutable_appearance/hands2_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "2hands", -PROTEAN_LAYER)
 			hands2_overlay.color = "#[skintone2hex(H.skin_tone)]"
@@ -214,7 +211,6 @@
 			var/victim = input(owner, "Choose victim to copy:", "Vicissitude Appearance") as null|mob in nibbers
 			if(victim)
 				var/datum/vampireclane/tzimisce/TZ = H.clane
-				TZ.stealing_appearance = TRUE
 				TZ.switch_masquerade(H)
 				original_hair = H.hairstyle
 				original_facehair = H.facial_hairstyle
@@ -255,7 +251,6 @@
 		return
 	else
 		var/datum/vampireclane/tzimisce/TZ = H.clane
-		TZ.stealing_appearance = FALSE
 		TZ.switch_masquerade(H)
 		playsound(get_turf(H), 'code/modules/ziggers/sounds/vicissitude.ogg', 100, TRUE, -6)
 		H.Stun(10)
