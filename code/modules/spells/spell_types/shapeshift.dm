@@ -11,6 +11,8 @@
 	invocation_type = INVOCATION_SHOUT
 	action_icon_state = "shapeshift"
 
+	var/mob/living/myshape
+
 	var/revert_on_death = TRUE
 	var/die_with_shapeshifted_form = TRUE
 	var/convert_damage = TRUE //If you want to convert the caster's health and blood to the shift, and vice versa.
@@ -96,6 +98,7 @@
 		return
 
 	var/mob/living/shape = new shapeshift_type(caster.loc)
+	myshape = shape
 	H = new(shape,src,caster)
 
 	clothes_req = FALSE
