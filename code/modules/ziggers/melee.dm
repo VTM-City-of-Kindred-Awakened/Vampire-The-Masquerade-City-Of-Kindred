@@ -140,7 +140,7 @@
 	icon_state = "gangrel"
 	w_class = WEIGHT_CLASS_BULKY
 	armour_penetration = 100	//It's magical damage
-	item_flags = ABSTRACT | NOBLUDGEON | DROPDEL
+	item_flags = DROPDEL
 
 /obj/item/melee/vampirearms/chainsaw
 	name = "chainsaw"

@@ -55,6 +55,7 @@
 				centipede_overlay.pixel_w = -16
 				H.overlays_standing[PROTEAN_LAYER] = centipede_overlay
 				H.apply_overlay(PROTEAN_LAYER)
+				H.add_movespeed_modifier(/datum/movespeed_modifier/centipede)
 			if("Second pair of arms")
 				TZ.additional_hands = TRUE
 				var/limbs = H.held_items.len
@@ -75,7 +76,6 @@
 		hided = TRUE
 		violating_appearance = FALSE
 		if(additional_hands)
-			var/limbs = H.held_items.len
 			H.remove_overlay(PROTEAN_LAYER)
 		if(additional_wings)
 			H.dna.species.RemoveSpeciesFlight(H)
@@ -90,7 +90,6 @@
 		if(!additional_hands && !additional_wings && !additional_centipede && !additional_armor)
 			violating_appearance = FALSE
 		if(additional_hands)
-			var/limbs = H.held_items.len
 			H.remove_overlay(PROTEAN_LAYER)
 			var/mutable_appearance/hands2_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "2hands", -PROTEAN_LAYER)
 			hands2_overlay.color = "#[skintone2hex(H.skin_tone)]"
@@ -185,6 +184,18 @@
 	desc = "Steal the appearance of your victim."
 	button_icon_state = "vicissitude"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/last_hair
+	var/last_facehair
+	var/last_skintone
+	var/last_gender
+	var/last_bodytype
+	var/last_haircolor
+	var/last_facialhaircolor
+	var/last_bodysprite
+	var/last_eyecolor
+	var/last_realname
+	var/last_age
+
 	var/original_hair
 	var/original_facehair
 	var/original_skintone
@@ -198,6 +209,9 @@
 	var/original_age
 	var/furry_changed = FALSE
 
+/datum/movespeed_modifier/centipede
+	multiplicative_slowdown = -0.15
+
 /datum/action/vicissitude/Trigger()
 	. = ..()
 	var/mob/living/carbon/human/H = owner
@@ -207,6 +221,41 @@
 		if(HU)
 			nibbers += HU
 	if(!furry_changed)
+		if(last_hair)
+			if(alert("Continue with last saved appearance?",,"Yes","No")=="Yes")
+				var/datum/vampireclane/tzimisce/TZ = H.clane
+				TZ.switch_masquerade(H)
+				original_hair = H.hairstyle
+				original_facehair = H.facial_hairstyle
+				original_skintone = H.skin_tone
+				original_gender = H.gender
+				original_bodytype = H.body_type
+				original_haircolor = H.hair_color
+				original_facialhaircolor = H.facial_hair_color
+				original_bodysprite = H.dna.species.limbs_id
+				original_eyecolor = H.eye_color
+				original_realname = H.real_name
+				original_age = H.age
+				playsound(get_turf(H), 'code/modules/ziggers/sounds/vicissitude.ogg', 100, TRUE, -6)
+				H.Stun(10)
+				H.do_jitter_animation(10)
+				H.hairstyle = last_hair
+				H.facial_hairstyle = last_facehair
+				H.skin_tone = last_skintone
+				H.gender = last_gender
+				H.body_type = last_bodytype
+				H.hair_color = last_haircolor
+				H.facial_hair_color = last_facialhaircolor
+				H.dna.species.limbs_id = last_bodysprite
+				H.eye_color = last_eyecolor
+				H.real_name = last_realname
+				H.name = H.real_name
+				H.age = last_age
+				H.update_body()
+				H.update_hair()
+				H.update_body_parts()
+				furry_changed = TRUE
+				return
 		if(length(nibbers) >= 1)
 			var/victim = input(owner, "Choose victim to copy:", "Vicissitude Appearance") as null|mob in nibbers
 			if(victim)
@@ -242,6 +291,17 @@
 				H.update_body()
 				H.update_hair()
 				H.update_body_parts()
+				last_hair = H.hairstyle
+				last_facehair = H.facial_hairstyle
+				last_skintone = H.skin_tone
+				last_gender = H.gender
+				last_bodytype = H.body_type
+				last_haircolor = H.hair_color
+				last_facialhaircolor = H.facial_hair_color
+				last_bodysprite = H.dna.species.limbs_id
+				last_eyecolor = H.eye_color
+				last_realname = H.real_name
+				last_age = H.age
 				furry_changed = TRUE
 			else
 				return

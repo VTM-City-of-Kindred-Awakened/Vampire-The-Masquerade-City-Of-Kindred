@@ -226,10 +226,10 @@
 				to_chat(target, "<span class='userdanger'><b>STAY DOWN</b></span>")
 				caster.say("STAY DOWN!!")
 		if(3 to 4)
-			to_chat(target, "<span class='userdanger'><b>GO AWAY</b></span>")
-			caster.say("GO AWAY!!")
-			target.set_glide_size(DELAY_TO_GLIDE_SIZE(target.total_multiplicative_slowdown()))
-			walk_away(target,caster,7,target.total_multiplicative_slowdown())
+			to_chat(target, "<span class='userdanger'><b>THINK TWICE</b></span>")
+			caster.say("THINK TWICE!!")
+			target.blind_eyes(50)
+			target.Stun(50)
 		if(5)
 			to_chat(target, "<span class='userdanger'><b>YOU SHOULD KILL YOURSELF NOW</b></span>")
 			caster.say("YOU SHOULD KILL YOURSELF NOW!!")
@@ -387,12 +387,14 @@
 	caster.dna.species.attack_sound = 'code/modules/ziggers/sounds/heavypunch.ogg'
 	spawn(delay+caster.discipline_time_plus)
 		if(caster)
-			playsound(caster.loc, 'code/modules/ziggers/sounds/potence_deactivate.ogg', 50, FALSE)
-			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-10
-			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-10
-			caster.dna.species.meleemod = caster.dna.species.meleemod-(0.5*level_casting)
-			caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
-			caster.remove_overlay(POTENCE_LAYER)
+			if(caster.dna)
+				if(caster.dna.species)
+					playsound(caster.loc, 'code/modules/ziggers/sounds/potence_deactivate.ogg', 50, FALSE)
+					caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-10
+					caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-10
+					caster.dna.species.meleemod = caster.dna.species.meleemod-(0.5*level_casting)
+					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
+					caster.remove_overlay(POTENCE_LAYER)
 
 /datum/discipline/fortitude
 	name = "Fortitude"
@@ -496,7 +498,9 @@
 	..()
 	var/mod = min(4, level_casting)
 //	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/gangrel/GA = new()
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/gangrel/GA = new(caster)
+	GA.owner = caster
+	caster.mind.spell_list += GA
 	switch(mod)
 		if(1)
 			caster.drop_all_held_items()
@@ -552,7 +556,7 @@
 //						caster.remove_overlay(PROTEAN_LAYER)
 		if(3)
 			caster.drop_all_held_items()
-			GA.cast()
+			GA.cast(list(caster), caster)
 //			caster.dna.species.attack_verb = "slash"
 //			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
 //			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+20
@@ -563,7 +567,7 @@
 //			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster && caster.stat != DEAD)
-					GA.cast()
+					GA.cast(list(caster), caster)
 //					if(caster.dna)
 					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 //						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
@@ -578,7 +582,7 @@
 				GA.shapeshift_type = /mob/living/simple_animal/hostile/gangrel/better
 			if(level_casting == 5)
 				GA.shapeshift_type = /mob/living/simple_animal/hostile/gangrel/best
-			GA.cast()
+			GA.cast(list(caster), caster)
 //			caster.dna.species.attack_verb = "slash"
 //			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
 //			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+25
@@ -592,7 +596,7 @@
 //			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster && caster.stat != DEAD)
-					GA.cast()
+					GA.cast(list(caster), caster)
 //					if(caster.dna)
 					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 //						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
