@@ -28,12 +28,12 @@
 
 /datum/action/basic_vicissitude/Trigger()
 	. = ..()
+	var/mob/living/carbon/human/H = owner
 	var/datum/vampireclane/tzimisce/TZ = H.clane
 	if(TZ.hided)
 		return
 	if(used)
 		return
-	var/mob/living/carbon/human/H = owner
 	var/upgrade = input(owner, "Choose basic upgrade:", "Vicissitude Upgrades") as null|anything in list("Skin armor", "Centipede legs", "Second pair of arms", "Leather wings")
 	if(upgrade)
 		H.clane.violating_appearance = TRUE
