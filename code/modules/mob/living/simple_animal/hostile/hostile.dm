@@ -445,6 +445,11 @@
 
 
 /mob/living/simple_animal/hostile/Move(atom/newloc, dir , step_x , step_y)
+	for(var/mob/living/L in newloc)
+		if(L)
+			if(CanAttack(L))
+				ClickOn(L)
+				return
 	if(dodging && approaching_target && prob(dodge_prob) && moving_diagonally == 0 && isturf(loc) && isturf(newloc))
 		return dodge(newloc,dir)
 	else

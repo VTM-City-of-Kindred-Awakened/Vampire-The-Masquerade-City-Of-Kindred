@@ -39,7 +39,7 @@
 /datum/action/vicissitude_blood
 	name = "Vicissitude Blood Form"
 	desc = "Suck blood from the floor."
-	button_icon_state = "tzimisce"
+	button_icon_state = "bloodcrawler"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler/BC
 
@@ -50,13 +50,13 @@
 		BC = new(owner)
 	BC.Shapeshift(H)
 	spawn(50)
-		if(BC && BC.myshape && H)
+		if(BC)
 			var/mob/living/simple_animal/hostile/bloodcrawler/BD = BC.myshape
-			H.bloodpool = min(H.bloodpool+BD.collected_blood, H.maxbloodpool)
-			if(BD.collected_blood)
-				H.adjustBruteLoss(-5*BD.collected_blood, TRUE)
-				H.adjustFireLoss(-5*BD.collected_blood, TRUE)
-			BC.Shapeshift(BC.myshape)
+			H.bloodpool = min(H.bloodpool+round(BD.collected_blood/2), H.maxbloodpool)
+			if(BD.collected_blood > 1)
+				H.adjustBruteLoss(-5*round(BD.collected_blood/2), TRUE)
+				H.adjustFireLoss(-5*round(BD.collected_blood/2), TRUE)
+			BC.Restore(BC.myshape)
 
 /datum/action/vicissitude_form
 	name = "Vicissitude Beast Form"
@@ -72,8 +72,8 @@
 		TE = new(owner)
 	TE.Shapeshift(H)
 	spawn(150)
-		if(TE && TE.myshape && H)
-			TE.Shapeshift(TE.myshape)
+		if(TE)
+			TE.Restore(TE.myshape)
 
 /datum/action/basic_vicissitude
 	name = "Vicissitude Upgrades"
@@ -625,6 +625,7 @@
 	minbodytemp = 0
 	bloodpool = 10
 	maxbloodpool = 10
+	dodging = TRUE
 
 /mob/living/simple_animal/hostile/gangrel/better
 	maxHealth = 500
@@ -665,6 +666,7 @@
 	minbodytemp = 0
 	bloodpool = 10
 	maxbloodpool = 10
+	dodging = TRUE
 
 /mob/living/simple_animal/hostile/bloodcrawler
 	name = "Tzimisce Blood Form"
@@ -674,7 +676,7 @@
 	icon_living = "liquid"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
-	speed = -3
+	speed = -1
 	maxHealth = 100
 	health = 100
 	butcher_results = list(/obj/item/stack/human_flesh = 20)

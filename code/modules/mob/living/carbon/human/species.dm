@@ -2061,14 +2061,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.update_body()
 
 /datum/species/proc/RemoveSpeciesFlight(mob/living/carbon/human/H)
-	if(!flying_species) //species that already have flying traits should not work with this proc
-		return
-	flying_species = FALSE
-	if(fly)
-		fly = null
-	mutant_bodyparts["wings"] = "None"
-	H.dna.features["wings"] = "None"
-	H.update_body()
+	if(flying_species)
+		fly.Remove(H)
+		QDEL_NULL(fly)
+		if(H.movement_type & FLYING)
+			ToggleFlight(H)
+	if(H.dna && H.dna.species && (H.dna.features["wings"] == wings_icon))
+		H.dna.species.mutant_bodyparts -= "wings"
+		H.dna.features["wings"] = "None"
+		H.update_body()
 
 /datum/species/proc/HandleFlight(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)

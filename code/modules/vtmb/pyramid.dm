@@ -215,10 +215,10 @@
 				AM.y = y_dir
 				if(istype(get_area(AM), /area/vtm))
 					var/area/vtm/V = get_area(AM)
-					qdel(AM)
 					if(V.name != "San Francisco")
 						playsound(loc, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
 						user.forceMove(AM.loc)
+						qdel(AM)
 						qdel(src)
 						return
 				else
