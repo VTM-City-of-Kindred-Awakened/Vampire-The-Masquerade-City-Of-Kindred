@@ -99,6 +99,9 @@
 
 	var/mob/living/shape = new shapeshift_type(caster.loc)
 	myshape = shape
+	if(istype(shape, /mob/living/simple_animal/hostile))
+		var/mob/living/simple_animal/hostile/hostile = shape
+		hostile.my_creator = caster
 	H = new(shape,src,caster)
 
 	clothes_req = FALSE
