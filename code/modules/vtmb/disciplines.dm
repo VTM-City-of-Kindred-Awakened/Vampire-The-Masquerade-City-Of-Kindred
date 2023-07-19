@@ -383,7 +383,7 @@
 	caster.apply_overlay(POTENCE_LAYER)
 	caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+10
 	caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh+10
-	caster.dna.species.meleemod = caster.dna.species.meleemod+(0.5*level_casting)
+	caster.dna.species.meleemod = caster.dna.species.meleemod+(0.3*level_casting)
 	caster.dna.species.attack_sound = 'code/modules/ziggers/sounds/heavypunch.ogg'
 	spawn(delay+caster.discipline_time_plus)
 		if(caster)
@@ -392,7 +392,7 @@
 					playsound(caster.loc, 'code/modules/ziggers/sounds/potence_deactivate.ogg', 50, FALSE)
 					caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-10
 					caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-10
-					caster.dna.species.meleemod = caster.dna.species.meleemod-(0.5*level_casting)
+					caster.dna.species.meleemod = caster.dna.species.meleemod-(0.3*level_casting)
 					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
 					caster.remove_overlay(POTENCE_LAYER)
 
@@ -493,6 +493,8 @@
 	desc = "Take on the shape a wolf."
 	charge_max = 50
 	cooldown_min = 50
+	revert_on_death = TRUE
+	die_with_shapeshifted_form = FALSE
 	shapeshift_type = /mob/living/simple_animal/hostile/gangrel
 
 /datum/discipline/protean/activate(mob/living/target, mob/living/carbon/human/caster)
@@ -500,9 +502,9 @@
 	var/mod = min(4, level_casting)
 //	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
 	if(!GA)
-	GA = new(caster)
-	GA.owner = caster
-	caster.mind.spell_list += GA
+		GA = new(caster)
+		GA.owner = caster
+		caster.mind.spell_list += GA
 	switch(mod)
 		if(1)
 			caster.drop_all_held_items()
@@ -558,7 +560,7 @@
 //						caster.remove_overlay(PROTEAN_LAYER)
 		if(3)
 			caster.drop_all_held_items()
-			GA.cast(list(caster), caster)
+			GA.Shapeshift(caster)
 //			caster.dna.species.attack_verb = "slash"
 //			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
 //			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+20
@@ -569,7 +571,7 @@
 //			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster && caster.stat != DEAD)
-					GA.cast(list(caster), caster)
+					GA.Restore(caster)
 //					if(caster.dna)
 					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 //						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
@@ -584,7 +586,7 @@
 				GA.shapeshift_type = /mob/living/simple_animal/hostile/gangrel/better
 			if(level_casting == 5)
 				GA.shapeshift_type = /mob/living/simple_animal/hostile/gangrel/best
-			GA.cast(list(caster), caster)
+			GA.Shapeshift(caster)
 //			caster.dna.species.attack_verb = "slash"
 //			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
 //			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+25
@@ -598,7 +600,7 @@
 //			caster.apply_overlay(PROTEAN_LAYER)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster && caster.stat != DEAD)
-					GA.cast(list(caster), caster)
+					GA.Restore(caster)
 //					if(caster.dna)
 					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 //						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
