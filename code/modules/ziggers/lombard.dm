@@ -7,6 +7,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	icon_state = "sell"
 	icon = 'code/modules/ziggers/props.dmi'
+	anchored = TRUE
 
 /obj/lombard/attackby(obj/item/W, mob/living/user, params)
 	if(W.cost)
