@@ -4,8 +4,6 @@ SUBSYSTEM_DEF(cityweather)
 	wait = 600
 	priority = FIRE_PRIORITY_DEFAULT
 
-	var/list/affected_turfs = list()
-	var/list/weather_effects = list()
 	var/current_weather = "Clear"	//"Clear", "Rain" and "Fog"
 	var/list/forecast = list()
 	var/raining = FALSE
@@ -50,30 +48,14 @@ SUBSYSTEM_DEF(cityweather)
 				to_chat(world, "The night sky becomes clear...")
 				raining = FALSE
 				fogging = FALSE
-				for(var/obj/effect/rain/R in weather_effects)
-					if(R)
-						qdel(R)
-				for(var/obj/effect/fog/F in weather_effects)
-					if(F)
-						qdel(F)
 			if("Rain")
 				to_chat(world, "Clouds are uniting on the sky, small raindrops irrigate the city...")
 				raining = TRUE
 				fogging = FALSE
-				for(var/obj/effect/fog/F in weather_effects)
-					if(F)
-						qdel(F)
-				for(var/turf/T in affected_turfs)
-					new /obj/effect/rain(T)
 			if("Fog")
 				to_chat(world, "Visibility range quickly decreases...")
 				raining = FALSE
 				fogging = TRUE
-				for(var/obj/effect/rain/R in weather_effects)
-					if(R)
-						qdel(R)
-				for(var/turf/T in affected_turfs)
-					new /obj/effect/fog(T)
 		current_weather = forecast[cityhour]
 
 /datum/controller/subsystem/cityweather/Initialize()
@@ -119,57 +101,7 @@ SUBSYSTEM_DEF(cityweather)
 				time = "05:00"
 		to_chat(user, "[time], [weath]")
 
-/obj/effect/rain
-	name = "rain"
-	icon = 'code/modules/ziggers/props.dmi'
-	icon_state = "rain"
-	plane = GAME_PLANE
-	layer = ABOVE_ALL_MOB_LAYER
-	alpha = 25
-	anchored = TRUE
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
-	move_resist = INFINITY
-	obj_flags = NONE
-	vis_flags = VIS_INHERIT_PLANE
-	mouse_opacity = 0
-
-/obj/effect/rain/Initialize()
-	. = ..()
-//	if(isturf(loc))
-//		var/turf/T = loc
-//		T.wash(CLEAN_SCRUB)
-	SScityweather.weather_effects += src
-
-/obj/effect/rain/Destroy()
-	. = ..()
-//	if(isturf(loc))
-//		var/turf/T = loc
-//		T.wash(CLEAN_SCRUB)
-	SScityweather.weather_effects -= src
-
 /obj/effect/rain/Crossed(atom/movable/AM)
 	. = ..()
 	AM.wash(CLEAN_RAD | CLEAN_TYPE_WEAK) // Clean radiation non-instantly
 	AM.wash(CLEAN_WASH)
-
-/obj/effect/fog
-	name = "fog"
-	icon = 'code/modules/ziggers/props.dmi'
-	icon_state = "fog"
-	plane = GAME_PLANE
-	layer = ABOVE_ALL_MOB_LAYER
-	alpha = 128
-	anchored = TRUE
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
-	move_resist = INFINITY
-	obj_flags = NONE
-	vis_flags = VIS_INHERIT_PLANE
-	mouse_opacity = 0
-
-/obj/effect/fog/Initialize()
-	. = ..()
-	SScityweather.weather_effects += src
-
-/obj/effect/fog/Destroy()
-	. = ..()
-	SScityweather.weather_effects -= src

@@ -206,6 +206,32 @@
 	var/wait_for_music = 30
 	var/wasforced
 
+/area/vtm/Crossed(atom/movable/AM)
+	. = ..()
+	if(upper)
+		if(SScityweather.raining)
+			if(ishuman(AM))
+				var/mob/living/carbon/human/H = AM
+				H.overlay_fullscreen("rain", /atom/movable/screen/fullscreen/fog, 1)
+				H.clear_fullscreen("fog")
+			AM.wash(CLEAN_RAD | CLEAN_TYPE_WEAK)
+			AM.wash(CLEAN_WASH)
+		else if(SScityweather.fogging)
+			if(ishuman(AM))
+				var/mob/living/carbon/human/H = AM
+				H.overlay_fullscreen("fog", /atom/movable/screen/fullscreen/fog, 1)
+				H.clear_fullscreen("rain")
+		else
+			if(ishuman(AM))
+				var/mob/living/carbon/human/H = AM
+				H.clear_fullscreen("fog")
+				H.clear_fullscreen("rain")
+	else
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			H.clear_fullscreen("fog")
+			H.clear_fullscreen("rain")
+
 /mob/living/proc/handle_vampire_music()
 	if(!client)
 		return
