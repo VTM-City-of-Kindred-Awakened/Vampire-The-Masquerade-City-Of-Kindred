@@ -43,6 +43,8 @@
 				TZ.additional_armor = TRUE
 				H.dna.species.limbs_id = "tziarmor"
 				H.skin_tone = "albino"
+				H.physiology.armor.melee = H.physiology.armor.melee+50
+				H.physiology.armor.bullet = H.physiology.armor.bullet+50
 			if("Centipede legs")
 				TZ.additional_centipede = TRUE
 				H.remove_overlay(PROTEAN_LAYER)
