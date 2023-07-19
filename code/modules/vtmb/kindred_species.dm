@@ -200,8 +200,8 @@
 							BLOODBONDED.maxbloodpool = 10+((13-BLOODBONDED.generation)*5)
 							BLOODBONDED.clane.enlightement = H.clane.enlightement
 							if(BLOODBONDED.generation < 13)
-								BLOODBONDED.maxHealth = initial(BLOODBONDED.maxHealth)+100*(13-BLOODBONDED.generation)
-								BLOODBONDED.health = initial(BLOODBONDED.health)+100*(13-BLOODBONDED.generation)
+								BLOODBONDED.maxHealth = initial(BLOODBONDED.maxHealth)+50*(13-BLOODBONDED.generation)
+								BLOODBONDED.health = initial(BLOODBONDED.health)+50*(13-BLOODBONDED.generation)
 						else
 							BLOODBONDED.clane = new /datum/vampireclane/caitiff()
 					else

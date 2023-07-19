@@ -52,8 +52,8 @@
 				TZ.additional_centipede = TRUE
 				H.remove_overlay(PROTEAN_LAYER)
 				var/mutable_appearance/centipede_overlay = mutable_appearance('code/modules/ziggers/64x64.dmi', "centipede", -PROTEAN_LAYER)
-				centipede.pixel_z = -16
-				centipede.pixel_w = -16
+				centipede_overlay.pixel_z = -16
+				centipede_overlay.pixel_w = -16
 				H.overlays_standing[PROTEAN_LAYER] = centipede_overlay
 				H.apply_overlay(PROTEAN_LAYER)
 			if("Second pair of arms")
@@ -104,8 +104,8 @@
 		if(additional_centipede)
 			H.remove_overlay(PROTEAN_LAYER)
 			var/mutable_appearance/centipede_overlay = mutable_appearance('code/modules/ziggers/64x64.dmi', "centipede", -PROTEAN_LAYER)
-			centipede.pixel_z = -16
-			centipede.pixel_w = -16
+			centipede_overlay.pixel_z = -16
+			centipede_overlay.pixel_w = -16
 			H.overlays_standing[PROTEAN_LAYER] = centipede_overlay
 			H.apply_overlay(PROTEAN_LAYER)
 		if(additional_armor)

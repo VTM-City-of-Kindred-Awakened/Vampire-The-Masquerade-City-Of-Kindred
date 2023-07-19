@@ -60,12 +60,6 @@ SUBSYSTEM_DEF(cityweather)
 
 /datum/controller/subsystem/cityweather/Initialize()
 	. = ..()
-	for(var/turf/open/floor/T in world)
-		if(istype(get_area(T), /area/vtm))
-			var/area/vtm/V = get_area(T)
-			if(V.upper)
-				affected_turfs += T
-
 	create_forecast()
 
 /datum/controller/subsystem/cityweather/proc/create_forecast()
