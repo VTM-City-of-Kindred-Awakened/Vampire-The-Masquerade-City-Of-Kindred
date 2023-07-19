@@ -503,8 +503,6 @@
 //	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
 	if(!GA)
 		GA = new(caster)
-		GA.owner = caster
-		caster.mind.spell_list += GA
 	switch(mod)
 		if(1)
 			caster.drop_all_held_items()
@@ -647,7 +645,7 @@
 	name = "blood beam"
 	icon_state = "thaumaturgy"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 10
+	damage = 5
 	damage_type = BURN
 	hitsound = 'code/modules/ziggers/sounds/drinkblood1.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
@@ -715,7 +713,7 @@
 			var/turf/start = get_turf(caster)
 			var/obj/projectile/thaumaturgy/H = new(start)
 			H.firer = caster
-			H.damage = 20+caster.thaum_damage_plus
+			H.damage = 10+caster.thaum_damage_plus
 			H.preparePixelProjectile(target, start)
 			H.level = 2
 			H.fire(direct_target = target)
@@ -723,7 +721,7 @@
 			var/turf/start = get_turf(caster)
 			var/obj/projectile/thaumaturgy/H = new(start)
 			H.firer = caster
-			H.damage = 30+caster.thaum_damage_plus
+			H.damage = 15+caster.thaum_damage_plus
 			H.preparePixelProjectile(target, start)
 			H.level = 2
 			H.fire(direct_target = target)
@@ -732,7 +730,7 @@
 				var/turf/start = get_turf(caster)
 				var/obj/projectile/thaumaturgy/H = new(start)
 				H.firer = caster
-				H.damage = (10*level_casting)+caster.thaum_damage_plus
+				H.damage = (5*level_casting)+caster.thaum_damage_plus
 				H.preparePixelProjectile(target, start)
 				H.level = round(level_casting/2)
 				H.fire(direct_target = target)
