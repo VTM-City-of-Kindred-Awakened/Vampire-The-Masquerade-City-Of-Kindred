@@ -149,11 +149,15 @@
 			H.remove_overlay(PROTEAN_LAYER)
 		if(additional_wings)
 			H.dna.species.RemoveSpeciesFlight(H)
+			H.pixel_z = 0
 		if(additional_centipede)
 			H.remove_overlay(PROTEAN_LAYER)
+			H.remove_movespeed_modifier(/datum/movespeed_modifier/centipede)
 		if(additional_armor)
 			H.dna.species.limbs_id = initial(H.dna.species.limbs_id)
 			H.update_body()
+			H.physiology.armor.melee = H.physiology.armor.melee-50
+			H.physiology.armor.bullet = H.physiology.armor.bullet-50
 	else
 		hided = FALSE
 		violating_appearance = TRUE
@@ -174,9 +178,12 @@
 			centipede_overlay.pixel_w = -16
 			H.overlays_standing[PROTEAN_LAYER] = centipede_overlay
 			H.apply_overlay(PROTEAN_LAYER)
+			H.add_movespeed_modifier(/datum/movespeed_modifier/centipede)
 		if(additional_armor)
 			H.dna.species.limbs_id = "tziarmor"
 			H.update_body()
+			H.physiology.armor.melee = H.physiology.armor.melee+50
+			H.physiology.armor.bullet = H.physiology.armor.bullet+50
 
 /datum/vampireclane/tzimisce/on_gain(mob/living/carbon/human/H)
 	..()
