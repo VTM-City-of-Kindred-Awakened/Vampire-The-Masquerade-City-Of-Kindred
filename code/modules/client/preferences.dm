@@ -2311,9 +2311,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.masquerade = masquerade
 	if(!character_setup)
 		if(character in GLOB.masquerade_breakers_list)
-			if(character.masquerade > 3)
+			if(character.masquerade > 1)
 				GLOB.masquerade_breakers_list -= character
-		else if(character.masquerade < 4)
+		else if(character.masquerade < 2)
 			GLOB.masquerade_breakers_list += character
 
 	character.gender = gender
