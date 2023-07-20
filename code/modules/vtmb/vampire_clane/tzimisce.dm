@@ -189,11 +189,11 @@
 	U.Grant(H)
 	var/datum/action/basic_vicissitude/BV = new()
 	BV.Grant(H)
-	if(H.client.prefs)
-		if(H.client.prefs.discipline3level >= 2)
+	if(H.hud_used.discipline3_icon.dscpln)
+		if(H.hud_used.discipline3_icon.dscpln.level >= 3)
 			var/datum/action/vicissitude_blood/VB = new()
 			VB.Grant(H)
-		if(H.client.prefs.discipline3level >= 3)
+		if(H.hud_used.discipline3_icon.dscpln.level >= 4)
 			var/datum/action/vicissitude_form/VF = new()
 			VF.Grant(H)
 	if(H.mind)
@@ -402,7 +402,7 @@
 				H.do_jitter_animation(10)
 				var/mob/living/carbon/human/ZV = victim
 				H.hairstyle = ZV.hairstyle
-				H.facial_hairstyle = H.facial_hairstyle
+				H.facial_hairstyle = ZV.facial_hairstyle
 				H.skin_tone = ZV.skin_tone
 				H.gender = ZV.gender
 				H.body_type = ZV.body_type

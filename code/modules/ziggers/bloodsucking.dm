@@ -95,7 +95,7 @@
 				if(iskindred(mob))
 					AdjustHumanity(src, -1, 0)
 					AdjustMasquerade(src, -1)
-					if(K.generation > generation)
+					if(K.generation >= generation)
 						if(K.client)
 							reset_shit(K)
 							K.ghostize(FALSE)
@@ -107,11 +107,12 @@
 							to_chat(src, "<span class='userdanger'><b>[K]'s SOUL OVERCOMES YOURS AND GAIN CONTROL OF YOUR BODY.</b></span>")
 							reset_shit(src)
 							ghostize(FALSE)
-							key = K.key
-							generation = K.generation
-							maxHealth = initial(maxHealth)+100*(13-generation)
-							health = initial(health)+100*(13-generation)
-							mob.death()
+							death()
+//							key = K.key
+//							generation = K.generation
+//							maxHealth = initial(maxHealth)+100*(13-generation)
+//							health = initial(health)+100*(13-generation)
+//							mob.death()
 						else
 							generation = K.generation
 							maxHealth = initial(maxHealth)+100*(13-generation)
@@ -124,15 +125,16 @@
 						client.images -= suckbar
 					qdel(suckbar)
 					return
-				K.blood_volume = 0
-			if(ishuman(mob))
+				else
+					K.blood_volume = 0
+			if(ishuman(mob) && !iskindred(mob))
 				if(isnpc(mob))
 					var/mob/living/carbon/human/npc/Npc = mob
 					Npc.last_attacker = null
 				SEND_SOUND(src, sound('code/modules/ziggers/sounds/feed_failed.ogg', 0, 0, 75))
 				to_chat(src, "<span class='warning'>This sad sacrifice for your own pleasure affects something deep in your mind.</span>")
 				AdjustHumanity(src, -1, 3)
-			mob.death()
+				mob.death()
 			stop_sound_channel(CHANNEL_BLOOD)
 			last_drinkblood_use = 0
 			if(client)

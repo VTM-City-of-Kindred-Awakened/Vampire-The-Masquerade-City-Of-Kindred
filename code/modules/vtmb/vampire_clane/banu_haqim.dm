@@ -10,11 +10,10 @@
 
 /datum/vampireclane/banu_haqim/post_gain(mob/living/carbon/human/H)
 	..()
-	if(H.client)
-		if(H.client.prefs)
-			if(H.client.prefs.discipline3level >= 3)
-				var/datum/action/silence_radius/SI = new()
-				SI.Grant(H)
+	if(H.hud_used.discipline3_icon.dscpln)
+		if(H.hud_used.discipline3_icon.dscpln.level >= 3)
+			var/datum/action/silence_radius/SI = new()
+			SI.Grant(H)
 
 /datum/action/silence_radius
 	name = "Silence Radius"
