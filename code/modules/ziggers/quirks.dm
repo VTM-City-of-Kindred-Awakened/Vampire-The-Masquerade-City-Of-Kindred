@@ -299,5 +299,6 @@ Dancer
 	name = "Homosexual"
 	desc = "You love your gender more than the opposite."
 	value = 0
+	mob_trait = TRAIT_HOMOSEXUAL
 	gain_text = "<span class='notice'>You feel gay.</span>"
 	lose_text = "<span class='notice'>You don't feel gay anymore.</span>"

@@ -640,6 +640,7 @@
 	health = 500
 	melee_damage_lower = 60
 	melee_damage_upper = 60
+	speed = -2
 
 /mob/living/simple_animal/hostile/gangrel/best
 	icon_state = "gangrel_m"
@@ -648,6 +649,7 @@
 	health = 700
 	melee_damage_lower = 80
 	melee_damage_upper = 80
+	speed = -3
 
 /mob/living/simple_animal/hostile/tzimisce_beast
 	name = "Tzimisce Beast Form"

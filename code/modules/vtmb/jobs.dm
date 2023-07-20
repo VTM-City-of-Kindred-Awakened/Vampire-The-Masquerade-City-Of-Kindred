@@ -1375,3 +1375,51 @@
 
 /obj/effect/landmark/start/taxi
 	name = "Taxi Driver"
+
+/datum/antagonist/ambitious
+	name = "Ambitious"
+	roundend_category = "ambitious"
+	antagpanel_category = "Ambitious"
+	job_rank = ROLE_SYNDICATE
+	antag_moodlet = /datum/mood_event/focused
+	show_to_ghosts = FALSE
+
+/datum/antagonist/ambitious/on_gain()
+	owner.special_role = src
+	var/objectve = rand(1, 3)
+	switch(objectve)
+		if(1)
+			var/datum/objective/blood/blood_objective = new
+			blood_objective.owner = owner
+			var/list/niggas = list()
+			for(var/mob/living/carbon/human/H in GLOB.player_list)
+				if(H.stat != DEAD && H.dna.real_name != owner.current.real_name)
+					niggas += H
+			if(length(niggas))
+				var/mob/living/carbon/human/HU = pick(niggas)
+				blood_objective.target_name = HU.dna.real_name
+				objectives += blood_objective
+			else
+				var/datum/objective/money/money_objective = new
+				money_objective.owner = owner
+				money_objective.amount = rand(300, 1000)
+				objectives += money_objective
+		if(2)
+			var/datum/objective/money/money_objective = new
+			money_objective.owner = owner
+			money_objective.amount = rand(300, 1000)
+			objectives += money_objective
+		if(3)
+			var/datum/objective/protect/protect_objective = new
+			protect_objective.owner = owner
+			objectives += protect_objective
+	return ..()
+
+/datum/antagonist/ambitious/on_removal()
+	..()
+	to_chat(owner.current,"<span class='userdanger'>You don't have ambitions anymore.</span>")
+	owner.special_role = null
+
+/datum/antagonist/ambitious/greet()
+	to_chat(owner.current, "<span class='alertsyndie'>You got some goals that night.</span>")
+	owner.announce_objectives()

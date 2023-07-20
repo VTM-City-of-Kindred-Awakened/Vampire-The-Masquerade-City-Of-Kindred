@@ -161,15 +161,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/discipline3type
 	var/discipline4type
 
+	var/friend = FALSE
+	var/enemy = FALSE
+	var/lover = FALSE
+
+	var/ambitious = FALSE
+
 //	var/datum/vampireclane/Clane
 
 /proc/calculate_mob_max_exper(var/mob/M)
 	if(M.client)
 		if(M.client.prefs)
-			return 1440 + 360*((max(1, 13-M.client.prefs.generation)*max(0, M.client.prefs.generation_bonus))+M.client.prefs.discipline1level+M.client.prefs.discipline2level+M.client.prefs.discipline3level-3)
+			return 360*(M.client.prefs.discipline1level+M.client.prefs.discipline2level+M.client.prefs.discipline3level-3) + 720*(max(0, 13-M.client.prefs.generation)*max(1, M.client.prefs.generation_bonus)) + 1440*(max(1, 13-M.client.prefs.generation)*max(1, M.client.prefs.generation_bonus))
 
 /datum/preferences/proc/calculate_max_exper()
-	return 1440 + 360*((max(1, 13-generation)*max(0, generation_bonus))+discipline1level+discipline2level+discipline3level-3)
+	return 360*(discipline1level+discipline2level+discipline3level-3) + 720*(max(0, 13-generation)*max(1, generation_bonus)) + 1440*(max(1, 13-generation)*max(1, generation_bonus))
 
 /proc/reset_shit(var/mob/M)
 	if(M.client)
@@ -209,6 +215,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
+			for(var/i in GLOB.donaters)
+				if(i == "[C.key]")
+					max_save_slots = 4
 //			unlock_content = C.IsByondMember()
 //			if(unlock_content)
 //				max_save_slots = 8
@@ -348,7 +357,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
 			dat += "<b>Path of [enlightement == FALSE ? "Humanity" : "Enlightement"]:</b> [humanity]/10<BR>"
 			for(var/i in GLOB.donaters)
-				if(i == "[parent.ckey]")
+				if(i == "[parent.ckey]" && !slotlocked)
 					dat += "<a href='?_src_=prefs;preference=pathof;task=input'>Switch Path</a><BR>"
 			dat += "<b>Masquerade:</b> [masquerade]/5<BR>"
 			if(pref_species.name == "Vampire")
@@ -425,6 +434,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<br><b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backpack]</a>"
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_BACKPACK]'>[(randomise[RANDOM_BACKPACK]) ? "Lock" : "Unlock"]</A>"
+
+			dat += "<BR><b>Relationships:</b><BR>"
+			dat += "Have a Friend: <a href='?_src_=prefs;preference=friend'>[friend == TRUE ? "Enabled" : "Disabled"]</A><BR>"
+			dat += "Have an Enemy: <a href='?_src_=prefs;preference=enemy'>[enemy == TRUE ? "Enabled" : "Disabled"]</A><BR>"
+			dat += "Have a Lover: <a href='?_src_=prefs;preference=lover'>[lover == TRUE ? "Enabled" : "Disabled"]</A><BR>"
+
+			dat += "<BR><b>Be Ambitious:</b><a href='?_src_=prefs;preference=ambitious'>[ambitious == TRUE ? "Enabled" : "Disabled"]</A><BR>"
 
 			if((HAS_FLESH in pref_species.species_traits) || (HAS_BONE in pref_species.species_traits))
 				dat += "<BR><b>Temporal Scarring:</b><BR><a href='?_src_=prefs;preference=persistent_scars'>[(persistent_scars) ? "Enabled" : "Disabled"]</A>"
@@ -1670,7 +1686,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					exper = 0
 
 				if("pathof")
-					enlightement = !enlightement
+					if(!slotlocked)
+						enlightement = !enlightement
 
 				if("generation")
 					generation_bonus = min(generation_bonus+1, max(0, generation-7))
@@ -2074,13 +2091,25 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					else
 						randomise[random_type] = TRUE
 
-//				if("persistent_scars")
-//					persistent_scars = !persistent_scars
+				if("friend")
+					friend = !friend
 
-//				if("clear_scars")
-//					var/path = "data/player_saves/[user.ckey[1]]/[user.ckey]/scars.sav"
-//					fdel(path)
-//					to_chat(user, "<span class='notice'>All scar slots cleared.</span>")
+				if("enemy")
+					enemy = !enemy
+
+				if("lover")
+					lover = !lover
+
+				if("ambitious")
+					ambitious = !ambitious
+
+				if("persistent_scars")
+					persistent_scars = !persistent_scars
+
+				if("clear_scars")
+					var/path = "data/player_saves/[user.ckey[1]]/[user.ckey]/scars.sav"
+					fdel(path)
+					to_chat(user, "<span class='notice'>All scar slots cleared.</span>")
 
 				if("hear_midis")
 					toggles ^= SOUND_MIDI
@@ -2346,6 +2375,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(!character_setup)
 		parent << browse(null, "window=preferences_window")
 		parent << browse(null, "window=preferences_browser")
+		if(friend)
+			character.have_friend = TRUE
+		if(enemy)
+			character.have_enemy = TRUE
+		if(lover)
+			character.have_lover = TRUE
 
 /mob/living/carbon/human/proc/create_disciplines(var/discipline_pref = TRUE, var/discipline1, var/discipline2, var/discipline3)	//EMBRACE BASIC
 	if(client)

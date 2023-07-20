@@ -179,6 +179,9 @@
 		C.dir = dir
 		animate(C, pixel_x = rand(-16, 16), pixel_y = rand(-16, 16), alpha = 0, time = 5)
 
+/datum/movespeed_modifier/celerity
+	multiplicative_slowdown = -0.5
+
 /datum/discipline/celerity/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	caster.add_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
@@ -186,7 +189,7 @@
 	spawn((delay*level_casting)+caster.discipline_time_plus)
 		if(caster)
 			playsound(caster.loc, 'code/modules/ziggers/sounds/celerity_deactivate.ogg', 50, FALSE)
-			caster.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
+			caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity)
 			caster.celerity_visual = FALSE
 
 /datum/discipline/dominate

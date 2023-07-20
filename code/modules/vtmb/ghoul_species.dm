@@ -48,7 +48,7 @@
 
 		if(host.mind.assigned_role)
 			if(host.mind.special_role)
-				dat += ", carrying the <font color=red>[host.mind.special_role]</font> role."
+				dat += ", carrying the [host.mind.assigned_role] (<font color=red>[host.mind.special_role]<font>) role."
 			else
 				dat += ", carrying the [host.mind.assigned_role] role."
 		if(!host.mind.assigned_role)
@@ -143,6 +143,7 @@
 						taking = TRUE
 						if(do_mob(owner, VIT, 10 SECONDS))
 							taking = FALSE
+							H.drunked_of |= "[VIT.dna.real_name]"
 							H.adjustBruteLoss(-25, TRUE)
 							H.adjustFireLoss(-25, TRUE)
 							VIT.bloodpool = max(0, VIT.bloodpool-1)

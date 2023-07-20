@@ -53,7 +53,7 @@
 
 			if(host.mind.assigned_role)
 				if(host.mind.special_role)
-					dat += ", carrying the <font color=red>[host.mind.special_role]</font> role."
+					dat += ", carrying the [host.mind.assigned_role] (<font color=red>[host.mind.special_role]<font>) role."
 				else
 					dat += ", carrying the [host.mind.assigned_role] role."
 			if(!host.mind.assigned_role)
@@ -118,21 +118,20 @@
 						humanity = "Am I <b>ENLIGHTED</b> or <b>HUMANE</b>?"
 
 			dat += "[humanity]<BR>"
-		if(host.client)
-			if(host.clane.clane_disciplines)
-				dat += "<b>Known disciplines:</b><BR>"
-				if(length(host.clane.clane_disciplines) >= 1)
-					var/datype = host.clane.clane_disciplines[1]
-					var/datum/discipline/AD = new datype()
-					dat += "[AD.name] [host.client.prefs.discipline1level] - [AD.desc]<BR>"
-				if(length(host.clane.clane_disciplines) >= 2)
-					var/datype = host.clane.clane_disciplines[2]
-					var/datum/discipline/AD = new datype()
-					dat += "[AD.name] [host.client.prefs.discipline2level] - [AD.desc]<BR>"
-				if(length(host.clane.clane_disciplines) >= 3)
-					var/datype = host.clane.clane_disciplines[3]
-					var/datum/discipline/AD = new datype()
-					dat += "[AD.name] [host.client.prefs.discipline3level] - [AD.desc]<BR>"
+		if(host.hud_used.discipline1_icon.dscpln)
+			dat += "<b>Known disciplines:</b><BR>"
+			if(host.hud_used.discipline1_icon.dscpln)
+				dat += "[host.hud_used.discipline1_icon.dscpln.name] [host.hud_used.discipline1_icon.dscpln.level] - [host.hud_used.discipline1_icon.dscpln.desc]<BR>"
+			if(host.hud_used.discipline2_icon.dscpln)
+				dat += "[host.hud_used.discipline2_icon.dscpln.name] [host.hud_used.discipline2_icon.dscpln.level] - [host.hud_used.discipline2_icon.dscpln.desc]<BR>"
+			if(host.hud_used.discipline3_icon.dscpln)
+				dat += "[host.hud_used.discipline3_icon.dscpln.name] [host.hud_used.discipline3_icon.dscpln.level] - [host.hud_used.discipline3_icon.dscpln.desc]<BR>"
+		if(host.friend_name)
+			dat += "<b>Friend: [host.friend_name]</b><BR>"
+		if(host.enemy_name)
+			dat += "<b>Enemy: [host.enemy_name]</b><BR>"
+		if(host.lover_name)
+			dat += "<b>Lover: [host.lover_name]</b><BR>"
 		if(length(host.knowscontacts) > 0)
 			dat += "<b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
 			for(var/i in host.knowscontacts)
@@ -183,6 +182,7 @@
 			if(do_mob(owner, BLOODBONDED, 10 SECONDS))
 				var/new_master = FALSE
 				BLOODBONDED.faction |= H.faction
+				BLOODBONDED.drunked_of |= "[H.dna.real_name]"
 				if(BLOODBONDED.stat == DEAD && !iskindred(BLOODBONDED))
 					if(BLOODBONDED.respawntimeofdeath+6000 > world.time)
 						if(BLOODBONDED.revive(full_heal = TRUE, admin_revive = TRUE))

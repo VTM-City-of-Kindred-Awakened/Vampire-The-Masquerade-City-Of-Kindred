@@ -969,3 +969,46 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/area/target_area = get_area(target)
 
 	return (istype(user_area, dropoff) && istype(target_area, dropoff))
+
+
+/datum/objective/money
+	name = "earn money"
+	var/amount = 500
+
+/datum/objective/money/update_explanation_text()
+	..()
+	explanation_text = "Earn [amount] dollars."
+
+/datum/objective/money/check_completion()
+	var/stol = 0
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!isliving(M.current))
+			continue
+		var/list/all_items = M.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
+		for(var/obj/item/stack/dollar/I in all_items) //Check for wanted items
+			stol += I.amount
+	return stol >= amount
+
+/mob/living
+	var/list/drunked_of = list()
+
+/datum/objective/blood
+	name = "get blood of"
+	var/target_name
+
+/datum/objective/blood/update_explanation_text()
+	..()
+	explanation_text = "Drink blood of [target_name]."
+
+/datum/objective/blood/check_completion()
+	var/tru = FALSE
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!isliving(M.current))
+			continue
+		var/mob/living/L = M.current
+		for(var/i in L.drunked_of)
+			if(i == target_name)
+				tru = TRUE
+	return tru
