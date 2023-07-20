@@ -133,6 +133,11 @@
 			if("Leather wings")
 				TZ.additional_wings = TRUE
 				H.dna.species.GiveSpeciesFlight(H)
+				for(var/datum/action/acrobate/A in H.actions)
+					if(A)
+						return
+				var/datum/action/acrobate/DA = new()
+				DA.Grant(H)
 
 /datum/vampireclane/tzimisce/proc/switch_masquerade(var/mob/living/carbon/human/H)
 	if(!additional_hands && !additional_wings && !additional_centipede && !additional_armor)

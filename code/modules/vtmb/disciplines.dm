@@ -182,9 +182,12 @@
 /datum/movespeed_modifier/celerity
 	multiplicative_slowdown = -0.5
 
+/datum/movespeed_modifier/wing
+	multiplicative_slowdown = -0.25
+
 /datum/discipline/celerity/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	caster.add_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
+	caster.add_movespeed_modifier(/datum/movespeed_modifier/celerity)
 	caster.celerity_visual = TRUE
 	spawn((delay*level_casting)+caster.discipline_time_plus)
 		if(caster)

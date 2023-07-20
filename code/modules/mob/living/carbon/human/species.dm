@@ -2071,11 +2071,32 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.dna.features["wings"] = "None"
 		H.update_body()
 
+/datum/species
+	var/animation_goes_up = FALSE	//
+
 /datum/species/proc/HandleFlight(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
 		if(!CanFly(H))
 			ToggleFlight(H)
 			return FALSE
+		if(animation_goes_up)
+			switch(H.pixel_z)
+				if(0)
+					H.pixel_z = 1
+				if(1)
+					H.pixel_z = 2
+				if(2)
+					H.pixel_z = 3
+					animation_goes_up = FALSE
+		else
+			switch(H.pixel_z)
+				if(3)
+					H.pixel_z = 2
+				if(2)
+					H.pixel_z = 1
+				if(1)
+					H.pixel_z = 0
+					animation_goes_up = TRUE
 		return TRUE
 	else
 		return FALSE
@@ -2127,6 +2148,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		ADD_TRAIT(H, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
 		ADD_TRAIT(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
 		passtable_on(H, SPECIES_TRAIT)
+		H.add_movespeed_modifier(/datum/movespeed_modifier/wing)
 		H.OpenWings()
 	else
 		stunmod *= 0.5
@@ -2134,6 +2156,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		REMOVE_TRAIT(H, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
 		REMOVE_TRAIT(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
 		passtable_off(H, SPECIES_TRAIT)
+		H.remove_movespeed_modifier(/datum/movespeed_modifier/wing)
 		H.CloseWings()
 
 /datum/action/innate/flight
