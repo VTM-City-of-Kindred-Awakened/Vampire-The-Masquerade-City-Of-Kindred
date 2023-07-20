@@ -400,8 +400,9 @@
 		if(loc && ishuman(usr))
 			var/mob/living/carbon/human/H = usr
 			if(H.a_intent == INTENT_HARM)
-				H.face_atom(src)
-				H.harm_focus = H.dir
+				if(!H.IsSleeping() && !H.IsUnconscious() && !H.IsParalyzed() && !H.IsKnockdown() && !H.IsStun() && !HAS_TRAIT(H, TRAIT_RESTRAINED))
+					H.face_atom(src)
+					H.harm_focus = H.dir
 
 /mob/living/carbon/human/Move(atom/newloc, direct, glide_size_override)
 	..()
@@ -511,6 +512,8 @@
 		if(world.time < last_discipline_click+5)
 			return
 		if(world.time < last_discipline_use+dadelay+5)
+			return
+		if(BD.IsSleeping() && BD.IsUnconscious() && BD.IsParalyzed() && BD.IsKnockdown() && BD.IsStun() && HAS_TRAIT(BD, TRAIT_RESTRAINED))
 			return
 		last_discipline_click = world.time
 		if(active)

@@ -46,8 +46,12 @@
 /datum/action/vicissitude_blood/Trigger()
 	. = ..()
 	var/mob/living/carbon/human/H = owner
+	if(H.bloodpool < 2)
+		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
+		return
 	if(!BC)
 		BC = new(owner)
+	H.bloodpool = max(0, H.bloodpool-2)
 	BC.Shapeshift(H)
 	spawn(50)
 		if(BC)
@@ -68,8 +72,12 @@
 /datum/action/vicissitude_form/Trigger()
 	. = ..()
 	var/mob/living/carbon/human/H = owner
+	if(H.bloodpool < 3)
+		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
+		return
 	if(!TE)
 		TE = new(owner)
+	H.bloodpool = max(0, H.bloodpool-3)
 	TE.Shapeshift(H)
 	spawn(150)
 		if(TE)
@@ -167,11 +175,11 @@
 
 /datum/vampireclane/tzimisce/on_gain(mob/living/carbon/human/H)
 	..()
-	H.add_quirk(/datum/quirk/ground_heirloom)
 	H.faction |= "Tzimisce"
 
 /datum/vampireclane/tzimisce/post_gain(mob/living/carbon/human/H)
 	..()
+	H.add_quirk(/datum/quirk/ground_heirloom)
 	var/datum/action/vicissitude/U = new()
 	U.Grant(H)
 	var/datum/action/basic_vicissitude/BV = new()
