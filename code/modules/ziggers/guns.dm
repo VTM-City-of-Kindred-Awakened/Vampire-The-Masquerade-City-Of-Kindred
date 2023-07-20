@@ -307,7 +307,7 @@
 /obj/item/ammo_box/magazine/internal/vampcrossbow
 	ammo_type = /obj/item/ammo_casing/caseless/bolt
 	caliber = CALIBER_FOAM
-	max_ammo = 1
+	max_ammo = 2
 
 /obj/item/ammo_casing/caseless/bolt
 	name = "bolt"
