@@ -1397,6 +1397,7 @@
 					niggas += H
 			if(length(niggas))
 				var/mob/living/carbon/human/HU = pick(niggas)
+				blood_objective.owner = owner
 				blood_objective.target_name = HU.dna.real_name
 				objectives += blood_objective
 			else
