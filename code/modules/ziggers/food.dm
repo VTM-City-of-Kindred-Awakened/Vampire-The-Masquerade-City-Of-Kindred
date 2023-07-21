@@ -341,6 +341,7 @@
 		new /datum/data/mining_equipment("desert eagle",	/obj/item/gun/ballistic/automatic/vampire/deagle,	150),
 		new /datum/data/mining_equipment("mini uzi",	/obj/item/gun/ballistic/automatic/vampire/uzi,	250),
 		new /datum/data/mining_equipment("AR-15 rifle",		/obj/item/gun/ballistic/automatic/vampire/ar15,	500),
+		new /datum/data/mining_equipment("sniper rifle",		/obj/item/gun/ballistic/automatic/vampire/sniper,	500),
 		new /datum/data/mining_equipment("AUG carbine",		/obj/item/gun/ballistic/automatic/vampire/aug,	750),
 		new /datum/data/mining_equipment("fishing rod",		/obj/item/fishing_rod,	50),
 		new /datum/data/mining_equipment("9mm ammo",	/obj/item/ammo_box/vampire/c9mm,	150),
@@ -355,3 +356,15 @@
 		new /datum/data/mining_equipment("real katana",	/obj/item/melee/vampirearms/katana,	500),
 		new /datum/data/mining_equipment("donut",	/obj/item/food/vampire/donut,	10)
 	)
+
+/obj/machinery/mineral/equipment_vendor/fastfood/illegal
+	prize_list = list(new /datum/data/mining_equipment("morphine syringe",	/obj/item/reagent_containers/syringe/contraband/morphine,	100),
+		new /datum/data/mining_equipment("crank syringe",	/obj/item/reagent_containers/syringe/contraband/crank,	100),
+		new /datum/data/mining_equipment("krokodil syringe",	/obj/item/reagent_containers/syringe/contraband/krokodil,	100),
+		new /datum/data/mining_equipment("LSD pill bottle",		/obj/item/storage/pill_bottle/lsd,	50),
+		new /datum/data/mining_equipment("LSD pill",		/obj/item/reagent_containers/pill/lsd,	10),
+		new /datum/data/mining_equipment("cannabis puff",		/obj/item/clothing/mask/cigarette/rollie/cannabis,	25),
+		new /datum/data/mining_equipment("cannabis leaf",	/obj/item/food/grown/cannabis,	10),
+		new /datum/data/mining_equipment("incendiary 5.56 ammo",	/obj/item/ammo_box/vampire/c556/incendiary,	200),
+		new /datum/data/mining_equipment("stake",	/obj/item/melee/vampirearms/stake,	50)
+		)

@@ -1,5 +1,6 @@
 /obj/item
 	var/cost
+	var/illegal = FALSE
 
 /obj/lombard
 	name = "pawnshop"
@@ -8,16 +9,55 @@
 	icon_state = "sell"
 	icon = 'code/modules/ziggers/props.dmi'
 	anchored = TRUE
+	var/illegal = FALSE
 
 /obj/lombard/attackby(obj/item/W, mob/living/user, params)
 	if(W.cost)
-		for(var/i in 1 to W.cost)
-			new /obj/item/stack/dollar(loc)
-		playsound(loc, 'code/modules/ziggers/sounds/sell.ogg', 50, TRUE)
-		qdel(W)
-		return
+		if(W.illegal == illegal)
+			for(var/i in 1 to W.cost)
+				new /obj/item/stack/dollar(loc)
+			playsound(loc, 'code/modules/ziggers/sounds/sell.ogg', 50, TRUE)
+			qdel(W)
+			return
 	else
 		..()
+
+/obj/lombard/blackmarket
+	name = "black market"
+	desc = "Sell your stuff."
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	icon_state = "sell_d"
+	icon = 'code/modules/ziggers/props.dmi'
+	anchored = TRUE
+	illegal = TRUE
+
+/obj/item/organ/heart
+	illegal = TRUE
+	cost = 300
+
+/obj/item/organ/lungs
+	illegal = TRUE
+	cost = 100
+
+/obj/item/organ/liver
+	illegal = TRUE
+	cost = 100
+
+/obj/item/organ/stomach
+	illegal = TRUE
+	cost = 50
+
+/obj/item/organ/eyes
+	illegal = TRUE
+	cost = 50
+
+/obj/item/organ/ears
+	illegal = TRUE
+	cost = 50
+
+/obj/item/organ/tongue
+	illegal = TRUE
+	cost = 25
 
 /obj/item/clothing/under/vampire
 	cost = 10

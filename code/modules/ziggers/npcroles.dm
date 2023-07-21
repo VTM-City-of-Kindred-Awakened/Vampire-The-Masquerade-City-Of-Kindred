@@ -1258,3 +1258,30 @@
 /mob/living/carbon/human/npc/incel/Initialize()
 	..()
 	AssignSocialRole(/datum/socialrole/usualmale)
+
+/datum/socialrole/shop/illegal
+	masks = list(/obj/item/clothing/mask/vampire/balaclava)
+	shoes = list(/obj/item/clothing/shoes/vampire/sneakers)
+	uniforms = list(/obj/item/clothing/under/vampire/emo)
+	pockets = list(/obj/item/stack/dollar/rand)
+
+	male_phrases = list("Псс... Покупай...",
+											"Эй... Бродяга...",
+											"Смотри на мой товар...")
+	neutral_phrases = list("Псс... Покупай...",
+											"Эй... Бродяга...",
+											"Смотри на мой товар...")
+	random_phrases = list("Псс... Покупай...",
+											"Эй... Бродяга...",
+											"Смотри на мой товар...")
+	answer_phrases = list("Ничего личного...")
+	help_phrases = list("Копы!",
+											"Пошёл нахуй, это моя точка!!",
+											"Легавые?!")
+
+/mob/living/carbon/human/npc/illegal
+	staying = TRUE
+
+/mob/living/carbon/human/npc/illegal/Initialize()
+	..()
+	AssignSocialRole(/datum/socialrole/shop/illegal)
