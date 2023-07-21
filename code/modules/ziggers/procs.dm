@@ -1,5 +1,9 @@
 /mob/living/carbon/human/proc/AdjustHumanity(var/value, var/limit)
-	if(!is_special_character(src) || mind.special_role == "Ambitious")
+	var/special_role_name
+	if(mind.special_role)
+		var/datum/antagonist/A = mind.special_role
+		special_role_name = A.name
+	if(!is_special_character(src) || special_role_name == "Ambitious")
 		if(!in_frenzy)
 			var/mod = 1
 			var/enlight = FALSE
@@ -30,7 +34,11 @@
 						to_chat(src, "<span class='us-erhelp'><b>HUMANITY INCREASES</b></span>")
 
 /mob/living/carbon/human/proc/AdjustMasquerade(var/value)
-	if(!is_special_character(src) || mind.special_role == "Ambitious")
+	var/special_role_name
+	if(mind.special_role)
+		var/datum/antagonist/A = mind.special_role
+		special_role_name = A.name
+	if(!is_special_character(src) || special_role_name == "Ambitious")
 		if(last_masquerade_violation+100 < world.time)
 			last_masquerade_violation = world.time
 			if(value < 0)

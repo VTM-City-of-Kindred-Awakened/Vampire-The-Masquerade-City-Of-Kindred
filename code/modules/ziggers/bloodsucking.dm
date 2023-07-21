@@ -66,9 +66,9 @@
 			drunked_of |= "[H.dna.real_name]"
 			if(!iskindred(mob))
 				H.blood_volume = max(H.blood_volume-50, 150)
-				if(H.reagents)
-					if(length(H.reagents.reagent_list))
-						H.reagents.trans_to(src, min(10, H.reagents.total_volume))
+			if(H.reagents)
+				if(length(H.reagents.reagent_list))
+					H.reagents.trans_to(src, min(10, H.reagents.total_volume), transfered_by = mob, methods = VAMPIRE)
 		if(clane)
 			if(clane.name == "Giovanni")
 				mob.adjustBruteLoss(20, TRUE)

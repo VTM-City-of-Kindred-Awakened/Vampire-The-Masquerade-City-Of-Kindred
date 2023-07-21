@@ -131,7 +131,7 @@
 	desc = "You are the current owner of an domain, passed down for generations. You have to keep it safe!"
 	value = -2
 	mood_quirk = TRUE
-	var/obj/item/heirloom
+	var/obj/item/ground_heir/heirloom
 	var/where
 	var/last_notice = 0
 	medical_record_text = "Patient demonstrates an unnatural attachment to a ground."
@@ -139,9 +139,7 @@
 
 /datum/quirk/ground_heirloom/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/heirloom_type
-	heirloom_type = /obj/item/ground_heir
-	heirloom = new heirloom_type(get_turf(quirk_holder))
+	heirloom = new(get_turf(quirk_holder))
 	var/list/slots = list(
 		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
 		LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
