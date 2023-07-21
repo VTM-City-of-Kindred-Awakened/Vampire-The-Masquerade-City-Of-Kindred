@@ -67,57 +67,56 @@
 			for(var/datum/antagonist/A in host.mind.antag_datums)
 				if(A.objectives)
 					dat += "[printobjectives(A.objectives)]<BR>"
-		else
-			var/masquerade_level = " followed the Masquerade Tradition perfectly."
-			switch(host.masquerade)
+		var/masquerade_level = " followed the Masquerade Tradition perfectly."
+		switch(host.masquerade)
+			if(4)
+				masquerade_level = " broke the Masquerade rule once."
+			if(3)
+				masquerade_level = " made a couple of Masquerade breaches."
+			if(2)
+				masquerade_level = " provoked a moderate Masquerade breach."
+			if(1)
+				masquerade_level = " almost ruined the Masquerade."
+			if(0)
+				masquerade_level = "'m danger to the Masquerade and my own kind."
+		dat += "Camarilla thinks I[masquerade_level]<BR>"
+		var/humanity = "I'm out of my mind."
+		var/enlight = FALSE
+		if(host.clane)
+			if(host.clane.enlightement)
+				enlight = TRUE
+
+		if(!enlight)
+			switch(host.humanity)
+				if(8 to 10)
+					humanity = "I'm the best example of mercy and kindness."
+				if(7)
+					humanity = "I have nothing to complain about my humanity."
+				if(5 to 6)
+					humanity = "I'm slightly above the humane."
 				if(4)
-					masquerade_level = " broke the Masquerade rule once."
-				if(3)
-					masquerade_level = " made a couple of Masquerade breaches."
-				if(2)
-					masquerade_level = " provoked a moderate Masquerade breach."
+					humanity = "I don't care about kine."
+				if(2 to 3)
+					humanity = "There's nothing bad in murdering for <b>BLOOD</b>."
 				if(1)
-					masquerade_level = " almost ruined the Masquerade."
-				if(0)
-					masquerade_level = "'m danger to the Masquerade and my own kind."
-			dat += "Camarilla thinks I[masquerade_level]<BR>"
-			var/humanity = "I'm out of my mind."
-			var/enlight = FALSE
-			if(host.clane)
-				if(host.clane.enlightement)
-					enlight = TRUE
+					humanity = "I'm slowly falling into madness..."
 
-			if(!enlight)
-				switch(host.humanity)
-					if(8 to 10)
-						humanity = "I'm the best example of mercy and kindness."
-					if(7)
-						humanity = "I have nothing to complain about my humanity."
-					if(5 to 6)
-						humanity = "I'm slightly above the humane."
-					if(4)
-						humanity = "I don't care about kine."
-					if(2 to 3)
-						humanity = "There's nothing bad in murdering for <b>BLOOD</b>."
-					if(1)
-						humanity = "I'm slowly falling into madness..."
+		else
+			switch(host.humanity)
+				if(8 to 10)
+					humanity = "I'm <b>ENLIGHTED</b> and in the true harmony with my <b>BEAST</b>."
+				if(7)
+					humanity = "I'm slightly <b>ENLIGHTED</b>."
+				if(5 to 6)
+					humanity = "I'm about to be <b>ENLIGHTED</b>."
+				if(4)
+					humanity = "I'm purely trying to be <b>ENLIGHTED</b>."
+				if(2 to 3)
+					humanity = "My <b>BEAST</b> is calling me to be <b>ENLIGHTED</b>."
+				if(1)
+					humanity = "Am I <b>ENLIGHTED</b> or <b>HUMANE</b>?"
 
-			else
-				switch(host.humanity)
-					if(8 to 10)
-						humanity = "I'm <b>ENLIGHTED</b> and in the true harmony with my <b>BEAST</b>."
-					if(7)
-						humanity = "I'm slightly <b>ENLIGHTED</b>."
-					if(5 to 6)
-						humanity = "I'm about to be <b>ENLIGHTED</b>."
-					if(4)
-						humanity = "I'm purely trying to be <b>ENLIGHTED</b>."
-					if(2 to 3)
-						humanity = "My <b>BEAST</b> is calling me to be <b>ENLIGHTED</b>."
-					if(1)
-						humanity = "Am I <b>ENLIGHTED</b> or <b>HUMANE</b>?"
-
-			dat += "[humanity]<BR>"
+		dat += "[humanity]<BR>"
 		if(host.hud_used.discipline1_icon.dscpln)
 			dat += "<b>Known disciplines:</b><BR>"
 			if(host.hud_used.discipline1_icon.dscpln)

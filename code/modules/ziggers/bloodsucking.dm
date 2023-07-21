@@ -135,6 +135,8 @@
 				to_chat(src, "<span class='warning'>This sad sacrifice for your own pleasure affects something deep in your mind.</span>")
 				AdjustHumanity(src, -1, 3)
 				mob.death()
+			if(!ishuman(mob))
+				mob.death()
 			stop_sound_channel(CHANNEL_BLOOD)
 			last_drinkblood_use = 0
 			if(client)

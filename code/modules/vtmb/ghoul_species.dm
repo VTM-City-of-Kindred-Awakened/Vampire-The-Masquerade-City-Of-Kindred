@@ -63,35 +63,34 @@
 			for(var/datum/antagonist/A in host.mind.antag_datums)
 				if(A.objectives)
 					dat += "[printobjectives(A.objectives)]<BR>"
-		else
-			var/masquerade_level = " followed the Masquerade Tradition perfectly."
-			switch(host.masquerade)
-				if(4)
-					masquerade_level = " broke the Masquerade rule once."
-				if(3)
-					masquerade_level = " made a couple of Masquerade breaches."
-				if(2)
-					masquerade_level = " provoked a moderate Masquerade breach."
-				if(1)
-					masquerade_level = " almost ruined the Masquerade."
-				if(0)
-					masquerade_level = "'m danger to the Masquerade and my own kind."
-			dat += "Camarilla thinks I[masquerade_level]<BR>"
-			var/humanity = "I'm out of my mind."
-			switch(host.humanity)
-				if(8 to 10)
-					humanity = "I'm the best example of mercy and kindness."
-				if(7)
-					humanity = "I have nothing to complain about my humanity."
-				if(5 to 6)
-					humanity = "I'm slightly above the humane."
-				if(4)
-					humanity = "I don't care about kine."
-				if(2 to 3)
-					humanity = "There's nothing bad in murdering for <b>BLOOD</b>."
-				if(1)
-					humanity = "I'm slowly falling into madness..."
-			dat += "[humanity]<BR>"
+		var/masquerade_level = " followed the Masquerade Tradition perfectly."
+		switch(host.masquerade)
+			if(4)
+				masquerade_level = " broke the Masquerade rule once."
+			if(3)
+				masquerade_level = " made a couple of Masquerade breaches."
+			if(2)
+				masquerade_level = " provoked a moderate Masquerade breach."
+			if(1)
+				masquerade_level = " almost ruined the Masquerade."
+			if(0)
+				masquerade_level = "'m danger to the Masquerade and my own kind."
+		dat += "Camarilla thinks I[masquerade_level]<BR>"
+		var/humanity = "I'm out of my mind."
+		switch(host.humanity)
+			if(8 to 10)
+				humanity = "I'm the best example of mercy and kindness."
+			if(7)
+				humanity = "I have nothing to complain about my humanity."
+			if(5 to 6)
+				humanity = "I'm slightly above the humane."
+			if(4)
+				humanity = "I don't care about kine."
+			if(2 to 3)
+				humanity = "There's nothing bad in murdering for <b>BLOOD</b>."
+			if(1)
+				humanity = "I'm slowly falling into madness..."
+		dat += "[humanity]<BR>"
 		if(length(host.knowscontacts) > 0)
 			dat += "<b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
 			for(var/i in host.knowscontacts)

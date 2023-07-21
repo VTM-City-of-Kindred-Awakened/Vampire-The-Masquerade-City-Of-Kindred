@@ -189,6 +189,14 @@ Dancer
 		if(istype(A, /obj/structure/vampdoor))
 			return
 
+	for(var/atom/movable/A in get_step(owner, owner.dir))
+		if(istype(A, /obj/matrix))
+			return
+
+	for(var/atom/movable/A in get_step(get_step(owner, owner.dir), owner.dir))
+		if(istype(A, /obj/matrix))
+			return
+
 	var/turf/open/LO = get_step(get_step(owner, owner.dir), owner.dir)
 
 	var/mob/living/carbon/human/H = owner
