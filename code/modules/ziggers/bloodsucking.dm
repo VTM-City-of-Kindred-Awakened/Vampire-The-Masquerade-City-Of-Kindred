@@ -57,7 +57,7 @@
 			stop_sound_channel(CHANNEL_BLOOD)
 			return
 	if(!HAS_TRAIT(src, TRAIT_BLOODY_SUCKER) && CheckEyewitness(src, src, 7, FALSE))
-		AdjustMasquerade(src, -1)
+		AdjustMasquerade(-1)
 	if(do_after(src, 30, target = mob, timed_action_flags = NONE, progress = FALSE))
 		mob.bloodpool = max(0, mob.bloodpool-1)
 		suckbar.icon_state = "[round(14*(mob.bloodpool/mob.maxbloodpool))]"
@@ -93,8 +93,8 @@
 			if(ishuman(mob))
 				var/mob/living/carbon/human/K = mob
 				if(iskindred(mob))
-					AdjustHumanity(src, -1, 0)
-					AdjustMasquerade(src, -1)
+					AdjustHumanity(-1, 0)
+					AdjustMasquerade(-1)
 					if(K.generation >= generation)
 						if(K.client)
 							reset_shit(K)
@@ -133,7 +133,7 @@
 					Npc.last_attacker = null
 				SEND_SOUND(src, sound('code/modules/ziggers/sounds/feed_failed.ogg', 0, 0, 75))
 				to_chat(src, "<span class='warning'>This sad sacrifice for your own pleasure affects something deep in your mind.</span>")
-				AdjustHumanity(src, -1, 3)
+				AdjustHumanity(-1, 3)
 				mob.death()
 			if(!ishuman(mob))
 				mob.death()

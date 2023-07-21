@@ -86,7 +86,7 @@
 			if(my_creator)
 				SEND_SOUND(src, sound('code/modules/ziggers/sounds/masquerade_violation.ogg', 0, 0, 75))
 				to_chat(src, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
-				AdjustMasquerade(my_creator, -1)
+				my_creator.AdjustMasquerade(-1)
 
 /mob/living/simple_animal/hostile/handle_automated_action()
 	if(AIStatus == AI_OFF)

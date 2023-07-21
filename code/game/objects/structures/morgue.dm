@@ -270,11 +270,13 @@ GLOBAL_LIST_EMPTY(crematoriums)
 				M.emote("scream")
 				if(user)
 					if(ishuman(M) && !iskindred(M))
-						AdjustHumanity(user, -1, 2)
+						var/mob/living/carbon/human/HM = user
+						HM.AdjustHumanity(-1, 2)
 			if(user)
 				log_combat(user, M, "cremated")
 				if(!iskindred(M) && ishuman(M) && M.stat == DEAD)
-					AdjustMasquerade(user, 1)
+					var/mob/living/carbon/human/HM = user
+					HM.AdjustMasquerade(1)
 			else
 				M.log_message("was cremated", LOG_ATTACK)
 

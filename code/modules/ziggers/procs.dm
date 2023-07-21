@@ -1,56 +1,56 @@
-/proc/AdjustHumanity(var/mob/living/carbon/human/H, var/value, var/limit)
-	if(!is_special_character(H) || H.mind.special_role == "Ambitious")
-		if(!H.in_frenzy)
+/mob/living/carbon/human/proc/AdjustHumanity(var/value, var/limit)
+	if(!is_special_character(src) || mind.special_role == "Ambitious")
+		if(!in_frenzy)
 			var/mod = 1
 			var/enlight = FALSE
-			if(H.clane)
-				mod = H.clane.humanitymod
-				enlight = H.clane.enlightement
+			if(clane)
+				mod = clane.humanitymod
+				enlight = clane.enlightement
 			if(enlight)
 				if(value < 0)
-					if(H.humanity < 10)
-						H.humanity = max(limit, H.humanity-(value*mod))
-						SEND_SOUND(H, sound('code/modules/ziggers/sounds/humanity_gain.ogg', 0, 0, 75))
-						to_chat(H, "<span class='us-erhelp'><b>ENLIGHTEMENT INCREASES</b></span>")
+					if(humanity < 10)
+						humanity = max(limit, humanity-(value*mod))
+						SEND_SOUND(src, sound('code/modules/ziggers/sounds/humanity_gain.ogg', 0, 0, 75))
+						to_chat(src, "<span class='us-erhelp'><b>ENLIGHTEMENT INCREASES</b></span>")
 				if(value > 0)
-					if(H.humanity > 0)
-						H.humanity = min(limit, H.humanity-(value*mod))
-						SEND_SOUND(H, sound('code/modules/ziggers/sounds/humanity_loss.ogg', 0, 0, 75))
-						to_chat(H, "<span class='userdanger'><b>ENLIGHTEMENT DECREASES</b></span>")
+					if(humanity > 0)
+						humanity = min(limit, humanity-(value*mod))
+						SEND_SOUND(src, sound('code/modules/ziggers/sounds/humanity_loss.ogg', 0, 0, 75))
+						to_chat(src, "<span class='userdanger'><b>ENLIGHTEMENT DECREASES</b></span>")
 			else
 				if(value < 0)
-					if(H.humanity > limit)
-						H.humanity = max(limit, H.humanity+(value*mod))
-						SEND_SOUND(H, sound('code/modules/ziggers/sounds/humanity_loss.ogg', 0, 0, 75))
-						to_chat(H, "<span class='userdanger'><b>HUMANITY DECREASES</b></span>")
+					if(humanity > limit)
+						H.humanity = max(limit, humanity+(value*mod))
+						SEND_SOUND(src, sound('code/modules/ziggers/sounds/humanity_loss.ogg', 0, 0, 75))
+						to_chat(src, "<span class='userdanger'><b>HUMANITY DECREASES</b></span>")
 				if(value > 0)
-					if(H.humanity < limit)
-						H.humanity = min(limit, H.humanity+(value*mod))
-						SEND_SOUND(H, sound('code/modules/ziggers/sounds/humanity_gain.ogg', 0, 0, 75))
-						to_chat(H, "<span class='us-erhelp'><b>HUMANITY INCREASES</b></span>")
+					if(humanity < limit)
+						humanity = min(limit, humanity+(value*mod))
+						SEND_SOUND(src, sound('code/modules/ziggers/sounds/humanity_gain.ogg', 0, 0, 75))
+						to_chat(src, "<span class='us-erhelp'><b>HUMANITY INCREASES</b></span>")
 
-/proc/AdjustMasquerade(var/mob/living/carbon/human/H, var/value)
-	if(!is_special_character(H) || H.mind.special_role == "Ambitious")
-		if(H.last_masquerade_violation+100 < world.time)
-			H.last_masquerade_violation = world.time
+/mob/living/carbon/human/proc/AdjustMasquerade(var/value)
+	if(!is_special_character(src) || mind.special_role == "Ambitious")
+		if(last_masquerade_violation+100 < world.time)
+			last_masquerade_violation = world.time
 			if(value < 0)
-				if(H.masquerade > 0)
-					H.masquerade = max(0, H.masquerade+value)
-					SEND_SOUND(H, sound('code/modules/ziggers/sounds/masquerade_violation.ogg', 0, 0, 75))
-					to_chat(H, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
+				if(masquerade > 0)
+					masquerade = max(0, masquerade+value)
+					SEND_SOUND(src, sound('code/modules/ziggers/sounds/masquerade_violation.ogg', 0, 0, 75))
+					to_chat(src, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
 				SSbad_guys_party.next_fire = max(world.time, SSbad_guys_party.next_fire-600)
 			if(value > 0)
-				if(H.masquerade < 5)
-					H.masquerade = min(5, H.masquerade+value)
-					SEND_SOUND(H, sound('code/modules/ziggers/sounds/general_good.ogg', 0, 0, 75))
-					to_chat(H, "<span class='userhelp'><b>MASQUERADE REINFORCEMENT</b></span>")
+				if(masquerade < 5)
+					masquerade = min(5, masquerade+value)
+					SEND_SOUND(src, sound('code/modules/ziggers/sounds/general_good.ogg', 0, 0, 75))
+					to_chat(src, "<span class='userhelp'><b>MASQUERADE REINFORCEMENT</b></span>")
 				SSbad_guys_party.next_fire = max(world.time, SSbad_guys_party.next_fire+1200)
 
-	if(H in GLOB.masquerade_breakers_list)
-		if(H.masquerade > 1)
-			GLOB.masquerade_breakers_list -= H
-	else if(H.masquerade < 2)
-		GLOB.masquerade_breakers_list |= H
+	if(src in GLOB.masquerade_breakers_list)
+		if(masquerade > 1)
+			GLOB.masquerade_breakers_list -= src
+	else if(masquerade < 2)
+		GLOB.masquerade_breakers_list |= src
 
 /mob/living/carbon/human/npc/proc/backinvisible(var/atom/A)
 	switch(dir)
@@ -68,7 +68,7 @@
 				return TRUE
 	return FALSE
 
-/proc/CheckEyewitness(var/mob/living/source, var/mob/attacker, var/range = 0, var/affects_source = FALSE)
+/mob/living/proc/CheckEyewitness(var/mob/living/source, var/mob/attacker, var/range = 0, var/affects_source = FALSE)
 	var/actual_range = max(1, round(range*(attacker.alpha/255)))
 	if(SScityweather.fogging)
 		actual_range = round(actual_range/2)

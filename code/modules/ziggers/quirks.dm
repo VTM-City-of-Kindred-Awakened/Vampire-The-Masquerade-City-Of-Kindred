@@ -229,6 +229,7 @@ Dancer
 	var/last_added_humanity = 0
 
 /datum/action/dance/Trigger()
+	var/mob/living/carbon/human/H = owner
 	if(prob(50))
 		dancefirst(owner)
 	else
@@ -238,7 +239,7 @@ Dancer
 		for(var/obj/machinery/jukebox/J in range(7, owner))
 			if(J)
 				if(J.active)
-					AdjustHumanity(owner, 1, 8)
+					H.AdjustHumanity(1, 8)
 					last_added_humanity = world.time
 
 /mob/living

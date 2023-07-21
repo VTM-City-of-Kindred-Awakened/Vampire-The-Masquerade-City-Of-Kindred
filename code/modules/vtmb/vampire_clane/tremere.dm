@@ -38,8 +38,8 @@
 				drawing = FALSE
 				new ritual(H.loc)
 				H.bloodpool = max(0, H.bloodpool-2)
-				if(CheckEyewitness(H, H, 7, FALSE))
-					AdjustMasquerade(H, -1)
+				if(H.CheckEyewitness(H, H, 7, FALSE))
+					H.AdjustMasquerade(-1)
 			else
 				drawing = FALSE
 	else
@@ -52,7 +52,7 @@
 				var/rune = pick(subtypesof(/obj/ritualrune))
 				new rune(H.loc)
 				H.bloodpool = max(0, H.bloodpool-2)
-				if(CheckEyewitness(H, H, 7, FALSE))
-					AdjustMasquerade(H, -1)
+				if(H.CheckEyewitness(H, H, 7, FALSE))
+					H.AdjustMasquerade(-1)
 			else
 				drawing = FALSE

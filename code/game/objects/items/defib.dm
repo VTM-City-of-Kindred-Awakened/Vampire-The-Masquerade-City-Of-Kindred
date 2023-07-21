@@ -615,7 +615,8 @@
 					H.Jitter(100)
 					SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)
 					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
-					AdjustHumanity(user, 1, 10)
+					var/mob/living/carbon/human/HM = user
+					HM.AdjustHumanity(1, 10)
 					if(user.client)
 						var/mode = 1
 						if(HAS_TRAIT(user, TRAIT_NON_INT))

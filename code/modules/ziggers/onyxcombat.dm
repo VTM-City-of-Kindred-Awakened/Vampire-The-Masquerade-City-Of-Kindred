@@ -253,8 +253,8 @@
 						playsound(BD, 'code/modules/ziggers/sounds/drinkblood1.ogg', 50, TRUE)
 					LV.visible_message("<span class='warning'><b>[BD] bites [LV]'s neck!</b></span>", "<span class='warning'><b>[BD] bites your neck!</b></span>")
 					if(!HAS_TRAIT(BD, TRAIT_BLOODY_LOVER))
-						if(CheckEyewitness(LV, BD, 7, FALSE))
-							AdjustMasquerade(BD, -1)
+						if(BD.CheckEyewitness(LV, BD, 7, FALSE))
+							BD.AdjustMasquerade(-1)
 					else
 						playsound(BD, 'code/modules/ziggers/sounds/kiss.ogg', 50, TRUE)
 					if(iskindred(LV))

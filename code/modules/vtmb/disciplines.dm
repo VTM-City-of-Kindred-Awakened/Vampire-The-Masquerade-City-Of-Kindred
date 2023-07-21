@@ -50,8 +50,8 @@
 			caster.client.prefs.save_character()
 			caster.last_experience = world.time
 	if(violates_masquerade)
-		if(CheckEyewitness(target, caster, 7, TRUE))
-			AdjustMasquerade(caster, -1)
+		if(caster.CheckEyewitness(target, caster, 7, TRUE))
+			caster.AdjustMasquerade(-1)
 	if(target.resistant_to_disciplines)
 		to_chat(caster, "<span class='danger'>You failed to activate the [name].</span>")
 		return

@@ -27,7 +27,8 @@
 					M.ghostize(FALSE)
 				M.death()
 				to_chat(user, "<b>Successfully punished masquerade breaker and restored the Masquerade.</b>")
-				AdjustMasquerade(user, 1)
+				var/mob/living/carbon/human/HM = user
+				HM.AdjustMasquerade(1)
 				return
 			else
 				to_chat(user, "Target must be in critical condition or torpor.")

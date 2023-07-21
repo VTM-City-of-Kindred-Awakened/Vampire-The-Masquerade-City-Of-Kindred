@@ -84,7 +84,7 @@
 					var/mob/living/carbon/human/BT = L
 					BT.add_bite_animation()
 				if(CheckEyewitness(L, src, 7, FALSE))
-					AdjustMasquerade(src, -1)
+					AdjustMasquerade(-1)
 				playsound(src, 'code/modules/ziggers/sounds/drinkblood1.ogg', 50, TRUE)
 				L.visible_message("<span class='warning'><b>[src] bites [L]'s neck!</b></span>", "<span class='warning'><b>[src] bites your neck!</b></span>")
 				face_atom(L)
@@ -134,8 +134,8 @@
 	var/skipface = (H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE))
 	if(H.clane)
 		if(!skipface && H.clane.violating_appearance)
-			if(CheckEyewitness(H, H, 7, FALSE))
-				AdjustMasquerade(H, -1)
+			if(H.CheckEyewitness(H, H, 7, FALSE))
+				H.AdjustMasquerade(-1)
 
 	if(H.hearing_ghosts)
 		H.bloodpool = max(0, H.bloodpool-1)
@@ -197,4 +197,4 @@
 			H.rollfrenzy()
 			if(H.clane)
 				if(H.clane.enlightement)
-					AdjustHumanity(H, 1, 10)
+					H.AdjustHumanity(1, 10)

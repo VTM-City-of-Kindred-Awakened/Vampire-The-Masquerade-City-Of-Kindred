@@ -25,19 +25,19 @@ SUBSYSTEM_DEF(graveyard)
 		clear_runs = 0
 
 	if(lost_points > 2)
-		for(var/mob/living/L in graveyarders)
+		for(var/mob/living/carbon/human/L in graveyarders)
 			if(L)
 				if(L.client)
 					if(istype(get_area(L), /area/vtm/graveyard))
-						AdjustMasquerade(L, -1)
+						L.AdjustMasquerade(-1)
 					lost_points = 0
 
 	if(clear_runs > 2)
 		clear_runs = 0
-		for(var/mob/living/L in graveyarders)
+		for(var/mob/living/carbon/human/L in graveyarders)
 			if(L)
 				if(L.client)
-					AdjustMasquerade(L, 1)
+					L.AdjustMasquerade(1)
 					var/mode = 1
 					if(HAS_TRAIT(L, TRAIT_NON_INT))
 						mode = 2

@@ -28,10 +28,11 @@
 			if(istype(last_attacker, /mob/living/simple_animal/hostile))
 				var/mob/living/simple_animal/hostile/HS = last_attacker
 				if(HS.my_creator)
-					AdjustHumanity(HS.my_creator, -1, 0)
+					HS.my_creator.AdjustHumanity(-1, 0)
 			else
 				if(ishuman(last_attacker))
-					AdjustHumanity(last_attacker, -1, 0)
+					var/mob/living/carbon/human/HM = last_attacker
+					HM.AdjustHumanity(-1, 0)
 	remove_overlay(FIGHT_LAYER)
 	GLOB.npc_list -= src
 //	SShumannpcpool.npclost()
