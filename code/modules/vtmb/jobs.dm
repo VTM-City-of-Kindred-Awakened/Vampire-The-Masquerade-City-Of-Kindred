@@ -1386,7 +1386,7 @@
 
 /datum/antagonist/ambitious/on_gain()
 	owner.special_role = src
-	var/objectve = rand(1, 3)
+	var/objectve = rand(1, 2)
 	switch(objectve)
 		if(1)
 			var/datum/objective/blood/blood_objective = new
@@ -1409,10 +1409,6 @@
 			money_objective.owner = owner
 			money_objective.amount = rand(300, 1000)
 			objectives += money_objective
-		if(3)
-			var/datum/objective/protect/protect_objective = new
-			protect_objective.owner = owner
-			objectives += protect_objective
 	return ..()
 
 /datum/antagonist/ambitious/on_removal()

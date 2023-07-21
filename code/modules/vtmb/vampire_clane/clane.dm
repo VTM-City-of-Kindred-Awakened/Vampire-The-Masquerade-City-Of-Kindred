@@ -51,29 +51,29 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 /mob/living/carbon/human/proc/generate_friends()
 	if(have_friend && !friend_name)
 		for(var/mob/living/carbon/human/H in GLOB.player_list)
-			if(H.stat != DEAD && H.have_friend && !H.friend_name && H.client && H.enemy_name != real_name && H.lover_name != real_name)
+			if(H.stat != DEAD && H.have_friend && !H.friend_name && H.client && H.enemy_name != real_name && H.lover_name != real_name && H.dna.real_name != real_name)
 				H.friend_name = real_name
-				friend_name = H.client.prefs.real_name
+				friend_name = H.dna.real_name
 				to_chat(src, "Your friend, <b>[friend_name]</b>, is now in the city!")
 				to_chat(H, "Your friend, <b>[H.friend_name]</b>, is now in the city!")
 	if(have_enemy && !enemy_name)
 		for(var/mob/living/carbon/human/H in GLOB.player_list)
-			if(H.stat != DEAD && H.have_enemy && !H.enemy_name && H.client && H.friend_name != real_name && H.lover_name != real_name)
+			if(H.stat != DEAD && H.have_enemy && !H.enemy_name && H.client && H.friend_name != real_name && H.lover_name != real_name && H.dna.real_name != real_name)
 				H.enemy_name = real_name
-				enemy_name = H.client.prefs.real_name
+				enemy_name = H.dna.real_name
 				to_chat(src, "Your enemy, <b>[enemy_name]</b>, is now in the city!")
 				to_chat(H, "Your enemy, <b>[H.enemy_name]</b>, is now in the city!")
 	if(have_lover && !lover_name)
 		if(HAS_TRAIT(src, TRAIT_HOMOSEXUAL))
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				if(H.stat != DEAD && H.have_lover && !H.lover_name && H.client && HAS_TRAIT(H, TRAIT_HOMOSEXUAL) && H.gender == gender && H.enemy_name != real_name && H.friend_name != real_name)
+				if(H.stat != DEAD && H.have_lover && !H.lover_name && H.client && HAS_TRAIT(H, TRAIT_HOMOSEXUAL) && H.gender == gender && H.enemy_name != real_name && H.friend_name != real_name && H.dna.real_name != real_name)
 					H.lover_name = real_name
-					lover_name = H.client.prefs.real_name
+					lover_name = H.dna.real_name
 					to_chat(src, "Your lover, <b>[lover_name]</b>, is now in the city!")
 					to_chat(H, "Your lover, <b>[H.lover_name]</b>, is now in the city!")
 		else
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				if(H.stat != DEAD && H.have_lover && !H.lover_name && H.client && !HAS_TRAIT(H, TRAIT_HOMOSEXUAL) && H.gender != gender && H.enemy_name != real_name && H.friend_name != real_name)
+				if(H.stat != DEAD && H.have_lover && !H.lover_name && H.client && !HAS_TRAIT(H, TRAIT_HOMOSEXUAL) && H.gender != gender && H.enemy_name != real_name && H.friend_name != real_name && H.dna.real_name != real_name)
 					H.lover_name = real_name
 					lover_name = H.client.prefs.real_name
 					to_chat(src, "Your lover, <b>[lover_name]</b>, is now in the city!")
