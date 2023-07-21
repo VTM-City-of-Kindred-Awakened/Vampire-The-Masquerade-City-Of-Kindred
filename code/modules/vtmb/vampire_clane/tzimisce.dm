@@ -17,6 +17,7 @@
 	var/additional_wings = FALSE
 	var/additional_centipede = FALSE
 	var/additional_armor = FALSE
+	var/obj/item/heirl
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/tzimisce
 	name = "Tzimisce Form"
@@ -198,7 +199,15 @@
 
 /datum/vampireclane/tzimisce/post_gain(mob/living/carbon/human/H)
 	..()
-	H.add_quirk(/datum/quirk/ground_heirloom)
+	var/obj/item/ground_heir/heirloom = new(get_turf(H))
+	var/list/slots = list(
+		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+		LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+		LOCATION_HANDS = ITEM_SLOT_HANDS)
+	H.equip_in_one_of_slots(heirloom, slots, FALSE)
+	heirl = heirloom
+//	H.add_quirk(/datum/quirk/ground_heirloom)
 	var/datum/action/vicissitude/U = new()
 	U.Grant(H)
 	var/datum/action/basic_vicissitude/BV = new()
