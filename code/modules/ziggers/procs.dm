@@ -20,7 +20,7 @@
 			else
 				if(value < 0)
 					if(humanity > limit)
-						H.humanity = max(limit, humanity+(value*mod))
+						humanity = max(limit, humanity+(value*mod))
 						SEND_SOUND(src, sound('code/modules/ziggers/sounds/humanity_loss.ogg', 0, 0, 75))
 						to_chat(src, "<span class='userdanger'><b>HUMANITY DECREASES</b></span>")
 				if(value > 0)
