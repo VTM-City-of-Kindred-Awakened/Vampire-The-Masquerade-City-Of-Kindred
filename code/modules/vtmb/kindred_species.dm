@@ -246,7 +246,6 @@
 					var/datum/species/ghoul/G = BLOODBONDED.dna.species
 					G.master = owner
 					G.last_vitae = world.time
-					var/mob/living/carbon/human/O = owner
 					if(H.clane)
 						if(H.clane.name == "Tzimisce")
 							ADD_TRAIT(BLOODBONDED, TRAIT_UNMASQUERADE, HIGHLANDER)
