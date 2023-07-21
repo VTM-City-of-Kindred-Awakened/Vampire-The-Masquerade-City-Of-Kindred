@@ -85,6 +85,60 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 				else
 					to_chat(C, "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></span>")
 
+/client/verb/looc(msg as text)
+	set name = "LOOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
+	set category = "OOC"
+
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		return
+
+	if(!mob)
+		return
+
+	if(!holder)
+		if(!GLOB.ooc_allowed)
+			to_chat(src, "<span class='danger'>OOC is globally muted.</span>")
+			return
+		if(!GLOB.dooc_allowed && (mob.stat == DEAD))
+			to_chat(usr, "<span class='danger'>OOC for dead mobs has been turned off.</span>")
+			return
+		if(prefs.muted & MUTE_OOC)
+			to_chat(src, "<span class='danger'>You cannot use OOC (muted).</span>")
+			return
+	if(is_banned_from(ckey, "OOC"))
+		to_chat(src, "<span class='danger'>You have been banned from OOC.</span>")
+		return
+	if(QDELETED(src))
+		return
+
+	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	var/raw_msg = msg
+
+	if(!msg)
+		return
+
+	msg = emoji_parse(msg)
+
+	if(!holder)
+		if(handle_spam_prevention(msg,MUTE_OOC))
+			return
+		if(findtext(msg, "byond://"))
+			to_chat(src, "<B>Advertising other servers is not allowed.</B>")
+			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
+			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
+			return
+
+	if(!(prefs.chat_toggles & CHAT_OOC))
+		to_chat(src, "<span class='danger'>You have OOC muted.</span>")
+		return
+
+	mob.log_talk(raw_msg, LOG_OOC)
+	for(var/mob/living/L in viewers(9, mob))
+		if(L.client)
+			if(L.client.prefs.chat_toggles & CHAT_OOC)
+				to_chat(L, "<span class='notice'><b><span class='prefix'>LOOC:</span> <EM>[mob.name]:</EM> [msg]</b></span>")
+
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
 		if(toggle != GLOB.ooc_allowed)

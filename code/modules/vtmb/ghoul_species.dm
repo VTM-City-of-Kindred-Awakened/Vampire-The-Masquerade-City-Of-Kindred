@@ -200,6 +200,9 @@
 
 /datum/species/ghoul/spec_life(mob/living/carbon/human/H)
 	. = ..()
+	if(HAS_TRAIT(H, TRAIT_UNMASQUERADE))
+		if(H.CheckEyewitness(H, H, 7, FALSE))
+			H.AdjustMasquerade(-1)
 	if(H.client && H.stat <= 2)
 		if(H.client.prefs)
 			if(H.client.prefs.humanity != H.humanity)

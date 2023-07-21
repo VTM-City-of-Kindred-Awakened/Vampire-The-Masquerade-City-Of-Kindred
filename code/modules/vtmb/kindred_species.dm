@@ -218,7 +218,7 @@
 				BLOODBONDED.adjustFireLoss(-25, TRUE)
 				BLOODBONDED.bloodpool = min(BLOODBONDED.maxbloodpool, BLOODBONDED.bloodpool+2)
 				giving = FALSE
-				if(istype(H.pulling, /mob/living/carbon/human/npc))
+				if(!isghoul(H.pulling) && istype(H.pulling, /mob/living/carbon/human/npc))
 					var/mob/living/carbon/human/npc/NPC = H.pulling
 					if(NPC.ghoulificate(owner))
 						new_master = TRUE
@@ -233,11 +233,27 @@
 					G.last_vitae = world.time
 					if(new_master)
 						G.changed_master = TRUE
-				else if(!iskindred(BLOODBONDED))
+						if(H.clane)
+							if(H.clane.name == "Tzimisce")
+								if(!HAS_TRAIT(BLOODBONDED, TRAIT_UNMASQUERADE))
+									ADD_TRAIT(BLOODBONDED, TRAIT_UNMASQUERADE, HIGHLANDER)
+									BLOODBONDED.dna.species.limbs_id = "husk"
+									BLOODBONDED.update_body()
+									var/datum/action/basic_vicissitude/BV = new()
+									BV.Grant(BLOODBONDED)
+				else if(!iskindred(BLOODBONDED) && !isnpc(BLOODBONDED))
 					BLOODBONDED.set_species(/datum/species/ghoul)
 					var/datum/species/ghoul/G = BLOODBONDED.dna.species
 					G.master = owner
 					G.last_vitae = world.time
+					var/mob/living/carbon/human/O = owner
+					if(H.clane)
+						if(H.clane.name == "Tzimisce")
+							ADD_TRAIT(BLOODBONDED, TRAIT_UNMASQUERADE, HIGHLANDER)
+							BLOODBONDED.dna.species.limbs_id = "husk"
+							BLOODBONDED.update_body()
+							var/datum/action/basic_vicissitude/BV = new()
+							BV.Grant(BLOODBONDED)
 					if(new_master)
 						G.changed_master = TRUE
 			else

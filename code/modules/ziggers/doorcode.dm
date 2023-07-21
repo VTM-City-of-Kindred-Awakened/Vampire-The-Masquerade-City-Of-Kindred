@@ -115,7 +115,6 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 
 	var/baseicon = "door"
-	var/lastclicked = 0
 
 	var/closed = TRUE
 	var/locked = FALSE
@@ -129,13 +128,19 @@
 	var/lock_sound = 'code/modules/ziggers/sounds/door_locked.ogg'
 
 /obj/structure/vampdoor/attack_hand(mob/user)
-	if(lastclicked+5 > world.time)
-		return
-	lastclicked = world.time
+	. = ..()
+	var/mob/living/N = user
 	if(locked)
-		playsound(src, lock_sound, 75, TRUE)
-		to_chat(user, "<span class='warning'>[src] is locked!</span>")
-		return
+		if(N.a_intent != INTENT_HARM)
+			playsound(src, lock_sound, 75, TRUE)
+			to_chat(user, "<span class='warning'>[src] is locked!</span>")
+			return
+		else
+			animate(src, pixel_z = rand(-1, 1), pixel_w = rand(-1, 1), time = 2)
+			animate(src, pixel_z = 0, pixel_w = 0)
+			playsound(src, 'code/modules/ziggers/sounds/knock.ogg', 75, TRUE)
+			to_chat(user, "<span class='warning'>[src] is locked!</span>")
+			return
 
 	if(closed)
 		playsound(src, open_sound, 75, TRUE)
@@ -161,9 +166,6 @@
 		closed = TRUE
 
 /obj/structure/vampdoor/attackby(obj/item/W, mob/living/user, params)
-	if(lastclicked+5 > world.time)
-		return
-	lastclicked = world.time
 	if(istype(W, /obj/item/vamp/keys/hack))
 		if(locked)
 			if(hackable || HAS_TRAIT(user, TRAIT_BONE_KEY))

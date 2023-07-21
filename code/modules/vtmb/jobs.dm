@@ -1400,16 +1400,19 @@
 				blood_objective.owner = owner
 				blood_objective.target_name = HU.dna.real_name
 				objectives += blood_objective
+				blood_objective.update_explanation_text()
 			else
 				var/datum/objective/money/money_objective = new
 				money_objective.owner = owner
 				money_objective.amount = rand(300, 1000)
 				objectives += money_objective
+				money_objective.update_explanation_text()
 		if(2)
 			var/datum/objective/money/money_objective = new
 			money_objective.owner = owner
 			money_objective.amount = rand(300, 1000)
 			objectives += money_objective
+			money_objective.update_explanation_text()
 	return ..()
 
 /datum/antagonist/ambitious/on_removal()

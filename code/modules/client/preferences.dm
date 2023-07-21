@@ -435,12 +435,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<br><b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backpack]</a>"
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_BACKPACK]'>[(randomise[RANDOM_BACKPACK]) ? "Lock" : "Unlock"]</A>"
 
-			dat += "<BR><b>Relationships:</b><BR>"
+			dat += "<BR><BR><b>Relationships:</b><BR>"
 			dat += "Have a Friend: <a href='?_src_=prefs;preference=friend'>[friend == TRUE ? "Enabled" : "Disabled"]</A><BR>"
 			dat += "Have an Enemy: <a href='?_src_=prefs;preference=enemy'>[enemy == TRUE ? "Enabled" : "Disabled"]</A><BR>"
 			dat += "Have a Lover: <a href='?_src_=prefs;preference=lover'>[lover == TRUE ? "Enabled" : "Disabled"]</A><BR>"
 
-			dat += "<BR><b>Be Ambitious:</b><a href='?_src_=prefs;preference=ambitious'>[ambitious == TRUE ? "Enabled" : "Disabled"]</A><BR>"
+			dat += "<BR><b>Be Ambitious: </b><a href='?_src_=prefs;preference=ambitious'>[ambitious == TRUE ? "Enabled" : "Disabled"]</A><BR>"
 
 			if((HAS_FLESH in pref_species.species_traits) || (HAS_BONE in pref_species.species_traits))
 				dat += "<BR><b>Temporal Scarring:</b><BR><a href='?_src_=prefs;preference=persistent_scars'>[(persistent_scars) ? "Enabled" : "Disabled"]</A>"

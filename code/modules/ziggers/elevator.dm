@@ -3,6 +3,7 @@
 	desc = "Call an elevator."
 	icon_state = "control"
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
+	anchored = TRUE
 	var/id = 1
 	var/obj/elevator_button_down/D
 	var/list/doors = list()
@@ -50,6 +51,7 @@
 	desc = "Call an elevator."
 	icon_state = "control"
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
+	anchored = TRUE
 	var/id = 1
 	var/obj/elevator_button_up/U
 	var/list/doors = list()

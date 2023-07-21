@@ -339,6 +339,7 @@
 	desc = "HUMAN LEATHER JACKET."
 	icon_state = "trench_tzi"
 	armor = list(MELEE = 50, BULLET = 50, LASER = 10, ENERGY = 10, BOMB = 25, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 50)
+	clothing_traits = list(TRAIT_UNMASQUERADE)
 
 /obj/item/clothing/suit/vampire/vest
 	name = "bulletproof vest"

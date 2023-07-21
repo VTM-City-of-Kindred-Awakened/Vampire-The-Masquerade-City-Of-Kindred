@@ -502,6 +502,14 @@
 		key = C.key
 		ghoulificated = TRUE
 		set_species(/datum/species/ghoul)
+		var/mob/living/carbon/human/O = owner
+		if(O.clane)
+			if(O.clane.name == "Tzimisce")
+				ADD_TRAIT(src, TRAIT_UNMASQUERADE, HIGHLANDER)
+				dna.species.limbs_id = "husk"
+				update_body()
+				var/datum/action/basic_vicissitude/BV = new()
+				BV.Grant(src)
 		if(mind)
 			if(mind.enslaved_to != owner)
 				mind.enslave_mind_to_creator(owner)

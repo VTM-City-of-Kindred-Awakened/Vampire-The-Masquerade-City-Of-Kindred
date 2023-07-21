@@ -53,7 +53,7 @@
 		BC = new(owner)
 	H.bloodpool = max(0, H.bloodpool-2)
 	BC.Shapeshift(H)
-	spawn(50)
+	spawn(100)
 		if(BC)
 			var/mob/living/simple_animal/hostile/bloodcrawler/BD = BC.myshape
 			H.bloodpool = min(H.bloodpool+round(BD.collected_blood/2), H.maxbloodpool)
@@ -93,18 +93,22 @@
 /datum/action/basic_vicissitude/Trigger()
 	. = ..()
 	var/mob/living/carbon/human/H = owner
-	var/datum/vampireclane/tzimisce/TZ = H.clane
+	var/datum/vampireclane/tzimisce/TZ
+	if(H.clane)
+		TZ = H.clane
 	if(TZ.hided)
 		return
 	if(used)
 		return
 	var/upgrade = input(owner, "Choose basic upgrade:", "Vicissitude Upgrades") as null|anything in list("Skin armor", "Centipede legs", "Second pair of arms", "Leather wings")
 	if(upgrade)
-		H.clane.violating_appearance = TRUE
+		if(H.clane)
+			H.clane.violating_appearance = TRUE
 		used = TRUE
 		switch(upgrade)
 			if("Skin armor")
-				TZ.additional_armor = TRUE
+				if(H.clane)
+					TZ.additional_armor = TRUE
 				H.dna.species.limbs_id = "tziarmor"
 				H.skin_tone = "albino"
 				H.hairstyle = "Bald"
@@ -113,7 +117,8 @@
 				H.update_body()
 				H.update_hair()
 			if("Centipede legs")
-				TZ.additional_centipede = TRUE
+				if(H.clane)
+					TZ.additional_centipede = TRUE
 				H.remove_overlay(PROTEAN_LAYER)
 				var/mutable_appearance/centipede_overlay = mutable_appearance('code/modules/ziggers/64x64.dmi', "centipede", -PROTEAN_LAYER)
 				centipede_overlay.pixel_z = -16
@@ -122,7 +127,8 @@
 				H.apply_overlay(PROTEAN_LAYER)
 				H.add_movespeed_modifier(/datum/movespeed_modifier/centipede)
 			if("Second pair of arms")
-				TZ.additional_hands = TRUE
+				if(H.clane)
+					TZ.additional_hands = TRUE
 				var/limbs = H.held_items.len
 				H.change_number_of_hands(limbs+2)
 				H.remove_overlay(PROTEAN_LAYER)
@@ -131,7 +137,8 @@
 				H.overlays_standing[PROTEAN_LAYER] = hands2_overlay
 				H.apply_overlay(PROTEAN_LAYER)
 			if("Leather wings")
-				TZ.additional_wings = TRUE
+				if(H.clane)
+					TZ.additional_wings = TRUE
 				H.dna.species.GiveSpeciesFlight(H)
 				for(var/datum/action/acrobate/A in H.actions)
 					if(A)
@@ -336,13 +343,13 @@
 
 /mob/living/simple_animal/hostile/bloodcrawler/Move(NewLoc, direct)
 	. = ..()
-	for(var/obj/effect/decal/cleanable/blood/B in NewLoc)
+	for(var/obj/effect/decal/cleanable/blood/B in range(1, NewLoc))
 		if(B)
 			if(B.bloodiness)
 				collected_blood = collected_blood+1
 				to_chat(src, "You sense blood entering your mass...")
-	var/turf/T = get_turf(NewLoc)
-	T.wash(CLEAN_WASH)
+				var/turf/T = get_turf(B)
+				T.wash(CLEAN_WASH)
 
 /datum/action/vicissitude/Trigger()
 	. = ..()

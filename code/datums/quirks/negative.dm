@@ -139,7 +139,8 @@
 
 /datum/quirk/ground_heirloom/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/heirloom_type = /obj/item/ground_heir
+	var/obj/item/heirloom_type
+	heirloom_type = /obj/item/ground_heir
 	heirloom = new heirloom_type(get_turf(quirk_holder))
 	var/list/slots = list(
 		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
@@ -148,12 +149,18 @@
 		LOCATION_HANDS = ITEM_SLOT_HANDS
 	)
 	where = H.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
-	to_chat(quirk_holder, "<span class='boldnotice'>There is a precious [heirloom.name] domain [where]. Keep it safe!</span>")
 
 /datum/quirk/ground_heirloom/post_add()
 	if(where == LOCATION_BACKPACK)
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
+
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a precious family [heirloom.name] [where], passed down from generation to generation. Keep it safe!</span>")
+
+	var/list/names = splittext(quirk_holder.real_name, " ")
+	var/family_name = names[names.len]
+
+	heirloom.AddComponent(/datum/component/heirloom, quirk_holder.mind, family_name)
 
 /datum/quirk/ground_heirloom/on_process()
 	if(!heirloom in quirk_holder.GetAllContents())

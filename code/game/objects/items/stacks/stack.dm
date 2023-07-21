@@ -208,10 +208,12 @@
 	return GLOB.hands_state
 
 /obj/item/stack/ui_interact(mob/user, datum/tgui/ui)
+	return	/*
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Stack", name)
 		ui.open()
+*/
 
 /obj/item/stack/ui_data(mob/user)
 	var/list/data = list()
@@ -224,6 +226,7 @@
 	return data
 
 /obj/item/stack/ui_act(action, params)
+	return	/*
 	. = ..()
 	if(.)
 		return
@@ -287,6 +290,7 @@
 					qdel(I)
 			//BubbleWrap END
 			return TRUE
+*/
 
 /obj/item/stack/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, amount))

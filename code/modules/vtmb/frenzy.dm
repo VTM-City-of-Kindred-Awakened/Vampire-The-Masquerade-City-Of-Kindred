@@ -95,7 +95,7 @@
 
 /mob/living/carbon/human/proc/get_frenzy_targets()
 	var/list/targets = list()
-	for(var/mob/living/L in viewers(7, src))
+	for(var/mob/living/L in oviewers(7, src))
 		if(clane)
 			if(clane.name == "Banu Haqim")
 				if(L.bloodpool && L.stat != DEAD)
@@ -136,7 +136,9 @@
 		if(!skipface && H.clane.violating_appearance)
 			if(H.CheckEyewitness(H, H, 7, FALSE))
 				H.AdjustMasquerade(-1)
-
+	if(HAS_TRAIT(H, TRAIT_UNMASQUERADE))
+		if(H.CheckEyewitness(H, H, 7, FALSE))
+			H.AdjustMasquerade(-1)
 	if(H.hearing_ghosts)
 		H.bloodpool = max(0, H.bloodpool-1)
 		to_chat(H, "<span class='warning'>Necromancy Vision reduces your blood points too sustain itself.</span>")
