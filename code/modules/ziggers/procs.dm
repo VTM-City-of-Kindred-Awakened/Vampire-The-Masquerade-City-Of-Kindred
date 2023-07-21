@@ -1,5 +1,8 @@
 /proc/AdjustHumanity(var/mob/living/carbon/human/H, var/value, var/limit)
-	if(!H.in_frenzy && !is_special_character(H))
+	if(is_special_character(H))
+		if(H.mind.special_role.name != "Ambitious")
+			return
+	if(!H.in_frenzy)
 		var/mod = 1
 		var/enlight = FALSE
 		if(H.clane)
@@ -30,7 +33,8 @@
 
 /proc/AdjustMasquerade(var/mob/living/carbon/human/H, var/value)
 	if(is_special_character(H))
-		return
+		if(H.mind.special_role.name != "Ambitious")
+			return
 	if(H.last_masquerade_violation+300 > world.time)
 		return
 	H.last_masquerade_violation = world.time
