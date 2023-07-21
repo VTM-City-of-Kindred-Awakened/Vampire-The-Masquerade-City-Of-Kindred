@@ -207,7 +207,6 @@
 	var/wasforced
 
 /area/vtm/Crossed(atom/movable/AM)
-	. = ..()
 	if(upper)
 		if(SScityweather.raining)
 			if(ishuman(AM))
@@ -231,6 +230,7 @@
 			var/mob/living/carbon/human/H = AM
 			H.clear_fullscreen("fog")
 			H.clear_fullscreen("rain")
+	..()
 
 /mob/living/proc/handle_vampire_music()
 	if(!client)
