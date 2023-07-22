@@ -18,7 +18,8 @@
 				new /obj/item/stack/dollar(loc)
 			playsound(loc, 'code/modules/ziggers/sounds/sell.ogg', 50, TRUE)
 			if(illegal)
-				user.AdjustHumanity(-1, 0)
+				var/mob/living/carbon/human/H = user
+				H.AdjustHumanity(-1, 0)
 			qdel(W)
 			return
 	else
