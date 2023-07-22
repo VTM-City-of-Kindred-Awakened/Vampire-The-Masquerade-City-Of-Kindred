@@ -136,10 +136,13 @@
 			to_chat(user, "<span class='warning'>[src] is locked!</span>")
 			return
 		else
-			animate(src, pixel_z = rand(-1, 1), pixel_w = rand(-1, 1), time = 2)
-			animate(src, pixel_z = 0, pixel_w = 0)
+			pixel_z = rand(-1, 1)
+			pixel_w = rand(-1, 1)
 			playsound(src, 'code/modules/ziggers/sounds/knock.ogg', 75, TRUE)
 			to_chat(user, "<span class='warning'>[src] is locked!</span>")
+			spawn(2)
+				pixel_z = 0
+				pixel_w = 0
 			return
 
 	if(closed)

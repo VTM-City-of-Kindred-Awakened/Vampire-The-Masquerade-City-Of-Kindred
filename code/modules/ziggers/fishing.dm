@@ -1,3 +1,6 @@
+/mob/living
+	var/isfishing = FALSE
+
 /obj/item/food/fish
 	desc = "Marine life."
 	icon = 'code/modules/ziggers/48x32weapons.dmi'
@@ -57,11 +60,15 @@
 	if(anchored)
 		if(!istype(get_step(src, dir), /turf/open/floor/plating/vampocean))
 			return
+		if(user.isfishing)
+			return
 		if(!catching)
 			catching = TRUE
+			user.isfishing = TRUE
 			playsound(loc, 'code/modules/ziggers/sounds/catching.ogg', 50, FALSE)
 			if(do_mob(user, src, 15 SECONDS))
 				catching = FALSE
+				user.isfishing = FALSE
 				if(prob(33))
 					var/IT = pick(/obj/item/food/fish/shark,
 									/obj/item/food/fish/tune,
@@ -71,9 +78,11 @@
 						IT = /obj/item/vtm_artifact/rand
 					new IT(user.loc)
 					playsound(loc, 'code/modules/ziggers/sounds/catched.ogg', 50, FALSE)
+					user.client.prefs.exper = min(calculate_mob_max_exper(user), user.client.prefs.exper+20)
 				else
 					to_chat(user, "<span class='warning'>Nothing!</span>")
 			else
 				catching = FALSE
+				user.isfishing = FALSE
 		return
 	..()
