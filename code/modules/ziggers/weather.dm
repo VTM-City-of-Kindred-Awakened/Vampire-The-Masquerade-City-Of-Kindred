@@ -43,6 +43,7 @@ SUBSYSTEM_DEF(cityweather)
 			cityhour = 9
 
 	if(forecast[cityhour] != current_weather)
+		current_weather = forecast[cityhour]
 		switch(forecast[cityhour])
 			if("Clear")
 				to_chat(world, "The night sky becomes clear...")
@@ -56,7 +57,6 @@ SUBSYSTEM_DEF(cityweather)
 				to_chat(world, "Visibility range quickly decreases...")
 				raining = FALSE
 				fogging = TRUE
-		current_weather = forecast[cityhour]
 
 /datum/controller/subsystem/cityweather/Initialize()
 	. = ..()
@@ -94,8 +94,3 @@ SUBSYSTEM_DEF(cityweather)
 			if(9)
 				time = "05:00"
 		to_chat(user, "[time], [weath]")
-
-/obj/effect/rain/Crossed(atom/movable/AM)
-	. = ..()
-	AM.wash(CLEAN_RAD | CLEAN_TYPE_WEAK) // Clean radiation non-instantly
-	AM.wash(CLEAN_WASH)
