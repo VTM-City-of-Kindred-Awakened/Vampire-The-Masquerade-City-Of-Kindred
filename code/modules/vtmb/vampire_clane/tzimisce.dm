@@ -646,7 +646,7 @@
 	icon_living = "gangrel_f"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
-	speed = -1
+	speed = 0
 	maxHealth = 300
 	health = 300
 	butcher_results = list(/obj/item/stack/human_flesh = 20)
@@ -668,7 +668,7 @@
 	health = 500
 	melee_damage_lower = 60
 	melee_damage_upper = 60
-	speed = -2
+	speed = -1
 
 /mob/living/simple_animal/hostile/gangrel/best
 	icon_state = "gangrel_m"
@@ -677,7 +677,7 @@
 	health = 700
 	melee_damage_lower = 80
 	melee_damage_upper = 80
-	speed = -3
+	speed = -1
 
 /mob/living/simple_animal/hostile/tzimisce_beast
 	name = "Tzimisce Beast Form"
