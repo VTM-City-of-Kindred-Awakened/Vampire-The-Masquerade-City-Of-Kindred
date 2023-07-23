@@ -164,8 +164,6 @@
 		if(additional_armor)
 			H.dna.species.limbs_id = initial(H.dna.species.limbs_id)
 			H.update_body()
-			H.physiology.armor.melee = H.physiology.armor.melee-50
-			H.physiology.armor.bullet = H.physiology.armor.bullet-50
 	else
 		hided = FALSE
 		violating_appearance = TRUE
@@ -190,8 +188,6 @@
 		if(additional_armor)
 			H.dna.species.limbs_id = "tziarmor"
 			H.update_body()
-			H.physiology.armor.melee = H.physiology.armor.melee+50
-			H.physiology.armor.bullet = H.physiology.armor.bullet+50
 
 /datum/vampireclane/tzimisce/on_gain(mob/living/carbon/human/H)
 	..()

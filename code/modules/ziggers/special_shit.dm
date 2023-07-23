@@ -11,9 +11,14 @@
 /obj/item/masquerade_contract/attack_self(mob/user)
 	. = ..()
 	if(length(GLOB.masquerade_breakers_list))
-		to_chat(user, "<b>YOU</b>, [get_area_name(user)] X:[user.x] Y:[user.y]")
-		for(var/mob/living/H in GLOB.masquerade_breakers_list)
-			to_chat(user, "[H.real_name], Masquerade: [H.masquerade], [get_area_name(H)] X:[H.x] Y:[H.y]")
+		var/turf/UT = get_turf(user)
+		if(UT)
+			to_chat(user, "<b>YOU</b>, [get_area_name(user)] X:[UT.x] Y:[UT.y]")
+		for(var/mob/living/carbon/human/H in GLOB.masquerade_breakers_list)
+			var/turf/TT = get_turf(H)
+			if(TT)
+				if(H.dna)
+					to_chat(user, "[H.dna.real_name], Masquerade: [H.masquerade], [get_area_name(H)] X:[TT.x] Y:[TT.y]")
 	else
 		to_chat(user, "No available Masquerade breakers in city...")
 
