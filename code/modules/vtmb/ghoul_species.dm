@@ -91,6 +91,12 @@
 			if(1)
 				humanity = "I'm slowly falling into madness..."
 		dat += "[humanity]<BR>"
+		if(host.friend_name)
+			dat += "<b>Friend: [host.friend_name]</b><BR>"
+		if(host.enemy_name)
+			dat += "<b>Enemy: [host.enemy_name]</b><BR>"
+		if(host.lover_name)
+			dat += "<b>Ex-Lover: [host.lover_name]</b><BR>"
 		if(length(host.knowscontacts) > 0)
 			dat += "<b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
 			for(var/i in host.knowscontacts)
