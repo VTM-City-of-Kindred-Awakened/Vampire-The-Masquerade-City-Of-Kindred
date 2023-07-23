@@ -184,17 +184,21 @@ Dancer
 	for(var/atom/movable/A in get_step(owner, owner.dir))
 		if(istype(A, /obj/structure/vampdoor))
 			return
+		if(istype(A, /obj/matrix))
+			return
+		if(istype(A, /obj/structure/window))
+			return
+		if(istype(A, /turf/open/floor/plating/vampocean))
+			return
 
 	for(var/atom/movable/A in get_step(get_step(owner, owner.dir), owner.dir))
 		if(istype(A, /obj/structure/vampdoor))
 			return
-
-	for(var/atom/movable/A in get_step(owner, owner.dir))
 		if(istype(A, /obj/matrix))
 			return
-
-	for(var/atom/movable/A in get_step(get_step(owner, owner.dir), owner.dir))
-		if(istype(A, /obj/matrix))
+		if(istype(A, /obj/structure/window))
+			return
+		if(istype(A, /turf/open/floor/plating/vampocean))
 			return
 
 	var/turf/open/LO = get_step(get_step(owner, owner.dir), owner.dir)

@@ -89,7 +89,7 @@
 
 /turf/closed/wall/vampwall/rich/low/window/reinforced
 	icon_state = "rich-reinforced"
-	window = /obj/structure/window/reinforced/fulltile
+	window = /obj/structure/window/reinforced/fulltile/indestructable
 
 /turf/closed/wall/vampwall/junk
 	name = "junk brick wall"
@@ -136,7 +136,7 @@
 
 /turf/closed/wall/vampwall/market/low/window/reinforced
 	icon_state = "market-reinforced"
-	window = /obj/structure/window/reinforced/fulltile
+	window = /obj/structure/window/reinforced/fulltile/indestructable
 
 /turf/closed/wall/vampwall/old
 	name = "old brick wall"
@@ -155,7 +155,7 @@
 
 /turf/closed/wall/vampwall/old/low/window/reinforced
 	icon_state = "old-reinforced"
-	window = /obj/structure/window/reinforced/fulltile
+	window = /obj/structure/window/reinforced/fulltile/indestructable
 
 /turf/closed/wall/vampwall/painted
 	name = "painted brick wall"
@@ -174,7 +174,7 @@
 
 /turf/closed/wall/vampwall/painted/low/window/reinforced
 	icon_state = "painted-reinforced"
-	window = /obj/structure/window/reinforced/fulltile
+	window = /obj/structure/window/reinforced/fulltile/indestructable
 
 /turf/closed/wall/vampwall/rich/old
 	name = "old rich-looking wall"
@@ -193,7 +193,7 @@
 
 /turf/closed/wall/vampwall/rich/old/low/window/reinforced
 	icon_state = "theater-reinforced"
-	window = /obj/structure/window/reinforced/fulltile
+	window = /obj/structure/window/reinforced/fulltile/indestructable
 
 /turf/closed/wall/vampwall/brick
 	name = "brick wall"

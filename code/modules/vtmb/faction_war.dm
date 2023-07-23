@@ -63,18 +63,21 @@ SUBSYSTEM_DEF(factionwar)
 		if(!L.frakcja)
 			to_chat(user, "You don't belong to any faction, so you can't repaint it.")
 			return
+		if(L.frakcja != "camarilla" || L.frakcja != "anarch" || L.frakcja != "sabbat")
+			to_chat(user, "You don't belong to any faction, so you can't repaint it.")
+			return
 		if(L.frakcja != icon_state)
 			if(!repainting)
 				repainting = TRUE
 				if(do_mob(user, src, 10 SECONDS))
 					icon_state = L.frakcja
 					SSfactionwar.move_mark(src, L.frakcja)
-					if(user.client)
-						var/mode = 1
-						if(HAS_TRAIT(user, TRAIT_NON_INT))
-							mode = 2
-						user.client.prefs.exper = min(calculate_mob_max_exper(user), user.client.prefs.exper+(50+L.experience_plus)/mode)
-						to_chat(user, "Successfuly repainted to [L.frakcja]'s mark.")
+//					if(user.client)
+//						var/mode = 1
+//						if(HAS_TRAIT(user, TRAIT_NON_INT))
+//							mode = 2
+//						user.client.prefs.exper = min(calculate_mob_max_exper(user), user.client.prefs.exper+(50+L.experience_plus)/mode)
+//						to_chat(user, "Successfuly repainted to [L.frakcja]'s mark.")
 					repainting = FALSE
 				else
 					repainting = FALSE

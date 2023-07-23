@@ -36,31 +36,31 @@
 
 /obj/item/organ/heart
 	illegal = TRUE
-	cost = 300
+	cost = 100
 
 /obj/item/organ/lungs
 	illegal = TRUE
-	cost = 100
+	cost = 50
 
 /obj/item/organ/liver
 	illegal = TRUE
-	cost = 100
+	cost = 50
 
 /obj/item/organ/stomach
 	illegal = TRUE
-	cost = 50
+	cost = 25
 
 /obj/item/organ/eyes
 	illegal = TRUE
-	cost = 50
+	cost = 25
 
 /obj/item/organ/ears
 	illegal = TRUE
-	cost = 50
+	cost = 25
 
 /obj/item/organ/tongue
 	illegal = TRUE
-	cost = 25
+	cost = 10
 
 /obj/item/clothing/under/vampire
 	cost = 10

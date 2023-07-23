@@ -170,40 +170,42 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //	var/datum/vampireclane/Clane
 
 /proc/calculate_mob_max_exper(var/mob/M)
-	if(M.client)
-		if(M.client.prefs)
-			return 360*(M.client.prefs.discipline1level+M.client.prefs.discipline2level+M.client.prefs.discipline3level-3) + 720*(max(0, 13-M.client.prefs.generation)*max(1, M.client.prefs.generation_bonus)) + 1440*(max(1, 13-M.client.prefs.generation)*max(1, M.client.prefs.generation_bonus))
+	if(M.key)
+		var/datum/preferences/P = GLOB.preferences_datums[ckey(M.key)]
+		if(P)
+			return 360*(P.discipline1level+P.discipline2level+P.discipline3level-3) + 720*(max(0, 13-P.generation)*max(1, P.generation_bonus)) + 1440*(max(1, 13-P.generation)*max(1, P.generation_bonus))
 
 /datum/preferences/proc/calculate_max_exper()
 	return 360*(discipline1level+discipline2level+discipline3level-3) + 720*(max(0, 13-generation)*max(1, generation_bonus)) + 1440*(max(1, 13-generation)*max(1, generation_bonus))
 
 /proc/reset_shit(var/mob/M)
-	if(M.client)
-		if(M.client.prefs)
-			M.client.prefs.slotlocked = 0
-			M.client.prefs.exper = 1440
-			M.client.prefs.generation_bonus = 0
-			M.client.prefs.discipline1level = 1
-			M.client.prefs.discipline2level = 1
-			M.client.prefs.discipline3level = 1
-			M.client.prefs.masquerade = initial(M.client.prefs.masquerade)
-			M.client.prefs.generation = initial(M.client.prefs.generation)
-			qdel(M.client.prefs.clane)
-			M.client.prefs.clane = new /datum/vampireclane/brujah()
-			if(length(M.client.prefs.clane.clane_disciplines) >= 1)
-				M.client.prefs.discipline1type = M.client.prefs.clane.clane_disciplines[1]
-			if(length(M.client.prefs.clane.clane_disciplines) >= 2)
-				M.client.prefs.discipline2type = M.client.prefs.clane.clane_disciplines[2]
-			if(length(M.client.prefs.clane.clane_disciplines) >= 3)
-				M.client.prefs.discipline3type = M.client.prefs.clane.clane_disciplines[3]
-			M.client.prefs.discipline4type = null
-			M.client.prefs.enlightement = M.client.prefs.clane.enlightement
-			M.client.prefs.humanity = M.client.prefs.clane.start_humanity
-			M.client.prefs.random_species()
-			M.client.prefs.random_character()
-			M.client.prefs.real_name = random_unique_name(M.client.prefs.gender)
-			M.client.prefs.save_character()
-			M.client.prefs.save_preferences()
+	if(M.key)
+		var/datum/preferences/P = GLOB.preferences_datums[ckey(M.key)]
+		if(P)
+			P.slotlocked = 0
+			P.exper = 1440
+			P.generation_bonus = 0
+			P.discipline1level = 1
+			P.discipline2level = 1
+			P.discipline3level = 1
+			P.masquerade = initial(P.masquerade)
+			P.generation = initial(P.generation)
+			qdel(P.clane)
+			P.clane = new /datum/vampireclane/brujah()
+			if(length(P.clane.clane_disciplines) >= 1)
+				P.discipline1type = P.clane.clane_disciplines[1]
+			if(length(P.clane.clane_disciplines) >= 2)
+				P.discipline2type = P.clane.clane_disciplines[2]
+			if(length(P.clane.clane_disciplines) >= 3)
+				P.discipline3type = P.clane.clane_disciplines[3]
+			P.discipline4type = null
+			P.enlightement = P.clane.enlightement
+			P.humanity = P.clane.start_humanity
+			P.random_species()
+			P.random_character()
+			P.real_name = random_unique_name(P.gender)
+			P.save_character()
+			P.save_preferences()
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -215,9 +217,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
-			for(var/i in GLOB.donaters)
-				if(i == "[C.key]")
-					max_save_slots = 4
 //			unlock_content = C.IsByondMember()
 //			if(unlock_content)
 //				max_save_slots = 8
@@ -249,6 +248,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
 		return
+	for(var/i in GLOB.donaters)
+		if(i == "[parent.key]")
+			max_save_slots = 4
 	if(slot_randomized)
 		load_character(default_slot) // Reloads the character slot. Prevents random features from overwriting the slot if saved.
 		slot_randomized = FALSE
@@ -1713,7 +1715,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					discipline4type = null
 					humanity = clane.start_humanity
 					enlightement = clane.enlightement
-					random_species()
+//					random_species()
 					random_character()
 					real_name = random_unique_name(gender)
 					save_character()

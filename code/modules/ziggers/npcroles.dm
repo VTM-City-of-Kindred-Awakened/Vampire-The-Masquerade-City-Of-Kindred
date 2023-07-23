@@ -725,6 +725,7 @@
 											"На помощь!")
 
 /mob/living/carbon/human/npc/bandit
+	frakcja = "City"
 
 /mob/living/carbon/human/npc/bandit/Initialize()
 	..()
@@ -738,12 +739,14 @@
 	AssignSocialRole(/datum/socialrole/bandit)
 
 /mob/living/carbon/human/npc/walkby
+	frakcja = "City"
 
 /mob/living/carbon/human/npc/walkby/Initialize()
 	..()
 	AssignSocialRole(pick(/datum/socialrole/usualmale, /datum/socialrole/usualfemale))
 
 /mob/living/carbon/human/npc/hobo
+	frakcja = "City"
 	bloodquality = BLOOD_QUALITY_LOW
 
 /mob/living/carbon/human/npc/hobo/Initialize()
@@ -751,6 +754,7 @@
 	AssignSocialRole(pick(/datum/socialrole/poormale, /datum/socialrole/poorfemale))
 
 /mob/living/carbon/human/npc/business
+	frakcja = "City"
 	bloodquality = BLOOD_QUALITY_HIGH
 
 /mob/living/carbon/human/npc/business/Initialize()
@@ -882,6 +886,7 @@
 											"Мамочка!")
 
 /mob/living/carbon/human/npc/shop
+	frakcja = "City"
 	staying = TRUE
 
 /mob/living/carbon/human/npc/shop/Initialize()
@@ -892,6 +897,7 @@
 	uniforms = list(/obj/item/clothing/under/vampire/bacotell)
 
 /mob/living/carbon/human/npc/bacotell
+	frakcja = "City"
 	staying = TRUE
 
 /mob/living/carbon/human/npc/bacotell/Initialize()
@@ -902,6 +908,7 @@
 	uniforms = list(/obj/item/clothing/under/vampire/bubway)
 
 /mob/living/carbon/human/npc/bubway
+	frakcja = "City"
 	staying = TRUE
 
 /mob/living/carbon/human/npc/bubway/Initialize()
@@ -912,6 +919,7 @@
 	uniforms = list(/obj/item/clothing/under/vampire/gummaguts)
 
 /mob/living/carbon/human/npc/gummaguts
+	frakcja = "City"
 	staying = TRUE
 
 /mob/living/carbon/human/npc/gummaguts/Initialize()
@@ -1004,6 +1012,7 @@
 											"Это полиция, выходите с поднятыми руками!")
 
 /mob/living/carbon/human/npc/police
+	frakcja = "Police"
 	fights_anyway = TRUE
 
 /mob/living/carbon/human/npc/police/Initialize()
@@ -1095,6 +1104,7 @@
 											"Это полиция, выходите с поднятыми руками!")
 
 /mob/living/carbon/human/npc/guard
+	frakcja = "City"
 	staying = TRUE
 	fights_anyway = TRUE
 
@@ -1120,6 +1130,7 @@
 				staying = FALSE
 
 /mob/living/carbon/human/npc/walkby/club
+	frakcja = "City"
 	staying = TRUE
 
 /datum/socialrole/stripfemale
@@ -1233,6 +1244,7 @@
 											"На помощь!")
 
 /mob/living/carbon/human/npc/stripper
+	frakcja = "City"
 	staying = TRUE
 
 /mob/living/carbon/human/npc/stripper/Initialize()
@@ -1253,6 +1265,7 @@
 					ClickOn(P)
 
 /mob/living/carbon/human/npc/incel
+	frakcja = "City"
 	staying = TRUE
 
 /mob/living/carbon/human/npc/incel/Initialize()
@@ -1280,6 +1293,7 @@
 											"Легавые?!")
 
 /mob/living/carbon/human/npc/illegal
+	frakcja = "City"
 	staying = TRUE
 
 /mob/living/carbon/human/npc/illegal/Initialize()

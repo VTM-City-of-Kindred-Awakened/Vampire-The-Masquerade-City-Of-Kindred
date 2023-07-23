@@ -42,12 +42,13 @@
 			NPC.Aggro(caster, TRUE)
 	if(activate_sound)
 		playsound(caster, activate_sound, 50, FALSE)
-	if(caster.client)
-		if(caster.client.prefs)
+	if(caster.key)
+		var/datum/preferences/P = GLOB.preferences_datums[ckey(caster.key)]
+		if(P)
 			if(!HAS_TRAIT(caster, TRAIT_NON_INT))
-				caster.client.prefs.exper = min(calculate_mob_max_exper(caster), caster.client.prefs.exper+5+caster.experience_plus)
-			caster.client.prefs.save_preferences()
-			caster.client.prefs.save_character()
+				P.exper = min(calculate_mob_max_exper(caster), P.exper+5+caster.experience_plus)
+			P.save_preferences()
+			P.save_character()
 			caster.last_experience = world.time
 	if(violates_masquerade)
 		if(caster.CheckEyewitness(target, caster, 7, TRUE))

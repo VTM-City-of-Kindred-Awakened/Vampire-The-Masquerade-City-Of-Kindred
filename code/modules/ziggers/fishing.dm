@@ -78,7 +78,10 @@
 						IT = /obj/item/vtm_artifact/rand
 					new IT(user.loc)
 					playsound(loc, 'code/modules/ziggers/sounds/catched.ogg', 50, FALSE)
-					user.client.prefs.exper = min(calculate_mob_max_exper(user), user.client.prefs.exper+20)
+					if(user.key)
+						var/datum/preferences/P = GLOB.preferences_datums[ckey(user.key)]
+						if(P)
+							P.exper = min(calculate_mob_max_exper(user), P.exper+20)
 				else
 					to_chat(user, "<span class='warning'>Nothing!</span>")
 			else

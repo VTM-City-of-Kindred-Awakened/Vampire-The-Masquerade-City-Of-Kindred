@@ -11,17 +11,25 @@
 	var/last_bloodpower_click = 0
 	var/last_drinkblood_click = 0
 	var/harm_focus = SOUTH
+	var/masquerade_votes = 0
+	var/list/voted_for = list()
+
 /mob/living/carbon/human/death()
 	. = ..()
 	GLOB.masquerade_breakers_list -= src
-	if(client)
-		if(client.prefs)
+	if(key)
+		var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
+		if(P)
 			if(!HAS_TRAIT(src, TRAIT_PHOENIX))
-				client.prefs.exper = 0
-			client.prefs.humanity = humanity
-			client.prefs.masquerade = masquerade
-			client.prefs.save_character()
-			client.prefs.save_preferences()
+				P.exper = 0
+				P.generation = min(13, P.generation+1)
+				P.discipline1level = max(1, P.discipline1level-1)
+				P.discipline2level = max(1, P.discipline2level-1)
+				P.discipline3level = max(1, P.discipline3level-1)
+			P.humanity = humanity
+			P.masquerade = masquerade
+			P.save_character()
+			P.save_preferences()
 	if(iskindred(src))
 		if(in_frenzy)
 			exit_frenzymod()

@@ -57,11 +57,13 @@ SUBSYSTEM_DEF(city_time)
 				H.death()
 			if(won)
 				if(H.frakcja == won)
-					if(H.client)
-						var/mode = 1
-						if(HAS_TRAIT(H, TRAIT_NON_INT))
-							mode = 2
-						H.client.prefs.exper = min(calculate_mob_max_exper(H), H.client.prefs.exper+(500/mode))
+					if(H.key)
+						var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
+						if(P)
+							var/mode = 1
+							if(HAS_TRAIT(H, TRAIT_NON_INT))
+								mode = 2
+							P.exper = min(calculate_mob_max_exper(H), P.exper+(500/mode))
 		switch(won)
 			if("camarilla")
 				to_chat(world, "Camarilla takes control over the city...")

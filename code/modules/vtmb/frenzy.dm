@@ -161,28 +161,29 @@
 			GLOB.masquerade_breakers_list -= H
 */
 
-	if(H.client && H.stat <= 3)
-		if(H.client.prefs)
-			if(H.client.prefs.humanity != H.humanity)
-				H.client.prefs.humanity = H.humanity
-				H.client.prefs.save_preferences()
-				H.client.prefs.save_character()
-			if(H.client.prefs.masquerade != H.masquerade)
-				H.client.prefs.masquerade = H.masquerade
-				H.client.prefs.save_preferences()
-				H.client.prefs.save_character()
+	if(H.key && H.stat <= 3)
+		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
+		if(P)
+			if(P.humanity != H.humanity)
+				P.humanity = H.humanity
+				P.save_preferences()
+				P.save_character()
+			if(P.masquerade != H.masquerade)
+				P.masquerade = H.masquerade
+				P.save_preferences()
+				P.save_character()
 			if(H.last_experience+600 <= world.time)
-				H.client.prefs.exper = min(calculate_mob_max_exper(H), H.client.prefs.exper+5+H.experience_plus)
-				if(H.client.prefs.exper == calculate_mob_max_exper(H))
+				P.exper = min(calculate_mob_max_exper(H), P.exper+5+H.experience_plus)
+				if(P.exper == calculate_mob_max_exper(H))
 					to_chat(H, "You've reached a new level! You can add new points in Character Setup (Lobby screen).")
-				H.client.prefs.save_preferences()
-				H.client.prefs.save_character()
+				P.save_preferences()
+				P.save_character()
 				H.last_experience = world.time
-			if(H.client.prefs.generation != H.generation)
-				H.client.prefs.generation = H.generation
-				H.client.prefs.save_preferences()
-				H.client.prefs.save_character()
-			if(H.client.prefs.humanity < 1)
+			if(P.generation != H.generation)
+				P.generation = H.generation
+				P.save_preferences()
+				P.save_character()
+			if(P.humanity < 1)
 				H.enter_frenzymod()
 				reset_shit(H)
 				H.ghostize(FALSE)
@@ -202,6 +203,10 @@
 			if(H.bloodpool > 1 || H.in_frenzy)
 				H.last_frenzy_check = world.time
 
+	var/list/blood_fr = list()
+	for(var/obj/effect/decal/cleanable/blood/B in range(7, src))
+		if(B.bloodiness)
+			blood_fr += B
 	if(H.bloodpool <= 1 && !H.in_frenzy)
 		if(H.last_frenzy_check+400 <= world.time)
 			H.last_frenzy_check = world.time
@@ -209,3 +214,7 @@
 			if(H.clane)
 				if(H.clane.enlightement)
 					H.AdjustHumanity(1, 10)
+	if(length(blood_fr) >= 10 && !H.in_frenzy)
+		if(H.last_frenzy_check+400 <= world.time)
+			H.last_frenzy_check = world.time
+			H.rollfrenzy()

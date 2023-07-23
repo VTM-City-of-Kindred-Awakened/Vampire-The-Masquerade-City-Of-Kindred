@@ -1,8 +1,9 @@
 /mob/living/carbon/human/proc/AdjustHumanity(var/value, var/limit)
 	var/special_role_name
-	if(mind.special_role)
-		var/datum/antagonist/A = mind.special_role
-		special_role_name = A.name
+	if(mind)
+		if(mind.special_role)
+			var/datum/antagonist/A = mind.special_role
+			special_role_name = A.name
 	if(!is_special_character(src) || special_role_name == "Ambitious")
 		if(!in_frenzy)
 			var/mod = 1
@@ -35,9 +36,10 @@
 
 /mob/living/carbon/human/proc/AdjustMasquerade(var/value)
 	var/special_role_name
-	if(mind.special_role)
-		var/datum/antagonist/A = mind.special_role
-		special_role_name = A.name
+	if(mind)
+		if(mind.special_role)
+			var/datum/antagonist/A = mind.special_role
+			special_role_name = A.name
 	if(!is_special_character(src) || special_role_name == "Ambitious")
 		if(last_masquerade_violation+100 < world.time)
 			last_masquerade_violation = world.time

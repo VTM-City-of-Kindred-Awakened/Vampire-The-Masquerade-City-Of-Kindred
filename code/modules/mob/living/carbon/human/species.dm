@@ -2062,14 +2062,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/RemoveSpeciesFlight(mob/living/carbon/human/H)
 	if(flying_species)
+		flying_species = FALSE
 		fly.Remove(H)
 		QDEL_NULL(fly)
 		if(H.movement_type & FLYING)
 			ToggleFlight(H)
-	if(H.dna && H.dna.species && (H.dna.features["wings"] == wings_icon))
-		H.dna.species.mutant_bodyparts -= "wings"
-		H.dna.features["wings"] = "None"
-		H.update_body()
+		if(H.dna && H.dna.species && (H.dna.features["wings"] == wings_icon))
+			H.dna.species.mutant_bodyparts -= "wings"
+			H.dna.features["wings"] = "None"
+			H.update_body()
 
 /datum/species
 	var/animation_goes_up = FALSE	//

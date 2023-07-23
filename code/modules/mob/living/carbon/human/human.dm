@@ -268,6 +268,30 @@
 	if(istype(user) && href_list["shoes"] && shoes && (user.mobility_flags & MOBILITY_USE)) // we need to be on the ground, so we'll be a bit looser
 		shoes.handle_tying(usr)
 
+///////KARMA//////
+	if(href_list["masquerade"])
+		if(!ishuman(usr))
+			return
+		var/mob/living/carbon/human/H = usr
+		if(H.stat > 2)
+			return
+		if(usr == src)
+			return
+		if(dna)
+			var/no_vote = FALSE
+			for(var/i in H.voted_for)
+				if(i == dna.real_name)
+					no_vote = TRUE
+			if(no_vote)
+				return
+			var/reason = input(usr, "Write a description of violation:", "Spot a Masquerade violation") as text|null
+			if(reason)
+				message_admins("[H]([H.key]) spotted [src]'s([key]) masqureade violation. Description: [reason]")
+				H.voted_for |= dna.real_name
+				masquerade_votes = min(3, masquerade_votes+1)
+				if(masquerade_votes > 2)
+					masquerade_votes = 0
+					AdjustMasquerade(-1)
 ///////HUDs///////
 	if(href_list["hud"])
 		if(!ishuman(usr))
@@ -693,11 +717,13 @@
 		if(last_cpr_exp+1200 < world.time)
 			last_cpr_exp = world.time
 			AdjustHumanity(1, 10)
-			if(client)
-				var/mode = 1
-				if(HAS_TRAIT(src, TRAIT_NON_INT))
-					mode = 2
-				client.prefs.exper = min(calculate_mob_max_exper(src), client.prefs.exper+(10/mode))
+			if(key)
+				var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
+				if(P)
+					var/mode = 1
+					if(HAS_TRAIT(src, TRAIT_NON_INT))
+						mode = 2
+					P.exper = min(calculate_mob_max_exper(src), P.exper+(20/mode))
 		log_combat(src, target, "CPRed")
 
 		if (HAS_TRAIT(target, TRAIT_NOBREATH))

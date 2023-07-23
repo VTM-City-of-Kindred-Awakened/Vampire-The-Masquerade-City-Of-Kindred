@@ -34,6 +34,10 @@
 				to_chat(user, "<b>Successfully punished masquerade breaker and restored the Masquerade.</b>")
 				var/mob/living/carbon/human/HM = user
 				HM.AdjustMasquerade(1)
+				if(user.key)
+					var/datum/preferences/P = GLOB.preferences_datums[ckey(user.key)]
+					if(P)
+						P.exper = min(calculate_mob_max_exper(user), P.exper+100)
 				return
 			else
 				to_chat(user, "Target must be in critical condition or torpor.")

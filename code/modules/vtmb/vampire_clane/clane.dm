@@ -80,11 +80,6 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 					to_chat(H, "Your lover, <b>[H.lover_name]</b>, is now in the city!")
 
 /datum/vampireclane/proc/post_gain(var/mob/living/carbon/human/H)
-	if(H.client)
-		if(H.client.prefs.ambitious)
-			if(H.mind)
-				H.mind.add_antag_datum(/datum/antagonist/ambitious)
-	H.generate_friends()
 	if(violating_appearance)
 		if(length(GLOB.masquerade_latejoin))
 			var/obj/effect/landmark/latejoin_masquerade/LM = pick(GLOB.masquerade_latejoin)

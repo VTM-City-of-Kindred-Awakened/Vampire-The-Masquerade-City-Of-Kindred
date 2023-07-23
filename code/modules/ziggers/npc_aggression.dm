@@ -3,6 +3,10 @@
 		walk(src,0)
 	if(M == src)
 		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.frakcja == frakcja)
+			return
 	if(stat != DEAD)
 		danger_source = M
 		if(attacked)

@@ -209,20 +209,21 @@
 	if(HAS_TRAIT(H, TRAIT_UNMASQUERADE))
 		if(H.CheckEyewitness(H, H, 7, FALSE))
 			H.AdjustMasquerade(-1)
-	if(H.client && H.stat <= 2)
-		if(H.client.prefs)
-			if(H.client.prefs.humanity != H.humanity)
-				H.client.prefs.humanity = H.humanity
-				H.client.prefs.save_preferences()
-				H.client.prefs.save_character()
-			if(H.client.prefs.masquerade != H.masquerade)
-				H.client.prefs.masquerade = H.masquerade
-				H.client.prefs.save_preferences()
-				H.client.prefs.save_character()
+	if(H.key && H.stat != DEAD)
+		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
+		if(P)
+			if(P.humanity != H.humanity)
+				P.humanity = H.humanity
+				P.save_preferences()
+				P.save_character()
+			if(P.masquerade != H.masquerade)
+				P.masquerade = H.masquerade
+				P.save_preferences()
+				P.save_character()
 			if(H.last_experience+600 <= world.time)
-				H.client.prefs.exper = min(calculate_mob_max_exper(H), H.client.prefs.exper+5+H.experience_plus)
-				H.client.prefs.save_preferences()
-				H.client.prefs.save_character()
+				P.exper = min(calculate_mob_max_exper(H), P.exper+5+H.experience_plus)
+				P.save_preferences()
+				P.save_character()
 				H.last_experience = world.time
 			if(H.humanity <= 2)
 				if(prob(5))
@@ -252,16 +253,17 @@
 		H.last_bloodpool_restore = world.time
 		H.bloodpool = min(H.maxbloodpool, H.bloodpool+1)
 
-	if(H.client && H.stat <= 2)
-		if(H.client.prefs)
-			if(H.client.prefs.humanity != H.humanity)
-				H.client.prefs.humanity = H.humanity
-				H.client.prefs.save_preferences()
-				H.client.prefs.save_character()
+	if(H.key && H.stat != DEAD)
+		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
+		if(P)
+			if(P.humanity != H.humanity)
+				P.humanity = H.humanity
+				P.save_preferences()
+				P.save_character()
 			if(H.last_experience+600 <= world.time)
-				H.client.prefs.exper = min(calculate_mob_max_exper(H), H.client.prefs.exper+5+H.experience_plus)
-				H.client.prefs.save_preferences()
-				H.client.prefs.save_character()
+				P.exper = min(calculate_mob_max_exper(H), P.exper+5+H.experience_plus)
+				P.save_preferences()
+				P.save_character()
 				H.last_experience = world.time
 
 			if(H.humanity <= 2)

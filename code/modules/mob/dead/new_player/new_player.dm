@@ -199,6 +199,14 @@
 			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
 			return
 
+		var/name_wrong = FALSE
+		for(var/i in GLOB.fucking_joined)
+			if(i == client.prefs.real_name)
+				name_wrong = TRUE
+		if(name_wrong)
+			to_chat(usr, "<span class='danger'>You already used this character in round!</span>")
+			return
+
 		if(!GLOB.enter_allowed)
 			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 			return
@@ -516,6 +524,11 @@
 			var/mob/living/carbon/human/H = new_character
 			if(H.client)
 				H.create_disciplines()
+				if(H.client.prefs.ambitious)
+					if(H.mind)
+						H.mind.add_antag_datum(/datum/antagonist/ambitious)
+				H.generate_friends()
+				GLOB.fucking_joined |= H.client.prefs.real_name
 		new_character = null
 		qdel(src)
 

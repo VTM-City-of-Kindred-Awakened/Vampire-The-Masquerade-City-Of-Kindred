@@ -236,26 +236,11 @@
 					G.last_vitae = world.time
 					if(new_master)
 						G.changed_master = TRUE
-						if(H.clane)
-							if(H.clane.name == "Tzimisce")
-								if(!HAS_TRAIT(BLOODBONDED, TRAIT_UNMASQUERADE))
-									ADD_TRAIT(BLOODBONDED, TRAIT_UNMASQUERADE, HIGHLANDER)
-									BLOODBONDED.dna.species.limbs_id = "husk"
-									BLOODBONDED.update_body()
-									var/datum/action/basic_vicissitude/BV = new()
-									BV.Grant(BLOODBONDED)
 				else if(!iskindred(BLOODBONDED) && !isnpc(BLOODBONDED))
 					BLOODBONDED.set_species(/datum/species/ghoul)
 					var/datum/species/ghoul/G = BLOODBONDED.dna.species
 					G.master = owner
 					G.last_vitae = world.time
-					if(H.clane)
-						if(H.clane.name == "Tzimisce")
-							ADD_TRAIT(BLOODBONDED, TRAIT_UNMASQUERADE, HIGHLANDER)
-							BLOODBONDED.dna.species.limbs_id = "husk"
-							BLOODBONDED.update_body()
-							var/datum/action/basic_vicissitude/BV = new()
-							BV.Grant(BLOODBONDED)
 					if(new_master)
 						G.changed_master = TRUE
 			else

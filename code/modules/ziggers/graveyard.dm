@@ -36,12 +36,14 @@ SUBSYSTEM_DEF(graveyard)
 		clear_runs = 0
 		for(var/mob/living/carbon/human/L in graveyarders)
 			if(L)
-				if(L.client)
-					L.AdjustMasquerade(1)
-					var/mode = 1
-					if(HAS_TRAIT(L, TRAIT_NON_INT))
-						mode = 2
-					L.client.prefs.exper = min(calculate_mob_max_exper(L), L.client.prefs.exper+((100+L.experience_plus)/mode))
+				if(L.key)
+					var/datum/preferences/P = GLOB.preferences_datums[ckey(L.key)]
+					if(P)
+						L.AdjustMasquerade(1)
+						var/mode = 1
+						if(HAS_TRAIT(L, TRAIT_NON_INT))
+							mode = 2
+						P.exper = min(calculate_mob_max_exper(L), P.exper+((100+L.experience_plus)/mode))
 
 /obj/vampgrave
 	icon = 'code/modules/ziggers/props.dmi'
