@@ -87,6 +87,16 @@
 	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	return TRUE
 
+/mob/living/simple_animal/hostile/gargoyle/petrify(statue_timer)
+	if(!isturf(loc))
+		return FALSE
+	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
+	S.name = "statue of [name]"
+	S.icon = icon
+	S.icon_state = icon_state
+	S.color = "#000000"
+	return TRUE
+
 /mob/living/simple_animal/pet/dog/corgi/petrify(statue_timer)
 	if(!isturf(loc))
 		return FALSE

@@ -205,13 +205,18 @@
 //Tentacles have less stun time compared to regular variant, to balance being able to use them much more often.  Also, 10 more damage.
 /obj/effect/temp_visual/goliath_tentacle/broodmother/trip()
 	var/latched = FALSE
-	for(var/mob/living/L in loc)
+	for(var/mob/living/carbon/human/L in loc)
 		if((!QDELETED(spawner) && spawner.faction_check_mob(L)) || L.stat == DEAD)
 			continue
-		visible_message("<span class='danger'>[src] grabs hold of [L]!</span>")
-		L.Stun(10)
-		L.adjustBruteLoss(rand(30,35))
-		latched = TRUE
+		var/krill = TRUE
+		if(L.clane)
+			if(L.clane.name == "Lasombra")
+				krill = FALSE
+		if(krill)
+			visible_message("<span class='danger'>[src] grabs hold of [L]!</span>")
+			L.Stun(20)
+			L.adjustBruteLoss(rand(30,35))
+			latched = TRUE
 	if(!latched)
 		retract()
 	else

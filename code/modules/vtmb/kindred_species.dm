@@ -169,11 +169,22 @@
 		if(H.bloodpool < 2)
 			to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 			return
+		if(istype(H.pulling, /mob/living/simple_animal))
+			var/mob/living/L = H.pulling
+			L.bloodpool = min(L.maxbloodpool, L.bloodpool+2)
+			H.bloodpool = max(0, H.bloodpool-2)
+			L.adjustBruteLoss(-25)
+			L.adjustFireLoss(-25)
 		if(istype(H.pulling, /mob/living/carbon/human))
 			var/mob/living/carbon/human/BLOODBONDED = H.pulling
 			if(!BLOODBONDED.client && !istype(H.pulling, /mob/living/carbon/human/npc))
 				to_chat(owner, "<span class='warning'>You need [BLOODBONDED]'s attention to do that!</span>")
 				return
+			if(BLOODBONDED.stat == DEAD)
+				if(!BLOODBONDED.key)
+					to_chat(owner, "<span class='warning'>You need [BLOODBONDED]'s mind to Embrace!</span>")
+					return
+				message_admins("[H]([H.key]) is embracing [BLOODBONDED]([BLOODBONDED.key])!")
 			if(giving)
 				return
 			giving = TRUE
@@ -209,6 +220,10 @@
 						to_chat(owner, "<span class='notice'>[BLOODBONDED] is totally <b>DEAD</b>!</span>")
 						giving = FALSE
 						return
+				else
+					if(BLOODBONDED.has_status_effect(STATUS_EFFECT_INLOVE))
+						BLOODBONDED.remove_status_effect(STATUS_EFFECT_INLOVE)
+					BLOODBONDED.apply_status_effect(STATUS_EFFECT_INLOVE, owner)
 				H.bloodpool = max(0, H.bloodpool-2)
 				to_chat(owner, "<span class='notice'>You successfuly fed [BLOODBONDED] with vitae.</span>")
 				if(H.reagents)

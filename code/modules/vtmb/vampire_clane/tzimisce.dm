@@ -657,7 +657,6 @@
 	minbodytemp = 0
 	bloodpool = 10
 	maxbloodpool = 10
-	dodging = TRUE
 
 /mob/living/simple_animal/hostile/gangrel/better
 	maxHealth = 500
@@ -674,6 +673,65 @@
 	melee_damage_lower = 80
 	melee_damage_upper = 80
 	speed = -1
+
+/mob/living/simple_animal/hostile/gargoyle
+	name = "Gargoyle"
+	desc = "Stone-skinned..."
+	icon = 'code/modules/ziggers/32x48.dmi'
+	icon_state = "gargoyle_m"
+	icon_living = "gargoyle_m"
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	speak_chance = 0
+	speed = 0
+	maxHealth = 300
+	health = 300
+	butcher_results = list(/obj/item/stack/human_flesh = 20)
+	harm_intent_damage = 5
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	attack_verb_continuous = "punches"
+	attack_verb_simple = "punch"
+	attack_sound = 'sound/weapons/punch1.ogg'
+	a_intent = INTENT_HARM
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	bloodpool = 10
+	maxbloodpool = 10
+	dextrous = TRUE
+	held_items = list(null, null)
+	possible_a_intents = list(INTENT_HELP, INTENT_GRAB, INTENT_DISARM, INTENT_HARM)
+
+/mob/living/simple_animal/hostile/gargoyle/proc/gain_nigs()
+	set waitfor = FALSE
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Embraced Gargoyle?", null, null, null, 50, src)
+	for(var/mob/dead/observer/G in GLOB.player_list)
+		if(G.key)
+			to_chat(G, "<span class='ghostalert'>New Gargoyle has been made.</span>")
+	if(LAZYLEN(candidates))
+		var/mob/dead/observer/C = pick(candidates)
+		key = C.key
+
+/mob/living/simple_animal/hostile/gargoyle/Initialize()
+	. = ..()
+	var/datum/action/gargoyle/G = new()
+	G.Grant(src)
+
+/datum/action/gargoyle
+	name = "Turn into stone"
+	desc = "Save some time till healing..."
+	button_icon_state = "gargoyle"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/abuse_fix = 0
+
+/datum/action/gargoyle/Trigger()
+	. = ..()
+	if(abuse_fix+300 > world.time)
+		return
+	abuse_fix = world.time
+	var/mob/living/simple_animal/hostile/gargoyle/G = owner
+	G.Stun(100)
+	G.petrify(100)
+	G.revive(full_heal = TRUE, admin_revive = TRUE)
 
 /mob/living/simple_animal/hostile/tzimisce_beast
 	name = "Tzimisce Beast Form"
