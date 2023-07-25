@@ -725,13 +725,14 @@
 
 /datum/action/gargoyle/Trigger()
 	. = ..()
-	if(abuse_fix+300 > world.time)
+	if(abuse_fix+100 > world.time)
 		return
 	abuse_fix = world.time
 	var/mob/living/simple_animal/hostile/gargoyle/G = owner
-	G.Stun(100)
-	G.petrify(100)
-	G.revive(full_heal = TRUE, admin_revive = TRUE)
+	G.Stun(50)
+	G.petrify(50)
+	G.adjustBruteLoss(-300)
+	G..adjustFireLoss(-300)
 
 /mob/living/simple_animal/hostile/tzimisce_beast
 	name = "Tzimisce Beast Form"

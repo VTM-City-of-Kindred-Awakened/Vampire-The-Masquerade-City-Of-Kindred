@@ -4,7 +4,8 @@
 	icon_state = "human_male"
 	density = TRUE
 	anchored = TRUE
-	max_integrity = 200
+//	max_integrity = 200
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	var/timer = 480 //eventually the person will be freed
 	var/mob/living/petrified_mob
 
