@@ -732,7 +732,7 @@
 	G.Stun(50)
 	G.petrify(50)
 	G.adjustBruteLoss(-300)
-	G..adjustFireLoss(-300)
+	G.adjustFireLoss(-300)
 
 /mob/living/simple_animal/hostile/tzimisce_beast
 	name = "Tzimisce Beast Form"
