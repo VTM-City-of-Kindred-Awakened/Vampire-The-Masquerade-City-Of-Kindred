@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")
-		return
+		return FALSE
 
 	if(ic_blocked)
 		//The filter warning message shows the sanitized message though.
@@ -113,19 +113,19 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/datum/saymode/saymode = SSradio.saymodes[message_mods[RADIO_KEY]]
 
 	if(!message)
-		return
+		return FALSE
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
 		client?.cmd_admin_say(message)
-		return
+		return TRUE
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
 		client?.dsay(message)
-		return
+		return TRUE
 
 	// dead is the only state you can never emote
 	if(stat != DEAD && check_emote(original_message, forced))
-		return
+		return FALSE
 
 	// Checks if the saymode or channel extension can be used even if not totally conscious.
 	var/say_radio_or_mode = saymode || message_mods[RADIO_EXTENSION]
@@ -139,16 +139,16 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(SOFT_CRIT)
 			message_mods[WHISPER_MODE] = MODE_WHISPER
 		if(UNCONSCIOUS)
-			return
+			return FALSE
 		if(HARD_CRIT)
 			if(!message_mods[WHISPER_MODE])
-				return
+				return FALSE
 		if(DEAD)
 			say_dead(original_message)
-			return
+			return TRUE
 
 	if(!can_speak_basic(original_message, ignore_spam, forced))
-		return
+		return FALSE
 
 	language = message_mods[LANGUAGE_EXTENSION]
 
@@ -158,10 +158,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(!can_speak_vocal(message))
 		if (HAS_TRAIT(src, TRAIT_SIGN_LANG) && H.mind.miming)
 			to_chat(src, "<span class='warning'>You stop yourself from signing in favor of the artform of mimery!</span>")
-			return
+			return FALSE
 		else
 			to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
-			return
+			return FALSE
 
 	var/message_range = 7
 
@@ -187,7 +187,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if (sigreturn & COMPONENT_UPPERCASE_SPEECH)
 		message = uppertext(message)
 	if(!message)
-		return
+		return FALSE
 
 	spans |= speech_span
 
@@ -202,7 +202,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	//This is before anything that sends say a radio message, and after all important message type modifications, so you can scumb in alien chat or something
 	if(saymode && !saymode.handle_message(src, message, language))
-		return
+		return FALSE
 	var/radio_message = message
 	if(message_mods[WHISPER_MODE])
 		// radios don't pick up whispers very well
@@ -216,7 +216,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(!message_mods[WHISPER_MODE])
 			message_mods[WHISPER_MODE] = MODE_WHISPER
 	if(radio_return & NOPASS)
-		return 1
+		return TRUE
 
 	//No screams in space, unless you're next to someone.
 	var/turf/T = get_turf(src)
@@ -234,7 +234,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		succumb(1)
 		to_chat(src, compose_message(src, language, message, , spans, message_mods))
 
-	return 1
+	return TRUE
 
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)

@@ -333,13 +333,13 @@
 	is_talking = TRUE
 	var/delay = round(length_char(message)/2)
 	spawn(5)
-		remove_overlay(FIGHT_LAYER)
-		var/mutable_appearance/parry_overlay = mutable_appearance('icons/mob/talk.dmi', "default0", -FIGHT_LAYER)
-		overlays_standing[FIGHT_LAYER] = parry_overlay
-		apply_overlay(FIGHT_LAYER)
+		remove_overlay(SAY_LAYER)
+		var/mutable_appearance/say_overlay = mutable_appearance('icons/mob/talk.dmi', "default0", -SAY_LAYER)
+		overlays_standing[SAY_LAYER] = say_overlay
+		apply_overlay(SAY_LAYER)
 		spawn(max(1, delay))
 			if(stat != DEAD)
-				remove_overlay(FIGHT_LAYER)
+				remove_overlay(SAY_LAYER)
 				say(message)
 				is_talking = FALSE
 
@@ -477,7 +477,7 @@
 		var/list/interest_persons = list()
 		for(var/mob/living/carbon/human/npc/H in viewers(4, src))
 			if(H)
-				if(H != src)
+				if(H != src && !H.CheckMove())
 					interest_persons += H
 		if(length(interest_persons))
 			var/mob/living/carbon/human/npc/N = pick(interest_persons)

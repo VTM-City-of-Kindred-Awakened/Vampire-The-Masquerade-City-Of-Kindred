@@ -210,6 +210,7 @@
 
 /mob/living/simple_animal/Life()
 	. = ..()
+	update_health_hud()
 	if(staminaloss > 0)
 		adjustStaminaLoss(-stamina_recovery, FALSE, TRUE)
 

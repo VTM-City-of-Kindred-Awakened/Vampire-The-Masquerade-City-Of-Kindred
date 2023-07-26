@@ -604,23 +604,23 @@
 /mob/living/update_health_hud()
 	var/severity = 0
 	var/healthpercent = (health/maxHealth) * 100
+	switch(healthpercent)
+		if(100 to INFINITY)
+			severity = 0
+		if(80 to 100)
+			severity = 1
+		if(60 to 80)
+			severity = 2
+		if(40 to 60)
+			severity = 3
+		if(20 to 40)
+			severity = 4
+		if(1 to 20)
+			severity = 5
+		else
+			severity = 6
 	if(hud_used?.healths) //to really put you in the boots of a simplemob
 		var/atom/movable/screen/healthdoll/living/livingdoll = hud_used.healths
-		switch(healthpercent)
-			if(100 to INFINITY)
-				severity = 0
-			if(80 to 100)
-				severity = 1
-			if(60 to 80)
-				severity = 2
-			if(40 to 60)
-				severity = 3
-			if(20 to 40)
-				severity = 4
-			if(1 to 20)
-				severity = 5
-			else
-				severity = 6
 		livingdoll.icon_state = "living[severity]"
 		if(!livingdoll.filtered)
 			livingdoll.filtered = TRUE
