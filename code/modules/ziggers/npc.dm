@@ -233,6 +233,9 @@
 		gender = pick(MALE, FEMALE)
 		if(socialrole.preferedgender)
 			gender = socialrole.preferedgender
+		body_type = gender
+		if(prob(33))
+			base_body_mod = pick("s", "f")
 		var/list/m_names = list()
 		var/list/f_names = list()
 		var/list/s_names = list()

@@ -9,6 +9,8 @@
 	worn_icon = 'code/modules/ziggers/worn.dmi'
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 15)
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	body_worn = TRUE
+	fitted = NO_FEMALE_UNIFORM
 
 /obj/item/clothing/under/vampire/brujah
 	desc = "Some punk clothes."
@@ -250,6 +252,7 @@
 	gender = PLURAL
 	can_be_tied = FALSE
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	body_worn = TRUE
 
 /obj/item/clothing/shoes/vampire/brown
 	icon_state = "shoes_brown"
@@ -300,6 +303,7 @@
 	max_integrity = 250
 	resistance_flags = NONE
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
+	body_worn = TRUE
 
 /obj/item/clothing/suit/vampire/coat
 	name = "coat"
@@ -388,6 +392,7 @@
 	icon = 'code/modules/ziggers/clothing.dmi'
 	worn_icon = 'code/modules/ziggers/worn.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	body_worn = TRUE
 
 /obj/item/clothing/glasses/vampire/yellow
 	name = "yellow glasses"
@@ -420,6 +425,7 @@
 	worn_icon = 'code/modules/ziggers/worn.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
+	body_worn = TRUE
 
 /obj/item/clothing/head/vampire/bandana
 	name = "bandana"
@@ -516,6 +522,7 @@
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 	inhand_icon_state = "fingerless"
 	undyeable = TRUE
+	body_worn = TRUE
 
 /obj/item/clothing/gloves/vampire/leather
 	name = "leather gloves"
@@ -563,6 +570,7 @@
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 	inhand_icon_state = ""
 	w_class = WEIGHT_CLASS_SMALL
+	body_worn = TRUE
 
 /obj/item/clothing/neck/vampire/scarf
 	name = "black scarf"
@@ -612,6 +620,7 @@
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
+	body_worn = TRUE
 
 /obj/item/clothing/mask/vampire/balaclava
 	name = "balaclava"

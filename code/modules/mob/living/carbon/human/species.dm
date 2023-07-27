@@ -511,7 +511,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(H.facial_hairstyle && (FACEHAIR in species_traits) && (!facialhair_hidden || dynamic_fhair_suffix))
 		S = GLOB.facial_hairstyles_list[H.facial_hairstyle]
 		if(S)
-
 			//List of all valid dynamic_fhair_suffixes
 			var/static/list/fextensions
 			if(!fextensions)
@@ -524,6 +523,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			//Is hair+dynamic_fhair_suffix a valid iconstate?
 			var/fhair_state = S.icon_state
 			var/fhair_file = S.icon
+			if(H.base_body_mod == "s")
+				fhair_file = 'icons/mob/human_face_f.dmi'
 			if(fextensions[fhair_state+dynamic_fhair_suffix])
 				fhair_state += dynamic_fhair_suffix
 				fhair_file = 'icons/mob/facialhair_extensions.dmi'
@@ -586,6 +587,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				//Is hair+dynamic_hair_suffix a valid iconstate?
 				var/hair_state = S.icon_state
 				var/hair_file = S.icon
+				if(H.base_body_mod == "s")
+					hair_file = 'icons/mob/human_face_f.dmi'
 				if(extensions[hair_state+dynamic_hair_suffix])
 					hair_state += dynamic_hair_suffix
 					hair_file = 'icons/mob/hair_extensions.dmi'
