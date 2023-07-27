@@ -1218,12 +1218,12 @@
 	name = "Shirt (Matroska)"
 	icon_state = "matroska"
 	gender = NEUTER
-
+/*
 /datum/sprite_accessory/undershirt/meat
 	name = "Shirt (Meat)"
 	icon_state = "shirt_meat"
 	gender = NEUTER
-/*
+
 /datum/sprite_accessory/undershirt/nano
 	name = "Shirt (Nanotrasen)"
 	icon_state = "shirt_nano"
@@ -1283,7 +1283,7 @@
 	name = "Shirt (White)"
 	icon_state = "shirt_white"
 	gender = NEUTER
-
+/*
 /datum/sprite_accessory/undershirt/blackshortsleeve
 	name = "Short-sleeved Shirt (Black)"
 	icon_state = "blackshortsleeve"
@@ -1308,7 +1308,7 @@
 	name = "Short-sleeved Shirt (White)"
 	icon_state = "whiteshortsleeve"
 	gender = NEUTER
-/*
+
 /datum/sprite_accessory/undershirt/sports_bra
 	name = "Sports Bra"
 	icon_state = "sports_bra"
@@ -1348,12 +1348,12 @@
 	name = "Tank Top (Grey)"
 	icon_state = "tank_grey"
 	gender = NEUTER
-
+/*
 /datum/sprite_accessory/undershirt/female_midriff
 	name = "Tank Top (Midriff)"
 	icon_state = "tank_midriff"
 	gender = FEMALE
-
+*/
 /datum/sprite_accessory/undershirt/tank_red
 	name = "Tank Top (Red)"
 	icon_state = "tank_red"
@@ -1378,7 +1378,7 @@
 	name = "Top (White)"
 	icon_state = "whitetop"
 	gender = FEMALE
-*/
+
 /datum/sprite_accessory/undershirt/tshirt_blue
 	name = "T-Shirt (Blue)"
 	icon_state = "blueshirt"
@@ -1398,7 +1398,7 @@
 	name = "T-Shirt (Yellow)"
 	icon_state = "yellowshirt"
 	gender = NEUTER
-
+*/
 ///////////////////////
 // Socks Definitions //
 ///////////////////////
@@ -1459,7 +1459,7 @@
 /datum/sprite_accessory/socks/pantyhose
 	name = "Pantyhose"
 	icon_state = "pantyhose"
-
+/*
 /datum/sprite_accessory/socks/black_short
 	name = "Short (Black)"
 	icon_state = "black_short"
@@ -1467,7 +1467,7 @@
 /datum/sprite_accessory/socks/white_short
 	name = "Short (White)"
 	icon_state = "white_short"
-/*
+
 /datum/sprite_accessory/socks/stockings_blue
 	name = "Stockings (Blue)"
 	icon_state = "stockings_blue"
