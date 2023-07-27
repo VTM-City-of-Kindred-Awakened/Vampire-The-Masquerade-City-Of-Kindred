@@ -714,16 +714,31 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		if(H.undershirt)
 			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[H.undershirt]
+			var/mutable_appearance/undershirt_overlay
 			if(undershirt)
-				if(H.dna.species.sexes && H.body_type == FEMALE)
-					standing += wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
-				else
-					standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
+				undershirt_overlay = mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
+				if(H.base_body_mod == "s")
+					if(H.gender == FEMALE)
+						undershirt_overlay = mutable_appearance('icons/mob/clothing/underwear_s_female.dmi', undershirt.icon_state, -BODY_LAYER)
+					else
+						undershirt_overlay = mutable_appearance('icons/mob/clothing/underwear_s_male.dmi', undershirt.icon_state, -BODY_LAYER)
+				if(H.base_body_mod == "f")
+					undershirt_overlay = mutable_appearance('icons/mob/clothing/underwear_f.dmi', undershirt.icon_state, -BODY_LAYER)
+				standing += undershirt_overlay
 
 		if(H.socks && H.num_legs >= 2 && !(DIGITIGRADE in species_traits))
 			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[H.socks]
+			var/mutable_appearance/socks_overlay
 			if(socks)
-				standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
+				socks_overlay = mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
+				if(H.base_body_mod == "s")
+					if(H.gender == FEMALE)
+						socks_overlay = mutable_appearance('icons/mob/clothing/underwear_s_female.dmi', socks.icon_state, -BODY_LAYER)
+					else
+						socks_overlay = mutable_appearance('icons/mob/clothing/underwear_s_male.dmi', socks.icon_state, -BODY_LAYER)
+				if(H.base_body_mod == "f")
+					socks_overlay = mutable_appearance('icons/mob/clothing/underwear_f.dmi', socks.icon_state, -BODY_LAYER)
+				standing += socks_overlay
 
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing

@@ -1263,12 +1263,12 @@
 	name = "Shirt (Striped)"
 	icon_state = "shirt_stripes"
 	gender = NEUTER
-*/
+
 /datum/sprite_accessory/undershirt/tiedye
 	name = "Shirt (Tie-dye)"
 	icon_state = "shirt_tiedye"
 	gender = NEUTER
-/*
+
 /datum/sprite_accessory/undershirt/uk
 	name = "Shirt (UK)"
 	icon_state = "uk"
