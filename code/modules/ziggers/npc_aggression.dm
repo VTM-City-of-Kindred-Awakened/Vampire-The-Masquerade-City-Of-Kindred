@@ -11,9 +11,7 @@
 		danger_source = M
 		if(attacked)
 			last_attacker = M
-//	if(CheckMove())
-//		return
-	if(stat >= 2)
+	if(CheckMove())
 		return
 	if(last_danger_meet+50 < world.time)
 		last_danger_meet = world.time

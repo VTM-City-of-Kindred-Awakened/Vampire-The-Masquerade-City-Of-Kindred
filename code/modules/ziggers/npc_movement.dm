@@ -151,10 +151,6 @@
 	if(is_talking)
 		return TRUE
 	if(pulledby)
-		if(prob(10))
-			Aggro(pulledby, TRUE)
-		if(fights_anyway)
-			Aggro(pulledby, TRUE)
 		if(prob(20))
 			resist()
 		return TRUE
@@ -173,6 +169,11 @@
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
 	if(CheckMove())
 		return
+	if(pulledby)
+		if(prob(10))
+			Aggro(pulledby, TRUE)
+		if(fights_anyway)
+			Aggro(pulledby, TRUE)
 	lifespan = lifespan+1
 	if(lifespan >= 10000)
 		if(route_optimisation())
