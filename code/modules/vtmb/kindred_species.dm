@@ -221,9 +221,9 @@
 						giving = FALSE
 						return
 				else
-					if(BLOODBONDED.has_status_effect(STATUS_EFFECT_INLOVE))
-						BLOODBONDED.remove_status_effect(STATUS_EFFECT_INLOVE)
-					BLOODBONDED.apply_status_effect(STATUS_EFFECT_INLOVE, owner)
+//					if(BLOODBONDED.has_status_effect(STATUS_EFFECT_INLOVE))
+//						BLOODBONDED.remove_status_effect(STATUS_EFFECT_INLOVE)
+//					BLOODBONDED.apply_status_effect(STATUS_EFFECT_INLOVE, owner)
 				H.bloodpool = max(0, H.bloodpool-2)
 				to_chat(owner, "<span class='notice'>You successfuly fed [BLOODBONDED] with vitae.</span>")
 				if(H.reagents)
