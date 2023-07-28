@@ -1728,7 +1728,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	humi.adjust_coretemperature(skin_core_change)
 
 	// get the enviroment details of where the mob is standing
-	var/datum/gas_mixture/environment = humi.loc.return_air()
+	var/turf/T = get_turf(humi)
+	var/datum/gas_mixture/environment = T.return_air()
 	if(!environment) // if there is no environment (nullspace) drop out here.
 		return
 
