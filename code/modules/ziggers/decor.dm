@@ -628,6 +628,7 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	if(announce)
 		for(var/obj/vampire_computer/C in GLOB.vampire_computers)
 			C.last_message = "[announce]"
+			message_admins("[user]([user.key]) send an announcement:\"- [announce]\"")
 			if(!C.main)
 				C.say("New announcement from Prince!")
 				C.icon_state = "computermessage"
