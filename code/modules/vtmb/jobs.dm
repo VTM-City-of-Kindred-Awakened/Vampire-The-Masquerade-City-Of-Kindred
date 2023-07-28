@@ -1,3 +1,6 @@
+/datum/job
+	var/experience_addition = 5
+
 /datum/outfit/job/post_equip(mob/living/carbon/human/H)
 	. = ..()
 	if(H.clane)
@@ -46,6 +49,7 @@
 												"Barkeeper")
 
 	duty = "Represent interests of Camarilla and maintain Masquerade."
+	experience_addition = 25
 
 /datum/job/vamp/prince/announce(mob/living/carbon/human/H)
 	..()
@@ -127,6 +131,7 @@
 	known_contacts = list("Prince")
 
 	duty = "Protect the Prince at any cost."
+	experience_addition = 20
 
 /datum/outfit/job/sheriff
 	name = "Sheriff"
@@ -207,6 +212,7 @@
 	known_contacts = list("Prince")
 
 	duty = "Represent interest of the Prince to other kindred."
+	experience_addition = 15
 
 /datum/outfit/job/clerk
 	name = "Clerk"
@@ -260,6 +266,7 @@
 
 	duty = "Work for the Prince and follow orders."
 	minimal_masquerade = 4
+	experience_addition = 10
 
 /datum/outfit/job/agent
 	name = "Camarilla Agent"
@@ -311,6 +318,7 @@
 
 	duty = "Protect the Graveyard Gates from the undead."
 	minimal_masquerade = 0
+	experience_addition = 25
 
 /datum/outfit/job/graveyard
 	name = "Graveyard Keeper"
@@ -362,6 +370,7 @@
 	bounty_types = CIV_JOB_MED
 
 	duty = "Collect blood by helping mortals at the Clinic."
+	experience_addition = 15
 
 /datum/outfit/job/vdoctor
 	name = "Doctor"
@@ -404,9 +413,11 @@
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_STREETJAN
+	allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff")
 
 	duty = "Clean up all traces of Masquerade violations."
 	minimal_masquerade = 0
+	experience_addition = 25
 
 /datum/outfit/job/vjanitor
 	name = "Street Janitor"
@@ -447,6 +458,7 @@
 	minimal_masquerade = 4
 	kindred_only = TRUE
 	allowed_bloodlines = list("Tremere")
+	experience_addition = 20
 
 /datum/outfit/job/regent
 	name = "Chantry Regent"
@@ -496,6 +508,7 @@
 	minimal_masquerade = 3
 	kindred_only = TRUE
 	allowed_bloodlines = list("Tremere")
+	experience_addition = 15
 
 /datum/outfit/job/archivist
 	name = "Archivist"
@@ -551,6 +564,7 @@
 	minimal_masquerade = 3
 	kindred_only = TRUE
 	allowed_bloodlines = list("Brujah")
+	experience_addition = 20
 
 /datum/outfit/job/barkeeper
 	name = "Barkeeper"
@@ -602,6 +616,7 @@
 
 	duty = "Work for the Barkeeper."
 	minimal_masquerade = 2
+	experience_addition = 15
 
 /datum/outfit/job/bouncer
 	name = "Bouncer"
@@ -655,6 +670,7 @@
 	duty = "Provide weapons to other kindred in the city."
 	minimal_masquerade = 3
 	kindred_only = TRUE
+	experience_addition = 20
 
 /datum/outfit/job/dealer
 	name = "Dealer"
@@ -701,6 +717,7 @@
 
 	duty = "Manage deliveries and supplies for kindred in the City."
 	minimal_masquerade = 2
+	experience_addition = 15
 
 /datum/outfit/job/supply
 	name = "Supply Technician"
@@ -796,6 +813,7 @@
 	duty = "Offer strip club services to humans or undead."
 	minimal_masquerade = 3
 	allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff")
+	experience_addition = 10
 
 /datum/outfit/job/strip
 	name = "Stripper"
@@ -1304,6 +1322,7 @@
 
 	duty = "Protect the Family."
 	minimal_masquerade = 0
+	experience_addition = 10
 	kindred_only = TRUE
 	allowed_bloodlines = list("Giovanni")
 
@@ -1351,6 +1370,7 @@
 
 	duty = "Transfer people in the city."
 	minimal_masquerade = 0
+	experience_addition = 10
 
 /datum/job/vamp/taxi/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
 	..()

@@ -56,19 +56,6 @@
 	if(target.resistant_to_disciplines)
 		to_chat(caster, "<span class='danger'>You failed to activate the [name].</span>")
 		return
-	switch(caster.generation-target.generation)
-		if(10)
-			if(prob(90))
-				to_chat(caster, "<span class='danger'>You failed to activate the [name].</span>")
-				return
-		if(7 to 9)
-			if(prob(50))
-				to_chat(caster, "<span class='danger'>You failed to activate the [name].</span>")
-				return
-		if(4 to 6)
-			if(prob(10))
-				to_chat(caster, "<span class='danger'>You failed to activate the [name].</span>")
-				return
 //	if(!target)
 //		var/choice = input(caster, "Choose your target", "Available Targets") as mob in oviewers(4, caster)
 //		if(choice)
@@ -367,10 +354,11 @@
 	..()
 	for(var/mob/living/carbon/human/H in viewers(5, caster))
 		if(H != caster)
-			if(H.generation < caster.generation)
-				return
-			H.emote("laugh")
-			H.Immobilize(10*level_casting)
+			if(prob(50))
+				H.emote("laugh")
+			else
+				H.emote("scream")
+			H.Immobilize(20*level_casting)
 			if(H.stat <= 2 && !H.IsSleeping() && !H.IsUnconscious() && !H.IsParalyzed() && !H.IsKnockdown() && !HAS_TRAIT(H, TRAIT_RESTRAINED))
 				if(prob(50))
 					dancefirst(H)
