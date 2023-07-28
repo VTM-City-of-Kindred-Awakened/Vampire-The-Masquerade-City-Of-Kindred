@@ -208,7 +208,10 @@
 //				if(last_walkin+5 < world.time)
 						var/reqsteps = round((SShumannpcpool.next_fire-world.time)/total_multiplicative_slowdown())
 						set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
-						walk_to(src, danger_source, reqsteps, total_multiplicative_slowdown())
+						var/plus_turfs = 0
+						if(istype(my_weapon, /obj/item/gun))
+							plus_turfs = 3
+						walk_to(src, danger_source, (get_dist(src, danger_source)-reqsteps)+plus_turfs, total_multiplicative_slowdown())
 
 			if(isliving(danger_source))
 				var/mob/living/L = danger_source

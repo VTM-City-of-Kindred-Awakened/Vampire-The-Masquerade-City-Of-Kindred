@@ -673,6 +673,9 @@
 	if(access == "none")
 		access = "npc[rand(1, 20)]"
 
+/obj/vampire_car/track/volkswagen
+	icon_state = "volkswagen"
+
 /obj/vampire_car/track/ambulance
 	icon_state = "ambulance"
 	access = "clinic"

@@ -222,16 +222,10 @@
 	//MICE!
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
-			for(var/mob/living/simple_animal/mouse/M in view(1,src))
-				if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && inept_hunter)
-					if (emote_cooldown < (world.time - 600))
-						visible_message("<span class='warning'>[src] chases [M] around, to no avail!</span>")
-						step(M, pick(GLOB.cardinals))
-						emote_cooldown = world.time
-					break
+			for(var/mob/living/simple_animal/pet/rat/M in view(1,src))
 				if(!M.stat && Adjacent(M))
 					manual_emote("splats \the [M]!")
-					M.splat()
+					M.death()
 					movement_target = null
 					stop_automated_movement = 0
 					break
@@ -252,10 +246,10 @@
 			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
 				movement_target = null
 				stop_automated_movement = 0
-			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
+			if( !movement_target || !(movement_target.loc in oview(src, 5)) )
 				movement_target = null
 				stop_automated_movement = 0
-				for(var/mob/living/simple_animal/mouse/snack in oview(src,3))
+				for(var/mob/living/simple_animal/pet/rat/snack in oview(src,5))
 					if(isturf(snack.loc) && !snack.stat)
 						movement_target = snack
 						break
@@ -320,3 +314,15 @@
 	if(L.a_intent == INTENT_HARM && L.reagents && !stat)
 		L.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.4)
 		L.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)
+
+/mob/living/simple_animal/pet/cat/vampire
+	icon = 'code/modules/ziggers/mobs.dmi'
+	bloodpool = 1
+	maxbloodpool = 1
+
+/mob/living/simple_animal/pet/cat/vampire/Initialize()
+	. = ..()
+	var/id = rand(1, 7)
+	icon_state = "cat[id]"
+	icon_living = "cat[id]"
+	icon_dead = "cat[id]_dead"
