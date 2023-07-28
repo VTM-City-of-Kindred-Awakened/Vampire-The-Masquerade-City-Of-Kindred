@@ -33,6 +33,42 @@
 /datum/phonecontact/proc/check_global_contacts()
 	return FALSE
 
+/datum/phonecontact/malkavian
+	name = "Primogen Malkavian"
+
+/datum/phonecontact/malkavian/check_global_contacts()
+	if(number != GLOB.malkaviannumber)
+		number = GLOB.malkaviannumber
+		return TRUE
+	..()
+
+/datum/phonecontact/nosferatu
+	name = "Primogen Nosferatu"
+
+/datum/phonecontact/nosferatu/check_global_contacts()
+	if(number != GLOB.nosferatunumber)
+		number = GLOB.nosferatunumber
+		return TRUE
+	..()
+
+/datum/phonecontact/toreador
+	name = "Primogen Toreador"
+
+/datum/phonecontact/toreador/check_global_contacts()
+	if(number != GLOB.toreadornumber)
+		number = GLOB.toreadornumber
+		return TRUE
+	..()
+
+/datum/phonecontact/ventrue
+	name = "Primogen Ventrue"
+
+/datum/phonecontact/ventrue/check_global_contacts()
+	if(number != GLOB.ventruenumber)
+		number = GLOB.ventruenumber
+		return TRUE
+	..()
+
 /datum/phonecontact/prince
 	name = "Prince"
 
@@ -149,6 +185,14 @@
 	contacts += CLERK
 	var/datum/phonecontact/barkeeper/BARKEEPER = new()
 	contacts += BARKEEPER
+	var/datum/phonecontact/malkavian/M = new()
+	contacts += M
+	var/datum/phonecontact/nosferatu/N = new()
+	contacts += N
+	var/datum/phonecontact/toreador/T = new()
+	contacts += T
+	var/datum/phonecontact/ventrue/V = new()
+	contacts += V
 
 /obj/item/vamp/phone/sheriff
 	exchange_num = 267
@@ -193,7 +237,7 @@
 
 /obj/item/vamp/phone/camarilla/Initialize()
 	..()
-	GLOB.dealernumber = number
+//	GLOB.dealernumber = number
 	var/datum/phonecontact/prince/PRINCE = new()
 	contacts += PRINCE
 
@@ -202,9 +246,33 @@
 
 /obj/item/vamp/phone/anarch/Initialize()
 	..()
-	GLOB.dealernumber = number
+//	GLOB.dealernumber = number
 	var/datum/phonecontact/barkeeper/BARKEEPER = new()
 	contacts += BARKEEPER
+
+/obj/item/vamp/phone/malkavian/Initialize()
+	..()
+	GLOB.malkaviannumber = number
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+
+/obj/item/vamp/phone/nosferatu/Initialize()
+	..()
+	GLOB.nosferatunumber = number
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+
+/obj/item/vamp/phone/toreador/Initialize()
+	..()
+	GLOB.toreadornumber = number
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+
+/obj/item/vamp/phone/ventrue/Initialize()
+	..()
+	GLOB.ventruenumber = number
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
 
 /obj/item/vamp/phone/Destroy()
 	GLOB.phone_numbers_list -= number

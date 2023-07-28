@@ -337,23 +337,23 @@
 	icon_state = "vat[rand(1, 3)]"
 
 /obj/machinery/mineral/equipment_vendor/fastfood/america
-	prize_list = list(new /datum/data/mining_equipment("revolver",	/obj/item/gun/ballistic/vampire/revolver,	50),
-		new /datum/data/mining_equipment("desert eagle",	/obj/item/gun/ballistic/automatic/vampire/deagle,	150),
-		new /datum/data/mining_equipment("mini uzi",	/obj/item/gun/ballistic/automatic/vampire/uzi,	250),
-		new /datum/data/mining_equipment("AR-15 rifle",		/obj/item/gun/ballistic/automatic/vampire/ar15,	500),
-		new /datum/data/mining_equipment("sniper rifle",		/obj/item/gun/ballistic/automatic/vampire/sniper,	500),
-		new /datum/data/mining_equipment("AUG carbine",		/obj/item/gun/ballistic/automatic/vampire/aug,	750),
-		new /datum/data/mining_equipment("fishing rod",		/obj/item/fishing_rod,	50),
-		new /datum/data/mining_equipment("9mm ammo",	/obj/item/ammo_box/vampire/c9mm,	150),
-		new /datum/data/mining_equipment(".44 ammo",	/obj/item/ammo_box/vampire/c44,	200),
-		new /datum/data/mining_equipment("5.56 ammo",	/obj/item/ammo_box/vampire/c556,	300),
-		new /datum/data/mining_equipment("mini uzi magazine",	/obj/item/ammo_box/magazine/vamp9mm,	25),
-		new /datum/data/mining_equipment("desert eagle magazine",	/obj/item/ammo_box/magazine/m44,	25),
-		new /datum/data/mining_equipment("AR-15 rifle magazine",	/obj/item/ammo_box/magazine/vamp556,	25),
-		new /datum/data/mining_equipment("AUG carbine magazine",	/obj/item/ammo_box/magazine/vampaug,	25),
-		new /datum/data/mining_equipment("knife",	/obj/item/melee/vampirearms/knife,	50),
-		new /datum/data/mining_equipment("baseball bat",	/obj/item/melee/vampirearms/baseball,	100),
-		new /datum/data/mining_equipment("real katana",	/obj/item/melee/vampirearms/katana,	500),
+	prize_list = list(new /datum/data/mining_equipment("revolver",	/obj/item/gun/ballistic/vampire/revolver,	200),
+		new /datum/data/mining_equipment("desert eagle",	/obj/item/gun/ballistic/automatic/vampire/deagle,	600),
+		new /datum/data/mining_equipment("mini uzi",	/obj/item/gun/ballistic/automatic/vampire/uzi,	1000),
+		new /datum/data/mining_equipment("AR-15 rifle",		/obj/item/gun/ballistic/automatic/vampire/ar15,	2000),
+		new /datum/data/mining_equipment("sniper rifle",		/obj/item/gun/ballistic/automatic/vampire/sniper,	2000),
+		new /datum/data/mining_equipment("AUG carbine",		/obj/item/gun/ballistic/automatic/vampire/aug,	3000),
+		new /datum/data/mining_equipment("fishing rod",		/obj/item/fishing_rod,	200),
+		new /datum/data/mining_equipment("9mm ammo",	/obj/item/ammo_box/vampire/c9mm,	600),
+		new /datum/data/mining_equipment(".44 ammo",	/obj/item/ammo_box/vampire/c44,	800),
+		new /datum/data/mining_equipment("5.56 ammo",	/obj/item/ammo_box/vampire/c556,	1200),
+		new /datum/data/mining_equipment("mini uzi magazine",	/obj/item/ammo_box/magazine/vamp9mm,	200),
+		new /datum/data/mining_equipment("desert eagle magazine",	/obj/item/ammo_box/magazine/m44,	100),
+		new /datum/data/mining_equipment("AR-15 rifle magazine",	/obj/item/ammo_box/magazine/vamp556,	200),
+		new /datum/data/mining_equipment("AUG carbine magazine",	/obj/item/ammo_box/magazine/vampaug,	300),
+		new /datum/data/mining_equipment("knife",	/obj/item/melee/vampirearms/knife,	100),
+		new /datum/data/mining_equipment("baseball bat",	/obj/item/melee/vampirearms/baseball,	200),
+		new /datum/data/mining_equipment("real katana",	/obj/item/melee/vampirearms/katana,	1500),
 		new /datum/data/mining_equipment("donut",	/obj/item/food/vampire/donut,	10)
 	)
 
@@ -365,6 +365,6 @@
 		new /datum/data/mining_equipment("LSD pill",		/obj/item/reagent_containers/pill/lsd,	10),
 		new /datum/data/mining_equipment("cannabis puff",		/obj/item/clothing/mask/cigarette/rollie/cannabis,	25),
 		new /datum/data/mining_equipment("cannabis leaf",	/obj/item/food/grown/cannabis,	10),
-		new /datum/data/mining_equipment("incendiary 5.56 ammo",	/obj/item/ammo_box/vampire/c556/incendiary,	200),
-		new /datum/data/mining_equipment("stake",	/obj/item/melee/vampirearms/stake,	50)
+		new /datum/data/mining_equipment("incendiary 5.56 ammo",	/obj/item/ammo_box/vampire/c556/incendiary,	1000),
+		new /datum/data/mining_equipment("stake",	/obj/item/melee/vampirearms/stake,	100)
 		)

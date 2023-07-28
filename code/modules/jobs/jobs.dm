@@ -44,7 +44,11 @@ GLOBAL_LIST_INIT(independent_positions, list(
 	"Chantry Regent",
 	"Chantry Archivist",
 	"Giovanni Member",
-	"Taxi Driver"))
+	"Taxi Driver",
+	"Primogen Malkavian",
+	"Primogen Nosferatu",
+	"Primogen Toreador",
+	"Primogen Ventrue"))
 
 GLOBAL_LIST_INIT(security_positions, list(
 	))

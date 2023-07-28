@@ -237,6 +237,36 @@
 	desc = "Some work clothes."
 	icon_state = "supply"
 
+//PRIMOGEN
+
+/obj/item/clothing/under/vampire/primogen_malkavian
+	name = "pants"
+	desc = "Some weirdo rich clothes."
+	icon_state = "malkav_pants"
+
+/obj/item/clothing/under/vampire/primogen_malkavian/female
+	name = "suit"
+	icon_state = "malkav_suit"
+
+/obj/item/clothing/under/vampire/primogen_toreador
+	name = "suit"
+	desc = "Some sexy rich clothes."
+	icon_state = "toreador_male"
+
+/obj/item/clothing/under/vampire/primogen_toreador/female
+	name = "suitskirt"
+	desc = "Some sexy rich clothes."
+	icon_state = "toreador_female"
+
+/obj/item/clothing/suit/vampire/trench/malkav
+	icon_state = "malkav_coat"
+
+/obj/item/clothing/head/vampire/malkav
+	name = "weirdo hat"
+	desc = "Can look dangerous or sexy despite the circumstances. Provides some kind of protection."
+	icon_state = "malkav_hat"
+	armor = list(MELEE = 25, BULLET = 25, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
+
 //SHOES
 
 //SHOES

@@ -88,6 +88,7 @@ There are several things that need to be remembered:
 	update_inv_wear_suit()
 	update_inv_pockets()
 	update_inv_neck()
+//	update_body_parts_head_only()
 	remove_overlay(BODY_LAYER)
 	dna.species.handle_body(src)
 	..()

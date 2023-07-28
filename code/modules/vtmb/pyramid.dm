@@ -265,3 +265,42 @@
 		if(A)
 			A.wash(CLEAN_WASH)
 	qdel(src)
+
+/obj/ritualrune/gargoyle
+	name = "Gargoyle Transformation"
+	desc = "Create a Gargoyle."
+	icon_state = "rune9"
+	word = "GRORRR'RRR"
+
+/obj/ritualrune/gargoyle/complete()
+	for(var/mob/living/carbon/human/H in loc)
+		if(H)
+			if(H.stat > 1)
+				if(H.key)
+					var/mob/living/simple_animal/hostile/gargoyle/Y = new(loc)
+					Y.key = H.key
+					Y.my_creator = last_activator
+					qdel(H)
+					playsound(loc, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
+					qdel(src)
+					return
+				else
+					var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you wish to play as Sentient Gargoyle?", null, null, null, 50, src)
+					for(var/mob/dead/observer/G in GLOB.player_list)
+						if(G.key)
+							to_chat(G, "<span class='ghostalert'>Gargoyle Transformation rune has been triggered.</span>")
+					if(LAZYLEN(candidates))
+						var/mob/dead/observer/C = pick(candidates)
+						var/mob/living/simple_animal/hostile/gargoyle/Y = new(loc)
+						Y.key = C.key
+						Y.my_creator = last_activator
+						qdel(H)
+						playsound(loc, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
+						qdel(src)
+						return
+				return
+			else
+				playsound(loc, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
+				H.adjustBruteLoss(25)
+				H.emote("scream")
+				return

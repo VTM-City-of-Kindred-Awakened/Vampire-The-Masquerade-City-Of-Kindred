@@ -587,6 +587,7 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	plane = GAME_PLANE
 	layer = CAR_LAYER
 	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	var/main = FALSE
 	var/last_message = ""
 

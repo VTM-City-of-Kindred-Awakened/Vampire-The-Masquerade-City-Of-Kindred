@@ -13,7 +13,7 @@
 
 	var/turf/walktarget	//dlya movementa
 
-	var/last_grab = 0
+//	var/last_grab = 0
 
 	var/tupik_steps = 0
 	var/tupik_loc
@@ -27,6 +27,8 @@
 	var/ghoulificated = FALSE
 
 	var/staying = FALSE
+
+	var/lifespan = 0	//How many cycles. He'll be deleted if over than a ten thousand
 
 /datum/socialrole
 	//For randomizing
@@ -423,6 +425,8 @@
 			for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
 				NEPIC.Aggro(P.firer)
 			Aggro(P.firer, TRUE)
+			for(var/obj/item/police_radio/R in GLOB.police_radios)
+				R.announce_crime("victim", get_turf(src))
 
 /mob/living/carbon/human/npc/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	. = ..()
@@ -438,9 +442,9 @@
 				NEPIC.Aggro(user)
 			Aggro(user, TRUE)
 
-/mob/living/carbon/human/npc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
-	. = ..()
-	last_grab = world.time
+//mob/living/carbon/human/npc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
+//	. = ..()
+//	last_grab = world.time
 
 /mob/living/carbon/human/npc/proc/EmoteAction()
 	walk(src,0)

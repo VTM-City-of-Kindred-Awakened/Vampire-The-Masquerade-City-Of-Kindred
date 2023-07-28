@@ -523,11 +523,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			//Is hair+dynamic_fhair_suffix a valid iconstate?
 			var/fhair_state = S.icon_state
 			var/fhair_file = S.icon
-			if(H.base_body_mod == "s")
-				fhair_file = 'icons/mob/human_face_f.dmi'
 			if(fextensions[fhair_state+dynamic_fhair_suffix])
 				fhair_state += dynamic_fhair_suffix
 				fhair_file = 'icons/mob/facialhair_extensions.dmi'
+			if(H.base_body_mod == "s")
+				fhair_file = 'icons/mob/human_face_f.dmi'
 
 			var/mutable_appearance/facial_overlay = mutable_appearance(fhair_file, fhair_state, -HAIR_LAYER)
 
@@ -587,11 +587,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				//Is hair+dynamic_hair_suffix a valid iconstate?
 				var/hair_state = S.icon_state
 				var/hair_file = S.icon
-				if(H.base_body_mod == "s")
-					hair_file = 'icons/mob/human_face_f.dmi'
 				if(extensions[hair_state+dynamic_hair_suffix])
 					hair_state += dynamic_hair_suffix
 					hair_file = 'icons/mob/hair_extensions.dmi'
+				if(H.base_body_mod == "s")
+					hair_file = 'icons/mob/human_face_f.dmi'
 
 				hair_overlay.icon = hair_file
 				hair_overlay.icon_state = hair_state
@@ -651,8 +651,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			var/mutable_appearance/eye_overlay
 			if(!E)
 				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
+				if(H.base_body_mod == "s")
+					eye_overlay = mutable_appearance('icons/mob/human_face_f.dmi', "eyes_missing", -BODY_LAYER)
 			else
 				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', E.eye_icon_state, -BODY_LAYER)
+				if(H.base_body_mod == "s")
+					eye_overlay = mutable_appearance('icons/mob/human_face_f.dmi', E.eye_icon_state, -BODY_LAYER)
 			if((EYECOLOR in species_traits) && E)
 				eye_overlay.color = "#" + H.eye_color
 			if(OFFSET_FACE in H.dna.species.offset_features)

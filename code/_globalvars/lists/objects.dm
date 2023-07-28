@@ -57,3 +57,5 @@ GLOBAL_LIST_EMPTY(niggers)
 
 GLOBAL_LIST_INIT(donaters, list("badteammate", "meomoor", "terain1", "egorium", "vanotyan", "takyon69", "lemshake", "happypala44", "kerststf", "oneplusone", "triple_wammy", "leonko", "t.winer"))
 GLOBAL_LIST_EMPTY(fucking_joined)
+
+GLOBAL_LIST_EMPTY(police_radios)

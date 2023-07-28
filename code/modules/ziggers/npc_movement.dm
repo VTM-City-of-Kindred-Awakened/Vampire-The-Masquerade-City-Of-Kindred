@@ -151,33 +151,31 @@
 	if(is_talking)
 		return TRUE
 	if(pulledby)
-		if(last_grab+100 > world.time)
-			return TRUE
-		if(pulledby.grab_state >= GRAB_PASSIVE)
-			return TRUE
-	if(last_grab+50 > world.time)
+		if(prob(10))
+			Aggro(pulledby, TRUE)
+		if(fights_anyway)
+			Aggro(pulledby, TRUE)
+		resist()
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/human/npc
-	var/no_walks = 0
 
 /mob/living/carbon/human/npc/proc/route_optimisation()
 	var/sosat = FALSE
-	for(var/mob/M in viewers(10, src))
+	for(var/mob/M in viewers(7, src))
 		if(M.client)
 			sosat = TRUE
 	if(sosat)
 		return FALSE
-	if(no_walks >= 10)
-		no_walks = 0
-		return FALSE
-	no_walks = no_walks+1
 	return TRUE
 
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
 	if(CheckMove())
 		return
+	lifespan = lifespan+1
+	if(lifespan >= 10000)
+		if(route_optimisation())
+			qdel(src)
 	if(!walktarget && !staying && !danger_source)
 		stopturf = rand(1, 2)
 		walktarget = ChoosePath()

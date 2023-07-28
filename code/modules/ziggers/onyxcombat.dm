@@ -16,16 +16,33 @@
 
 /mob/living/carbon/human/death()
 	. = ..()
+	for(var/obj/item/police_radio/R in GLOB.police_radios)
+		R.announce_crime("murder", get_turf(src))
 	GLOB.masquerade_breakers_list -= src
 	if(key)
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
 		if(P)
-			if(!HAS_TRAIT(src, TRAIT_PHOENIX))
-				P.exper = 0
-				P.generation = min(13, P.generation+1)
-				P.discipline1level = max(1, P.discipline1level-1)
-				P.discipline2level = max(1, P.discipline2level-1)
-				P.discipline3level = max(1, P.discipline3level-1)
+			var/max_death = 6
+			if(generation == 12)
+				max_death = 5
+			if(generation == 11)
+				max_death = 4
+			if(generation == 10)
+				max_death = 3
+			if(generation == 9)
+				max_death = 2
+			if(generation <= 8)
+				max_death = 1
+			P.torpor_count = P.torpor_count+1
+			if(P.torpor_count >= max_death)
+				P.torpor_count = 0
+				if(!HAS_TRAIT(src, TRAIT_PHOENIX))
+					P.exper = 0
+					P.discipline1level = max(1, P.discipline1level-1)
+					P.discipline2level = max(1, P.discipline2level-1)
+					P.discipline3level = max(1, P.discipline3level-1)
+				generation = min(13, generation+1)
+				P.generation = generation
 			P.humanity = humanity
 			P.masquerade = masquerade
 			P.save_character()

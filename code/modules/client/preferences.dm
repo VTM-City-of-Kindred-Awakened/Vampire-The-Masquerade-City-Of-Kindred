@@ -152,6 +152,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/humanity = 7
 
 	var/exper = 1440	//Urovni
+	var/torpor_count = 0
 
 	var/discipline1level = 1
 	var/discipline2level = 1
@@ -184,6 +185,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(M.key)]
 		if(P)
 			P.slotlocked = 0
+			P.torpor_count = 0
 			P.exper = 1440
 			P.generation_bonus = 0
 			P.discipline1level = 1
@@ -362,6 +364,34 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "</tr></table>"
 
 			dat += "<h2>[make_font_cool("BODY")]</h2>"
+			dat += "<BR>"
+			var/max_death = 6
+			if(pref_species.name == "Vampire")
+				switch(generation)
+					if(13)
+						max_death = 6
+					if(12)
+						max_death = 5
+					if(11)
+						max_death = 4
+					if(10)
+						max_death = 3
+					if(9)
+						max_death = 2
+					if(8)
+						max_death = 1
+					if(7)
+						max_death = 1
+					if(6)
+						max_death = 1
+					if(5)
+						max_death = 1
+					if(4)
+						max_death = 1
+					if(3)
+						max_death = 1
+			dat += "<b>[pref_species.name == "Vampire" ? "Torpor" : "Clinical Death"] Count: [torpor_count]/[max_death]<BR>"
+			dat += "<BR>"
 			dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_BODY]'>Always Random Body: [(randomise[RANDOM_BODY]) ? "Yes" : "No"]</A>"
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_BODY_ANTAG]'>When Antagonist: [(randomise[RANDOM_BODY_ANTAG]) ? "Yes" : "No"]</A><br>"
@@ -1711,28 +1741,29 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/bonus = generation-generation_bonus
 					slotlocked = 0
 					exper = 0
+					torpor_count = 0
 					discipline1level = 1
 					discipline2level = 1
 					discipline3level = 1
 					masquerade = initial(masquerade)
-					generation = initial(generation)
-					qdel(clane)
-					clane = new /datum/vampireclane/brujah()
-					if(length(clane.clane_disciplines) >= 1)
-						discipline1type = clane.clane_disciplines[1]
-					if(length(clane.clane_disciplines) >= 2)
-						discipline2type = clane.clane_disciplines[2]
-					if(length(clane.clane_disciplines) >= 3)
-						discipline3type = clane.clane_disciplines[3]
-					discipline4type = null
+					generation = bonus
+					generation_bonus = 0
+//					generation = initial(generation)
+//					qdel(clane)
+//					clane = new /datum/vampireclane/brujah()
+//					if(length(clane.clane_disciplines) >= 1)
+//						discipline1type = clane.clane_disciplines[1]
+//					if(length(clane.clane_disciplines) >= 2)
+//						discipline2type = clane.clane_disciplines[2]
+//					if(length(clane.clane_disciplines) >= 3)
+//						discipline3type = clane.clane_disciplines[3]
+//					discipline4type = null
 					humanity = clane.start_humanity
 					enlightement = clane.enlightement
 //					random_species()
-					random_character()
-					real_name = random_unique_name(gender)
+//					random_character()
+//					real_name = random_unique_name(gender)
 					save_character()
-					generation_bonus = 0
-					generation = bonus
 
 				if("species")
 					if(slotlocked)
@@ -2244,6 +2275,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("reset_all")
 					slotlocked = 0
+					torpor_count = 0
 					exper = 1440
 					generation_bonus = 0
 					discipline1level = 1

@@ -216,6 +216,13 @@
 			return
 
 	if(href_list["pockets"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY)) //TODO: Make it match (or intergrate it into) strippanel so you get 'item cannot fit here' warnings if mob_can_equip fails
+		if(isnpc(src))
+			var/mob/living/carbon/human/npc/N = src
+			if(N.fights_anyway)
+				N.Aggro(usr, TRUE)
+			else
+				if(prob(33))
+					N.Aggro(usr, TRUE)
 		var/pocket_side = href_list["pockets"] != "right" ? "left" : "right"
 		var/pocket_id = (pocket_side == "right" ? ITEM_SLOT_RPOCKET : ITEM_SLOT_LPOCKET)
 		var/obj/item/pocket_item = (pocket_id == ITEM_SLOT_RPOCKET ? r_store : l_store)

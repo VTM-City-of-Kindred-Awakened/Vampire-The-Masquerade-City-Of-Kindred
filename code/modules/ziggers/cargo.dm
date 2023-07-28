@@ -36,140 +36,140 @@
 /datum/supply_pack/vampire/weaponshovel
 	name = "Weapon (shovel)"
 	desc = "Contains shovel."
-	cost = 150
+	cost = 300
 	contains = list(/obj/item/melee/vampirearms/shovel)
 	crate_name = "weapon crate"
 
 /datum/supply_pack/vampire/weaponbaseball
 	name = "Weapon (baseball bat)"
 	desc = "Contains baseball bat."
-	cost = 200
+	cost = 400
 	contains = list(/obj/item/melee/vampirearms/baseball)
 	crate_name = "weapon crate"
 
 /datum/supply_pack/vampire/weaponfireaxe
 	name = "Weapon (fire axe)"
 	desc = "Contains fire axe."
-	cost = 300
+	cost = 600
 	contains = list(/obj/item/melee/vampirearms/fireaxe)
 	crate_name = "weapon crate"
 
 /datum/supply_pack/vampire/weaponkatana
 	name = "Weapon (katana)"
 	desc = "Contains katana."
-	cost = 500
+	cost = 1000
 	contains = list(/obj/item/melee/vampirearms/katana)
 	crate_name = "weapon crate"
 
 /datum/supply_pack/vampire/weaponchainsaw
 	name = "Weapon (chainsaw)"
 	desc = "Contains chainsaw."
-	cost = 1000
+	cost = 2000
 	contains = list(/obj/item/melee/vampirearms/chainsaw)
 	crate_name = "weapon crate"
 
 /datum/supply_pack/vampire/weaponrevolver
 	name = "Weapon (revolver)"
 	desc = "Contains revolver."
-	cost = 100
+	cost = 200
 	contains = list(/obj/item/gun/ballistic/vampire/revolver)
 	crate_name = "weapon crate"
 
 /datum/supply_pack/vampire/weapondeagle
 	name = "Weapon (desert eagle)"
 	desc = "Contains desert eagle."
-	cost = 200
+	cost = 400
 	contains = list(/obj/item/gun/ballistic/automatic/vampire/deagle, /obj/item/ammo_box/magazine/m44)
 	crate_name = "weapon crate"
 
 /datum/supply_pack/vampire/weaponuzi
 	name = "Weapon (mini uzi)"
 	desc = "Contains mini uzi."
-	cost = 300
+	cost = 600
 	contains = list(/obj/item/gun/ballistic/automatic/vampire/uzi, /obj/item/ammo_box/magazine/vamp9mm)
 	crate_name = "weapon crate"
 
 /datum/supply_pack/vampire/weaponrifle
 	name = "Weapon (assault rifle)"
 	desc = "Contains assault rifle."
-	cost = 500
+	cost = 1000
 	contains = list(/obj/item/gun/ballistic/automatic/vampire/ar15, /obj/item/ammo_box/magazine/vamp556)
 	crate_name = "weapon crate"
 
 /datum/supply_pack/vampire/weaponcarbine
 	name = "Weapon (assault carbine)"
 	desc = "Contains assault carbine."
-	cost = 700
+	cost = 1500
 	contains = list(/obj/item/gun/ballistic/automatic/vampire/aug, /obj/item/ammo_box/magazine/vampaug)
 	crate_name = "weapon crate"
 
 /datum/supply_pack/vampire/weaponshotgun
 	name = "Weapon (pomp shotgun)"
 	desc = "Contains pomp shotgun."
-	cost = 400
+	cost = 800
 	contains = list(/obj/item/gun/ballistic/shotgun/vampire)
 	crate_name = "weapon crate"
 
 /datum/supply_pack/vampire/weaponsniper
 	name = "Weapon (sniper rifle)"
 	desc = "Contains sniper rifle."
-	cost = 1000
+	cost = 2000
 	contains = list(/obj/item/gun/ballistic/automatic/vampire/sniper)
 	crate_name = "weapon crate"
 
 /datum/supply_pack/vampire/weaponcrossbow
 	name = "Weapon (crossbow)"
 	desc = "Contains crossbow."
-	cost = 500
+	cost = 1000
 	contains = list(/obj/item/gun/ballistic/shotgun/toy/crossbow/vampire)
 	crate_name = "weapon crate"
 
 /datum/supply_pack/vampire/ammo9
 	name = "Ammo (9mm)"
 	desc = "Contains box of 9mm ammunition."
-	cost = 100
+	cost = 200
 	contains = list(/obj/item/ammo_box/vampire/c9mm)
 	crate_name = "ammo crate"
 
 /datum/supply_pack/vampire/ammo44
 	name = "Ammo (.44)"
 	desc = "Contains box of .44 ammunition."
-	cost = 150
+	cost = 300
 	contains = list(/obj/item/ammo_box/vampire/c44)
 	crate_name = "ammo crate"
 
 /datum/supply_pack/vampire/ammo556
 	name = "Ammo (5.56)"
 	desc = "Contains box of 5.56 ammunition."
-	cost = 200
+	cost = 400
 	contains = list(/obj/item/ammo_box/vampire/c556)
 	crate_name = "ammo crate"
 
 /datum/supply_pack/vampire/ammo556/incendiart
 	name = "Ammo (5.56 incendiary)"
 	desc = "Contains box of incendiary 5.56 ammunition."
-	cost = 300
+	cost = 1000
 	contains = list(/obj/item/ammo_box/vampire/c556/incendiary)
 	crate_name = "ammo crate"
 
 /datum/supply_pack/vampire/ammo12g
 	name = "Ammo (12g)"
 	desc = "Contains box of 12g ammunition."
-	cost = 200
+	cost = 400
 	contains = list(/obj/item/ammo_box/vampire/c12g)
 	crate_name = "ammo crate"
 
 /datum/supply_pack/vampire/ammobolt
 	name = "Ammo (bolts)"
 	desc = "Contains box of crossbow ammunition."
-	cost = 300
+	cost = 600
 	contains = list(/obj/item/ammo_box/vampire/arrows)
 	crate_name = "ammo crate"
 
 /datum/supply_pack/vampire/armorlight
 	name = "Armor (3 civilian)"
 	desc = "Contains 3 types of body clothing and 3 types of light head protection."
-	cost = 500
+	cost = 1000
 	contains = list(/obj/item/clothing/suit/vampire/trench,
 					/obj/item/clothing/suit/vampire/trench/alt,
 					/obj/item/clothing/suit/vampire/trench/archive,
@@ -181,7 +181,7 @@
 /datum/supply_pack/vampire/armorpolice
 	name = "Armor (police)"
 	desc = "Contains single complect of full police protection."
-	cost = 500
+	cost = 1000
 	contains = list(/obj/item/clothing/suit/vampire/vest,
 					/obj/item/clothing/head/vampire/helmet)
 	crate_name = "armor crate"
@@ -189,7 +189,7 @@
 /datum/supply_pack/vampire/armorarmy
 	name = "Armor (army)"
 	desc = "Contains single complect of full army protection."
-	cost = 750
+	cost = 1500
 	contains = list(/obj/item/clothing/suit/vampire/vest/army,
 					/obj/item/clothing/head/vampire/army)
 	crate_name = "armor crate"
@@ -197,7 +197,7 @@
 /datum/supply_pack/vampire/armoreod
 	name = "Armor (EOD)"
 	desc = "Contains single complect of full EOD protection."
-	cost = 1000
+	cost = 2000
 	contains = list(/obj/item/clothing/suit/vampire/eod,
 					/obj/item/clothing/head/vampire/eod)
 	crate_name = "armor crate"
@@ -231,6 +231,9 @@
 		else
 			icon_state = "money"
 
+/obj/item/stack/dollar/one
+	amount = 1
+
 /obj/item/stack/dollar/ten
 	amount = 10
 
@@ -248,3 +251,49 @@
 	if(amount == 1.3)
 		amount = rand(5, 30)
 		update_icon()
+
+/obj/item/cargo_box
+	name = "cargo box"
+	desc = "Special deliever."
+	icon_state = "box"
+	icon = 'code/modules/ziggers/items.dmi'
+	lefthand_file = 'code/modules/ziggers/righthand.dmi'
+	righthand_file = 'code/modules/ziggers/lefthand.dmi'
+	w_class = WEIGHT_CLASS_HUGE
+
+/obj/structure/cargo_take
+	name = "cargo"
+	desc = "Take and place boxes."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "box_take"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	var/last_take = 0
+
+/obj/structure/cargo_take/attack_hand(mob/user)
+	if(last_take+30 < world.time)
+		last_take = world.time
+		new /obj/item/cargo_box(loc)
+		return
+	..()
+
+/obj/structure/cargo_put
+	name = "cargo"
+	desc = "Take and place boxes."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "box_put"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+
+/obj/structure/cargo_put/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/cargo_box))
+		qdel(I)
+		new /obj/item/stack/dollar/one(loc)
+		return
+	..()

@@ -779,8 +779,14 @@
 			if(what)
 				if(!(what.item_flags & ABSTRACT))
 					user.stripPanelUnequip(what,src,slot)
+					if(isnpc(src))
+						var/mob/living/carbon/human/npc/N = src
+						N.Aggro(usr, TRUE)
 			else
 				user.stripPanelEquip(what,src,slot)
+				if(isnpc(src))
+					var/mob/living/carbon/human/npc/N = src
+					N.Aggro(usr, TRUE)
 
 		if(user.machine == src)
 			if(Adjacent(user))

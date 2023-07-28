@@ -331,6 +331,7 @@
 	var/last_eyecolor
 	var/last_realname
 	var/last_age
+	var/last_body_mode
 
 	var/original_hair
 	var/original_facehair
@@ -343,10 +344,11 @@
 	var/original_eyecolor
 	var/original_realname
 	var/original_age
+	var/original_body_mode
 	var/furry_changed = FALSE
 
 /datum/movespeed_modifier/centipede
-	multiplicative_slowdown = -0.5
+	multiplicative_slowdown = -1
 
 /mob/living/simple_animal/hostile/bloodcrawler
 	var/collected_blood = 0
@@ -385,6 +387,7 @@
 				original_eyecolor = H.eye_color
 				original_realname = H.real_name
 				original_age = H.age
+				original_body_mode = H.base_body_mod
 				playsound(get_turf(H), 'code/modules/ziggers/sounds/vicissitude.ogg', 100, TRUE, -6)
 				H.Stun(10)
 				H.do_jitter_animation(10)
@@ -400,6 +403,7 @@
 				H.real_name = last_realname
 				H.name = H.real_name
 				H.age = last_age
+				H.base_body_mod = last_body_mode
 				H.update_body()
 				H.update_hair()
 				H.update_body_parts()
@@ -421,6 +425,7 @@
 				original_eyecolor = H.eye_color
 				original_realname = H.real_name
 				original_age = H.age
+				original_body_mode = H.base_body_mod
 				playsound(get_turf(H), 'code/modules/ziggers/sounds/vicissitude.ogg', 100, TRUE, -6)
 				H.Stun(10)
 				H.do_jitter_animation(10)
@@ -437,6 +442,7 @@
 				H.real_name = ZV.real_name
 				H.name = H.real_name
 				H.age = ZV.age
+				H.base_body_mod = ZV.base_body_mod
 				H.update_body()
 				H.update_hair()
 				H.update_body_parts()
@@ -451,6 +457,7 @@
 				last_eyecolor = H.eye_color
 				last_realname = H.real_name
 				last_age = H.age
+				last_body_mode = H.base_body_mod
 				furry_changed = TRUE
 			else
 				return
@@ -564,7 +571,7 @@
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
 	emote_taunt = list("gnashes")
-	speed = 0
+	speed = -1
 	maxHealth = 25
 	health = 25
 
@@ -585,6 +592,26 @@
 	bloodquality = BLOOD_QUALITY_LOW
 	bloodpool = 2
 	maxbloodpool = 2
+
+/mob/living/simple_animal/hostile/biter/lasombra
+	name = "shadow abomination"
+	mob_biotypes = MOB_SPIRIT
+	icon_state = "shadow"
+	icon_living = "shadow"
+	del_on_death = TRUE
+	maxHealth = 100
+	health = 100
+	bloodpool = 0
+	maxbloodpool = 0
+	faction = list("Lasombra")
+
+/mob/living/simple_animal/hostile/biter/lasombra/better
+	icon_state = "shadow2"
+	icon_living = "shadow2"
+	maxHealth = 200
+	health = 200
+	melee_damage_lower = 50
+	melee_damage_upper = 50
 
 /mob/living/simple_animal/hostile/fister
 	name = "fister"
@@ -705,6 +732,7 @@
 	dextrous = TRUE
 	held_items = list(null, null)
 	possible_a_intents = list(INTENT_HELP, INTENT_GRAB, INTENT_DISARM, INTENT_HARM)
+	faction = list("Tremere")
 
 /mob/living/simple_animal/hostile/gargoyle/proc/gain_nigs()
 	set waitfor = FALSE

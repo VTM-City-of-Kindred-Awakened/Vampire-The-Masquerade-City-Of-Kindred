@@ -1039,7 +1039,29 @@
 /datum/discipline/obtenebration/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	playsound(target.loc, 'code/modules/ziggers/sounds/necromancy.ogg', 50, TRUE)
-	var/atom/movable/AM = new(caster)
-	AM.set_light(level_casting, -3)
-	spawn(delay+caster.discipline_time_plus)
-		AM.set_light(0)
+	switch(level_casting)
+		if(1)
+			var/atom/movable/AM = new(caster)
+			AM.set_light(level_casting+3, -7)
+			spawn(delay+caster.discipline_time_plus)
+				AM.set_light(0)
+		if(2)
+			var/mob/living/simple_animal/hostile/biter/lasombra/L = new(caster.loc)
+			L.my_creator = caster
+		if(3)
+			var/mob/living/simple_animal/hostile/biter/lasombra/better/L = new(caster.loc)
+			L.my_creator = caster
+		if(4)
+			for(var/turf/T in range(3, src))
+				new /obj/effect/temp_visual/goliath_tentacle/broodmother(T)
+		if(5)
+			for(var/turf/T in range(7, src))
+				new /obj/effect/temp_visual/goliath_tentacle/broodmother(T)
+			var/mob/living/simple_animal/hostile/biter/lasombra/L1 = new(caster.loc)
+			L1.my_creator = caster
+			var/mob/living/simple_animal/hostile/biter/lasombra/L2 = new(caster.loc)
+			L2.my_creator = caster
+			var/mob/living/simple_animal/hostile/biter/lasombra/L3 = new(caster.loc)
+			L3.my_creator = caster
+			var/mob/living/simple_animal/hostile/biter/lasombra/better/B = new(caster.loc)
+			B.my_creator = caster

@@ -8,3 +8,15 @@
 	male_clothes = "/obj/item/clothing/under/vampire/emo"
 	female_clothes = "/obj/item/clothing/under/vampire/business"
 	enlightement = TRUE
+
+/datum/vampireclane/lasombra/on_gain(mob/living/carbon/human/H)
+	..()
+	H.faction |= "Lasombra"
+
+/datum/vampireclane/lasombra/post_gain(mob/living/carbon/human/H)
+	..()
+	if(H.client)
+		if(H.client.prefs)
+			if(H.client.prefs.discipline3level >= 3)
+				var/obj/effect/proc_holder/spell/targeted/shadowwalk/S = new(H)
+				H.mind.AddSpell(S)

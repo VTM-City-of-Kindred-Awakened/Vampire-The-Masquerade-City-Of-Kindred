@@ -5,8 +5,8 @@
 	clane_disciplines = list(/datum/discipline/obfuscate = 1,
 														/datum/discipline/presence = 2,
 														/datum/discipline/serpentis = 3)
-	male_clothes = "/obj/item/clothing/under/costume/mummy"
-	female_clothes = "/obj/item/clothing/under/costume/mummy"
+	male_clothes = "/obj/item/clothing/under/vampire/pimp"
+	female_clothes = "/obj/item/clothing/under/vampire/whore"
 
 /datum/vampireclane/ministry/on_gain(mob/living/carbon/human/H)
 	..()

@@ -53,8 +53,14 @@
 	if(BB.firer)
 		firing_dir = BB.firer.dir
 	if(!BB.suppressed && firing_effect_type)
+		var/check_witness = FALSE
 		for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, user))
-			NEPIC.Aggro(user)
+			if(NEPIC)
+				NEPIC.Aggro(user)
+				check_witness = TRUE
+		if(check_witness)
+			for(var/obj/item/police_radio/P in GLOB.police_radios)
+				P.announce_crime("shooting", get_turf(user))
 		var/atom/A = new firing_effect_type(get_turf(src), firing_dir)
 		var/atom/movable/shit = new(A.loc)
 		if(ishuman(user))
