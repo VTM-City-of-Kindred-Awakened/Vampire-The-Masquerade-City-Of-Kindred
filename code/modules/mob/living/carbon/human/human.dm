@@ -293,11 +293,12 @@
 				return
 			var/reason = input(usr, "Write a description of violation:", "Spot a Masquerade violation") as text|null
 			if(reason)
+				masquerade_votes = masquerade_votes+1
 				message_admins("[H]([H.key]) spotted [src]'s([key]) masqureade violation. Description: [reason]")
 				H.voted_for |= dna.real_name
-				masquerade_votes = min(2, masquerade_votes+1)
-				if(masquerade_votes >= 2)
+				if(masquerade_votes > 1)
 					masquerade_votes = 0
+					last_masquerade_violation = 0
 					AdjustMasquerade(-1)
 ///////HUDs///////
 	if(href_list["hud"])

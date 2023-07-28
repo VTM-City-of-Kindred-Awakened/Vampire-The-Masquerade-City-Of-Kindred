@@ -48,13 +48,15 @@
 					masquerade = max(0, masquerade+value)
 					SEND_SOUND(src, sound('code/modules/ziggers/sounds/masquerade_violation.ogg', 0, 0, 75))
 					to_chat(src, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
-				SSbad_guys_party.next_fire = max(world.time, SSbad_guys_party.next_fire-600)
+				SSbad_guys_party.next_fire = max(world.time, SSbad_guys_party.next_fire-1200)
 			if(value > 0)
+				for(var/mob/living/carbon/human/H in GLOB.player_list)
+					H.voted_for -= dna.real_name
 				if(masquerade < 5)
 					masquerade = min(5, masquerade+value)
 					SEND_SOUND(src, sound('code/modules/ziggers/sounds/general_good.ogg', 0, 0, 75))
 					to_chat(src, "<span class='userhelp'><b>MASQUERADE REINFORCEMENT</b></span>")
-				SSbad_guys_party.next_fire = max(world.time, SSbad_guys_party.next_fire+1200)
+				SSbad_guys_party.next_fire = max(world.time, SSbad_guys_party.next_fire+600)
 
 	if(src in GLOB.masquerade_breakers_list)
 		if(masquerade > 1)

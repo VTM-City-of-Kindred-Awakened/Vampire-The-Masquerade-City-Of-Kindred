@@ -72,6 +72,11 @@ SUBSYSTEM_DEF(factionwar)
 				if(do_mob(user, src, 10 SECONDS))
 					icon_state = L.frakcja
 					SSfactionwar.move_mark(src, L.frakcja)
+					for(var/mob/living/carbon/human/H in GLOB.player_list)
+						if(H.frakcja == "camarilla" || H.frakcja == "anarch" || H.frakcja == "sabbat")
+							if(H.frakcja != L.frakcja)
+								var/area/A = get_area(src)
+								to_chat(H, "<b>[A.name] [x]:[y] mark now belongs to <span class='warning'>[L.frakcja]</span></b>")
 //					if(user.client)
 //						var/mode = 1
 //						if(HAS_TRAIT(user, TRAIT_NON_INT))
