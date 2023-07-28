@@ -295,8 +295,8 @@
 			if(reason)
 				message_admins("[H]([H.key]) spotted [src]'s([key]) masqureade violation. Description: [reason]")
 				H.voted_for |= dna.real_name
-				masquerade_votes = min(3, masquerade_votes+1)
-				if(masquerade_votes > 2)
+				masquerade_votes = min(2, masquerade_votes+1)
+				if(masquerade_votes >= 2)
 					masquerade_votes = 0
 					AdjustMasquerade(-1)
 ///////HUDs///////
