@@ -487,6 +487,7 @@
 		H.real_name = original_realname
 		H.name = H.real_name
 		H.age = original_age
+		H.base_body_mod = original_body_mode
 		H.update_body()
 		H.update_hair()
 		H.update_body_parts()
