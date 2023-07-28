@@ -386,6 +386,9 @@
 	if (!isnull(trait_exam))
 		. += trait_exam
 
+	if(flavor_text)
+		. += "[flavor_text]"
+
 	if(ishuman(user))
 		. += "<a href='?src=[REF(src)];masquerade=1'>Spot a Masquerade violation</a>"
 

@@ -26,6 +26,16 @@
 		if(mess)
 			say(mess)
 
+/mob/living/verb/flavor_verb()
+	set name = "Flavor Text"
+	set category = "IC"
+	var/flavor = input("Choose your new flavor text:") as text|null
+	if(flavor)
+		if(length(flavor) > 3 * 512)
+			to_chat(src, "Too long...")
+		else
+			flavor_text = sanitize_text(flavor)
+
 ///Whisper verb
 /mob/verb/whisper_verb(message as text)
 	set name = "Whisper"

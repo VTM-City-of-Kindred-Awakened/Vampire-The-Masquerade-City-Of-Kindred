@@ -231,8 +231,8 @@
 		else
 			icon_state = "money"
 
-/obj/item/stack/dollar/one
-	amount = 1
+/obj/item/stack/dollar/five
+	amount = 5
 
 /obj/item/stack/dollar/ten
 	amount = 10
@@ -294,6 +294,6 @@
 /obj/structure/cargo_put/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/cargo_box))
 		qdel(I)
-		new /obj/item/stack/dollar/one(loc)
+		new /obj/item/stack/dollar/five(loc)
 		return
 	..()

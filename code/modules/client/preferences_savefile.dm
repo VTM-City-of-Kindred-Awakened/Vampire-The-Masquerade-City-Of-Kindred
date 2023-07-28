@@ -377,6 +377,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["enemy"], enemy)
 	READ_FILE(S["lover"], lover)
 	READ_FILE(S["ambitious"], ambitious)
+	READ_FILE(S["flavor_text"], flavor_text)
 //	READ_FILE(S["clane"], clane)
 	READ_FILE(S["generation"], generation)
 	READ_FILE(S["archtype"], archtype)
@@ -489,6 +490,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	socks			= sanitize_inlist(socks, GLOB.socks_list)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
+	flavor_text		= sanitize_text(flavor_text)
 	torpor_count				= sanitize_integer(torpor_count, 0, 6, initial(torpor_count))
 	total_age		= sanitize_integer(total_age, 18, 1120, initial(total_age))
 	slotlocked			= sanitize_integer(slotlocked, 0, 1, initial(slotlocked))
@@ -572,6 +574,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["enemy"]			, enemy)
 	WRITE_FILE(S["lover"]			, lover)
 	WRITE_FILE(S["ambitious"]			, ambitious)
+	WRITE_FILE(S["flavor_text"]			, flavor_text)
 	WRITE_FILE(S["clane"]			, clane.name)
 	WRITE_FILE(S["generation"]			, generation)
 	WRITE_FILE(S["archtype"]			, archtype)

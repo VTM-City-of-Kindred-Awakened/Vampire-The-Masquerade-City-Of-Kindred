@@ -25,6 +25,8 @@
 
 
 /obj/item/mop/proc/clean(turf/A, mob/living/cleaner)
+	var/datum/preferences/P = GLOB.preferences_datums[ckey(cleaner.key)]
+	P.exper = min(calculate_mob_max_exper(cleaner), P.exper+10)
 	if(reagents.has_reagent(/datum/reagent/water, 1) || reagents.has_reagent(/datum/reagent/water/holywater, 1) || reagents.has_reagent(/datum/reagent/consumable/ethanol/vodka, 1) || reagents.has_reagent(/datum/reagent/space_cleaner, 1))
 		// If there's a cleaner with a mind, let's gain some experience!
 		if(cleaner?.mind)

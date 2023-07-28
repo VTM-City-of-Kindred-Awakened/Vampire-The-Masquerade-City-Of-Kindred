@@ -168,6 +168,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/lover = FALSE
 
 	var/ambitious = FALSE
+	var/flavor_text
 
 //	var/datum/vampireclane/Clane
 
@@ -456,6 +457,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(generation_bonus)
 				dat += "<b>Note: this will wipe your current character and create new with claimed generation bonuses.</b><BR>"
 				dat += "<a href='?_src_=prefs;preference=reset_with_bonus;task=input'>Create new character with generation bonus</a><BR>"
+
+			dat += "<BR><b>Flavor Text:</b> [flavor_text] <a href='?_src_=prefs;preference=flavor_text;task=input'>Change</a><BR>"
 
 			dat += "<h2>[make_font_cool("EQUIP")]</h2>"
 
@@ -1737,6 +1740,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					generation_bonus = min(generation_bonus+1, max(0, generation-7))
 					exper = 0
 
+				if("flavor_text")
+					var/new_flavor = input(user, "Choose your character's flavor text:", "Character Preference")  as text|null
+					if(new_flavor)
+						if(length(new_flavor) > 3 * 512)
+							to_chat(user, "Too long...")
+						else
+							flavor_text = sanitize_text(new_flavor)
+
 				if("reset_with_bonus")
 					var/bonus = generation-generation_bonus
 					slotlocked = 0
@@ -2372,6 +2383,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		else if(character.masquerade < 2)
 			GLOB.masquerade_breakers_list += character
 
+	character.flavor_text = flavor_text
 	character.gender = gender
 	character.age = age
 	if(gender == MALE || gender == FEMALE)

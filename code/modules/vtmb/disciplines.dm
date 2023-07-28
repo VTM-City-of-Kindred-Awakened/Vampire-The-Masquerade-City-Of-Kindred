@@ -49,7 +49,6 @@
 				P.exper = min(calculate_mob_max_exper(caster), P.exper+5+caster.experience_plus)
 			P.save_preferences()
 			P.save_character()
-			caster.last_experience = world.time
 	if(violates_masquerade)
 		if(caster.CheckEyewitness(target, caster, 7, TRUE))
 			caster.AdjustMasquerade(-1)
@@ -799,19 +798,14 @@
 				spawn(5)
 					H.remove_overlay(MUTATIONS_LAYER)
 	if(level_casting >= 2)
-		if(get_dist(caster, target) <= 2+level_casting)
-			playsound(target.loc, 'code/modules/ziggers/sounds/serpentis.ogg', 50, TRUE)
-			playsound(caster.loc, 'code/modules/ziggers/sounds/tongue.ogg', 50, TRUE)
-			target.Immobilize(5*level_casting)
-			target.apply_damage(5*level_casting, BRUTE, BODY_ZONE_HEAD)
-			if(ishuman(target))
-				var/mob/living/carbon/human/H = target
-				H.remove_overlay(MUTATIONS_LAYER)
-				var/mutable_appearance/serpentis_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "serpentis2", -MUTATIONS_LAYER)
-				H.overlays_standing[MUTATIONS_LAYER] = serpentis_overlay
-				H.apply_overlay(MUTATIONS_LAYER)
-				spawn(5*level_casting)
-					H.remove_overlay(MUTATIONS_LAYER)
+		var/turf/start = get_turf(caster)
+		var/obj/projectile/tentacle/H = new(start)
+		H.hitsound = 'code/modules/ziggers/sounds/tongue.ogg'
+		H.damage = 20*level_casting
+		H.firer = caster
+		H.preparePixelProjectile(target, start)
+		H.fire(direct_target = target)
+		playsound(target.loc, 'code/modules/ziggers/sounds/serpentis.ogg', 50, TRUE)
 
 /datum/discipline/vicissitude
 	name = "Vicissitude"

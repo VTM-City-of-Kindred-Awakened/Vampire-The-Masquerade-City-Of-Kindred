@@ -236,6 +236,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	return TRUE
 
+/mob/living
+	var/last_nigging
+
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 	if(!client)
@@ -275,6 +278,18 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	// Create map text prior to modifying message for goonchat
 	if (client?.prefs.chat_on_map && !(stat == UNCONSCIOUS || stat == HARD_CRIT) && (client.prefs.see_chat_non_mob || ismob(speaker)) && can_hear())
 		create_chat_message(speaker, message_language, raw_message, spans)
+
+	if(stat != DEAD && key && client)
+		if(ishuman(speaker))
+			var/mob/living/carbon/human/EX = speaker
+			if(EX.key && EX.client)
+				if(length(message) > 60 && EX.last_nigging != message)
+					EX.last_nigging = message
+					var/datum/preferences/P = GLOB.preferences_datums[ckey(EX.key)]
+					if(P)
+						P.exper = min(calculate_mob_max_exper(EX), P.exper+5)
+						P.save_preferences()
+						P.save_character()
 
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
