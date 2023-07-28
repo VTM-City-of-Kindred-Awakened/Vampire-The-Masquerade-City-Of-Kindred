@@ -10,7 +10,7 @@
 	speak_emote = list("purrs", "meows")
 	emote_hear = list("meows.", "mews.")
 	emote_see = list("shakes its head.", "shivers.")
-	speak_chance = 1
+	speak_chance = 0
 	turns_per_move = 5
 	see_in_dark = 6
 	ventcrawler = VENTCRAWLER_ALWAYS
