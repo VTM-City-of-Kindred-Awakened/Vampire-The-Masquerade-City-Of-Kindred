@@ -191,6 +191,10 @@
 
 /mob/living/simple_animal/pet/cat/Life()
 	//MICE!
+	if(stat == DEAD)
+		return
+	if(key)
+		return
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
 			for(var/mob/living/simple_animal/pet/rat/M in view(1,src))
