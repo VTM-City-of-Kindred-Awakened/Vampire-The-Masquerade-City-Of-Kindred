@@ -46,6 +46,7 @@
 /mob/living/carbon/human/npc/Life()
 	if(stat == DEAD)
 		return
+	..()
 	if(!CheckMove())
 		nutrition = 400
 		if(get_dist(danger_source, src) < 7)
@@ -72,7 +73,6 @@
 					EmoteAction()
 				if(3)
 					SpeechAction()
-	..()
 
 /mob/living/carbon/human/npc/proc/CreateWay(var/direction)
 	var/turf/location = get_turf(src)
@@ -209,9 +209,9 @@
 //				if(last_walkin+5 < world.time)
 						var/reqsteps = round((SShumannpcpool.next_fire-world.time)/total_multiplicative_slowdown())
 						set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
-						var/plus_turfs = 0
-						if(istype(my_weapon, /obj/item/gun))
-							plus_turfs = 3
+//						var/plus_turfs = 0
+//						if(istype(my_weapon, /obj/item/gun))
+//							plus_turfs = 3
 						walk_to(src, danger_source, reqsteps, total_multiplicative_slowdown())
 
 			if(isliving(danger_source))

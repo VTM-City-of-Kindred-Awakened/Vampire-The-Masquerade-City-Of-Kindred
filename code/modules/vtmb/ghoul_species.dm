@@ -223,9 +223,9 @@
 			if(H.last_experience+600 <= world.time)
 				var/addd = 5
 				if(H.mind)
-					var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
-					if(J)
-						addd = J.experience_addition
+					if(!H.JOB)
+						H.JOB = SSjob.GetJob(H.mind.assigned_role)
+						addd = H.JOB.experience_addition
 				P.exper = min(calculate_mob_max_exper(H), P.exper+addd+H.experience_plus)
 				P.save_preferences()
 				P.save_character()

@@ -802,12 +802,11 @@
 /mob/living/simple_animal/pet/rat/Life()
 	. = ..()
 	var/delete_me = TRUE
-	for(var/mob/living/carbon/human/H in viewers(5, src))
+	for(var/mob/living/carbon/human/H in oviewers(5, src))
 		if(H)
 			delete_me = FALSE
 	if(delete_me)
 		death()
-		return
 
 /datum/socialrole/shop
 	s_tones = list("albino",
@@ -1138,7 +1137,7 @@
 	if(staying && stat < 2)
 		if(prob(5))
 			var/hasjukebox = FALSE
-			for(var/obj/machinery/jukebox/J in range(7, src))
+			for(var/obj/machinery/jukebox/J in range(5, src))
 				if(J)
 					hasjukebox = TRUE
 					if(J.active)

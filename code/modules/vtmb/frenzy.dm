@@ -129,6 +129,9 @@
 					face_atom(T)
 					Move(T)
 
+/mob/living/carbon/human
+	var/datum/job/JOB
+
 /datum/species/kindred/spec_life(mob/living/carbon/human/H)
 	. = ..()
 	var/skipface = (H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE))
@@ -174,10 +177,9 @@
 				P.save_character()
 			if(H.last_experience+600 <= world.time)
 				var/addd = 5
-				if(H.mind)
-					var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
-					if(J)
-						addd = J.experience_addition
+				if(!H.JOB && H.mind)
+					H.JOB = SSjob.GetJob(H.mind.assigned_role)
+					addd = H.JOB.experience_addition
 				P.exper = min(calculate_mob_max_exper(H), P.exper+addd+H.experience_plus)
 				if(P.exper == calculate_mob_max_exper(H))
 					to_chat(H, "You've reached a new level! You can add new points in Character Setup (Lobby screen).")

@@ -45,7 +45,7 @@
 		desc = drydesc
 		bloodiness = 0
 		color =  COLOR_GRAY
-		STOP_PROCESSING(SSobj, src)
+//		STOP_PROCESSING(SSobj, src)
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	if(C)
