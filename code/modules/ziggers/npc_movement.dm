@@ -155,7 +155,8 @@
 			Aggro(pulledby, TRUE)
 		if(fights_anyway)
 			Aggro(pulledby, TRUE)
-		resist()
+		if(prob(20))
+			resist()
 		return TRUE
 	return FALSE
 
