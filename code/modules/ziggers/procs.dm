@@ -85,7 +85,7 @@
 	if(SScityweather.fogging)
 		actual_range = round(actual_range/2)
 	var/list/seenby = list()
-	for(var/mob/living/carbon/human/npc/NPC in viewers(2, source))
+	for(var/mob/living/carbon/human/npc/NPC in oviewers(2, source))
 		if(!NPC.CheckMove())
 			seenby |= NPC
 			NPC.Aggro(attacker, FALSE)
