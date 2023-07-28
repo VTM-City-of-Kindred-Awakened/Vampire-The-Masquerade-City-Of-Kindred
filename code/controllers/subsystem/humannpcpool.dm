@@ -34,8 +34,7 @@ SUBSYSTEM_DEF(humannpcpool)
 //!NPC.route_optimisation()
 		if(MC_TICK_CHECK)
 			return
-		if(!NPC.CheckMove())
-			NPC.handle_automated_movement()
+		NPC.handle_automated_movement()
 
 /datum/controller/subsystem/humannpcpool/proc/npclost()
 	var/atom/kal = pick(GLOB.npc_spawn_points)
