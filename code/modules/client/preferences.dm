@@ -390,7 +390,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						max_death = 1
 					if(3)
 						max_death = 1
-			dat += "<b>[pref_species.name == "Vampire" ? "Torpor" : "Clinical Death"] Count: [torpor_count]/[max_death]<BR>"
+			dat += "<b>[pref_species.name == "Vampire" ? "Torpor" : "Clinical Death"] Count:</b> [torpor_count]/[max_death]<BR>"
 			dat += "<BR>"
 			dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_BODY]'>Always Random Body: [(randomise[RANDOM_BODY]) ? "Yes" : "No"]</A>"
