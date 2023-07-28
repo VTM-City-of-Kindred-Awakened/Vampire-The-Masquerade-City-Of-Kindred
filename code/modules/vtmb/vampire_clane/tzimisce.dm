@@ -362,7 +362,8 @@
 				collected_blood = collected_blood+1
 				to_chat(src, "You sense blood entering your mass...")
 				var/turf/T = get_turf(B)
-				T.wash(CLEAN_WASH)
+				if(T)
+					T.wash(CLEAN_WASH)
 
 /datum/action/vicissitude/Trigger()
 	. = ..()
