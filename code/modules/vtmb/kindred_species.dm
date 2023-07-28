@@ -224,40 +224,40 @@
 //					if(BLOODBONDED.has_status_effect(STATUS_EFFECT_INLOVE))
 //						BLOODBONDED.remove_status_effect(STATUS_EFFECT_INLOVE)
 //					BLOODBONDED.apply_status_effect(STATUS_EFFECT_INLOVE, owner)
-				H.bloodpool = max(0, H.bloodpool-2)
-				to_chat(owner, "<span class='notice'>You successfuly fed [BLOODBONDED] with vitae.</span>")
-				if(H.reagents)
-					if(length(H.reagents.reagent_list))
-						H.reagents.trans_to(BLOODBONDED, min(10, H.reagents.total_volume), transfered_by = H, methods = VAMPIRE)
-				BLOODBONDED.adjustBruteLoss(-25, TRUE)
-				if(length(BLOODBONDED.all_wounds))
-					var/datum/wound/W = pick(BLOODBONDED.all_wounds)
-					W.remove_wound()
-				BLOODBONDED.adjustFireLoss(-25, TRUE)
-				BLOODBONDED.bloodpool = min(BLOODBONDED.maxbloodpool, BLOODBONDED.bloodpool+2)
-				giving = FALSE
-				if(!isghoul(H.pulling) && istype(H.pulling, /mob/living/carbon/human/npc))
-					var/mob/living/carbon/human/npc/NPC = H.pulling
-					if(NPC.ghoulificate(owner))
-						new_master = TRUE
-				if(BLOODBONDED.mind)
-					if(BLOODBONDED.mind.enslaved_to != owner)
-						BLOODBONDED.mind.enslave_mind_to_creator(owner)
-						to_chat(BLOODBONDED, "<span class='userdanger'><b>AS PRECIOUS VITAE ENTER YOUR MOUTH, YOU NOW ARE IN THE BLOODBOND OF [H]. SERVE YOUR REGNANT CORRECTLY, OR YOUR ACTIONS WILL NOT BE TOLERATED.</b></span>")
-						new_master = TRUE
-				if(isghoul(BLOODBONDED))
-					var/datum/species/ghoul/G = BLOODBONDED.dna.species
-					G.master = owner
-					G.last_vitae = world.time
-					if(new_master)
-						G.changed_master = TRUE
-				else if(!iskindred(BLOODBONDED) && !isnpc(BLOODBONDED))
-					BLOODBONDED.set_species(/datum/species/ghoul)
-					var/datum/species/ghoul/G = BLOODBONDED.dna.species
-					G.master = owner
-					G.last_vitae = world.time
-					if(new_master)
-						G.changed_master = TRUE
+					H.bloodpool = max(0, H.bloodpool-2)
+					to_chat(owner, "<span class='notice'>You successfuly fed [BLOODBONDED] with vitae.</span>")
+					if(H.reagents)
+						if(length(H.reagents.reagent_list))
+							H.reagents.trans_to(BLOODBONDED, min(10, H.reagents.total_volume), transfered_by = H, methods = VAMPIRE)
+					BLOODBONDED.adjustBruteLoss(-25, TRUE)
+					if(length(BLOODBONDED.all_wounds))
+						var/datum/wound/W = pick(BLOODBONDED.all_wounds)
+						W.remove_wound()
+					BLOODBONDED.adjustFireLoss(-25, TRUE)
+					BLOODBONDED.bloodpool = min(BLOODBONDED.maxbloodpool, BLOODBONDED.bloodpool+2)
+					giving = FALSE
+					if(!isghoul(H.pulling) && istype(H.pulling, /mob/living/carbon/human/npc))
+						var/mob/living/carbon/human/npc/NPC = H.pulling
+						if(NPC.ghoulificate(owner))
+							new_master = TRUE
+					if(BLOODBONDED.mind)
+						if(BLOODBONDED.mind.enslaved_to != owner)
+							BLOODBONDED.mind.enslave_mind_to_creator(owner)
+							to_chat(BLOODBONDED, "<span class='userdanger'><b>AS PRECIOUS VITAE ENTER YOUR MOUTH, YOU NOW ARE IN THE BLOODBOND OF [H]. SERVE YOUR REGNANT CORRECTLY, OR YOUR ACTIONS WILL NOT BE TOLERATED.</b></span>")
+							new_master = TRUE
+					if(isghoul(BLOODBONDED))
+						var/datum/species/ghoul/G = BLOODBONDED.dna.species
+						G.master = owner
+						G.last_vitae = world.time
+						if(new_master)
+							G.changed_master = TRUE
+					else if(!iskindred(BLOODBONDED) && !isnpc(BLOODBONDED))
+						BLOODBONDED.set_species(/datum/species/ghoul)
+						var/datum/species/ghoul/G = BLOODBONDED.dna.species
+						G.master = owner
+						G.last_vitae = world.time
+						if(new_master)
+							G.changed_master = TRUE
 			else
 				giving = FALSE
 
