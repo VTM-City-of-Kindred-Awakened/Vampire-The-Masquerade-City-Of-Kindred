@@ -26,7 +26,7 @@
 		dry()
 
 /obj/effect/decal/cleanable/blood/Destroy()
-	STOP_PROCESSING(SSobj, src)
+//	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/decal/cleanable/blood/proc/get_timer()
@@ -34,7 +34,7 @@
 
 /obj/effect/decal/cleanable/blood/proc/start_drying()
 	get_timer()
-	START_PROCESSING(SSobj, src)
+//	START_PROCESSING(SSobj, src)
 
 /obj/effect/decal/cleanable/blood/proc/dry()
 	if(bloodiness > 20)

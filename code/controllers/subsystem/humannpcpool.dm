@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(humannpcpool)
 	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_BACKGROUND
 	priority = FIRE_PRIORITY_NPC
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	wait = 15
+	wait = 30
 
 	var/list/currentrun = list()
 
