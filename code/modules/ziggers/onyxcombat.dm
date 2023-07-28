@@ -590,6 +590,7 @@
 	var/humanity = 7
 	var/masquerade = 5
 	var/last_masquerade_violation = 0
+	var/last_nonraid = 0
 
 /mob/living/carbon/human/Life()
 	if(iskindred(src))
@@ -618,6 +619,10 @@
 				GLOB.fuckers -= src
 		else
 			GLOB.fuckers -= src
+	else
+		if(last_nonraid+1800 < world.time)
+			last_nonraid = world.time
+			killed_count = max(0, killed_count-1)
 	..()
 
 
