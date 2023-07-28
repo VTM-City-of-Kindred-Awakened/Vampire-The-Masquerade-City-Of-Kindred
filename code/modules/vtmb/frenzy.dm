@@ -210,10 +210,10 @@
 			if(H.bloodpool > 1 || H.in_frenzy)
 				H.last_frenzy_check = world.time
 
-	var/list/blood_fr = list()
-	for(var/obj/effect/decal/cleanable/blood/B in range(7, src))
-		if(B.bloodiness)
-			blood_fr += B
+//	var/list/blood_fr = list()
+//	for(var/obj/effect/decal/cleanable/blood/B in range(7, src))
+//		if(B.bloodiness)
+//			blood_fr += B
 	if(H.bloodpool <= 1 && !H.in_frenzy)
 		if(H.last_frenzy_check+400 <= world.time)
 			H.last_frenzy_check = world.time
@@ -221,7 +221,7 @@
 			if(H.clane)
 				if(H.clane.enlightement)
 					H.AdjustHumanity(1, 10)
-	if(length(blood_fr) >= 10 && !H.in_frenzy)
-		if(H.last_frenzy_check+400 <= world.time)
-			H.last_frenzy_check = world.time
-			H.rollfrenzy()
+//	if(length(blood_fr) >= 10 && !H.in_frenzy)
+//		if(H.last_frenzy_check+400 <= world.time)
+//			H.last_frenzy_check = world.time
+//			H.rollfrenzy()
