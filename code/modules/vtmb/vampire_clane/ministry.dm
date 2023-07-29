@@ -14,15 +14,16 @@
 
 /datum/vampireclane/ministry/post_gain(mob/living/carbon/human/H)
 	..()
-	if(H.client)
-		if(H.client.prefs.discipline3level >= 3)
-			var/datum/action/mummyfy/mummy = new()
-			mummy.Grant(H)
-		if(H.client.prefs.discipline3level >= 4)
-			var/datum/action/urn/U = new()
-			U.Grant(H)
 	var/obj/item/organ/eyes/night_vision/NV = new()
 	NV.Insert(H, TRUE, FALSE)
+
+/datum/discipline/serpentis/post_gain(mob/living/carbon/human/H)
+	if(level >= 3)
+		var/datum/action/mummyfy/mummy = new()
+		mummy.Grant(H)
+	if(level >= 4)
+		var/datum/action/urn/U = new()
+		U.Grant(H)
 
 /obj/urn
 	name = "organ urn"

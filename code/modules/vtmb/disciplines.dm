@@ -13,6 +13,9 @@
 
 	var/level_casting = 1	//which level we want to cast
 
+/datum/discipline/proc/post_gain(var/mob/living/carbon/human/H)
+	return
+
 /mob/living
 	var/resistant_to_disciplines = FALSE
 
@@ -760,7 +763,7 @@
 //				if(isnpc(target))
 //					AdjustHumanity(caster, -1, 0)
 				target.tremere_gib()
-
+/*
 /datum/discipline/bloodshield
 	name = "Blood shield"
 	desc = "Boosts armor."
@@ -783,7 +786,7 @@
 			caster.physiology.armor.melee = caster.physiology.armor.melee-(15*mod)
 			caster.physiology.armor.bullet = caster.physiology.armor.bullet-(15*mod)
 			caster.color = initial(caster.color)
-
+*/
 
 /datum/discipline/serpentis
 	name = "Serpentis"

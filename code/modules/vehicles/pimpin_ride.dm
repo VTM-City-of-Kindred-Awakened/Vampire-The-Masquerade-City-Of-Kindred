@@ -6,6 +6,7 @@
 	key_type = /obj/item/key/janitor
 	var/obj/item/storage/bag/trash/mybag = null
 	var/floorbuffer = FALSE
+	var/turfs_for_exp = 0
 
 /obj/vehicle/ridden/janicart/Initialize(mapload)
 	. = ..()
@@ -14,6 +15,18 @@
 
 	if(floorbuffer)
 		AddElement(/datum/element/cleaning)
+
+/obj/vehicle/ridden/janicart/relaydrive(mob/living/user, direction)
+	if(ishuman(user))
+		if(user.key)
+			var/mob/living/carbon/human/H = user
+			var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
+			if(P)
+				turfs_for_exp = turfs_for_exp+1
+				if(turfs_for_exp >= 25)
+					turfs_for_exp = 0
+					P.exper = min(calculate_mob_max_exper(H), P.exper+5)
+	..()
 
 /obj/vehicle/ridden/janicart/Destroy()
 	if(mybag)
@@ -60,8 +73,6 @@
 	. = ..()
 	if(mybag)
 		. += "cart_garbage"
-	if(floorbuffer)
-		. += "cart_buffer"
 
 /obj/vehicle/ridden/janicart/attack_hand(mob/user)
 	. = ..()

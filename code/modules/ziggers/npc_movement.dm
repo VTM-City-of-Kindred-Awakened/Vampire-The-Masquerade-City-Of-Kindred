@@ -38,6 +38,7 @@
 					HS.my_creator.last_nonraid = world.time
 					if(HS.my_creator.killed_count >= 5)
 						GLOB.fuckers |= HS.my_creator
+						HS.my_creator.warrant = TRUE
 						SEND_SOUND(HS.my_creator, sound('code/modules/ziggers/sounds/humanity_loss.ogg', 0, 0, 75))
 						to_chat(HS.my_creator, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
 			else
@@ -48,6 +49,7 @@
 					HM.last_nonraid = world.time
 					if(HM.killed_count >= 5)
 						GLOB.fuckers |= HM
+						HM.warrant = TRUE
 						SEND_SOUND(HM, sound('code/modules/ziggers/sounds/humanity_loss.ogg', 0, 0, 75))
 						to_chat(HM, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
 	remove_overlay(FIGHT_LAYER)

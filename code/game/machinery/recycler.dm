@@ -205,7 +205,7 @@
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"
 	obj_flags = CAN_BE_HIT | EMAGGED
-	crush_damage = 120
+	crush_damage = 999999
 	flags_1 = NODECONSTRUCT_1
 
 /obj/item/paper/guides/recycler

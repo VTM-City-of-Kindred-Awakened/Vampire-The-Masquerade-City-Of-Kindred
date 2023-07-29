@@ -10,10 +10,15 @@
 
 /datum/vampireclane/tremere/post_gain(mob/living/carbon/human/H)
 	..()
+	H.faction |= "Tremere"
+
+/datum/discipline/thaumaturgy/post_gain(mob/living/carbon/human/H)
 	var/datum/action/thaumaturgy/T = new()
 	T.Grant(H)
 	H.thaumaturgy_knowledge = TRUE
-	H.faction |= "Tremere"
+	if(level >= 3)
+		var/datum/action/bloodshield/B = new()
+		B.Grant(H)
 
 /datum/action/thaumaturgy
 	name = "Thaumaturgy"
@@ -56,3 +61,33 @@
 					H.AdjustMasquerade(-1)
 			else
 				drawing = FALSE
+
+/datum/action/bloodshield
+	name = "Bloodshield"
+	desc = "Gain armor with blood."
+	button_icon_state = "bloodshield"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/abuse_fix = 0
+
+/datum/action/bloodshield/Trigger()
+	. = ..()
+	if(abuse_fix+100 > world.time)
+		return
+	var/mob/living/carbon/human/H = owner
+	if(H.bloodpool < 2)
+		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
+		return
+	H.bloodpool = max(0, H.bloodpool-2)
+	playsound(H.loc, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
+	abuse_fix = world.time
+	H.physiology.armor.melee = H.physiology.armor.melee+(50)
+	H.physiology.armor.bullet = H.physiology.armor.bullet+(50)
+	animate(H, color = "#ff0000", time = 10, loop = 1)
+	if(H.CheckEyewitness(H, H, 7, FALSE))
+		H.AdjustMasquerade(-1)
+	spawn(100)
+		if(H)
+			playsound(H.loc, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
+			H.physiology.armor.melee = H.physiology.armor.melee-(50)
+			H.physiology.armor.bullet = H.physiology.armor.bullet-(50)
+			H.color = initial(H.color)

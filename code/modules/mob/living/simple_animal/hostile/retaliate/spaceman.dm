@@ -81,11 +81,13 @@
 	icon_state = "swat"
 	icon_living = "swat"
 	icon_dead = "swat_dead"
-	del_on_death = 0
+	del_on_death = 1
 	footstep_type = FOOTSTEP_MOB_SHOE
 	vision_range = 9
 	rapid = 3
 	ranged = 1
+	maxHealth = 500
+	health = 500
 	retreat_distance = 3
 	minimum_distance = 5
 	casingtype = /obj/item/ammo_casing/vampire/c556mm
@@ -107,6 +109,10 @@
 			return
 	..()
 
+/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire/Destroy()
+	new /obj/effect/temp_visual/desant_back(loc)
+	..()
+
 /obj/effect/temp_visual/desant
 	name = "helicopter rope"
 	icon = 'code/modules/ziggers/64x64.dmi'
@@ -115,8 +121,12 @@
 
 /obj/effect/temp_visual/desant/Destroy()
 	var/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire/V = new(loc)
-	V.enemies = GLOB.fuckers
+	V.enemies |= GLOB.fuckers
+//	V.ListTargets()
 	..()
+
+/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire/Retaliate()
+	return
 
 /obj/effect/temp_visual/desant_back
 	name = "helicopter rope"

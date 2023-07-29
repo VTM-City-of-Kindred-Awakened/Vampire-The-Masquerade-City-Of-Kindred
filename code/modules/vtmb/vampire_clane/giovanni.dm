@@ -12,13 +12,10 @@
 	..()
 	H.faction |= "Giovanni"
 
-/datum/vampireclane/giovanni/post_gain(mob/living/carbon/human/H)
-	..()
-	if(H.client)
-		if(H.client.prefs)
-			if(H.client.prefs.discipline3level >= 2)
-				var/datum/action/ghost_hear/GH = new()
-				GH.Grant(H)
+/datum/discipline/necromancy/post_gain(mob/living/carbon/human/H)
+	if(level >= 2)
+		var/datum/action/ghost_hear/GH = new()
+		GH.Grant(H)
 
 /mob/living
 	var/hearing_ghosts = FALSE

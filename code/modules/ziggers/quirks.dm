@@ -175,6 +175,9 @@ Dancer
 	if(!isturf(owner.loc))
 		return
 
+	if(owner.pulledby)
+		return
+
 	if(isclosedturf(get_step(owner, owner.dir)))
 		return
 
