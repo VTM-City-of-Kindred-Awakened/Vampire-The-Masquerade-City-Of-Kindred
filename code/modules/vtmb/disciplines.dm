@@ -351,8 +351,16 @@
 
 /datum/discipline/dementation/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	for(var/mob/living/carbon/human/H in viewers(5, caster))
+	var/mod = 0.3*level_casting
+	for(var/mob/living/carbon/human/H in viewers(6, caster))
 		if(H != caster)
+			H.dna.species.brutemod = H.dna.species.brutemod+mod
+			H.dna.species.burnmod = H.dna.species.burnmod+mod
+			H.remove_overlay(MUTATIONS_LAYER)
+			var/mutable_appearance/presence_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "presence", -MUTATIONS_LAYER)
+			presence_overlay.pixel_z = 1
+			H.overlays_standing[MUTATIONS_LAYER] = presence_overlay
+			H.apply_overlay(MUTATIONS_LAYER)
 			if(prob(50))
 				H.emote("laugh")
 			else
@@ -363,6 +371,11 @@
 					dancefirst(H)
 				else
 					dancesecond(H)
+			spawn(delay+caster.discipline_time_plus)
+				if(H)
+					H.dna.species.brutemod = H.dna.species.brutemod-mod
+					H.dna.species.burnmod = H.dna.species.burnmod-mod
+					H.remove_overlay(MUTATIONS_LAYER)
 
 /datum/discipline/potence
 	name = "Potence"
@@ -435,7 +448,7 @@
 		if(NPC)
 			if(NPC.danger_source == caster)
 				NPC.danger_source = null
-	caster.alpha = 32
+	caster.alpha = 10
 	spawn((delay*level_casting)+caster.discipline_time_plus)
 		if(caster)
 			playsound(caster.loc, 'code/modules/ziggers/sounds/obfuscate_deactivate.ogg', 50, FALSE)

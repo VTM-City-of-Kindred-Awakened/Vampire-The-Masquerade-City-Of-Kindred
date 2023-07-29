@@ -454,8 +454,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //			dat += "<a href='?_src_=prefs;preference=species;task=random'>Random Species</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SPECIES]'>Always Random Species: [(randomise[RANDOM_SPECIES]) ? "Yes" : "No"]</A><br>"
 
+			if(exper == calculate_max_exper())
+				dat += "<a href='?_src_=prefs;preference=change_appearance;task=input'>Change Appearance</a><BR>"
+
 			if(generation_bonus)
-				dat += "<b>Note: this will wipe your current character and create new with claimed generation bonuses.</b><BR>"
 				dat += "<a href='?_src_=prefs;preference=reset_with_bonus;task=input'>Create new character with generation bonus</a><BR>"
 
 			dat += "<BR><b>Flavor Text:</b> [flavor_text] <a href='?_src_=prefs;preference=flavor_text;task=input'>Change</a><BR>"
@@ -1748,14 +1750,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else
 							flavor_text = sanitize_text(new_flavor)
 
+				if("change_appearance")
+					torpor_count = max(0, torpor_count-1)
+					slotlocked = 0
+					exper = 0
+
 				if("reset_with_bonus")
 					var/bonus = generation-generation_bonus
 					slotlocked = 0
 					exper = 0
 					torpor_count = 0
-					discipline1level = 1
-					discipline2level = 1
-					discipline3level = 1
+//					discipline1level = 1
+//					discipline2level = 1
+//					discipline3level = 1
 					masquerade = initial(masquerade)
 					generation = bonus
 					generation_bonus = 0
