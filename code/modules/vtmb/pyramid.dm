@@ -134,6 +134,8 @@
 	layer = ABOVE_MOB_LAYER
 	anchored = TRUE
 	density = TRUE
+	max_integrity = 100
+	obj_integrity = 100
 
 /obj/structure/fleshwall
 	name = "flesh wall"
@@ -144,6 +146,8 @@
 	layer = ABOVE_MOB_LAYER
 	anchored = TRUE
 	density = TRUE
+	max_integrity = 100
+	obj_integrity = 100
 
 /obj/structure/fleshwall/Initialize()
 	icon_state = "necro[rand(1, 3)]"

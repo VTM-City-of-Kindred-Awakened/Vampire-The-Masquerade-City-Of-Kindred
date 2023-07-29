@@ -35,7 +35,8 @@
 				if(HS.my_creator)
 					HS.my_creator.AdjustHumanity(-1, 0)
 					HS.my_creator.killed_count = HS.my_creator.killed_count+1
-					if(HS.my_creator.killed_count >= 5 && !HS.my_creator in GLOB.fuckers)
+					HS.my_creator.last_nonraid = world.time
+					if(HS.my_creator.killed_count >= 5)
 						GLOB.fuckers |= HS.my_creator
 						SEND_SOUND(HS.my_creator, sound('code/modules/ziggers/sounds/humanity_loss.ogg', 0, 0, 75))
 						to_chat(HS.my_creator, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
@@ -44,7 +45,8 @@
 					var/mob/living/carbon/human/HM = last_attacker
 					HM.AdjustHumanity(-1, 0)
 					HM.killed_count = HM.killed_count+1
-					if(HM.killed_count >= 5 && !HM in GLOB.fuckers)
+					HM.last_nonraid = world.time
+					if(HM.killed_count >= 5)
 						GLOB.fuckers |= HM
 						SEND_SOUND(HM, sound('code/modules/ziggers/sounds/humanity_loss.ogg', 0, 0, 75))
 						to_chat(HM, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")

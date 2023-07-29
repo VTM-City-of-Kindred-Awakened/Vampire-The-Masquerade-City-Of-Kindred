@@ -814,6 +814,11 @@
 //		var/turf/start = get_turf(caster)
 //		var/obj/projectile/tentacle/H = new(start)
 //		H.hitsound = 'code/modules/ziggers/sounds/tongue.ogg'
+		var/bloodpoints_to_suck = max(0, min(target.bloodpool, level_casting-1))
+		if(bloodpoints_to_suck)
+			caster.bloodpool = min(caster.maxbloodpool, caster.bloodpool+bloodpoints_to_suck)
+			target.bloodpool = max(0, target.bloodpool-bloodpoints_to_suck)
+		target.Stun(10*(level_casting-1))
 		var/obj/item/ammo_casing/magic/tentacle/casing = new (caster.loc)
 		playsound(caster.loc, 'code/modules/ziggers/sounds/tongue.ogg', 100, TRUE)
 		casing.fire_casing(target, caster, null, null, null, ran_zone(), 0,  caster)

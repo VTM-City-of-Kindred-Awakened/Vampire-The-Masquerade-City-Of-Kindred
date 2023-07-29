@@ -225,7 +225,8 @@
 				if(H.mind)
 					if(!H.JOB)
 						H.JOB = SSjob.GetJob(H.mind.assigned_role)
-						addd = H.JOB.experience_addition
+						if(H.JOB)
+							addd = H.JOB.experience_addition
 				P.exper = min(calculate_mob_max_exper(H), P.exper+addd+H.experience_plus)
 				P.save_preferences()
 				P.save_character()

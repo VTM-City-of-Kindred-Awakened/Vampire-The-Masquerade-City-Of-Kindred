@@ -188,6 +188,18 @@
 				var/mob/living/simple_animal/hostile/HS = I
 				if(ishuman(a))
 					HS.my_creator = a
+			if(istype(I, /obj/structure/fleshwall))
+				if(istype(get_area(a), /area/vtm))
+					var/area/vtm/V = get_area(a)
+					if(ishuman(a) && V.upper)
+						var/mob/living/carbon/human/PIS = a
+						PIS.AdjustMasquerade(-1)
+			if(istype(I, /obj/effect/decal/gut_floor))
+				if(istype(get_area(a), /area/vtm))
+					var/area/vtm/V = get_area(a)
+					if(ishuman(a) && V.upper)
+						var/mob/living/carbon/human/PIS = a
+						PIS.AdjustMasquerade(-1)
 			I.CheckParts(parts, R)
 			if(send_feedback)
 				SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)

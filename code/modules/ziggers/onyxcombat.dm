@@ -479,7 +479,8 @@
 						else
 							return
 					if(item_to_pick)
-						HUY.put_in_active_hand(item_to_pick)
+						if(HUY.CanReach(item_to_pick))
+							HUY.put_in_active_hand(item_to_pick)
 						return
 	..()
 
@@ -598,6 +599,7 @@
 	update_shadow()
 	handle_vampire_music()
 	if(src in GLOB.fuckers)
+		last_nonraid = world.time
 		if(key)
 			if(stat != DEAD)
 				if(istype(get_area(src), /area/vtm))

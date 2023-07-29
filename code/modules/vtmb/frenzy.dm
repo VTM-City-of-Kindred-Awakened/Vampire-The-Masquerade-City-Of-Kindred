@@ -179,7 +179,8 @@
 				var/addd = 5
 				if(!H.JOB && H.mind)
 					H.JOB = SSjob.GetJob(H.mind.assigned_role)
-					addd = H.JOB.experience_addition
+					if(H.JOB)
+						addd = H.JOB.experience_addition
 				P.exper = min(calculate_mob_max_exper(H), P.exper+addd+H.experience_plus)
 				if(P.exper == calculate_mob_max_exper(H))
 					to_chat(H, "You've reached a new level! You can add new points in Character Setup (Lobby screen).")
