@@ -297,7 +297,7 @@
 	name = "tentacle"
 	icon_state = "tentacle_end"
 	pass_flags = PASSTABLE
-	damage = 0
+	damage = 25
 	damage_type = BRUTE
 	range = 8
 	hitsound = 'sound/weapons/thudswoosh.ogg'

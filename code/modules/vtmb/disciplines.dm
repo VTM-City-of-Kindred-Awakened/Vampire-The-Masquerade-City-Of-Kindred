@@ -768,7 +768,7 @@
 	icon_state = "serpentis"
 	cost = 1
 	ranged = TRUE
-	delay = 50
+	delay = 5
 	range = 2
 
 /datum/discipline/serpentis/activate(mob/living/target, mob/living/carbon/human/caster)
@@ -798,13 +798,12 @@
 				spawn(5)
 					H.remove_overlay(MUTATIONS_LAYER)
 	if(level_casting >= 2)
-		var/turf/start = get_turf(caster)
-		var/obj/projectile/tentacle/H = new(start)
-		H.hitsound = 'code/modules/ziggers/sounds/tongue.ogg'
-		H.damage = 20*level_casting
-		H.firer = caster
-		H.preparePixelProjectile(target, start)
-		H.fire(direct_target = target)
+//		var/turf/start = get_turf(caster)
+//		var/obj/projectile/tentacle/H = new(start)
+//		H.hitsound = 'code/modules/ziggers/sounds/tongue.ogg'
+		var/obj/item/ammo_casing/magic/tentacle/casing = new (caster.loc)
+		playsound(caster.loc, 'code/modules/ziggers/sounds/tongue.ogg', 100, TRUE)
+		casing.fire_casing(target, caster, null, null, null, ran_zone(), 0,  caster)
 		playsound(target.loc, 'code/modules/ziggers/sounds/serpentis.ogg', 50, TRUE)
 
 /datum/discipline/vicissitude

@@ -20,3 +20,5 @@
 			if(H.client.prefs.discipline3level >= 3)
 				var/obj/effect/proc_holder/spell/targeted/shadowwalk/S = new(H)
 				H.mind.AddSpell(S)
+	var/obj/item/organ/eyes/night_vision/NV = new()
+	NV.Insert(H, TRUE, FALSE)
