@@ -31,6 +31,12 @@
 				trophy_message = showpiece_entry["trophy_message"]
 	if(start_showpiece_type)
 		showpiece = new start_showpiece_type (src)
+	if(!showpiece)
+		for(var/obj/item/I in loc)
+			if(I)
+				showpiece = new I.type (src)
+				qdel(I)
+				return
 	update_icon()
 
 /obj/structure/displaycase/vv_edit_var(vname, vval)
