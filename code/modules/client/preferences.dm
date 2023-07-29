@@ -170,6 +170,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/ambitious = FALSE
 	var/flavor_text
 
+	var/diablerist = 0
+
 //	var/datum/vampireclane/Clane
 
 /proc/calculate_mob_max_exper(var/mob/M)
@@ -2293,6 +2295,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("reset_all")
 					slotlocked = 0
+					diablerist = 0
 					torpor_count = 0
 					exper = 1440
 					generation_bonus = 0
@@ -2370,6 +2373,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.real_name = real_name
 	character.name = character.real_name
+	character.diablerist = diablerist
 
 	if(pref_species.name == "Vampire")
 		var/datum/vampireclane/CLN = new clane.type()

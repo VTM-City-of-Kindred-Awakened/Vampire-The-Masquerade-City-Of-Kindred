@@ -39,6 +39,8 @@
 	next_activation = world.time + rand(cooldown_low,cooldown_high)
 
 /obj/item/organ/heart/gland/proc/update_gland_hud()
+	return
+/*
 	if(!owner)
 		return
 	var/image/holder = owner.hud_list[GLAND_HUD]
@@ -50,7 +52,7 @@
 		holder.icon_state = "hudgland_ready"
 	else
 		holder.icon_state = "hudgland_spent"
-
+*/
 /obj/item/organ/heart/gland/proc/mind_control(command, mob/living/user)
 	if(!ownerCheck() || !mind_control_uses || active_mind_control)
 		return FALSE

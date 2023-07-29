@@ -37,3 +37,35 @@
 /obj/item/police_radio/Destroy()
 	. = ..()
 	GLOB.police_radios -= src
+
+/mob/living/carbon/human
+	var/diablerist = FALSE
+
+/mob/living/carbon/human/Initialize()
+	. = ..()
+	var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]
+	hud.add_to_hud(src)
+
+/mob/living/carbon/human/proc/update_auspex_hud()
+	var/image/holder = hud_list[GLAND_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if(iskindred(src))
+		holder.color = "#ffffff"
+		if(diablerist)
+			holder.icon_state = "diablerie_aura"
+		else
+			holder.icon_state = "aura"
+	else
+		holder.icon_state = "aura"
+		if(isnpc(src))
+			var/mob/living/carbon/human/npc/N = src
+			if(N.danger_source)
+				holder.color = "#ff0000"
+			else
+				holder.color = "#0000ff"
+		else
+			if(a_intent == INTENT_HARM)
+				holder.color = "#ff0000"
+			else
+				holder.color = "#0000ff"

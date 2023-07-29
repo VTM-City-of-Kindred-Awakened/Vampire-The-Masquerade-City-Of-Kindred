@@ -123,8 +123,18 @@
 		loh = TRUE
 	caster.update_sight()
 	caster.add_client_colour(/datum/client_colour/glass_colour/blue)
+	if(level_casting >= 2)
+		var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
+		abductor_hud.add_hud_to(caster)
+	if(level_casting >= 3)
+		var/datum/atom_hud/health_hud = GLOB.huds[DATA_HUD_MEDICAL_BASIC]
+		health_hud.add_hud_to(caster)
 	spawn((delay*level_casting)+caster.discipline_time_plus)
 		if(caster)
+			var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
+			abductor_hud.remove_hud_from(caster)
+			var/datum/atom_hud/health_hud = GLOB.huds[DATA_HUD_MEDICAL_BASIC]
+			health_hud.remove_hud_from(caster)
 			caster.stop_sound_channel(CHANNEL_DISCIPLINES)
 			playsound(caster.loc, 'code/modules/ziggers/sounds/auspex_deactivate.ogg', 50, FALSE)
 			REMOVE_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)

@@ -598,6 +598,7 @@
 		update_blood_hud()
 	update_shadow()
 	handle_vampire_music()
+	update_auspex_hud()
 	if(src in GLOB.fuckers)
 		last_nonraid = world.time
 		if(key)

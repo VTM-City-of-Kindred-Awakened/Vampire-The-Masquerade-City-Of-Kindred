@@ -102,6 +102,11 @@
 						mob.death()
 						adjustBruteLoss(-50, TRUE)
 						adjustFireLoss(-50, TRUE)
+						if(key)
+							var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
+							if(P)
+								P.diablerist = 1
+							diablerist = 1
 					else
 						if(prob(20+((generation-K.generation)*10)))
 							to_chat(src, "<span class='userdanger'><b>[K]'s SOUL OVERCOMES YOURS AND GAIN CONTROL OF YOUR BODY.</b></span>")
@@ -114,6 +119,11 @@
 //							health = initial(health)+100*(13-generation)
 //							mob.death()
 						else
+							if(key)
+								var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
+								if(P)
+									P.diablerist = 1
+								diablerist = 1
 							generation = K.generation
 							maxHealth = initial(maxHealth)+100*(13-generation)
 							health = initial(health)+100*(13-generation)
