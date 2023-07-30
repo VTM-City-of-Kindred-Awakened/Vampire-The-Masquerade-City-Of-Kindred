@@ -24,6 +24,9 @@
 	if(level >= 4)
 		var/datum/action/urn/U = new()
 		U.Grant(H)
+	if(level >= 5)
+		var/datum/action/cobra/C = new()
+		C.Grant(H)
 
 /obj/urn
 	name = "organ urn"
