@@ -233,7 +233,7 @@
 				else
 					to_chat(user, "<span class='warning'>There is no available teleportation place by this coordinates!</span>")
 					qdel(AM)
-
+/*
 /obj/ritualrune/curse
 	name = "Curse Rune"
 	desc = "Curse your enemies in distance."
@@ -246,7 +246,7 @@
 		playsound(loc, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
 		color = rgb(255,0,0)
 		activated = TRUE
-
+*/
 /obj/ritualrune/curse/attack_hand(mob/user)
 	..()
 	var/cursed

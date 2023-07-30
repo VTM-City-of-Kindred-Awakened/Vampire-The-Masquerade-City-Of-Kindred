@@ -42,6 +42,7 @@
 					P.discipline1level = max(1, P.discipline1level-1)
 					P.discipline2level = max(1, P.discipline2level-1)
 					P.discipline3level = max(1, P.discipline3level-1)
+					P.discipline4level = max(1, P.discipline4level-1)
 				generation = min(13, generation+1)
 				P.generation = generation
 			P.humanity = humanity

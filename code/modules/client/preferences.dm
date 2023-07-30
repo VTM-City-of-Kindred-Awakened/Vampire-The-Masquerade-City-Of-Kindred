@@ -2348,6 +2348,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					discipline1level = 1
 					discipline2level = 1
 					discipline3level = 1
+					discipline4level = 1
 					masquerade = initial(masquerade)
 					generation = initial(generation)
 					qdel(clane)
