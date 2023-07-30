@@ -283,7 +283,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(ishuman(speaker))
 			var/mob/living/carbon/human/EX = speaker
 			if(EX.key && EX.client)
-				if(length(message) > 300 && EX.last_nigging != message)
+				if(length(message) > 100 && EX.last_nigging != message)
 					EX.last_nigging = message
 					var/datum/preferences/P = GLOB.preferences_datums[ckey(EX.key)]
 					if(P)

@@ -17,7 +17,7 @@
 /obj/item/arcane_tome/attack_self(mob/user)
 	. = ..()
 	for(var/obj/ritualrune/R in rituals)
-		to_chat(user, "[R.name] - [R.desc]")
+		to_chat(user, "[R.thaumlevel] [R.name] - [R.desc]")
 
 /obj/ritualrune
 	name = "Tremere Rune"
@@ -30,6 +30,7 @@
 	var/activator_bonus = 0
 	var/activated = FALSE
 	var/mob/living/last_activator
+	var/thaumlevel = 1
 
 /mob/living
 	var/thaumaturgy_knowledge = FALSE
@@ -51,6 +52,7 @@
 	desc = "Creates the Blood Guardian to protect tremere or his domain."
 	icon_state = "rune1"
 	word = "UR'JOLA"
+	thaumlevel = 3
 
 /obj/ritualrune/blood_guardian/complete()
 	var/mob/living/simple_animal/hostile/blood_guard/BG = new(loc)
@@ -119,6 +121,7 @@
 	desc = "Creates the Blood Wall to protect tremere or his domain."
 	icon_state = "rune3"
 	word = "SOT'PY-O"
+	thaumlevel = 2
 
 /obj/ritualrune/blood_wall/complete()
 	new /obj/structure/bloodwall(loc)
@@ -171,6 +174,7 @@
 	desc = "Summon souls from the dead. Ask a question and get answers."
 	icon_state = "rune5"
 	word = "TE-ME'LL"
+	thaumlevel = 3
 
 /mob/living/simple_animal/hostile/ghost/tremere
 	maxHealth = 1
@@ -196,6 +200,7 @@
 	desc = "Move your body among the city streets."
 	icon_state = "rune6"
 	word = "POR'TALE"
+	thaumlevel = 5
 
 /obj/ritualrune/teleport/complete()
 	if(!activated)
@@ -234,6 +239,7 @@
 	desc = "Curse your enemies in distance."
 	icon_state = "rune7"
 	word = "CUS-RE'S"
+	thaumlevel = 5
 
 /obj/ritualrune/curse/complete()
 	if(!activated)
@@ -275,6 +281,7 @@
 	desc = "Create a Gargoyle."
 	icon_state = "rune9"
 	word = "GRORRR'RRR"
+	thaumlevel = 4
 
 /obj/ritualrune/gargoyle/complete()
 	for(var/mob/living/carbon/human/H in loc)

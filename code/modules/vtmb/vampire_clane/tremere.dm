@@ -15,6 +15,7 @@
 /datum/discipline/thaumaturgy/post_gain(mob/living/carbon/human/H)
 	var/datum/action/thaumaturgy/T = new()
 	T.Grant(H)
+	T.level = level
 	H.thaumaturgy_knowledge = TRUE
 	if(level >= 3)
 		var/datum/action/bloodshield/B = new()
@@ -26,6 +27,7 @@
 	button_icon_state = "thaumaturgy"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	var/drawing = FALSE
+	var/level = 1
 
 /datum/action/thaumaturgy/Trigger()
 	. = ..()
@@ -36,7 +38,13 @@
 		return
 
 	if(istype(H.get_active_held_item(), /obj/item/arcane_tome))
-		var/ritual = input(owner, "Choose rune to draw:", "Thaumaturgy") as anything in subtypesof(/obj/ritualrune)
+		var/list/shit = list()
+		for(var/i in subtypesof(/obj/ritualrune))
+			var/obj/ritualrune/R = new i(owner)
+			if(R.thaumlevel <= level)
+				shit += i
+			qdel(R)
+		var/ritual = input(owner, "Choose rune to draw:", "Thaumaturgy") as null|anything in shit
 		if(ritual)
 			drawing = TRUE
 			if(do_after(H, 30, H))
@@ -48,13 +56,19 @@
 			else
 				drawing = FALSE
 	else
-		var/ritual = input(owner, "Choose rune to draw (You need an Arcane Tome to reduce random):", "Thaumaturgy") as anything in list("???", "???")
+		var/list/shit = list()
+		for(var/i in subtypesof(/obj/ritualrune))
+			var/obj/ritualrune/R = new i(owner)
+			if(R.thaumlevel <= level)
+				shit += i
+			qdel(R)
+		var/ritual = input(owner, "Choose rune to draw (You need an Arcane Tome to reduce random):", "Thaumaturgy") as null|anything in list("???")
 		if(ritual)
 			drawing = TRUE
 			if(do_after(H, 30, H))
 				drawing = FALSE
 //				var/list/runes = subtypesof(/obj/ritualrune)
-				var/rune = pick(subtypesof(/obj/ritualrune))
+				var/rune = pick(shit)
 				new rune(H.loc)
 				H.bloodpool = max(0, H.bloodpool-2)
 				if(H.CheckEyewitness(H, H, 7, FALSE))
@@ -80,14 +94,14 @@
 	H.bloodpool = max(0, H.bloodpool-2)
 	playsound(H.loc, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
 	abuse_fix = world.time
-	H.physiology.armor.melee = H.physiology.armor.melee+(50)
-	H.physiology.armor.bullet = H.physiology.armor.bullet+(50)
+	H.physiology.armor.melee += 50
+	H.physiology.armor.bullet += 50
 	animate(H, color = "#ff0000", time = 10, loop = 1)
 	if(H.CheckEyewitness(H, H, 7, FALSE))
 		H.AdjustMasquerade(-1)
 	spawn(100)
 		if(H)
 			playsound(H.loc, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
-			H.physiology.armor.melee = H.physiology.armor.melee-(50)
-			H.physiology.armor.bullet = H.physiology.armor.bullet-(50)
+			H.physiology.armor.melee -= 50
+			H.physiology.armor.bullet -= 50
 			H.color = initial(H.color)

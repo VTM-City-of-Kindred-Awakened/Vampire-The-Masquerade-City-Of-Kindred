@@ -179,10 +179,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(M.key)
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(M.key)]
 		if(P)
-			return 360*(P.discipline1level+P.discipline2level+P.discipline3level-3) + 720*(max(0, 13-P.generation)*max(1, P.generation_bonus)) + 1440*(max(1, 13-P.generation)*max(1, P.generation_bonus))
+			return 360*(P.discipline1level+P.discipline2level+P.discipline3level+P.discipline4level-4) + 1440*(max(1, 13-P.generation)*max(1, P.generation_bonus))
 
 /datum/preferences/proc/calculate_max_exper()
-	return 360*(discipline1level+discipline2level+discipline3level-3) + 720*(max(0, 13-generation)*max(1, generation_bonus)) + 1440*(max(1, 13-generation)*max(1, generation_bonus))
+	return 360*(discipline1level+discipline2level+discipline3level+discipline4level-4) + 1440*(max(1, 13-generation)*max(1, generation_bonus))
 
 /proc/reset_shit(var/mob/M)
 	if(M.key)
@@ -190,7 +190,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(P)
 			P.slotlocked = 0
 			P.torpor_count = 0
-			P.exper = 1440
 			P.generation_bonus = 0
 			P.discipline1level = 1
 			P.discipline2level = 1
@@ -209,9 +208,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			P.discipline4type = null
 			P.enlightement = P.clane.enlightement
 			P.humanity = P.clane.start_humanity
-			P.random_species()
-			P.random_character()
+//			P.random_species()
+//			P.random_character()
 			P.real_name = random_unique_name(P.gender)
+			P.exper = calculate_mob_max_exper(M)
 			P.save_character()
 			P.save_preferences()
 
@@ -380,17 +380,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(13)
 						max_death = 6
 					if(12)
-						max_death = 5
+						max_death = 6
 					if(11)
-						max_death = 4
+						max_death = 5
 					if(10)
-						max_death = 3
+						max_death = 4
 					if(9)
-						max_death = 2
+						max_death = 3
 					if(8)
-						max_death = 1
+						max_death = 2
 					if(7)
-						max_death = 1
+						max_death = 2
 					if(6)
 						max_death = 1
 					if(5)
@@ -399,7 +399,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						max_death = 1
 					if(3)
 						max_death = 1
-			dat += "<b>[pref_species.name == "Vampire" ? "Torpor" : "Clinical Death"] Count:</b> [torpor_count]/[max_death]<BR>"
+			dat += "<b>[pref_species.name == "Vampire" ? "Torpor" : "Clinical Death"] Count:</b> [torpor_count]/[max_death]"
+			if(exper == calculate_max_exper() && torpor_count > 0)
+				dat += " <a href='?_src_=prefs;preference=torpor_restore;task=input'>Restore</a><BR>"
 			dat += "<BR>"
 			dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_BODY]'>Always Random Body: [(randomise[RANDOM_BODY]) ? "Yes" : "No"]</A>"
@@ -474,11 +476,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //			dat += "<a href='?_src_=prefs;preference=species;task=random'>Random Species</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SPECIES]'>Always Random Species: [(randomise[RANDOM_SPECIES]) ? "Yes" : "No"]</A><br>"
 
-			if(exper == calculate_max_exper() && !slotlocked)
-				dat += "<a href='?_src_=prefs;preference=change_appearance;task=input'>Change Appearance</a><BR>"
+			if(exper == calculate_max_exper() && slotlocked)
+				dat += "<a href='?_src_=prefs;preference=change_appearance;task=input'>Change Appearance [exper]/[calculate_max_exper()]</a><BR>"
 
 			if(generation_bonus)
-				dat += "<a href='?_src_=prefs;preference=reset_with_bonus;task=input'>Create new character with generation bonus</a><BR>"
+				dat += "<a href='?_src_=prefs;preference=reset_with_bonus;task=input'>Create new character with generation bonus ([generation]-[generation_bonus])</a><BR>"
 
 			dat += "<BR><b>Flavor Text:</b> [flavor_text] <a href='?_src_=prefs;preference=flavor_text;task=input'>Change</a><BR>"
 
@@ -1781,6 +1783,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(!slotlocked)
 						enlightement = !enlightement
 
+				if("torpor_restore")
+					torpor_count = 0
+					exper = 0
+
 				if("generation")
 					generation_bonus = min(generation_bonus+1, max(0, generation-7))
 					exper = 0
@@ -1794,7 +1800,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							flavor_text = sanitize_text(new_flavor)
 
 				if("change_appearance")
-					torpor_count = max(0, torpor_count-1)
+//					torpor_count = max(0, torpor_count-1)
 					slotlocked = 0
 					exper = 0
 
@@ -2338,7 +2344,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					slotlocked = 0
 					diablerist = 0
 					torpor_count = 0
-					exper = 1440
 					generation_bonus = 0
 					discipline1level = 1
 					discipline2level = 1
@@ -2359,6 +2364,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					random_species()
 					random_character()
 					body_model = rand(1, 3)
+					exper = calculate_max_exper()
 					real_name = random_unique_name(gender)
 					save_character()
 

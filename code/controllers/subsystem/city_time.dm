@@ -63,7 +63,7 @@ SUBSYSTEM_DEF(city_time)
 							var/mode = 1
 							if(HAS_TRAIT(H, TRAIT_NON_INT))
 								mode = 2
-							P.exper = min(calculate_mob_max_exper(H), P.exper+(500/mode))
+							P.exper = min(calculate_mob_max_exper(H), P.exper+(1000/mode))
 		switch(won)
 			if("camarilla")
 				to_chat(world, "Camarilla takes control over the city...")

@@ -12,6 +12,8 @@
 	var/illegal = FALSE
 
 /obj/lombard/attackby(obj/item/W, mob/living/user, params)
+	if(istype(W, /obj/item/stack))
+		return
 	if(W.cost)
 		if(W.illegal == illegal)
 			for(var/i in 1 to W.cost)

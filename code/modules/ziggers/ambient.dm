@@ -75,7 +75,7 @@
 	upper = TRUE
 
 /area/vtm/prince_elevator
-	name = "Prince Elevator"
+	name = "Millenium Elevator"
 	icon_state = "prince"
 	ambience_index = AMBIENCE_INTERIOR
 
@@ -85,17 +85,17 @@
 	ambience_index = AMBIENCE_INTERIOR
 
 /area/vtm/prince
-	name = "Prince Tower"
+	name = "Millenium Tower"
 	icon_state = "prince"
 	ambience_index = AMBIENCE_INTERIOR
 
 /area/vtm/camarilla
-	name = "Camarilla Appartements"
+	name = "Millenium Appartements"
 	icon_state = "camarilla"
 	ambience_index = AMBIENCE_INTERIOR
 
 /area/vtm/cabinet
-	name = "Prince Cabinet"
+	name = "Millenium Upper Level"
 	icon_state = "prince"
 	ambience_index = AMBIENCE_INTERIOR
 	music = /datum/vampiremusic/prince
@@ -135,6 +135,7 @@
 /area/vtm/graveyard/interior
 	name = "Graveyard Interior"
 	icon_state = "interior"
+	upper = FALSE
 
 /area/vtm/park
 	name = "Park"
@@ -155,7 +156,7 @@
 	music = /datum/vampiremusic/sewer
 
 /area/vtm/sewer/nosferatu_town
-	name = "Nosferatu Town"
+	name = "Underground Town"
 	icon_state = "hotel"
 
 /area/vtm/elevator

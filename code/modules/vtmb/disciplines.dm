@@ -49,7 +49,7 @@
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(caster.key)]
 		if(P)
 			if(!HAS_TRAIT(caster, TRAIT_NON_INT))
-				P.exper = min(calculate_mob_max_exper(caster), P.exper+5+caster.experience_plus)
+				P.exper = min(calculate_mob_max_exper(caster), P.exper+10+caster.experience_plus)
 			P.save_preferences()
 			P.save_character()
 	if(violates_masquerade)
@@ -401,22 +401,24 @@
 
 /datum/discipline/potence/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
+	var/mod = 10*level_casting
+	var/armah = 0.5*level_casting
 	caster.remove_overlay(POTENCE_LAYER)
 	var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "potence", -POTENCE_LAYER)
 	caster.overlays_standing[POTENCE_LAYER] = potence_overlay
 	caster.apply_overlay(POTENCE_LAYER)
-	caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+10
-	caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh+10
-	caster.dna.species.meleemod = caster.dna.species.meleemod+(0.3*level_casting)
+	caster.dna.species.punchdamagelow += mod
+	caster.dna.species.punchdamagehigh += mod
+	caster.dna.species.meleemod += armah
 	caster.dna.species.attack_sound = 'code/modules/ziggers/sounds/heavypunch.ogg'
 	spawn(delay+caster.discipline_time_plus)
 		if(caster)
 			if(caster.dna)
 				if(caster.dna.species)
 					playsound(caster.loc, 'code/modules/ziggers/sounds/potence_deactivate.ogg', 50, FALSE)
-					caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-10
-					caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-10
-					caster.dna.species.meleemod = caster.dna.species.meleemod-(0.3*level_casting)
+					caster.dna.species.punchdamagelow -= mod
+					caster.dna.species.punchdamagehigh -= mod
+					caster.dna.species.meleemod -= armah
 					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
 					caster.remove_overlay(POTENCE_LAYER)
 
@@ -432,17 +434,18 @@
 /datum/discipline/fortitude/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	var/mod = min(3, level_casting)
+	var/armah = 15*mod
 	caster.remove_overlay(FORTITUDE_LAYER)
 	var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "fortitude", -FORTITUDE_LAYER)
 	caster.overlays_standing[FORTITUDE_LAYER] = fortitude_overlay
 	caster.apply_overlay(FORTITUDE_LAYER)
-	caster.physiology.armor.melee = caster.physiology.armor.melee+(15*mod)
-	caster.physiology.armor.bullet = caster.physiology.armor.bullet+(15*mod)
+	caster.physiology.armor.melee += armah
+	caster.physiology.armor.bullet += armah
 	spawn(delay+caster.discipline_time_plus)
 		if(caster)
 			playsound(caster.loc, 'code/modules/ziggers/sounds/fortitude_deactivate.ogg', 50, FALSE)
-			caster.physiology.armor.melee = caster.physiology.armor.melee-(15*mod)
-			caster.physiology.armor.bullet = caster.physiology.armor.bullet-(15*mod)
+			caster.physiology.armor.melee -= armah
+			caster.physiology.armor.bullet -= armah
 			caster.remove_overlay(FORTITUDE_LAYER)
 
 /datum/discipline/obfuscate
@@ -483,8 +486,8 @@
 	for(var/mob/living/carbon/human/L in viewers(6, caster))
 		if(L != caster)
 			var/mob/living/carbon/human/H = L
-			H.dna.species.brutemod = H.dna.species.brutemod+mod
-			H.dna.species.burnmod = H.dna.species.burnmod+mod
+			H.dna.species.brutemod += mod
+			H.dna.species.burnmod += mod
 			H.remove_overlay(MUTATIONS_LAYER)
 			var/mutable_appearance/presence_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "presence", -MUTATIONS_LAYER)
 			presence_overlay.pixel_z = 1
@@ -492,8 +495,8 @@
 			H.apply_overlay(MUTATIONS_LAYER)
 			spawn(delay+caster.discipline_time_plus)
 				if(H)
-					H.dna.species.brutemod = H.dna.species.brutemod-mod
-					H.dna.species.burnmod = H.dna.species.burnmod-mod
+					H.dna.species.brutemod -= mod
+					H.dna.species.burnmod -= mod
 					H.remove_overlay(MUTATIONS_LAYER)
 	if(caster)
 		playsound(caster.loc, 'code/modules/ziggers/sounds/presence_deactivate.ogg', 50, FALSE)
@@ -955,7 +958,7 @@
 	..()
 	playsound(target.loc, 'code/modules/ziggers/sounds/quietus.ogg', 50, TRUE)
 	target.Stun(5*level_casting)
-	if(level_casting > 3)
+	if(level_casting >= 3)
 		if(target.bloodpool > 1)
 			var/transfered = max(1, target.bloodpool-3)
 			caster.bloodpool = min(caster.maxbloodpool, caster.bloodpool+transfered)
@@ -1064,16 +1067,18 @@
 			var/mob/living/simple_animal/hostile/biter/lasombra/better/L = new(caster.loc)
 			L.my_creator = caster
 		if(4)
-			for(var/turf/T in range(3, src))
-				new /obj/effect/temp_visual/goliath_tentacle/broodmother(T)
+			var/mob/living/simple_animal/hostile/biter/lasombra/L1 = new(caster.loc)
+			L1.my_creator = caster
+			var/mob/living/simple_animal/hostile/biter/lasombra/better/B = new(caster.loc)
+			B.my_creator = caster
+	//		for(var/turf/T in range(3, src))
+	//			new /obj/effect/temp_visual/goliath_tentacle/broodmother(T)
 		if(5)
-			for(var/turf/T in range(7, src))
-				new /obj/effect/temp_visual/goliath_tentacle/broodmother(T)
+	//		for(var/turf/T in range(7, src))
+	//			new /obj/effect/temp_visual/goliath_tentacle/broodmother(T)
 			var/mob/living/simple_animal/hostile/biter/lasombra/L1 = new(caster.loc)
 			L1.my_creator = caster
 			var/mob/living/simple_animal/hostile/biter/lasombra/L2 = new(caster.loc)
 			L2.my_creator = caster
-			var/mob/living/simple_animal/hostile/biter/lasombra/L3 = new(caster.loc)
-			L3.my_creator = caster
 			var/mob/living/simple_animal/hostile/biter/lasombra/better/B = new(caster.loc)
 			B.my_creator = caster

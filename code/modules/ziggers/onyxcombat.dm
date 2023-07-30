@@ -38,7 +38,7 @@
 			if(P.torpor_count >= max_death)
 				P.torpor_count = 0
 				if(!HAS_TRAIT(src, TRAIT_PHOENIX))
-					P.exper = 0
+//					P.exper = 0
 					P.discipline1level = max(1, P.discipline1level-1)
 					P.discipline2level = max(1, P.discipline2level-1)
 					P.discipline3level = max(1, P.discipline3level-1)
@@ -285,6 +285,10 @@
 						playsound(BD, 'code/modules/ziggers/sounds/kiss.ogg', 50, TRUE)
 					if(iskindred(LV))
 						message_admins("[BD]([BD.key]) is diablerizing [LV]([LV.key])!")
+						var/mob/living/carbon/human/HV = BD.pulling
+						if(HV.stakeimmune)
+							to_chat(BD, "<span class='warning'>There is no <b>HEART</b> in this creature.</span>")
+							return
 					BD.drinksomeblood(LV)
 	..()
 
@@ -319,11 +323,11 @@
 			to_chat(BD, "<span class='notice'>You use blood to heal your wounds.</span>")
 			if(BD.getBruteLoss() + BD.getBruteLoss() >= 25)
 				BD.visible_message("<span class='warning'>Some of [BD]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
-			BD.adjustBruteLoss(-10, TRUE)
+			BD.adjustBruteLoss(-20, TRUE)
 			if(length(BD.all_wounds))
 				var/datum/wound/W = pick(BD.all_wounds)
 				W.remove_wound()
-			BD.adjustFireLoss(-10, TRUE)
+			BD.adjustFireLoss(-20, TRUE)
 			BD.update_damage_overlays()
 			BD.update_health_hud()
 		else
@@ -540,7 +544,7 @@
 			return
 		if(world.time < last_discipline_use+dadelay+5)
 			return
-		if(BD.IsSleeping() && BD.IsUnconscious() && BD.IsParalyzed() && BD.IsKnockdown() && BD.IsStun() && HAS_TRAIT(BD, TRAIT_RESTRAINED))
+		if(BD.IsSleeping() || BD.IsUnconscious() || BD.IsParalyzed() || BD.IsKnockdown() || BD.IsStun() || HAS_TRAIT(BD, TRAIT_RESTRAINED) || !isturf(BD.loc))
 			return
 		last_discipline_click = world.time
 		if(active)

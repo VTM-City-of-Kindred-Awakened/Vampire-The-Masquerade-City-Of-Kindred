@@ -37,7 +37,7 @@
 				if(user.key)
 					var/datum/preferences/P = GLOB.preferences_datums[ckey(user.key)]
 					if(P)
-						P.exper = min(calculate_mob_max_exper(user), P.exper+100)
+						P.exper = min(calculate_mob_max_exper(user), P.exper+500)
 				return
 			else
 				to_chat(user, "Target must be in critical condition or torpor.")

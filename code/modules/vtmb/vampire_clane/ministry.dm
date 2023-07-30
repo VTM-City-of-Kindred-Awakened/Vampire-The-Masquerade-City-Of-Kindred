@@ -47,10 +47,6 @@
 	if(own)
 		own.death()
 
-/obj/urn/New(var/mob/living/owner)
-	. = ..()
-	own = owner
-
 /datum/action/urn
 	name = "Make Urn"
 	desc = "Move your heart to the urn and become immune to stakes."
@@ -80,7 +76,11 @@
 					H.dna.species.inherent_traits |= TRAIT_SLEEPIMMUNE
 					H.dna.species.inherent_traits |= TRAIT_NOSOFTCRIT
 					H.stakeimmune = TRUE
-					new /obj/urn(H.loc, H)
+					urn = new(H.loc)
+					urn.own = owner
+					var/obj/item/organ/heart/heart = H.getorganslot(ORGAN_SLOT_HEART)
+					heart.forceMove(urn)
+
 		else
 			if(H.dna)
 				if(H.dna.species)
@@ -88,6 +88,9 @@
 					H.dna.species.inherent_traits -= TRAIT_SLEEPIMMUNE
 					H.dna.species.inherent_traits -= TRAIT_NOSOFTCRIT
 					H.stakeimmune = FALSE
+					for(var/obj/item/organ/heart/heart in urn)
+						heart.forceMove(H)
+						heart.Insert(H)
 			urn.own = null
 			qdel(urn)
 
@@ -130,3 +133,58 @@
 	var/mob/living/carbon/human/G = owner
 	G.Stun(100)
 	G.petrify(100)
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/cobra
+	name = "Cobra"
+	desc = "Take on the shape a beast."
+	charge_max = 50
+	cooldown_min = 50
+	revert_on_death = TRUE
+	die_with_shapeshifted_form = FALSE
+	shapeshift_type = /mob/living/simple_animal/hostile/cobra
+
+/datum/action/cobra
+	name = "Cobra Form"
+	desc = "Take on the shape a cobra."
+	button_icon_state = "cobra"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/cobra/BC
+
+/datum/action/cobra/Trigger()
+	. = ..()
+	var/mob/living/carbon/human/H = owner
+	if(H.bloodpool < 2)
+		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
+		return
+	if(!BC)
+		BC = new(owner)
+	H.bloodpool = max(0, H.bloodpool-2)
+	BC.Shapeshift(H)
+	spawn(150)
+		if(BC)
+			BC.Restore(BC.myshape)
+
+/mob/living/simple_animal/hostile/cobra
+	name = "Cobra Form"
+	desc = "Hssssss..."
+	icon = 'code/modules/ziggers/48x48.dmi'
+	icon_state = "cobra"
+	icon_living = "cobra"
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	speak_chance = 0
+	speed = 0
+	maxHealth = 300
+	health = 300
+	butcher_results = list(/obj/item/stack/human_flesh = 20)
+	harm_intent_damage = 5
+	melee_damage_lower = 40
+	melee_damage_upper = 40
+	attack_verb_continuous = "slashes"
+	attack_verb_simple = "slash"
+	attack_sound = 'sound/weapons/slash.ogg'
+	a_intent = INTENT_HARM
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	bloodpool = 10
+	maxbloodpool = 10
+	pixel_w = -8

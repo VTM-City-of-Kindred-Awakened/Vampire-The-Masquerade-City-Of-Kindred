@@ -38,6 +38,7 @@
 
 /obj/effect/dummy/phased_mob/shadow
 	var/mob/living/jaunter
+	var/last_go = 0
 
 /obj/effect/dummy/phased_mob/shadow/Initialize(mapload)
 	. = ..()
@@ -59,10 +60,14 @@
 
 
 /obj/effect/dummy/phased_mob/shadow/relaymove(mob/living/user, direction)
+	if(last_go+5 > world.time)
+		return
+	last_go = world.time
 	var/turf/oldloc = loc
 	. = ..()
 	if(loc != oldloc)
-		check_light_level()
+		if(!check_light_level())
+			user.forceMove(oldloc)
 
 /obj/effect/dummy/phased_mob/shadow/phased_check(mob/living/user, direction)
 	. = ..()
@@ -75,6 +80,17 @@
 	var/light_amount = T.get_lumcount()
 	if(light_amount > 0.2) // jaunt ends
 		end_jaunt(TRUE)
+		return FALSE
+	else
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.name == "San Francisco")
+				end_jaunt(TRUE)
+				return FALSE
+		else
+			end_jaunt(TRUE)
+			return FALSE
+	return TRUE
 
 /obj/effect/dummy/phased_mob/shadow/proc/end_jaunt(forced = FALSE)
 	if(jaunter)

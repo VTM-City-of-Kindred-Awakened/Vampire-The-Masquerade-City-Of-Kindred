@@ -142,6 +142,10 @@
 	armour_penetration = 100	//It's magical damage
 	item_flags = DROPDEL
 
+/obj/item/melee/vampirearms/knife/gangrel/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
 /obj/item/melee/vampirearms/chainsaw
 	name = "chainsaw"
 	desc = "A versatile power tool. Useful for limbing trees and delimbing humans."
