@@ -99,36 +99,14 @@
 	desc = "Fall in torpor-like condition and ignore physical damage."
 	button_icon_state = "serpentis"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-
-/datum/action/mummyfy/Trigger()
-	if(istype(owner, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = owner
-		if(H.bloodpool < 2)
-			to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
-			return
-		H.bloodpool = max(0, H.bloodpool-2)
-		to_chat(owner, "<span class='notice'>You activate the Serpentis Mummyfy.</span>")
-		H.Paralyze(600)
-		if(H.dna)
-			if(H.dna.species)
-				H.dna.species.brutemod = 0
-		spawn(600)
-			if(H)
-				if(H.dna)
-					if(H.dna.species)
-						H.dna.species.brutemod = initial(H.dna.species.brutemod)
-
-/datum/action/mummyfy
-	name = "Mummyfy"
-	desc = "Fall in torpor-like condition and ignore physical damage."
-	button_icon_state = "serpentis"
-	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	var/abuse_fix = 0
 
 /datum/action/mummyfy/Trigger()
 	. = ..()
 	if(abuse_fix+150 > world.time)
 		return
+	if(H.CheckEyewitness(H, H, 7, FALSE))
+		H.AdjustMasquerade(-1)
 	abuse_fix = world.time
 	var/mob/living/carbon/human/G = owner
 	G.Stun(100)
