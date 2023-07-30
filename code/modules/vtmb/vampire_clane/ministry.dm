@@ -108,10 +108,10 @@
 	. = ..()
 	if(abuse_fix+150 > world.time)
 		return
-	if(H.CheckEyewitness(H, H, 7, FALSE))
-		H.AdjustMasquerade(-1)
-	abuse_fix = world.time
 	var/mob/living/carbon/human/G = owner
+	if(G.CheckEyewitness(G, G, 7, FALSE))
+		G.AdjustMasquerade(-1)
+	abuse_fix = world.time
 	G.Stun(100)
 	G.petrify(100)
 
