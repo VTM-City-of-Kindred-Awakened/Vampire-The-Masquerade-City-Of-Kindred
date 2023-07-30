@@ -12,6 +12,8 @@
 	male_clothes = "/obj/item/clothing/under/vampire/sport"
 	female_clothes = "/obj/item/clothing/under/vampire/red"
 	enlightement = TRUE
+
+/datum/vampireclane
 	var/hided = FALSE
 	var/additional_hands = FALSE
 	var/additional_wings = FALSE
@@ -148,7 +150,7 @@
 				var/datum/action/acrobate/DA = new()
 				DA.Grant(H)
 
-/datum/vampireclane/tzimisce/proc/switch_masquerade(var/mob/living/carbon/human/H)
+/datum/vampireclane/proc/switch_masquerade(var/mob/living/carbon/human/H)
 	if(!additional_hands && !additional_wings && !additional_centipede && !additional_armor)
 		return
 	if(!hided)

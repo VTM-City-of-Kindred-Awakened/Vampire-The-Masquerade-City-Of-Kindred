@@ -114,3 +114,19 @@
 				if(H.dna)
 					if(H.dna.species)
 						H.dna.species.brutemod = initial(H.dna.species.brutemod)
+
+/datum/action/mummyfy
+	name = "Mummyfy"
+	desc = "Fall in torpor-like condition and ignore physical damage."
+	button_icon_state = "serpentis"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/abuse_fix = 0
+
+/datum/action/mummyfy/Trigger()
+	. = ..()
+	if(abuse_fix+150 > world.time)
+		return
+	abuse_fix = world.time
+	var/mob/living/carbon/human/G = owner
+	G.Stun(100)
+	G.petrify(100)

@@ -117,7 +117,7 @@
 					humanity = "Am I <b>ENLIGHTED</b> or <b>HUMANE</b>?"
 
 		dat += "[humanity]<BR>"
-		if(host.hud_used.discipline1_icon.dscpln)
+		if(host.hud_used)
 			dat += "<b>Known disciplines:</b><BR>"
 			if(host.hud_used.discipline1_icon.dscpln)
 				dat += "[host.hud_used.discipline1_icon.dscpln.name] [host.hud_used.discipline1_icon.dscpln.level] - [host.hud_used.discipline1_icon.dscpln.desc]<BR>"
@@ -191,10 +191,12 @@
 			to_chat(owner, "<span class='notice'>You started to feed [BLOODBONDED] with your own blood.</span>")
 			if(do_mob(owner, BLOODBONDED, 10 SECONDS))
 				var/new_master = FALSE
+				giving = FALSE
 				BLOODBONDED.faction |= H.faction
 				BLOODBONDED.drunked_of |= "[H.dna.real_name]"
 				if(BLOODBONDED.stat == DEAD && !iskindred(BLOODBONDED))
 					if(BLOODBONDED.respawntimeofdeath+6000 > world.time)
+						giving = FALSE
 						if(BLOODBONDED.revive(full_heal = TRUE, admin_revive = TRUE))
 							BLOODBONDED.grab_ghost(force = TRUE)
 							to_chat(BLOODBONDED, "<span class='userdanger'>You rise with a start, you're alive! Or not... You feel your soul going somewhere, as you realize you are embraced by a vampire...</span>")
@@ -221,9 +223,9 @@
 						giving = FALSE
 						return
 				else
-//					if(BLOODBONDED.has_status_effect(STATUS_EFFECT_INLOVE))
-//						BLOODBONDED.remove_status_effect(STATUS_EFFECT_INLOVE)
-//					BLOODBONDED.apply_status_effect(STATUS_EFFECT_INLOVE, owner)
+					if(BLOODBONDED.has_status_effect(STATUS_EFFECT_INLOVE))
+						BLOODBONDED.remove_status_effect(STATUS_EFFECT_INLOVE)
+					BLOODBONDED.apply_status_effect(STATUS_EFFECT_INLOVE, owner)
 					H.bloodpool = max(0, H.bloodpool-2)
 					to_chat(owner, "<span class='notice'>You successfuly fed [BLOODBONDED] with vitae.</span>")
 					if(H.reagents)
