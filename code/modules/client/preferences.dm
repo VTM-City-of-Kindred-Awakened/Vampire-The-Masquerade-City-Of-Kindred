@@ -2578,6 +2578,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			hud_used.discipline3_icon.desc = hud_used.discipline3_icon.dscpln.desc
 			hud_used.discipline3_icon.icon_state = hud_used.discipline3_icon.dscpln.icon_state
 			hud_used.discipline3_icon.main_state = hud_used.discipline3_icon.dscpln.icon_state
+		var/donor = FALSE
+		for(var/i in GLOB.donaters)
+			if(i == "[client.ckey]")
+				donor = TRUE
+		if(!donor)
+			client.prefs.discipline4type = null
 		if(client.prefs.discipline4type && discipline_pref)
 			var/datum/discipline/D = client.prefs.discipline4type
 			hud_used.discipline4_icon.icon = 'code/modules/ziggers/disciplines.dmi'
