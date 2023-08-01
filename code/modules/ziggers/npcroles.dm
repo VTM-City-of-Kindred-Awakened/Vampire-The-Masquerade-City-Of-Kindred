@@ -1121,7 +1121,7 @@
 											"Это полиция, выходите с поднятыми руками!")
 
 /mob/living/carbon/human/npc/guard
-	frakcja = "City"
+	frakcja = "Police"
 	staying = TRUE
 	fights_anyway = TRUE
 

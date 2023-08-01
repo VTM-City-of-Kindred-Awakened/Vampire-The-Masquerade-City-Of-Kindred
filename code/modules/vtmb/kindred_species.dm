@@ -61,6 +61,8 @@
 			dat += "<BR>"
 			if(host.mind.enslaved_to)
 				dat += "My Regnant is [host.mind.enslaved_to], I should obey their wants.<BR>"
+		if(host.frakcja == "Camarilla" || host.frakcja == "Anarch" || host.frakcja == "Sabbat")
+			dat += "I belong to [host.frakcja] faction, I shouldn't disobey their rules.<BR>"
 		if(host.generation)
 			dat += "I'm from [host.generation] generation.<BR>"
 		if(host.mind.special_role)
@@ -193,6 +195,12 @@
 				var/new_master = FALSE
 				giving = FALSE
 				BLOODBONDED.faction |= H.faction
+				if(!istype(BLOODBONDED, /mob/living/carbon/human/npc))
+					if(H.frakcja == "Camarilla" || H.frakcja == "Anarch" || H.frakcja == "Sabbat")
+						if(BLOODBONDED.frakcja != H.frakcja)
+							BLOODBONDED.frakcja = H.frakcja
+							SSfactionwar.switch_member(BLOODBONDED, H.frakcja)
+							to_chat(BLOODBONDED, "<span class='notice'>You are now member of <b>[H.frakcja]</b></span>")
 				BLOODBONDED.drunked_of |= "[H.dna.real_name]"
 				if(BLOODBONDED.stat == DEAD && !iskindred(BLOODBONDED))
 					if(BLOODBONDED.respawntimeofdeath+6000 > world.time)

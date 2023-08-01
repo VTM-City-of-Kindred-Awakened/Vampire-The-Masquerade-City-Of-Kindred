@@ -145,7 +145,7 @@
 		if(F)
 			if(get_dist(F, H) < 8 && F.z == H.z)
 				fearstack += F.stage
-	for(var/mob/living/carbon/human/U in oviewers(7, src))
+	for(var/mob/living/carbon/human/U in viewers(7, src))
 		if(U.on_fire)
 			fearstack += 1
 
@@ -163,6 +163,9 @@
 			if(H.CheckEyewitness(H, H, 7, FALSE))
 				H.AdjustMasquerade(-1)
 	if(HAS_TRAIT(H, TRAIT_UNMASQUERADE))
+		if(H.CheckEyewitness(H, H, 7, FALSE))
+			H.AdjustMasquerade(-1)
+	if(HAS_TRAIT(H, TRAIT_NONMASQUERADE))
 		if(H.CheckEyewitness(H, H, 7, FALSE))
 			H.AdjustMasquerade(-1)
 	if(H.hearing_ghosts)

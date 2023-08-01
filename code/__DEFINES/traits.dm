@@ -257,7 +257,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PHOENIX			"phoenix"
 #define TRAIT_LAZY			"lazy"
 #define TRAIT_HOMOSEXUAL			"homosexual"
-#define TRAIT_UNMASQUERADE			"unmasquerade"
+#define TRAIT_UNMASQUERADE			"unmasquerade"	//For tzi clothing
+#define TRAIT_NONMASQUERADE			"nonmasquerade"	//For tzi mods
 
 // You can stare into the abyss, but it does not stare back.
 // You're immune to the hallucination effect of the supermatter, either

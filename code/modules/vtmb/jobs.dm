@@ -79,7 +79,8 @@
 
 /datum/outfit/job/prince/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.frakcja = "camarilla"
+	H.frakcja = "Camarilla"
+	SSfactionwar.camarilla_members += H
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/prince/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
@@ -157,7 +158,8 @@
 
 /datum/outfit/job/sheriff/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.frakcja = "camarilla"
+	H.frakcja = "Camarilla"
+	SSfactionwar.camarilla_members += H
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/sheriff/female
 
@@ -228,7 +230,8 @@
 
 /datum/outfit/job/clerk/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.frakcja = "camarilla"
+	H.frakcja = "Camarilla"
+	SSfactionwar.camarilla_members += H
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/clerk/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
@@ -289,7 +292,8 @@
 
 /datum/outfit/job/agent/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.frakcja = "camarilla"
+	H.frakcja = "Camarilla"
+	SSfactionwar.camarilla_members += H
 
 /obj/effect/landmark/start/camarillaagent
 	name = "Camarilla Agent"
@@ -582,7 +586,8 @@
 
 /datum/outfit/job/barkeeper/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.frakcja = "anarch"
+	H.frakcja = "Anarch"
+	SSfactionwar.anarch_members += H
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/bar/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
@@ -633,7 +638,8 @@
 
 /datum/outfit/job/bouncer/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.frakcja = "anarch"
+	H.frakcja = "Anarch"
+	SSfactionwar.anarch_members += H
 
 /obj/effect/landmark/start/bouncer
 	name = "Bouncer"
@@ -686,7 +692,8 @@
 
 /datum/outfit/job/dealer/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.frakcja = "anarch"
+	H.frakcja = "Anarch"
+	SSfactionwar.anarch_members += H
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels/red
@@ -733,7 +740,8 @@
 
 /datum/outfit/job/supply/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.frakcja = "anarch"
+	H.frakcja = "Anarch"
+	SSfactionwar.anarch_members += H
 
 /obj/effect/landmark/start/supplytechnician
 	name = "Supply Technician"
@@ -1241,7 +1249,7 @@
 
 /datum/outfit/job/sabbatist/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.frakcja = "sabbat"
+	H.frakcja = "Sabbat"
 	if(H.gender == MALE)
 		shoes = /obj/item/clothing/shoes/vampire
 		if(H.clane)

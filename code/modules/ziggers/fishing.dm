@@ -81,7 +81,7 @@
 					if(user.key)
 						var/datum/preferences/P = GLOB.preferences_datums[ckey(user.key)]
 						if(P)
-							P.exper = min(calculate_mob_max_exper(user), P.exper+20)
+							P.exper = min(calculate_mob_max_exper(user), P.exper+10)
 				else
 					to_chat(user, "<span class='warning'>Nothing!</span>")
 			else

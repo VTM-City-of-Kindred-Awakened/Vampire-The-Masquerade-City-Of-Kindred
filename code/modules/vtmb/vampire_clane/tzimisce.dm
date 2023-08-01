@@ -156,6 +156,7 @@
 	if(!hided)
 		hided = TRUE
 		violating_appearance = FALSE
+		REMOVE_TRAIT(H, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 		if(additional_hands)
 			H.remove_overlay(PROTEAN_LAYER)
 		if(additional_wings)
@@ -172,6 +173,8 @@
 		violating_appearance = TRUE
 		if(!additional_hands && !additional_wings && !additional_centipede && !additional_armor)
 			violating_appearance = FALSE
+		if(violating_appearance)
+			ADD_TRAIT(H, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 		if(additional_hands)
 			H.remove_overlay(PROTEAN_LAYER)
 			var/mutable_appearance/hands2_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "2hands", -PROTEAN_LAYER)

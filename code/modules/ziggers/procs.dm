@@ -59,9 +59,9 @@
 				SSbad_guys_party.next_fire = max(world.time, SSbad_guys_party.next_fire+600)
 
 	if(src in GLOB.masquerade_breakers_list)
-		if(masquerade > 1)
+		if(masquerade > 2)
 			GLOB.masquerade_breakers_list -= src
-	else if(masquerade < 2)
+	else if(masquerade < 3)
 		GLOB.masquerade_breakers_list |= src
 
 /mob/living/carbon/human/npc/proc/backinvisible(var/atom/A)
