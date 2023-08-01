@@ -9,6 +9,7 @@
 	var/fights_anyway = FALSE
 	var/last_danger_meet = 0
 	var/mob/living/danger_source
+	var/atom/movable/less_danger
 	var/mob/living/last_attacker
 
 	var/turf/walktarget	//dlya movementa
@@ -385,6 +386,13 @@
 		if(get_dist(src, CPN.walktarget) <= CPN.stopturf)
 			walk(src,0)
 			CPN.walktarget = null
+		for(var/obj/effect/decal/cleanable/blood/B in NewLoc)
+			if(B)
+				if(B.bloodiness)
+					walk(src,0)
+					CPN.walktarget = null
+					if(!CPN.CheckMove())
+						step_away(CPN, B)
 	if(HAS_TRAIT(src, TRAIT_RUBICON))
 		if(istype(NewLoc, /turf/open/floor/plating/shit))
 			return
@@ -413,7 +421,7 @@
 		if(user.a_intent == INTENT_DISARM)
 			Aggro(user, TRUE)
 		if(user.a_intent == INTENT_HARM)
-			for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
+			for(var/mob/living/carbon/human/npc/NEPIC in oviewers(7, src))
 				NEPIC.Aggro(user)
 			Aggro(user, TRUE)
 	..()
@@ -422,7 +430,7 @@
 	. = ..()
 	if(P)
 		if(P.firer)
-			for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
+			for(var/mob/living/carbon/human/npc/NEPIC in oviewers(7, src))
 				NEPIC.Aggro(P.firer)
 			Aggro(P.firer, TRUE)
 			for(var/obj/item/police_radio/R in GLOB.police_radios)
@@ -438,7 +446,7 @@
 	. = ..()
 	if(user)
 		if(W.force)
-			for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, src))
+			for(var/mob/living/carbon/human/npc/NEPIC in oviewers(7, src))
 				NEPIC.Aggro(user)
 			Aggro(user, TRUE)
 

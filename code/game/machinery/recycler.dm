@@ -201,6 +201,7 @@
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Unconscious(100)
 	L.adjustBruteLoss(crush_damage)
+	qdel(src)
 
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"

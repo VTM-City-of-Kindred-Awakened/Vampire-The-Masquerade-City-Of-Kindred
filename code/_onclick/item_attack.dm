@@ -99,6 +99,7 @@
 
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
+	user.lastattacked = M
 
 	if(force && M == user && user.client)
 		user.client.give_award(/datum/award/achievement/misc/selfouch, user)

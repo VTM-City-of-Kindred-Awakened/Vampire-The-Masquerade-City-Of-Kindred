@@ -74,39 +74,43 @@
 		toggle_move_intent(src)
 	set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
 
-	if(get_dist(frenzy_target, src) <= 1)
-		if(isliving(frenzy_target))
-			var/mob/living/L = frenzy_target
-			if(L.bloodpool && L.stat != DEAD && last_drinkblood_use+95 <= world.time)
-				L.grabbedby(src)
-				if(ishuman(L))
-					L.emote("scream")
-					var/mob/living/carbon/human/BT = L
-					BT.add_bite_animation()
-				if(CheckEyewitness(L, src, 7, FALSE))
-					AdjustMasquerade(-1)
-				playsound(src, 'code/modules/ziggers/sounds/drinkblood1.ogg', 50, TRUE)
-				L.visible_message("<span class='warning'><b>[src] bites [L]'s neck!</b></span>", "<span class='warning'><b>[src] bites your neck!</b></span>")
-				face_atom(L)
-				drinksomeblood(L)
+	var/atom/fear
+	for(var/obj/effect/fire/F in GLOB.fires_list)
+		if(F)
+			if(get_dist(src, F) < 8 && F.z == src.z)
+				fear = F
+
+	if(fear)
+		step_away(src,fear,0)
+		if(prob(25))
+			emote("scream")
 	else
-		step_to(src,frenzy_target,0)
-		face_atom(frenzy_target)
+		if(get_dist(frenzy_target, src) <= 1)
+			if(isliving(frenzy_target))
+				var/mob/living/L = frenzy_target
+				if(L.bloodpool && L.stat != DEAD && last_drinkblood_use+95 <= world.time)
+					L.grabbedby(src)
+					if(ishuman(L))
+						L.emote("scream")
+						var/mob/living/carbon/human/BT = L
+						BT.add_bite_animation()
+					if(CheckEyewitness(L, src, 7, FALSE))
+						AdjustMasquerade(-1)
+					playsound(src, 'code/modules/ziggers/sounds/drinkblood1.ogg', 50, TRUE)
+					L.visible_message("<span class='warning'><b>[src] bites [L]'s neck!</b></span>", "<span class='warning'><b>[src] bites your neck!</b></span>")
+					face_atom(L)
+					drinksomeblood(L)
+		else
+			step_to(src,frenzy_target,0)
+			face_atom(frenzy_target)
 
 /mob/living/carbon/human/proc/get_frenzy_targets()
 	var/list/targets = list()
 	for(var/mob/living/L in oviewers(7, src))
-		if(clane)
-			if(clane.name == "Banu Haqim")
-				if(L.bloodpool && L.stat != DEAD)
-					targets += L
-					if(L == frenzy_target)
-						return L
-			else
-				if(!iskindred(L) && L.bloodpool && L.stat != DEAD)
-					targets += L
-					if(L == frenzy_target)
-						return L
+		if(!iskindred(L) && L.bloodpool && L.stat != DEAD)
+			targets += L
+			if(L == frenzy_target)
+				return L
 	if(length(targets) > 0)
 		return pick(targets)
 	else
@@ -131,9 +135,28 @@
 
 /mob/living/carbon/human
 	var/datum/job/JOB
+	var/roundstart_vampire = TRUE
 
 /datum/species/kindred/spec_life(mob/living/carbon/human/H)
 	. = ..()
+	//FIRE FEAR
+	var/fearstack = 0
+	for(var/obj/effect/fire/F in GLOB.fires_list)
+		if(F)
+			if(get_dist(F, H) < 8 && F.z == H.z)
+				fearstack += F.stage
+	for(var/mob/living/carbon/human/U in oviewers(7, src))
+		if(U.on_fire)
+			fearstack += 1
+
+	if(fearstack)
+		if(prob(fearstack*5))
+			H.do_jitter_animation(10)
+		if(!H.has_status_effect(STATUS_EFFECT_FEAR))
+			H.apply_status_effect(STATUS_EFFECT_FEAR)
+	else
+		H.remove_status_effect(STATUS_EFFECT_FEAR)
+
 	var/skipface = (H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE))
 	if(H.clane)
 		if(!skipface && H.clane.violating_appearance)
@@ -187,10 +210,11 @@
 				P.save_preferences()
 				P.save_character()
 				H.last_experience = world.time
-			if(P.generation != H.generation)
-				P.generation = H.generation
-				P.save_preferences()
-				P.save_character()
+			if(H.roundstart_vampire)
+				if(P.generation != H.generation)
+					P.generation = H.generation
+					P.save_preferences()
+					P.save_character()
 			if(P.humanity < 1)
 				H.enter_frenzymod()
 				reset_shit(H)

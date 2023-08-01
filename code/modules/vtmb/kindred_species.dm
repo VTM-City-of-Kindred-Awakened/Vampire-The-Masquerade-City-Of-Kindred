@@ -200,6 +200,7 @@
 						if(BLOODBONDED.revive(full_heal = TRUE, admin_revive = TRUE))
 							BLOODBONDED.grab_ghost(force = TRUE)
 							to_chat(BLOODBONDED, "<span class='userdanger'>You rise with a start, you're alive! Or not... You feel your soul going somewhere, as you realize you are embraced by a vampire...</span>")
+						BLOODBONDED.roundstart_vampire = TRUE
 						BLOODBONDED.set_species(/datum/species/kindred)
 						BLOODBONDED.generation = H.generation+1
 						if(H.generation < 13)
@@ -210,7 +211,7 @@
 							if(BLOODBONDED.clane.alt_sprite)
 								BLOODBONDED.skin_tone = "albino"
 								BLOODBONDED.update_body()
-							BLOODBONDED.create_disciplines(FALSE, BLOODBONDED.clane.clane_disciplines[1], BLOODBONDED.clane.clane_disciplines[2], BLOODBONDED.clane.clane_disciplines[3])
+							BLOODBONDED.create_disciplines(FALSE, H.client.prefs.discipline1type, H.client.prefs.discipline2type, H.client.prefs.discipline3type)
 							BLOODBONDED.maxbloodpool = 10+((13-BLOODBONDED.generation)*5)
 							BLOODBONDED.clane.enlightement = H.clane.enlightement
 							if(BLOODBONDED.generation < 13)
@@ -218,6 +219,10 @@
 								BLOODBONDED.health = initial(BLOODBONDED.health)+50*(13-BLOODBONDED.generation)
 						else
 							BLOODBONDED.clane = new /datum/vampireclane/caitiff()
+						qdel(BLOODBONDED.hud_used)
+						BLOODBONDED.hud_used = new BLOODBONDED.hud_type(BLOODBONDED)
+						BLOODBONDED.update_sight()
+						SEND_SIGNAL(BLOODBONDED, COMSIG_MOB_HUD_CREATED)
 					else
 						to_chat(owner, "<span class='notice'>[BLOODBONDED] is totally <b>DEAD</b>!</span>")
 						giving = FALSE

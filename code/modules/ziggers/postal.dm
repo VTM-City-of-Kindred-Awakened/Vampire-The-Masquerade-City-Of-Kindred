@@ -28,6 +28,7 @@
 	if(istype(I, /obj/item/mark))
 		new /obj/item/stack/dollar/ten(loc)
 		new /obj/item/stack/dollar/ten(loc)
+		new /obj/item/stack/dollar/ten(loc)
 		say("[I] delivered!")
 		qdel(I)
 	return

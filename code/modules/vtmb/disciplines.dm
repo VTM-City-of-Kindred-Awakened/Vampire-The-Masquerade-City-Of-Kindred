@@ -234,12 +234,9 @@
 		if(3 to 4)
 			to_chat(target, "<span class='userdanger'><b>THINK TWICE</b></span>")
 			caster.say("THINK TWICE!!")
-			if(level_casting == 3)
-				target.Jitter(10)
-				target.Stun(20)
-			else
-				target.Jitter(20)
-				target.Stun(40)
+			ADD_TRAIT(target, TRAIT_PACIFISM, "dominate")
+			spawn(50)
+				REMOVE_TRAIT(target, TRAIT_PACIFISM, "dominate")
 		if(5)
 			to_chat(target, "<span class='userdanger'><b>YOU SHOULD KILL YOURSELF NOW</b></span>")
 			caster.say("YOU SHOULD KILL YOURSELF NOW!!")
@@ -956,6 +953,7 @@
 
 /datum/discipline/quietus/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
+/*
 	playsound(target.loc, 'code/modules/ziggers/sounds/quietus.ogg', 50, TRUE)
 	target.Stun(5*level_casting)
 	if(level_casting >= 3)
@@ -971,7 +969,7 @@
 		H.apply_overlay(MUTATIONS_LAYER)
 		spawn(5*level_casting)
 			H.remove_overlay(MUTATIONS_LAYER)
-
+*/
 /datum/discipline/necromancy
 	name = "Necromancy"
 	desc = "Offers control over another, undead reality."

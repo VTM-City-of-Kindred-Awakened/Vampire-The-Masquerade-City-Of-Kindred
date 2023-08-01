@@ -142,6 +142,13 @@
 	armour_penetration = 100	//It's magical damage
 	item_flags = DROPDEL
 
+/obj/item/melee/vampirearms/knife/quietus
+	name = "poison hand"
+	icon_state = "quietus"
+	w_class = WEIGHT_CLASS_BULKY
+	armour_penetration = 100	//It's magical damage
+	item_flags = DROPDEL
+
 /obj/item/melee/vampirearms/knife/gangrel/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)

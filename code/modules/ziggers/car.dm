@@ -5,6 +5,44 @@
 #define BACKWARDS 0
 #define AHEAD 1
 
+/obj/item/gas_can
+	name = "gas can"
+	desc = "Stores gasoline or pure fire death."
+	icon_state = "gasoline"
+	icon = 'code/modules/ziggers/items.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	lefthand_file = 'code/modules/ziggers/righthand.dmi'
+	righthand_file = 'code/modules/ziggers/lefthand.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+	var/stored_gasoline = 0
+
+/obj/item/gas_can/examine(mob/user)
+	. = ..()
+	. += "<b>Gas</b>: [stored_gasoline]/1000"
+
+/obj/item/gas_can/full
+	stored_gasoline = 1000
+
+/obj/item/gas_can/rand
+
+/obj/item/gas_can/rand/Initialize()
+	. = ..()
+	stored_gasoline = rand(0, 500)
+
+/obj/item/gas_can/afterattack(atom/A, mob/user, proximity)
+	. = ..()
+	if(istype(get_turf(A), /turf/open/floor) && !istype(A, /obj/vampire_car) && !istype(A, /obj/structure/fuelstation))
+		var/obj/effect/decal/cleanable/gasoline/G = locate() in get_turf(A)
+		if(G)
+			return
+		if(!proximity)
+			return
+		if(stored_gasoline < 50)
+			return
+		stored_gasoline = max(0, stored_gasoline-50)
+		new /obj/effect/decal/cleanable/gasoline(get_turf(A))
+		playsound(get_turf(src), 'code/modules/ziggers/sounds/gas_splat.ogg', 50, TRUE)
+
 /obj/vampire_car
 	name = "car"
 	desc = "Take me home, country roads..."
@@ -52,6 +90,8 @@
 
 	var/exploded = FALSE
 	var/beep_sound = 'code/modules/ziggers/sounds/beep.ogg'
+
+	var/gas = 1000
 
 /obj/vampire_car/ComponentInitialize()
 	. = ..()
@@ -102,22 +142,35 @@
 			return
 
 /obj/vampire_car/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/gas_can))
+		var/obj/item/gas_can/G = I
+		if(G.stored_gasoline && gas < 1000 && isturf(user.loc))
+			var/gas_to_transfer = min(1000-gas, min(100, max(1, G.stored_gasoline)))
+			G.stored_gasoline = max(0, G.stored_gasoline-gas_to_transfer)
+			gas = min(1000, gas+gas_to_transfer)
+			playsound(loc, 'code/modules/ziggers/sounds/gas_fill.ogg', 50, TRUE)
+			to_chat(user, "<span class='notice'>You transfer [gas_to_transfer] to [src].</span>")
+		return
 	if(istype(I, /obj/item/vamp/keys))
 		var/obj/item/vamp/keys/K = I
 		if(istype(I, /obj/item/vamp/keys/hack))
 			if(!repairing)
 				repairing = TRUE
 				if(do_mob(user, src, 20 SECONDS))
-					if(prob(50) || HAS_TRAIT(user, TRAIT_BONE_KEY))
+					if(prob(25) || HAS_TRAIT(user, TRAIT_BONE_KEY))
 						locked = FALSE
 						repairing = FALSE
 						to_chat(user, "<span class='notice'>You've managed to open [src]'s lock.</span>")
 						playsound(src, 'code/modules/ziggers/sounds/open.ogg', 50, TRUE)
+						if(initial(access) == "none")
+							if(ishuman(user))
+								var/mob/living/carbon/human/H = user
+								H.AdjustHumanity(-1, 4)
 						return
 					else
 						to_chat(user, "<span class='warning'>You've failed to open [src]'s lock.</span>")
 						playsound(src, 'code/modules/ziggers/sounds/signal.ogg', 50, FALSE)
-						for(var/mob/living/carbon/human/npc/police/P in range(7, src))
+						for(var/mob/living/carbon/human/npc/police/P in oviewers(7, src))
 							if(P)
 								P.Aggro(user)
 						repairing = FALSE
@@ -162,7 +215,7 @@
 			if(!driver && !length(passengers) && last_beep+70 < world.time && locked)
 				last_beep = world.time
 				playsound(src, 'code/modules/ziggers/sounds/signal.ogg', 50, FALSE)
-				for(var/mob/living/carbon/human/npc/police/P in range(7, src))
+				for(var/mob/living/carbon/human/npc/police/P in oviewers(7, src))
 					P.Aggro(user)
 
 			if(prob(10) && locked)
@@ -173,6 +226,7 @@
 
 /obj/vampire_car/Initialize()
 	. = ..()
+	gas = rand(100, 1000)
 	FARI = new(src)
 	FARI.forceMove(get_step(src, facing_dir))
 	FARI.anchored = TRUE
@@ -202,6 +256,12 @@
 			qdel(G)
 
 /obj/vampire_car/process(delta_time)
+	if(gas <= 0)
+		on = FALSE
+		STOP_PROCESSING(SSobj, src)
+		set_light(0)
+		if(driver)
+			to_chat(driver, "<span class='warning'>No fuel in the tank!</span>")
 	if(last_speeded+15 < world.time)
 		speed = 0
 	if(last_vzhzh+10 < world.time)
@@ -212,6 +272,8 @@
 
 /obj/vampire_car/examine(mob/user)
 	. = ..()
+	if(user.loc == src)
+		. += "<b>Gas</b>: [gas]/1000"
 	if(health < maxhealth && health >= maxhealth-(maxhealth/4))
 		. += "It's slightly dented..."
 	if(health < maxhealth-(maxhealth/4) && health >= maxhealth/2)
@@ -516,6 +578,7 @@
 			delay = delay /= 0.75
 		glide_size = (32 / delay) * world.tick_lag / (diagonal ? 0.75 : 1)// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
 		step(src, moving_dir)
+		gas = max(0, gas-1)
 		dir = facing_dir
 		FARI.forceMove(get_step(src, facing_dir))
 		last_dir = moving_dir

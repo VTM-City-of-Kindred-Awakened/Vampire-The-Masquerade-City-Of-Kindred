@@ -501,7 +501,7 @@
 			say("Printer currently unavailable, please wait a moment.")
 	if(href_list["printposter"])
 		if(printer_cooldown < world.time)
-			new /obj/item/poster/random_official(src.loc)
+			new /obj/item/poster/random_contraband(src.loc)
 			printer_cooldown = world.time + PRINTER_COOLDOWN
 		else
 			say("Printer currently unavailable, please wait a moment.")

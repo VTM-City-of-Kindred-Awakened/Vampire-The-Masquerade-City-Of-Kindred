@@ -280,13 +280,24 @@
 	UnregisterSignal(src, COMSIG_MOVABLE_HEAR)
 	..()
 
-/obj/item/vamp/phone/attack_self(mob/user)
-	..()
+/obj/item/vamp/phone/ui_interact(mob/user, datum/tgui/ui)
+	var/lasombra = FALSE
+	if(iskindred(user))
+		var/mob/living/carbon/human/H = user
+		if(H.clane)
+			if(H.clane.name == "Lasombra")
+				lasombra = TRUE
+	if(lasombra)
+		return
 	if(closed)
 		closed = FALSE
 		icon_state = "phone2"
+		ui = SStgui.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "Telephone", "Telephone")
+			ui.open()
+/*
 	else
-		user << browse(null, "window=phone")
 		closed = TRUE
 		icon_state = "phone0"
 		talking = FALSE
@@ -294,23 +305,38 @@
 			online.online = null
 			online.talking = FALSE
 			online = null
-
-/obj/item/vamp/phone/attack_hand(mob/user)
-	var/lasombra = FALSE
-	if(iskindred(user))
-		var/mob/living/carbon/human/H = user
-		if(H.clane)
-			if(H.clane.name == "Lasombra")
-				lasombra = TRUE
-	if(!closed && user.get_inactive_held_item() == src)
-		if(!lasombra)
-			OpenMenu(user)
-	else if(anchored)
-		if(!lasombra)
-			OpenMenu(user)
+			ui.close()
+*/
+/obj/item/vamp/phone/attack_self(mob/user)
+	if(!closed)
+		closed = TRUE
+		icon_state = "phone0"
+		talking = FALSE
+		if(online)
+			online.online = null
+			online.talking = FALSE
+			online = null
 	else
-		..()
+		return ..()
 
+/obj/item/vamp/phone/ui_data(mob/user)
+	var/list/data = list()
+	data["calling"] = FALSE
+	if(last_call+100 > world.time && !talking)
+		data["calling"] = TRUE
+
+	data["online"] = online
+	data["talking"] = talking
+	data["my_number"] = choosed_number
+	data["choosed_number"] = number
+	if(online)
+		data["calling_user"] = "(+1 707) [online.number]"
+		for(var/datum/phonecontact/P in contacts)
+			if(P.number == online.number)
+				data["calling_user"] = P.name
+
+	return data
+/*
 /obj/item/vamp/phone/proc/OpenMenu(var/mob/mobila)
 	var/dat = "<body><center><h2>Phone</h2><BR>"
 	if(last_call+100 > world.time && !talking)
@@ -347,6 +373,129 @@
 	dat += "</body>"
 	mobila << browse(dat, "window=phone;size=250x350;border=1;can_resize=0;can_minimize=0")
 	onclose(mobila, "phone", src)
+*/
+
+/obj/item/vamp/phone/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("hang")
+			last_call = 0
+			if(talking)
+				talking = FALSE
+				if(online)
+					online.talking = FALSE
+			if(online)
+				playsound(online, 'code/modules/ziggers/sounds/phonestop.ogg', 25, FALSE)
+				online.online = null
+				online = null
+			.= TRUE
+			attack_self(usr)
+			return
+		if("accept")
+			if(online)
+				talking = TRUE
+				online.online = src
+				online.talking = TRUE
+			.= TRUE
+			attack_self(usr)
+			return
+		if("decline")
+			talking = FALSE
+			if(online)
+				playsound(online, 'code/modules/ziggers/sounds/phonestop.ogg', 25, FALSE)
+				online.online = null
+				online.talking = FALSE
+				online = null
+			.= TRUE
+			attack_self(usr)
+			return
+		if("call")
+			for(var/obj/item/vamp/phone/PHN in GLOB.phones_list)
+				if(PHN.number == choosed_number)
+					if(!PHN.online && !PHN.talking)
+						last_call = world.time
+						online = PHN
+						PHN.online = src
+						Recall(online, usr)
+					else
+						to_chat(usr, "<span class='notice'>Abonent is busy.</span>")
+			if(!online)
+				if(choosed_number == "#111")
+					call_sound = 'code/modules/ziggers/sounds/call.ogg'
+					to_chat(usr, "<span class='notice'>Settings are now reset to default.</span>")
+				else if(choosed_number == "#228")
+					call_sound = 'code/modules/ziggers/sounds/nokia.ogg'
+					to_chat(usr, "<span class='notice'>Code activated.</span>")
+				else if(choosed_number == "#666")
+					call_sound = 'sound/voice/human/malescream_6.ogg'
+					to_chat(usr, "<span class='notice'>Code activated.</span>")
+				else if(choosed_number == "#34")
+					usr << link("https://rule34.xxx/index.php?page=post&s=list&tags=werewolf")
+					to_chat(usr, "<span class='notice'>Code activated.</span>")
+				else
+					to_chat(usr, "<span class='notice'>Invalid number.</span>")
+			.= TRUE
+			attack_self(usr)
+			return
+		if("contacts")
+			var/list/options = list("Add", "Choose", "My Number")
+			var/option =  input(usr, "Select an option", "Option Selection") as null|anything in options
+			switch(option)
+				if("Add")
+					var/new_contact = input(usr, "Input phone number", "Add Contact")  as text|null
+					if(new_contact)
+						var/datum/phonecontact/NEWC = new()
+						NEWC.number = "[new_contact]"
+						contacts += NEWC
+						var/new_contact_name = input(usr, "Input name", "Add Contact")  as text|null
+						if(new_contact_name)
+							NEWC.name = "[new_contact_name]"
+						else
+							var/numbrr = length(contacts)+1
+							NEWC.name = "Contact [numbrr]"
+				if("Choose")
+					var/list/shit = list()
+					for(var/datum/phonecontact/CNTCT in contacts)
+						if(CNTCT)
+							shit += CNTCT.name
+					if(length(shit) >= 1)
+						var/result = input(usr, "Select a contact", "Contact Selection") as null|anything in shit
+						if(result)
+							for(var/datum/phonecontact/CNTCT in contacts)
+								if(CNTCT.name == result)
+									if(CNTCT.number == "")
+										CNTCT.check_global_contacts()
+										if(CNTCT.number == "")
+											to_chat(usr, "<span class='notice'>Sorry, [CNTCT.name] still got no actual number.</span>")
+									choosed_number = CNTCT.number
+				if("My Number")
+					to_chat(usr, "[number]")
+			.= TRUE
+			attack_self(usr)
+			return
+		if("keypad")
+			playsound(loc, 'sound/machines/terminal_select.ogg', 15, TRUE)
+			switch(params["value"])
+				if("C")
+					choosed_number = ""
+					.= TRUE
+					attack_self(usr)
+					return
+				if("_")
+					choosed_number += " "
+					.= TRUE
+					attack_self(usr)
+					return
+
+			choosed_number += params["value"]
+			.= TRUE
+			attack_self(usr)
+			return
+
+	return FALSE
 
 /obj/item/vamp/phone/proc/Recall(var/obj/item/vamp/phone/abonent, var/mob/usar)
 	if(last_call+100 <= world.time && !talking)
@@ -361,7 +510,7 @@
 		addtimer(CALLBACK(src, .proc/Recall, online, usar), 20)
 //	usar << browse(null, "window=phone")
 //	OpenMenu(usar)
-
+/*
 /obj/item/vamp/phone/Topic(href, href_list)
 	..()
 	var/mob/living/U = usr
@@ -479,7 +628,7 @@
 		playsound(loc, 'sound/machines/terminal_select.ogg', 15, TRUE)
 	else
 		U << browse(null, "window=phone")
-
+*/
 /obj/item/vamp/phone/proc/handle_hearing(datum/source, list/hearing_args)
 	var/message = hearing_args[HEARING_RAW_MESSAGE]
 	if(online && talking)

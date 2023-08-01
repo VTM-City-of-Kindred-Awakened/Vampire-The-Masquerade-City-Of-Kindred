@@ -103,8 +103,13 @@
 			if(A.density && !istype(A, /obj/structure/lamppost))
 				return location
 			if(istype(A, /obj/effect/landmark/npcwall))
-				stopturf = 2
-				return location
+				return get_step_towards(location, get_turf(src))
+			if(istype(A, /obj/effect/decal/cleanable/blood))
+				var/obj/effect/decal/cleanable/blood/B = A
+				if(B.bloodiness)
+					return get_step_towards(location, get_turf(src))
+			if(istype(A, /obj/effect/fire))
+				return get_turf(src)
 			if(isnpcbeacon(A) && prob(50))
 //				var/opposite_dir = turn(direction, 180)				Nado
 				stopturf = 1
@@ -172,7 +177,8 @@
 	if(pulledby)
 		if(prob(20))
 			resist()
-		return TRUE
+			if(pulledby)
+				return TRUE
 	return FALSE
 
 
@@ -188,16 +194,23 @@
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
 	if(CheckMove())
 		return
+	var/fire_danger = FALSE
+	for(var/obj/effect/fire/F in range(7, src))
+		if(F)
+			less_danger = F
+			fire_danger = TRUE
+	if(!fire_danger)
+		less_danger = null
 	if(pulledby)
-		if(prob(10))
+		if(prob(25))
 			Aggro(pulledby, TRUE)
 		if(fights_anyway)
 			Aggro(pulledby, TRUE)
 	lifespan = lifespan+1
-	if(lifespan >= 10000)
+	if(lifespan >= 1000)
 		if(route_optimisation())
 			qdel(src)
-	if(!walktarget && !staying && !danger_source)
+	if(!walktarget && !staying && !danger_source && !less_danger)
 		stopturf = rand(1, 2)
 		walktarget = ChoosePath()
 		face_atom(walktarget)
@@ -259,6 +272,12 @@
 						my_weapon = null
 				walktarget = ChoosePath()
 				a_intent = INTENT_HELP
+		else if(less_danger)
+			var/reqsteps = round((SShumannpcpool.next_fire-world.time)/total_multiplicative_slowdown())
+			set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
+			walk_away(src, less_danger, reqsteps, total_multiplicative_slowdown())
+			if(prob(25))
+				emote("scream")
 		else if(walktarget && !staying)
 			if(prob(25))
 				toggle_move_intent(src)

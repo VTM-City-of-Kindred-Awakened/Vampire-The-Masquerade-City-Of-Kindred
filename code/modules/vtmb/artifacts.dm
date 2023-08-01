@@ -1,16 +1,18 @@
 /obj/item/vtm_artifact/pickup(mob/user)
 	..()
-	owner = user
-	START_PROCESSING(SSobj, src)
-	get_powers()
+	if(identified)
+		owner = user
+		START_PROCESSING(SSobj, src)
+		get_powers()
 
 /obj/item/vtm_artifact/dropped(mob/user)
 	..()
-	if(isturf(loc))
-		STOP_PROCESSING(SSobj, src)
-		if(owner)
-			remove_powers()
-			owner = null
+	if(identified)
+		if(isturf(loc))
+			STOP_PROCESSING(SSobj, src)
+			if(owner)
+				remove_powers()
+				owner = null
 
 /obj/item/vtm_artifact/process(delta_time)
 	if(owner != loc && owner != loc.loc)
@@ -216,6 +218,8 @@
 	if(!iskindred(M))
 		return
 	if(!stored_blood)
+		return
+	if(!identified)
 		return
 	M.adjustBruteLoss(-5*stored_blood, TRUE)
 	M.adjustFireLoss(-5*stored_blood, TRUE)

@@ -130,6 +130,7 @@
 	outfit = /datum/outfit/civillian1
 	roundstart = FALSE
 	death = FALSE
+	random = FALSE
 	mob_species = /datum/species/human
 	short_desc = "You just woke up from strange noises outside. This city is totally cursed..."
 	flavour_text = "Each day you notice some weird shit going at night. Each day, new corpses, new missing people, new police-don't-give-a-fuck. This time you definitely should go and see the mysterious powers of the night... or not? You are too afraid because you are not aware of it."
@@ -166,6 +167,7 @@
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/flashlight
 	l_hand = /obj/item/vamp/keys/npc/fix
+	back = /obj/item/storage/backpack/satchel
 
 /datum/outfit/civillian2
 	name = "civillian"
@@ -175,6 +177,7 @@
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/flashlight
 	l_hand = /obj/item/vamp/keys/npc/fix
+	back = /obj/item/storage/backpack/satchel
 
 /datum/outfit/civillian3
 	name = "civillian"
@@ -184,6 +187,7 @@
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/flashlight
 	l_hand = /obj/item/vamp/keys/npc/fix
+	back = /obj/item/storage/backpack/satchel
 
 /datum/outfit/civillian4
 	name = "civillian"
@@ -193,6 +197,7 @@
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/flashlight
 	l_hand = /obj/item/vamp/keys/npc/fix
+	back = /obj/item/storage/backpack/satchel
 
 /obj/effect/mob_spawn/human/police
 	name = "a police officer"
@@ -203,6 +208,7 @@
 	outfit = /datum/outfit/policeofficer
 	roundstart = FALSE
 	death = FALSE
+	random = FALSE
 	mob_species = /datum/species/human
 	short_desc = "You worked a simple night shift, but then..."
 	flavour_text = "You woke up on your regular night shift and noticed something strange happening in the city. Only man interested in finding the truth is you..."
@@ -227,3 +233,4 @@
 	r_pocket = /obj/item/flashlight
 	l_hand = /obj/item/vamp/keys/police
 	r_hand = /obj/item/police_radio
+	back = /obj/item/storage/backpack/satchel

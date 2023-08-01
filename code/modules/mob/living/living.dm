@@ -972,6 +972,9 @@
 	what.add_fingerprint(src)
 	if(do_mob(src, who, what.strip_delay, interaction_key = what))
 		if(what && Adjacent(who))
+			if(ishuman(src) && isnpc(who))
+				var/mob/living/carbon/human/H = src
+				H.AdjustHumanity(-1, 3)
 			if(islist(where))
 				var/list/L = where
 				if(what == who.get_item_for_held_index(L[2]))

@@ -11,6 +11,8 @@
 	var/lastattacker = null
 	var/lastattackerckey = null
 
+	var/mob/living/lastattacked = null
+
 	//Health and life related vars
 	/// Maximum health that should be possible.
 	var/maxHealth = MAX_LIVING_HEALTH

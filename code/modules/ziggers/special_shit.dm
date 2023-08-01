@@ -101,7 +101,7 @@
 
 /obj/item/drinkable_bloodpack/vitae
 	name = "\improper vampire vitae pack (full)"
-	amount_of_bloodpoints = 6
+	amount_of_bloodpoints = 4
 	vitae = TRUE
 
 /obj/item/blood_hunt

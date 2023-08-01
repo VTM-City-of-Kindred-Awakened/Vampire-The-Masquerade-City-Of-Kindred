@@ -212,7 +212,7 @@
 	righthand_file = null
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	max_amount = 100
+	max_amount = 1000
 	merge_type = /obj/item/stack/dollar
 
 /obj/item/stack/dollar/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
@@ -222,11 +222,11 @@
 /obj/item/stack/dollar/update_icon_state()
 	var/amount = get_amount()
 	switch(amount)
-		if(50 to INFINITY)
+		if(100 to INFINITY)
 			icon_state = "money3"
-		if(25 to 50)
+		if(50 to 100)
 			icon_state = "money2"
-		if(1 to 25)
+		if(1 to 50)
 			icon_state = "money1"
 		else
 			icon_state = "money"

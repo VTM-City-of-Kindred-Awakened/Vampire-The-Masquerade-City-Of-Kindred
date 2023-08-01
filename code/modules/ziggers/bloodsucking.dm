@@ -45,17 +45,32 @@
 		NPC.danger_source = null
 		NPC.last_attacker = src
 	to_chat(src, "<span class='warning'>You sip some <b>BLOOD</b> from your victim. It feels good.</span>")
-	if(mob.bloodpool == 1 && mob.maxbloodpool > 1)
+	if(mob.bloodpool <= 1 && mob.maxbloodpool > 1)
 //		if(alert("This action will kill your victim. Are you sure?",,"Yes","No")!="Yes")
 //			return
 		to_chat(src, "<span class='warning'>You feel small amount of <b>BLOOD</b> in your victim.</span>")
-		if(iskindred(mob) && !mob.client)
-			last_drinkblood_use = 0
-			if(client)
-				client.images -= suckbar
-			qdel(suckbar)
-			stop_sound_channel(CHANNEL_BLOOD)
-			return
+		if(iskindred(mob))
+			message_admins("[src]([key]) is trying to diablerie [mob]([mob.key])!")
+			if(mob.key)
+				var/special_role_name
+				if(mind)
+					if(mind.special_role)
+						var/datum/antagonist/A = mind.special_role
+						special_role_name = A.name
+				if(clane)
+					if(clane.name != "Banu Haqim" && clane.name != "Caitiff")
+						if(!mind.special_role || special_role_name == "Ambitious")
+							to_chat(src, "<span class='warning'>You find the idea of drinking your own <b>KIND</b> disgusting!</span>")
+							last_drinkblood_use = 0
+							if(client)
+								client.images -= suckbar
+							qdel(suckbar)
+							stop_sound_channel(CHANNEL_BLOOD)
+							return
+			else
+				to_chat(src, "<span class='warning'>You need [mob]'s attention to do that...</span>")
+				return
+			message_admins("[src]([key]) success in diablerie over [mob](mob.key])!")
 	if(!HAS_TRAIT(src, TRAIT_BLOODY_SUCKER) && CheckEyewitness(src, src, 7, FALSE))
 		AdjustMasquerade(-1)
 	if(do_after(src, 30, target = mob, timed_action_flags = NONE, progress = FALSE))
@@ -148,7 +163,7 @@
 						to_chat(src, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
 				SEND_SOUND(src, sound('code/modules/ziggers/sounds/feed_failed.ogg', 0, 0, 75))
 				to_chat(src, "<span class='warning'>This sad sacrifice for your own pleasure affects something deep in your mind.</span>")
-				AdjustHumanity(-1, 3)
+				AdjustHumanity(-1, 0)
 				mob.death()
 			if(!ishuman(mob))
 				mob.death()

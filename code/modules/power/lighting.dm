@@ -403,8 +403,8 @@
 		if(LIGHT_BROKEN)
 			icon_state = "[base_state]-broken"
 
-/obj/machinery/light/update_overlays()
-	. = ..()
+///obj/machinery/light/update_overlays()
+//	. = ..()
 //	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 //	if(on && status == LIGHT_OK)
 //		var/area/A = get_area(src)

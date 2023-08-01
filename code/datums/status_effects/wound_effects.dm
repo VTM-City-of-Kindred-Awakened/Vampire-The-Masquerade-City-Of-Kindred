@@ -24,6 +24,30 @@
 		human_owner.physiology.bleed_mod /= WOUND_DETERMINATION_BLEED_MOD
 	return ..()
 
+/atom/movable/screen/alert/status_effect/fear
+	name = "Fear"
+	desc = "The serious reason you've sustained have put your body into fight-or-flight mode! Now's the time to look for an exit!"
+	icon_state = "fear"
+
+/datum/status_effect/fear
+	id = "fear"
+	alert_type = /atom/movable/screen/alert/status_effect/fear
+
+/datum/status_effect/fear/on_apply()
+	. = ..()
+	owner.visible_message("<span class='danger'>[owner]'s body trembles, tensing [owner.p_their()] muscles!</span>", "<span class='warning'><b>Your senses sharpen as your body tenses up!</b></span>", \
+		vision_distance=COMBAT_MESSAGE_RANGE)
+//	if(ishuman(owner))
+//		var/mob/living/carbon/human/human_owner = owner
+//		human_owner.physiology.bleed_mod *= WOUND_DETERMINATION_BLEED_MOD
+
+/datum/status_effect/fear/on_remove()
+	owner.visible_message("<span class='danger'>[owner]'s body slackens noticeably!</span>", "<span class='notice'><b>You feel safe again...</b></span>", vision_distance=COMBAT_MESSAGE_RANGE)
+//	if(ishuman(owner))
+//		var/mob/living/carbon/human/human_owner = owner
+//		human_owner.physiology.bleed_mod /= WOUND_DETERMINATION_BLEED_MOD
+	return ..()
+
 /datum/status_effect/limp
 	id = "limp"
 	status_type = STATUS_EFFECT_REPLACE

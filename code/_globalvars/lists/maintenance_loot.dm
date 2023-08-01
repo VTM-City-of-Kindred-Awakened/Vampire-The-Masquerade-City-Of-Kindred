@@ -27,7 +27,6 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/trash/pistachios = 1,
 
 		/obj/item/poster/random_contraband = 1,
-		/obj/item/poster/random_official = 1,
 		/obj/item/folder/yellow = 1,
 		/obj/item/hand_labeler = 1,
 		/obj/item/pen = 1,

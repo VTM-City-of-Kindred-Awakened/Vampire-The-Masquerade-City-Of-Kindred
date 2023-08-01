@@ -33,6 +33,8 @@
 
 #define STATUS_EFFECT_DETERMINED /datum/status_effect/determined //currently in a combat high from being seriously wounded
 
+#define STATUS_EFFECT_FEAR /datum/status_effect/fear
+
 /////////////
 // DEBUFFS //
 /////////////

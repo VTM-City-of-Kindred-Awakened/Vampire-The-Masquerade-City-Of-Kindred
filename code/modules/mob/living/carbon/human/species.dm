@@ -1402,6 +1402,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey
+		user.lastattacked = target
 		user.dna.species.spec_unarmedattacked(user, target)
 
 		if(user.limb_destroyer)
@@ -1514,9 +1515,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(prob(50) && I.force > 5)
 		for(var/obj/item/vtm_artifact/odious_chalice/OC in user.GetAllContents())
 			if(OC)
-				if(H.bloodpool)
-					H.bloodpool = max(0, H.bloodpool-1)
-					OC.stored_blood = OC.stored_blood+1
+				if(OC.identified)
+					if(H.bloodpool)
+						H.bloodpool = max(0, H.bloodpool-1)
+						OC.stored_blood = OC.stored_blood+1
 	apply_damage((I.force*modifikator) * weakness, I.damtype, def_zone, armor_block, H, wound_bonus = Iwound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
 
 	if(!I.force)

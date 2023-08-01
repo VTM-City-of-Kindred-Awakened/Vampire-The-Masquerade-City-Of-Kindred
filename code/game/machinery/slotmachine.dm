@@ -30,8 +30,8 @@
 	var/balance = 0 //How much money is in the machine, ready to be CONSUMED.
 	var/jackpots = 0
 	var/paymode = HOLOCHIP //toggles between HOLOCHIP/COIN, defined above
-	var/cointype = /obj/item/coin/iron //default cointype
-	var/list/coinvalues = list()
+	var/cointype = /obj/item/stack/dollar //default cointype
+//	var/list/coinvalues = list()
 	var/list/reels = list(list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0)
 	var/list/symbols = list(SEVEN = 1, "<font color='orange'>&</font>" = 2, "<font color='yellow'>@</font>" = 2, "<font color='green'>$</font>" = 2, "<font color='blue'>?</font>" = 2, "<font color='grey'>#</font>" = 2, "<font color='white'>!</font>" = 2, "<font color='fuchsia'>%</font>" = 2) //if people are winning too much, multiply every number in this list by 2 and see if they are still winning too much.
 
@@ -49,10 +49,10 @@
 
 	INVOKE_ASYNC(src, .proc/toggle_reel_spin, FALSE)
 
-	for(cointype in typesof(/obj/item/coin))
-		var/obj/item/coin/C = new cointype
-		coinvalues["[cointype]"] = C.get_item_credit_value()
-		qdel(C) //Sigh
+//	for(cointype in typesof(/obj/item/coin))
+//		var/obj/item/coin/C = new cointype
+//		coinvalues["[cointype]"] = C.get_item_credit_value()
+//		qdel(C) //Sigh
 
 /obj/machinery/computer/slot_machine/Destroy()
 	if(balance)
@@ -80,45 +80,14 @@
 		icon_state = "slots1"
 
 /obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/coin))
-		var/obj/item/coin/C = I
-		if(paymode == COIN)
-			if(prob(2))
-				if(!user.transferItemToLoc(C, drop_location(), silent = FALSE))
-					return
-				C.throw_at(user, 3, 10)
-				if(prob(10))
-					balance = max(balance - SPIN_PRICE, 0)
-				to_chat(user, "<span class='warning'>[src] spits your coin back out!</span>")
-
-			else
-				if(!user.temporarilyRemoveItemFromInventory(C))
-					return
-				to_chat(user, "<span class='notice'>You insert [C] into [src]'s slot!</span>")
-				balance += C.value
-				qdel(C)
-		else
-			to_chat(user, "<span class='warning'>This machine is only accepting holochips!</span>")
-	else if(istype(I, /obj/item/holochip))
-		if(paymode == HOLOCHIP)
-			var/obj/item/holochip/H = I
-			if(!user.temporarilyRemoveItemFromInventory(H))
-				return
-			to_chat(user, "<span class='notice'>You insert [H.credits] holocredits into [src]'s slot!</span>")
-			balance += H.credits
-			qdel(H)
-		else
-			to_chat(user, "<span class='warning'>This machine is only accepting coins!</span>")
-	else if(I.tool_behaviour == TOOL_MULTITOOL)
-		if(balance > 0)
-			visible_message("<b>[src]</b> says, 'ERROR! Please empty the machine balance before altering paymode'") //Prevents converting coins into holocredits and vice versa
-		else
-			if(paymode == HOLOCHIP)
-				paymode = COIN
-				visible_message("<b>[src]</b> says, 'This machine now works with COINS!'")
-			else
-				paymode = HOLOCHIP
-				visible_message("<b>[src]</b> says, 'This machine now works with HOLOCHIPS!'")
+	if(istype(I, /obj/item/stack/dollar))
+		var/obj/item/stack/dollar/H = I
+		if(!user.temporarilyRemoveItemFromInventory(H))
+			return
+		to_chat(user, "<span class='notice'>You insert [H.amount] dollars into [src]'s slot!</span>")
+		balance += H.amount
+		playsound(loc, 'code/modules/ziggers/sounds/insert.ogg', 50, TRUE)
+		qdel(H)
 	else
 		return ..()
 
@@ -146,9 +115,9 @@
 		dat = reeltext
 
 	else
-		dat = {"Five credits to play!<BR>
+		dat = {"Five dollars to play!<BR>
 		<B>Prize Money Available:</B> [money] (jackpot payout is ALWAYS 100%!)<BR>
-		<B>Credit Remaining:</B> [balance]<BR>
+		<B>Dollars Remaining:</B> [balance]<BR>
 		[plays] players have tried their luck today, and [jackpots] have won a jackpot!<BR>
 		<HR><BR>
 		<A href='?src=[REF(src)];spin=1'>Play!</A><BR>
@@ -174,6 +143,7 @@
 		if(balance > 0)
 			give_payout(balance)
 			balance = 0
+
 
 /obj/machinery/computer/slot_machine/emp_act(severity)
 	. = ..()
@@ -208,6 +178,8 @@
 	toggle_reel_spin(1)
 	update_icon()
 	updateDialog()
+
+	playsound(loc, 'code/modules/ziggers/sounds/slot.ogg', 50, TRUE)
 
 	var/spin_loop = addtimer(CALLBACK(src, .proc/do_spin), 2, TIMER_LOOP|TIMER_STOPPABLE)
 
@@ -263,26 +235,24 @@
 		jackpots += 1
 		balance += money - give_payout(JACKPOT)
 		money = 0
-		if(paymode == HOLOCHIP)
-			new /obj/item/holochip(loc,JACKPOT)
-		else
-			for(var/i = 0, i < 5, i++)
-				cointype = pick(subtypesof(/obj/item/coin))
-				var/obj/item/coin/C = new cointype(loc)
-				random_step(C, 2, 50)
+		playsound(loc, 'code/modules/ziggers/sounds/jackpot.ogg', 50, TRUE)
+		new /obj/item/stack/dollar(loc,JACKPOT)
 
 	else if(linelength == 5)
 		visible_message("<b>[src]</b> says, 'Big Winner! You win a thousand credits!'")
 		give_money(BIG_PRIZE)
+		playsound(loc, 'code/modules/ziggers/sounds/jackpot.ogg', 50, TRUE)
 
 	else if(linelength == 4)
 		visible_message("<b>[src]</b> says, 'Winner! You win four hundred credits!'")
 		give_money(SMALL_PRIZE)
+		playsound(loc, 'code/modules/ziggers/sounds/jackpot.ogg', 50, TRUE)
 
 	else if(linelength == 3)
 		to_chat(user, "<span class='notice'>You win three free games!</span>")
 		balance += SPIN_PRICE * 4
 		money = max(money - SPIN_PRICE * 4, money)
+		playsound(loc, 'code/modules/ziggers/sounds/jackpot.ogg', 50, TRUE)
 
 	else
 		to_chat(user, "<span class='warning'>No luck!</span>")
@@ -313,38 +283,23 @@
 	balance += surplus
 
 /obj/machinery/computer/slot_machine/proc/give_payout(amount)
-	if(paymode == HOLOCHIP)
-		cointype = /obj/item/holochip
-	else
-		cointype = obj_flags & EMAGGED ? /obj/item/coin/iron : /obj/item/coin/silver
+	cointype = /obj/item/stack/dollar
 
 	if(!(obj_flags & EMAGGED))
 		amount = dispense(amount, cointype, null, 0)
 
 	else
 		var/mob/living/target = locate() in range(2, src)
-
 		amount = dispense(amount, cointype, target, 1)
 
+	playsound(loc, 'code/modules/ziggers/sounds/payout.ogg', 50, TRUE)
 	return amount
 
-/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/coin/silver, mob/living/target, throwit = 0)
-	if(paymode == HOLOCHIP)
-		var/obj/item/holochip/H = new /obj/item/holochip(loc,amount)
+/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/stack/dollar, mob/living/target, throwit = 0)
+	var/obj/item/stack/dollar/H = new /obj/item/stack/dollar(loc,amount)
 
-		if(throwit && target)
-			H.throw_at(target, 3, 10)
-	else
-		var/value = coinvalues["[cointype]"]
-		if(value <= 0)
-			CRASH("Coin value of zero, refusing to payout in dispenser")
-		while(amount >= value)
-			var/obj/item/coin/C = new cointype(loc) //DOUBLE THE PAIN
-			amount -= value
-			if(throwit && target)
-				C.throw_at(target, 3, 10)
-			else
-				random_step(C, 2, 40)
+	if(throwit && target)
+		H.throw_at(target, 3, 10)
 
 	return amount
 

@@ -537,13 +537,41 @@
 
 /obj/structure/fuelstation
 	name = "fuel station"
-	desc = "Fuel your car here."
+	desc = "Fuel your car here. 50 dollars per 1000 units."
 	icon = 'code/modules/ziggers/props.dmi'
 	icon_state = "fuelstation"
 	plane = GAME_PLANE
 	layer = CAR_LAYER
 	anchored = TRUE
 	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	var/stored_money = 0
+
+/obj/structure/fuelstation/AltClick(mob/user)
+	if(stored_money)
+		say("Money refunded.")
+		for(var/i in 1 to stored_money)
+			new /obj/item/stack/dollar(loc)
+
+/obj/structure/fuelstation/examine(mob/user)
+	. = ..()
+	. += "<b>Balance</b>: [stored_money] dollars"
+
+/obj/structure/fuelstation/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/stack/dollar))
+		var/obj/item/stack/dollar/D = I
+		stored_money += D.amount
+		qdel(I)
+		say("Payment received.")
+	if(istype(I, /obj/item/gas_can))
+		var/obj/item/gas_can/G = I
+		if(G.stored_gasoline < 1000 && stored_money)
+			var/gas_to_dispense = min(stored_money*200, 1000-G.stored_gasoline)
+			var/money_to_spend = round(gas_to_dispense/200)
+			G.stored_gasoline = min(1000, G.stored_gasoline+gas_to_dispense)
+			stored_money = max(0, stored_money-money_to_spend)
+			playsound(loc, 'code/modules/ziggers/sounds/gas_fill.ogg', 50, TRUE)
+			say("Gas filled.")
 
 /obj/structure/bloodextractor
 	name = "blood extractor"
@@ -564,18 +592,23 @@
 			var/obj/structure/bloodextractor/V = over_object
 			if(!buckled)
 				V.visible_message("<span class='warning'>Buckle [src] fist!</span>")
-			if(bloodpool < 1)
+			if(bloodpool < 2)
 				V.visible_message("<span class='warning'>[V] can't find enough blood in [src]!</span>")
 				return
+			if(iskindred(src))
+				if(bloodpool < 4)
+					V.visible_message("<span class='warning'>[V] can't find enough blood in [src]!</span>")
+					return
 			if(V.last_extracted+1200 > world.time)
 				V.visible_message("<span class='warning'>[V] isn't ready!</span>")
 				return
 			V.last_extracted = world.time
 			if(!iskindred(src))
 				new /obj/item/drinkable_bloodpack(get_step(V, SOUTH))
+				bloodpool = max(0, bloodpool-2)
 			else
 				new /obj/item/drinkable_bloodpack/vitae(get_step(V, SOUTH))
-			bloodpool = max(0, bloodpool-1)
+				bloodpool = max(0, bloodpool-4)
 
 GLOBAL_LIST_EMPTY(vampire_computers)
 
@@ -808,6 +841,8 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	var/list/gear = list()
 	if(ishuman(mob_occupant))		// sorry simp-le-mobs deserve no mercy
 		var/mob/living/carbon/human/C = mob_occupant
+		if(C.dna)
+			GLOB.fucking_joined -= C.dna.real_name
 		gear = C.get_all_gear()
 		for(var/obj/item/item_content as anything in gear)
 			qdel(item_content)

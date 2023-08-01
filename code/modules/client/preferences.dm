@@ -263,6 +263,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			max_save_slots = 4
 	if(!donor)
 		discipline4type = null
+		discipline4level = 1
 	if(slot_randomized)
 		load_character(default_slot) // Reloads the character slot. Prevents random features from overwriting the slot if saved.
 		slot_randomized = FALSE
@@ -400,7 +401,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(3)
 						max_death = 1
 			dat += "<b>[pref_species.name == "Vampire" ? "Torpor" : "Clinical Death"] Count:</b> [torpor_count]/[max_death]"
-			if(exper == calculate_max_exper() && torpor_count > 0)
+			if(exper >= calculate_max_exper() && torpor_count > 0)
 				dat += " <a href='?_src_=prefs;preference=torpor_restore;task=input'>Restore</a><BR>"
 			dat += "<BR>"
 			dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
@@ -417,10 +418,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Masquerade:</b> [masquerade]/5<BR>"
 			if(pref_species.name == "Vampire")
 				dat += "<b>Generation:</b> [generation]"
-				if(generation_bonus)
-					dat += " (+[generation_bonus]/[min(6, generation-7)])"
-				if(exper == calculate_max_exper() && generation_bonus < max(0, generation-7))
-					dat += " <a href='?_src_=prefs;preference=generation;task=input'>Claim generation bonus</a><BR>"
+				var/generation_allowed = TRUE
+				if(clane)
+					if(clane.name == "Caitiff")
+						generation_allowed = FALSE
+				if(generation_allowed)
+					if(generation_bonus)
+						dat += " (+[generation_bonus]/[min(6, generation-7)])"
+					if(exper >= calculate_max_exper() && generation_bonus < max(0, generation-7))
+						dat += " <a href='?_src_=prefs;preference=generation;task=input'>Claim generation bonus</a><BR>"
+					else
+						dat += "<BR>"
 				else
 					dat += "<BR>"
 				dat += "<h2>[make_font_cool("CLANE")]</h2>"
@@ -432,7 +440,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(discipline1type)
 					var/datum/discipline/AD = new discipline1type()
 					dat += "<b>[AD.name]</b>: •[discipline1level > 1 ? "•" : "o"][discipline1level > 2 ? "•" : "o"][discipline1level > 3 ? "•" : "o"][discipline1level > 4 ? "•" : "o"]([discipline1level])"
-					if(exper == calculate_max_exper() && discipline1level != 5)
+					if(exper >= calculate_max_exper() && discipline1level != 5)
 						dat += "<a href='?_src_=prefs;preference=discipline1;task=input'>Learn</a><BR>"
 					else
 						dat += "<BR>"
@@ -440,7 +448,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(discipline2type)
 					var/datum/discipline/AD = new discipline2type()
 					dat += "<b>[AD.name]</b>: •[discipline2level > 1 ? "•" : "o"][discipline2level > 2 ? "•" : "o"][discipline2level > 3 ? "•" : "o"][discipline2level > 4 ? "•" : "o"]([discipline2level])"
-					if(exper == calculate_max_exper() && discipline2level != 5)
+					if(exper >= calculate_max_exper() && discipline2level != 5)
 						dat += "<a href='?_src_=prefs;preference=discipline2;task=input'>Learn</a><BR>"
 					else
 						dat += "<BR>"
@@ -448,7 +456,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(discipline3type)
 					var/datum/discipline/AD = new discipline3type()
 					dat += "<b>[AD.name]</b>: •[discipline3level > 1 ? "•" : "o"][discipline3level > 2 ? "•" : "o"][discipline3level > 3 ? "•" : "o"][discipline3level > 4 ? "•" : "o"]([discipline3level])"
-					if(exper == calculate_max_exper() && discipline3level != 5)
+					if(exper >= calculate_max_exper() && discipline3level != 5)
 						dat += "<a href='?_src_=prefs;preference=discipline3;task=input'>Learn</a><BR>"
 					else
 						dat += "<BR>"
@@ -479,8 +487,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(exper == calculate_max_exper() && slotlocked)
 				dat += "<a href='?_src_=prefs;preference=change_appearance;task=input'>Change Appearance [exper]/[calculate_max_exper()]</a><BR>"
 
-			if(generation_bonus)
-				dat += "<a href='?_src_=prefs;preference=reset_with_bonus;task=input'>Create new character with generation bonus ([generation]-[generation_bonus])</a><BR>"
+			if(clane)
+				if(clane.name != "Caitiff")
+					if(generation_bonus)
+						dat += "<a href='?_src_=prefs;preference=reset_with_bonus;task=input'>Create new character with generation bonus ([generation]-[generation_bonus])</a><BR>"
 
 			dat += "<BR><b>Flavor Text:</b> [flavor_text] <a href='?_src_=prefs;preference=flavor_text;task=input'>Change</a><BR>"
 
@@ -1725,6 +1735,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/newtype = GLOB.clanes_list[result]
 						var/datum/vampireclane/Clan = new newtype()
 						if(result == "Caitiff")
+							generation = 13
 							var/discipline1 = input(user, "Select first start discipline", "Discipline Selection") as null|anything in subtypesof(/datum/discipline)
 							if(discipline1)
 								Clan.clane_disciplines |= 1
@@ -1753,6 +1764,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(length(Clan.clane_disciplines) >= 3)
 							discipline3type = Clan.clane_disciplines[3]
 						discipline4type = null
+						discipline1level = 1
+						discipline2level = 1
+						discipline3level = 1
+						discipline4level = 1
 //						if(length(Clan.clane_disciplines) >= 4)
 //							discipline4type = Clan.clane_disciplines[4]
 						humanity = clane.start_humanity
@@ -1788,6 +1803,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					exper = 0
 
 				if("generation")
+					if(clane)
+						if(clane.name == "Caitiff")
+							return
 					generation_bonus = min(generation_bonus+1, max(0, generation-7))
 					exper = 0
 
@@ -1805,6 +1823,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					exper = 0
 
 				if("reset_with_bonus")
+					if(clane)
+						if(clane.name == "Caitiff")
+							return
 					var/bonus = generation-generation_bonus
 					slotlocked = 0
 					exper = 0

@@ -20,7 +20,16 @@
 	for(var/obj/item/police_radio/R in GLOB.police_radios)
 		R.announce_crime("murder", get_turf(src))
 	GLOB.masquerade_breakers_list -= src
+	var/allowed_to_loose = FALSE
 	if(key)
+		var/special_role_name
+		if(mind)
+			if(mind.special_role)
+				var/datum/antagonist/A = mind.special_role
+				special_role_name = A.name
+			if(!mind.special_role || special_role_name == "Ambitious")
+				allowed_to_loose = TRUE
+	if(allowed_to_loose)
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
 		if(P)
 			var/max_death = 6
@@ -285,7 +294,6 @@
 					else
 						playsound(BD, 'code/modules/ziggers/sounds/kiss.ogg', 50, TRUE)
 					if(iskindred(LV))
-						message_admins("[BD]([BD.key]) is diablerizing [LV]([LV.key])!")
 						var/mob/living/carbon/human/HV = BD.pulling
 						if(HV.stakeimmune)
 							to_chat(BD, "<span class='warning'>There is no <b>HEART</b> in this creature.</span>")

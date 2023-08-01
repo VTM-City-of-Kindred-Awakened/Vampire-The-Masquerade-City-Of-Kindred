@@ -269,6 +269,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/mob/living/M = loc
 	if(isliving(loc))
 		M.IgniteMob()
+	if(istype(loc, /turf/open/floor))
+		var/turf/open/floor/F = location
+		if(F.spread_chance > 50 && F.burn_material)
+			var/obj/effect/fire/R = locate() in location
+			if(!R)
+				new /obj/effect/fire(location)
 	smoketime -= delta_time
 	if(smoketime <= 0)
 		new type_butt(location)
@@ -749,6 +755,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/lighter/process()
 	open_flame()
+	if(istype(loc, /turf/open/floor))
+		var/turf/open/floor/F = loc
+		if(F.spread_chance > 50 && F.burn_material)
+			var/obj/effect/fire/R = locate() in loc
+			if(!R)
+				new /obj/effect/fire(loc)
 
 /obj/item/lighter/get_temperature()
 	return lit * heat

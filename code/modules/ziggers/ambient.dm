@@ -17,6 +17,14 @@
 	name = "Shop"
 	icon_state = "shop"
 
+/area/vtm/interior/giovanni
+	name = "Giovanni Mansion"
+	icon_state = "giovanni"
+
+/area/vtm/interior/police
+	name = "Police Station"
+	icon_state = "police"
+
 /area/vtm/interior/strip
 	name = "Strip Club"
 	icon_state = "strip"

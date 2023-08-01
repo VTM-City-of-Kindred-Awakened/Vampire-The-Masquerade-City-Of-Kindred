@@ -32,6 +32,7 @@ GLOBAL_LIST_EMPTY(carbon_list)				//all instances of /mob/living/carbon and subt
 GLOBAL_LIST_EMPTY(human_list)				//all instances of /mob/living/carbon/human and subtypes
 GLOBAL_LIST_EMPTY(npc_list)
 GLOBAL_LIST_EMPTY(frenzy_list)
+GLOBAL_LIST_EMPTY(fires_list)
 GLOBAL_LIST_EMPTY(ai_list)
 GLOBAL_LIST_EMPTY(pai_list)
 GLOBAL_LIST_EMPTY(available_ai_shells)

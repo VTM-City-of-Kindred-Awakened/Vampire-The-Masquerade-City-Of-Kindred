@@ -174,14 +174,18 @@
 			if(hackable || HAS_TRAIT(user, TRAIT_BONE_KEY))
 				hacking = TRUE
 				playsound(src, 'code/modules/ziggers/sounds/hack.ogg', 100, TRUE)
-				for(var/mob/living/carbon/human/npc/police/P in range(7, src))
+				for(var/mob/living/carbon/human/npc/police/P in oviewers(7, src))
 					if(P)
 						P.Aggro(user)
 				if(do_mob(user, src, 7 SECONDS))
-					if(prob(50) || HAS_TRAIT(user, TRAIT_BONE_KEY))
+					if(prob(25) || HAS_TRAIT(user, TRAIT_BONE_KEY))
 						to_chat(user, "<span class='notice'>You pick the lock.</span>")
 						locked = FALSE
 						hacking = FALSE
+						if(initial(lock_id) == "npc")
+							if(ishuman(user))
+								var/mob/living/carbon/human/H = user
+								H.AdjustHumanity(-1, 5)
 						return
 					else
 						to_chat(user, "<span class='warning'>You failed to pick the lock.</span>")

@@ -3349,6 +3349,7 @@
 #include "code\modules\ziggers\decor.dm"
 #include "code\modules\ziggers\doorcode.dm"
 #include "code\modules\ziggers\elevator.dm"
+#include "code\modules\ziggers\fire.dm"
 #include "code\modules\ziggers\fishing.dm"
 #include "code\modules\ziggers\flavledders.dm"
 #include "code\modules\ziggers\food.dm"

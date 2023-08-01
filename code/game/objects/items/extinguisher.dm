@@ -201,6 +201,9 @@
 		if(!W)
 			continue
 		step_towards(W,my_target)
+		var/obj/effect/fire/F = locate() in get_turf(W)
+		if(F)
+			qdel(F)
 		if(!W.reagents)
 			continue
 		W.reagents.expose(get_turf(W))

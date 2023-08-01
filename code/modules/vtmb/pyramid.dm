@@ -246,7 +246,7 @@
 		playsound(loc, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
 		color = rgb(255,0,0)
 		activated = TRUE
-*/
+
 /obj/ritualrune/curse/attack_hand(mob/user)
 	..()
 	var/cursed
@@ -263,7 +263,7 @@
 					qdel(src)
 					return
 			to_chat(user, "<span class='warning'>There is no such names in the city!</span>")
-
+*/
 /obj/ritualrune/blood_to_water
 	name = "Blood To Water"
 	desc = "Purges all blood in range into the water."
