@@ -368,3 +368,15 @@
 		new /datum/data/mining_equipment("incendiary 5.56 ammo",	/obj/item/ammo_box/vampire/c556/incendiary,	1000),
 		new /datum/data/mining_equipment("stake",	/obj/item/melee/vampirearms/stake,	100)
 		)
+
+/obj/machinery/mineral/equipment_vendor/fastfood/smoking
+	prize_list = list(new /datum/data/mining_equipment("malboro",	/obj/item/storage/fancy/cigarettes/cigpack_robust,	50),
+		new /datum/data/mining_equipment("newport",		/obj/item/storage/fancy/cigarettes/cigpack_xeno,	30),
+		new /datum/data/mining_equipment("camel",	/obj/item/storage/fancy/cigarettes/dromedaryco,	30),
+		new /datum/data/mining_equipment("lighter",		/obj/item/lighter/greyscale,	10)
+		)
+
+/obj/machinery/mineral/equipment_vendor/fastfood/gas
+	prize_list = list(new /datum/data/mining_equipment("full gas can",	/obj/item/gas_can/full,	250),
+		new /datum/data/mining_equipment("tire iron",		/obj/item/melee/vampirearms/tire,	50)
+		)

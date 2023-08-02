@@ -274,8 +274,8 @@
 		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
 
 /obj/item/storage/fancy/cigarettes/dromedaryco
-	name = "\improper DromedaryCo packet"
-	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
+	name = "\improper Camel packet"
+	desc = "A packet of six imported Camel cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
 	icon_state = "dromedary"
 	spawn_type = /obj/item/clothing/mask/cigarette/dromedary
 
@@ -286,7 +286,7 @@
 	spawn_type = /obj/item/clothing/mask/cigarette/uplift
 
 /obj/item/storage/fancy/cigarettes/cigpack_robust
-	name = "\improper Robust packet"
+	name = "\improper Malboro packet"
 	desc = "Smoked by the robust."
 	icon_state = "robust"
 	spawn_type = /obj/item/clothing/mask/cigarette/robust
@@ -336,8 +336,8 @@
 	spawn_type = /obj/item/clothing/mask/cigarette/shadyjims
 
 /obj/item/storage/fancy/cigarettes/cigpack_xeno
-	name = "\improper Xeno Filtered packet"
-	desc = "Loaded with 100% pure slime. And also nicotine."
+	name = "\improper Newport packet"
+	desc = "Loaded with 100% pure tabacco. And also nicotine."
 	icon_state = "slime"
 	spawn_type = /obj/item/clothing/mask/cigarette/xeno
 
