@@ -340,10 +340,6 @@
 	satchel = /obj/item/storage/backpack/satchel
 	duffelbag = /obj/item/storage/backpack/duffelbag
 
-/datum/outfit/job/graveyard/post_equip(mob/living/carbon/human/H)
-	..()
-	SSgraveyard.graveyarders += src
-
 /obj/effect/landmark/start/graveyardkeeper
 	name = "Graveyard Keeper"
 	icon_state = "Graveyard Keeper"
