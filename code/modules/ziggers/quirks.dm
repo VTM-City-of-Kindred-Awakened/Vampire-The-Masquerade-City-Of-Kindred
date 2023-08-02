@@ -193,6 +193,8 @@ Dancer
 			return
 		if(istype(A, /turf/open/floor/plating/vampocean))
 			return
+		if(istype(A, /obj/elevator_door))
+			return
 
 	for(var/atom/movable/A in get_step(get_step(owner, owner.dir), owner.dir))
 		if(istype(A, /obj/structure/vampdoor))
@@ -202,6 +204,8 @@ Dancer
 		if(istype(A, /obj/structure/window))
 			return
 		if(istype(A, /turf/open/floor/plating/vampocean))
+			return
+		if(istype(A, /obj/elevator_door))
 			return
 
 	var/turf/open/LO = get_step(get_step(owner, owner.dir), owner.dir)

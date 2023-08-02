@@ -391,8 +391,8 @@
 				if(B.bloodiness)
 					walk(src,0)
 					CPN.walktarget = null
-					if(!CPN.CheckMove())
-						step_away(CPN, B)
+//					if(!CPN.CheckMove())
+//						step_away(CPN, B)
 	if(HAS_TRAIT(src, TRAIT_RUBICON))
 		if(istype(NewLoc, /turf/open/floor/plating/shit))
 			return

@@ -66,6 +66,11 @@
 	if(stat == DEAD)
 		return
 	..()
+	if(pulledby)
+		if(prob(25))
+			Aggro(pulledby, TRUE)
+		if(fights_anyway)
+			Aggro(pulledby, TRUE)
 	if(!CheckMove())
 		nutrition = 400
 		if(get_dist(danger_source, src) < 7)
@@ -177,8 +182,8 @@
 	if(pulledby)
 		if(prob(20))
 			resist()
-			if(pulledby)
-				return TRUE
+		else
+			return TRUE
 	return FALSE
 
 
@@ -201,11 +206,6 @@
 			fire_danger = TRUE
 	if(!fire_danger)
 		less_danger = null
-	if(pulledby)
-		if(prob(25))
-			Aggro(pulledby, TRUE)
-		if(fights_anyway)
-			Aggro(pulledby, TRUE)
 	lifespan = lifespan+1
 	if(lifespan >= 1000)
 		if(route_optimisation())

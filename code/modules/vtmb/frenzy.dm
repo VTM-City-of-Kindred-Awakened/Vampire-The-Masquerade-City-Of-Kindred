@@ -52,7 +52,7 @@
 	GLOB.frenzy_list -= src
 
 /mob/living/carbon/human/proc/CheckFrenzyMove()
-	if(stat >= 2)
+	if(stat > 1)
 		return TRUE
 	if(IsSleeping())
 		return TRUE
@@ -68,7 +68,7 @@
 		return TRUE
 
 /mob/living/carbon/human/proc/frenzystep()
-	if(!frenzy_target || !isturf(loc) || CheckFrenzyMove())
+	if(!isturf(loc) || CheckFrenzyMove())
 		return
 	if(m_intent == MOVE_INTENT_WALK)
 		toggle_move_intent(src)
@@ -79,6 +79,9 @@
 		if(F)
 			if(get_dist(src, F) < 8 && F.z == src.z)
 				fear = F
+
+	if(!fear && !frenzy_target)
+		return
 
 	if(fear)
 		step_away(src,fear,0)
