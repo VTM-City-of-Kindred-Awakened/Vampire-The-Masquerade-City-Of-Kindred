@@ -529,6 +529,7 @@
 						H.mind.add_antag_datum(/datum/antagonist/ambitious)
 				H.generate_friends()
 				GLOB.fucking_joined |= H.client.prefs.real_name
+				SSfactionwar.adjust_members()
 		new_character = null
 		qdel(src)
 

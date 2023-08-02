@@ -8,13 +8,15 @@ SUBSYSTEM_DEF(graveyard)
 	var/lost_points = 0
 	var/clear_runs = 0
 	var/list/graves = list()
-	var/list/graveyarders = list()
 
 /datum/controller/subsystem/graveyard/fire()
 	if(alive_zombies < 20)
-		for(var/mob/living/L in graveyarders)
-			if(L.client)
-				to_chat(L, "WALKING DEAD ARE RISING...")
+		for(var/mob/living/carbon/human/L in GLOB.player_list)
+			if(L)
+				if(L.mind)
+					if(L.mind.assigned_role == "Graveyard Keeper")
+						if(L.client)
+							to_chat(L, "WALKING DEAD ARE RISING...")
 		for(var/i in 1 to 50-alive_zombies)
 			var/atom/grave = pick(graves)
 			new /mob/living/simple_animal/hostile/zombie(grave.loc)
@@ -25,25 +27,29 @@ SUBSYSTEM_DEF(graveyard)
 		clear_runs = 0
 
 	if(lost_points > 2)
-		for(var/mob/living/carbon/human/L in graveyarders)
+		for(var/mob/living/carbon/human/L in GLOB.player_list)
 			if(L)
-				if(L.client)
-					if(istype(get_area(L), /area/vtm/graveyard))
-						L.AdjustMasquerade(-1)
-					lost_points = 0
+				if(L.mind)
+					if(L.mind.assigned_role == "Graveyard Keeper")
+						if(L.client)
+							if(istype(get_area(L), /area/vtm/graveyard))
+								L.AdjustMasquerade(-1)
+		lost_points = 0
 
 	if(clear_runs > 2)
 		clear_runs = 0
-		for(var/mob/living/carbon/human/L in graveyarders)
+		for(var/mob/living/carbon/human/L in GLOB.player_list)
 			if(L)
-				if(L.key)
-					var/datum/preferences/P = GLOB.preferences_datums[ckey(L.key)]
-					if(P)
-						L.AdjustMasquerade(1)
-						var/mode = 1
-						if(HAS_TRAIT(L, TRAIT_NON_INT))
-							mode = 2
-						P.exper = min(calculate_mob_max_exper(L), P.exper+((250+L.experience_plus)/mode))
+				if(L.mind)
+					if(L.mind.assigned_role == "Graveyard Keeper")
+						if(L.client && L.key)
+							var/datum/preferences/P = GLOB.preferences_datums[ckey(L.key)]
+							if(P)
+								L.AdjustMasquerade(1)
+								var/mode = 1
+								if(HAS_TRAIT(L, TRAIT_NON_INT))
+									mode = 2
+								P.exper = min(calculate_mob_max_exper(L), P.exper+((250+L.experience_plus)/mode))
 
 /obj/vampgrave
 	icon = 'code/modules/ziggers/props.dmi'

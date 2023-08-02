@@ -18,6 +18,16 @@ SUBSYSTEM_DEF(factionwar)
 		SSfactionwar.camarilla_members -= src
 	..()
 
+/datum/controller/subsystem/factionwar/proc/adjust_members()
+	camarilla_members = list()
+	anarch_members = list()
+	for(var/mob/living/carbon/human/H in GLOB.player_list)
+		if(H)
+			if(H.frakcja == "Camarilla")
+				camarilla_members += H
+			if(H.frakcja == "Anarch")
+				anarch_members += H
+
 /datum/controller/subsystem/factionwar/fire()
 	//Sanity check
 	camarilla_members = list()
@@ -207,14 +217,14 @@ SUBSYSTEM_DEF(factionwar)
 			if(length(SSfactionwar.camarilla_members))
 				. += "<b>Total Members:</b> [length(SSfactionwar.camarilla_members)]"
 			if(length(SSfactionwar.marks_camarilla))
-				. += "<b>Total Marks:</b> [length(SSfactionwar.camarilla_members)]"
+				. += "<b>Total Marks:</b> [length(SSfactionwar.marks_camarilla)]"
 			. += "<b>Next Mark Cost:</b> [round(length(SSfactionwar.marks_camarilla)/3)] members and [length(SSfactionwar.marks_camarilla)*5] influence"
 		if("Anarch")
 			. += "<b>Total Influence:</b> [SSfactionwar.anarch_power]"
 			if(length(SSfactionwar.anarch_members))
 				. += "<b>Total Members:</b> [length(SSfactionwar.anarch_members)]"
 			if(length(SSfactionwar.marks_anarch))
-				. += "<b>Total Marks:</b> [length(SSfactionwar.anarch_members)]"
+				. += "<b>Total Marks:</b> [length(SSfactionwar.marks_anarch)]"
 			. += "<b>Next Mark Cost:</b> [round(length(SSfactionwar.marks_anarch)/3)] members and [length(SSfactionwar.marks_anarch)*5] influence"
 
 /obj/structure/faction_map/camarilla
