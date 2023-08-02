@@ -71,6 +71,18 @@ SUBSYSTEM_DEF(die_in_a_fire)
 	for(var/obj/effect/decal/cleanable/blood/B in loc)
 		if(B)
 			B.dry()
+	for(var/obj/structure/vampdoor/V in loc)
+		if(V)
+			if(V.burnable)
+				V.color = "#808080"
+				if(V.closed)
+					V.closed = FALSE
+					V.locked = FALSE
+					playsound(V, V.open_sound, 75, TRUE)
+					V.icon_state = "[V.baseicon]-0"
+					V.density = FALSE
+					V.opacity = FALSE
+					V.layer = OPEN_DOOR_LAYER
 	var/total_burn = 0
 	if(istype(get_turf(src), /turf/open/floor))
 		var/turf/open/floor/A = get_turf(src)
@@ -83,11 +95,23 @@ SUBSYSTEM_DEF(die_in_a_fire)
 			A.spread_chance = initial(A.spread_chance)
 	if(total_burn)
 		for(var/turf/open/floor/A in range(1, src))
-			if(A != loc && A.burn_material)
-				var/obj/effect/fire/F = locate() in A
-				if(!F && prob(A.spread_chance))
-					playsound(get_turf(A), 'code/modules/ziggers/sounds/spread.ogg', 80, TRUE)
-					new /obj/effect/fire(A)
+			var/obj/structure/vampdoor/V = locate() in A
+			var/allowed_to_spread = FALSE
+
+			if(!V)
+				allowed_to_spread = TRUE
+			else
+				if(!V.opacity)
+					allowed_to_spread = TRUE
+				if(V.burnable)
+					allowed_to_spread = TRUE
+
+			if(allowed_to_spread)
+				if(A != loc && A.burn_material)
+					var/obj/effect/fire/F = locate() in A
+					if(!F && prob(A.spread_chance))
+						playsound(get_turf(A), 'code/modules/ziggers/sounds/spread.ogg', 80, TRUE)
+						new /obj/effect/fire(A)
 	else
 		qdel(src)
 

@@ -126,6 +126,7 @@
 	var/open_sound = 'code/modules/ziggers/sounds/door_open.ogg'
 	var/close_sound = 'code/modules/ziggers/sounds/door_close.ogg'
 	var/lock_sound = 'code/modules/ziggers/sounds/door_locked.ogg'
+	var/burnable = FALSE
 
 /obj/structure/vampdoor/attack_hand(mob/user)
 	. = ..()
@@ -244,16 +245,19 @@
 /obj/structure/vampdoor/wood
 	icon_state = "wood-1"
 	baseicon = "wood"
+	burnable = TRUE
 
 /obj/structure/vampdoor/wood/old
 	icon_state = "oldwood-1"
 	baseicon = "oldwood"
+	burnable = TRUE
 
 /obj/structure/vampdoor/glass
 	icon_state = "glass-1"
 	opacity = FALSE
 	baseicon = "glass"
 	glass = TRUE
+	burnable = TRUE
 
 /obj/structure/vampdoor/shop
 	icon_state = "shop-1"
@@ -284,12 +288,14 @@
 	locked = TRUE
 	lock_id = "prince"
 	hackable = FALSE
+	burnable = TRUE
 
 /obj/structure/vampdoor/graveyard
 	icon_state = "oldwood-1"
 	baseicon = "oldwood"
 	locked = TRUE
 	lock_id = "graveyard"
+	burnable = TRUE
 
 /obj/structure/vampdoor/clinic
 	icon_state = "shop-1"
@@ -336,6 +342,7 @@
 	baseicon = "wood"
 	locked = TRUE
 	lock_id = "npc"
+	burnable = TRUE
 
 /obj/structure/vampdoor/npc/Initialize()
 	. = ..()
@@ -366,3 +373,4 @@
 	baseicon = "wood"
 	locked = TRUE
 	lock_id = "giovanni"
+	burnable = TRUE
