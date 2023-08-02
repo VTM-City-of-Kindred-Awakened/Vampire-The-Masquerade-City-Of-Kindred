@@ -55,7 +55,7 @@ GLOBAL_LIST_EMPTY(masquerade_breakers_list)
 GLOBAL_LIST_EMPTY(masquerade_latejoin)
 GLOBAL_LIST_EMPTY(niggers)
 
-GLOBAL_LIST_INIT(donaters, list("badteammate", "meomoor", "terain1", "egorium", "vanotyan", "takyon69", "lemshake", "happypala44", "kerststf", "oneplusone", "triplewammy", "leonko", "twiner", "otuskursky", "sishtis", "shirumic", "kommando", "nehoroshka", "raikyh", "themaskedman2", "xilvahphyre", "nikroszero", "foxfiredogs", "d6ll1r10um"))
+GLOBAL_LIST_INIT(donaters, list("badteammate", "meomoor", "terain1", "egorium", "vanotyan", "takyon69", "lemshake", "happypala44", "kerststf", "oneplusone", "triplewammy", "leonko", "twiner", "otuskursky", "sishtis", "shirumic", "kommando", "nehoroshka", "raikyh", "themaskedman2", "xilvahphyre", "nikroszero", "foxfiredogs", "d6ll1r10um", "drdreidel", "stinkethstonketh"))
 GLOBAL_LIST_EMPTY(fucking_joined)
 
 GLOBAL_LIST_EMPTY(police_radios)
