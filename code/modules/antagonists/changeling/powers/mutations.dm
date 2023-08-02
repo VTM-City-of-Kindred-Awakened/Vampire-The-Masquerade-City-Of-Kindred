@@ -284,6 +284,7 @@
 	icon_state = "tentacle_end"
 	firing_effect_type = null
 	var/obj/item/gun/magic/tentacle/gun //the item that shot it
+	item_flags = DROPDEL
 
 /obj/item/ammo_casing/magic/tentacle/Initialize()
 	gun = loc

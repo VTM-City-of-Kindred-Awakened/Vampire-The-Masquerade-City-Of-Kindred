@@ -108,7 +108,7 @@
 
 /datum/discipline/auspex
 	name = "Auspex"
-	desc = "Allows to see auras."
+	desc = "Allows to see entities, auras and their health through walls."
 	icon_state = "auspex"
 	cost = 1
 	ranged = FALSE
@@ -197,7 +197,7 @@
 
 /datum/discipline/dominate
 	name = "Dominate"
-	desc = "Supresses will of your targets. More effects on higher levels."
+	desc = "Supresses will of your targets and forces them to obey you, if their will is not more powerful than yours."
 	icon_state = "dominate"
 	cost = 2
 	ranged = TRUE
@@ -209,6 +209,9 @@
 	if(iskindred(target))
 		if(target.generation < caster.generation)
 			return
+	if(HAS_TRAIT(caster, TRAIT_MUTE))
+		to_chat(caster, "<span class='warning'>You find yourself unable to speak!</span>")
+		return
 	var/mob/living/carbon/human/TRGT
 	if(ishuman(target))
 		TRGT = target
@@ -259,7 +262,7 @@
 
 /datum/discipline/dementation
 	name = "Dementation"
-	desc = "Makes all humans in radius mentally ill for a second."
+	desc = "Makes all humans in radius mentally ill for a moment, supressing their defending ability."
 	icon_state = "dementation"
 	cost = 2
 	ranged = FALSE
@@ -447,7 +450,7 @@
 
 /datum/discipline/obfuscate
 	name = "Obfuscate"
-	desc = "Makes you less noticable."
+	desc = "Makes you less noticable for living and un-living beings."
 	icon_state = "obfuscate"
 	cost = 1
 	ranged = FALSE
@@ -469,7 +472,7 @@
 
 /datum/discipline/presence
 	name = "Presence"
-	desc = "Makes targets in radius more vulnerable to damages, can hypnotize."
+	desc = "Makes targets in radius more vulnerable to damages."
 	icon_state = "presence"
 	cost = 1
 	ranged = FALSE
@@ -716,7 +719,7 @@
 
 /datum/discipline/thaumaturgy
 	name = "Thaumaturgy"
-	desc = "Sucks blood from your victim in distance. Even from your own kind. On higher levels boils blood of victims and unlocks blood shield. Violates Masquerade."
+	desc = "Opens the secrets of blood magic and how you use it, allows to steal other's blood. Violates Masquerade."
 	icon_state = "thaumaturgy"
 	cost = 1
 	ranged = TRUE
@@ -790,7 +793,7 @@
 
 /datum/discipline/serpentis
 	name = "Serpentis"
-	desc = "Act like a cobra, get the powers to stun targets with your gaze and your tongue. On higher levels you can reach the ability to move your heart to the urn or ignore damage in torpor."
+	desc = "Act like a cobra, get the powers to stun targets with your gaze and your tongue, praise the mummy traditions and spread them to your childe."
 	icon_state = "serpentis"
 	cost = 1
 	ranged = TRUE
@@ -839,7 +842,7 @@
 
 /datum/discipline/vicissitude
 	name = "Vicissitude"
-	desc = "It is widely known as their art of flesh and bone shaping."
+	desc = "It is widely known as Tzimisce art of flesh and bone shaping."
 	icon_state = "vicissitude"
 	cost = 1
 	ranged = TRUE
@@ -942,17 +945,95 @@
 /turf
 	var/silented = FALSE
 
+/obj/projectile/quietus
+	name = "acid spit"
+	icon_state = "har4ok"
+	pass_flags = PASSTABLE
+	damage = 50
+	damage_type = BURN
+	hitsound = 'sound/weapons/effects/searwall.ogg'
+	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
+	ricochets_max = 0
+	ricochet_chance = 0
+
 /datum/discipline/quietus
 	name = "Quietus"
-	desc = "Grants influence over the blood of others. Can mute the nearby area."
+	desc = "Make a poison out of nowhere and forces all beings in range to mute, poison your touch, poison your weapon, poison your spit and make it acid."
 	icon_state = "quietus"
 	cost = 1
-	ranged = TRUE
+	ranged = FALSE
 	delay = 50
-	range = 2
+//	range = 2
 
 /datum/discipline/quietus/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
+	playsound(target.loc, 'code/modules/ziggers/sounds/quietus.ogg', 50, TRUE)
+	switch(level_casting)
+		if(1)
+			for(var/mob/living/carbon/human/H in oviewers(7, caster))
+				ADD_TRAIT(H, TRAIT_MUTE, "quietus")
+				H.remove_overlay(MUTATIONS_LAYER)
+				var/mutable_appearance/quietus_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "quietus", -MUTATIONS_LAYER)
+				H.overlays_standing[MUTATIONS_LAYER] = quietus_overlay
+				H.apply_overlay(MUTATIONS_LAYER)
+				spawn(50)
+					if(H)
+						REMOVE_TRAIT(H, TRAIT_MUTE, "quietus")
+						H.remove_overlay(MUTATIONS_LAYER)
+		if(2)
+			caster.drop_all_held_items()
+			caster.put_in_active_hand(new /obj/item/melee/touch_attack/quietus(caster))
+		if(3)
+			if(caster.lastattacked)
+				if(isliving(caster.lastattacked))
+					var/mob/living/L = caster.lastattacked
+					L.adjustStaminaLoss(80)
+					L.adjustFireLoss(10)
+					to_chat(caster, "You send your curse on [L], the last creature you attacked.")
+				else
+					to_chat(caster, "You don't seem to have last attacked soul earlier...")
+					return
+			else
+				to_chat(caster, "You don't seem to have last attacked soul earlier...")
+				return
+		if(4)
+			caster.drop_all_held_items()
+			caster.put_in_active_hand(new /obj/item/quietus_upgrade(caster))
+		if(5)
+			caster.drop_all_held_items()
+			caster.put_in_active_hand(new /obj/item/gun/magic/quietus(caster))
+
+/obj/item/gun/magic/quietus
+	name = "acid spit"
+	desc = "Spit poison on your targets."
+	icon = 'code/modules/ziggers/items.dmi'
+	icon_state = "har4ok"
+	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL | NOBLUDGEON
+	flags_1 = NONE
+	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = NONE
+	ammo_type = /obj/item/ammo_casing/magic/quietus
+	fire_sound = 'sound/effects/splat.ogg'
+	force = 0
+	max_charges = 1
+	fire_delay = 1
+	throwforce = 0 //Just to be on the safe side
+	throw_range = 0
+	throw_speed = 0
+	item_flags = DROPDEL
+
+/obj/item/ammo_casing/magic/quietus
+	name = "acid spit"
+	desc = "A spit."
+	projectile_type = /obj/projectile/quietus
+	caliber = CALIBER_TENTACLE
+	firing_effect_type = null
+	item_flags = DROPDEL
+
+/obj/item/gun/magic/quietus/process_fire()
+	. = ..()
+	if(charges == 0)
+		qdel(src)
 /*
 	playsound(target.loc, 'code/modules/ziggers/sounds/quietus.ogg', 50, TRUE)
 	target.Stun(5*level_casting)

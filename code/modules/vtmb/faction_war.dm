@@ -186,3 +186,52 @@ SUBSYSTEM_DEF(factionwar)
 						to_chat(user, "Your faction needs <span class='warning'>[round(length(SSfactionwar.marks_anarch)/3)]</span> members and <span class='warning'>[length(SSfactionwar.marks_anarch)*5]</span> influence to gain this mark.")
 			else
 				to_chat(user, "Your faction already own this.")
+
+/obj/structure/faction_map
+	name = "faction marks map"
+	desc = "Exact map of all marks. <b>Insert dollars to gain influence and bloodbond kindred to gain faction members</b>."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "faction_map"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	var/faction
+
+/obj/structure/faction_map/examine(mob/user)
+	. = ..()
+	switch(faction)
+		if("Camarilla")
+			. += "<b>Total Influence:</b> [SSfactionwar.camarilla_power]"
+			if(length(SSfactionwar.camarilla_members))
+				. += "<b>Total Members:</b> [length(SSfactionwar.camarilla_members)]"
+			if(length(SSfactionwar.marks_camarilla))
+				. += "<b>Total Marks:</b> [length(SSfactionwar.camarilla_members)]"
+			. += "<b>Next Mark Cost:</b> [round(length(SSfactionwar.marks_camarilla)/3)] members and [length(SSfactionwar.marks_camarilla)*5] influence"
+		if("Anarch")
+			. += "<b>Total Influence:</b> [SSfactionwar.anarch_power]"
+			if(length(SSfactionwar.anarch_members))
+				. += "<b>Total Members:</b> [length(SSfactionwar.anarch_members)]"
+			if(length(SSfactionwar.marks_anarch))
+				. += "<b>Total Marks:</b> [length(SSfactionwar.anarch_members)]"
+			. += "<b>Next Mark Cost:</b> [round(length(SSfactionwar.marks_anarch)/3)] members and [length(SSfactionwar.marks_anarch)*5] influence"
+
+/obj/structure/faction_map/camarilla
+	icon_state = "camarilla_map"
+	faction = "Camarilla"
+
+/obj/structure/faction_map/anarch
+	icon_state = "anarch_map"
+	faction = "Anarch"
+
+/obj/structure/faction_map/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(istype(I, /obj/item/stack/dollar))
+		var/obj/item/stack/dollar/D = I
+		if(faction == "Camarilla")
+			SSfactionwar.camarilla_power += D.amount
+			qdel(I)
+		if(faction == "Anarch")
+			SSfactionwar.anarch_power += D.amount
+			qdel(I)

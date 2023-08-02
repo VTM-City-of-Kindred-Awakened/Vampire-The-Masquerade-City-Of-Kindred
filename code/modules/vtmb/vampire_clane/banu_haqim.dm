@@ -8,11 +8,12 @@
 	male_clothes = "/obj/item/clothing/under/vampire/bandit"
 	female_clothes = "/obj/item/clothing/under/vampire/bandit"
 
+/*
 /datum/discipline/quietus/post_gain(mob/living/carbon/human/H)
 	if(level >= 3)
 		var/datum/action/silence_radius/SI = new()
 		SI.Grant(H)
-
+*/
 /datum/action/silence_radius
 	name = "Silence Radius"
 	desc = "Silence nearby location."

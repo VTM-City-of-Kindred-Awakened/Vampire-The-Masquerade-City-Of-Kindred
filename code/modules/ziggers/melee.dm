@@ -3,6 +3,7 @@
 	righthand_file = 'code/modules/ziggers/lefthand.dmi'
 	worn_icon = 'code/modules/ziggers/worn.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	var/quieted = FALSE
 
 /obj/item/melee/vampirearms/fireaxe
 	icon = 'code/modules/ziggers/48x32weapons.dmi'
@@ -142,12 +143,42 @@
 	armour_penetration = 100	//It's magical damage
 	item_flags = DROPDEL
 
-/obj/item/melee/vampirearms/knife/quietus
-	name = "poison hand"
+/obj/item/melee/touch_attack/quietus
+	name = "\improper poison touch"
+	desc = "This is kind of like when you rub your feet on a shag rug so you can zap your friends, only a lot less safe."
+	icon = 'code/modules/ziggers/weapons.dmi'
+	catchphrase = null
+	on_use_sound = 'sound/magic/disintegrate.ogg'
 	icon_state = "quietus"
-	w_class = WEIGHT_CLASS_BULKY
-	armour_penetration = 100	//It's magical damage
+	inhand_icon_state = "mansus"
+
+/obj/item/melee/touch_attack/quietus/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity)
+		return
+	if(isliving(target))
+		var/mob/living/L = target
+		L.adjustFireLoss(10)
+		L.AdjustKnockdown(3 SECONDS)
+		L.adjustStaminaLoss(50)
+	return ..()
+
+/obj/item/quietus_upgrade
+	name = "poison for weapons"
+	desc = "Upgrade your melee weapons with it."
+	icon_state = "quietus"
+	icon = 'code/modules/ziggers/items.dmi'
+	w_class = WEIGHT_CLASS_SMALL
 	item_flags = DROPDEL
+
+/obj/item/melee/vampirearms/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(istype(I, /obj/item/quietus_upgrade))
+		if(!quieted)
+			quieted = TRUE
+			armour_penetration = min(100, armour_penetration+50)
+			force += 30
+			color = "#72b27c"
+			qdel(I)
 
 /obj/item/melee/vampirearms/knife/gangrel/Initialize()
 	. = ..()
