@@ -80,8 +80,8 @@
 			if(get_dist(src, F) < 8 && F.z == src.z)
 				fear = F
 
-	if(!fear && !frenzy_target)
-		return
+//	if(!fear && !frenzy_target)
+//		return
 
 	if(fear)
 		step_away(src,fear,0)
@@ -155,6 +155,10 @@
 	if(fearstack)
 		if(prob(fearstack*5))
 			H.do_jitter_animation(10)
+			if(fearstack > 10)
+				if(prob(fearstack*5))
+					if(!H.in_frenzy)
+						H.rollfrenzy()
 		if(!H.has_status_effect(STATUS_EFFECT_FEAR))
 			H.apply_status_effect(STATUS_EFFECT_FEAR)
 	else

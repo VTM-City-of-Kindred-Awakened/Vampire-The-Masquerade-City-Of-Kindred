@@ -433,7 +433,9 @@
 					call_sound = 'sound/voice/human/malescream_6.ogg'
 					to_chat(usr, "<span class='notice'>Code activated.</span>")
 				else if(choosed_number == "#34")
-					usr << link("https://rule34.xxx/index.php?page=post&s=list&tags=werewolf")
+					if(ishuman(usr))
+						var/mob/living/carbon/human/H = usr
+						H.emote("moan")
 					to_chat(usr, "<span class='notice'>Code activated.</span>")
 				else
 					to_chat(usr, "<span class='notice'>Invalid number.</span>")

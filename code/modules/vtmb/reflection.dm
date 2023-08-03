@@ -40,6 +40,8 @@
 	if(!mirror)
 		return
 
+	alpha = mirror.alpha
+
 	var/matrix/M = matrix()
 	if(dir == WEST || dir == EAST)
 		M.Scale(-1, 1)

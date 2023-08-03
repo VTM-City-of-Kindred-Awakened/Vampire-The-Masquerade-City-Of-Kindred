@@ -867,6 +867,9 @@
 /obj/item/card/id/hunter/AltClick(mob/user)
 	return
 
+/obj/item/card/id/primogen/AltClick(mob/user)
+	return
+
 /obj/item/card/id/hunter
 	var/last_detonated = 0
 
@@ -1130,16 +1133,15 @@
 
 /datum/outfit/job/hunter
 	name = "Hunter"
-	uniform = /obj/item/clothing/under/rank/civilian/chaplain
+	uniform = /obj/item/clothing/under/vampire/graveyard
 	r_pocket = /obj/item/flashlight
 	id = /obj/item/card/id/hunter
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	backpack_contents = list(
 		/obj/item/storage/book/bible = 1,
 		/obj/item/melee/vampirearms/stake = 3,
-		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/ammo_box/vampire/c44 = 1,
-		/obj/item/gun/ballistic/vampire/revolver = 1,
+		/obj/item/molotov = 1,
+		/obj/item/gas_can/full = 1,
 		/obj/item/vamp/keys/hack=1
 		)
 
@@ -1173,17 +1175,19 @@
 	var/obj/effect/landmark/start/D = pick(landmarkslist)
 	H.forceMove(D.loc)
 
-	var/list/loadouts = list("Sniper Rifle", "EOD Suit", "Holy Presence")
+	var/list/loadouts = list("Fire Fighter", "EOD Suit", "Holy Presence")
 	var/loadout_type = input(H, "Choose the Lord's gift for you:", "Loadout") as anything in loadouts
 	switch(loadout_type)
-		if("Sniper Rifle")
+		if("Fire Master")
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/vampire/helmet(H), ITEM_SLOT_HEAD)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/vest(H), ITEM_SLOT_OCLOTHING)
-			H.put_in_r_hand(new /obj/item/gun/ballistic/automatic/vampire/sniper(H))
+			H.put_in_r_hand(new /obj/item/vampire_flamethrower(H))
+			H.put_in_l_hand(new /obj/item/melee/vampirearms/fireaxe(H))
 		if("EOD Suit")
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/eod(H), ITEM_SLOT_OCLOTHING)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/vampire/eod(H), ITEM_SLOT_HEAD)
-			H.put_in_r_hand(new /obj/item/melee/vampirearms/fireaxe(H))
+			H.put_in_r_hand(new /obj/item/gun/ballistic/shotgun/vampire(H))
+			H.put_in_l_hand(new /obj/item/ammo_box/vampire/c12g(H))
 		if("Holy Presence")
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/vest/army(H), ITEM_SLOT_OCLOTHING)
 			H.put_in_r_hand(new /obj/item/melee/vampirearms/chainsaw(H))

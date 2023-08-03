@@ -1,4 +1,6 @@
 /mob/living/carbon/human/proc/AdjustHumanity(var/value, var/limit)
+	if(!iskindred(src))
+		return
 	var/special_role_name
 	if(mind)
 		if(mind.special_role)
@@ -16,7 +18,7 @@
 					if(humanity < 10)
 						humanity = max(limit, humanity-(value*mod))
 						SEND_SOUND(src, sound('code/modules/ziggers/sounds/humanity_gain.ogg', 0, 0, 75))
-						to_chat(src, "<span class='us-erhelp'><b>ENLIGHTEMENT INCREASES</b></span>")
+						to_chat(src, "<span class='userhelp'><b>ENLIGHTEMENT INCREASES</b></span>")
 				if(value > 0)
 					if(humanity > 0)
 						humanity = min(limit, humanity-(value*mod))
@@ -32,9 +34,11 @@
 					if(humanity < limit)
 						humanity = min(limit, humanity+(value*mod))
 						SEND_SOUND(src, sound('code/modules/ziggers/sounds/humanity_gain.ogg', 0, 0, 75))
-						to_chat(src, "<span class='us-erhelp'><b>HUMANITY INCREASES</b></span>")
+						to_chat(src, "<span class='userhelp'><b>HUMANITY INCREASES</b></span>")
 
 /mob/living/carbon/human/proc/AdjustMasquerade(var/value)
+	if(!iskindred(src) && !isghoul(src))
+		return
 	var/special_role_name
 	if(mind)
 		if(mind.special_role)
@@ -50,6 +54,9 @@
 					to_chat(src, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
 				SSbad_guys_party.next_fire = max(world.time, SSbad_guys_party.next_fire-1200)
 			if(value > 0)
+				if(clane)
+					if(clane.enlightement)
+						AdjustHumanity(1, 10)
 				for(var/mob/living/carbon/human/H in GLOB.player_list)
 					H.voted_for -= dna.real_name
 				if(masquerade < 5)

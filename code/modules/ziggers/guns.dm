@@ -318,3 +318,78 @@
 	icon = 'code/modules/ziggers/ammo.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 	harmful = TRUE
+
+/obj/item/molotov
+	name = "molotov cocktail"
+	desc = "Well fire weapon."
+	icon_state = "molotov"
+	icon = 'code/modules/ziggers/weapons.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+	var/active = FALSE
+
+/obj/item/molotov/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	for(var/turf/open/floor/F in range(2, hit_atom))
+		if(F)
+			new /obj/effect/decal/cleanable/gasoline(F)
+	if(active)
+		new /obj/effect/fire(get_turf(hit_atom))
+	playsound(get_turf(hit_atom), 'code/modules/ziggers/sounds/explode.ogg', 100, TRUE)
+	qdel(src)
+	..()
+
+/obj/item/molotov/attackby(obj/item/I, mob/user, params)
+	if(I.get_temperature() && !active)
+		active = TRUE
+		log_bomber(user, "has primed a", src, "for detonation")
+		icon_state = "molotov_flamed"
+
+/obj/item/vampire_flamethrower
+	name = "flamethrower"
+	desc = "Well fire weapon."
+	icon_state = "flamethrower4"
+	icon = 'code/modules/ziggers/weapons.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+	var/oil = 1000
+
+/obj/item/vampire_flamethrower/attackby(obj/item/W, mob/user, params)
+	. = ..()
+	if(istype(W, /obj/item/gas_can))
+		var/obj/item/gas_can/G = W
+		if(G.stored_gasoline > 10 && oil < 1000)
+			var/gas_to_transfer = min(G.stored_gasoline, 1000-oil)
+			G.stored_gasoline = max(0, G.stored_gasoline-gas_to_transfer)
+			oil = min(1000, oil+gas_to_transfer)
+			if(oil)
+				playsound(get_turf(user), 'code/modules/ziggers/sounds/gas_fill.ogg', 50, TRUE)
+				to_chat(user, "<span class='notice'>You fill [src].</span>")
+				icon_state = "flamethrower4"
+
+/obj/item/vampire_flamethrower/afterattack(atom/target, mob/user, flag)
+	. = ..()
+//	if(flag)
+//		return
+//	if(ishuman(user))
+//		if(!can_trigger_gun(user))
+//			return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You can't bring yourself to fire \the [src]! You don't want to risk harming anyone...</span>")
+		return
+	playsound(target.loc, 'code/modules/ziggers/sounds/flamethrower.ogg', 50, TRUE)
+	visible_message("<span class='warning'>[user] fires [src]!</span>", "<span class='warning'>You fire [src]!</span>")
+	if(user && user.get_active_held_item() == src) // Make sure our user is still holding us
+		var/turf/target_turf = get_turf(target)
+		if(target_turf)
+			var/turflist = getline(user, target_turf)
+			log_combat(user, target, "flamethrowered", src)
+			for(var/turf/open/floor/F in turflist)
+				if(F)
+					if(F != user.loc)
+						if(oil)
+							new /obj/effect/decal/cleanable/gasoline(F)
+							oil = max(0, oil-10)
+							if(oil == 0)
+								icon_state = "flamethrower1"
+							if(get_dist(F, user) == 1)
+								new /obj/effect/fire(F)

@@ -34,6 +34,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		matchburnout()
 	else
 		open_flame(heat)
+		if(istype(loc, /turf/open/floor))
+			var/obj/effect/decal/cleanable/gasoline/G = locate() in loc
+			if(G)
+				new /obj/effect/fire(loc)
 
 /obj/item/match/fire_act(exposed_temperature, exposed_volume)
 	matchignite()
@@ -640,7 +644,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/overlay_list = list(
 		"plain",
 		"dame",
-		"thirteen",
 		"snake"
 		)
 

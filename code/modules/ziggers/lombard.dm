@@ -14,6 +14,11 @@
 /obj/lombard/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/stack))
 		return
+	if(istype(W, /obj/item/organ))
+		var/obj/item/organ/O = W
+		if(O.damage > round(O.maxHealth/2))
+			to_chat(user, "<span class='warning'>[W] is too damaged to sell!</span>")
+			return
 	if(W.cost > 0)
 		if(W.illegal == illegal)
 			for(var/i in 1 to W.cost)
@@ -38,31 +43,31 @@
 
 /obj/item/organ/heart
 	illegal = TRUE
-	cost = 100
+	cost = 1000
 
 /obj/item/organ/lungs
 	illegal = TRUE
-	cost = 50
+	cost = 500
 
 /obj/item/organ/liver
 	illegal = TRUE
-	cost = 50
+	cost = 500
 
 /obj/item/organ/stomach
 	illegal = TRUE
-	cost = 25
+	cost = 100
 
 /obj/item/organ/eyes
 	illegal = TRUE
-	cost = 25
+	cost = 100
 
 /obj/item/organ/ears
 	illegal = TRUE
-	cost = 25
+	cost = 100
 
 /obj/item/organ/tongue
 	illegal = TRUE
-	cost = 10
+	cost = 50
 
 /obj/item/clothing/under/vampire
 	cost = 10

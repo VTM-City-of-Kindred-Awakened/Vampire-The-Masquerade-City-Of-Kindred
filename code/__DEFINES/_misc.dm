@@ -13,6 +13,7 @@
 #define REVERSE_DIR(dir) ( ((dir & 85) << 1) | ((dir & 170) >> 1) )
 
 //Human Overlays Indexes/////////
+#define LUZHA_LAYER				38
 #define UNDERSHADOW_LAYER		37
 #define MUTATIONS_LAYER			36		//mutations. Tk headglows, cold resistance glow, etc
 #define BODY_BEHIND_LAYER		35		//certain mutantrace features (tail when looking south) that must appear behind the body parts
@@ -50,7 +51,7 @@
 #define BITE_LAYER				3
 #define FIGHT_LAYER				2
 #define SAY_LAYER				1
-#define TOTAL_LAYERS			37		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			38		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"

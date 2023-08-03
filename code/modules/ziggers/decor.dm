@@ -562,6 +562,7 @@
 	if(istype(I, /obj/item/stack/dollar))
 		var/obj/item/stack/dollar/D = I
 		stored_money += D.amount
+		to_chat(user, "<span class='notice'>You insert [D.amount] dollars into [src].</span>")
 		qdel(I)
 		say("Payment received.")
 	if(istype(I, /obj/item/gas_can))
@@ -572,6 +573,7 @@
 			G.stored_gasoline = min(1000, G.stored_gasoline+gas_to_dispense)
 			stored_money = max(0, stored_money-money_to_spend)
 			playsound(loc, 'code/modules/ziggers/sounds/gas_fill.ogg', 50, TRUE)
+			to_chat(user, "<span class='notice'>You fill [I].</span>")
 			say("Gas filled.")
 
 /obj/structure/bloodextractor

@@ -17,6 +17,7 @@
 	..()
 	var/obj/item/organ/eyes/night_vision/NV = new()
 	NV.Insert(H, TRUE, FALSE)
+	H.vis_flags |= VIS_HIDE
 
 /datum/discipline/obtenebration/post_gain(mob/living/carbon/human/H)
 	if(level >= 3)

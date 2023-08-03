@@ -6,6 +6,7 @@
 	layer = ABOVE_NORMAL_TURF_LAYER
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	var/climbing = FALSE
 
 /obj/manholeup/attack_hand(mob/user)
 	var/turf/destination = get_step_multiz(src, UP)
@@ -24,6 +25,7 @@
 	layer = ABOVE_NORMAL_TURF_LAYER
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	var/climbing = FALSE
 
 /obj/manholedown/attack_hand(mob/user)
 	var/turf/destination = get_step_multiz(src, DOWN)

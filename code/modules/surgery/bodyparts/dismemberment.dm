@@ -67,6 +67,7 @@
 			continue
 		O.Remove(C)
 		O.forceMove(T)
+		O.damage = rand(round(O.maxHealth/2), O.maxHealth)
 		. += X
 	if(cavity_item)
 		cavity_item.forceMove(T)

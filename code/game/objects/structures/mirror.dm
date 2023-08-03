@@ -34,15 +34,15 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 
 /obj/structure/mirror/Crossed(atom/movable/AM)
 	. = ..()
-	if(ishuman(AM) && ref)
-		var/mob/living/carbon/human/H = AM
-		if(H.clane)
-			if(H.clane.name == "Lasombra")
-				var/obj/effect/reflection/reflection = ref.resolve()
-				if(istype(reflection))
-					qdel(reflection)
-					ref = null
-	else if(!ref)
+//	if(ishuman(AM) && ref)
+//		var/mob/living/carbon/human/H = AM
+//		if(H.clane)
+//			if(H.clane.name == "Lasombra")
+//				var/obj/effect/reflection/reflection = ref.resolve()
+//				if(istype(reflection))
+//					qdel(reflection)
+//					ref = null
+	if(!ref)
 		var/obj/effect/reflection/reflection = new(src.loc)
 		reflection.setup_visuals(src)
 		ref = WEAKREF(reflection)

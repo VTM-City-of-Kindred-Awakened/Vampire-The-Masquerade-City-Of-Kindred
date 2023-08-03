@@ -214,10 +214,10 @@
 	if(H.key && H.stat != DEAD)
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
 		if(P)
-			if(P.humanity != H.humanity)
-				P.humanity = H.humanity
-				P.save_preferences()
-				P.save_character()
+//			if(P.humanity != H.humanity)
+//				P.humanity = H.humanity
+//				P.save_preferences()
+//				P.save_character()
 			if(P.masquerade != H.masquerade)
 				P.masquerade = H.masquerade
 				P.save_preferences()
@@ -264,23 +264,23 @@
 	if(H.key && H.stat != DEAD)
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
 		if(P)
-			if(P.humanity != H.humanity)
-				P.humanity = H.humanity
-				P.save_preferences()
-				P.save_character()
+//			if(P.humanity != H.humanity)
+//				P.humanity = H.humanity
+//				P.save_preferences()
+//				P.save_character()
 			if(H.last_experience+600 <= world.time)
 				P.exper = min(calculate_mob_max_exper(H), P.exper+5+H.experience_plus)
 				P.save_preferences()
 				P.save_character()
 				H.last_experience = world.time
 
-			if(H.humanity <= 2)
-				if(prob(5))
-					if(prob(50))
-						H.Stun(10)
-						to_chat(H, "<span class='warning'>You stop in fear and remember your crimes against humanity...</span>")
-						H.emote("cry")
-					else
-						to_chat(H, "<span class='warning'>You feel the rage rising as your last sins come to your head...</span>")
-						H.drop_all_held_items()
-						H.emote("scream")
+//			if(H.humanity <= 2)
+//				if(prob(5))
+//					if(prob(50))
+//						H.Stun(10)
+//						to_chat(H, "<span class='warning'>You stop in fear and remember your crimes against humanity...</span>")
+//						H.emote("cry")
+//					else
+//						to_chat(H, "<span class='warning'>You feel the rage rising as your last sins come to your head...</span>")
+//						H.drop_all_held_items()
+//						H.emote("scream")
