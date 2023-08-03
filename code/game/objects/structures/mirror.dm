@@ -118,6 +118,10 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 		if(desc == initial(desc))
 			desc = "Oh no, seven years of bad luck!"
 		broken = TRUE
+		if(!ref)
+			var/obj/effect/reflection/reflection = new(src.loc)
+			reflection.setup_visuals(src)
+			ref = WEAKREF(reflection)
 		var/obj/effect/reflection/reflection = ref.resolve()
 		if(istype(reflection))
 			reflection.alpha_icon_state = "mirror_mask_broken"

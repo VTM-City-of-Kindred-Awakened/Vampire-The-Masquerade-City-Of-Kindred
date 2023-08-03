@@ -2,24 +2,42 @@
 // The proc you should always use to set the light of this atom.
 // Nonesensical value for l_color default, so we can detect if it gets set to null.
 #define NONSENSICAL_VALUE -99999
+/atom
+	var/atom/movable/parent_multiz_light
+
 /atom/proc/set_light(l_range, l_power, l_color = NONSENSICAL_VALUE, l_on)
+	if(istype(get_step_multiz(src, UP), /turf/open/openspace))
+		parent_multiz_light = new(get_step_multiz(src, UP))
 	if(l_range > 0 && l_range < MINIMUM_USEFUL_LIGHT_RANGE)
 		l_range = MINIMUM_USEFUL_LIGHT_RANGE	//Brings the range up to 1.4, which is just barely brighter than the soft lighting that surrounds players.
+//		AM.l_range = MINIMUM_USEFUL_LIGHT_RANGE
 	if (!isnull(l_power))
 		light_power = l_power
+		if(parent_multiz_light)
+			parent_multiz_light.light_power = l_power
 
 	if (!isnull(l_range))
 		light_range = l_range
+		if(parent_multiz_light)
+			parent_multiz_light.light_range = l_range
 
 	if (l_color != NONSENSICAL_VALUE)
 		light_color = l_color
+		if(parent_multiz_light)
+			parent_multiz_light.light_color = l_color
 
 	if(!isnull(l_on))
 		light_on = l_on
+		if(parent_multiz_light)
+			parent_multiz_light.light_on = l_on
 
 	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT, l_range, l_power, l_color, l_on)
+	if(parent_multiz_light)
+		SEND_SIGNAL(parent_multiz_light, COMSIG_ATOM_SET_LIGHT, l_range, l_power, l_color, l_on)
 
 	update_light()
+	if(parent_multiz_light)
+		parent_multiz_light.update_light()
 
 #undef NONSENSICAL_VALUE
 
@@ -79,6 +97,11 @@
 	recalculate_directional_opacity()
 
 
+/atom/Destroy()
+	. = ..()
+	if(parent_multiz_light)
+		qdel(parent_multiz_light)
+
 /atom/movable/Moved(atom/OldLoc, Dir)
 	. = ..()
 	var/datum/light_source/L
@@ -86,6 +109,12 @@
 	for (thing in light_sources) // Cycle through the light sources on this atom and tell them to update.
 		L = thing
 		L.source_atom.update_light()
+		if(L.source_atom.parent_multiz_light)
+			L.source_atom.parent_multiz_light.forceMove(get_step_multiz(src, UP))
+			if(!istype(L.source_atom.parent_multiz_light.loc, /turf/open/openspace))
+				qdel(L.source_atom.parent_multiz_light)
+		else if(istype(get_step_multiz(L.source_atom, UP), /turf/open/openspace))
+			L.source_atom.parent_multiz_light = new(get_step_multiz(L.source_atom, UP))
 
 
 /atom/proc/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION)
