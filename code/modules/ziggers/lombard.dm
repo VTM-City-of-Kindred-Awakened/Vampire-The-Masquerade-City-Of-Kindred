@@ -1,5 +1,5 @@
 /obj/item
-	var/cost
+	var/cost = 0
 	var/illegal = FALSE
 
 /obj/lombard
@@ -14,14 +14,14 @@
 /obj/lombard/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/stack))
 		return
-	if(W.cost)
+	if(W.cost > 0)
 		if(W.illegal == illegal)
 			for(var/i in 1 to W.cost)
 				new /obj/item/stack/dollar(loc)
 			playsound(loc, 'code/modules/ziggers/sounds/sell.ogg', 50, TRUE)
 			if(illegal)
 				var/mob/living/carbon/human/H = user
-				H.AdjustHumanity(-1, 0)
+				H.AdjustHumanity(-1, 3)
 			qdel(W)
 			return
 	else

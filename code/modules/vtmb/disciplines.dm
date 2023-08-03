@@ -99,7 +99,7 @@
 	W.set_light(2, 2, "#6eeeff")
 	target.Immobilize(10)
 	spawn(10)
-		W.forceMove(target.loc)
+		W.forceMove(get_turf(target))
 		playsound(W.loc, 'code/modules/ziggers/sounds/volk.ogg', 80, TRUE)
 		target.apply_damage(5*level_casting, BRUTE, BODY_ZONE_CHEST)
 		target.visible_message("<span class='warning'><b>[W] bites [target]!</b></span>", "<span class='warning'><b>[W] bites you!</b></span>")

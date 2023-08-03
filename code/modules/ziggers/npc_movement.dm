@@ -206,7 +206,8 @@
 			fire_danger = TRUE
 	if(!fire_danger)
 		less_danger = null
-	lifespan = lifespan+1
+	if(!staying)
+		lifespan = lifespan+1
 	if(lifespan >= 1000)
 		if(route_optimisation())
 			qdel(src)

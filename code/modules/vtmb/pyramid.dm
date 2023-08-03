@@ -226,7 +226,7 @@
 					var/area/vtm/V = get_area(AM)
 					if(V.name != "San Francisco")
 						playsound(loc, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
-						user.forceMove(AM.loc)
+						user.forceMove(get_turf(AM))
 						qdel(AM)
 						qdel(src)
 						return

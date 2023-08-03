@@ -31,7 +31,7 @@
 
 /obj/item/gas_can/afterattack(atom/A, mob/user, proximity)
 	. = ..()
-	if(istype(get_turf(A), /turf/open/floor) && !istype(A, /obj/vampire_car) && !istype(A, /obj/structure/fuelstation))
+	if(istype(get_turf(A), /turf/open/floor) && !istype(A, /obj/vampire_car) && !istype(A, /obj/structure/fuelstation) && !istype(A, /mob/living/carbon/human))
 		var/obj/effect/decal/cleanable/gasoline/G = locate() in get_turf(A)
 		if(G)
 			return
@@ -42,6 +42,16 @@
 		stored_gasoline = max(0, stored_gasoline-50)
 		new /obj/effect/decal/cleanable/gasoline(get_turf(A))
 		playsound(get_turf(src), 'code/modules/ziggers/sounds/gas_splat.ogg', 50, TRUE)
+	if(istype(A, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = A
+		if(!proximity)
+			return
+		if(stored_gasoline < 50)
+			return
+		stored_gasoline = max(0, stored_gasoline-50)
+		H.fire_stacks = min(10, H.fire_stacks+10)
+		playsound(get_turf(H), 'code/modules/ziggers/sounds/gas_splat.ogg', 50, TRUE)
+		user.visible_message("<span class='warning'>[user] covers [A] in something flammable!</span>")
 
 /obj/vampire_car
 	name = "car"
@@ -165,7 +175,7 @@
 						if(initial(access) == "none")
 							if(ishuman(user))
 								var/mob/living/carbon/human/H = user
-								H.AdjustHumanity(-1, 4)
+								H.AdjustHumanity(-1, 6)
 						return
 					else
 						to_chat(user, "<span class='warning'>You've failed to open [src]'s lock.</span>")

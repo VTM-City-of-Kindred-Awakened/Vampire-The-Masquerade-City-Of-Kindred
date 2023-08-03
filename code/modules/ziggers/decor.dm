@@ -552,6 +552,7 @@
 		say("Money refunded.")
 		for(var/i in 1 to stored_money)
 			new /obj/item/stack/dollar(loc)
+		stored_money = 0
 
 /obj/structure/fuelstation/examine(mob/user)
 	. = ..()
@@ -566,8 +567,8 @@
 	if(istype(I, /obj/item/gas_can))
 		var/obj/item/gas_can/G = I
 		if(G.stored_gasoline < 1000 && stored_money)
-			var/gas_to_dispense = min(stored_money*200, 1000-G.stored_gasoline)
-			var/money_to_spend = round(gas_to_dispense/200)
+			var/gas_to_dispense = min(stored_money*20, 1000-G.stored_gasoline)
+			var/money_to_spend = round(gas_to_dispense/20)
 			G.stored_gasoline = min(1000, G.stored_gasoline+gas_to_dispense)
 			stored_money = max(0, stored_money-money_to_spend)
 			playsound(loc, 'code/modules/ziggers/sounds/gas_fill.ogg', 50, TRUE)
