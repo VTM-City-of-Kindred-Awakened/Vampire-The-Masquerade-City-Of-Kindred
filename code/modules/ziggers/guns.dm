@@ -366,6 +366,10 @@
 				to_chat(user, "<span class='notice'>You fill [src].</span>")
 				icon_state = "flamethrower4"
 
+/obj/item/vampire_flamethrower/examine(mob/user)
+	. = ..()
+	. += "<b>Ammo:</b> [(oil/1000)*100]%"
+
 /obj/item/vampire_flamethrower/afterattack(atom/target, mob/user, flag)
 	. = ..()
 //	if(flag)
@@ -376,7 +380,7 @@
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You can't bring yourself to fire \the [src]! You don't want to risk harming anyone...</span>")
 		return
-	playsound(target.loc, 'code/modules/ziggers/sounds/flamethrower.ogg', 50, TRUE)
+	playsound(get_turf(user), 'code/modules/ziggers/sounds/flamethrower.ogg', 50, TRUE)
 	visible_message("<span class='warning'>[user] fires [src]!</span>", "<span class='warning'>You fire [src]!</span>")
 	if(user && user.get_active_held_item() == src) // Make sure our user is still holding us
 		var/turf/target_turf = get_turf(target)
