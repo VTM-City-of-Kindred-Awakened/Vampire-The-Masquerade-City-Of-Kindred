@@ -751,6 +751,12 @@
 	icon = 'code/modules/ziggers/tiles.dmi'
 	icon_state = "shadow"
 
+/obj/effect/decal/shadow/Initialize()
+	. = ..()
+	if(istype(loc, /turf/open/openspace))
+		forceMove(get_step(src, NORTH))
+		pixel_y = -32
+
 /obj/effect/decal/support
 	name = "support"
 	icon = 'code/modules/ziggers/tiles.dmi'

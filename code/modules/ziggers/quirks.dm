@@ -184,45 +184,97 @@ Dancer
 	if(isclosedturf(get_step(get_step(owner, owner.dir), owner.dir)))
 		return
 
-	for(var/atom/movable/A in get_step(owner, owner.dir))
-		if(istype(A, /obj/structure/vampdoor))
-			return
-		if(istype(A, /obj/matrix))
-			return
-		if(istype(A, /obj/structure/window))
-			return
-		if(istype(A, /turf/open/floor/plating/vampocean))
-			return
-		if(istype(A, /obj/elevator_door))
-			return
-		if(istype(A, /obj/machinery/door/poddoor/shutters))
-			return
+	if(isclosedturf(get_step(get_step(get_step(owner, owner.dir), owner.dir), owner.dir)))
+		for(var/atom/movable/A in get_step(owner, owner.dir))
+			if(istype(A, /obj/structure/vampdoor))
+				return
+			if(istype(A, /obj/matrix))
+				return
+			if(istype(A, /obj/structure/window))
+				return
+			if(istype(A, /turf/open/floor/plating/vampocean))
+				return
+			if(istype(A, /obj/elevator_door))
+				return
+			if(istype(A, /obj/machinery/door/poddoor/shutters))
+				return
 
-	for(var/atom/movable/A in get_step(get_step(owner, owner.dir), owner.dir))
-		if(istype(A, /obj/structure/vampdoor))
-			return
-		if(istype(A, /obj/matrix))
-			return
-		if(istype(A, /obj/structure/window))
-			return
-		if(istype(A, /turf/open/floor/plating/vampocean))
-			return
-		if(istype(A, /obj/elevator_door))
-			return
-		if(istype(A, /obj/machinery/door/poddoor/shutters))
-			return
+		for(var/atom/movable/A in get_step(get_step(owner, owner.dir), owner.dir))
+			if(istype(A, /obj/structure/vampdoor))
+				return
+			if(istype(A, /obj/matrix))
+				return
+			if(istype(A, /obj/structure/window))
+				return
+			if(istype(A, /turf/open/floor/plating/vampocean))
+				return
+			if(istype(A, /obj/elevator_door))
+				return
+			if(istype(A, /obj/machinery/door/poddoor/shutters))
+				return
 
-	var/turf/open/LO = get_step(get_step(owner, owner.dir), owner.dir)
+		var/turf/open/LO = get_step(get_step(owner, owner.dir), owner.dir)
 
-	var/mob/living/carbon/human/H = owner
-	if(H.dancing)
-		return
-	H.dance_flip()
-	H.Immobilize(2, TRUE)
-	animate(H, pixel_z = 32, time = 2)
-	spawn(2)
-		H.forceMove(LO)
-		animate(H, pixel_z = 0, time = 2)
+		var/mob/living/carbon/human/H = owner
+		if(H.dancing)
+			return
+		H.Immobilize(2, TRUE)
+		animate(H, pixel_z = 32, time = 2)
+		spawn(2)
+			H.forceMove(LO)
+			animate(H, pixel_z = 0, time = 2)
+	else if(isopenturf(get_step(get_step(get_step(owner, owner.dir), owner.dir), owner.dir)))
+		for(var/atom/movable/A in get_step(owner, owner.dir))
+			if(istype(A, /obj/structure/vampdoor))
+				return
+			if(istype(A, /obj/matrix))
+				return
+			if(istype(A, /obj/structure/window))
+				return
+			if(istype(A, /turf/open/floor/plating/vampocean))
+				return
+			if(istype(A, /obj/elevator_door))
+				return
+			if(istype(A, /obj/machinery/door/poddoor/shutters))
+				return
+
+		for(var/atom/movable/A in get_step(get_step(owner, owner.dir), owner.dir))
+			if(istype(A, /obj/structure/vampdoor))
+				return
+			if(istype(A, /obj/matrix))
+				return
+			if(istype(A, /obj/structure/window))
+				return
+			if(istype(A, /turf/open/floor/plating/vampocean))
+				return
+			if(istype(A, /obj/elevator_door))
+				return
+			if(istype(A, /obj/machinery/door/poddoor/shutters))
+				return
+
+		for(var/atom/movable/A in get_step(get_step(get_step(owner, owner.dir), owner.dir), owner.dir))
+			if(istype(A, /obj/structure/vampdoor))
+				return
+			if(istype(A, /obj/matrix))
+				return
+			if(istype(A, /obj/structure/window))
+				return
+			if(istype(A, /turf/open/floor/plating/vampocean))
+				return
+			if(istype(A, /obj/elevator_door))
+				return
+			if(istype(A, /obj/machinery/door/poddoor/shutters))
+				return
+
+		var/turf/open/LO = get_step(get_step(get_step(owner, owner.dir), owner.dir), owner.dir)
+		var/mob/living/carbon/human/H = owner
+		if(H.dancing)
+			return
+		H.Immobilize(2, TRUE)
+		animate(H, pixel_z = 32, time = 2)
+		spawn(2)
+			H.forceMove(LO)
+			animate(H, pixel_z = 0, time = 2)
 
 /datum/quirk/dancer
 	name = "Dancer"
