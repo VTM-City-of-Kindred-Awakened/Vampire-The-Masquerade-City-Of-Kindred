@@ -51,6 +51,10 @@
 	name = "Cleaning keys"
 	accesslocks = list("cleaning")
 
+/obj/item/vamp/keys/church
+	name = "Church keys"
+	accesslocks = list("cleaning")
+
 /obj/item/vamp/keys/archive
 	name = "Archive keys"
 	accesslocks = list("archive")
@@ -296,6 +300,14 @@
 	locked = TRUE
 	lock_id = "graveyard"
 	burnable = TRUE
+
+/obj/structure/vampdoor/church
+	icon_state = "oldwood-1"
+	baseicon = "oldwood"
+	locked = TRUE
+	lock_id = "church"
+	burnable = TRUE
+	hackable = FALSE
 
 /obj/structure/vampdoor/clinic
 	icon_state = "shop-1"

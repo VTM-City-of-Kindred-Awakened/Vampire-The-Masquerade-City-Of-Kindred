@@ -199,7 +199,7 @@
 					if(H.frakcja == "Camarilla" || H.frakcja == "Anarch" || H.frakcja == "Sabbat")
 						if(BLOODBONDED.frakcja != H.frakcja)
 							BLOODBONDED.frakcja = H.frakcja
-							SSfactionwar.switch_member(BLOODBONDED, H.frakcja)
+							SSfactionwar.adjust_members()
 							to_chat(BLOODBONDED, "<span class='notice'>You are now member of <b>[H.frakcja]</b></span>")
 				BLOODBONDED.drunked_of |= "[H.dna.real_name]"
 				if(BLOODBONDED.stat == DEAD && !iskindred(BLOODBONDED))

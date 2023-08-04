@@ -37,7 +37,16 @@
 			our_turf.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return FALSE
 	if(init)
-		our_turf.vis_contents += below_turf
+		var/atom/movable/shitta = new(our_turf)
+		shitta.vis_contents += below_turf
+		if(get_step(get_step_multiz(shitta, DOWN), NORTH))
+			shitta.vis_contents += get_step(get_step_multiz(shitta, DOWN), NORTH)
+		shitta.pixel_y = -28
+		shitta.plane = our_turf.plane
+		shitta.layer = our_turf.layer
+		shitta.mouse_opacity = 0
+		shitta.add_filter("z_level_blur", 1, list(type = "blur", size = 0.75))
+//		our_turf.vis_contents += below_turf
 	if(isclosedturf(our_turf)) //Show girders below closed turfs
 		var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', "girder", layer = TURF_LAYER-0.01)
 		girder_underlay.appearance_flags = RESET_ALPHA | RESET_COLOR

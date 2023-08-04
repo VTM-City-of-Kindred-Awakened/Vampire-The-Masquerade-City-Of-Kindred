@@ -8,7 +8,7 @@
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYERS_LAYER
 	anchored = TRUE
-	vis_flags = VIS_HIDE
+//	vis_flags = VIS_HIDE
 
 /turf/closed/wall/vampwall
 	name = "old brick wall"

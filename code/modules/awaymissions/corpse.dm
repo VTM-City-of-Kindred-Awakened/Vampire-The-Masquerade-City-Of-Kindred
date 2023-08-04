@@ -108,6 +108,25 @@
 	M.adjustFireLoss(burn_damage)
 	M.color = mob_color
 	equip(M)
+	if(!random)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/datum/preferences/P = GLOB.preferences_datums[ckey]
+			if(P)
+				H.hairstyle = P.hairstyle
+				H.facial_hairstyle = P.facial_hairstyle
+				H.hair_color = P.hair_color
+				H.facial_hair_color = P.facial_hair_color
+				H.skin_tone = P.skin_tone
+				switch(P.body_model)
+					if(1)
+						H.base_body_mod = "s"
+					if(2)
+						H.base_body_mod = ""
+					if(3)
+						H.base_body_mod = "f"
+				H.update_hair()
+				H.update_body()
 
 	if(ckey)
 		M.ckey = ckey
