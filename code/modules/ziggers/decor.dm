@@ -1077,3 +1077,23 @@ obj/effect/decal/graffiti/Initialize()
 		icon_state = "graffiti[rand(1, 15)]"
 	else
 		icon_state = "graffiti[rand(1, 3)]"
+
+/obj/structure/roofstuff
+	name = "roof ventilation"
+	desc = "Air to inside."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "roof1"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	density = TRUE
+
+/obj/structure/roofstuff/alt1
+	icon_state = "roof2"
+	density = FALSE
+
+/obj/structure/roofstuff/alt2
+	icon_state = "roof3"
+
+/obj/structure/roofstuff/alt3
+	icon_state = "roof4"

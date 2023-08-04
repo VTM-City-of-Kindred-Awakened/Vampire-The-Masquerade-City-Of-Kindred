@@ -357,6 +357,19 @@
 	number_of_variations = 6
 	based_icon_state = "sidewalk_rich"
 
+/turf/open/floor/plating/roofwalk
+	gender = PLURAL
+	name = "roof"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "roof"
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_TROTUAR
+	barefootstep = FOOTSTEP_TROTUAR
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
 /obj/effect/decal/bordur
 	name = "sidewalk"
 	icon = 'code/modules/ziggers/tiles.dmi'
