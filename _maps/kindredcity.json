@@ -1,16 +1,17 @@
 {
-	"version": 1,
+	"version": 2,
 	"map_name": "San Francisco",
 	"map_path": "map_files/Vampire",
 	"map_file": "KindredCity2.dmm",
 	"traits": [
 		{
-			"Upper": 2,
+			"Up": 1,
 			"Baseturf": "/turf/open/floor/plating",
 			"Linkage": "Cross"
 		},
 		{
 			"Up": 1,
+			"Down": -1,
 			"Baseturf": "/turf/open/floor/plating",
 			"Linkage": "Cross"
 		},
