@@ -53,7 +53,7 @@
 
 /obj/item/vamp/keys/church
 	name = "Church keys"
-	accesslocks = list("cleaning")
+	accesslocks = list("church")
 
 /obj/item/vamp/keys/archive
 	name = "Archive keys"
