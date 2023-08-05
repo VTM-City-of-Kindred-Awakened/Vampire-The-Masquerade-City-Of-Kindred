@@ -126,7 +126,7 @@
 						if(prob(20+((generation-K.generation)*10)))
 							to_chat(src, "<span class='userdanger'><b>[K]'s SOUL OVERCOMES YOURS AND GAIN CONTROL OF YOUR BODY.</b></span>")
 							reset_shit(src)
-							ghostize(FALSE)
+//							ghostize(FALSE)
 							death()
 //							key = K.key
 //							generation = K.generation
@@ -138,10 +138,11 @@
 								var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
 								if(P)
 									P.diablerist = 1
-								diablerist = 1
-							generation = K.generation
-							maxHealth = initial(maxHealth)+100*(13-generation)
-							health = initial(health)+100*(13-generation)
+									P.generation = K.generation
+									generation = P.generation
+							diablerist = 1
+							maxHealth = initial(maxHealth)+max(0, 50*(13-generation))
+							health = initial(health)+max(0, 50*(13-generation))
 							if(K.client)
 								reset_shit(K)
 								K.ghostize(FALSE)

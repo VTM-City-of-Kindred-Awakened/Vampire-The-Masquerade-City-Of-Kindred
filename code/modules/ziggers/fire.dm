@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(die_in_a_fire)
 		if(L)
 			L.fire_stacks += 5
 			L.IgniteMob()
-			L.apply_damage(25*stage, BURN, BODY_ZONE_CHEST)
+			L.apply_damage(10*stage, BURN, BODY_ZONE_CHEST)
 	for(var/obj/machinery/light/M in loc)
 		if(M)
 			if(M.status != LIGHT_BROKEN && M.status != LIGHT_EMPTY)

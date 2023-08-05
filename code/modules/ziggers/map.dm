@@ -199,6 +199,38 @@
 	l_hand = /obj/item/vamp/keys/npc/fix
 	back = /obj/item/storage/backpack/satchel
 
+/obj/effect/mob_spawn/human/corpse/ciz1
+	name = "Citizen"
+	id_job = "Citizen"
+	outfit = /datum/outfit/civillian1
+
+/obj/effect/mob_spawn/human/corpse/ciz2
+	name = "Citizen"
+	id_job = "Citizen"
+	outfit = /datum/outfit/civillian2
+
+/obj/effect/mob_spawn/human/corpse/ciz3
+	name = "Citizen"
+	id_job = "Citizen"
+	outfit = /datum/outfit/civillian3
+
+/obj/effect/mob_spawn/human/corpse/ciz4
+	name = "Citizen"
+	id_job = "Citizen"
+	outfit = /datum/outfit/civillian4
+
+/datum/outfit/syndicatecommandocorpse
+	name = "Syndicate Commando Corpse"
+	uniform = /obj/item/clothing/under/syndicate
+	suit = /obj/item/clothing/suit/space/hardsuit/syndi
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
+	ears = /obj/item/radio/headset
+	mask = /obj/item/clothing/mask/gas/syndicate
+	back = /obj/item/tank/jetpack/oxygen
+	r_pocket = /obj/item/tank/internals/emergency_oxygen
+	id = /obj/item/card/id/syndicate
+
 /obj/effect/mob_spawn/human/police
 	name = "a police officer"
 	desc = "A humming sleeper with a silhouetted occupant inside. Its stasis function is broken and it's likely being used as a bed."

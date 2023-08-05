@@ -9,12 +9,18 @@
 	var/climbing = FALSE
 
 /obj/manholeup/attack_hand(mob/user)
-	var/turf/destination = get_step_multiz(src, UP)
-	var/mob/living/L = user
-	if(L.pulling)
-		L.pulling.forceMove(destination)
-	user.forceMove(destination)
-	playsound(src, 'code/modules/ziggers/sounds/manhole.ogg', 50, TRUE)
+	if(!climbing)
+		climbing = TRUE
+		if(do_after(user, 50, src))
+			climbing = FALSE
+			var/turf/destination = get_step_multiz(src, UP)
+			var/mob/living/L = user
+			if(L.pulling)
+				L.pulling.forceMove(destination)
+			user.forceMove(destination)
+			playsound(src, 'code/modules/ziggers/sounds/manhole.ogg', 50, TRUE)
+		else
+			climbing = FALSE
 	..()
 
 /obj/manholedown
@@ -28,10 +34,16 @@
 	var/climbing = FALSE
 
 /obj/manholedown/attack_hand(mob/user)
-	var/turf/destination = get_step_multiz(src, DOWN)
-	var/mob/living/L = user
-	if(L.pulling)
-		L.pulling.forceMove(destination)
-	user.forceMove(destination)
-	playsound(src, 'code/modules/ziggers/sounds/manhole.ogg', 50, TRUE)
+	if(!climbing)
+		climbing = TRUE
+		if(do_after(user, 50, src))
+			climbing = FALSE
+			var/turf/destination = get_step_multiz(src, DOWN)
+			var/mob/living/L = user
+			if(L.pulling)
+				L.pulling.forceMove(destination)
+			user.forceMove(destination)
+			playsound(src, 'code/modules/ziggers/sounds/manhole.ogg', 50, TRUE)
+		else
+			climbing = FALSE
 	..()
