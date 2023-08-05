@@ -138,7 +138,7 @@
 
 /mob/living/carbon/human
 	var/datum/job/JOB
-	var/roundstart_vampire = TRUE
+	var/roundstart_vampire = FALSE
 
 /datum/species/kindred/spec_life(mob/living/carbon/human/H)
 	. = ..()
@@ -155,8 +155,8 @@
 	if(fearstack)
 		if(prob(fearstack*5))
 			H.do_jitter_animation(10)
-			if(fearstack > 10)
-				if(prob(fearstack*5))
+			if(fearstack > 20)
+				if(prob(fearstack))
 					if(!H.in_frenzy)
 						H.rollfrenzy()
 		if(!H.has_status_effect(STATUS_EFFECT_FEAR))

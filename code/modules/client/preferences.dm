@@ -464,7 +464,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(discipline4type)
 					var/datum/discipline/AD = new discipline4type()
 					dat += "<b>[AD.name]</b>: •[discipline4level > 1 ? "•" : "o"][discipline4level > 2 ? "•" : "o"][discipline4level > 3 ? "•" : "o"][discipline4level > 4 ? "•" : "o"]([discipline4level])"
-					if(exper == calculate_max_exper() && discipline4level != 5)
+					if(exper >= calculate_max_exper() && discipline4level != 5)
 						dat += "<a href='?_src_=prefs;preference=discipline4;task=input'>Learn</a><BR>"
 					else
 						dat += "<BR>"
@@ -475,12 +475,36 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							dat += "<a href='?_src_=prefs;preference=disciplineplus;task=input'>Learn custom type of disciplines</a><BR>"
 			if(pref_species.name == "Ghoul")
 				dat += "Experience rewarded: [exper]/[calculate_max_exper()]<BR>"
-				dat += "<b>Blood Heal</b>: •[discipline1level > 1 ? "•" : "o"][discipline1level > 2 ? "•" : "o"][discipline1level > 3 ? "•" : "o"][discipline1level > 4 ? "•" : "o"]([discipline1level])"
-				if(exper == calculate_max_exper() && discipline1level != 5)
-					dat += "<a href='?_src_=prefs;preference=discipline1;task=input'>Learn</a><BR>"
-				else
-					dat += "<BR>"
-				dat += "-Heals wounds by using vitae.<BR>"
+				if(!discipline1type && exper >= calculate_max_exper())
+					dat += "<a href='?_src_=prefs;preference=discipline1ghoul;task=input'>Learn new type of discipline</a><BR>"
+				if(discipline1type)
+					var/datum/discipline/AD = new discipline1type()
+					dat += "<b>[AD.name]</b>: •(1)<BR>"
+					dat += "-[AD.desc]<BR>"
+				if(discipline1type && !discipline2type && exper >= calculate_max_exper())
+					dat += "<a href='?_src_=prefs;preference=discipline2ghoul;task=input'>Learn new type of discipline</a><BR>"
+				if(discipline2type)
+					var/datum/discipline/AD = new discipline2type()
+					dat += "<b>[AD.name]</b>: •(1)<BR>"
+					dat += "-[AD.desc]<BR>"
+				if(discipline1type && discipline2type && !discipline3type && exper >= calculate_max_exper())
+					dat += "<a href='?_src_=prefs;preference=discipline3ghoul;task=input'>Learn new type of discipline</a><BR>"
+				if(discipline3type)
+					var/datum/discipline/AD = new discipline3type()
+					dat += "<b>[AD.name]</b>: •(1)<BR>"
+					dat += "-[AD.desc]<BR>"
+				var/sponsor = FALSE
+				for(var/i in GLOB.donaters)
+					if(i == "[parent.ckey]")
+						sponsor = TRUE
+				if(sponsor)
+					if(discipline1type && discipline2type && discipline3type && !discipline4type && exper >= calculate_max_exper())
+						dat += "<a href='?_src_=prefs;preference=discipline4ghoul;task=input'>Learn new type of discipline</a><BR>"
+					if(discipline4type)
+						var/datum/discipline/AD = new discipline4type()
+						dat += "<b>[AD.name]</b>: •(1)<BR>"
+						dat += "-[AD.desc]<BR>"
+
 //			dat += "<a href='?_src_=prefs;preference=species;task=random'>Random Species</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SPECIES]'>Always Random Species: [(randomise[RANDOM_SPECIES]) ? "Yes" : "No"]</A><br>"
 
@@ -1727,6 +1751,42 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(discipline4)
 						discipline4type = discipline4
 
+				if("discipline1ghoul")
+					var/discipline1 = input(user, "Select second discipline", "Discipline Selection") as null|anything in subtypesof(/datum/discipline)
+					if(discipline1)
+						discipline1type = discipline1
+						exper = 0
+
+				if("discipline2ghoul")
+					var/list/disc2 = list()
+					for(var/i in subtypesof(/datum/discipline))
+						if(i != discipline1type)
+							disc2 += i
+					var/discipline2 = input(user, "Select second discipline", "Discipline Selection") as null|anything in disc2
+					if(discipline2)
+						discipline2type = discipline2
+						exper = 0
+
+				if("discipline3ghoul")
+					var/list/disc3 = list()
+					for(var/i in subtypesof(/datum/discipline))
+						if(i != discipline1type && i != discipline2type)
+							disc3 += i
+					var/discipline3 = input(user, "Select second discipline", "Discipline Selection") as null|anything in disc3
+					if(discipline3)
+						discipline3type = discipline3
+						exper = 0
+
+				if("discipline4ghoul")
+					var/list/disc4 = list()
+					for(var/i in subtypesof(/datum/discipline))
+						if(i != discipline1type && i != discipline2type && i != discipline3type)
+							disc4 += i
+					var/discipline4 = input(user, "Select second discipline", "Discipline Selection") as null|anything in disc4
+					if(discipline4)
+						discipline4type = discipline4
+						exper = 0
+
 				if("clane")
 					if(slotlocked)
 						return
@@ -1846,8 +1906,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //					if(length(clane.clane_disciplines) >= 3)
 //						discipline3type = clane.clane_disciplines[3]
 //					discipline4type = null
-					humanity = clane.start_humanity
-					enlightement = clane.enlightement
+//					humanity = clane.start_humanity
+//					enlightement = clane.enlightement
 //					random_species()
 //					random_character()
 //					real_name = random_unique_name(gender)
@@ -1864,6 +1924,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(result)
 						var/newtype = GLOB.species_list[result]
 						pref_species = new newtype()
+						if(pref_species.id == "ghoul")
+							discipline1type = null
+							discipline2type = null
+							discipline3type = null
+							discipline4type = null
+						if(pref_species.id == "kindred")
+							qdel(clane)
+							clane = new /datum/vampireclane/brujah()
+							if(length(clane.clane_disciplines) >= 1)
+								discipline1type = clane.clane_disciplines[1]
+							if(length(clane.clane_disciplines) >= 2)
+								discipline2type = clane.clane_disciplines[2]
+							if(length(clane.clane_disciplines) >= 3)
+								discipline3type = clane.clane_disciplines[3]
+							discipline4type = null
 						//Now that we changed our species, we must verify that the mutant colour is still allowed.
 						var/temp_hsv = RGBtoHSV(features["mcolor"])
 						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
@@ -2529,6 +2604,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_hair()
 		character.update_body_parts()
 	if(!character_setup)
+		character.roundstart_vampire = TRUE
 		parent << browse(null, "window=preferences_window")
 		parent << browse(null, "window=preferences_browser")
 		if(friend)
@@ -2543,10 +2619,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		client.prefs.slotlocked = 1
 		client.prefs.save_preferences()
 		client.prefs.save_character()
-	if(dna.species.id == "ghoul")
-		for(var/datum/action/blood_heal/BH in actions)
-			BH.level = client.prefs.discipline1level
-	if(dna.species.id == "kindred")
+//	if(dna.species.id == "ghoul")
+//		for(var/datum/action/blood_heal/BH in actions)
+//			BH.level = client.prefs.discipline1level
+	if(dna.species.id == "kindred" || dna.species.id == "ghoul")
 		var/datum/discipline/D1
 		var/datum/discipline/D2
 		var/datum/discipline/D3
@@ -2569,7 +2645,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(D1)
 			hud_used.discipline1_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline1_icon.dscpln = new D1()
-			if(discipline_pref)
+			if(discipline_pref && dna.species.id != "ghoul")
 				hud_used.discipline1_icon.dscpln.level = client.prefs.discipline1level
 			else
 				hud_used.discipline1_icon.dscpln.level = 1
@@ -2580,7 +2656,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(D2)
 			hud_used.discipline2_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline2_icon.dscpln = new D2()
-			if(discipline_pref)
+			if(discipline_pref && dna.species.id != "ghoul")
 				hud_used.discipline2_icon.dscpln.level = client.prefs.discipline2level
 			else
 				hud_used.discipline1_icon.dscpln.level = 1
@@ -2591,7 +2667,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(D3)
 			hud_used.discipline3_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline3_icon.dscpln = new D3()
-			if(discipline_pref)
+			if(discipline_pref && dna.species.id != "ghoul")
 				hud_used.discipline3_icon.dscpln.level = client.prefs.discipline3level
 			else
 				hud_used.discipline1_icon.dscpln.level = 1
@@ -2609,7 +2685,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/datum/discipline/D = client.prefs.discipline4type
 			hud_used.discipline4_icon.icon = 'code/modules/ziggers/disciplines.dmi'
 			hud_used.discipline4_icon.dscpln = new D()
-			hud_used.discipline4_icon.dscpln.level = client.prefs.discipline4level
+			if(dna.species.id != "ghoul")
+				hud_used.discipline4_icon.dscpln.level = client.prefs.discipline4level
+			else
+				hud_used.discipline4_icon.dscpln.level = 1
 			hud_used.discipline4_icon.name = hud_used.discipline4_icon.dscpln.name
 			hud_used.discipline4_icon.desc = hud_used.discipline4_icon.dscpln.desc
 			hud_used.discipline4_icon.icon_state = hud_used.discipline4_icon.dscpln.icon_state

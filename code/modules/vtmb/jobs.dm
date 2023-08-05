@@ -367,6 +367,7 @@
 
 	duty = "Collect blood by helping mortals at the Clinic."
 	experience_addition = 15
+	allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce")
 
 /datum/outfit/job/vdoctor
 	name = "Doctor"

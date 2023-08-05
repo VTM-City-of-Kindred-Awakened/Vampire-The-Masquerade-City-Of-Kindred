@@ -158,7 +158,7 @@
 					Npc.last_attacker = null
 					killed_count = killed_count+1
 					if(killed_count >= 5)
-						GLOB.fuckers |= src
+//						GLOB.fuckers |= src
 						SEND_SOUND(src, sound('code/modules/ziggers/sounds/humanity_loss.ogg', 0, 0, 75))
 						to_chat(src, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
 				SEND_SOUND(src, sound('code/modules/ziggers/sounds/feed_failed.ogg', 0, 0, 75))

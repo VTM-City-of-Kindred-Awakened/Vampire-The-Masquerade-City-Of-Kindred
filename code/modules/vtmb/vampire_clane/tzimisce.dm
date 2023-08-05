@@ -12,14 +12,14 @@
 	male_clothes = "/obj/item/clothing/under/vampire/sport"
 	female_clothes = "/obj/item/clothing/under/vampire/red"
 	enlightement = TRUE
+	var/obj/item/heirl
 
-/datum/vampireclane
+/mob/living/carbon/human
 	var/hided = FALSE
 	var/additional_hands = FALSE
 	var/additional_wings = FALSE
 	var/additional_centipede = FALSE
 	var/additional_armor = FALSE
-	var/obj/item/heirl
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/tzimisce
 	name = "Tzimisce Form"
@@ -96,10 +96,7 @@
 /datum/action/basic_vicissitude/Trigger()
 	. = ..()
 	var/mob/living/carbon/human/H = owner
-	var/datum/vampireclane/tzimisce/TZ
-	if(H.clane)
-		TZ = H.clane
-	if(TZ.hided)
+	if(H.hided)
 		return
 	if(used)
 		return
@@ -110,8 +107,7 @@
 		used = TRUE
 		switch(upgrade)
 			if("Skin armor")
-				if(H.clane)
-					TZ.additional_armor = TRUE
+				H.additional_armor = TRUE
 				H.dna.species.limbs_id = "tziarmor"
 				H.skin_tone = "albino"
 				H.hairstyle = "Bald"
@@ -121,8 +117,7 @@
 				H.update_body()
 				H.update_hair()
 			if("Centipede legs")
-				if(H.clane)
-					TZ.additional_centipede = TRUE
+				H.additional_centipede = TRUE
 				H.remove_overlay(PROTEAN_LAYER)
 				var/mutable_appearance/centipede_overlay = mutable_appearance('code/modules/ziggers/64x64.dmi', "centipede", -PROTEAN_LAYER)
 				centipede_overlay.pixel_z = -16
@@ -131,8 +126,7 @@
 				H.apply_overlay(PROTEAN_LAYER)
 				H.add_movespeed_modifier(/datum/movespeed_modifier/centipede)
 			if("Second pair of arms")
-				if(H.clane)
-					TZ.additional_hands = TRUE
+				H.additional_hands = TRUE
 				var/limbs = H.held_items.len
 				H.change_number_of_hands(limbs+2)
 				H.remove_overlay(PROTEAN_LAYER)
@@ -141,8 +135,7 @@
 				H.overlays_standing[PROTEAN_LAYER] = hands2_overlay
 				H.apply_overlay(PROTEAN_LAYER)
 			if("Leather wings")
-				if(H.clane)
-					TZ.additional_wings = TRUE
+				H.additional_wings = TRUE
 				H.dna.species.GiveSpeciesFlight(H)
 				for(var/datum/action/acrobate/A in H.actions)
 					if(A)
@@ -150,12 +143,12 @@
 				var/datum/action/acrobate/DA = new()
 				DA.Grant(H)
 
-/datum/vampireclane/proc/switch_masquerade(var/mob/living/carbon/human/H)
+/mob/living/carbon/human/proc/switch_masquerade(var/mob/living/carbon/human/H)
 	if(!additional_hands && !additional_wings && !additional_centipede && !additional_armor)
 		return
 	if(!hided)
 		hided = TRUE
-		violating_appearance = FALSE
+//		violating_appearance = FALSE
 		REMOVE_TRAIT(H, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 		if(additional_hands)
 			H.remove_overlay(PROTEAN_LAYER)
@@ -170,11 +163,12 @@
 			H.update_body()
 	else
 		hided = FALSE
-		violating_appearance = TRUE
-		if(!additional_hands && !additional_wings && !additional_centipede && !additional_armor)
-			violating_appearance = FALSE
-		if(violating_appearance)
+//		violating_appearance = TRUE
+		if(additional_hands || additional_wings || additional_centipede || additional_armor)
 			ADD_TRAIT(H, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
+//			violating_appearance = FALSE
+//		if(violating_appearance)
+
 		if(additional_hands)
 			H.remove_overlay(PROTEAN_LAYER)
 			var/mutable_appearance/hands2_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "2hands", -PROTEAN_LAYER)
@@ -217,6 +211,7 @@
 		if(level >= 2)
 			H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_floor)
 			H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_biter)
+			H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_med)
 		if(level >= 3)
 			H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_eyes)
 			H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_fister)
@@ -224,6 +219,7 @@
 		if(level >= 4)
 			H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_tanker)
 			H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_heart)
+			H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_koldun)
 		if(level >= 5)
 			H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_stealth)
 			H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_trench)
@@ -266,7 +262,7 @@
 	always_available = FALSE
 	category = CAT_TZIMISCE
 
-/*
+
 /datum/crafting_recipe/tzi_med
 	name = "Medical Hand (Healing)"
 	time = 50
@@ -274,7 +270,7 @@
 	result = /obj/item/organ/cyberimp/arm/medibeam
 	always_available = FALSE
 	category = CAT_TZIMISCE
-*/
+
 
 /datum/crafting_recipe/tzi_heart
 	name = "Second Heart (Antistun)"
@@ -296,7 +292,15 @@
 	name = "Stealth Skin (Invisibility)"
 	time = 50
 	reqs = list(/obj/item/stack/human_flesh = 10, /obj/item/melee/vampirearms/stake = 1, /obj/item/drinkable_bloodpack)
-	result = /obj/item/implanter/stealth
+	result = /obj/item/dnainjector/chameleonmut
+	always_available = FALSE
+	category = CAT_TZIMISCE
+
+/datum/crafting_recipe/tzi_koldun
+	name = "Koldun Sorcery (Firebreath)"
+	time = 50
+	reqs = list(/obj/item/stack/human_flesh = 10, /obj/item/melee/vampirearms/stake = 1, /obj/item/drinkable_bloodpack)
+	result = /obj/item/dnainjector/koldun
 	always_available = FALSE
 	category = CAT_TZIMISCE
 
@@ -389,8 +393,7 @@
 	if(!furry_changed)
 		if(last_hair)
 			if(alert("Continue with last saved appearance?",,"Yes","No")=="Yes")
-				var/datum/vampireclane/tzimisce/TZ = H.clane
-				TZ.switch_masquerade(H)
+				H.switch_masquerade(H)
 				original_hair = H.hairstyle
 				original_facehair = H.facial_hairstyle
 				original_skintone = H.skin_tone
@@ -427,8 +430,7 @@
 		if(length(nibbers) >= 1)
 			var/victim = input(owner, "Choose victim to copy:", "Vicissitude Appearance") as null|mob in nibbers
 			if(victim)
-				var/datum/vampireclane/tzimisce/TZ = H.clane
-				TZ.switch_masquerade(H)
+				H.switch_masquerade(H)
 				original_hair = H.hairstyle
 				original_facehair = H.facial_hairstyle
 				original_skintone = H.skin_tone
@@ -481,8 +483,7 @@
 			return
 		return
 	else
-		var/datum/vampireclane/tzimisce/TZ = H.clane
-		TZ.switch_masquerade(H)
+		H.switch_masquerade(H)
 		playsound(get_turf(H), 'code/modules/ziggers/sounds/vicissitude.ogg', 100, TRUE, -6)
 		H.Stun(10)
 		H.do_jitter_animation(10)
@@ -494,7 +495,7 @@
 		H.hair_color = original_haircolor
 		H.facial_hair_color = original_facialhaircolor
 		H.dna.species.limbs_id = original_bodysprite
-		if(TZ.additional_armor)
+		if(H.additional_armor)
 			H.dna.species.limbs_id = "tziarmor"
 		H.eye_color = original_eyecolor
 		H.real_name = original_realname

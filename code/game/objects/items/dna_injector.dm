@@ -182,6 +182,11 @@
 	desc = "Gives you fire."
 	add_mutations = list(SPACEMUT)
 
+/obj/item/dnainjector/koldun
+	name = "\improper Mutation injector (Koldun Fire)"
+	desc = "Gives you fire."
+	add_mutations = list(FIRESWEAT)
+
 /obj/item/dnainjector/blindmut
 	name = "\improper DNA injector (Blind)"
 	desc = "Makes you not see anything."
@@ -227,11 +232,11 @@
 	remove_mutations = list(RACEMUT)
 
 /obj/item/dnainjector/antichameleon
-	name = "\improper DNA injector (Anti-Chameleon)"
+	name = "\improper Mutation injector (Anti-Chameleon)"
 	remove_mutations = list(CHAMELEON)
 
 /obj/item/dnainjector/chameleonmut
-	name = "\improper DNA injector (Chameleon)"
+	name = "\improper Mutation injector (Chameleon)"
 	add_mutations = list(CHAMELEON)
 
 /obj/item/dnainjector/antiwacky

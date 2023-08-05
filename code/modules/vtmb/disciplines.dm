@@ -1056,7 +1056,8 @@
 	desc = "Offers control over another, undead reality."
 	icon_state = "necromancy"
 	cost = 2
-	ranged = FALSE
+	ranged = TRUE
+	range = 1
 	delay = 50
 	violates_masquerade = TRUE
 
@@ -1104,22 +1105,51 @@
 /datum/discipline/necromancy/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	playsound(target.loc, 'code/modules/ziggers/sounds/necromancy.ogg', 50, TRUE)
-	switch(level_casting)
-		if(1)
-			var/mob/living/simple_animal/hostile/M = new /mob/living/simple_animal/hostile/ghost/level1(caster.loc)
-			M.my_creator = caster
-		if(2)
-			var/mob/living/simple_animal/hostile/M = new /mob/living/simple_animal/hostile/ghost/level2(caster.loc)
-			M.my_creator = caster
-		if(3)
-			var/mob/living/simple_animal/hostile/M = new /mob/living/simple_animal/hostile/ghost/player/level3(caster.loc)
-			M.my_creator = caster
-		if(4)
-			var/mob/living/simple_animal/hostile/M = new /mob/living/simple_animal/hostile/ghost/player/level4(caster.loc)
-			M.my_creator = caster
-		if(5)
-			var/mob/living/simple_animal/hostile/M = new /mob/living/simple_animal/hostile/ghost/player/level5(caster.loc)
-			M.my_creator = caster
+	if(target.stat == DEAD)
+		switch(level_casting)
+			if(1)
+				var/mob/living/simple_animal/hostile/giovanni_zombie/M = new /mob/living/simple_animal/hostile/giovanni_zombie(caster.loc)
+				M.my_creator = caster
+//				if(target.key)
+//					M.key = target.key
+//				else
+//					M.give_player()
+				qdel(target)
+			if(2)
+				var/mob/living/simple_animal/hostile/giovanni_zombie/M = new /mob/living/simple_animal/hostile/giovanni_zombie/level2(caster.loc)
+				M.my_creator = caster
+				if(target.key)
+					M.key = target.key
+				else
+					M.give_player()
+				qdel(target)
+			if(3)
+				var/mob/living/simple_animal/hostile/giovanni_zombie/M = new /mob/living/simple_animal/hostile/giovanni_zombie/level3(caster.loc)
+				M.my_creator = caster
+				if(target.key)
+					M.key = target.key
+				else
+					M.give_player()
+				qdel(target)
+			if(4)
+				var/mob/living/simple_animal/hostile/giovanni_zombie/M = new /mob/living/simple_animal/hostile/giovanni_zombie/level4(caster.loc)
+				M.my_creator = caster
+				if(target.key)
+					M.key = target.key
+				else
+					M.give_player()
+				qdel(target)
+			if(5)
+				var/mob/living/simple_animal/hostile/giovanni_zombie/M = new /mob/living/simple_animal/hostile/giovanni_zombie/level5(caster.loc)
+				M.my_creator = caster
+				if(target.key)
+					M.key = target.key
+				else
+					M.give_player()
+				qdel(target)
+	else
+		target.apply_damage(10*level_casting, BRUTE, BODY_ZONE_CHEST)
+		target.emote("scream")
 
 /datum/discipline/obtenebration
 	name = "Obtenebration"

@@ -208,7 +208,7 @@
 						if(BLOODBONDED.revive(full_heal = TRUE, admin_revive = TRUE))
 							BLOODBONDED.grab_ghost(force = TRUE)
 							to_chat(BLOODBONDED, "<span class='userdanger'>You rise with a start, you're alive! Or not... You feel your soul going somewhere, as you realize you are embraced by a vampire...</span>")
-						BLOODBONDED.roundstart_vampire = TRUE
+						BLOODBONDED.roundstart_vampire = FALSE
 						BLOODBONDED.set_species(/datum/species/kindred)
 						BLOODBONDED.generation = H.generation+1
 						if(H.generation < 13)
@@ -227,10 +227,13 @@
 								BLOODBONDED.health = initial(BLOODBONDED.health)+50*(13-BLOODBONDED.generation)
 						else
 							BLOODBONDED.clane = new /datum/vampireclane/caitiff()
-						qdel(BLOODBONDED.hud_used)
-						BLOODBONDED.hud_used = new BLOODBONDED.hud_type(BLOODBONDED)
-						BLOODBONDED.update_sight()
-						SEND_SIGNAL(BLOODBONDED, COMSIG_MOB_HUD_CREATED)
+						if(BLOODBONDED.hud_used)
+							var/datum/hud/human/HU = BLOODBONDED.hud_used
+							HU.create_vampiric(BLOODBONDED)
+//						qdel(BLOODBONDED.hud_used)
+//						BLOODBONDED.hud_used = new BLOODBONDED.hud_type(BLOODBONDED)
+//						BLOODBONDED.update_sight()
+//						SEND_SIGNAL(BLOODBONDED, COMSIG_MOB_HUD_CREATED)
 					else
 						to_chat(owner, "<span class='notice'>[BLOODBONDED] is totally <b>DEAD</b>!</span>")
 						giving = FALSE
@@ -255,6 +258,10 @@
 						var/mob/living/carbon/human/npc/NPC = H.pulling
 						if(NPC.ghoulificate(owner))
 							new_master = TRUE
+							if(NPC.hud_used)
+								var/datum/hud/human/HU = NPC.hud_used
+								HU.create_ghoulic()
+							NPC.roundstart_vampire = FALSE
 					if(BLOODBONDED.mind)
 						if(BLOODBONDED.mind.enslaved_to != owner)
 							BLOODBONDED.mind.enslave_mind_to_creator(owner)
@@ -268,6 +275,10 @@
 							G.changed_master = TRUE
 					else if(!iskindred(BLOODBONDED) && !isnpc(BLOODBONDED))
 						BLOODBONDED.set_species(/datum/species/ghoul)
+						if(BLOODBONDED.hud_used)
+							var/datum/hud/human/HU = BLOODBONDED.hud_used
+							HU.create_ghoulic()
+						BLOODBONDED.roundstart_vampire = FALSE
 						var/datum/species/ghoul/G = BLOODBONDED.dna.species
 						G.master = owner
 						G.last_vitae = world.time

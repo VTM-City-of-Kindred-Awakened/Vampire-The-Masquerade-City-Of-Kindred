@@ -155,6 +155,7 @@
 							H.adjustFireLoss(-25, TRUE)
 							VIT.bloodpool = max(0, VIT.bloodpool-1)
 							H.bloodpool = min(H.maxbloodpool, H.bloodpool+1)
+							H.update_blood_hud()
 							to_chat(owner, "<span class='warning'>You feel precious <b>VITAE</b> entering your mouth and suspending your addiction.</span>")
 							return
 						else
@@ -201,6 +202,7 @@
 			W.remove_wound()
 		H.update_damage_overlays()
 		H.update_health_hud()
+		H.update_blood_hud()
 		H.visible_message("<span class='warning'>Some of [H]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
 
 /datum/species/ghoul/check_roundstart_eligible()

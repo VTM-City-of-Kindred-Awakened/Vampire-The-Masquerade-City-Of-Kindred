@@ -121,12 +121,23 @@
 
 /obj/effect/temp_visual/desant/Destroy()
 	var/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire/V = new(loc)
-	V.enemies |= GLOB.fuckers
-//	V.ListTargets()
+//	V.enemies |= GLOB.fuckers
+	V.Retaliate()
+	for(var/mob/living/carbon/human/H in oviewers(9, src))
+		if(H)
+			if(H.warrant)
+				V.GiveTarget(H)
 	..()
 
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire/Retaliate()
-	return
+	for(var/mob/living/carbon/human/H in oviewers(9, src))
+		if(H)
+			if(H.warrant)
+				enemies |= H
+	for(var/mob/living/simple_animal/hostile/T in oviewers(9, src))
+		if(T)
+			if(!istype(T, /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire))
+				enemies |= T
 
 /obj/effect/temp_visual/desant_back
 	name = "helicopter rope"
