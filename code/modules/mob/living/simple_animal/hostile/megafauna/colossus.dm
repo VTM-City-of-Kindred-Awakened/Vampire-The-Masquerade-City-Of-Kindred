@@ -19,7 +19,7 @@
  * Intended Difficulty: Very Hard
  */
 /mob/living/simple_animal/hostile/megafauna/colossus
-	name = "colossus"
+	name = "Unknown Patriarch"
 	desc = "A monstrous creature protected by heavy shielding."
 	health = 2500
 	maxHealth = 2500
@@ -34,9 +34,9 @@
 	friendly_verb_simple = "stare down"
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
 	speak_emote = list("roars")
-	armour_penetration = 40
-	melee_damage_lower = 40
-	melee_damage_upper = 40
+	armour_penetration = 100
+	melee_damage_lower = 100
+	melee_damage_upper = 100
 	speed = 10
 	move_to_delay = 10
 	ranged = TRUE
@@ -48,7 +48,7 @@
 	crusher_achievement_type = /datum/award/achievement/boss/colossus_crusher
 	score_achievement_type = /datum/award/score/colussus_score
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/colossus/crusher)
-	loot = list(/obj/structure/closet/crate/necropolis/colossus)
+	loot = list()
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	deathsound = 'sound/magic/demon_dies.ogg'
 	attack_action_types = list(/datum/action/innate/megafauna_attack/spiral_attack,
@@ -151,10 +151,12 @@
 	if(health < maxHealth/3)
 		return double_spiral()
 	visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
+	playsound(get_turf(src), 'code/modules/ziggers/sounds/mp_judgement.ogg', 100, TRUE)
 	return spiral_shoot()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
 	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
+	playsound(get_turf(src), 'code/modules/ziggers/sounds/mp_die.ogg', 100, TRUE)
 
 	SLEEP_CHECK_DEATH(10)
 	INVOKE_ASYNC(src, .proc/spiral_shoot, FALSE)
@@ -257,7 +259,7 @@
 /obj/projectile/colossus
 	name ="death bolt"
 	icon_state= "chronobolt"
-	damage = 25
+	damage = 100
 	armour_penetration = 100
 	speed = 2
 	eyeblur = 0

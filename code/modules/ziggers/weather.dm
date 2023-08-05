@@ -13,7 +13,8 @@ SUBSYSTEM_DEF(cityweather)
 	if(SScity_time.hour > 5 && SScity_time.hour < 21)
 		return
 
-	for(var/obj/effect/decal/cleanable/C in GLOB.cleanable_list)
+	if(raining && length(GLOB.cleanable_list))
+		var/obj/effect/decal/cleanable/C = pick(GLOB.cleanable_list)
 		if(C)
 			qdel(C)
 
@@ -57,10 +58,10 @@ SUBSYSTEM_DEF(cityweather)
 				to_chat(world, "Clouds are uniting on the sky, small raindrops irrigate the city...")
 				raining = TRUE
 				fogging = FALSE
-			if("Fog")
-				to_chat(world, "Visibility range quickly decreases...")
-				raining = FALSE
-				fogging = TRUE
+//			if("Fog")
+//				to_chat(world, "Visibility range quickly decreases...")
+//				raining = FALSE
+//				fogging = TRUE
 
 /datum/controller/subsystem/cityweather/Initialize()
 	. = ..()
@@ -71,7 +72,7 @@ SUBSYSTEM_DEF(cityweather)
 		forecast += i
 		var/weather = "Clear"
 		if(i != 1 && i != 9)
-			weather = pick("Clear", "Rain", "Fog")
+			weather = pick("Clear", "Rain")
 		forecast[i] = weather
 
 /datum/controller/subsystem/cityweather/proc/get_forecast(mob/user)

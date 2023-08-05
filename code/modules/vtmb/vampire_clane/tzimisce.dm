@@ -102,9 +102,10 @@
 		return
 	var/upgrade = input(owner, "Choose basic upgrade:", "Vicissitude Upgrades") as null|anything in list("Skin armor", "Centipede legs", "Second pair of arms", "Leather wings")
 	if(upgrade)
-		if(H.clane)
-			H.clane.violating_appearance = TRUE
+//		if(H.clane)
+//			H.clane.violating_appearance = TRUE
 		used = TRUE
+		ADD_TRAIT(H, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 		switch(upgrade)
 			if("Skin armor")
 				H.additional_armor = TRUE

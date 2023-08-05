@@ -39,7 +39,7 @@
 #define TONGUESPIKECHEM		/datum/mutation/human/tongue_spike/chem
 #define STRONG    	/datum/mutation/human/strong
 #define STIMMED		/datum/mutation/human/stimmed
-#define FIRESWEAT	/datum/mutation/human/fire
+#define FIRESWEAT	/datum/mutation/human/firebreath
 #define THERMAL		/datum/mutation/human/thermal
 #define ANTENNA		/datum/mutation/human/antenna
 #define PARANOIA	/datum/mutation/human/paranoia

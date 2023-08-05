@@ -1036,9 +1036,16 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 /obj/sarcophagus/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 	if(istype(I, /obj/item/sarcophagus_key))
-		icon_state = "b_sarcophagus-open3"
-		to_chat(world, "<span class='userdanger'><b>UNKNOWN SARCOPHAGUS HAS BEEN OPENED</b></span>")
-		new /turf/open/floor/plating/bloodshit(loc)
+		if(prob(10))
+			icon_state = "b_sarcophagus-open3"
+			to_chat(world, "<span class='userdanger'><b>UNKNOWN SARCOPHAGUS HAS BEEN OPENED</b></span>")
+			new /turf/open/floor/plating/bloodshit(loc)
+		else
+			icon_state = "b_sarcophagus-open1"
+			to_chat(world, "<span class='userdanger'><b>UNKNOWN SARCOPHAGUS HAS BEEN OPENED</b></span>")
+			spawn(50)
+				icon_state = "b_sarcophagus-open0"
+				new /mob/living/simple_animal/hostile/megafauna/colossus(loc)
 
 /obj/sarcophagus/Initialize()
 	. = ..()
