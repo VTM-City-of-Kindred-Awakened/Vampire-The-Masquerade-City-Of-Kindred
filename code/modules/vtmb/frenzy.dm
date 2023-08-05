@@ -77,8 +77,20 @@
 	var/atom/fear
 	for(var/obj/effect/fire/F in GLOB.fires_list)
 		if(F)
-			if(get_dist(src, F) < 8 && F.z == src.z)
-				fear = F
+			if(get_dist(src, F) < 7 && F.z == src.z)
+				if(F in view(6, src))
+					if(get_dist(src, F) < 6)
+						fear = F
+					if(get_dist(src, F) < 5)
+						fear = F
+					if(get_dist(src, F) < 4)
+						fear = F
+					if(get_dist(src, F) < 3)
+						fear = F
+					if(get_dist(src, F) < 2)
+						fear = F
+					if(get_dist(src, F) < 1)
+						fear = F
 
 //	if(!fear && !frenzy_target)
 //		return

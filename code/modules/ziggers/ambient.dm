@@ -6,32 +6,38 @@
 	has_gravity = STANDARD_GRAVITY
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	var/music
-	var/upper = FALSE
+	var/upper = TRUE
 
 /area/vtm/interior
 	name = "Interior"
 	icon_state = "interior"
 	ambience_index = AMBIENCE_INTERIOR
+	upper = FALSE
 
 /area/vtm/interior/shop
 	name = "Shop"
 	icon_state = "shop"
+	upper = FALSE
 
 /area/vtm/interior/giovanni
 	name = "Giovanni Mansion"
 	icon_state = "giovanni"
+	upper = FALSE
 
 /area/vtm/interior/police
 	name = "Police Station"
 	icon_state = "police"
+	upper = FALSE
 
 /area/vtm/interior/strip
 	name = "Strip Club"
 	icon_state = "strip"
+	upper = FALSE
 
 /area/vtm/interior/mansion
 	name = "Abandoned Mansion"
 	icon_state = "mansion"
+	upper = FALSE
 
 /area/vtm/financialdistrict
 	name = "Financial District"
@@ -86,52 +92,62 @@
 	name = "Millenium Elevator"
 	icon_state = "prince"
 	ambience_index = AMBIENCE_INTERIOR
+	upper = FALSE
 
 /area/vtm/city_elevator
 	name = "City Elevator"
 	icon_state = "prince"
 	ambience_index = AMBIENCE_INTERIOR
+	upper = FALSE
 
 /area/vtm/prince
 	name = "Millenium Tower"
 	icon_state = "prince"
 	ambience_index = AMBIENCE_INTERIOR
+	upper = FALSE
 
 /area/vtm/camarilla
 	name = "Millenium Appartements"
 	icon_state = "camarilla"
 	ambience_index = AMBIENCE_INTERIOR
+	upper = FALSE
 
 /area/vtm/cabinet
 	name = "Millenium Upper Level"
 	icon_state = "prince"
 	ambience_index = AMBIENCE_INTERIOR
 	music = /datum/vampiremusic/prince
+	upper = FALSE
 
 /area/vtm/clinic
 	name = "Clinic"
 	icon_state = "clinic"
 	ambience_index = AMBIENCE_INTERIOR
+	upper = FALSE
 
 /area/vtm/supply
 	name = "Supply"
 	icon_state = "supply"
 	ambience_index = AMBIENCE_INTERIOR
+	upper = FALSE
 
 /area/vtm/anarch
 	name = "Bar"
 	icon_state = "anarch"
 	ambience_index = AMBIENCE_INTERIOR
+	upper = FALSE
 
 /area/vtm/hotel
 	name = "Hotel"
 	icon_state = "hotel"
 	ambience_index = AMBIENCE_INTERIOR
+	upper = FALSE
 
 /area/vtm/church
 	name = "Church"
 	icon_state = "church"
 	ambience_index = AMBIENCE_INTERIOR
+	upper = FALSE
 
 /area/vtm/graveyard
 	name = "Graveyard"
@@ -156,21 +172,25 @@
 	name = "Theatre"
 	icon_state = "theatre"
 	ambience_index = AMBIENCE_INTERIOR
+	upper = FALSE
 
 /area/vtm/sewer
 	name = "Sewer"
 	icon_state = "sewer"
 	ambience_index = AMBIENCE_SEWER
 	music = /datum/vampiremusic/sewer
+	upper = FALSE
 
 /area/vtm/sewer/nosferatu_town
 	name = "Underground Town"
 	icon_state = "hotel"
+	upper = FALSE
 
 /area/vtm/elevator
 	name = "Elevator"
 	icon_state = "prince"
 	music = /datum/vampiremusic/elevator
+	upper = FALSE
 
 //MUSIC
 

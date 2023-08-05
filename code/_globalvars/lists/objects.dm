@@ -59,3 +59,4 @@ GLOBAL_LIST_INIT(donaters, list("badteammate", "meomoor", "terain1", "egorium", 
 GLOBAL_LIST_EMPTY(fucking_joined)
 
 GLOBAL_LIST_EMPTY(police_radios)
+GLOBAL_LIST_EMPTY(cleanable_list)
