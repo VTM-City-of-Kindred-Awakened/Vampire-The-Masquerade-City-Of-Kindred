@@ -13,6 +13,10 @@ SUBSYSTEM_DEF(cityweather)
 	if(SScity_time.hour > 5 && SScity_time.hour < 21)
 		return
 
+	for(var/obj/effect/decal/cleanable/C in GLOB.cleanable_list)
+		if(C)
+			qdel(C)
+
 //	if(raining)
 //		var/turf/T = pick(affected_turfs)
 //		T.wash(CLEAN_SCRUB)
