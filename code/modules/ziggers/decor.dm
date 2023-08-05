@@ -997,7 +997,7 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 /obj/sarcophagus
 	name = "Unknown Sarcophagus"
 	desc = "Contains elder devil..."
-	icon = 'code/modules/ziggers/props.dmi'
+	icon = 'code/modules/ziggers/48x32weapons.dmi'
 	icon_state = "b_sarcophagus"
 	plane = GAME_PLANE
 	layer = CAR_LAYER
@@ -1025,16 +1025,13 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 
 /turf/open/floor/plating/bloodshit/Initialize()
 	. = ..()
+	for(var/mob/living/L in src)
+		if(L)
+			L.death()
 	spawn(5)
 		for(var/turf/T in range(1, src))
 			if(T && !istype(T, /turf/open/floor/plating/bloodshit))
 				new /turf/open/floor/plating/bloodshit(T)
-
-/turf/open/floor/plating/bloodshit/Crossed(atom/movable/AM)
-	. = ..()
-	if(isliving(AM))
-		var/mob/living/L = AM
-		L.death()
 
 /obj/sarcophagus/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
