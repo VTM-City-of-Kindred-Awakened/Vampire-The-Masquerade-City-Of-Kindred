@@ -350,6 +350,8 @@
 	icon_state = "flamethrower4"
 	icon = 'code/modules/ziggers/weapons.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	lefthand_file = 'code/modules/ziggers/righthand.dmi'
+	righthand_file = 'code/modules/ziggers/lefthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	var/oil = 1000
 
