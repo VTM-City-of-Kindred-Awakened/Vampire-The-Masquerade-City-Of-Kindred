@@ -12,6 +12,7 @@
 	var/leveldelay = FALSE
 
 	var/level_casting = 1	//which level we want to cast
+	var/clane_restricted = FALSE	//Only for specified clans
 
 /datum/discipline/proc/post_gain(var/mob/living/carbon/human/H)
 	return
@@ -266,6 +267,7 @@
 	ranged = FALSE
 	delay = 100
 	activate_sound = 'code/modules/ziggers/sounds/insanity.ogg'
+	clane_restricted = TRUE
 
 /mob/living
 	var/dancing = FALSE
@@ -508,6 +510,7 @@
 	delay = 150
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/ziggers/sounds/protean_activate.ogg'
+	clane_restricted = TRUE
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/gangrel/GA
 
 /datum/movespeed_modifier/protean2
@@ -724,6 +727,7 @@
 	delay = 10
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/ziggers/sounds/thaum.ogg'
+	clane_restricted = TRUE
 
 /datum/discipline/thaumaturgy/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
@@ -761,9 +765,10 @@
 				H.fire(direct_target = target)
 			else
 				caster.bloodpool = min(caster.maxbloodpool, caster.bloodpool+target.bloodpool)
+				if(!istype(target, /mob/living/simple_animal/hostile/megafauna))
 //				if(isnpc(target))
 //					AdjustHumanity(caster, -1, 0)
-				target.tremere_gib()
+					target.tremere_gib()
 /*
 /datum/discipline/bloodshield
 	name = "Blood shield"
@@ -797,6 +802,7 @@
 	ranged = TRUE
 	delay = 5
 	range = 2
+	clane_restricted = TRUE
 
 /datum/discipline/serpentis/activate(mob/living/target, mob/living/carbon/human/caster)
 	range = initial(range)+level_casting
@@ -846,6 +852,7 @@
 	ranged = TRUE
 	delay = 100
 	range = 1
+	clane_restricted = TRUE
 
 /datum/discipline/vicissitude/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
@@ -962,6 +969,7 @@
 	ranged = FALSE
 	delay = 50
 //	range = 2
+	clane_restricted = TRUE
 
 /datum/discipline/quietus/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
@@ -1058,6 +1066,7 @@
 	range = 1
 	delay = 50
 	violates_masquerade = TRUE
+	clane_restricted = TRUE
 
 /mob/living/simple_animal/hostile/ghost/level1
 	maxHealth = 20
@@ -1157,6 +1166,7 @@
 	ranged = FALSE
 	delay = 100
 	violates_masquerade = TRUE
+	clane_restricted = TRUE
 
 /datum/discipline/obtenebration/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()

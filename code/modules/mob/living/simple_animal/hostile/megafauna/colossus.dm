@@ -32,7 +32,7 @@
 	health_doll_icon = "eva"
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
-	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
+	icon = 'icons/mob/32x64.dmi'
 	speak_emote = list("roars")
 	armour_penetration = 100
 	melee_damage_lower = 100
@@ -107,7 +107,17 @@
 
 	if(enrage(target))
 		if(move_to_delay == initial(move_to_delay))
-			visible_message("<span class='colossus'>\"<b>You can't dodge.</b>\"</span>")
+			var/tip = pick(1, 3)
+			switch(tip)
+				if(1)
+					visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
+					playsound(get_turf(src), 'code/modules/ziggers/sounds/mp_judgement.ogg', 100, TRUE)
+				if(2)
+					visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
+					playsound(get_turf(src), 'code/modules/ziggers/sounds/mp_die.ogg', 100, TRUE)
+				if(3)
+					visible_message("<span class='colossus'>\"<b>Thy end is now.</b>\"</span>")
+					playsound(get_turf(src), 'code/modules/ziggers/sounds/mp_end.ogg', 100, TRUE)
 		ranged_cooldown = world.time + 30
 		telegraph()
 		dir_shots(GLOB.alldirs)
@@ -150,13 +160,31 @@
 	icon_state = "eva_attack"
 	if(health < maxHealth/3)
 		return double_spiral()
-	visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
-	playsound(get_turf(src), 'code/modules/ziggers/sounds/mp_judgement.ogg', 100, TRUE)
+	var/tip = pick(1, 3)
+	switch(tip)
+		if(1)
+			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
+			playsound(get_turf(src), 'code/modules/ziggers/sounds/mp_judgement.ogg', 100, TRUE)
+		if(2)
+			visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
+			playsound(get_turf(src), 'code/modules/ziggers/sounds/mp_die.ogg', 100, TRUE)
+		if(3)
+			visible_message("<span class='colossus'>\"<b>Thy end is now.</b>\"</span>")
+			playsound(get_turf(src), 'code/modules/ziggers/sounds/mp_end.ogg', 100, TRUE)
 	return spiral_shoot()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
-	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
-	playsound(get_turf(src), 'code/modules/ziggers/sounds/mp_die.ogg', 100, TRUE)
+	var/tip = pick(1, 3)
+	switch(tip)
+		if(1)
+			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
+			playsound(get_turf(src), 'code/modules/ziggers/sounds/mp_judgement.ogg', 100, TRUE)
+		if(2)
+			visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
+			playsound(get_turf(src), 'code/modules/ziggers/sounds/mp_die.ogg', 100, TRUE)
+		if(3)
+			visible_message("<span class='colossus'>\"<b>Thy end is now.</b>\"</span>")
+			playsound(get_turf(src), 'code/modules/ziggers/sounds/mp_end.ogg', 100, TRUE)
 
 	SLEEP_CHECK_DEATH(10)
 	INVOKE_ASYNC(src, .proc/spiral_shoot, FALSE)
@@ -175,7 +203,7 @@
 		if(counter < 1)
 			counter = 16
 		shoot_projectile(start_turf, counter * 22.5)
-		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
+//		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 		SLEEP_CHECK_DEATH(1)
 	icon_state = initial(icon_state)
 
@@ -193,7 +221,7 @@
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
 	ranged_cooldown = world.time + 30
 	var/turf/U = get_turf(src)
-	playsound(U, 'sound/magic/clockwork/invoke_general.ogg', 300, TRUE, 5)
+//	playsound(U, 'sound/magic/clockwork/invoke_general.ogg', 300, TRUE, 5)
 	for(var/T in RANGE_TURFS(12, U) - U)
 		if(prob(5))
 			shoot_projectile(T)
@@ -201,7 +229,7 @@
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast(set_angle)
 	ranged_cooldown = world.time + 20
 	var/turf/target_turf = get_turf(target)
-	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 2)
+//	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 2)
 	newtonian_move(get_dir(target_turf, src))
 	var/angle_to_target = Get_Angle(src, target_turf)
 	if(isnum(set_angle))
@@ -213,7 +241,7 @@
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/dir_shots(list/dirs)
 	if(!islist(dirs))
 		dirs = GLOB.alldirs.Copy()
-	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 2)
+//	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 2)
 	for(var/d in dirs)
 		var/turf/E = get_step(src, d)
 		shoot_projectile(E)

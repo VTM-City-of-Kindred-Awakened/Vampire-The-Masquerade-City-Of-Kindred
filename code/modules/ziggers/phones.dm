@@ -392,7 +392,8 @@
 				online.online = null
 				online = null
 			.= TRUE
-			attack_self(usr)
+			ui_interact(usr)
+//			attack_self(usr)
 			return
 		if("accept")
 			if(online)
@@ -400,7 +401,8 @@
 				online.online = src
 				online.talking = TRUE
 			.= TRUE
-			attack_self(usr)
+			ui_interact(usr)
+//			attack_self(usr)
 			return
 		if("decline")
 			talking = FALSE
@@ -410,7 +412,8 @@
 				online.talking = FALSE
 				online = null
 			.= TRUE
-			attack_self(usr)
+			ui_interact(usr)
+//			attack_self(usr)
 			return
 		if("call")
 			for(var/obj/item/vamp/phone/PHN in GLOB.phones_list)
@@ -440,7 +443,8 @@
 				else
 					to_chat(usr, "<span class='notice'>Invalid number.</span>")
 			.= TRUE
-			attack_self(usr)
+			ui_interact(usr)
+//			attack_self(usr)
 			return
 		if("contacts")
 			var/list/options = list("Add", "Choose", "My Number")
@@ -476,7 +480,8 @@
 				if("My Number")
 					to_chat(usr, "[number]")
 			.= TRUE
-			attack_self(usr)
+			ui_interact(usr)
+//			attack_self(usr)
 			return
 		if("keypad")
 			playsound(loc, 'sound/machines/terminal_select.ogg', 15, TRUE)
@@ -484,17 +489,20 @@
 				if("C")
 					choosed_number = ""
 					.= TRUE
-					attack_self(usr)
+					ui_interact(usr)
+//					attack_self(usr)
 					return
 				if("_")
 					choosed_number += " "
 					.= TRUE
-					attack_self(usr)
+					ui_interact(usr)
+//					attack_self(usr)
 					return
 
 			choosed_number += params["value"]
 			.= TRUE
-			attack_self(usr)
+			ui_interact(usr)
+//			attack_self(usr)
 			return
 
 	return FALSE

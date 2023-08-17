@@ -1746,7 +1746,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/list/disc4 = list()
 					for(var/i in subtypesof(/datum/discipline))
 						if(i != discipline1type && i != discipline2type && i != discipline3type)
-							disc4 += i
+							var/datum/discipline/D = new i
+							if(!D.clane_restricted)
+								disc4 += i
+							qdel(D)
 					var/discipline4 = input(user, "Select fourth discipline", "Discipline Selection") as null|anything in disc4
 					if(discipline4)
 						discipline4type = discipline4
@@ -1790,25 +1793,41 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("clane")
 					if(slotlocked)
 						return
-					var/result = input(user, "Select a clane", "Clane Selection") as null|anything in GLOB.clanes_list
+					var/list/shittedmyself = list()
+					for(var/i in GLOB.clanes_list)
+						var/a = GLOB.clanes_list[i]
+						var/datum/vampireclane/V = new a
+						if(length(V.whitelist))
+							if(parent.ckey in V.whitelist)
+								shittedmyself[V.name] += GLOB.clanes_list[i]
+						else
+							shittedmyself[V.name] += GLOB.clanes_list[i]
+						qdel(V)
+					var/result = input(user, "Select a clane", "Clane Selection") as null|anything in shittedmyself
 					if(result)
 						var/newtype = GLOB.clanes_list[result]
 						var/datum/vampireclane/Clan = new newtype()
 						if(result == "Caitiff")
 							generation = 13
-							var/discipline1 = input(user, "Select first start discipline", "Discipline Selection") as null|anything in subtypesof(/datum/discipline)
+							var/list/disc1 = list()
+							for(var/i in subtypesof(/datum/discipline))
+								var/datum/discipline/D = new i
+								if(!D.clane_restricted)
+									disc1 += i
+								qdel(D)
+							var/discipline1 = input(user, "Select first start discipline", "Discipline Selection") as null|anything in disc1
 							if(discipline1)
 								Clan.clane_disciplines |= 1
 								Clan.clane_disciplines[1] = discipline1
 								var/list/disc2 = list()
 								for(var/i in subtypesof(/datum/discipline))
-									if(i != discipline1)
+									if(i != discipline1 && i in disc1)
 										disc2 += i
 								var/discipline2 = input(user, "Select second start discipline", "Discipline Selection") as null|anything in disc2
 								if(discipline2)
 									var/list/disc3 = list()
 									for(var/i in subtypesof(/datum/discipline))
-										if(i != discipline1 && i != discipline2)
+										if(i != discipline1 && i != discipline2 && i in disc1)
 											disc3 += i
 									Clan.clane_disciplines |= 2
 									Clan.clane_disciplines[2] = discipline2
