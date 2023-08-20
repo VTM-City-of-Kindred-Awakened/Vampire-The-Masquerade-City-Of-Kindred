@@ -1220,12 +1220,12 @@
 		BAT = new(caster)
 	switch(mod)
 		if(1)
-			caster.dna.species.burnmod *= 0.01
+			caster.physiology.burn_mod *= 1/100
 			caster.color = "#884200"
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.color = initial(caster.color)
-					caster.dna.species.burnmod *= 100
+					caster.physiology.burn_mod *= 100
 					playsound(caster.loc, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 		if(2)
 			caster.dna.species.GiveSpeciesFlight(caster)
