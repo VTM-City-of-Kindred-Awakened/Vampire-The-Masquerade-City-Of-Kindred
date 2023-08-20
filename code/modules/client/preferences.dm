@@ -2596,7 +2596,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	else
 		character.skin_tone = skin_tone
 	character.hairstyle = hairstyle
-	character.facial_hairstyle = facial_hairstyle
+	if(character.age < 16)
+		facial_hairstyle = "Shaved"
+	else
+		character.facial_hairstyle = facial_hairstyle
 	character.underwear = underwear
 	character.underwear_color = underwear_color
 	character.undershirt = undershirt

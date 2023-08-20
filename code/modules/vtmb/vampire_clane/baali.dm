@@ -17,6 +17,7 @@
 	H.gain_trauma(T, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/discipline/daimonion/post_gain(mob/living/carbon/human/H)
+	H.put_in_r_hand(new /obj/item/vamp/keys/baali(H))
 	if(level >= 5)
 		var/datum/action/antifrenzy/A = new()
 		A.Grant(H)
