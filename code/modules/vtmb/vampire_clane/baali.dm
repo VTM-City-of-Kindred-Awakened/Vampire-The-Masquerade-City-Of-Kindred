@@ -18,6 +18,9 @@
 
 /datum/discipline/daimonion/post_gain(mob/living/carbon/human/H)
 	H.put_in_r_hand(new /obj/item/vamp/keys/baali(H))
+	if(level >= 3)
+		var/obj/effect/proc_holder/spell/aimed/fireball/baali/S = new(H)
+		H.mind.AddSpell(S)
 	if(level >= 5)
 		var/datum/action/antifrenzy/A = new()
 		A.Grant(H)
@@ -38,3 +41,28 @@
 	H.antifrenzy = TRUE
 	SEND_SOUND(owner, sound('sound/magic/curse.ogg', 0, 0, 50))
 	to_chat(owner, "<span class='warning'>You feel control over your Beast, but at what cost...</span>")
+
+/mob/living/simple_animal/hostile/baali_guard
+	name = "Infernal Creature"
+	desc = "The peak of abominations armor. Unbelievably undamagable..."
+	icon = 'code/modules/ziggers/32x48.dmi'
+	icon_state = "baali"
+	icon_living = "baali"
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	speak_chance = 0
+	speed = 0
+	maxHealth = 300
+	health = 300
+	butcher_results = list(/obj/item/stack/human_flesh = 20)
+	harm_intent_damage = 5
+	melee_damage_lower = 40
+	melee_damage_upper = 40
+	attack_verb_continuous = "slashes"
+	attack_verb_simple = "slash"
+	attack_sound = 'sound/weapons/slash.ogg'
+	a_intent = INTENT_HARM
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	bloodpool = 10
+	maxbloodpool = 10
+	faction = list("Baali")

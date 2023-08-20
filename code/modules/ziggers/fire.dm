@@ -111,7 +111,8 @@ SUBSYSTEM_DEF(die_in_a_fire)
 					var/obj/effect/fire/F = locate() in A
 					if(!F && prob(A.spread_chance))
 						playsound(get_turf(A), 'code/modules/ziggers/sounds/spread.ogg', 80, TRUE)
-						new /obj/effect/fire(A)
+						var/obj/effect/fire/R = new(A)
+						R.color = color
 	else
 		qdel(src)
 
