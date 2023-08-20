@@ -1026,7 +1026,7 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	layer = CAR_LAYER
 	anchored = TRUE
 
-obj/effect/decal/graffiti
+/obj/effect/decal/graffiti
 	name = "graffiti"
 	icon = 'code/modules/ziggers/32x48.dmi'
 	icon_state = "graffiti1"
@@ -1036,12 +1036,12 @@ obj/effect/decal/graffiti
 	anchored = TRUE
 	var/large = FALSE
 
-obj/effect/decal/graffiti/large
+/obj/effect/decal/graffiti/large
 	pixel_w = -16
 	icon = 'code/modules/ziggers/64x64.dmi'
 	large = TRUE
 
-obj/effect/decal/graffiti/Initialize()
+/obj/effect/decal/graffiti/Initialize()
 	. = ..()
 	if(!large)
 		icon_state = "graffiti[rand(1, 15)]"
