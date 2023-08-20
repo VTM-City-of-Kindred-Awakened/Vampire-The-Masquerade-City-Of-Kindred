@@ -2563,9 +2563,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.flavor_text = flavor_text
 	character.gender = gender
 	character.age = age
-	if(character.age < 16 && !character.ischildren)
-		character.ischildren = TRUE
-		character.AddElement(/datum/element/children, COMSIG_PARENT_PREQDELETED, src)
+	if(character.age < 16)
+		if(!character.ischildren)
+			character.ischildren = TRUE
+			character.AddElement(/datum/element/children, COMSIG_PARENT_PREQDELETED, src)
 	if(gender == MALE || gender == FEMALE)
 		character.body_type = gender
 	else
@@ -2598,6 +2599,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.hairstyle = hairstyle
 	if(character.age < 16)
 		facial_hairstyle = "Shaved"
+		character.facial_hairstyle = facial_hairstyle
 	else
 		character.facial_hairstyle = facial_hairstyle
 	character.underwear = underwear
