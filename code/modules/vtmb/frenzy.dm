@@ -156,12 +156,12 @@
 	. = ..()
 	if(H.clane)
 		if(H.clane.name == "Baali")
-			if(istype(get_area(C), /area/vtm/church))
+			if(istype(get_area(H), /area/vtm/church))
 				if(prob(25))
-					to_chat(C, "<span class='warning'>You don't belong here!</span>")
-					C.adjustFireLoss(20)
-					C.adjust_fire_stacks(6)
-					C.IgniteMob()
+					to_chat(H, "<span class='warning'>You don't belong here!</span>")
+					H.adjustFireLoss(20)
+					H.adjust_fire_stacks(6)
+					H.IgniteMob()
 	//FIRE FEAR
 	if(!H.antifrenzy)
 		var/fearstack = 0
