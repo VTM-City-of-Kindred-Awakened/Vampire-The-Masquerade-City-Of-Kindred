@@ -276,6 +276,24 @@ Dancer
 			H.forceMove(LO)
 			animate(H, pixel_z = 0, time = 2)
 
+/datum/action/fly_upper
+	name = "Fly Up"
+	desc = "Fly to the upper level."
+	button_icon_state = "fly"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/last_acrobate = 0
+
+/datum/action/fly_upper/Trigger()
+	if(last_acrobate+15 > world.time)
+		return
+	if(get_step_multiz(owner, UP))
+		if(istype(get_step_multiz(owner, UP), /turf/open/openspace))
+			var/mob/living/carbon/human/H = owner
+			H.Immobilize(20)
+			animate(owner, pixel_y = 32, time = 20)
+			spawn(20)
+				owner.forceMove(get_step_multiz(owner, UP))
+
 /datum/quirk/dancer
 	name = "Dancer"
 	desc = "You know a couple of dance moves."

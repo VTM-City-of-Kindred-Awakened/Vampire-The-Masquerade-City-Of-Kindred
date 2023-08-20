@@ -306,7 +306,8 @@
 			online.talking = FALSE
 			online = null
 			ui.close()
-*/
+
+
 /obj/item/vamp/phone/attack_self(mob/user)
 	if(!closed)
 		closed = TRUE
@@ -318,6 +319,17 @@
 			online = null
 	else
 		return ..()
+*/
+
+/obj/item/vamp/phone/AltClick(mob/user)
+	if(!closed)
+		closed = TRUE
+		icon_state = "phone0"
+		talking = FALSE
+		if(online)
+			online.online = null
+			online.talking = FALSE
+			online = null
 
 /obj/item/vamp/phone/ui_data(mob/user)
 	var/list/data = list()
@@ -328,7 +340,7 @@
 	data["online"] = online
 	data["talking"] = talking
 	data["my_number"] = choosed_number
-	data["choosed_number"] = number
+	data["choosed_number"] = choosed_number
 	if(online)
 		data["calling_user"] = "(+1 707) [online.number]"
 		for(var/datum/phonecontact/P in contacts)

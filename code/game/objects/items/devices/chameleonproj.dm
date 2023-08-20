@@ -4,6 +4,16 @@
 			var/obj/effect/dummy/chameleon/C = loc
 			C.say("[message]")
 			return
+		if(prob(25))
+			if(iskindred(src))
+				if(clane)
+					if(clane.name == "Malkavian")
+						for(var/mob/living/carbon/human/H in GLOB.player_list)
+							if(H != src)
+								if(iskindred(H))
+									if(H.clane)
+										if(H.clane.name == "Malkavian")
+											to_chat(H, "<span class='ghostalert'>[message]</span>")
 	..()
 
 /obj/item/chameleon

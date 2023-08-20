@@ -61,6 +61,13 @@
 /obj/item/clothing/under/vampire/ventrue/female
 	icon_state = "ventrue_f"
 
+/obj/item/clothing/under/vampire/baali
+	desc = "Some satanic clothes."
+	icon_state = "baali_m"
+
+/obj/item/clothing/under/vampire/baali/female
+	icon_state = "baali_f"
+
 //FOR NPC
 
 //NGERS n BANDITS

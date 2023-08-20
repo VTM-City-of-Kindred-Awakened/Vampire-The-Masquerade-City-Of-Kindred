@@ -32,6 +32,8 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
 	/client/proc/add_nigger,
 	/client/proc/reward_exp,
+	/client/proc/encipher_word,
+	/client/proc/uncipher_word,
 	/client/proc/check_ai_laws,			/*shows AI and borg laws*/
 	/client/proc/ghost_pool_protection,	/*opens a menu for toggling ghost roles*/
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
@@ -433,6 +435,24 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 			else
 				message_admins("[nigger] ISN'T ACTUAL CKEY, YOU NIGGER [key_name_admin(usr)].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "NIGGER BAN")
+
+/client/proc/encipher_word()
+	set name = "ENCRYPT WORD"
+	set category = "Admin"
+	var/word = input("Word to encrypt:") as null|text
+	if(word)
+		var/pass = input("Letter shift:") as null|num
+		if(pass)
+			to_chat(src, "<b>[encipher(word, pass)]</b>")
+
+/client/proc/uncipher_word()
+	set name = "DECIPHER WORD"
+	set category = "Admin"
+	var/word = input("Word to decipher:") as null|text
+	if(word)
+		var/pass = input("Letter shift:") as null|num
+		if(pass)
+			to_chat(src, "<b>[uncipher(word, pass)]</b>")
 
 /client/proc/reward_exp()
 	set name = "REWARD EXPERIENCE TO"

@@ -12,7 +12,7 @@
 	male_clothes = "/obj/item/clothing/under/vampire/sport"
 	female_clothes = "/obj/item/clothing/under/vampire/red"
 	enlightement = TRUE
-	whitelist = list("badteammate", "meomoor", "terain1", "egorium", "vanotyan", "takyon69", "lemshake", "happypala44", "kerststf", "oneplusone", "triplewammy", "leonko", "twiner", "otuskursky", "sishtis", "shirumic", "kommando", "nehoroshka", "raikyh", "themaskedman2", "xilvahphyre", "nikroszero", "foxfiredogs", "d6ll1r10um", "drdreidel", "stinkethstonketh", "neepbeep666", "parchment", "blackcat055", "laoziofcitium", "aniotaess", "andreykey", "mosasauruss", "animusin", "mercuryarrow", "keebo885", "homuhomu", "ivanzarax", "testuser")
+	whitelist = list("badteammate", "meomoor", "terain1", "egorium", "vanotyan", "takyon69", "lemshake", "happypala44", "kerststf", "oneplusone", "triplewammy", "leonko", "twiner", "otuskursky", "sishtis", "shirumic", "kommando", "nehoroshka", "raikyh", "themaskedman2", "xilvahphyre", "nikroszero", "foxfiredogs", "d6ll1r10um", "drdreidel", "stinkethstonketh", "neepbeep666", "parchment", "blackcat055", "laoziofcitium", "aniotaess", "andreykey", "mosasauruss", "animusin", "mercuryarrow", "keebo885", "homuhomu", "ivanzarax", "testuser", "ntno", "athiny", "jacobmadson", "ceoofbutter", "psewdoplot", "cmdrgungnir")
 	var/obj/item/heirl
 
 /mob/living/carbon/human
@@ -139,10 +139,10 @@
 			if("Leather wings")
 				H.additional_wings = TRUE
 				H.dna.species.GiveSpeciesFlight(H)
-				for(var/datum/action/acrobate/A in H.actions)
+				for(var/datum/action/fly_upper/A in H.actions)
 					if(A)
 						return
-				var/datum/action/acrobate/DA = new()
+				var/datum/action/fly_upper/DA = new()
 				DA.Grant(H)
 
 /mob/living/carbon/human/proc/switch_masquerade(var/mob/living/carbon/human/H)

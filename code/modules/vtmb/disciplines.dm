@@ -1199,3 +1199,14 @@
 			L2.my_creator = caster
 			var/mob/living/simple_animal/hostile/biter/lasombra/better/B = new(caster.loc)
 			B.my_creator = caster
+
+/datum/discipline/daimonion
+	name = "Daimonion"
+	desc = "Get a help from the Hell creatures, resist THE FIRE, transform into an imp. Violates Masquerade."
+	icon_state = "protean"
+	cost = 2
+	ranged = FALSE
+	delay = 150
+	violates_masquerade = TRUE
+	activate_sound = 'code/modules/ziggers/sounds/protean_activate.ogg'
+	clane_restricted = TRUE

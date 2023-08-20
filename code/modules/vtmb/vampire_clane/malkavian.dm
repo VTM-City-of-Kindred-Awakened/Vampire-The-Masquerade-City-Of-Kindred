@@ -11,3 +11,25 @@
 /datum/vampireclane/malkavian/on_gain(mob/living/carbon/human/H)
 	..()
 	H.add_quirk(/datum/quirk/insanity)
+	var/datum/action/malk_hivemind/GH = new()
+	GH.Grant(H)
+
+/datum/action/malk_hivemind
+	name = "Hivemind"
+	desc = "Fall in torpor-like condition and ignore physical damage."
+	button_icon_state = "hivemind"
+	check_flags = AB_CHECK_CONSCIOUS
+	var/abuse_fix = 0
+
+/datum/action/malk_hivemind/Trigger()
+	. = ..()
+	if(abuse_fix+50 > world.time)
+		to_chat(owner, "<span class='warning'>Your mind feels a bit empty...</span>")
+		return
+	var/new_thought = input(owner, "Have any thought about this, buddy?") as text|null
+	if(new_thought)
+		abuse_fix = world.time
+		for(var/mob/living/carbon/human/H in GLOB.player_list)
+			if(H.clane)
+				if(H.clane.name == "Malkavian")
+					to_chat(H, "<span class='ghostalert'>[new_thought]</span>")

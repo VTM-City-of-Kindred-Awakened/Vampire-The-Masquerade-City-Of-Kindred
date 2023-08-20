@@ -241,6 +241,14 @@
 				else
 					if(BLOODBONDED.has_status_effect(STATUS_EFFECT_INLOVE))
 						BLOODBONDED.remove_status_effect(STATUS_EFFECT_INLOVE)
+					else
+						var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
+						if(P)
+							P.exper = min(calculate_mob_max_exper(H), P.exper+250)
+						if(BLOODBONDED.key)
+							var/datum/preferences/P2 = GLOB.preferences_datums[ckey(BLOODBONDED.key)]
+							if(P2)
+								P2.exper = min(calculate_mob_max_exper(BLOODBONDED), P2.exper+250)
 					BLOODBONDED.apply_status_effect(STATUS_EFFECT_INLOVE, owner)
 					H.bloodpool = max(0, H.bloodpool-2)
 					to_chat(owner, "<span class='notice'>You successfuly fed [BLOODBONDED] with vitae.</span>")

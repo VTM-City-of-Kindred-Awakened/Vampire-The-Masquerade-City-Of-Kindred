@@ -994,22 +994,6 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	. = ..()
 	to_chat(user, "<b>[SScity_time.timeofnight]</b>")
 
-/obj/sarcophagus
-	name = "Unknown Sarcophagus"
-	desc = "Contains elder devil..."
-	icon = 'code/modules/ziggers/48x32weapons.dmi'
-	icon_state = "b_sarcophagus"
-	plane = GAME_PLANE
-	layer = CAR_LAYER
-	density = TRUE
-
-/obj/item/sarcophagus_key
-	name = "sarcophagus key"
-	desc = "The secrets of elder devil..."
-	icon_state = "sarcophagus_key"
-	icon = 'code/modules/ziggers/icons.dmi'
-	w_class = WEIGHT_CLASS_SMALL
-
 /turf/open/floor/plating/bloodshit
 	gender = PLURAL
 	name = "blood"
@@ -1032,23 +1016,6 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 		for(var/turf/T in range(1, src))
 			if(T && !istype(T, /turf/open/floor/plating/bloodshit))
 				new /turf/open/floor/plating/bloodshit(T)
-
-/obj/sarcophagus/attackby(obj/item/I, mob/living/user, params)
-	. = ..()
-	if(istype(I, /obj/item/sarcophagus_key))
-//			icon_state = "b_sarcophagus-open3"
-//			to_chat(world, "<span class='userdanger'><b>UNKNOWN SARCOPHAGUS HAS BEEN OPENED</b></span>")
-//			new /turf/open/floor/plating/bloodshit(loc)
-		icon_state = "b_sarcophagus-open1"
-		to_chat(world, "<span class='userdanger'><b>UNKNOWN SARCOPHAGUS HAS BEEN OPENED</b></span>")
-		playsound(get_turf(src), 'code/modules/ziggers/sounds/mp_hello.ogg', 100, TRUE)
-		spawn(50)
-			icon_state = "b_sarcophagus-open0"
-			new /mob/living/simple_animal/hostile/megafauna/colossus(loc)
-
-/obj/sarcophagus/Initialize()
-	. = ..()
-	to_chat(world, "<span class='userdanger'><b>UNKNOWN SARCOPHAGUS POSITION HAS BEEN LEAKED</b></span>")
 
 /obj/american_flag
 	name = "american flag"

@@ -1,6 +1,6 @@
 /obj/item/gun/medbeam
-	name = "Medical Beamgun"
-	desc = "Don't cross the streams!"
+	name = "Healing Hand"
+	desc = "It has some blood coming from it..."
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "medgun"
 	inhand_icon_state = "medgun"
@@ -110,11 +110,11 @@
 			if(!AM.CanPass(dummy,turf,1))
 				qdel(dummy)
 				return FALSE
-		for(var/obj/effect/ebeam/medical/B in turf)// Don't cross the str-beams!
-			if(B.owner.origin != current_beam.origin)
-				explosion(B.loc,0,3,5,8)
-				qdel(dummy)
-				return FALSE
+//		for(var/obj/effect/ebeam/medical/B in turf)// Don't cross the str-beams!
+//			if(B.owner.origin != current_beam.origin)
+//				explosion(B.loc,0,3,5,8)
+//				qdel(dummy)
+//				return FALSE
 	qdel(dummy)
 	return TRUE
 
@@ -124,10 +124,10 @@
 /obj/item/gun/medbeam/proc/on_beam_tick(mob/living/target)
 	if(target.health != target.maxHealth)
 		new /obj/effect/temp_visual/heal(get_turf(target), "#FF0000")
-	target.adjustBruteLoss(-10)
-	target.adjustFireLoss(-10)
-	target.adjustToxLoss(-5)
-	target.adjustOxyLoss(-5)
+	target.adjustBruteLoss(-20)
+	target.adjustFireLoss(-20)
+	target.adjustToxLoss(-10)
+	target.adjustOxyLoss(-10)
 	return
 
 /obj/item/gun/medbeam/proc/on_beam_release(mob/living/target)
