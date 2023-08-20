@@ -40,6 +40,7 @@
 
 /mob/living/carbon/human
 	var/diablerist = FALSE
+	var/antifrenzy = FALSE
 
 /mob/living/carbon/human/Initialize()
 	. = ..()
@@ -51,6 +52,8 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	if(iskindred(src))
+		if(antifrenzy)
+			holder.icon = 'icons/effects/32x64.dmi'
 		holder.color = "#ffffff"
 		if(diablerist)
 			holder.icon_state = "diablerie_aura"

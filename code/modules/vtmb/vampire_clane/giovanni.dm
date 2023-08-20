@@ -8,11 +8,9 @@
 	male_clothes = "/obj/item/clothing/under/vampire/suit"
 	female_clothes = "/obj/item/clothing/under/vampire/suit/female"
 
-/datum/vampireclane/giovanni/on_gain(mob/living/carbon/human/H)
-	..()
-	H.faction |= "Giovanni"
-
 /datum/discipline/necromancy/post_gain(mob/living/carbon/human/H)
+	H.faction |= "Giovanni"
+	H.grant_language(/datum/language/sylvan)
 	if(level >= 2)
 		var/datum/action/ghost_hear/GH = new()
 		GH.Grant(H)

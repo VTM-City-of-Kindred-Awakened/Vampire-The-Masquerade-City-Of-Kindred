@@ -60,3 +60,4 @@ GLOBAL_LIST_EMPTY(fucking_joined)
 
 GLOBAL_LIST_EMPTY(police_radios)
 GLOBAL_LIST_EMPTY(cleanable_list)
+GLOBAL_LIST_EMPTY(malkavian_list)

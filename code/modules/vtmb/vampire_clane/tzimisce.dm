@@ -139,11 +139,6 @@
 			if("Leather wings")
 				H.additional_wings = TRUE
 				H.dna.species.GiveSpeciesFlight(H)
-				for(var/datum/action/fly_upper/A in H.actions)
-					if(A)
-						return
-				var/datum/action/fly_upper/DA = new()
-				DA.Grant(H)
 
 /mob/living/carbon/human/proc/switch_masquerade(var/mob/living/carbon/human/H)
 	if(!additional_hands && !additional_wings && !additional_centipede && !additional_armor)
@@ -191,11 +186,8 @@
 			H.dna.species.limbs_id = "tziarmor"
 			H.update_body()
 
-/datum/vampireclane/tzimisce/on_gain(mob/living/carbon/human/H)
-	..()
-	H.faction |= "Tzimisce"
-
 /datum/discipline/vicissitude/post_gain(mob/living/carbon/human/H)
+	H.faction |= "Tzimisce"
 	var/datum/action/vicissitude/U = new()
 	U.Grant(H)
 	if(level >= 3)

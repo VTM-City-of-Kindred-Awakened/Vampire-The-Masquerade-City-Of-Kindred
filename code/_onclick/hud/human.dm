@@ -59,6 +59,13 @@
 		blood_icon.screen_loc = ui_bloodpool
 		blood_icon.hud = src
 		infodisplay += blood_icon
+	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
+		if(inv.slot_id)
+			inv.hud = src
+			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
+			inv.update_icon()
+
+	update_locked_slots()
 
 /datum/hud/human/proc/create_vampiric(mob/living/carbon/human/owner)
 	if(!blood_icon)
@@ -107,6 +114,14 @@
 		bloodpower_icon.screen_loc = ui_bloodpower
 		bloodpower_icon.hud = src
 		static_inventory += bloodpower_icon
+
+	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
+		if(inv.slot_id)
+			inv.hud = src
+			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
+			inv.update_icon()
+
+	update_locked_slots()
 
 /datum/hud/human/New(mob/living/carbon/human/owner)
 	..()

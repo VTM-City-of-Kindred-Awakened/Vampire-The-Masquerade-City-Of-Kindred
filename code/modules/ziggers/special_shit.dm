@@ -128,3 +128,16 @@
 			SEND_SOUND(world, sound('code/modules/ziggers/sounds/announce.ogg'))
 		else
 			to_chat(user, "<span class='warning'>There is no such names in the city!</span>")
+
+/obj/item/phone_book
+	name = "phone book"
+	desc = "See the actual numbers in the city."
+	icon_state = "phonebook"
+	icon = 'code/modules/ziggers/items.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/phone_book/attack_self(mob/user)
+	. = ..()
+	for(var/i in GLOB.phone_numbers_list)
+		to_chat(user, "- [i]")

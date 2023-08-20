@@ -329,6 +329,7 @@ Dancer
 
 /mob/living
 	var/isdwarfy = FALSE
+	var/ischildren = FALSE
 
 /datum/quirk/dwarf
 	name = "Dwarf"
@@ -339,6 +340,9 @@ Dancer
 
 /datum/quirk/dwarf/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
+	if(H.age < 16)
+		to_chat(H, "<span class='userdanger'>You can't be a dwarf kid, looser!</span>")
+		return
 	H.AddElement(/datum/element/dwarfism, COMSIG_PARENT_PREQDELETED, src)
 	H.isdwarfy = TRUE
 
@@ -389,6 +393,37 @@ Dancer
 #undef SHORT
 #undef TALL
 
+
+/datum/element/children
+	element_flags = ELEMENT_DETACH|ELEMENT_BESPOKE
+	id_arg_index = 2
+	var/comsig
+	var/list/attached_targets = list()
+
+/datum/element/children/Attach(datum/target, comsig, comsig_target)
+	. = ..()
+	if(!ishuman(target))
+		return ELEMENT_INCOMPATIBLE
+
+	src.comsig = comsig
+
+	var/mob/living/carbon/human/L = target
+	L.transform = L.transform.Scale(81/100, 81/100)
+	attached_targets[target] = comsig_target
+	RegisterSignal(target, comsig, .proc/check_loss) //Second arg of the signal will be checked against the comsig_target.
+
+/datum/element/children/proc/check_loss(mob/living/L, comsig_target)
+	if(attached_targets[L] == comsig_target)
+		Detach(L)
+
+/datum/element/children/Detach(mob/living/L)
+	. = ..()
+	if(QDELETED(L))
+		return
+	L.transform = L.transform.Scale(100/81, 100/81)
+	UnregisterSignal(L, comsig)
+	attached_targets -= L
+
 /datum/quirk/homosexual
 	name = "Homosexual"
 	desc = "You love your gender more than the opposite."
@@ -396,3 +431,55 @@ Dancer
 	mob_trait = TRAIT_HOMOSEXUAL
 	gain_text = "<span class='notice'>You feel gay.</span>"
 	lose_text = "<span class='notice'>You don't feel gay anymore.</span>"
+
+/datum/quirk/foreign
+	name = "Foreigner"
+	desc = "You don't know English language! If you don't know other languages - that means you don't know any."
+	value = -3
+	gain_text = "<span class='notice'>The words being spoken around you don't make any sense."
+	lose_text = "<span class='notice'>You've developed fluency in English."
+	medical_record_text = "Patient does not speak English and may require an interpreter."
+
+/datum/quirk/foreign/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.add_blocked_language(/datum/language/common)
+
+/datum/quirk/foreign/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.remove_blocked_language(/datum/language/common)
+
+/datum/quirk/espanol
+	name = "Espanol"
+	desc = "You know Spanish language."
+	value = 1
+
+/datum/quirk/espanol/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.grant_language(/datum/language/uncommon)
+
+/datum/quirk/chinese
+	name = "Chinese"
+	desc = "You know Chinese language."
+	value = 1
+
+/datum/quirk/chinese/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.grant_language(/datum/language/draconic)
+
+/datum/quirk/russian
+	name = "Russian"
+	desc = "You know Russian language."
+	value = 1
+
+/datum/quirk/russian/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.grant_language(/datum/language/moffic)
+
+/datum/quirk/italian
+	name = "Italian"
+	desc = "You know Italian language."
+	value = 1
+
+/datum/quirk/italian/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.grant_language(/datum/language/sylvan)

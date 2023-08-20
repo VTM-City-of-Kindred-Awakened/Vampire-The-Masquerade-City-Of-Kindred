@@ -38,7 +38,6 @@ SUBSYSTEM_DEF(traumas)
 	)
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
-		"security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
 		"lizards"  = typecacheof(list(/mob/living/simple_animal/hostile/lizard)),
 		"skeletons" = typecacheof(list(/mob/living/simple_animal/hostile/skeleton)),
 		"snakes"   = typecacheof(list(/mob/living/simple_animal/hostile/retaliate/poison/snake)),
@@ -63,12 +62,7 @@ SUBSYSTEM_DEF(traumas)
 
 	phobia_objs = list("snakes" = typecacheof(list(/obj/item/rod_of_asclepius, /obj/item/toy/plush/snakeplushie)),
 		"spiders"   = typecacheof(list(/obj/structure/spider)),
-		"security"  = typecacheof(list(
-			/obj/item/clothing/under/rank/security/officer, /obj/item/clothing/under/rank/security/warden,
-			/obj/item/clothing/under/rank/security/head_of_security, /obj/item/clothing/under/rank/security/detective,
-			/obj/item/melee/baton, /obj/item/gun/energy/taser, /obj/item/restraints/handcuffs,
-			/obj/machinery/door/airlock/security, /obj/effect/hallucination/simple/securitron,
-		)),
+		"security"  = typecacheof(list(/obj/item/card/id/hunter, /obj/item/storage/book/bible, /obj/structure/jesuscross)),
 
 		"clowns"    = typecacheof(list(
 			/obj/item/clothing/under/rank/civilian/clown, /obj/item/clothing/shoes/clown_shoes,
@@ -182,6 +176,7 @@ SUBSYSTEM_DEF(traumas)
 		"aliens" = typecacheof(list(/turf/open/floor/plating/abductor, /turf/open/floor/plating/abductor2,
 			/turf/open/floor/mineral/abductor, /turf/closed/wall/mineral/abductor
 		)),
+		"security" = typecacheof(list(/turf/open/floor/plating/church, /turf/open/floor/plating/saint)),
 		"falling" = typecacheof(list(/turf/open/chasm, /turf/open/floor/fakepit))
 	)
 

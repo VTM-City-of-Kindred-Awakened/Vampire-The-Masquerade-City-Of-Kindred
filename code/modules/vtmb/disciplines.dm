@@ -126,7 +126,7 @@
 		ADD_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
 		loh = TRUE
 	caster.update_sight()
-	caster.add_client_colour(/datum/client_colour/glass_colour/blue)
+	caster.add_client_colour(/datum/client_colour/glass_colour/lightblue)
 	if(level_casting >= 2)
 		var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
 		abductor_hud.add_hud_to(caster)
@@ -144,7 +144,7 @@
 			REMOVE_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
 			if(loh)
 				REMOVE_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
-			caster.remove_client_colour(/datum/client_colour/glass_colour/blue)
+			caster.remove_client_colour(/datum/client_colour/glass_colour/lightblue)
 			caster.update_sight()
 
 /datum/discipline/celerity
@@ -1210,3 +1210,43 @@
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/ziggers/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/BAT
+
+/datum/discipline/daimonion/activate(mob/living/target, mob/living/carbon/human/caster)
+	..()
+	var/mod = min(4, level_casting)
+//	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
+	if(!BAT)
+		BAT = new(caster)
+	switch(mod)
+		if(1)
+			ADD_TRAIT(caster, TRAIT_NOFIRE, "daimonion")
+			caster.color = "#884200"
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.color = initial(caster.color)
+					REMOVE_TRAIT(caster, TRAIT_NOFIRE, "daimonion")
+					playsound(caster.loc, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
+		if(2)
+			caster.dna.species.GiveSpeciesFlight(caster)
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.dna.species.RemoveSpeciesFlight(caster)
+					playsound(caster.loc, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
+		if(3)
+			caster.drop_all_held_items()
+			caster.put_in_r_hand(new /obj/item/melee/vampirearms/knife/gangrel(caster))
+			caster.put_in_l_hand(new /obj/item/melee/vampirearms/knife/gangrel(caster))
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					for(var/obj/item/melee/vampirearms/knife/gangrel/G in caster)
+						if(G)
+							qdel(G)
+					playsound(caster.loc, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
+		if(4 to 5)
+			caster.drop_all_held_items()
+			BAT.Shapeshift(caster)
+			spawn(delay+caster.discipline_time_plus)
+				if(caster && caster.stat != DEAD)
+					BAT.Restore(BAT.myshape)
+					playsound(caster.loc, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)

@@ -71,8 +71,9 @@
 				to_chat(src, "<span class='warning'>You need [mob]'s attention to do that...</span>")
 				return
 			message_admins("[src]([key]) success in diablerie over [mob](mob.key])!")
-	if(!HAS_TRAIT(src, TRAIT_BLOODY_SUCKER) && CheckEyewitness(src, src, 7, FALSE))
-		AdjustMasquerade(-1)
+	if(!HAS_TRAIT(src, TRAIT_BLOODY_LOVER))
+		if(CheckEyewitness(src, src, 7, FALSE))
+			AdjustMasquerade(-1)
 	if(do_after(src, 30, target = mob, timed_action_flags = NONE, progress = FALSE))
 		mob.bloodpool = max(0, mob.bloodpool-1)
 		suckbar.icon_state = "[round(14*(mob.bloodpool/mob.maxbloodpool))]"

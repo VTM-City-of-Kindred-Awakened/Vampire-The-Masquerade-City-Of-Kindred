@@ -13,6 +13,7 @@
 	H.add_quirk(/datum/quirk/insanity)
 	var/datum/action/malk_hivemind/GH = new()
 	GH.Grant(H)
+	GLOB.malkavian_list += H
 
 /datum/action/malk_hivemind
 	name = "Hivemind"

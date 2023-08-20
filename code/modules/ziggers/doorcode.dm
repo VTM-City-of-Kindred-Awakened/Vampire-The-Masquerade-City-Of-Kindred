@@ -105,6 +105,10 @@
 	accesslocks = list("taxi")
 	color = "#fffb8b"
 
+/obj/item/vamp/keys/baali
+	name = "Satanic keys"
+	accesslocks = list("baali")
+
 /obj/structure/vampdoor
 	name = "\improper door"
 	desc = "It opens and closes."
@@ -386,3 +390,11 @@
 	locked = TRUE
 	lock_id = "giovanni"
 	burnable = TRUE
+
+/obj/structure/vampdoor/baali
+	icon_state = "oldwood-1"
+	baseicon = "oldwood"
+	locked = TRUE
+	lock_id = "baali"
+	burnable = FALSE
+	hackable = FALSE

@@ -437,6 +437,8 @@
 /mob/living/proc/lying_fix()
 	animate(src, transform = null, time = 1, loop = 0)
 	lying_prev = 0
+	if(ischildren)
+		transform = transform.Scale(81/100, 81/100)
 	if(isdwarfy)
 		if(lying_angle != 0)
 			transform = transform.Scale(4/5, 1)

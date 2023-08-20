@@ -2,7 +2,7 @@
 	name = "Terrum"
 	desc = "The language of the golems. Sounds similar to old-earth Hebrew."
 	key = "g"
-	space_chance = 40
+	space_chance = 100
 	syllables = list(
 		"sha", "vu", "nah", "ha", "yom", "ma", "cha", "ar", "et", "mol", "lua",
 		"ch", "na", "sh", "ni", "yah", "bes", "ol", "hish", "ev", "la", "ot", "la",

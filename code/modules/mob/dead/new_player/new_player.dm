@@ -319,6 +319,8 @@
 		return JOB_UNAVAILABLE_GENERATION
 	if(client.prefs.masquerade < job.minimal_masquerade)
 		return JOB_UNAVAILABLE_MASQUERADE
+	if(client.prefs.age < job.minimal_age)
+		return JOB_UNAVAILABLE_AGE
 	if(job.kindred_only)
 		if(client.prefs.pref_species.name != "Vampire")
 			return JOB_UNAVAILABLE_SPECIES
@@ -523,6 +525,10 @@
 		if(ishuman(new_character))
 			var/mob/living/carbon/human/H = new_character
 			if(H.client)
+				H.add_quirk(/datum/quirk/freerunning)
+				H.add_quirk(/datum/quirk/light_step)
+				H.add_quirk(/datum/quirk/skittish)
+				H.add_quirk(/datum/quirk/pushover)
 				H.create_disciplines()
 				if(H.client.prefs.ambitious)
 					if(H.mind)

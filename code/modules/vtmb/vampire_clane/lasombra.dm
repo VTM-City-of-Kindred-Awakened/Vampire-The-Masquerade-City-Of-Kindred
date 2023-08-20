@@ -10,10 +10,6 @@
 	enlightement = TRUE
 	whitelist = list("badteammate", "meomoor", "terain1", "egorium", "vanotyan", "takyon69", "lemshake", "happypala44", "kerststf", "oneplusone", "triplewammy", "leonko", "twiner", "otuskursky", "sishtis", "shirumic", "kommando", "nehoroshka", "raikyh", "themaskedman2", "xilvahphyre", "nikroszero", "foxfiredogs", "d6ll1r10um", "drdreidel", "stinkethstonketh", "neepbeep666", "parchment", "blackcat055", "laoziofcitium", "aniotaess", "andreykey", "mosasauruss", "animusin", "mercuryarrow", "keebo885", "homuhomu", "ivanzarax", "testuser", "panbarin", "cmdrgungnir")
 
-/datum/vampireclane/lasombra/on_gain(mob/living/carbon/human/H)
-	..()
-	H.faction |= "Lasombra"
-
 /datum/vampireclane/lasombra/post_gain(mob/living/carbon/human/H)
 	..()
 	var/obj/item/organ/eyes/night_vision/NV = new()
@@ -21,6 +17,7 @@
 	H.vis_flags |= VIS_HIDE
 
 /datum/discipline/obtenebration/post_gain(mob/living/carbon/human/H)
+	H.faction |= "Lasombra"
 	if(level >= 3)
 		var/obj/effect/proc_holder/spell/targeted/shadowwalk/S = new(H)
 		H.mind.AddSpell(S)

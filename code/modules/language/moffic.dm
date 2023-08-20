@@ -1,16 +1,17 @@
 /datum/language/moffic
-	name = "Moffic"
-	desc = "The language of the Mothpeople borders on complete unintelligibility."
+	name = "Russian"
+	desc = "The language of the Mother Russia."
 	key = "m"
-	space_chance = 10
+	flags = TONGUELESS_SPEECH
+	space_chance = 100
 	syllables = list(
-		"år", "i", "går", "sek", "mo", "ff", "ok", "gj", "ø", "gå", "la", "le",
-		"lit", "ygg", "van", "dår", "næ", "møt", "idd", "hvo", "ja", "på", "han",
-		"så", "ån", "det", "att", "nå", "gö", "bra", "int", "tyc", "om", "när",
-		"två", "må", "dag", "sjä", "vii", "vuo", "eil", "tun", "käyt", "teh", "vä",
-		"hei", "huo", "suo", "ää", "ten", "ja", "heu", "stu", "uhr", "kön", "we", "hön"
+		"blyat", "suka", "pizdec", "nahooi", "ebanutsya", "kapec", "pidoras", "eblan", "dolboyob", "idi", "suda", "gandon",
+		"shtopanny", "vovanchik", "dobry", "privet", "zdarova", "uebak", "idiot", "hooy", "pizda", "zalupa", "chlen",
+		"glaz", "v", "odel", "nadel", "uebooi", "sosiska", "putin", "gavno", "kal", "epta", "mlya",
+		"ya", "maslinu", "poimal", "a", "nu", "chiki", "briki", "i", "v", "damki", "haha",
+		"den", "udachi", "dosvidanya", "rossia", "telo", "kherson", "hohol", "vodka", "pivo", "buhat", "spravedlivo", "poka"
 	)
-	icon_state = "moth"
+	icon_state = "russian"
 	default_priority = 90
 
 // Fuck guest accounts, and fuck language testing.

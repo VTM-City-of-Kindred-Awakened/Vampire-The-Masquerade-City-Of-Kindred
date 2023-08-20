@@ -1,16 +1,14 @@
 /datum/language/uncommon
-	name = "Galactic Uncommon"
-	desc = "The second-most spoken Human language."
+	name = "Espanol"
+	desc = "The second-most spoken World language."
 	key = "!"
 	flags = TONGUELESS_SPEECH
-	space_chance = 50
+	space_chance = 100
 	syllables = list(
-"ba", "be", "bo", "ca", "ce", "co", "da", "de", "do",
-"fa", "fe", "fo", "ga", "ge", "go", "ha", "he", "ho",
-"ja", "je", "jo", "ka", "ke", "ko", "la", "le", "lo",
-"ma", "me", "mo", "na", "ne", "no", "ra", "re", "ro",
-"sa", "se", "so", "ta", "te", "to", "va", "ve", "vo",
-"xa", "xe", "xo", "ya", "ye", "yo", "za", "ze", "zo"
+"hola", "adios", "gracias", "por", "favor", "si", "claro", "no", "amor",
+"todo", "te", "hora", "donde", "que", "entiende", "buenos", "tardes", "abrir",
+"ayudar", "estar", "gustar", "jugar", "querer", "ser", "tener", "familia", "hijo",
+"de", "puta", "submarino", "bandito", "hombre", "mujer", "caliente", "luna", "viento"
 	)
-	icon_state = "galuncom"
+	icon_state = "espanol"
 	default_priority = 90

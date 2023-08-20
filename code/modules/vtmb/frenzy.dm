@@ -155,26 +155,27 @@
 /datum/species/kindred/spec_life(mob/living/carbon/human/H)
 	. = ..()
 	//FIRE FEAR
-	var/fearstack = 0
-	for(var/obj/effect/fire/F in GLOB.fires_list)
-		if(F)
-			if(get_dist(F, H) < 8 && F.z == H.z)
-				fearstack += F.stage
-	for(var/mob/living/carbon/human/U in viewers(7, src))
-		if(U.on_fire)
-			fearstack += 1
+	if(!H.antifrenzy)
+		var/fearstack = 0
+		for(var/obj/effect/fire/F in GLOB.fires_list)
+			if(F)
+				if(get_dist(F, H) < 8 && F.z == H.z)
+					fearstack += F.stage
+		for(var/mob/living/carbon/human/U in viewers(7, src))
+			if(U.on_fire)
+				fearstack += 1
 
-	if(fearstack)
-		if(prob(fearstack*5))
-			H.do_jitter_animation(10)
-			if(fearstack > 20)
-				if(prob(fearstack))
-					if(!H.in_frenzy)
-						H.rollfrenzy()
-		if(!H.has_status_effect(STATUS_EFFECT_FEAR))
-			H.apply_status_effect(STATUS_EFFECT_FEAR)
-	else
-		H.remove_status_effect(STATUS_EFFECT_FEAR)
+		if(fearstack)
+			if(prob(fearstack*5))
+				H.do_jitter_animation(10)
+				if(fearstack > 20)
+					if(prob(fearstack))
+						if(!H.in_frenzy)
+							H.rollfrenzy()
+			if(!H.has_status_effect(STATUS_EFFECT_FEAR))
+				H.apply_status_effect(STATUS_EFFECT_FEAR)
+		else
+			H.remove_status_effect(STATUS_EFFECT_FEAR)
 
 	var/skipface = (H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE))
 	if(H.clane)
@@ -237,12 +238,13 @@
 //					P.generation = H.generation
 //					P.save_preferences()
 //					P.save_character()
-			if(P.humanity < 1)
-				H.enter_frenzymod()
-				reset_shit(H)
-				H.ghostize(FALSE)
+			if(!H.antifrenzy)
+				if(P.humanity < 1)
+					H.enter_frenzymod()
+					reset_shit(H)
+					H.ghostize(FALSE)
 
-	if(H.clane)
+	if(H.clane && !H.antifrenzy)
 		if(H.clane.name == "Banu Haqim")
 			if(H.mind)
 				if(H.mind.enslaved_to)

@@ -14,7 +14,31 @@
 		if(HAS_TRAIT(L, TRAIT_PROSOPAGNOSIA))
 			obscure_name = TRUE
 
-	. = list("<span class='info'>*---------*\nThis is <EM>[!obscure_name ? name : "Unknown"]</EM>!")
+	var/my_shape = "average"
+	var/my_gender = "male"
+	if(gender == MALE)
+		switch(age)
+			if(1 to 16)
+				my_gender = "boy"
+			if(16 to 24)
+				my_gender = "guy"
+			if(24 to INFINITY)
+				my_gender = "man"
+	if(gender == FEMALE)
+		my_gender = "female"
+		switch(age)
+			if(1 to 16)
+				my_gender = "girl"
+			if(16 to 24)
+				my_gender = "lady"
+			if(24 to INFINITY)
+				my_gender = "woman"
+	if(my_shape == "s")
+		my_shape = "slim"
+	if(my_shape == "f")
+		my_shape = "fat"
+
+	. = list("<span class='info'>*---------*\nThis is <EM>[!obscure_name ? name : "Unknown"]</EM>, [age2agedescription(age)] [my_shape] [my_gender]!")
 
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))

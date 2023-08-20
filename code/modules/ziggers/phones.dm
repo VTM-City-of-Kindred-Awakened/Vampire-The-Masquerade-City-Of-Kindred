@@ -292,10 +292,10 @@
 	if(closed)
 		closed = FALSE
 		icon_state = "phone2"
-		ui = SStgui.try_update_ui(user, src, ui)
-		if(!ui)
-			ui = new(user, src, "Telephone", "Telephone")
-			ui.open()
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Telephone", "Telephone")
+		ui.open()
 /*
 	else
 		closed = TRUE
@@ -404,18 +404,18 @@
 				online.online = null
 				online = null
 			.= TRUE
-			ui_interact(usr)
+//			ui_interact(usr)
 //			attack_self(usr)
-			return
+//			return
 		if("accept")
 			if(online)
 				talking = TRUE
 				online.online = src
 				online.talking = TRUE
 			.= TRUE
-			ui_interact(usr)
+//			ui_interact(usr)
 //			attack_self(usr)
-			return
+//			return
 		if("decline")
 			talking = FALSE
 			if(online)
@@ -424,9 +424,9 @@
 				online.talking = FALSE
 				online = null
 			.= TRUE
-			ui_interact(usr)
+//			ui_interact(usr)
 //			attack_self(usr)
-			return
+//			return
 		if("call")
 			for(var/obj/item/vamp/phone/PHN in GLOB.phones_list)
 				if(PHN.number == choosed_number)
@@ -455,9 +455,9 @@
 				else
 					to_chat(usr, "<span class='notice'>Invalid number.</span>")
 			.= TRUE
-			ui_interact(usr)
+//			ui_interact(usr)
 //			attack_self(usr)
-			return
+//			return
 		if("contacts")
 			var/list/options = list("Add", "Choose", "My Number")
 			var/option =  input(usr, "Select an option", "Option Selection") as null|anything in options
@@ -492,30 +492,30 @@
 				if("My Number")
 					to_chat(usr, "[number]")
 			.= TRUE
-			ui_interact(usr)
+//			ui_interact(usr)
 //			attack_self(usr)
-			return
+//			return
 		if("keypad")
 			playsound(loc, 'sound/machines/terminal_select.ogg', 15, TRUE)
 			switch(params["value"])
 				if("C")
 					choosed_number = ""
 					.= TRUE
-					ui_interact(usr)
+//					ui_interact(usr)
 //					attack_self(usr)
-					return
+//					return
 				if("_")
 					choosed_number += " "
 					.= TRUE
-					ui_interact(usr)
-//					attack_self(usr)
-					return
+//					ui_interact(usr)
+///					attack_self(usr)
+//					return
 
 			choosed_number += params["value"]
 			.= TRUE
-			ui_interact(usr)
+//			ui_interact(usr)
 //			attack_self(usr)
-			return
+//			return
 
 	return FALSE
 

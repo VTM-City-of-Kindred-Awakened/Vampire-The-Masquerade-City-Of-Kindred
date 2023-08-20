@@ -71,7 +71,7 @@
 
 	var/damage = rand(min_damage, max_damage)
 	if(HAS_TRAIT(H, TRAIT_LIGHT_STEP))
-		damage *= 0.75
+		damage *= 0.5
 
 
 	if(!(flags & CALTROP_SILENT) && !H.has_status_effect(/datum/status_effect/caltropped))

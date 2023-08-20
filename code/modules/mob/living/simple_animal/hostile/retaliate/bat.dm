@@ -65,3 +65,10 @@
 	turns_per_move = 10
 	pet_bonus = TRUE
 	pet_bonus_emote = "chitters proudly!"
+
+/mob/living/simple_animal/hostile/retaliate/bat/baali
+	health = 100
+	maxHealth = 100
+	speed = -1
+	icon = 'code/modules/ziggers/icons.dmi'
+	icon_state = "bat"

@@ -67,7 +67,7 @@
 	shoes = /obj/item/clothing/shoes/vampire
 	l_pocket = /obj/item/vamp/phone/prince
 	r_pocket = /obj/item/vamp/keys/prince
-	backpack_contents = list(/obj/item/gun/ballistic/automatic/vampire/deagle=1, /obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/masquerade_contract=1, /obj/item/stack/dollar/hundred=3)
+	backpack_contents = list(/obj/item/gun/ballistic/automatic/vampire/deagle=1, /obj/item/phone_book=1, /obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/masquerade_contract=1, /obj/item/stack/dollar/hundred=3)
 
 
 	backpack = /obj/item/storage/backpack
@@ -213,6 +213,7 @@
 
 	duty = "Represent interest of the Prince to other kindred."
 	experience_addition = 15
+	minimal_age = 12
 
 /datum/outfit/job/clerk
 	name = "Clerk"
@@ -224,7 +225,7 @@
 //	head = /obj/item/clothing/head/hopcap
 	l_pocket = /obj/item/vamp/phone/clerk
 	r_pocket = /obj/item/vamp/keys/clerk
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/stack/dollar/hundred=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/phone_book=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/stack/dollar/hundred=1)
 
 /datum/outfit/job/clerk/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -319,6 +320,7 @@
 	duty = "Protect the Graveyard Gates from the undead."
 	minimal_masquerade = 0
 	experience_addition = 25
+	minimal_age = 12
 
 /datum/outfit/job/graveyard
 	name = "Graveyard Keeper"
@@ -415,6 +417,7 @@
 	duty = "Clean up all traces of Masquerade violations."
 	minimal_masquerade = 0
 	experience_addition = 25
+	minimal_age = 12
 
 /datum/outfit/job/vjanitor
 	name = "Street Janitor"
@@ -470,7 +473,7 @@
 	r_pocket = /obj/item/vamp/keys/archive
 	l_pocket = /obj/item/vamp/phone
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/arcane_tome=1, /obj/item/stack/dollar/rand=1, /obj/item/melee/vampirearms/katana/kosa=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/phone_book=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/arcane_tome=1, /obj/item/stack/dollar/rand=1, /obj/item/melee/vampirearms/katana/kosa=1)
 
 /datum/outfit/job/regent/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -506,6 +509,7 @@
 	kindred_only = TRUE
 	allowed_bloodlines = list("Tremere")
 	experience_addition = 15
+	minimal_age = 12
 
 /datum/outfit/job/archivist
 	name = "Archivist"
@@ -575,7 +579,7 @@
 	gloves = /obj/item/clothing/gloves/vampire/work
 	l_pocket = /obj/item/vamp/phone/barkeeper
 	r_pocket = /obj/item/vamp/keys/bar
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/stack/dollar/hundred=3)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/phone_book=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/stack/dollar/hundred=3)
 
 /datum/outfit/job/barkeeper/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -715,6 +719,7 @@
 	duty = "Manage deliveries and supplies for kindred in the City."
 	minimal_masquerade = 2
 	experience_addition = 15
+	minimal_age = 12
 
 /datum/outfit/job/supply
 	name = "Supply Technician"
@@ -726,7 +731,7 @@
 	l_pocket = /obj/item/vamp/phone/anarch
 	r_pocket = /obj/item/vamp/keys/supply
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/stack/dollar/rand=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/phone_book=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/stack/dollar/rand=1)
 
 /datum/outfit/job/supply/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -759,6 +764,7 @@
 
 	duty = "Follow the Traditions, or other laws provided by the current authority among your kind."
 	minimal_masquerade = 0
+	minimal_age = 12
 	allowed_bloodlines = list("Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff")
 
 /datum/outfit/job/citizen
@@ -1327,6 +1333,7 @@
 	experience_addition = 10
 	kindred_only = TRUE
 	allowed_bloodlines = list("Giovanni")
+	minimal_age = 12
 
 /datum/outfit/job/giovanni
 	name = "Giovanni Member"
@@ -1486,6 +1493,7 @@
 	minimal_masquerade = 5
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
+	minimal_age = 12
 
 /datum/outfit/job/malkav
 	name = "Primogen Malkavian"
@@ -1535,6 +1543,7 @@
 	minimal_masquerade = 5
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
+	minimal_age = 12
 
 /datum/outfit/job/nosferatu
 	name = "Primogen Nosferatu"
@@ -1580,6 +1589,7 @@
 	minimal_masquerade = 5
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
+	minimal_age = 12
 
 /datum/outfit/job/ventrue
 	name = "Primogen Ventrue"
@@ -1625,6 +1635,7 @@
 	minimal_masquerade = 5
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
+	minimal_age = 12
 
 /datum/outfit/job/toreador
 	name = "Primogen Toreador"

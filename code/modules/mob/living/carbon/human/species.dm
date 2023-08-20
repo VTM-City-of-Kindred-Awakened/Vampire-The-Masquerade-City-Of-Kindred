@@ -1374,6 +1374,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
+		if(user.age < 16)
+			damage = round(damage/2)
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 
@@ -1485,6 +1487,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(USR.dna)
 			if(USR.dna.species)
 				modifikator = USR.dna.species.meleemod
+		if(USR.age < 16)
+			modifikator = modifikator/2
 	if(user != H)
 		if(H.check_shields(I, I.force, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
 			return FALSE
@@ -2088,6 +2092,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		mutant_bodyparts["wings"] = wings_icon
 		H.dna.features["wings"] = wings_icon
 		H.update_body()
+	var/datum/action/fly_upper/A = locate() in H.actions
+	if(A)
+		return
+	var/datum/action/fly_upper/DA = new()
+	DA.Grant(H)
 
 /datum/species/proc/RemoveSpeciesFlight(mob/living/carbon/human/H)
 	if(flying_species)
@@ -2096,6 +2105,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		QDEL_NULL(fly)
 		if(H.movement_type & FLYING)
 			ToggleFlight(H)
+		var/datum/action/fly_upper/A = locate() in H.actions
+		if(A)
+			qdel(A)
 		if(H.dna && H.dna.species && (H.dna.features["wings"] == wings_icon))
 			H.dna.species.mutant_bodyparts -= "wings"
 			H.dna.features["wings"] = "None"
