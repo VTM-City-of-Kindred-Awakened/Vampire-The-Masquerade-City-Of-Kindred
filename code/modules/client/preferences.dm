@@ -2563,10 +2563,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.flavor_text = flavor_text
 	character.gender = gender
 	character.age = age
-	if(character.age < 16)
-		if(!character.ischildren)
-			character.ischildren = TRUE
-			character.AddElement(/datum/element/children, COMSIG_PARENT_PREQDELETED, src)
 	if(gender == MALE || gender == FEMALE)
 		character.body_type = gender
 	else
@@ -2635,6 +2631,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_body_parts()
 	if(!character_setup)
 		character.roundstart_vampire = TRUE
+		if(character.age < 16)
+			if(!character.ischildren)
+				character.ischildren = TRUE
+				character.AddElement(/datum/element/children, COMSIG_PARENT_PREQDELETED, src)
 		parent << browse(null, "window=preferences_window")
 		parent << browse(null, "window=preferences_browser")
 		if(friend)
