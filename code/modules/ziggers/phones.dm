@@ -511,7 +511,8 @@
 ///					attack_self(usr)
 //					return
 
-			choosed_number += params["value"]
+			if(params["value"] != "C")
+				choosed_number += params["value"]
 			.= TRUE
 //			ui_interact(usr)
 //			attack_self(usr)
