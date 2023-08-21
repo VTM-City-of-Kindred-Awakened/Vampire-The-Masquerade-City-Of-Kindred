@@ -12,7 +12,7 @@
 	male_clothes = "/obj/item/clothing/under/vampire/sport"
 	female_clothes = "/obj/item/clothing/under/vampire/red"
 	enlightement = TRUE
-	whitelist = list("badteammate", "meomoor", "terain1", "egorium", "vanotyan", "takyon69", "lemshake", "happypala44", "kerststf", "oneplusone", "triplewammy", "leonko", "twiner", "otuskursky", "sishtis", "shirumic", "kommando", "nehoroshka", "raikyh", "themaskedman2", "xilvahphyre", "nikroszero", "foxfiredogs", "d6ll1r10um", "drdreidel", "stinkethstonketh", "neepbeep666", "parchment", "blackcat055", "laoziofcitium", "aniotaess", "andreykey", "mosasauruss", "animusin", "mercuryarrow", "keebo885", "homuhomu", "ivanzarax", "testuser", "ntno", "athiny", "jacobmadson", "ceoofbutter", "psewdoplot", "cmdrgungnir")
+	whitelist = list("badteammate", "meomoor", "terain1", "egorium", "vanotyan", "takyon69", "lemshake", "happypala44", "kerststf", "oneplusone", "triplewammy", "leonko", "twiner", "otuskursky", "sishtis", "shirumic", "kommando", "nehoroshka", "raikyh", "themaskedman2", "xilvahphyre", "nikroszero", "foxfiredogs", "omegazip2", "d6ll1r10um", "drdreidel", "stinkethstonketh", "neepbeep666", "parchment", "blackcat055", "laoziofcitium", "aniotaess", "andreykey", "mosasauruss", "animusin", "mercuryarrow", "keebo885", "homuhomu", "ivanzarax", "testuser", "ntno", "athiny", "jacobmadson", "ceoofbutter", "psewdoplot", "cmdrgungnir")
 	var/obj/item/heirl
 
 /mob/living/carbon/human
