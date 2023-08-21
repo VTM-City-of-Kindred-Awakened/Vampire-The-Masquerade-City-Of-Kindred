@@ -228,8 +228,8 @@
 						else
 							BLOODBONDED.clane = new /datum/vampireclane/caitiff()
 						if(BLOODBONDED.hud_used)
-							var/datum/hud/human/HU = BLOODBONDED.hud_used
-							HU.create_vampiric(BLOODBONDED)
+							QDEL_NULL(BLOODBONDED.hud_used)
+						BLOODBONDED.create_mob_hud()
 //						qdel(BLOODBONDED.hud_used)
 //						BLOODBONDED.hud_used = new BLOODBONDED.hud_type(BLOODBONDED)
 //						BLOODBONDED.update_sight()

@@ -271,13 +271,14 @@
 //	for(var/obj/effect/decal/cleanable/blood/B in range(7, src))
 //		if(B.bloodiness)
 //			blood_fr += B
-	if(H.bloodpool <= 1 && !H.in_frenzy)
-		if(H.last_frenzy_check+400 <= world.time)
-			H.last_frenzy_check = world.time
-			H.rollfrenzy()
-			if(H.clane)
-				if(H.clane.enlightement)
-					H.AdjustHumanity(1, 10)
+	if(!H.antifrenzy)
+		if(H.bloodpool <= 1 && !H.in_frenzy)
+			if(H.last_frenzy_check+400 <= world.time)
+				H.last_frenzy_check = world.time
+				H.rollfrenzy()
+				if(H.clane)
+					if(H.clane.enlightement)
+						H.AdjustHumanity(1, 10)
 //	if(length(blood_fr) >= 10 && !H.in_frenzy)
 //		if(H.last_frenzy_check+400 <= world.time)
 //			H.last_frenzy_check = world.time
