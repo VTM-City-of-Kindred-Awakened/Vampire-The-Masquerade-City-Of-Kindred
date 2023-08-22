@@ -3336,6 +3336,7 @@
 #include "code\modules\vtmb\vampire_clane\malkavian.dm"
 #include "code\modules\vtmb\vampire_clane\ministry.dm"
 #include "code\modules\vtmb\vampire_clane\nosferatu.dm"
+#include "code\modules\vtmb\vampire_clane\salubri.dm"
 #include "code\modules\vtmb\vampire_clane\toreador.dm"
 #include "code\modules\vtmb\vampire_clane\tremere.dm"
 #include "code\modules\vtmb\vampire_clane\tzimisce.dm"

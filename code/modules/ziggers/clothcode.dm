@@ -68,6 +68,13 @@
 /obj/item/clothing/under/vampire/baali/female
 	icon_state = "baali_f"
 
+/obj/item/clothing/under/vampire/salubri
+	desc = "Some conspiracy clothes."
+	icon_state = "salubri_m"
+
+/obj/item/clothing/under/vampire/salubri/female
+	icon_state = "salubri_f"
+
 //FOR NPC
 
 //NGERS n BANDITS

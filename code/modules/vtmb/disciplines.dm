@@ -1250,3 +1250,61 @@
 				if(caster && caster.stat != DEAD)
 					BAT.Restore(BAT.myshape)
 					playsound(caster.loc, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
+
+/datum/discipline/valeren
+	name = "Valeren"
+	desc = "Use your third eye in healing or protecting needs."
+	icon_state = "valeren"
+	cost = 2
+	ranged = TRUE
+	delay = 50
+	violates_masquerade = FALSE
+	activate_sound = 'code/modules/ziggers/sounds/valeren.ogg'
+	clane_restricted = TRUE
+	var/datum/beam/current_beam
+
+/datum/discipline/valeren/activate(mob/living/target, mob/living/carbon/human/caster)
+	..()
+	switch(level_casting)
+		if(1)
+			healthscan(caster, target, 1, FALSE)
+			chemscan(caster, target)
+//			woundscan(caster, target, src)
+			to_chat(caster, "<b>[target]</b> has <b>[target.bloodpool]/[target.maxbloodpool]</b> blood points.")
+		if(2)
+			if(current_beam)
+				qdel(current_beam)
+			caster.Beam(target, icon_state="sm_arc", time = 50, maxdistance = 9, beam_type = /obj/effect/ebeam/medical)
+			target.Paralyze(30)
+			if(target.generation >= caster.generation)
+				if(ishuman(target))
+					var/mob/living/carbon/human/H = target
+					if(!H.handcuffed)
+						H.set_handcuffed(new /obj/item/restraints/handcuffs/energy/cult/used(target))
+						H.update_handcuffed()
+		if(3)
+			if(current_beam)
+				qdel(current_beam)
+			caster.Beam(target, icon_state="sm_arc", time = 50, maxdistance = 9, beam_type = /obj/effect/ebeam/medical)
+			target.adjustBruteLoss(-50, TRUE)
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				if(length(H.all_wounds))
+					var/datum/wound/W = pick(H.all_wounds)
+					W.remove_wound()
+			target.adjustFireLoss(-50, TRUE)
+			target.update_damage_overlays()
+			target.update_health_hud()
+		if(4)
+			if(iskindred(target) || isghoul(target))
+				if(current_beam)
+					qdel(current_beam)
+				caster.Beam(target, icon_state="sm_arc", time = 50, maxdistance = 9, beam_type = /obj/effect/ebeam/medical)
+				target.bloodpool = 0
+				target.update_blood_hud()
+		if(5)
+			if(current_beam)
+				qdel(current_beam)
+			caster.Beam(target, icon_state="sm_arc", time = 50, maxdistance = 9, beam_type = /obj/effect/ebeam/medical)
+			if(target.revive(full_heal = TRUE, admin_revive = TRUE))
+				target.grab_ghost(force = TRUE)

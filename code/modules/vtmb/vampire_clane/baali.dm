@@ -7,7 +7,7 @@
 														/datum/discipline/daimonion = 3)
 	male_clothes = "/obj/item/clothing/under/vampire/baali"
 	female_clothes = "/obj/item/clothing/under/vampire/baali/female"
-	whitelist = list("badteammate", "meomoor", "leonko", "raikyh", "xilvahphyre", "homuhomu", "lemshake", "notaspider")
+	whitelist = list("badteammate", "meomoor", "leonko", "raikyh", "xilvahphyre", "homuhomu", "lemshake", "notaspider", "themaskedman2")
 	enlightement = TRUE
 
 /datum/vampireclane/baali/on_gain(mob/living/carbon/human/H)
@@ -18,6 +18,8 @@
 
 /datum/discipline/daimonion/post_gain(mob/living/carbon/human/H)
 	H.put_in_r_hand(new /obj/item/vamp/keys/baali(H))
+	var/obj/item/organ/eyes/night_vision/NV = new()
+	NV.Insert(H, TRUE, FALSE)
 	if(level >= 3)
 		var/obj/effect/proc_holder/spell/aimed/fireball/baali/S = new(H)
 		H.mind.AddSpell(S)

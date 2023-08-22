@@ -109,6 +109,10 @@
 	name = "Satanic keys"
 	accesslocks = list("baali")
 
+/obj/item/vamp/keys/salubri
+	name = "Conspiracy keys"
+	accesslocks = list("salubri")
+
 /obj/structure/vampdoor
 	name = "\improper door"
 	desc = "It opens and closes."
@@ -396,5 +400,13 @@
 	baseicon = "oldwood"
 	locked = TRUE
 	lock_id = "baali"
+	burnable = FALSE
+	hackable = FALSE
+
+/obj/structure/vampdoor/salubri
+	icon_state = "oldwood-1"
+	baseicon = "oldwood"
+	locked = TRUE
+	lock_id = "salubri"
 	burnable = FALSE
 	hackable = FALSE

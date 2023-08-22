@@ -137,4 +137,6 @@
 	invocation = "Squeak!"
 	charge_max = 50
 	cooldown_min = 50
+	revert_on_death = TRUE
+	die_with_shapeshifted_form = FALSE
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/bat/baali
