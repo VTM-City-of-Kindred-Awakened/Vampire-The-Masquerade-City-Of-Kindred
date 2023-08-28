@@ -225,7 +225,7 @@
 	var/on = FALSE					// 1 if on, 0 if off
 	var/on_gs = FALSE
 	var/static_power_used = 0
-	var/brightness = 6			// luminosity when on, also used in power calculation
+	var/brightness = 4			// luminosity when on, also used in power calculation
 	var/bulb_power = 1			// basically the alpha of the emitted light source
 	var/bulb_colour = "#ffe3cd"	// befault colour of the light.
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
@@ -307,7 +307,7 @@
 	icon_state = "bulb"
 	base_state = "bulb"
 	fitting = "bulb"
-	brightness = 4
+	brightness = 3
 	nightshift_allowed = FALSE
 	bulb_colour = "#ffde9b"
 	desc = "A small lighting fixture."

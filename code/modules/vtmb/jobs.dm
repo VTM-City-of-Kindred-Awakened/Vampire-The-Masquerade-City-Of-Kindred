@@ -41,12 +41,12 @@
 	minimal_generation = 10	//Uncomment when players get exp enough
 	minimal_masquerade = 5
 	kindred_only = TRUE
-	allowed_bloodlines = list("Ventrue")
+	allowed_bloodlines = list("Tremere", "Ventrue", "Nosferatu", "Toreador", "Malkavian")
 
 	my_contact_is_important = TRUE
 	known_contacts = list("Sheriff",
 												"Clerk",
-												"Barkeeper")
+												"Baron")
 
 	duty = "Represent interests of Camarilla and maintain Masquerade."
 	experience_addition = 25
@@ -397,7 +397,7 @@
 
 /datum/job/vamp/vjanitor
 	title = "Street Janitor"
-	department_head = list("Barkeeper")
+	department_head = list("Baron")
 	faction = "Vampire"
 	total_positions = 6
 	spawn_positions = 6
@@ -538,7 +538,7 @@
 //ANARCHS
 
 /datum/job/vamp/barkeeper
-	title = "Barkeeper"
+	title = "Baron"
 	department_head = list("Justicar")
 	faction = "Vampire"
 	total_positions = 1
@@ -564,11 +564,11 @@
 	duty = "Lead the Anarchs in the City."
 	minimal_masquerade = 3
 	kindred_only = TRUE
-	allowed_bloodlines = list("Brujah")
+	allowed_bloodlines = list("Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian")
 	experience_addition = 20
 
 /datum/outfit/job/barkeeper
-	name = "Barkeeper"
+	name = "Baron"
 	jobtype = /datum/job/vamp/barkeeper
 
 	id = /obj/item/card/id/anarch
@@ -589,16 +589,16 @@
 		shoes = /obj/item/clothing/shoes/vampire/heels
 
 /obj/effect/landmark/start/barkeeper
-	name = "Barkeeper"
+	name = "Baron"
 	icon_state = "Barkeeper"
 
 /datum/job/vamp/bouncer
 	title = "Bouncer"
-	department_head = list("Barkeeper")
+	department_head = list("Baron")
 	faction = "Vampire"
 	total_positions = 7
 	spawn_positions = 7
-	supervisors = "the barkeeper"
+	supervisors = "the Baron"
 	selection_color = "#434343"
 
 	outfit = /datum/outfit/job/bouncer
@@ -612,10 +612,10 @@
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_BOUNCER
-	known_contacts = list("Barkeeper")
+	known_contacts = list("Baron")
 	allowed_bloodlines = list("Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff")
 
-	duty = "Work for the Barkeeper."
+	duty = "Work for the Baron."
 	minimal_masquerade = 2
 	experience_addition = 15
 
@@ -665,7 +665,7 @@
 //	minimal_generation = 12	//Uncomment when players get exp enough
 
 	my_contact_is_important = TRUE
-	known_contacts = list("Barkeeper")
+	known_contacts = list("Baron")
 	allowed_bloodlines = list("Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff")
 
 	duty = "Provide weapons to other kindred in the city."
@@ -713,7 +713,7 @@
 	paycheck_department = ACCOUNT_CAR
 	display_order = JOB_DISPLAY_ORDER_SUPPLY
 	bounty_types = CIV_JOB_RANDOM
-	known_contacts = list("Barkeeper")
+	known_contacts = list("Baron")
 	allowed_bloodlines = list("Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff")
 
 	duty = "Manage deliveries and supplies for kindred in the City."

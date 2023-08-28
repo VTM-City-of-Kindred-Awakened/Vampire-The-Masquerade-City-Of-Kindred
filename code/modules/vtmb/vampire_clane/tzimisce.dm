@@ -202,6 +202,7 @@
 	if(H.mind)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_wall)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_stool)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_unicorn)
 		if(level >= 2)
 			H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_floor)
 			H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_biter)
@@ -256,6 +257,13 @@
 	always_available = FALSE
 	category = CAT_TZIMISCE
 
+/datum/crafting_recipe/tzi_unicorn
+	name = "Unicorn (Decoration)"
+	time = 50
+	reqs = list(/obj/item/organ/penis = 1)
+	result = /obj/item/organ/penicorn
+	always_available = FALSE
+	category = CAT_TZIMISCE
 
 /datum/crafting_recipe/tzi_med
 	name = "Medical Hand (Healing)"

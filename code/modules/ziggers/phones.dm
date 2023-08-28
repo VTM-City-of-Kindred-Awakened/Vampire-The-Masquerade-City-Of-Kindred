@@ -97,7 +97,7 @@
 	..()
 
 /datum/phonecontact/barkeeper
-	name = "Barkeeper"
+	name = "Baron"
 
 /datum/phonecontact/barkeeper/check_global_contacts()
 	if(number != GLOB.barkeepernumber)

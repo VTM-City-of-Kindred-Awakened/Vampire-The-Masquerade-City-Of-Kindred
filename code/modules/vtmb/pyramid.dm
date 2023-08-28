@@ -17,7 +17,13 @@
 /obj/item/arcane_tome/attack_self(mob/user)
 	. = ..()
 	for(var/obj/ritualrune/R in rituals)
-		to_chat(user, "[R.thaumlevel] [R.name] - [R.desc]")
+		if(R)
+			if(R.sacrifice)
+				var/obj/item/I = new R.sacrifice(src)
+				to_chat(user, "[R.thaumlevel] [R.name] - [R.desc] Requirements: [I].")
+				qdel(I)
+			else
+				to_chat(user, "[R.thaumlevel] [R.name] - [R.desc]")
 
 /obj/ritualrune
 	name = "Tremere Rune"
@@ -31,6 +37,7 @@
 	var/activated = FALSE
 	var/mob/living/last_activator
 	var/thaumlevel = 1
+	var/sacrifice
 
 /mob/living
 	var/thaumaturgy_knowledge = FALSE
@@ -42,10 +49,32 @@
 	if(!activated)
 		var/mob/living/L = user
 		if(L.thaumaturgy_knowledge)
+			L.say("[word]")
+			L.Stun(50)
 			last_activator = user
 			activator_bonus = L.thaum_damage_plus
-			complete()
-			L.say("[word]")
+			if(sacrifice)
+				for(var/obj/item/I in get_turf(src))
+					if(I)
+						if(istype(I, sacrifice))
+							qdel(I)
+							complete()
+			else
+				complete()
+
+/obj/ritualrune/AltClick(mob/user)
+	..()
+	qdel(src)
+
+/obj/ritualrune/selfgib
+	name = "Self Destruction"
+	desc = "Meet the Final Death."
+	icon_state = "rune2"
+	word = "CHNGE DA'WORD, GDBE"
+	sacrifice = /obj/item/arcane_tome
+
+/obj/ritualrune/selfgib/complete()
+	last_activator.death()
 
 /obj/ritualrune/blood_guardian
 	name = "Blood Guardian"
@@ -53,6 +82,7 @@
 	icon_state = "rune1"
 	word = "UR'JOLA"
 	thaumlevel = 3
+	sacrifice = /obj/item/clothing/suit/vampire/vest
 
 /obj/ritualrune/blood_guardian/complete()
 	var/mob/living/simple_animal/hostile/blood_guard/BG = new(loc)
@@ -102,6 +132,7 @@
 	desc = "Creates the Blood Trap to protect tremere or his domain."
 	icon_state = "rune2"
 	word = "DUH'K-A'U"
+	sacrifice = /obj/item/fishing_rod
 
 /obj/ritualrune/blood_trap/complete()
 	if(!activated)
@@ -122,6 +153,7 @@
 	icon_state = "rune3"
 	word = "SOT'PY-O"
 	thaumlevel = 2
+	sacrifice = /obj/item/drinkable_bloodpack
 
 /obj/ritualrune/blood_wall/complete()
 	new /obj/structure/bloodwall(loc)
@@ -175,6 +207,7 @@
 	icon_state = "rune5"
 	word = "TE-ME'LL"
 	thaumlevel = 3
+	sacrifice = /obj/item/letter
 
 /mob/living/simple_animal/hostile/ghost/tremere
 	maxHealth = 1
@@ -201,6 +234,7 @@
 	icon_state = "rune6"
 	word = "POR'TALE"
 	thaumlevel = 5
+	sacrifice = /obj/item/arcane_tome
 
 /obj/ritualrune/teleport/complete()
 	if(!activated)
@@ -215,10 +249,10 @@
 	if(activated)
 		var/x = input(user, "Choose x direction:\n(1-255)", "Teleportation Rune") as num|null
 		if(x)
-			x_dir = max(min( round(text2num(x)), 255),1)
+			x_dir = max(min(round(text2num(x)), 255),1)
 			var/y = input(user, "Choose y direction:\n(1-255)", "Teleportation Rune") as num|null
 			if(y)
-				y_dir = max(min( round(text2num(y)), 255),1)
+				y_dir = max(min(round(text2num(y)), 255),1)
 				var/atom/movable/AM = new(user.loc)
 				AM.x = x_dir
 				AM.y = y_dir
@@ -233,13 +267,14 @@
 				else
 					to_chat(user, "<span class='warning'>There is no available teleportation place by this coordinates!</span>")
 					qdel(AM)
-/*
+
 /obj/ritualrune/curse
 	name = "Curse Rune"
 	desc = "Curse your enemies in distance."
 	icon_state = "rune7"
 	word = "CUS-RE'S"
 	thaumlevel = 5
+	sacrifice = /obj/item/organ/penis
 
 /obj/ritualrune/curse/complete()
 	if(!activated)
@@ -263,7 +298,7 @@
 					qdel(src)
 					return
 			to_chat(user, "<span class='warning'>There is no such names in the city!</span>")
-*/
+
 /obj/ritualrune/blood_to_water
 	name = "Blood To Water"
 	desc = "Purges all blood in range into the water."

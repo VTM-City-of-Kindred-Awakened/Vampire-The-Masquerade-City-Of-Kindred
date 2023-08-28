@@ -398,6 +398,7 @@
 	ranged = FALSE
 	delay = 100
 	activate_sound = 'code/modules/ziggers/sounds/potence_activate.ogg'
+	var/datum/component/tackler
 
 /datum/discipline/potence/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
@@ -411,6 +412,7 @@
 	caster.dna.species.punchdamagehigh += mod
 	caster.dna.species.meleemod += armah
 	caster.dna.species.attack_sound = 'code/modules/ziggers/sounds/heavypunch.ogg'
+	tackler = caster.AddComponent(/datum/component/tackler, stamina_cost=0, base_knockdown = 1 SECONDS, range = 2+level_casting, speed = 1, skill_mod = 0, min_distance = 0)
 	spawn(delay+caster.discipline_time_plus)
 		if(caster)
 			if(caster.dna)
@@ -421,6 +423,7 @@
 					caster.dna.species.meleemod -= armah
 					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
 					caster.remove_overlay(POTENCE_LAYER)
+					qdel(tackler)
 
 /datum/discipline/fortitude
 	name = "Fortitude"
@@ -843,6 +846,7 @@
 		playsound(caster.loc, 'code/modules/ziggers/sounds/tongue.ogg', 100, TRUE)
 		casing.fire_casing(target, caster, null, null, null, ran_zone(), 0,  caster)
 		playsound(target.loc, 'code/modules/ziggers/sounds/serpentis.ogg', 50, TRUE)
+		qdel(casing)
 
 /datum/discipline/vicissitude
 	name = "Vicissitude"
@@ -1163,42 +1167,23 @@
 	desc = "Controls the darkness around you."
 	icon_state = "obtenebration"
 	cost = 1
-	ranged = FALSE
+	ranged = TRUE
 	delay = 100
 	violates_masquerade = TRUE
 	clane_restricted = TRUE
+	activate_sound = 'sound/magic/voidblink.ogg'
 
 /datum/discipline/obtenebration/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	playsound(target.loc, 'code/modules/ziggers/sounds/necromancy.ogg', 50, TRUE)
-	switch(level_casting)
-		if(1)
-			var/atom/movable/AM = new(caster)
-			AM.set_light(level_casting+3, -7)
-			spawn(delay+caster.discipline_time_plus)
-				AM.set_light(0)
-		if(2)
-			var/mob/living/simple_animal/hostile/biter/lasombra/L = new(caster.loc)
-			L.my_creator = caster
-		if(3)
-			var/mob/living/simple_animal/hostile/biter/lasombra/better/L = new(caster.loc)
-			L.my_creator = caster
-		if(4)
-			var/mob/living/simple_animal/hostile/biter/lasombra/L1 = new(caster.loc)
-			L1.my_creator = caster
-			var/mob/living/simple_animal/hostile/biter/lasombra/better/B = new(caster.loc)
-			B.my_creator = caster
-	//		for(var/turf/T in range(3, src))
-	//			new /obj/effect/temp_visual/goliath_tentacle/broodmother(T)
-		if(5)
-	//		for(var/turf/T in range(7, src))
-	//			new /obj/effect/temp_visual/goliath_tentacle/broodmother(T)
-			var/mob/living/simple_animal/hostile/biter/lasombra/L1 = new(caster.loc)
-			L1.my_creator = caster
-			var/mob/living/simple_animal/hostile/biter/lasombra/L2 = new(caster.loc)
-			L2.my_creator = caster
-			var/mob/living/simple_animal/hostile/biter/lasombra/better/B = new(caster.loc)
-			B.my_creator = caster
+	if(level_casting == 1)
+		var/atom/movable/AM = new(target)
+		AM.set_light(3, -7)
+		spawn(delay+caster.discipline_time_plus)
+			AM.set_light(0)
+	else
+		target.Stun(10*(level_casting-1))
+		var/obj/item/ammo_casing/magic/tentacle/lasombra/casing = new (caster.loc)
+		casing.fire_casing(target, caster, null, null, null, ran_zone(), 0,  caster)
 
 /datum/discipline/daimonion
 	name = "Daimonion"

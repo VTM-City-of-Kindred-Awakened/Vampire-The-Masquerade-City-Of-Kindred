@@ -158,7 +158,7 @@
 			var/gas_to_transfer = min(1000-gas, min(100, max(1, G.stored_gasoline)))
 			G.stored_gasoline = max(0, G.stored_gasoline-gas_to_transfer)
 			gas = min(1000, gas+gas_to_transfer)
-			playsound(loc, 'code/modules/ziggers/sounds/gas_fill.ogg', 50, TRUE)
+			playsound(loc, 'code/modules/ziggers/sounds/gas_fill.ogg', 25, TRUE)
 			to_chat(user, "<span class='notice'>You transfer [gas_to_transfer] to [src].</span>")
 		return
 	if(istype(I, /obj/item/vamp/keys))
@@ -588,7 +588,7 @@
 			delay = delay /= 0.75
 		glide_size = (32 / delay) * world.tick_lag / (diagonal ? 0.75 : 1)// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
 		step(src, moving_dir)
-		gas = max(0, gas-1)
+		gas = max(0, gas-0.05)
 		dir = facing_dir
 		FARI.forceMove(get_step(src, facing_dir))
 		last_dir = moving_dir

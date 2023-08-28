@@ -1,6 +1,6 @@
 GLOBAL_LIST_INIT(leader_positions, list(
 	"Prince",
-	"Barkeeper",
+	"Baron",
 	"Chantry Regent"))
 
 GLOBAL_LIST_INIT(command_positions, list(
@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(medical_positions, list(
 
 
 GLOBAL_LIST_INIT(anarch_positions, list(
-	"Barkeeper",
+	"Baron",
 	"Bouncer",
 	"Dealer",
 	"Supply Technician"

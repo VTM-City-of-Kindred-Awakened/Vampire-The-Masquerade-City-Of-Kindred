@@ -49,12 +49,17 @@
 /datum/component/npc_controller/proc/on_moved(datum/source, OldLoc, Dir, Forced)
 	if(!check_move())
 		walk(my_parent,0)
-	var/mindistance = 7
+	for(var/atom/M in dangers)
+		if(get_dist(my_parent, M) > 9)
+			dangers -= M
+	var/mindistance = 9
 	var/mob/living/A
 	for(var/mob/living/L in attackers)
 		if(get_dist(my_parent, L) <= mindistance)
 			mindistance = get_dist(my_parent, L)
 			A = L
+		else
+			attackers -= L
 	if(A)
 		var/allowed_to_click = FALSE
 		var/obj/item/I = my_parent.get_active_held_item()
@@ -69,6 +74,18 @@
 			my_parent.ClickOn(A)
 
 /datum/component/npc_controller/proc/generate_move()		//Realistic movement pattern
+	if(!length(dangers) && !length(attackers))
+		var/list/possible_interests = list()
+		for(var/obj/effect/landmark/activity/A in GLOB.landmarks_list)
+			if((A.x-my_parent.x) > -7 && (A.x-my_parent.x) < 7)
+				possible_interests += A
+			if((A.y-my_parent.y) > -7 && (A.y-my_parent.y) < 7)
+				possible_interests += A
+		if(!length(possible_interests))
+			for(var/obj/effect/landmark/activity/A in GLOB.landmarks_list)
+				possible_interests += A
+
+		current_target = A
 	/*
 	!USE DEFAULT DM TABULATION AND FONT TO SEE CORRECT IMAGE!
 		\ | /
@@ -96,3 +113,7 @@
 	If there is an obstacle in the possible way of movement - chance is 0%
 	Always choosing the nearest target to move to, from list. If there are a couple of dangers - pattern will seek for optimal way to avoid all
 	*/
+
+/obj/effect/landmark/activity
+	name = "NPC Activity"
+	icon_state = "activity"
