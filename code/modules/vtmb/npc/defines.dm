@@ -58,29 +58,29 @@
 		walk(my_parent,0)
 	if(get_dist(my_parent, current_target) < 3)
 		get_target()
-	for(var/atom/M in dangers)
-		if(get_dist(my_parent, M) > 9)
-			dangers -= M
-	var/mindistance = 9
-	var/mob/living/A
-	for(var/mob/living/L in attackers)
-		if(get_dist(my_parent, L) <= mindistance)
-			mindistance = get_dist(my_parent, L)
-			A = L
-		else
-			attackers -= L
-	if(A)
-		var/allowed_to_click = FALSE
-		var/obj/item/I = my_parent.get_active_held_item()
-		if(I.force > 10)
-			allowed_to_click = TRUE
-		if(istype(I, /obj/item/gun))
-			allowed_to_click = TRUE
-		if(fights_anyway)
-			allowed_to_click = TRUE
+//	for(var/atom/M in dangers)
+//		if(get_dist(my_parent, M) > 9)
+//			dangers -= M
+//	var/mindistance = 9
+//	var/mob/living/A
+//	for(var/mob/living/L in attackers)
+//		if(get_dist(my_parent, L) <= mindistance)
+//			mindistance = get_dist(my_parent, L)
+//			A = L
+//		else
+//			attackers -= L
+//	if(A)
+//		var/allowed_to_click = FALSE
+//		var/obj/item/I = my_parent.get_active_held_item()
+//		if(I.force > 10)
+//			allowed_to_click = TRUE
+//		if(istype(I, /obj/item/gun))
+//			allowed_to_click = TRUE
+//		if(fights_anyway)
+//			allowed_to_click = TRUE
 
-		if(allowed_to_click)
-			my_parent.ClickOn(A)
+//		if(allowed_to_click)
+//			my_parent.ClickOn(A)
 
 /datum/component/npc_controller/proc/get_target()
 	var/list/possible_interests = list()
