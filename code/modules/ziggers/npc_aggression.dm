@@ -1,4 +1,6 @@
+
 /mob/living/carbon/human/npc/proc/Aggro(var/mob/M, var/attacked = FALSE)
+/*
 	if(attacked && danger_source != M)
 		walk(src,0)
 	if(M == src)
@@ -23,3 +25,4 @@
 					RealisticSay(pick(socialrole.help_phrases))
 			else
 				RealisticSay(pick(socialrole.help_phrases))
+*/

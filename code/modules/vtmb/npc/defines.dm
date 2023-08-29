@@ -7,11 +7,16 @@
 	var/hostile = FALSE
 	var/fights_anyway = FALSE
 
+/mob/living/carbon/human/proc/handle_automated_npc_controller_movement()
+	var/datum/component/npc_controller/NPC = GetComponent(/datum/component/npc_controller)
+	if(NPC)
+		NPC.do_move()
+
 /datum/component/npc_controller/Initialize()
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
 	my_parent = parent
-
+	GLOB.npc_list += src
 	RegisterSignal(my_parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 
 /datum/component/npc_controller/proc/check_move()	//Can we call the movement?
@@ -44,11 +49,15 @@
 /datum/component/npc_controller/proc/remove()
 	SIGNAL_HANDLER
 	if(!QDELETED(my_parent))
+		GLOB.npc_list -= src
 		UnregisterSignal(my_parent, COMSIG_MOVABLE_MOVED)
 
 /datum/component/npc_controller/proc/on_moved(datum/source, OldLoc, Dir, Forced)
+	my_parent.set_glide_size(DELAY_TO_GLIDE_SIZE(my_parent.total_multiplicative_slowdown()))
 	if(!check_move())
 		walk(my_parent,0)
+	if(get_dist(my_parent, current_target) < 3)
+		get_target()
 	for(var/atom/M in dangers)
 		if(get_dist(my_parent, M) > 9)
 			dangers -= M
@@ -73,19 +82,30 @@
 		if(allowed_to_click)
 			my_parent.ClickOn(A)
 
-/datum/component/npc_controller/proc/generate_move()		//Realistic movement pattern
-	if(!length(dangers) && !length(attackers))
-		var/list/possible_interests = list()
-		for(var/obj/effect/landmark/activity/A in GLOB.landmarks_list)
-			if((A.x-my_parent.x) > -7 && (A.x-my_parent.x) < 7)
-				possible_interests += A
-			if((A.y-my_parent.y) > -7 && (A.y-my_parent.y) < 7)
-				possible_interests += A
-		if(!length(possible_interests))
-			for(var/obj/effect/landmark/activity/A in GLOB.landmarks_list)
-				possible_interests += A
+/datum/component/npc_controller/proc/get_target()
+	var/list/possible_interests = list()
+	for(var/obj/effect/landmark/activity/A in GLOB.npc_activities)
+		if((A.x-my_parent.x) > -7 && (A.x-my_parent.x) < 7 && get_dist(my_parent, A) > 5 && get_dist(my_parent, A) < 128)
+			possible_interests += A
+		if((A.y-my_parent.y) > -7 && (A.y-my_parent.y) < 7 && get_dist(my_parent, A) > 5 && get_dist(my_parent, A) < 128)
+			possible_interests += A
+	if(!length(possible_interests))
+		for(var/obj/effect/landmark/activity/A in GLOB.npc_activities)
+			possible_interests += A
 
-		current_target = A
+	current_target = pick(possible_interests)
+
+/datum/component/npc_controller/proc/do_move()		//Realistic movement pattern
+	if(!check_move())
+		return
+	if(!length(dangers) && !length(attackers))
+		if(!current_target)
+			get_target()
+
+		if(current_target)
+			var/reqsteps = round((SShumannpcpool.next_fire-world.time)/my_parent.total_multiplicative_slowdown())
+			my_parent.set_glide_size(DELAY_TO_GLIDE_SIZE(my_parent.total_multiplicative_slowdown()))
+			walk_to(my_parent, current_target, reqsteps, my_parent.total_multiplicative_slowdown())
 	/*
 	!USE DEFAULT DM TABULATION AND FONT TO SEE CORRECT IMAGE!
 		\ | /
@@ -117,3 +137,7 @@
 /obj/effect/landmark/activity
 	name = "NPC Activity"
 	icon_state = "activity"
+
+/obj/effect/landmark/activity/Initialize()
+	. = ..()
+	GLOB.npc_activities += src
