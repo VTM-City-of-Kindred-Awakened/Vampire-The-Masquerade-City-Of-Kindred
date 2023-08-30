@@ -49,27 +49,17 @@
 	if(!activated)
 		var/mob/living/L = user
 		if(L.thaumaturgy_knowledge)
+			L.say("[word]")
+			L.Stun(50)
+			last_activator = user
+			activator_bonus = L.thaum_damage_plus
 			if(sacrifice)
-				var/completed = FALSE
 				for(var/obj/item/I in get_turf(src))
 					if(I)
 						if(istype(I, sacrifice))
 							qdel(I)
-							L.say("[word]")
-							L.Stun(50)
-							last_activator = user
-							activator_bonus = L.thaum_damage_plus
 							complete()
-							completed = TRUE
-				if(!completed)
-					var/obj/item/I = new sacrifice(user)
-					to_chat(user, "<span class='warning'>You need [I] to complete [src]!</span>")
-					qdel(I)
 			else
-				L.say("[word]")
-				L.Stun(50)
-				last_activator = user
-				activator_bonus = L.thaum_damage_plus
 				complete()
 
 /obj/ritualrune/AltClick(mob/user)

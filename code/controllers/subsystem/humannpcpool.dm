@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(humannpcpool)
 	var/list/currentrun = src.currentrun
 
 	while(currentrun.len)
-		var/datum/component/npc_controller/NPC = currentrun[currentrun.len]
+		var/mob/living/carbon/human/npc/NPC = currentrun[currentrun.len]
 		--currentrun.len
 
 		if (QDELETED(NPC)) // Some issue causes nulls to get into this list some times. This keeps it running, but the bug is still there.
@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(humannpcpool)
 //!NPC.route_optimisation()
 		if(MC_TICK_CHECK)
 			return
-		NPC.do_move()
+		NPC.handle_automated_movement()
 
 /datum/controller/subsystem/humannpcpool/proc/npclost()
 	var/atom/kal = pick(GLOB.npc_spawn_points)

@@ -92,22 +92,22 @@
 	if(SScityweather.fogging)
 		actual_range = round(actual_range/2)
 	var/list/seenby = list()
-//	for(var/mob/living/carbon/human/npc/NPC in oviewers(2, source))
-//		if(!NPC.CheckMove())
-//			seenby |= NPC
-//			NPC.Aggro(attacker, FALSE)
-//	for(var/mob/living/carbon/human/npc/NPC in viewers(actual_range, source))
-//		if(!NPC.CheckMove())
-//			if(affects_source)
-//				if(NPC == source)
-//					NPC.Aggro(attacker, TRUE)
-//					seenby |= NPC
-//			if(!NPC.pulledby)
-//				var/turf/LC = get_turf(attacker)
-//				if(LC.get_lumcount() > 0.25 || get_dist(NPC, attacker) <= 1)
-//					if(NPC.backinvisible(attacker))
-//						seenby |= NPC
-//						NPC.Aggro(attacker, FALSE)
+	for(var/mob/living/carbon/human/npc/NPC in oviewers(2, source))
+		if(!NPC.CheckMove())
+			seenby |= NPC
+			NPC.Aggro(attacker, FALSE)
+	for(var/mob/living/carbon/human/npc/NPC in viewers(actual_range, source))
+		if(!NPC.CheckMove())
+			if(affects_source)
+				if(NPC == source)
+					NPC.Aggro(attacker, TRUE)
+					seenby |= NPC
+			if(!NPC.pulledby)
+				var/turf/LC = get_turf(attacker)
+				if(LC.get_lumcount() > 0.25 || get_dist(NPC, attacker) <= 1)
+					if(NPC.backinvisible(attacker))
+						seenby |= NPC
+						NPC.Aggro(attacker, FALSE)
 	if(length(seenby) >= 1)
 		return TRUE
 	return FALSE

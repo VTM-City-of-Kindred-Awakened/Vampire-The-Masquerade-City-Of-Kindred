@@ -321,7 +321,7 @@
 			O.r_pocket = pick(another_pocket)
 	equipOutfit(O)
 	qdel(O)
-/*
+
 /mob/living/carbon/human/npc/proc/GetSayDelay(var/message)
 	var/delay = length_char(message)
 	return delay
@@ -372,25 +372,25 @@
 		else
 			phrase = pick(socialrole.female_phrases)
 	RealisticSay(phrase)
-*/
+
 /mob/living/carbon/human/Move(NewLoc, direct)
 	update_shadow()
-//	var/mob/living/carbon/human/npc/NPC = locate() in NewLoc
-//	if(NPC)
-//		if(a_intent != INTENT_HELP)
-//			NPC.Annoy(src)
-//	if(istype(src, /mob/living/carbon/human/npc))
-//		var/mob/living/carbon/human/npc/CPN = src
-//		if(CPN.CheckMove())
-//			walk(src,0)
-//		if(get_dist(src, CPN.walktarget) <= CPN.stopturf)
-//			walk(src,0)
-//			CPN.walktarget = null
-//		for(var/obj/effect/decal/cleanable/blood/B in NewLoc)
-//			if(B)
-//				if(B.bloodiness)
-//					walk(src,0)
-//					CPN.walktarget = null
+	var/mob/living/carbon/human/npc/NPC = locate() in NewLoc
+	if(NPC)
+		if(a_intent != INTENT_HELP)
+			NPC.Annoy(src)
+	if(istype(src, /mob/living/carbon/human/npc))
+		var/mob/living/carbon/human/npc/CPN = src
+		if(CPN.CheckMove())
+			walk(src,0)
+		if(get_dist(src, CPN.walktarget) <= CPN.stopturf)
+			walk(src,0)
+			CPN.walktarget = null
+		for(var/obj/effect/decal/cleanable/blood/B in NewLoc)
+			if(B)
+				if(B.bloodiness)
+					walk(src,0)
+					CPN.walktarget = null
 //					if(!CPN.CheckMove())
 //						step_away(CPN, B)
 	if(HAS_TRAIT(src, TRAIT_RUBICON))
@@ -413,7 +413,7 @@
 			apply_overlay(UNDERSHADOW_LAYER)
 	else if(overlays_standing[UNDERSHADOW_LAYER])
 		remove_overlay(UNDERSHADOW_LAYER)
-/*
+
 /mob/living/carbon/human/npc/attack_hand(mob/user)
 	if(user)
 		if(user.a_intent == INTENT_HELP)
@@ -503,7 +503,7 @@
 				spawn(GetSayDelay(question))
 					N.is_talking = FALSE
 					N.RealisticSay(pick(N.socialrole.answer_phrases))
-*/
+
 /mob/living/carbon/human/npc/proc/ghoulificate(mob/owner)
 	set waitfor = FALSE
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]`s ghoul?", null, null, null, 50, src)

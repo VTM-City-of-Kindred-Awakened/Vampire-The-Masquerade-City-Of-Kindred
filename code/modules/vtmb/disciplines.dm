@@ -1180,7 +1180,6 @@
 		AM.set_light(3, -7)
 		spawn(delay+caster.discipline_time_plus)
 			AM.set_light(0)
-			qdel(AM)
 	else
 		target.Stun(10*(level_casting-1))
 		var/obj/item/ammo_casing/magic/tentacle/lasombra/casing = new (caster.loc)
