@@ -1,4 +1,4 @@
-/datum/component/npc_controller
+/*/datum/component/npc_controller
 	var/mob/living/carbon/human/my_parent	//Who will be npc
 	var/list/dangers = list()			//What are dangers to the npc, etc fire, shooters, hostile mobs
 	var/list/attackers = list()			//Who are enemies to the npc
@@ -75,21 +75,21 @@
 //		if(allowed_to_click)
 //			my_parent.ClickOn(A)
 
-/datum/component/npc_controller/proc/get_target()
+// /datum/component/npc_controller/proc/get_target()
 	var/list/possible_interests = list()
-	for(var/obj/effect/landmark/activity/A in GLOB.npc_activities)
-		if((A.x-my_parent.x) > -7 && (A.x-my_parent.x) < 7 && get_dist(my_parent, A) > 5 && get_dist(my_parent, A) < 128)
-			possible_interests += A
-		if((A.y-my_parent.y) > -7 && (A.y-my_parent.y) < 7 && get_dist(my_parent, A) > 5 && get_dist(my_parent, A) < 128)
-			possible_interests += A
-	if(!length(possible_interests))
-		for(var/obj/effect/landmark/activity/A in GLOB.npc_activities)
-			possible_interests += A
-
-		current_target = A
-	/*
-	!USE DEFAULT DM TABULATION AND FONT TO SEE CORRECT IMAGE!
-		\ | /
+//	for(var/obj/effect/landmark/activity/A in GLOB.npc_activities)
+//		if((A.x-my_parent.x) > -7 && (A.x-my_parent.x) < 7 && get_dist(my_parent, A) > 5 && get_dist(my_parent, A) < 128)
+//			possible_interests += A
+//		if((A.y-my_parent.y) > -7 && (A.y-my_parent.y) < 7 && get_dist(my_parent, A) > 5 && get_dist(my_parent, A) < 128)
+//			possible_interests += A
+//	if(!length(possible_interests))
+//		for(var/obj/effect/landmark/activity/A in GLOB.npc_activities)
+//			possible_interests += A
+//
+//		current_target = A
+//
+//	!USE DEFAULT DM TABULATION AND FONT TO SEE CORRECT IMAGE!
+//	\ | /
 		- . -
 		/ | \
 	Here is illustration of which pattern npc will be using while walking to the target
@@ -113,7 +113,7 @@
 
 	If there is an obstacle in the possible way of movement - chance is 0%
 	Always choosing the nearest target to move to, from list. If there are a couple of dangers - pattern will seek for optimal way to avoid all
-	*/
+
 
 /obj/effect/landmark/activity
 	name = "NPC Activity"
@@ -122,3 +122,5 @@
 /obj/effect/landmark/activity/Initialize()
 	. = ..()
 	GLOB.npc_activities += src
+
+*/
