@@ -10,3 +10,5 @@
 /datum/stock_log/buy
 
 /datum/stock_log/sell
+
+/datum/stock_log/borrow
