@@ -282,8 +282,20 @@
 					SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
+				if(BD.clane)
+					var/special_clan = FALSE
+					if(BD.clane.name == "Salubri")
+						if(!PB.IsSleeping())
+							to_chat(BD, "<span class='warning'>You can't drink from aware targets!</span>")
+							return
+						special_clan = TRUE
+						PB.emote("moan")
+					if(BD.clane.name == "Giovanni")
+						PB.emote("scream")
+						special_clan = TRUE
+					if(!special_clan)
+						PB.emote("groan")
 				PB.add_bite_animation()
-				PB.emote("scream")
 			if(isliving(BD.pulling))
 				var/mob/living/LV = BD.pulling
 				if(LV.bloodpool <= 0 && !iskindred(BD.pulling))

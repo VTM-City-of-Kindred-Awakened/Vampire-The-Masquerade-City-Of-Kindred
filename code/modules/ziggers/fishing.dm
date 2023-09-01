@@ -74,7 +74,8 @@
 									/obj/item/food/fish/tune,
 									/obj/item/food/fish/catfish,
 									/obj/item/food/fish/crab)
-					if(prob(1))
+					var/i = rand(1, 1000)
+					if(i == 1000)
 						IT = /obj/item/vtm_artifact/rand
 					new IT(user.loc)
 					playsound(loc, 'code/modules/ziggers/sounds/catched.ogg', 50, FALSE)

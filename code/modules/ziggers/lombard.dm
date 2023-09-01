@@ -92,6 +92,6 @@
 /obj/item/melee/vampirearms/katana
 	cost = 250
 /obj/item/food/fish
-	cost = 50
+	cost = 20
 /obj/item/cockclock
 	cost = 50

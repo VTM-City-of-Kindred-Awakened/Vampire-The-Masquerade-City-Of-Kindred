@@ -36,15 +36,19 @@
 		src.emote("moan")
 		Immobilize(30, TRUE)
 	playsound_local(src, heartbeat, 75, 0, channel = CHANNEL_BLOOD, use_reverb = FALSE)
-	if(!iskindred(mob))
-		mob.Stun(30)
-	if(iskindred(mob))
-		to_chat(src, "<span class='userdanger'><b>YOU TRY TO COMMIT DIABLERIE OVER [mob].</b></span>")
 	if(isnpc(mob))
 		var/mob/living/carbon/human/npc/NPC = mob
 		NPC.danger_source = null
 		NPC.last_attacker = src
-	to_chat(src, "<span class='warning'>You sip some <b>BLOOD</b> from your victim. It feels good.</span>")
+
+	if(iskindred(mob))
+		to_chat(src, "<span class='userlove'>You notice a pleasant feeling while siping [mob]'s BLOOD...</span>")
+		adjustBruteLoss(-25, TRUE)
+		adjustFireLoss(-25, TRUE)
+	else
+		mob.Stun(30)
+		to_chat(src, "<span class='warning'>You sip some <b>BLOOD</b> from your victim. It feels good.</span>")
+
 	if(mob.bloodpool <= 1 && mob.maxbloodpool > 1)
 //		if(alert("This action will kill your victim. Are you sure?",,"Yes","No")!="Yes")
 //			return
@@ -52,14 +56,20 @@
 		if(iskindred(mob))
 			message_admins("[src]([key]) is trying to diablerie [mob]([mob.key])!")
 			if(mob.key)
+				var/vse_taki = FALSE
 				var/special_role_name
 				if(mind)
 					if(mind.special_role)
 						var/datum/antagonist/A = mind.special_role
 						special_role_name = A.name
 				if(clane)
+					var/salubri_allowed = FALSE
+					var/mob/living/carbon/human/H = mob
+					if(H.clane)
+						if(H.clane.name == "Salubri")
+							salubri_allowed = TRUE
 					if(clane.name != "Banu Haqim" && clane.name != "Caitiff")
-						if(!mind.special_role || special_role_name == "Ambitious")
+						if(!mind.special_role || special_role_name == "Ambitious" || !salubri_allowed)
 							to_chat(src, "<span class='warning'>You find the idea of drinking your own <b>KIND</b> disgusting!</span>")
 							last_drinkblood_use = 0
 							if(client)
@@ -67,10 +77,16 @@
 							qdel(suckbar)
 							stop_sound_channel(CHANNEL_BLOOD)
 							return
+						else
+							vse_taki = TRUE
+					else
+						vse_taki = TRUE
+				if(vse_taki)
+					to_chat(src, "<span class='userdanger'><b>YOU TRY TO COMMIT DIABLERIE OVER [mob].</b></span>")
 			else
 				to_chat(src, "<span class='warning'>You need [mob]'s attention to do that...</span>")
 				return
-			message_admins("[src]([key]) success in diablerie over [mob](mob.key])!")
+
 	if(!HAS_TRAIT(src, TRAIT_BLOODY_LOVER))
 		if(CheckEyewitness(src, src, 7, FALSE))
 			AdjustMasquerade(-1)
@@ -109,9 +125,11 @@
 			if(ishuman(mob))
 				var/mob/living/carbon/human/K = mob
 				if(iskindred(mob))
+					message_admins("[src]([key]) tries to diablerie [mob](mob.key])!")
 					AdjustHumanity(-1, 0)
 					AdjustMasquerade(-1)
 					if(K.generation >= generation)
+						message_admins("[src]([key]) successes in diablerie over [mob](mob.key])!")
 						if(K.client)
 							reset_shit(K)
 							K.ghostize(FALSE)
@@ -126,6 +144,7 @@
 					else
 						if(prob(20+((generation-K.generation)*10)))
 							to_chat(src, "<span class='userdanger'><b>[K]'s SOUL OVERCOMES YOURS AND GAIN CONTROL OF YOUR BODY.</b></span>")
+							message_admins("[src]([key]) failed to diablerie [mob](mob.key])!")
 							reset_shit(src)
 //							ghostize(FALSE)
 							death()
@@ -135,6 +154,7 @@
 //							health = initial(health)+100*(13-generation)
 //							mob.death()
 						else
+							message_admins("[src]([key]) successes in diablerie over [mob](mob.key])!")
 							if(key)
 								var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
 								if(P)
