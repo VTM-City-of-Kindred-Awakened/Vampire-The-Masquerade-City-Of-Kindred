@@ -16,6 +16,25 @@ Dwarf
 Homosexual
 Dancer
 */
+/datum/quirk/broker
+	name = "Broker"
+	desc = "You are working on stock market in Millenium Tower."
+	value = 0
+	gain_text = "<span class='notice'>You feel more financial stable.</span>"
+	lose_text = "<span class='warning'>You don't feel rich anymore.</span>"
+
+/datum/quirk/broker/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/stocks_license/pills = new()
+	pills.whose = H.real_name
+	pills.name = "[H.real_name]'s stocks trading license"
+	var/list/slots = list(
+		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+		LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+		LOCATION_HANDS = ITEM_SLOT_HANDS
+	)
+	H.equip_in_one_of_slots(pills, slots, FALSE)
 
 /datum/quirk/experienced_driver
 	name = "Experienced Driver"

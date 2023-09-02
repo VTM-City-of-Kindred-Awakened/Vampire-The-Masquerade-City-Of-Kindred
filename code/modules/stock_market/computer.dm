@@ -5,20 +5,53 @@
 	icon_state = "oldcomp"
 	icon_screen = "stock_computer"
 	icon_keyboard = "no_keyboard"
-	var/logged_in = "Cargo Department"
+	var/logged_in = "Millenium Stock Department"
 	var/vmode = 1
 	interaction_flags_atom = INTERACT_ATOM_REQUIRES_DEXTERITY | INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_REQUIRES_ANCHORED
 
 	light_color = LIGHT_COLOR_GREEN
 
+/obj/machinery/computer/stockexchange/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/stack/dollar))
+		var/obj/item/stack/dollar/D = I
+		var/obj/item/stocks_license/CR = get_fuckin_card_number(logged_in)
+		if(CR)
+			CR.balance += D.amount
+			to_chat(user, "<span class='notice'>You insert [D.amount] dollars into [src].</span>")
+			qdel(I)
+		return
+	..()
+
+/obj/machinery/computer/stockexchange/AltClick(mob/user)
+	var/obj/item/stocks_license/CR = get_fuckin_card_number(logged_in)
+	if(CR)
+		if(CR.balance)
+			to_chat(user, "<span class='notice'>You withdraw [CR.balance] dollars from [src].</span>")
+			for(var/i in 1 to CR.balance)
+				new /obj/item/stack/dollar(get_turf(src))
+
 /obj/machinery/computer/stockexchange/Initialize()
 	. = ..()
-	logged_in = "SS13 Cargo Department"
+	logged_in = "Millenium Stock Department"
 
 /obj/machinery/computer/stockexchange/proc/balance()
 	if (!logged_in)
 		return 0
-	return SSshuttle.points
+	return get_fuckin_card_number_balance(logged_in)
+
+/proc/get_fuckin_card_number_balance(var/logged)
+	for(var/obj/item/stocks_license/S in GLOB.stock_licenses)
+		if(S)
+			if(S.whose == logged)
+				return S.balance
+	return 0
+
+/proc/get_fuckin_card_number(var/logged)
+	for(var/obj/item/stocks_license/S in GLOB.stock_licenses)
+		if(S)
+			if(S.whose == logged)
+				return S
+	return 0
 
 /obj/machinery/computer/stockexchange/ui_interact(mob/user)
 	. = ..()
@@ -52,9 +85,12 @@ a.updated {
 	color: red;
 }
 </style>"}
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		logged_in = H.real_name
 	var/dat = "<html><head><title>[station_name()] Stock Exchange</title>[css]</head><body>"
 
-	dat += "<span class='user'>Welcome, <b>[station_name()] Cargo Department</b></span><br><span class='balance'><b>Credits:</b> [balance()] </span><br>"
+	dat += "<span class='user'>Welcome, <b>[user]</b></span><br><span class='balance'><b>Balance:</b> [balance()] </span><br>"
 	for (var/datum/stock/S in GLOB.stockExchange.last_read)
 		var/list/LR = GLOB.stockExchange.last_read[S]
 		if (!(logged_in in LR))
@@ -169,7 +205,7 @@ a.updated {
 	if (!li)
 		to_chat(user, "<span class='danger'>No active account on the console!</span>")
 		return
-	var/b = SSshuttle.points
+	var/b = get_fuckin_card_number_balance(logged_in)
 	var/avail = S.shareholders[logged_in]
 	if (!avail)
 		to_chat(user, "<span class='danger'>This account does not own any shares of [S.name]!</span>")
@@ -184,7 +220,7 @@ a.updated {
 		return
 	if (li != logged_in)
 		return
-	b = SSshuttle.points
+	b = get_fuckin_card_number_balance(logged_in)
 	if (!isnum(b))
 		to_chat(user, "<span class='danger'>No active account on the console!</span>")
 		return

@@ -287,7 +287,11 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 					EX.last_nigging = message
 					var/datum/preferences/P = GLOB.preferences_datums[ckey(EX.key)]
 					if(P)
-						P.exper = min(calculate_mob_max_exper(EX), P.exper+5)
+						var/kal = 5
+						if(EX.clane)
+							if(EX.clane.name == "Toreador")
+								kal = 25
+						P.exper = min(calculate_mob_max_exper(EX), P.exper+kal)
 						P.save_preferences()
 						P.save_character()
 

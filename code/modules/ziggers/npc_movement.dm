@@ -17,6 +17,14 @@
 	name = "NPC Wall"
 	icon_state = "x"
 
+/obj/effect/landmark/npcactivity
+	name = "NPC Activity"
+	icon_state = "bullets"
+
+/obj/effect/landmark/npcactivity/Initialize()
+	. = ..()
+	GLOB.npc_activities += src
+
 /mob/living/carbon/human/npc/Initialize()
 	..()
 	GLOB.npc_list += src
@@ -128,41 +136,52 @@
 //			return location
 
 /mob/living/carbon/human/npc/proc/ChoosePath()
-	var/turf/north_steps = CreateWay(NORTH)
-	var/turf/south_steps = CreateWay(SOUTH)
-	var/turf/west_steps = CreateWay(WEST)
-	var/turf/east_steps = CreateWay(EAST)
+	if(!old_movement)
+		var/list/possible_list = list()
+		for(var/obj/effect/landmark/npcactivity/N in GLOB.npc_activities)
+			if(N.x > x-3 && N.x < x+3)
+				possible_list += N
+			if(N.y > y-3 && N.y < y+3)
+				possible_list += N
+		if(!length(possible_list))
+			possible_list += pick(GLOB.npc_activities)
 
-	if(dir == NORTH || dir == SOUTH)
-		if(get_dist(src, west_steps) >= 7 && get_dist(src, east_steps) >= 7)
-			return(pick(west_steps, east_steps))
-		if(get_dist(src, west_steps) > get_dist(src, east_steps))
-			if(prob(75))
-				return west_steps
-		else if(get_dist(src, east_steps) > get_dist(src, west_steps))
-			if(prob(75))
-				return east_steps
-		else
-			if(dir == NORTH)
-				return pick(west_steps, east_steps, south_steps)
+		return get_turf(pick(possible_list))
+	else
+		var/turf/north_steps = CreateWay(NORTH)
+		var/turf/south_steps = CreateWay(SOUTH)
+		var/turf/west_steps = CreateWay(WEST)
+		var/turf/east_steps = CreateWay(EAST)
+
+		if(dir == NORTH || dir == SOUTH)
+			if(get_dist(src, west_steps) >= 7 && get_dist(src, east_steps) >= 7)
+				return(pick(west_steps, east_steps))
+			if(get_dist(src, west_steps) > get_dist(src, east_steps))
+				if(prob(75))
+					return west_steps
+			else if(get_dist(src, east_steps) > get_dist(src, west_steps))
+				if(prob(75))
+					return east_steps
 			else
-				return pick(west_steps, east_steps, north_steps)
+				if(dir == NORTH)
+					return pick(west_steps, east_steps, south_steps)
+				else
+					return pick(west_steps, east_steps, north_steps)
 
-	if(dir == WEST || dir == EAST)
-		if(get_dist(src, north_steps) >= 7 && get_dist(src, south_steps) >= 7)
-			return pick(north_steps, south_steps)
-		if(get_dist(src, north_steps) > get_dist(src, south_steps))
-			if(prob(75))
-				return north_steps
-		else if(get_dist(src, south_steps) > get_dist(src, north_steps))
-			if(prob(75))
-				return south_steps
-		else
-			if(dir == WEST)
-				return pick(north_steps, south_steps, east_steps)
+		if(dir == WEST || dir == EAST)
+			if(get_dist(src, north_steps) >= 7 && get_dist(src, south_steps) >= 7)
+				return pick(north_steps, south_steps)
+			if(get_dist(src, north_steps) > get_dist(src, south_steps))
+				if(prob(75))
+					return north_steps
+			else if(get_dist(src, south_steps) > get_dist(src, north_steps))
+				if(prob(75))
+					return south_steps
 			else
-				return pick(north_steps, south_steps, west_steps)
-
+				if(dir == WEST)
+					return pick(north_steps, south_steps, east_steps)
+				else
+					return pick(north_steps, south_steps, west_steps)
 /mob/living/carbon/human/npc/proc/CheckMove()
 	if(stat >= 2)
 		return TRUE

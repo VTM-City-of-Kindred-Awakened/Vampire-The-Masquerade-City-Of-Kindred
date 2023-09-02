@@ -15,6 +15,7 @@
 	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	action_icon_state = "ninja_cloak"
 	action_background_icon_state = "bg_alien"
+	var/activating = FALSE
 
 /obj/effect/proc_holder/spell/targeted/shadowwalk/cast(list/targets,mob/living/user = usr)
 	var/L = user.loc
@@ -26,13 +27,19 @@
 		var/turf/T = get_turf(user)
 		var/light_amount = T.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, TRUE, -1)
-			visible_message("<span class='boldwarning'>[user] melts into the shadows!</span>")
-			user.SetAllImmobility(0)
-			user.setStaminaLoss(0, 0)
-			var/obj/effect/dummy/phased_mob/shadow/S2 = new(get_turf(user.loc))
-			user.forceMove(S2)
-			S2.jaunter = user
+			if(!activating)
+				activating = TRUE
+				if(do_mob(user, user, 50))
+					activating = FALSE
+					playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, TRUE, -1)
+					visible_message("<span class='boldwarning'>[user] melts into the shadows!</span>")
+					user.SetAllImmobility(0)
+					user.setStaminaLoss(0, 0)
+					var/obj/effect/dummy/phased_mob/shadow/S2 = new(get_turf(user.loc))
+					user.forceMove(S2)
+					S2.jaunter = user
+				else
+					activating = FALSE
 		else
 			to_chat(user, "<span class='warning'>It isn't dark enough here!</span>")
 

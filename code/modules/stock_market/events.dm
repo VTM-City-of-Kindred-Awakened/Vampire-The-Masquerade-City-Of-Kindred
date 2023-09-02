@@ -37,7 +37,7 @@
 	var/mins = rand(5*TIME_MULTIPLIER,20*TIME_MULTIPLIER)
 	next_phase = mins * (600*TIME_MULTIPLIER) + world.time
 	current_title = "Product demo"
-	current_desc = S.industry.detokenize("[S.name] will unveil a new product on an upcoming %industrial% conference held at spacetime [spacetime(next_phase)]")
+	current_desc = S.industry.detokenize("[S.name] will unveil a new product on an upcoming %industrial% conference held at time [spacetime(next_phase)]")
 	S.addEvent(src)
 
 
@@ -48,7 +48,7 @@
 			next_phase = world.time + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
 			product_name = company.industry.generateProductName(company.name)
 			current_title = "Product release: [product_name]"
-			current_desc = "[company.name] unveiled their newest product, [product_name], at a conference. Product release is expected to happen at spacetime [spacetime(next_phase)]."
+			current_desc = "[company.name] unveiled their newest product, [product_name], at a conference. Product release is expected to happen at time [spacetime(next_phase)]."
 			var/datum/article/A = company.industry.generateInCharacterProductArticle(product_name, company)
 			product_article = A
 			effect = A.opinion + rand(-1, 1)
@@ -91,7 +91,7 @@
 			company.affectPublicOpinion(rand(-6, -3))
 			hidden = 0
 			current_title = "Bailout pending due to bankruptcy"
-			current_desc = "The government prepared a press release, which will occur at spacetime [spacetime(next_phase)]."
+			current_desc = "The government prepared a press release, which will occur at time [spacetime(next_phase)]."
 			phase_id = 1
 		if (1)
 			next_phase = world.time + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
@@ -191,7 +191,7 @@
 			company.affectPublicOpinion(rand(-3, -1))
 			hidden = 0
 			current_title = "Trial of [tname] ([position]) scheduled"
-			current_desc = "[female ? "She": "He"] has been charged with [offenses]; the trial is scheduled to occur at spacetime [spacetime(next_phase)]."
+			current_desc = "[female ? "She": "He"] has been charged with [offenses]; the trial is scheduled to occur at time [spacetime(next_phase)]."
 			phase_id = 1
 		if (1)
 			next_phase = world.time + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)

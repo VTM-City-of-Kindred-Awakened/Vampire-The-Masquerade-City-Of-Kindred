@@ -535,6 +535,18 @@
 		M3.opacity = TRUE
 	M3.anchored = TRUE
 
+/obj/structure/marketplace
+	name = "stock market"
+	desc = "Recent stocks visualization."
+	icon = 'code/modules/ziggers/stonks.dmi'
+	icon_state = "marketplace"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+	density = TRUE
+	pixel_w = -24
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+
 /obj/structure/fuelstation
 	name = "fuel station"
 	desc = "Fuel your car here. 50 dollars per 1000 units."

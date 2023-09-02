@@ -752,6 +752,7 @@
 /mob/living/carbon/human/npc/hobo
 	frakcja = "City"
 	bloodquality = BLOOD_QUALITY_LOW
+	old_movement = TRUE
 
 /mob/living/carbon/human/npc/hobo/Initialize()
 	..()

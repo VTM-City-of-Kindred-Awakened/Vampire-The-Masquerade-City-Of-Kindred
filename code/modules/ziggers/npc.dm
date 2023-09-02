@@ -30,6 +30,7 @@
 	var/staying = FALSE
 
 	var/lifespan = 0	//How many cycles. He'll be deleted if over than a ten thousand
+	var/old_movement = FALSE
 
 /datum/socialrole
 	//For randomizing
@@ -383,7 +384,10 @@
 		var/mob/living/carbon/human/npc/CPN = src
 		if(CPN.CheckMove())
 			walk(src,0)
-		if(get_dist(src, CPN.walktarget) <= CPN.stopturf)
+		var/getaway = CPN.stopturf+1
+		if(!CPN.old_movement)
+			getaway = 2
+		if(get_dist(src, CPN.walktarget) <= getaway)
 			walk(src,0)
 			CPN.walktarget = null
 		for(var/obj/effect/decal/cleanable/blood/B in NewLoc)

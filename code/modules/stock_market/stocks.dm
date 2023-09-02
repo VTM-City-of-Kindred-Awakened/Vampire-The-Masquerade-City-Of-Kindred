@@ -240,12 +240,14 @@
 	borrow_brokers += B
 
 /datum/stock/proc/modifyAccount(whose, by, force=0)
-	if (SSshuttle.points)
-		if (by < 0 && SSshuttle.points + by < 0 && !force)
-			return 0
-		SSshuttle.points += by
-		GLOB.stockExchange.balanceLog(whose, by)
-		return 1
+	var/obj/item/stocks_license/L = get_fuckin_card_number(whose)
+	if (L)
+		if(L.balance)
+			if (by < 0 && L.balance + by < 0 && !force)
+				return 0
+			L.balance += by
+			GLOB.stockExchange.balanceLog(whose, by)
+			return 1
 	return 0
 
 /datum/stock/proc/borrow(var/datum/borrow/B, var/who)

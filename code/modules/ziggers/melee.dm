@@ -143,6 +143,11 @@
 	armour_penetration = 100	//It's magical damage
 	item_flags = DROPDEL
 
+/obj/item/melee/vampirearms/knife/gangrel/lasombra
+	name = "shadow tentacle"
+	force = 50
+	icon_state = "lasombra"
+
 /obj/item/melee/touch_attack/quietus
 	name = "\improper poison touch"
 	desc = "This is kind of like when you rub your feet on a shag rug so you can zap your friends, only a lot less safe."
