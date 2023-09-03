@@ -144,7 +144,7 @@
 			if(N.y > y-3 && N.y < y+3)
 				possible_list += N
 		if(!length(possible_list))
-			possible_list += pick(GLOB.npc_activities)
+			possible_list = GLOB.npc_activities
 
 		return get_turf(pick(possible_list))
 	else
