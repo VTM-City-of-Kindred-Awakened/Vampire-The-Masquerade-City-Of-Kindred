@@ -34,6 +34,9 @@
 		return
 	if(ranged && get_dist(caster, target) > range)
 		return
+	if(target.spell_immunity)
+		to_chat(caster, "<span class='notice'>This being immune to magic</span>")
+		return
 	caster.bloodpool = max(0, caster.bloodpool-(cost+plus))
 	caster.update_blood_hud()
 	if(ranged)
@@ -56,7 +59,7 @@
 	if(violates_masquerade)
 		if(caster.CheckEyewitness(target, caster, 7, TRUE))
 			caster.AdjustMasquerade(-1)
-	if(target.resistant_to_disciplines)
+	if(target.resistant_to_disciplines || target.spell_immunity)
 		to_chat(caster, "<span class='danger'>You failed to activate the [name].</span>")
 		return
 //	if(!target)
@@ -207,6 +210,8 @@
 
 /datum/discipline/dominate/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
+	if(target.spell_immunity)
+		return
 	if(iskindred(target))
 		if(target.generation < caster.generation)
 			return
@@ -239,7 +244,7 @@
 			to_chat(target, "<span class='userdanger'><b>THINK TWICE</b></span>")
 			caster.say("THINK TWICE!!")
 			target.Stun(25*level_casting)
-		if(5)
+		if(5 && !target.spell_immunity)
 			to_chat(target, "<span class='userdanger'><b>YOU SHOULD KILL YOURSELF NOW</b></span>")
 			caster.say("YOU SHOULD KILL YOURSELF NOW!!")
 			if(iskindred(target))
