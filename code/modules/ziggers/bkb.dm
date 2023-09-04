@@ -3,6 +3,8 @@
 /obj/item/black_king_bar
 	name = "Black King Bar"
 	desc = "A powerful staff imbued with the strength of Old Kindred"
+	icon = 'code/modules/ziggers/bkb.dmi'
+	icon_state = "bkb"
 	var/bkb_timer = 9
 	var/active = FALSE
 	var/cd = 600
