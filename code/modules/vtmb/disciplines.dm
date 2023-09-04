@@ -244,7 +244,7 @@
 			to_chat(target, "<span class='userdanger'><b>THINK TWICE</b></span>")
 			caster.say("THINK TWICE!!")
 			target.Stun(25*level_casting)
-		if(5)
+		if(5 && !target.spell_immunity)
 			to_chat(target, "<span class='userdanger'><b>YOU SHOULD KILL YOURSELF NOW</b></span>")
 			caster.say("YOU SHOULD KILL YOURSELF NOW!!")
 			if(iskindred(target))
