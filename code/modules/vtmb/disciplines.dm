@@ -59,7 +59,7 @@
 	if(violates_masquerade)
 		if(caster.CheckEyewitness(target, caster, 7, TRUE))
 			caster.AdjustMasquerade(-1)
-	if(target.resistant_to_disciplines)
+	if(target.resistant_to_disciplines || target.spell_immunity)
 		to_chat(caster, "<span class='danger'>You failed to activate the [name].</span>")
 		return
 //	if(!target)
@@ -210,6 +210,8 @@
 
 /datum/discipline/dominate/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
+	if(target.spell_immunity)
+		return
 	if(iskindred(target))
 		if(target.generation < caster.generation)
 			return
