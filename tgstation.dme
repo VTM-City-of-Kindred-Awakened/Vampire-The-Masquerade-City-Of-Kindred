@@ -3351,6 +3351,7 @@
 #include "code\modules\ziggers\ambient.dm"
 #include "code\modules\ziggers\ammostack.dm"
 #include "code\modules\ziggers\archetypes.dm"
+#include "code\modules\ziggers\bkb.dm"
 #include "code\modules\ziggers\blinkdagger.dm"
 #include "code\modules\ziggers\bloodsucking.dm"
 #include "code\modules\ziggers\car.dm"

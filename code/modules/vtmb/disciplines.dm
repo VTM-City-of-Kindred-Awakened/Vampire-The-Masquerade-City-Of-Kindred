@@ -34,6 +34,9 @@
 		return
 	if(ranged && get_dist(caster, target) > range)
 		return
+	if(target.spell_immunity)
+		to_chat(caster, "<span class='notice'>This being immune to magic</span>")
+		return
 	caster.bloodpool = max(0, caster.bloodpool-(cost+plus))
 	caster.update_blood_hud()
 	if(ranged)
