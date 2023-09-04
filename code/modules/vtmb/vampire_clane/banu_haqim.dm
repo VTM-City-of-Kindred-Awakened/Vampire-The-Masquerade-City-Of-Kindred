@@ -19,6 +19,7 @@
 	desc = "Silence nearby location."
 	button_icon_state = "quietus"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	vampiric = TRUE
 	var/last_silence = 0
 
 /datum/action/silence_radius/Trigger()

@@ -27,8 +27,8 @@
 	if(CR)
 		if(CR.balance)
 			to_chat(user, "<span class='notice'>You withdraw [CR.balance] dollars from [src].</span>")
-			for(var/i in 1 to CR.balance)
-				new /obj/item/stack/dollar(get_turf(src))
+			new /obj/item/stack/dollar(get_turf(src), CR.balance)
+			CR.balance = 0
 
 /obj/machinery/computer/stockexchange/Initialize()
 	. = ..()

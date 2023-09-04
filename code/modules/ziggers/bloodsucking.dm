@@ -54,6 +54,9 @@
 //			return
 		to_chat(src, "<span class='warning'>You feel small amount of <b>BLOOD</b> in your victim.</span>")
 		if(iskindred(mob))
+			if(!mob.client)
+				to_chat(src, "<span class='warning'>You need [mob]'s attention to do that...</span>")
+				return
 			message_admins("[src]([key]) is trying to diablerie [mob]([mob.key])!")
 			if(mob.key)
 				var/vse_taki = FALSE

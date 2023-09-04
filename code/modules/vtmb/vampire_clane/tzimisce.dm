@@ -45,6 +45,7 @@
 	desc = "Suck blood from the floor."
 	button_icon_state = "bloodcrawler"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	vampiric = TRUE
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler/BC
 
 /datum/action/vicissitude_blood/Trigger()
@@ -71,6 +72,7 @@
 	desc = "Become a WereTzimisce!"
 	button_icon_state = "tzimisce"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	vampiric = TRUE
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/tzimisce/TE
 
 /datum/action/vicissitude_form/Trigger()
@@ -92,6 +94,7 @@
 	desc = "Upgrade your body..."
 	button_icon_state = "basic"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	vampiric = TRUE
 	var/used = FALSE
 
 /datum/action/basic_vicissitude/Trigger()
@@ -340,6 +343,7 @@
 	desc = "Steal the appearance of your victim."
 	button_icon_state = "vicissitude"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	vampiric = TRUE
 	var/last_hair
 	var/last_facehair
 	var/last_skintone

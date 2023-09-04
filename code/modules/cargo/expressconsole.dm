@@ -215,10 +215,18 @@
 					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
 						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 5 SECONDS)
 						account_balance = max(0, account_balance-SO.pack.cost)
-						if(pack.special_pod)
-							new /obj/effect/pod_landingzone(LZ, pack.special_pod, SO)
-						else
-							new /obj/effect/pod_landingzone(LZ, podType, SO)
+						var/obj/cargocrate/C = new(get_nearest_free_turf(LZ))
+						walk_to(C, LZ, 1, 5)
+						var/niggacount = get_dist(get_nearest_free_turf(LZ), LZ)*5
+						spawn(niggacount)
+							SO.generate(get_turf(C))
+							walk_to(C, get_nearest_free_turf(LZ), 1, 5)
+							spawn(niggacount)
+								qdel(C)
+//						if(pack.special_pod)
+//							new /obj/effect/pod_landingzone(LZ, pack.special_pod, SO)
+//						else
+//							new /obj/effect/pod_landingzone(LZ, podType, SO)
 						. = TRUE
 						update_icon()
 			else
@@ -237,10 +245,18 @@
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)
 							LAZYREMOVE(empty_turfs, LZ)
-							if(pack.special_pod)
-								new /obj/effect/pod_landingzone(LZ, pack.special_pod, SO)
-							else
-								new /obj/effect/pod_landingzone(LZ, podType, SO)
+							var/obj/cargocrate/C = new(get_nearest_free_turf(LZ))
+							walk_to(C, LZ, 1, 5)
+							var/niggacount = get_dist(get_nearest_free_turf(LZ), LZ)*5
+							spawn(niggacount)
+								SO.generate(get_turf(C))
+								walk_to(C, get_nearest_free_turf(LZ), 1, 5)
+								spawn(niggacount)
+									qdel(C)
+//							if(pack.special_pod)
+//								new /obj/effect/pod_landingzone(LZ, pack.special_pod, SO)
+//							else
+//								new /obj/effect/pod_landingzone(LZ, podType, SO)
 							. = TRUE
 							update_icon()
 							CHECK_TICK

@@ -55,6 +55,7 @@
 	desc = "Move your heart to the urn and become immune to stakes."
 	button_icon_state = "urn"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	vampiric = TRUE
 	var/obj/urn/urn
 	var/cool_down = 0
 
@@ -102,6 +103,7 @@
 	desc = "Fall in torpor-like condition and ignore physical damage."
 	button_icon_state = "serpentis"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	vampiric = TRUE
 	var/abuse_fix = 0
 
 /datum/action/mummyfy/Trigger()
@@ -129,6 +131,7 @@
 	desc = "Take on the shape a cobra."
 	button_icon_state = "cobra"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	vampiric = TRUE
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/cobra/BC
 
 /datum/action/cobra/Trigger()

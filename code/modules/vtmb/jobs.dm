@@ -1162,17 +1162,20 @@
 	H.maxHealth = 100
 	H.health = 100
 	for(var/atom/movable/screen/blood/B in H.hud_used.infodisplay)
-		qdel(B)
+		B.icon_state = null
 	for(var/atom/movable/screen/healths/HE in H.hud_used.infodisplay)
 		HE.icon = 'code/modules/ziggers/ghoul_health.dmi'
 	for(var/atom/movable/screen/drinkblood/DB in H.hud_used.static_inventory)
-		qdel(DB)
+		DB.icon_state = null
 	for(var/atom/movable/screen/bloodheal/BH in H.hud_used.static_inventory)
-		qdel(BH)
+		BH.icon_state = null
 	for(var/atom/movable/screen/bloodpower/BP in H.hud_used.static_inventory)
-		qdel(BP)
+		BP.icon_state = null
 	for(var/atom/movable/screen/disciplines/DI in H.hud_used.static_inventory)
-		qdel(DI)
+		DI.icon_state = null
+	for(var/datum/action/A in H.actions)
+		if(A.vampiric)
+			qdel(A)
 	if(H.mind)
 		H.mind.add_antag_datum(/datum/antagonist/hunter)
 

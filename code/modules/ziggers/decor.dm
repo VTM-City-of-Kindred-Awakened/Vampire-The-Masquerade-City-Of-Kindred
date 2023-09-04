@@ -535,6 +535,32 @@
 		M3.opacity = TRUE
 	M3.anchored = TRUE
 
+/obj/cargocrate/Move(NewLoc, direct)
+	for(var/mob/living/L in NewLoc)
+		L.adjustBruteLoss(500)
+	..()
+
+/proc/get_nearest_free_turf(var/turf/start)
+	if(isopenturf(get_step(start, EAST)))
+		if(isopenturf(get_step(get_step(start, EAST), EAST)))
+			if(isopenturf(get_step(get_step(get_step(start, EAST), EAST), EAST)))
+				if(isopenturf(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST)))
+					if(isopenturf(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST)))
+						if(isopenturf(get_step(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST), EAST)))
+							if(isopenturf(get_step(get_step(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST), EAST), EAST)))
+								if(isopenturf(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST)))
+									if(isopenturf(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST)))
+										return get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST)
+									return get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST)
+								return get_step(get_step(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST), EAST), EAST)
+							return get_step(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST), EAST)
+						return get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST)
+					return get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST)
+				return get_step(get_step(get_step(start, EAST), EAST), EAST)
+			return get_step(get_step(start, EAST), EAST)
+		return get_step(start, EAST)
+	return start
+
 /obj/structure/marketplace
 	name = "stock market"
 	desc = "Recent stocks visualization."

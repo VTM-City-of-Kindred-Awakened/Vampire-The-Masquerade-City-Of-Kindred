@@ -20,6 +20,7 @@
 	desc = "Fall in torpor-like condition and ignore physical damage."
 	button_icon_state = "hivemind"
 	check_flags = AB_CHECK_CONSCIOUS
+	vampiric = TRUE
 	var/abuse_fix = 0
 
 /datum/action/malk_hivemind/Trigger()

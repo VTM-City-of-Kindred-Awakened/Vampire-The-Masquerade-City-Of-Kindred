@@ -23,6 +23,7 @@
 	desc = "Allows you to see ghosts."
 	button_icon_state = "ghost"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	vampiric = TRUE
 
 /datum/action/ghost_hear/Trigger()
 	. = ..()

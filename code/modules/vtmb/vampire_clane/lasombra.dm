@@ -35,6 +35,7 @@
 	desc = "Summon tentacles from shadows to assist you."
 	button_icon_state = "tentacles"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	vampiric = TRUE
 	var/abuse_fix = 0
 
 /datum/action/lastentacles/Trigger()
@@ -71,6 +72,7 @@
 	desc = "Turn into shadow abomination for your safety."
 	button_icon_state = "armor"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	vampiric = TRUE
 	var/abuse_fix = 0
 
 /datum/action/lasarmor/Trigger()
@@ -84,16 +86,14 @@
 	H.bloodpool = max(0, H.bloodpool-2)
 	playsound(H.loc, 'sound/magic/voidblink.ogg', 50, FALSE)
 	abuse_fix = world.time
-	H.physiology.armor.melee += 50
-	H.physiology.armor.bullet += 50
+	H.physiology.damage_resistance += 75
 	animate(H, color = "#000000", time = 10, loop = 1)
 	if(H.CheckEyewitness(H, H, 7, FALSE))
 		H.AdjustMasquerade(-1)
 	spawn(100)
 		if(H)
 			playsound(H.loc, 'sound/magic/voidblink.ogg', 50, FALSE)
-			H.physiology.armor.melee -= 50
-			H.physiology.armor.bullet -= 50
+			H.physiology.damage_resistance -= 75
 			H.color = initial(H.color)
 
 /datum/action/shadowcontrol
@@ -101,6 +101,7 @@
 	desc = "Control shadows around you"
 	button_icon_state = "shadow"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	vampiric = TRUE
 	var/abuse_fix = 0
 
 /datum/action/shadowcontrol/Trigger()

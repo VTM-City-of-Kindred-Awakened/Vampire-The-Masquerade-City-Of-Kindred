@@ -91,6 +91,8 @@
 		if(fire_stacks >= 1)
 			resist()
 		if(!staying)
+			if(!walktarget)
+				walktarget = ChoosePath()
 			if(loc == tupik_loc)
 				tupik_steps += 1
 			if(loc != tupik_loc)
@@ -100,7 +102,6 @@
 				var/turf/T = get_step(src, pick(NORTH, SOUTH, WEST, EAST))
 				face_atom(T)
 				step_to(src,T,0)
-				walktarget = ChoosePath()
 		if(prob(5) && !danger_source)
 			var/activity = rand(1, 3)
 			switch(activity)
@@ -144,7 +145,7 @@
 			if(N.y > y-3 && N.y < y+3)
 				possible_list += N
 		if(!length(possible_list))
-			possible_list = GLOB.npc_activities
+			return get_turf(pick(GLOB.npc_activities))
 
 		return get_turf(pick(possible_list))
 	else
@@ -235,7 +236,7 @@
 	if(lifespan >= 1000)
 		if(route_optimisation())
 			qdel(src)
-	if(!walktarget && !staying && !danger_source && !less_danger)
+	if(!walktarget && !staying)
 		stopturf = rand(1, 2)
 		walktarget = ChoosePath()
 		face_atom(walktarget)

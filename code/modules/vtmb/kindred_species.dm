@@ -227,9 +227,10 @@
 								BLOODBONDED.health = initial(BLOODBONDED.health)+50*(13-BLOODBONDED.generation)
 						else
 							BLOODBONDED.clane = new /datum/vampireclane/caitiff()
-						if(BLOODBONDED.hud_used)
-							QDEL_NULL(BLOODBONDED.hud_used)
-						BLOODBONDED.create_mob_hud()
+						BLOODBONDED.hud_used.drinkblood_icon.icon_state = "drink"
+						BLOODBONDED.hud_used.bloodheal_icon.icon_state = "bloodheal"
+						BLOODBONDED.hud_used.bloodpower_icon.icon_state = "bloodpower"
+						BLOODBONDED.hud_used.healths.icon = 'code/modules/ziggers/32x48.dmi'
 //						qdel(BLOODBONDED.hud_used)
 //						BLOODBONDED.hud_used = new BLOODBONDED.hud_type(BLOODBONDED)
 //						BLOODBONDED.update_sight()
@@ -266,9 +267,9 @@
 						var/mob/living/carbon/human/npc/NPC = H.pulling
 						if(NPC.ghoulificate(owner))
 							new_master = TRUE
-							if(NPC.hud_used)
-								var/datum/hud/human/HU = NPC.hud_used
-								HU.create_ghoulic()
+//							if(NPC.hud_used)
+//								var/datum/hud/human/HU = NPC.hud_used
+//								HU.create_ghoulic()
 							NPC.roundstart_vampire = FALSE
 					if(BLOODBONDED.mind)
 						if(BLOODBONDED.mind.enslaved_to != owner)
@@ -283,9 +284,9 @@
 							G.changed_master = TRUE
 					else if(!iskindred(BLOODBONDED) && !isnpc(BLOODBONDED))
 						BLOODBONDED.set_species(/datum/species/ghoul)
-						if(BLOODBONDED.hud_used)
-							var/datum/hud/human/HU = BLOODBONDED.hud_used
-							HU.create_ghoulic()
+//						if(BLOODBONDED.hud_used)
+//							var/datum/hud/human/HU = BLOODBONDED.hud_used
+//							HU.create_ghoulic()
 						BLOODBONDED.roundstart_vampire = FALSE
 						var/datum/species/ghoul/G = BLOODBONDED.dna.species
 						G.master = owner
