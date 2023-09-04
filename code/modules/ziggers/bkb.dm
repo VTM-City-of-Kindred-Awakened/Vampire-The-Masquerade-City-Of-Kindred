@@ -26,6 +26,7 @@
 		to_chat(user, "<b>Your BKB on cooldown</b>")
 		return
 	to_chat(user, "<b>You activated Black King Bar</b>")
+	playsound(src, 'code/modules/ziggers/bkb.ogg', 25, TRUE)
 	last_activation_time = world.time
 	active = TRUE
 	addtimer(CALLBACK(src, .proc/remove_immunity, user), bkb_timer SECONDS)
