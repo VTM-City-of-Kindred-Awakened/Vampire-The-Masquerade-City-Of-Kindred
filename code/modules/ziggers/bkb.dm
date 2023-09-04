@@ -5,6 +5,8 @@
 	desc = "A powerful staff imbued with the strength of Old Kindred"
 	icon = 'code/modules/ziggers/bkb.dmi'
 	icon_state = "bkb"
+	righthand_file = 'code/modules/ziggers/bkb_r.dmi'
+	lefthand_file = 'code/modules/ziggers/bkb_l.dmi'
 	var/bkb_timer = 9
 	var/active = FALSE
 	var/cd = 600
