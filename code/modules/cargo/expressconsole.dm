@@ -26,12 +26,17 @@
 	var/podType = /obj/structure/closet/supplypod/centcompod
 	var/cooldown = 0 //cooldown to prevent printing supplypod beacon spam
 	var/locked = FALSE //is the console locked? unlock with ID
-	var/usingBeacon = FALSE //is the console in beacon mode? exists to let beacon know when a pod may come in
+	var/usingBeacon = TRUE //is the console in beacon mode? exists to let beacon know when a pod may come in
 	var/account_balance = 100
 
 /obj/machinery/computer/cargo/express/Initialize()
 	. = ..()
 	packin_up()
+	for(var/obj/item/supplypod_beacon/sb in range(9, src))
+		if(sb)
+			if(sb.express_console != src)
+				sb.altlink_console(src)
+				sb.anchored = TRUE
 
 /obj/machinery/computer/cargo/express/on_construction()
 	. = ..()
@@ -153,23 +158,23 @@
 		return
 
 	switch(action)
-		if("LZCargo")
-			usingBeacon = FALSE
-			if (beacon)
-				beacon.update_status(SP_UNREADY) //ready light on beacon will turn off
+//		if("LZCargo")
+//			usingBeacon = FALSE
+//			if (beacon)
+//				beacon.update_status(SP_UNREADY) //ready light on beacon will turn off
 		if("LZBeacon")
 			usingBeacon = TRUE
 			if (beacon)
 				beacon.update_status(SP_READY) //turns on the beacon's ready light
-		if("printBeacon")
-			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-			if(D)
-				if(D.adjust_money(-BEACON_COST))
-					cooldown = 10//a ~ten second cooldown for printing beacons to prevent spam
-					var/obj/item/supplypod_beacon/C = new /obj/item/supplypod_beacon(drop_location())
-					C.link_console(src, usr)//rather than in beacon's Initialize(), we can assign the computer to the beacon by reusing this proc)
-					printed_beacons++//printed_beacons starts at 0, so the first one out will be called beacon # 1
-					beacon.name = "Supply Pod Beacon #[printed_beacons]"
+//		if("printBeacon")
+//			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+//			if(D)
+//				if(D.adjust_money(-BEACON_COST))
+//					cooldown = 10//a ~ten second cooldown for printing beacons to prevent spam
+//					var/obj/item/supplypod_beacon/C = new /obj/item/supplypod_beacon(drop_location())
+//					C.link_console(src, usr)//rather than in beacon's Initialize(), we can assign the computer to the beacon by reusing this proc)
+//					printed_beacons++//printed_beacons starts at 0, so the first one out will be called beacon # 1
+//					beacon.name = "Supply Pod Beacon #[printed_beacons]"
 
 
 		if("add")//Generate Supply Order first
@@ -215,12 +220,15 @@
 					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
 						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 5 SECONDS)
 						account_balance = max(0, account_balance-SO.pack.cost)
-						var/obj/cargocrate/C = new(get_nearest_free_turf(LZ))
-						walk_to(C, LZ, 1, 5)
+						var/obj/cargotrain/C = new(get_nearest_free_turf(LZ))
+						C.glide_size = (32 / 3) * world.tick_lag
+						walk_to(C, LZ, 1, 3)
+						playsound(C, 'code/modules/ziggers/sounds/train_arrive.ogg', 50, FALSE)
 						var/niggacount = get_dist(get_nearest_free_turf(LZ), LZ)*5
 						spawn(niggacount)
 							SO.generate(get_turf(C))
-							walk_to(C, get_nearest_free_turf(LZ), 1, 5)
+							playsound(C, 'code/modules/ziggers/sounds/train_depart.ogg', 50, FALSE)
+							walk_to(C, get_nearest_free_turf(LZ), 1, 3)
 							spawn(niggacount)
 								qdel(C)
 //						if(pack.special_pod)
@@ -245,12 +253,15 @@
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)
 							LAZYREMOVE(empty_turfs, LZ)
-							var/obj/cargocrate/C = new(get_nearest_free_turf(LZ))
-							walk_to(C, LZ, 1, 5)
+							var/obj/cargotrain/C = new(get_nearest_free_turf(LZ))
+							C.glide_size = (32 / 3) * world.tick_lag
+							walk_to(C, LZ, 1, 3)
+							playsound(C, 'code/modules/ziggers/sounds/train_arrive.ogg', 50, FALSE)
 							var/niggacount = get_dist(get_nearest_free_turf(LZ), LZ)*5
 							spawn(niggacount)
+								playsound(C, 'code/modules/ziggers/sounds/train_depart.ogg', 50, FALSE)
 								SO.generate(get_turf(C))
-								walk_to(C, get_nearest_free_turf(LZ), 1, 5)
+								walk_to(C, get_nearest_free_turf(LZ), 1, 3)
 								spawn(niggacount)
 									qdel(C)
 //							if(pack.special_pod)

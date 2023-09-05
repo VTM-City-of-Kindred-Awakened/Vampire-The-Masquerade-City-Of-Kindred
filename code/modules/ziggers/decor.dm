@@ -504,6 +504,25 @@
 	. = ..()
 	icon_state = "trash[rand(1, 30)]"
 
+/obj/cargotrain
+	name = "cargocrate"
+	desc = "It delivers a lot of things."
+	icon = 'code/modules/ziggers/containers.dmi'
+	icon_state = "1"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+	density = TRUE
+
+/obj/cargotrain/Initialize()
+	. = ..()
+	icon_state = "[rand(2, 5)]"
+
+/obj/cargotrain/Moved(atom/OldLoc, Dir, Forced = FALSE)
+	for(var/mob/living/L in get_step(src, Dir))
+		L.gib()
+	..()
+
 /obj/cargocrate
 	name = "cargocrate"
 	desc = "It delivers a lot of things."
@@ -512,6 +531,7 @@
 	plane = GAME_PLANE
 	layer = CAR_LAYER
 	anchored = TRUE
+
 
 /obj/cargocrate/Initialize()
 	. = ..()
@@ -535,11 +555,6 @@
 		M3.opacity = TRUE
 	M3.anchored = TRUE
 
-/obj/cargocrate/Move(NewLoc, direct)
-	for(var/mob/living/L in NewLoc)
-		L.adjustBruteLoss(500)
-	..()
-
 /proc/get_nearest_free_turf(var/turf/start)
 	if(isopenturf(get_step(start, EAST)))
 		if(isopenturf(get_step(get_step(start, EAST), EAST)))
@@ -550,6 +565,10 @@
 							if(isopenturf(get_step(get_step(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST), EAST), EAST)))
 								if(isopenturf(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST)))
 									if(isopenturf(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST)))
+										if(isopenturf(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST)))
+											if(isopenturf(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST)))
+												return get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST)
+											return get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST)
 										return get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST)
 									return get_step(get_step(get_step(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST), EAST), EAST), EAST)
 								return get_step(get_step(get_step(get_step(get_step(get_step(get_step(start, EAST), EAST), EAST), EAST), EAST), EAST), EAST)

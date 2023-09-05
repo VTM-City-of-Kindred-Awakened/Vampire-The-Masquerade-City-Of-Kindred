@@ -75,13 +75,25 @@
 		update_status(SP_READY)
 	to_chat(user, "<span class='notice'>[src] linked to [C].</span>")
 
+/obj/item/supplypod_beacon/proc/altlink_console(obj/machinery/computer/cargo/express/C)
+	if (C.beacon)//if new console has a beacon, then...
+		C.beacon.unlink_console()//unlink the old beacon from new console
+	if (express_console)//if this beacon has an express console
+		express_console.beacon = null//remove the connection the expressconsole has from beacons
+	express_console = C//set the linked console var to the console
+	express_console.beacon = src//out with the old in with the news
+	update_status(SP_LINKED)
+	if (express_console.usingBeacon)
+		update_status(SP_READY)
+
 /obj/item/supplypod_beacon/AltClick(mob/user)
-	if (!user.canUseTopic(src, !issilicon(user)))
-		return
-	if (express_console)
-		unlink_console()
-	else
-		to_chat(user, "<span class='alert'>There is no linked console.</span>")
+	return
+//	if (!user.canUseTopic(src, !issilicon(user)))
+//		return
+//	if (express_console)
+//		unlink_console()
+//	else
+//		to_chat(user, "<span class='alert'>There is no linked console.</span>")
 
 /obj/item/supplypod_beacon/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/pen)) //give a tag that is visible from the linked express console
