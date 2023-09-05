@@ -33,6 +33,14 @@
 		return pick(List)
 
 
+/proc/sanitize_discipline(value, list/List, default)
+	if(value in List)
+		return value
+	if(default)
+		return default
+	if(List?.len)
+		return null
+
 
 //more specialised stuff
 /proc/sanitize_gender(gender,neuter=0,plural=1, default="male")
