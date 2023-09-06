@@ -50,7 +50,7 @@
 		var/mob/living/L = user
 		if(L.thaumaturgy_knowledge)
 			L.say("[word]")
-			L.Stun(50)
+			L.Immobilize(30)
 			last_activator = user
 			activator_bonus = L.thaum_damage_plus
 			if(sacrifice)
@@ -71,7 +71,6 @@
 	desc = "Meet the Final Death."
 	icon_state = "rune2"
 	word = "CHNGE DA'WORD, GDBE"
-	sacrifice = /obj/item/arcane_tome
 
 /obj/ritualrune/selfgib/complete()
 	last_activator.death()
@@ -82,7 +81,6 @@
 	icon_state = "rune1"
 	word = "UR'JOLA"
 	thaumlevel = 3
-	sacrifice = /obj/item/clothing/suit/vampire/vest
 
 /obj/ritualrune/blood_guardian/complete()
 	var/mob/living/simple_animal/hostile/blood_guard/BG = new(loc)
@@ -132,7 +130,6 @@
 	desc = "Creates the Blood Trap to protect tremere or his domain."
 	icon_state = "rune2"
 	word = "DUH'K-A'U"
-	sacrifice = /obj/item/fishing_rod
 
 /obj/ritualrune/blood_trap/complete()
 	if(!activated)
@@ -153,7 +150,6 @@
 	icon_state = "rune3"
 	word = "SOT'PY-O"
 	thaumlevel = 2
-	sacrifice = /obj/item/drinkable_bloodpack
 
 /obj/ritualrune/blood_wall/complete()
 	new /obj/structure/bloodwall(loc)
@@ -207,7 +203,7 @@
 	icon_state = "rune5"
 	word = "TE-ME'LL"
 	thaumlevel = 3
-	sacrifice = /obj/item/letter
+	sacrifice = /obj/item/drinkable_bloodpack
 
 /mob/living/simple_animal/hostile/ghost/tremere
 	maxHealth = 1
@@ -234,7 +230,7 @@
 	icon_state = "rune6"
 	word = "POR'TALE"
 	thaumlevel = 5
-	sacrifice = /obj/item/arcane_tome
+	sacrifice = /obj/item/drinkable_bloodpack
 
 /obj/ritualrune/teleport/complete()
 	if(!activated)

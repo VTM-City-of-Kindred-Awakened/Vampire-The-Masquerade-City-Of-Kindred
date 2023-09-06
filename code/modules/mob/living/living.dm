@@ -974,7 +974,10 @@
 		if(what && Adjacent(who))
 			if(ishuman(src) && isnpc(who))
 				var/mob/living/carbon/human/H = src
-				H.AdjustHumanity(-1, 5)
+				var/mob/living/carbon/human/NPC = who
+				if(NPC.stat != DEAD)
+					if(istype(what, /obj/item/clothing) || istype(what, /obj/item/vamp/keys) || istype(what, /obj/item/stack/dollar))
+						H.AdjustHumanity(-1, 5)
 			if(islist(where))
 				var/list/L = where
 				if(what == who.get_item_for_held_index(L[2]))

@@ -195,10 +195,10 @@
 						to_chat(user, "<span class='notice'>You pick the lock.</span>")
 						locked = FALSE
 						hacking = FALSE
-						if(initial(lock_id) == "npc")
-							if(ishuman(user))
-								var/mob/living/carbon/human/H = user
-								H.AdjustHumanity(-1, 6)
+//						if(initial(lock_id) == "npc")
+//							if(ishuman(user))
+//								var/mob/living/carbon/human/H = user
+//								H.AdjustHumanity(-1, 6)
 						return
 					else
 						to_chat(user, "<span class='warning'>You failed to pick the lock.</span>")

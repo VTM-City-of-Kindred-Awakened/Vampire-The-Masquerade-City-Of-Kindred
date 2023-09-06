@@ -335,7 +335,7 @@
 /atom/movable/screen/bloodheal
 	name = "Bloodheal"
 	icon = 'code/modules/ziggers/disciplines.dmi'
-//	icon_state = "bloodheal"
+	icon_state = "bloodheal"
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
@@ -380,7 +380,7 @@
 /atom/movable/screen/bloodpower
 	name = "Bloodpower"
 	icon = 'code/modules/ziggers/disciplines.dmi'
-//	icon_state = "bloodpower"
+	icon_state = "bloodpower"
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 

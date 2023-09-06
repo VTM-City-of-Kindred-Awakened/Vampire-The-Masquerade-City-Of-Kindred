@@ -271,7 +271,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 				if(user)
 					if(ishuman(M) && !iskindred(M))
 						var/mob/living/carbon/human/HM = user
-						HM.AdjustHumanity(-1, 2)
+						HM.AdjustHumanity(-1, 0)
 			if(user)
 				log_combat(user, M, "cremated")
 				if(!iskindred(M) && ishuman(M) && M.stat == DEAD)

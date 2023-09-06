@@ -352,15 +352,15 @@
 	static_inventory += drinkblood_icon
 
 	bloodheal_icon = new /atom/movable/screen/bloodheal()
-	if(iskindred(owner))
-		bloodheal_icon.icon_state = "bloodheal"
+	if(!iskindred(owner))
+		bloodheal_icon.icon_state = ""
 	bloodheal_icon.screen_loc = ui_bloodheal
 	bloodheal_icon.hud = src
 	static_inventory += bloodheal_icon
 
 	bloodpower_icon = new /atom/movable/screen/bloodpower()
-	if(iskindred(owner))
-		bloodpower_icon.icon_state = "bloodpower"
+	if(!iskindred(owner))
+		bloodpower_icon.icon_state = ""
 	bloodpower_icon.screen_loc = ui_bloodpower
 	bloodpower_icon.hud = src
 	static_inventory += bloodpower_icon

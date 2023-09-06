@@ -327,3 +327,47 @@
 /obj/item/melee/vampirearms/katana/kosa/egorium/Initialize()
 	. = ..()
 	set_light(3, 2, "#ff0000")
+
+/obj/item/melee/vampirearms/eguitar
+	icon = 'code/modules/ziggers/48x32weapons.dmi'
+	icon_state = "rock0"
+	name = "electric guitar"
+	desc = "You are pretty fly for a white guy..."
+	force = 40
+	throwforce = 25
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	attack_verb_continuous = list("attacks", "chops", "rocks", "hits")
+	attack_verb_simple = list("attack", "chop", "rock", "hit")
+	hitsound = 'code/modules/ziggers/sounds/rock.ogg'
+	sharpness = SHARP_EDGED
+	max_integrity = 200
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 30)
+	resistance_flags = FIRE_PROOF
+	wound_bonus = -15
+	bare_wound_bonus = 20
+	armour_penetration = 30
+	pixel_w = -8
+	var/wielded = FALSE
+
+/obj/item/melee/vampirearms/eguitar/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
+/obj/item/melee/vampirearms/eguitar/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, force_unwielded=40, force_wielded=10, icon_wielded="rock1")
+
+/obj/item/melee/vampirearms/eguitar/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
+	wielded = TRUE
+
+/obj/item/melee/vampirearms/eguitar/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
+	wielded = FALSE
+
+/obj/item/melee/vampirearms/eguitar/update_icon_state()
+	icon_state = "rock0"

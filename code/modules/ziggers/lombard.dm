@@ -26,7 +26,7 @@
 			playsound(loc, 'code/modules/ziggers/sounds/sell.ogg', 50, TRUE)
 			if(illegal)
 				var/mob/living/carbon/human/H = user
-				H.AdjustHumanity(-1, 3)
+				H.AdjustHumanity(-1, 2)
 			qdel(W)
 			return
 	else

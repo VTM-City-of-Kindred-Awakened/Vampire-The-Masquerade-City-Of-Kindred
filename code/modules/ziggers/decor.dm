@@ -513,6 +513,7 @@
 	layer = CAR_LAYER
 	anchored = TRUE
 	density = TRUE
+	var/mob/living/starter
 
 /obj/cargotrain/Initialize()
 	. = ..()
@@ -520,6 +521,11 @@
 
 /obj/cargotrain/Moved(atom/OldLoc, Dir, Forced = FALSE)
 	for(var/mob/living/L in get_step(src, Dir))
+		if(isnpc(L))
+			if(starter)
+				if(ishuman(starter))
+					var/mob/living/carbon/human/H = starter
+					H.AdjustHumanity(-1, 0)
 		L.gib()
 	..()
 

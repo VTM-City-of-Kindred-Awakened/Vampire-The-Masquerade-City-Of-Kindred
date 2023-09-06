@@ -75,6 +75,10 @@
 /obj/item/clothing/under/vampire/salubri/female
 	icon_state = "salubri_f"
 
+/obj/item/clothing/under/vampire/punk
+	desc = "Some punk clothes."
+	icon_state = "dirty"
+
 //FOR NPC
 
 //NGERS n BANDITS
@@ -309,6 +313,9 @@
 	desc = "Robust-looking boots."
 	icon_state = "jackboots"
 
+/obj/item/clothing/shoes/vampire/jackboots/punk
+	icon_state = "daboots"
+
 /obj/item/clothing/shoes/vampire/jackboots/work
 	icon_state = "jackboots_work"
 
@@ -362,6 +369,10 @@
 	desc = "True clothing for any punk. Provides some kind of protection."
 	icon_state = "jacket1"
 	armor = list(MELEE = 25, BULLET = 25, LASER = 10, ENERGY = 10, BOMB = 25, BIO = 0, RAD = 0, FIRE = 25, ACID = 10, WOUND = 25)
+
+/obj/item/clothing/suit/vampire/jacket/punk
+	icon_state = "punk"
+	armor = list(MELEE = 50, BULLET = 50, LASER = 10, ENERGY = 10, BOMB = 50, BIO = 0, RAD = 0, FIRE = 25, ACID = 10, WOUND = 25)
 
 /obj/item/clothing/suit/vampire/jacket/better
 	icon_state = "jacket2"

@@ -221,6 +221,7 @@
 						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 5 SECONDS)
 						account_balance = max(0, account_balance-SO.pack.cost)
 						var/obj/cargotrain/C = new(get_nearest_free_turf(LZ))
+						C.starter = usr
 						C.glide_size = (32 / 3) * world.tick_lag
 						walk_to(C, LZ, 1, 3)
 						playsound(C, 'code/modules/ziggers/sounds/train_arrive.ogg', 50, FALSE)
@@ -254,6 +255,7 @@
 							var/LZ = pick(empty_turfs)
 							LAZYREMOVE(empty_turfs, LZ)
 							var/obj/cargotrain/C = new(get_nearest_free_turf(LZ))
+							C.starter = usr
 							C.glide_size = (32 / 3) * world.tick_lag
 							walk_to(C, LZ, 1, 3)
 							playsound(C, 'code/modules/ziggers/sounds/train_arrive.ogg', 50, FALSE)
