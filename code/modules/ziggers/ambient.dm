@@ -7,6 +7,7 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	var/music
 	var/upper = TRUE
+	var/zone_type = "masquerade"
 
 /area/vtm/interior
 	name = "Interior"
@@ -23,6 +24,7 @@
 	name = "Giovanni Mansion"
 	icon_state = "giovanni"
 	upper = FALSE
+	zone_type = "elysium"
 
 /area/vtm/interior/police
 	name = "Police Station"
@@ -38,6 +40,7 @@
 	name = "Abandoned Mansion"
 	icon_state = "mansion"
 	upper = FALSE
+	zone_type = "battle"
 
 /area/vtm/financialdistrict
 	name = "Financial District"
@@ -93,24 +96,28 @@
 	icon_state = "prince"
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
+	zone_type = "elysium"
 
 /area/vtm/city_elevator
 	name = "City Elevator"
 	icon_state = "prince"
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
+	zone_type = "elysium"
 
 /area/vtm/prince
 	name = "Millenium Tower"
 	icon_state = "prince"
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
+	zone_type = "elysium"
 
 /area/vtm/camarilla
 	name = "Millenium Appartements"
 	icon_state = "camarilla"
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
+	zone_type = "elysium"
 
 /area/vtm/cabinet
 	name = "Millenium Upper Level"
@@ -118,6 +125,7 @@
 	ambience_index = AMBIENCE_INTERIOR
 	music = /datum/vampiremusic/prince
 	upper = FALSE
+	zone_type = "elysium"
 
 /area/vtm/clinic
 	name = "Clinic"
@@ -136,6 +144,7 @@
 	icon_state = "anarch"
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
+	zone_type = "elysium"
 
 /area/vtm/hotel
 	name = "Hotel"
@@ -155,11 +164,13 @@
 	ambience_index = AMBIENCE_INTERIOR
 	music = /datum/vampiremusic/hollywood
 	upper = TRUE
+	zone_type = "battle"
 
 /area/vtm/graveyard/interior
 	name = "Graveyard Interior"
 	icon_state = "interior"
 	upper = FALSE
+	zone_type = "battle"
 
 /area/vtm/park
 	name = "Park"
@@ -173,6 +184,7 @@
 	icon_state = "theatre"
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
+	zone_type = "elysium"
 
 /area/vtm/sewer
 	name = "Sewer"
@@ -180,17 +192,20 @@
 	ambience_index = AMBIENCE_SEWER
 	music = /datum/vampiremusic/sewer
 	upper = FALSE
+	zone_type = "battle"
 
 /area/vtm/sewer/nosferatu_town
 	name = "Underground Town"
 	icon_state = "hotel"
 	upper = FALSE
+	zone_type = "elysium"
 
 /area/vtm/elevator
 	name = "Elevator"
 	icon_state = "prince"
 	music = /datum/vampiremusic/elevator
 	upper = FALSE
+	zone_type = "elysium"
 
 //MUSIC
 

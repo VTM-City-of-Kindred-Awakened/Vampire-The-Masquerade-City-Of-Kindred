@@ -34,6 +34,8 @@
 		return
 	if(ranged && get_dist(caster, target) > range)
 		return
+	if(HAS_TRAIT(caster, TRAIT_PACIFISM))
+		return
 	if(target.spell_immunity)
 		to_chat(caster, "<span class='notice'>This being immune to magic</span>")
 		return

@@ -223,6 +223,14 @@
 		BL.SwitchBlocking()
 	..()
 
+/atom/movable/screen/vtm_zone
+	name = "zone"
+	icon = 'code/modules/ziggers/48x48.dmi'
+	icon_state = "masquerade"
+	layer = HUD_LAYER
+	plane = HUD_PLANE
+	alpha = 64
+
 /atom/movable/screen/blood
 	name = "bloodpool"
 	icon = 'code/modules/ziggers/vamphud.dmi'
@@ -633,6 +641,7 @@
 /mob/living/carbon/human/Life()
 	if(iskindred(src) || isghoul(src))
 		update_blood_hud()
+	update_zone_hud()
 	update_shadow()
 	handle_vampire_music()
 	update_auspex_hud()
@@ -678,3 +687,17 @@
 			hud_used.blood_icon.icon_state = "blood0"
 		else
 			hud_used.blood_icon.icon_state = "blood[emm]"
+
+/mob/living/proc/update_zone_hud()
+	if(!client || !hud_used)
+		return
+	if(hud_used.zone_icon)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			hud_used.zone_icon.icon_state = "[V.zone_type]"
+			if(V.zone_type == "elysium")
+				if(!HAS_TRAIT(src, TRAIT_PACIFISM))
+					ADD_TRAIT(src, TRAIT_PACIFISM, "elysium")
+			else
+				if(HAS_TRAIT(src, TRAIT_PACIFISM))
+					REMOVE_TRAIT(src, TRAIT_PACIFISM, "elysium")

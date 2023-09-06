@@ -365,6 +365,12 @@
 	bloodpower_icon.hud = src
 	static_inventory += bloodpower_icon
 
+	zone_icon = new /atom/movable/screen/vtm_zone()
+	zone_icon.screen_loc = ui_bloodpower
+	zone_icon.screen_loc = ui_vtm_zone
+	zone_icon.hud = src
+	static_inventory += zone_icon
+
 //	if(character.dna.species.id == "kindred"
 
 //	healthdoll = new /atom/movable/screen/healthdoll()

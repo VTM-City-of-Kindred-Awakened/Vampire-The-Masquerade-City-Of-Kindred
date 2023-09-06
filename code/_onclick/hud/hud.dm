@@ -49,6 +49,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/disciplines/discipline2_icon
 	var/atom/movable/screen/disciplines/discipline3_icon
 	var/atom/movable/screen/disciplines/discipline4_icon
+	var/atom/movable/screen/disciplines/zone_icon
 	var/atom/movable/screen/throw_icon
 	var/atom/movable/screen/module_store_icon
 

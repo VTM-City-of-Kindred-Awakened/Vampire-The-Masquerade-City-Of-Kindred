@@ -54,6 +54,7 @@
 #define ui_discipline2 "CENTER+3:16,SOUTH+1:8"
 #define ui_discipline3 "CENTER+4,SOUTH+1:8"
 #define ui_discipline4 "CENTER+4:16,SOUTH+1:8"
+#define ui_vtm_zone "CENTER-1:24,NORTH-2:24"
 
 //Lower right, persistent menu
 #define ui_drop_throw "EAST-1:24,SOUTH+1:5"
