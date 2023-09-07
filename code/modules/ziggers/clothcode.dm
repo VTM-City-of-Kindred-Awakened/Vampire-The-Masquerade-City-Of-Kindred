@@ -541,7 +541,7 @@
 	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 40, BOMB = 20, BIO = 0, RAD = 0, FIRE = 20, ACID = 40, WOUND = 25)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
-/obj/item/clothing/head/vampire/helmet/mask
+/obj/item/clothing/head/vampire/helmet/egorium
 	name = "strange mask"
 	desc = "Looks mysterious. Provides good protection."
 	icon_state = "masque"
