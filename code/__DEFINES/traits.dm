@@ -134,6 +134,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ADVANCEDTOOLUSER	"advancedtooluser" //Whether a mob is dexterous enough to use machines and certain items or not.
 #define TRAIT_MONKEYLIKE		"monkeylike" //Antagonizes the above.
 #define TRAIT_PACIFISM			"pacifism"
+#define TRAIT_ELYSIUM			"elysium"
 #define TRAIT_IGNORESLOWDOWN	"ignoreslow"
 #define TRAIT_IGNOREDAMAGESLOWDOWN "ignoredamageslowdown"
 #define TRAIT_DEATHCOMA			"deathcoma" //Causes death-like unconsciousness

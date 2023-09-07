@@ -8,6 +8,7 @@
 	var/music
 	var/upper = TRUE
 	var/zone_type = "masquerade"
+	var/zone_owner
 
 /area/vtm/interior
 	name = "Interior"
@@ -25,6 +26,7 @@
 	icon_state = "giovanni"
 	upper = FALSE
 	zone_type = "elysium"
+	zone_owner = "Giovanni"
 
 /area/vtm/interior/police
 	name = "Police Station"
@@ -97,6 +99,7 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	zone_type = "elysium"
+	zone_owner = "Camarilla"
 
 /area/vtm/city_elevator
 	name = "City Elevator"
@@ -104,6 +107,7 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	zone_type = "elysium"
+	zone_owner = "Camarilla"
 
 /area/vtm/prince
 	name = "Millenium Tower"
@@ -111,6 +115,7 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	zone_type = "elysium"
+	zone_owner = "Camarilla"
 
 /area/vtm/camarilla
 	name = "Millenium Appartements"
@@ -118,6 +123,7 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	zone_type = "elysium"
+	zone_owner = "Camarilla"
 
 /area/vtm/cabinet
 	name = "Millenium Upper Level"
@@ -126,6 +132,7 @@
 	music = /datum/vampiremusic/prince
 	upper = FALSE
 	zone_type = "elysium"
+	zone_owner = "Camarilla"
 
 /area/vtm/clinic
 	name = "Clinic"
@@ -145,6 +152,7 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	zone_type = "elysium"
+	zone_owner = "Anarch"
 
 /area/vtm/hotel
 	name = "Hotel"
@@ -185,6 +193,7 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	zone_type = "elysium"
+	zone_owner = "Chantry"
 
 /area/vtm/sewer
 	name = "Sewer"
@@ -199,6 +208,7 @@
 	icon_state = "hotel"
 	upper = FALSE
 	zone_type = "elysium"
+	zone_owner = "Nosferatu"
 
 /area/vtm/elevator
 	name = "Elevator"
@@ -206,6 +216,7 @@
 	music = /datum/vampiremusic/elevator
 	upper = FALSE
 	zone_type = "elysium"
+	zone_owner = "Camarilla"
 
 //MUSIC
 

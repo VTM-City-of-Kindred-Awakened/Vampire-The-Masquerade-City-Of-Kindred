@@ -121,12 +121,10 @@
 		var/name_in_list = FALSE
 		for(var/mob/living/carbon/human/H in GLOB.player_list)
 			if(H)
-				if(H.real_name == chosen_name)
+				if(H.dna.real_name == chosen_name)
+					SSbloodhunt.announce_hunted(H)
 					name_in_list = TRUE
-		if(name_in_list)
-			to_chat(world, "<b>Prince announces the Blood Hunt after <span class='warning'>[chosen_name]</span>!</b>")
-			SEND_SOUND(world, sound('code/modules/ziggers/sounds/announce.ogg'))
-		else
+		if(!name_in_list)
 			to_chat(user, "<span class='warning'>There is no such names in the city!</span>")
 
 /obj/item/phone_book

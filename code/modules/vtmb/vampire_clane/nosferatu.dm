@@ -31,3 +31,8 @@
 	H.apply_overlay(UPPER_EARS_LAYER)
 	var/obj/item/organ/eyes/night_vision/NV = new()
 	NV.Insert(H, TRUE, FALSE)
+
+/datum/vampireclane/nosferatu/post_gain(mob/living/carbon/human/H)
+	..()
+	if(H.frakcja != "Camarilla" && H.frakcja != "Anarch" && H.frakcja != "Sabbat")
+		H.frakcja = "Nosferatu"

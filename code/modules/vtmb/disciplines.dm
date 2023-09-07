@@ -25,6 +25,8 @@
 		return
 	if(!caster)
 		return
+	if(caster.IsSleeping() || caster.IsUnconscious() || caster.IsParalyzed() || caster.IsKnockdown() || caster.IsStun() || HAS_TRAIT(caster, TRAIT_RESTRAINED) || !isturf(caster.loc))
+		return
 	var/plus = 0
 	if(HAS_TRAIT(caster, TRAIT_HUNGRY))
 		plus = 1
@@ -36,6 +38,8 @@
 		return
 	if(HAS_TRAIT(caster, TRAIT_PACIFISM))
 		return
+	if(HAS_TRAIT(caster, TRAIT_ELYSIUM))
+		caster.check_elysium(FALSE)
 	if(target.spell_immunity)
 		to_chat(caster, "<span class='notice'>This being immune to magic</span>")
 		return

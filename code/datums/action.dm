@@ -218,6 +218,23 @@
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"
 
+/datum/action/item_action/eguitar
+	name = "Engage Distortion"
+	var/last_shit = 0
+
+/datum/action/item_action/eguitar/Trigger()
+	if(istype(target, /obj/item/melee/vampirearms/eguitar))
+		var/obj/item/melee/vampirearms/eguitar/E = target
+		if(!E.wielded)
+			return
+	if(last_shit+70 < world.time)
+		playsound(get_turf(owner), 'code/modules/ziggers/sounds/punk.ogg', 100, FALSE)
+		owner.emote("me",1,"riffs brutally.",TRUE)
+		last_shit = world.time
+		for(var/mob/living/carbon/human/H in oviewers(7, owner))
+			H.Stun(30)
+			H.do_jitter_animation(30)
+
 /datum/action/item_action/toggle_gunlight
 	name = "Toggle Gunlight"
 

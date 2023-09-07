@@ -477,12 +477,13 @@
 
 /datum/outfit/job/regent/pre_equip(mob/living/carbon/human/H)
 	..()
+	H.frakcja = "Chantry"
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/archivist/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
 
 /obj/effect/landmark/start/regent
-	name = "Regent"
+	name = "Chantry Regent"
 	icon_state = "Archivist"
 
 /datum/job/vamp/archivist
@@ -527,6 +528,7 @@
 
 /datum/outfit/job/archivist/pre_equip(mob/living/carbon/human/H)
 	..()
+	H.frakcja = "Chantry"
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/archivist/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
@@ -1355,6 +1357,7 @@
 
 /datum/outfit/job/giovanni/pre_equip(mob/living/carbon/human/H)
 	..()
+	H.frakcja = "Giovanni"
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels

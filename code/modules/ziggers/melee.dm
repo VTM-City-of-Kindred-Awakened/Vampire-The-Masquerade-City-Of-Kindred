@@ -270,6 +270,8 @@
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
+	if(HAS_TRAIT(user, TRAIT_ELYSIUM))
+		user.check_elysium(TRUE)
 	if(!target.IsParalyzed() && iskindred(target) && !target.stakeimmune)
 		visible_message("<span class='warning'>[user] aims [src] straight to the [target]'s heart!</span>", "<span class='warning'>You aim [src] straight to the [target]'s heart!</span>")
 		if(do_after(user, 10, target))
@@ -348,7 +350,9 @@
 	bare_wound_bonus = 20
 	armour_penetration = 30
 	pixel_w = -8
+	actions_types = list(/datum/action/item_action/eguitar)
 	var/wielded = FALSE
+	var/on = FALSE
 
 /obj/item/melee/vampirearms/eguitar/Initialize()
 	. = ..()

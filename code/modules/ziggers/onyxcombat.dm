@@ -20,6 +20,10 @@
 
 /mob/living/carbon/human/death()
 	. = ..()
+	if(bloodhunted)
+		SSbloodhunt.hunted -= src
+		bloodhunted = FALSE
+		SSbloodhunt.update_shit()
 	for(var/obj/item/police_radio/R in GLOB.police_radios)
 		R.announce_crime("murder", get_turf(src))
 	GLOB.masquerade_breakers_list -= src
@@ -584,8 +588,6 @@
 			return
 		if(world.time < last_discipline_use+dadelay+5)
 			return
-		if(BD.IsSleeping() || BD.IsUnconscious() || BD.IsParalyzed() || BD.IsKnockdown() || BD.IsStun() || HAS_TRAIT(BD, TRAIT_RESTRAINED) || !isturf(BD.loc))
-			return
 		last_discipline_click = world.time
 		if(active)
 			active = FALSE
@@ -696,8 +698,8 @@
 			var/area/vtm/V = get_area(src)
 			hud_used.zone_icon.icon_state = "[V.zone_type]"
 			if(V.zone_type == "elysium")
-				if(!HAS_TRAIT(src, TRAIT_PACIFISM))
-					ADD_TRAIT(src, TRAIT_PACIFISM, "elysium")
+				if(!HAS_TRAIT(src, TRAIT_ELYSIUM))
+					ADD_TRAIT(src, TRAIT_ELYSIUM, "elysium")
 			else
-				if(HAS_TRAIT(src, TRAIT_PACIFISM))
-					REMOVE_TRAIT(src, TRAIT_PACIFISM, "elysium")
+				if(HAS_TRAIT(src, TRAIT_ELYSIUM))
+					REMOVE_TRAIT(src, TRAIT_ELYSIUM, "elysium")

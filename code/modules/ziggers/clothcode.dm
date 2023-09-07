@@ -541,6 +541,15 @@
 	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 40, BOMB = 20, BIO = 0, RAD = 0, FIRE = 20, ACID = 40, WOUND = 25)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
+/obj/item/clothing/head/vampire/helmet/mask
+	name = "strange mask"
+	desc = "Looks mysterious. Provides good protection."
+	icon_state = "masque"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+
 /obj/item/clothing/head/vampire/helmet/spain
 	name = "spain helmet"
 	desc = "Concistador! Provides good protection."
