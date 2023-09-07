@@ -3,14 +3,14 @@
 	var/bloodhunted = FALSE
 
 /atom/movable/screen/alert/bloodhunt
-	name = "Blood Hunt"
+	name = "Blood Hunt Is Going On"
 	icon_state = "bloodhunt"
 
-/atom/movable/screen/alert/bloodhunt/examine(mob/user)
-	. = ..()
+/atom/movable/screen/alert/bloodhunt/Click()
 	for(var/mob/living/carbon/human/H in SSbloodhunt.hunted)
 		if(H)
-			. += "[icon2html(getFlatIcon(H), user)][H.dna.real_name], [H.mind.assigned_role]."
+			var/area/A = get_area(H)
+			to_chat(usr, "[icon2html(getFlatIcon(H), usr)][H.dna.real_name], [H.mind.assigned_role]. Was last seen at [A.name]")
 
 /mob/living/proc/check_elysium(var/instant = FALSE)
 	if(!ishuman(src))
