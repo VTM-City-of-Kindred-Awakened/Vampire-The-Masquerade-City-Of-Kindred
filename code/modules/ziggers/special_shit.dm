@@ -122,7 +122,14 @@
 		for(var/mob/living/carbon/human/H in GLOB.player_list)
 			if(H)
 				if(H.dna.real_name == chosen_name)
-					SSbloodhunt.announce_hunted(H)
+					if(H in SSbloodhunt.hunted)
+						SSbloodhunt.hunted -= H
+						H.bloodhunted = FALSE
+						SSbloodhunt.update()
+						to_chat(user, "<span class='warning'>You remove [chosen_name] from the Hunted list.</span>")
+					else
+						SSbloodhunt.announce_hunted(H)
+						to_chat(user, "<span class='warning'>You add [chosen_name] to the Hunted list.</span>")
 					name_in_list = TRUE
 		if(!name_in_list)
 			to_chat(user, "<span class='warning'>There is no such names in the city!</span>")

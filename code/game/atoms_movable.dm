@@ -685,11 +685,12 @@
 
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_THROW, args) & COMPONENT_CANCEL_THROW)
 		return
-
+/*
 	if(istype(get_area(target), /area/vtm))
 		var/area/vtm/V = get_area(target)
 		if(V.zone_type == "elysium")
 			return
+*/
 
 	if (pulledby)
 		pulledby.stop_pulling()
