@@ -38,7 +38,7 @@
 		return
 	if(HAS_TRAIT(caster, TRAIT_PACIFISM))
 		return
-	if(HAS_TRAIT(caster, TRAIT_ELYSIUM))
+	if(HAS_TRAIT(caster, TRAIT_ELYSIUM) && violates_masquerade)
 		caster.check_elysium(FALSE)
 	if(target.spell_immunity)
 		to_chat(caster, "<span class='notice'>This being immune to magic</span>")

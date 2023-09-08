@@ -907,6 +907,10 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	var/list/gear = list()
 	if(ishuman(mob_occupant))		// sorry simp-le-mobs deserve no mercy
 		var/mob/living/carbon/human/C = mob_occupant
+		if(C.bloodhunted)
+			SSbloodhunt.hunted -= C
+			C.bloodhunted = FALSE
+			SSbloodhunt.update_shit()
 		if(C.dna)
 			GLOB.fucking_joined -= C.dna.real_name
 		gear = C.get_all_gear()

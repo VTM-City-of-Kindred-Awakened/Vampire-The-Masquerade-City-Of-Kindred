@@ -40,6 +40,9 @@ SUBSYSTEM_DEF(bloodhunt)
 	update_shit()
 
 /datum/controller/subsystem/bloodhunt/proc/update_shit()
+	for(var/mob/living/L in hunted)
+		if(QDELETED(L))
+			hunted -= L
 	if(length(hunted))
 		for(var/mob/living/carbon/human/H in GLOB.player_list)
 			if(iskindred(H) || isghoul(H))
