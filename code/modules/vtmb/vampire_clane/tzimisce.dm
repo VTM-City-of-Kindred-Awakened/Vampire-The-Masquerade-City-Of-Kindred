@@ -50,6 +50,9 @@
 
 /datum/action/vicissitude_blood/Trigger()
 	. = ..()
+	var/mob/living/carbon/human/NG = owner
+	if(NG.stat > 1 || NG.IsSleeping() || NG.IsUnconscious() || NG.IsParalyzed() || NG.IsKnockdown() || NG.IsStun() || HAS_TRAIT(NG, TRAIT_RESTRAINED) || !isturf(NG.loc))
+		return
 	var/mob/living/carbon/human/H = owner
 	if(H.bloodpool < 2)
 		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
@@ -77,6 +80,9 @@
 
 /datum/action/vicissitude_form/Trigger()
 	. = ..()
+	var/mob/living/carbon/human/NG = owner
+	if(NG.stat > 1 || NG.IsSleeping() || NG.IsUnconscious() || NG.IsParalyzed() || NG.IsKnockdown() || NG.IsStun() || HAS_TRAIT(NG, TRAIT_RESTRAINED) || !isturf(NG.loc))
+		return
 	var/mob/living/carbon/human/H = owner
 	if(H.bloodpool < 3)
 		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")

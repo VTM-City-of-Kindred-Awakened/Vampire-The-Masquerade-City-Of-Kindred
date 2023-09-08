@@ -96,10 +96,11 @@
 	if(SScityweather.fogging)
 		actual_range = round(actual_range/2)
 	var/list/seenby = list()
-	for(var/mob/living/carbon/human/npc/NPC in oviewers(2, source))
+	for(var/mob/living/carbon/human/npc/NPC in oviewers(1, source))
 		if(!NPC.CheckMove())
-			seenby |= NPC
-			NPC.Aggro(attacker, FALSE)
+			if(get_turf(src) != turn(NPC.dir, 180))
+				seenby |= NPC
+				NPC.Aggro(attacker, FALSE)
 	for(var/mob/living/carbon/human/npc/NPC in viewers(actual_range, source))
 		if(!NPC.CheckMove())
 			if(affects_source)

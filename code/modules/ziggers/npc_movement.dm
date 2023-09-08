@@ -140,10 +140,11 @@
 	if(!old_movement)
 		var/list/possible_list = list()
 		for(var/obj/effect/landmark/npcactivity/N in GLOB.npc_activities)
-			if(N.x > x-3 && N.x < x+3)
-				possible_list += N
-			if(N.y > y-3 && N.y < y+3)
-				possible_list += N
+			if(get_dist(src, N) > 40)
+				if(N.x > x-3 && N.x < x+3)
+					possible_list += N
+				if(N.y > y-3 && N.y < y+3)
+					possible_list += N
 		if(!length(possible_list))
 			return get_turf(pick(GLOB.npc_activities))
 

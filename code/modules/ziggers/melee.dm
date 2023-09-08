@@ -353,6 +353,22 @@
 	actions_types = list(/datum/action/item_action/eguitar)
 	var/wielded = FALSE
 	var/on = FALSE
+	var/last_solo = 0
+
+/obj/item/melee/vampirearms/eguitar/AltClick(mob/user)
+	if(last_solo+600 > world.time)
+		return
+	var/result = input(user, "Select a riff") as null|anything in list("1", "2", "3", "4")
+	if(result)
+		last_solo = world.time
+		if(result == "1")
+			playsound(loc, 'code/modules/ziggers/sounds/solo1.ogg', 100, FALSE)
+		if(result == "2")
+			playsound(loc, 'code/modules/ziggers/sounds/solo2.ogg', 100, FALSE)
+		if(result == "3")
+			playsound(loc, 'code/modules/ziggers/sounds/solo3.ogg', 100, FALSE)
+		if(result == "4")
+			playsound(loc, 'code/modules/ziggers/sounds/solo4.ogg', 100, FALSE)
 
 /obj/item/melee/vampirearms/eguitar/Initialize()
 	. = ..()

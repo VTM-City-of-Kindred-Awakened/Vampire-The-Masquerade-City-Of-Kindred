@@ -36,6 +36,9 @@
 	var/used = FALSE
 
 /datum/action/antifrenzy/Trigger()
+	var/mob/living/carbon/human/NG = owner
+	if(NG.stat > 1 || NG.IsSleeping() || NG.IsUnconscious() || NG.IsParalyzed() || NG.IsKnockdown() || NG.IsStun() || HAS_TRAIT(NG, TRAIT_RESTRAINED) || !isturf(NG.loc))
+		return
 	if(used)
 		to_chat(owner, "<span class='warning'>You've already signed this contract!</span>")
 		return

@@ -25,7 +25,7 @@
 		return
 	if(!caster)
 		return
-	if(caster.IsSleeping() || caster.IsUnconscious() || caster.IsParalyzed() || caster.IsKnockdown() || caster.IsStun() || HAS_TRAIT(caster, TRAIT_RESTRAINED) || !isturf(caster.loc))
+	if(caster.stat > 2 || caster.IsSleeping() || caster.IsUnconscious() || caster.IsParalyzed() || caster.IsKnockdown() || caster.IsStun() || HAS_TRAIT(caster, TRAIT_RESTRAINED) || !isturf(caster.loc))
 		return
 	var/plus = 0
 	if(HAS_TRAIT(caster, TRAIT_HUNGRY))
