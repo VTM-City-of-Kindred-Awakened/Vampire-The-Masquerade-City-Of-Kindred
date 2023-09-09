@@ -17,7 +17,7 @@
 		for(var/mob/living/carbon/human/H in GLOB.masquerade_breakers_list)
 			var/turf/TT = get_turf(H)
 			if(TT)
-				to_chat(user, "[H.real_name], Masquerade: [H.masquerade], [get_area_name(H)] X:[TT.x] Y:[TT.y]")
+				to_chat(user, "[H.true_real_name], Masquerade: [H.masquerade], [get_area_name(H)] X:[TT.x] Y:[TT.y]")
 	else
 		to_chat(user, "No available Masquerade breakers in city...")
 
@@ -115,17 +115,19 @@
 
 /obj/item/blood_hunt/attack_self(mob/user)
 	. = ..()
-	var/chosen_name = input(user, "Write the hunted character name:", "Blood Hunt")  as text|null
+	var/chosen_name = input(user, "Write the hunted or forgiven character name:", "Blood Hunt")  as text|null
 	if(chosen_name)
 		var/name_in_list = FALSE
 		for(var/mob/living/carbon/human/H in GLOB.player_list)
 			if(H)
-				if(H.dna.real_name == chosen_name)
+				if(H.true_real_name == chosen_name)
 					if(H in SSbloodhunt.hunted)
 						SSbloodhunt.hunted -= H
 						H.bloodhunted = FALSE
 						SSbloodhunt.update_shit()
 						to_chat(user, "<span class='warning'>You remove [chosen_name] from the Hunted list.</span>")
+						to_chat(world, "<b>The Blood Hunt after <span class='green'>[H.true_real_name]</span> is over!</b>")
+						SEND_SOUND(world, sound('code/modules/ziggers/sounds/announce.ogg'))
 					else
 						SSbloodhunt.announce_hunted(H)
 						to_chat(user, "<span class='warning'>You add [chosen_name] to the Hunted list.</span>")

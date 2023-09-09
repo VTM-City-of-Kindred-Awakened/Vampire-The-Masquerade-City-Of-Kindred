@@ -10,10 +10,12 @@
 	for(var/mob/living/carbon/human/H in SSbloodhunt.hunted)
 		if(H)
 			var/area/A = get_area(H)
-			to_chat(usr, "[icon2html(getFlatIcon(H), usr)][H.dna.real_name], [H.mind.assigned_role]. Was last seen at [A.name]")
+			to_chat(usr, "[icon2html(getFlatIcon(H), usr)][H.true_real_name], [H.mind ? H.mind.assigned_role : "Citizen"]. Was last seen at [A.name]")
 
 /mob/living/proc/check_elysium(var/instant = FALSE)
 	if(!ishuman(src))
+		return
+	if(!client)
 		return
 	var/area/vtm/V
 	if(istype(get_area(src), /area/vtm))
@@ -36,7 +38,6 @@
 			SSbloodhunt.announce_hunted(src)
 			if(V)
 				V.break_elysium()
-
 
 SUBSYSTEM_DEF(bloodhunt)
 	name = "Blood Hunt"
@@ -68,7 +69,7 @@ SUBSYSTEM_DEF(bloodhunt)
 	var/mob/living/carbon/human/H = target
 	if(!H.bloodhunted)
 		H.bloodhunted = TRUE
-		to_chat(world, "<b>The Blood Hunt after <span class='warning'>[H.dna.real_name]</span> has been announced!</b>")
+		to_chat(world, "<b>The Blood Hunt after <span class='warning'>[H.true_real_name]</span> has been announced!</b>")
 		SEND_SOUND(world, sound('code/modules/ziggers/sounds/announce.ogg'))
 		hunted += H
 		update_shit()

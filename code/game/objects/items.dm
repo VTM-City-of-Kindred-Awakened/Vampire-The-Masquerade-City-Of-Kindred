@@ -969,7 +969,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(HAS_TRAIT(user, TRAIT_ELYSIUM))
 		if(istype(src, /obj/item/molotov))
 			user.check_elysium(TRUE)
-		else
+		else if(throwforce)
 			user.check_elysium(FALSE)
 	return src
 

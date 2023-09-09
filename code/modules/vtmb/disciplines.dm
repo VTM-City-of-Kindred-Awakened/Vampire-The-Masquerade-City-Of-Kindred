@@ -4,7 +4,7 @@
 	var/icon_state
 	var/cost = 2
 	var/ranged = FALSE
-	var/range = 8
+	var/range_sh = 8
 	var/delay = 5
 	var/violates_masquerade = FALSE
 	var/level = 1
@@ -20,30 +20,27 @@
 /mob/living
 	var/resistant_to_disciplines = FALSE
 
-/datum/discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
-	if(!target)
-		return
-	if(!caster)
-		return
-	if(caster.stat > 2 || caster.IsSleeping() || caster.IsUnconscious() || caster.IsParalyzed() || caster.IsKnockdown() || caster.IsStun() || HAS_TRAIT(caster, TRAIT_RESTRAINED) || !isturf(caster.loc))
-		return
+/datum/discipline/proc/check_activated(var/mob/living/target, var/mob/living/carbon/human/caster)
+	if(caster.stat >= 2 || caster.IsSleeping() || caster.IsUnconscious() || caster.IsParalyzed() || caster.IsKnockdown() || caster.IsStun() || HAS_TRAIT(caster, TRAIT_RESTRAINED) || !isturf(caster.loc))
+		return FALSE
 	var/plus = 0
 	if(HAS_TRAIT(caster, TRAIT_HUNGRY))
 		plus = 1
-	if(caster.bloodpool < cost+plus)
-		return
+	if(caster.bloodpool < cost+plus+(level_casting-1))
+		return FALSE
 	if(target.stat == DEAD)
-		return
-	if(ranged && get_dist(caster, target) > range)
-		return
+		return FALSE
+	if(ranged)
+		if(get_dist(caster, target) > range_sh)
+			return FALSE
 	if(HAS_TRAIT(caster, TRAIT_PACIFISM))
-		return
+		return FALSE
 	if(HAS_TRAIT(caster, TRAIT_ELYSIUM) && violates_masquerade)
 		caster.check_elysium(FALSE)
 	if(target.spell_immunity)
 		to_chat(caster, "<span class='notice'>This being immune to magic</span>")
-		return
-	caster.bloodpool = max(0, caster.bloodpool-(cost+plus))
+		return FALSE
+	caster.bloodpool = max(0, caster.bloodpool-(cost+plus+(level_casting-1)))
 	caster.update_blood_hud()
 	if(ranged)
 		to_chat(caster, "<span class='notice'>You activate the [name] on [target].</span>")
@@ -67,6 +64,13 @@
 			caster.AdjustMasquerade(-1)
 	if(target.resistant_to_disciplines || target.spell_immunity)
 		to_chat(caster, "<span class='danger'>You failed to activate the [name].</span>")
+		return FALSE
+	return TRUE
+
+/datum/discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	if(!target)
+		return
+	if(!caster)
 		return
 //	if(!target)
 //		var/choice = input(caster, "Choose your target", "Available Targets") as mob in oviewers(4, caster)
@@ -79,7 +83,7 @@
 	name = "Animalism"
 	desc = "Summons Spectral Animals over your targets. Violates Masquerade."
 	icon_state = "animalism"
-	cost = 2
+	cost = 1
 	ranged = TRUE
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/ziggers/sounds/wolves.ogg'
@@ -93,7 +97,7 @@
 	layer = ABOVE_ALL_MOB_LAYER
 
 /datum/discipline/animalism/activate(mob/living/target, mob/living/carbon/human/caster)
-	..()
+	. = ..()
 	var/antidir = NORTH
 	switch(target.dir)
 		if(NORTH)
@@ -126,7 +130,7 @@
 	leveldelay = TRUE
 
 /datum/discipline/auspex/activate(mob/living/target, mob/living/carbon/human/caster)
-	..()
+	. = ..()
 	var/sound/auspexbeat = sound('code/modules/ziggers/sounds/auspex.ogg', repeat = TRUE)
 	caster.playsound_local(caster, auspexbeat, 75, 0, channel = CHANNEL_DISCIPLINES, use_reverb = FALSE)
 	ADD_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
@@ -173,7 +177,7 @@
 	anchored = 1
 
 /obj/effect/celerity/Initialize()
-	..()
+	. = ..()
 	spawn(5)
 		qdel(src)
 
@@ -196,7 +200,7 @@
 	multiplicative_slowdown = -0.25
 
 /datum/discipline/celerity/activate(mob/living/target, mob/living/carbon/human/caster)
-	..()
+	. = ..()
 	caster.add_movespeed_modifier(/datum/movespeed_modifier/celerity)
 	caster.celerity_visual = TRUE
 	spawn((delay*level_casting)+caster.discipline_time_plus)
@@ -209,13 +213,13 @@
 	name = "Dominate"
 	desc = "Supresses will of your targets and forces them to obey you, if their will is not more powerful than yours."
 	icon_state = "dominate"
-	cost = 2
+	cost = 1
 	ranged = TRUE
 	delay = 50
 	activate_sound = 'code/modules/ziggers/sounds/dominate.ogg'
 
 /datum/discipline/dominate/activate(mob/living/target, mob/living/carbon/human/caster)
-	..()
+	. = ..()
 	if(target.spell_immunity)
 		return
 	if(iskindred(target))
@@ -246,7 +250,11 @@
 			else
 				to_chat(target, "<span class='userdanger'><b>STAY DOWN</b></span>")
 				caster.say("STAY DOWN!!")
-		if(3 to 4)
+		if(3)
+			to_chat(target, "<span class='userdanger'><b>THINK TWICE</b></span>")
+			caster.say("THINK TWICE!!")
+			target.Stun(25*level_casting)
+		if(4)
 			to_chat(target, "<span class='userdanger'><b>THINK TWICE</b></span>")
 			caster.say("THINK TWICE!!")
 			target.Stun(25*level_casting)
@@ -375,7 +383,7 @@
 	M.dancing = FALSE
 
 /datum/discipline/dementation/activate(mob/living/target, mob/living/carbon/human/caster)
-	..()
+	. = ..()
 	var/mod = 0.3*level_casting
 	for(var/mob/living/carbon/human/H in viewers(6, caster))
 		if(H != caster)
@@ -413,7 +421,7 @@
 	var/datum/component/tackler
 
 /datum/discipline/potence/activate(mob/living/target, mob/living/carbon/human/caster)
-	..()
+	. = ..()
 	var/mod = 10*level_casting
 	var/armah = 0.5*level_casting
 	caster.remove_overlay(POTENCE_LAYER)
@@ -447,7 +455,7 @@
 	activate_sound = 'code/modules/ziggers/sounds/fortitude_activate.ogg'
 
 /datum/discipline/fortitude/activate(mob/living/target, mob/living/carbon/human/caster)
-	..()
+	. = ..()
 	var/mod = min(3, level_casting)
 	var/armah = 15*mod
 	caster.remove_overlay(FORTITUDE_LAYER)
@@ -474,7 +482,7 @@
 	leveldelay = TRUE
 
 /datum/discipline/obfuscate/activate(mob/living/target, mob/living/carbon/human/caster)
-	..()
+	. = ..()
 	for(var/mob/living/carbon/human/npc/NPC in GLOB.npc_list)
 		if(NPC)
 			if(NPC.danger_source == caster)
@@ -496,7 +504,7 @@
 	leveldelay = FALSE
 
 /datum/discipline/presence/activate(mob/living/target, mob/living/carbon/human/caster)
-	..()
+	. = ..()
 	var/mod = 0.3*level_casting
 	for(var/mob/living/carbon/human/L in viewers(6, caster))
 		if(L != caster)
@@ -541,7 +549,7 @@
 	shapeshift_type = /mob/living/simple_animal/hostile/gangrel
 
 /datum/discipline/protean/activate(mob/living/target, mob/living/carbon/human/caster)
-	..()
+	. = ..()
 	var/mod = min(4, level_casting)
 //	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
 	if(!GA)
@@ -745,7 +753,7 @@
 	clane_restricted = TRUE
 
 /datum/discipline/thaumaturgy/activate(mob/living/target, mob/living/carbon/human/caster)
-	..()
+	. = ..()
 	switch(level_casting)
 		if(1)
 			var/turf/start = get_turf(caster)
@@ -811,17 +819,17 @@
 
 /datum/discipline/serpentis
 	name = "Serpentis"
-	desc = "Act like a cobra, get the powers to stun targets with your gaze and your tongue, praise the mummy traditions and spread them to your childe."
+	desc = "Act like a cobra, get the powers to stun targets with your gaze and your tongue, praise the mummy traditions and spread them to your childe. Violates Masquerade."
 	icon_state = "serpentis"
 	cost = 1
 	ranged = TRUE
 	delay = 5
-	range = 2
+//	range_sh = 2
+	violates_masquerade = TRUE
 	clane_restricted = TRUE
 
 /datum/discipline/serpentis/activate(mob/living/target, mob/living/carbon/human/caster)
-	range = initial(range)+level_casting
-	..()
+	. = ..()
 	if(level_casting == 1)
 		var/antidir = NORTH
 		switch(caster.dir)
@@ -862,16 +870,17 @@
 
 /datum/discipline/vicissitude
 	name = "Vicissitude"
-	desc = "It is widely known as Tzimisce art of flesh and bone shaping."
+	desc = "It is widely known as Tzimisce art of flesh and bone shaping. Violates Masquerade."
 	icon_state = "vicissitude"
 	cost = 1
 	ranged = TRUE
 	delay = 100
-	range = 1
+	range_sh = 2
+	violates_masquerade = TRUE
 	clane_restricted = TRUE
 
 /datum/discipline/vicissitude/activate(mob/living/target, mob/living/carbon/human/caster)
-	..()
+	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		playsound(target.loc, 'code/modules/ziggers/sounds/vicissitude.ogg', 50, TRUE)
@@ -979,16 +988,17 @@
 
 /datum/discipline/quietus
 	name = "Quietus"
-	desc = "Make a poison out of nowhere and forces all beings in range to mute, poison your touch, poison your weapon, poison your spit and make it acid."
+	desc = "Make a poison out of nowhere and forces all beings in range to mute, poison your touch, poison your weapon, poison your spit and make it acid. Violates Masquerade."
 	icon_state = "quietus"
 	cost = 1
 	ranged = FALSE
 	delay = 50
 //	range = 2
+	violates_masquerade = TRUE
 	clane_restricted = TRUE
 
 /datum/discipline/quietus/activate(mob/living/target, mob/living/carbon/human/caster)
-	..()
+	. = ..()
 	playsound(target.loc, 'code/modules/ziggers/sounds/quietus.ogg', 50, TRUE)
 	switch(level_casting)
 		if(1)
@@ -1077,9 +1087,9 @@
 	name = "Necromancy"
 	desc = "Offers control over another, undead reality."
 	icon_state = "necromancy"
-	cost = 2
+	cost = 1
 	ranged = TRUE
-	range = 1
+	range_sh = 2
 	delay = 50
 	violates_masquerade = TRUE
 	clane_restricted = TRUE
@@ -1126,7 +1136,7 @@
 	return FALSE
 
 /datum/discipline/necromancy/activate(mob/living/target, mob/living/carbon/human/caster)
-	..()
+	. = ..()
 	playsound(target.loc, 'code/modules/ziggers/sounds/necromancy.ogg', 50, TRUE)
 	if(target.stat == DEAD)
 		switch(level_casting)
@@ -1186,7 +1196,7 @@
 	activate_sound = 'sound/magic/voidblink.ogg'
 
 /datum/discipline/obtenebration/activate(mob/living/target, mob/living/carbon/human/caster)
-	..()
+	. = ..()
 	if(level_casting == 1)
 		var/atom/movable/AM = new(target)
 		AM.set_light(3, -7)
@@ -1201,7 +1211,7 @@
 	name = "Daimonion"
 	desc = "Get a help from the Hell creatures, resist THE FIRE, transform into an imp. Violates Masquerade."
 	icon_state = "daimonion"
-	cost = 2
+	cost = 1
 	ranged = FALSE
 	delay = 150
 	violates_masquerade = TRUE
@@ -1210,7 +1220,7 @@
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/BAT
 
 /datum/discipline/daimonion/activate(mob/living/target, mob/living/carbon/human/caster)
-	..()
+	. = ..()
 	var/mod = min(4, level_casting)
 //	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
 	if(!BAT)
@@ -1252,7 +1262,7 @@
 	name = "Valeren"
 	desc = "Use your third eye in healing or protecting needs."
 	icon_state = "valeren"
-	cost = 2
+	cost = 1
 	ranged = TRUE
 	delay = 50
 	violates_masquerade = FALSE
@@ -1261,7 +1271,7 @@
 	var/datum/beam/current_beam
 
 /datum/discipline/valeren/activate(mob/living/target, mob/living/carbon/human/caster)
-	..()
+	. = ..()
 	switch(level_casting)
 		if(1)
 			healthscan(caster, target, 1, FALSE)

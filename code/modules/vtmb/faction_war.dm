@@ -178,8 +178,10 @@ SUBSYSTEM_DEF(factionwar)
 							SSfactionwar.move_mark(src, L.frakcja)
 							for(var/mob/living/carbon/human/H in GLOB.player_list)
 								if(H.frakcja == "Camarilla" || H.frakcja == "Anarch" || H.frakcja == "Sabbat")
-									var/area/A = get_area(src)
+									var/area/vtm/A = get_area(src)
 									to_chat(H, "<b>[A.name] [x]:[y] mark now belongs to <span class='warning'>[L.frakcja]</span></b>")
+									if(A.zone_owner)
+										A.zone_owner = L.frakcja
 //						if(user.client)
 //							var/mode = 1
 //							if(HAS_TRAIT(user, TRAIT_NON_INT))

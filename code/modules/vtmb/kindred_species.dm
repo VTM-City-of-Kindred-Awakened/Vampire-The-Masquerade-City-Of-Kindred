@@ -253,6 +253,7 @@
 					BLOODBONDED.apply_status_effect(STATUS_EFFECT_INLOVE, owner)
 					H.bloodpool = max(0, H.bloodpool-2)
 					to_chat(owner, "<span class='notice'>You successfuly fed [BLOODBONDED] with vitae.</span>")
+					to_chat(BLOODBONDED, "<span class='userlove'>You feel good when you drink this <b>BLOOD</b>...</span>")
 					if(H.reagents)
 						if(length(H.reagents.reagent_list))
 							H.reagents.trans_to(BLOODBONDED, min(10, H.reagents.total_volume), transfered_by = H, methods = VAMPIRE)

@@ -147,7 +147,7 @@
 	glasses = /obj/item/clothing/glasses/vampire/sun
 	r_pocket = /obj/item/vamp/keys/sheriff
 	l_pocket = /obj/item/vamp/phone/sheriff
-	backpack_contents = list(/obj/item/gun/ballistic/automatic/vampire/deagle=1, /obj/item/melee/vampirearms/stake=3, /obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/masquerade_contract=1, /obj/item/stack/dollar/fifty=1)
+	backpack_contents = list(/obj/item/gun/ballistic/automatic/vampire/deagle=1, /obj/item/vampire_stake=3, /obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/masquerade_contract=1, /obj/item/stack/dollar/fifty=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -280,7 +280,7 @@
 	shoes = /obj/item/clothing/shoes/vampire
 	r_pocket = /obj/item/vamp/keys/camarilla
 	l_pocket = /obj/item/vamp/phone/camarilla
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/melee/vampirearms/stake=3, /obj/item/flashlight=1, /obj/item/masquerade_contract=1, /obj/item/vamp/keys/hack=1, /obj/item/stack/dollar/fifty=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/vampire_stake=3, /obj/item/flashlight=1, /obj/item/masquerade_contract=1, /obj/item/vamp/keys/hack=1, /obj/item/stack/dollar/fifty=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -632,7 +632,7 @@
 	r_pocket = /obj/item/vamp/keys/anarch
 	l_pocket = /obj/item/vamp/phone/anarch
 	r_hand = /obj/item/melee/vampirearms/baseball
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/melee/vampirearms/stake=3, /obj/item/flashlight=1, /obj/item/vamp/keys/hack=1, /obj/item/stack/dollar/rand=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/vampire_stake=3, /obj/item/flashlight=1, /obj/item/vamp/keys/hack=1, /obj/item/stack/dollar/rand=1)
 
 /datum/outfit/job/bouncer/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -1082,7 +1082,7 @@
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/flashlight
 	id = /obj/item/cockclock
-	backpack_contents = list(/obj/item/passport=1, /obj/item/melee/vampirearms/stake=1, /obj/item/vamp/keys/hack=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/vampire_stake=1, /obj/item/vamp/keys/hack=1)
 
 /datum/outfit/job/caitiff/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -1149,7 +1149,7 @@
 	l_pocket = /obj/item/vamp/keys/church
 	backpack_contents = list(
 		/obj/item/storage/book/bible = 1,
-		/obj/item/melee/vampirearms/stake = 3,
+		/obj/item/vampire_stake = 3,
 		/obj/item/molotov = 1,
 		/obj/item/gas_can/full = 1,
 		/obj/item/vamp/keys/hack=1
@@ -1252,7 +1252,7 @@
 	r_pocket = /obj/item/flashlight
 	suit = /obj/item/clothing/suit/vampire/trench
 	id = /obj/item/cockclock
-	backpack_contents = list(/obj/item/passport=1, /obj/item/melee/vampirearms/stake=3, /obj/item/gun/ballistic/vampire/revolver=1, /obj/item/melee/vampirearms/knife=1, /obj/item/vamp/keys/hack=1, /obj/item/melee/vampirearms/katana/kosa=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/vampire_stake=3, /obj/item/gun/ballistic/vampire/revolver=1, /obj/item/melee/vampirearms/knife=1, /obj/item/vamp/keys/hack=1, /obj/item/melee/vampirearms/katana/kosa=1)
 
 /datum/outfit/job/sabbatist/pre_equip(mob/living/carbon/human/H)
 	..()

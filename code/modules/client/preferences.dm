@@ -2538,6 +2538,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				real_name += "[pick(GLOB.last_names)]"
 
 	character.real_name = real_name
+	character.true_real_name = real_name
 	character.name = character.real_name
 	character.diablerist = diablerist
 

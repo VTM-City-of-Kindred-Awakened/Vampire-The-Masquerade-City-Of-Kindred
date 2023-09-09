@@ -871,11 +871,29 @@
 	set name = "Resist"
 	set category = "IC"
 
-	if(!can_resist())
-		return
 	changeNext_move(CLICK_CD_RESIST)
 
+	if(IsStun())
+		AdjustStun(-5)
+		do_attack_animation(src)
+		visible_message("<span class='danger'>[src] tries to stand up!</span>", \
+						"<span class='userdanger'>You try to stand up!</span>")
+	if(IsKnockdown())
+		AdjustKnockdown(-5)
+		do_attack_animation(src)
+		visible_message("<span class='danger'>[src] tries to stand up!</span>", \
+						"<span class='userdanger'>You try to stand up!</span>")
+	if(IsImmobilized())
+		AdjustImmobilized(-5)
+		do_attack_animation(src)
+		visible_message("<span class='danger'>[src] tries to stand up!</span>", \
+						"<span class='userdanger'>You try to stand up!</span>")
+
+	if(!can_resist())
+		return
+
 	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
+
 	//resisting grabs (as if it helps anyone...)
 	if(!HAS_TRAIT(src, TRAIT_RESTRAINED) && pulledby)
 		log_combat(src, pulledby, "resisted grab")

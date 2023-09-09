@@ -187,6 +187,8 @@
 /mob/living/carbon/human/npc/proc/CheckMove()
 	if(stat >= 2)
 		return TRUE
+	if(last_grab+30 > world.time)
+		return TRUE
 	if(ghoulificated)
 		return TRUE
 	if(key)

@@ -13,7 +13,7 @@
 /area/vtm/proc/break_elysium()
 	if(zone_type == "masquerade")
 		zone_type = "battle"
-		spawn(1200)
+		spawn(1800)
 			zone_type = "masquerade"
 
 /area/vtm/interior

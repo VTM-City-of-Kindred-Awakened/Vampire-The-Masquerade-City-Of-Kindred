@@ -72,14 +72,17 @@
 						if(H.clane.name == "Salubri")
 							salubri_allowed = TRUE
 					if(clane.name != "Banu Haqim" && clane.name != "Caitiff")
-						if(!mind.special_role || special_role_name == "Ambitious" || !salubri_allowed)
-							to_chat(src, "<span class='warning'>You find the idea of drinking your own <b>KIND</b> disgusting!</span>")
-							last_drinkblood_use = 0
-							if(client)
-								client.images -= suckbar
-							qdel(suckbar)
-							stop_sound_channel(CHANNEL_BLOOD)
-							return
+						if(!salubri_allowed)
+							if(!mind.special_role || special_role_name == "Ambitious")
+								to_chat(src, "<span class='warning'>You find the idea of drinking your own <b>KIND</b> disgusting!</span>")
+								last_drinkblood_use = 0
+								if(client)
+									client.images -= suckbar
+								qdel(suckbar)
+								stop_sound_channel(CHANNEL_BLOOD)
+								return
+							else
+								vse_taki = TRUE
 						else
 							vse_taki = TRUE
 					else

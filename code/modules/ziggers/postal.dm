@@ -72,7 +72,7 @@
 		playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 		var/IT = pick(/obj/item/storage/pill_bottle/estrogen,
 						/obj/item/storage/pill_bottle/antibirth,
-						/obj/item/melee/vampirearms/stake,
+						/obj/item/vampire_stake,
 						/obj/item/stack/dollar/rand,
 						/obj/item/melee/vampirearms/knife,
 						/obj/item/melee/vampirearms/tire,

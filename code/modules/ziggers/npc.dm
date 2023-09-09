@@ -14,7 +14,7 @@
 
 	var/turf/walktarget	//dlya movementa
 
-//	var/last_grab = 0
+	var/last_grab = 0
 
 	var/tupik_steps = 0
 	var/tupik_loc
@@ -374,12 +374,15 @@
 			phrase = pick(socialrole.female_phrases)
 	RealisticSay(phrase)
 
-/mob/living/carbon/human/Move(NewLoc, direct)
-	update_shadow()
-	var/mob/living/carbon/human/npc/NPC = locate() in NewLoc
+/mob/living/carbon/human/Bump(atom/Obstacle)
+	. = ..()
+	var/mob/living/carbon/human/npc/NPC = locate() in get_turf(Obstacle)
 	if(NPC)
 		if(a_intent != INTENT_HELP)
 			NPC.Annoy(src)
+
+/mob/living/carbon/human/Move(NewLoc, direct)
+	update_shadow()
 	if(istype(src, /mob/living/carbon/human/npc))
 		var/mob/living/carbon/human/npc/CPN = src
 		if(CPN.CheckMove())
@@ -454,9 +457,9 @@
 				NEPIC.Aggro(user)
 			Aggro(user, TRUE)
 
-//mob/living/carbon/human/npc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
-//	. = ..()
-//	last_grab = world.time
+/mob/living/carbon/human/npc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
+	. = ..()
+	last_grab = world.time
 
 /mob/living/carbon/human/npc/proc/EmoteAction()
 	walk(src,0)

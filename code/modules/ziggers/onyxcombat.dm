@@ -14,6 +14,7 @@
 	var/masquerade_votes = 0
 	var/list/voted_for = list()
 	var/flavor_text
+	var/true_real_name
 
 /datum/preferences
 	var/last_torpor = 0
@@ -597,7 +598,7 @@
 		var/plus = 0
 		if(HAS_TRAIT(BD, TRAIT_HUNGRY))
 			plus = 1
-		if(BD.bloodpool < dscpln.cost+plus)
+		if(BD.bloodpool < dscpln.cost+plus+(dscpln.level_casting-1))
 			SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to use this discipline.</span>")
 			return
@@ -613,20 +614,26 @@
 			icon_state = "[main_state]-on"
 		else if(!dscpln.ranged)
 			last_discipline_use = world.time
-			icon_state = "[main_state]-on"
-			dscpln.activate(BD, BD)
-			spawn(dadelay+BD.discipline_time_plus)
-				icon_state = main_state
+			if(dscpln.check_activated(BD, BD))
+				icon_state = "[main_state]-on"
+				dscpln.activate(BD, BD)
+				spawn(dadelay+BD.discipline_time_plus)
+					icon_state = main_state
 
 /atom/movable/screen/disciplines/proc/range_activate(var/mob/living/trgt, var/mob/living/carbon/human/cstr)
-	if(cstr.bloodpool < dscpln.cost)
+	var/plus = 0
+	if(HAS_TRAIT(cstr, TRAIT_HUNGRY))
+		plus = 1
+	if(cstr.bloodpool < dscpln.cost+plus+(dscpln.level_casting-1))
 		icon_state = main_state
 		active = FALSE
 		SEND_SOUND(cstr, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 		to_chat(cstr, "<span class='warning'>You don't have enough <b>BLOOD</b> to use this discipline.</span>")
 		return
-	dscpln.activate(trgt, cstr)
-	last_discipline_use = world.time
+
+	if(dscpln.check_activated(trgt, cstr))
+		dscpln.activate(trgt, cstr)
+		last_discipline_use = world.time
 	active = FALSE
 	icon_state = main_state
 

@@ -251,13 +251,13 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/melee/vampirearms/stake
+/obj/item/vampire_stake
 	name = "stake"
 	desc = "Paralyzes blank-bodies if aimed straight to the heart."
 	icon = 'code/modules/ziggers/weapons.dmi'
 	icon_state = "stake"
 	force = 10
-	wound_bonus = -10
+//	wound_bonus = -10
 	throwforce = 10
 	attack_verb_continuous = list("pierces", "cuts")
 	attack_verb_simple = list("pierce", "cut")
@@ -266,9 +266,11 @@
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/melee/vampirearms/stake/attack(mob/living/target, mob/living/user)
+/obj/item/vampire_stake/attack(mob/living/target, mob/living/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		return
+	if(target.IsParalyzed() || target.IsKnockdown() || target.IsStun())
 		return
 	if(HAS_TRAIT(user, TRAIT_ELYSIUM))
 		user.check_elysium(TRUE)

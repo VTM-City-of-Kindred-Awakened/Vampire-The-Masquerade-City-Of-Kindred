@@ -366,7 +366,7 @@
 		new /datum/data/mining_equipment("cannabis puff",		/obj/item/clothing/mask/cigarette/rollie/cannabis,	25),
 		new /datum/data/mining_equipment("cannabis leaf",	/obj/item/food/grown/cannabis,	10),
 		new /datum/data/mining_equipment("incendiary 5.56 ammo",	/obj/item/ammo_box/vampire/c556/incendiary,	1000),
-		new /datum/data/mining_equipment("stake",	/obj/item/melee/vampirearms/stake,	100)
+		new /datum/data/mining_equipment("stake",	/obj/item/vampire_stake,	100)
 		)
 
 /obj/machinery/mineral/equipment_vendor/fastfood/smoking
