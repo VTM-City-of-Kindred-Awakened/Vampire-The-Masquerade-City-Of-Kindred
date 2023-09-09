@@ -215,7 +215,7 @@
 	icon_state = "dominate"
 	cost = 1
 	ranged = TRUE
-	delay = 50
+	delay = 150
 	activate_sound = 'code/modules/ziggers/sounds/dominate.ogg'
 
 /datum/discipline/dominate/activate(mob/living/target, mob/living/carbon/human/caster)
