@@ -124,7 +124,7 @@
 					if(H in SSbloodhunt.hunted)
 						SSbloodhunt.hunted -= H
 						H.bloodhunted = FALSE
-						SSbloodhunt.update()
+						SSbloodhunt.update_shit()
 						to_chat(user, "<span class='warning'>You remove [chosen_name] from the Hunted list.</span>")
 					else
 						SSbloodhunt.announce_hunted(H)
