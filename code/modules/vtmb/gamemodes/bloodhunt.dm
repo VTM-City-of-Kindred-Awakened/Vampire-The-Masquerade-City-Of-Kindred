@@ -15,18 +15,28 @@
 /mob/living/proc/check_elysium(var/instant = FALSE)
 	if(!ishuman(src))
 		return
+	var/area/vtm/V
 	if(istype(get_area(src), /area/vtm))
-		var/area/vtm/V = get_area(src)
+		V = get_area(src)
 		var/mob/living/carbon/human/H = src
 		if(V.zone_owner == H.frakcja)
 			return
-	to_chat(src, "<span class='warning'>You feel like your actions are against the rules...</span>")
+		for(var/mob/living/carbon/human/HU in SSbloodhunt.hunted)
+			if(HU)
+				if(HU.real_name == H.real_name)
+					return
+	to_chat(src, "<span class='userdanger'><b>You feel like your actions are against the rules...</b></span>")
 	if(instant)
 		SSbloodhunt.announce_hunted(src)
+		if(V)
+			V.break_elysium()
 	else
 		elysium_checks = elysium_checks+1
 		if(elysium_checks > 2)
 			SSbloodhunt.announce_hunted(src)
+			if(V)
+				V.break_elysium()
+
 
 SUBSYSTEM_DEF(bloodhunt)
 	name = "Blood Hunt"

@@ -10,6 +10,12 @@
 	var/zone_type = "masquerade"
 	var/zone_owner
 
+/area/vtm/proc/break_elysium()
+	if(zone_type == "masquerade")
+		zone_type = "battle"
+		spawn(1200)
+			zone_type = "masquerade"
+
 /area/vtm/interior
 	name = "Interior"
 	icon_state = "interior"
