@@ -624,7 +624,7 @@
 	var/plus = 0
 	if(HAS_TRAIT(cstr, TRAIT_HUNGRY))
 		plus = 1
-	if(cstr.bloodpool < dscpln.cost+plus+(dscpln.level_casting-1))
+	if(cstr.bloodpool < dscpln.cost+plus)
 		icon_state = main_state
 		active = FALSE
 		SEND_SOUND(cstr, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
