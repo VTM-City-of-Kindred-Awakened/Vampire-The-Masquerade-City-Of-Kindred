@@ -272,8 +272,7 @@
 		return
 	if(target.IsParalyzed() || target.IsKnockdown() || target.IsStun())
 		return
-	if(HAS_TRAIT(user, TRAIT_ELYSIUM))
-		user.check_elysium(TRUE)
+	user.check_elysium(TRUE)
 	if(!target.IsParalyzed() && iskindred(target) && !target.stakeimmune)
 		visible_message("<span class='warning'>[user] aims [src] straight to the [target]'s heart!</span>", "<span class='warning'>You aim [src] straight to the [target]'s heart!</span>")
 		if(do_after(user, 10, target))
@@ -393,3 +392,20 @@
 
 /obj/item/melee/vampirearms/eguitar/update_icon_state()
 	icon_state = "rock0"
+
+/obj/item/shield/door
+	name = "\improper door"
+	desc = "It opens and closes."
+	icon_state = "door"
+	icon = 'code/modules/ziggers/weapons.dmi'
+	lefthand_file = 'code/modules/ziggers/righthand.dmi'
+	righthand_file = 'code/modules/ziggers/lefthand.dmi'
+	force = 10
+	throwforce = 40
+	throw_speed = 2
+	throw_range = 3
+	w_class = WEIGHT_CLASS_BULKY
+	attack_verb_continuous = list("shoves", "bashes")
+	attack_verb_simple = list("shove", "bash")
+	max_integrity = 999999
+	material_flags = MATERIAL_NO_EFFECTS

@@ -62,7 +62,7 @@ SUBSYSTEM_DEF(traumas)
 
 	phobia_objs = list("snakes" = typecacheof(list(/obj/item/rod_of_asclepius, /obj/item/toy/plush/snakeplushie)),
 		"spiders"   = typecacheof(list(/obj/structure/spider)),
-		"security"  = typecacheof(list(/obj/item/card/id/hunter, /obj/item/storage/book/bible, /obj/structure/jesuscross)),
+		"security"  = typecacheof(list(/obj/item/storage/book/bible, /obj/structure/jesuscross)),
 
 		"clowns"    = typecacheof(list(
 			/obj/item/clothing/under/rank/civilian/clown, /obj/item/clothing/shoes/clown_shoes,

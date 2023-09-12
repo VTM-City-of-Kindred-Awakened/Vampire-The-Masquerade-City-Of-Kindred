@@ -13,6 +13,7 @@
 
 	var/level_casting = 1	//which level we want to cast
 	var/clane_restricted = FALSE	//Only for specified clans
+	var/dead_restricted = TRUE
 
 /datum/discipline/proc/post_gain(var/mob/living/carbon/human/H)
 	return
@@ -26,9 +27,9 @@
 	var/plus = 0
 	if(HAS_TRAIT(caster, TRAIT_HUNGRY))
 		plus = 1
-	if(caster.bloodpool < cost+plus+(level_casting-1))
+	if(caster.bloodpool < cost+plus)
 		return FALSE
-	if(target.stat == DEAD)
+	if(target.stat == DEAD && dead_restricted)
 		return FALSE
 	if(ranged)
 		if(get_dist(caster, target) > range_sh)
@@ -40,7 +41,7 @@
 	if(target.spell_immunity)
 		to_chat(caster, "<span class='notice'>This being immune to magic</span>")
 		return FALSE
-	caster.bloodpool = max(0, caster.bloodpool-(cost+plus+(level_casting-1)))
+	caster.bloodpool = max(0, caster.bloodpool-(cost+plus))
 	caster.update_blood_hud()
 	if(ranged)
 		to_chat(caster, "<span class='notice'>You activate the [name] on [target].</span>")
@@ -87,6 +88,7 @@
 	ranged = TRUE
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/ziggers/sounds/wolves.ogg'
+	dead_restricted = FALSE
 
 /obj/effect/spectral_wolf
 	name = "Spectral Wolf"
@@ -167,7 +169,7 @@
 	cost = 1
 	ranged = FALSE
 	delay = 50
-	violates_masquerade = TRUE
+	violates_masquerade = FALSE
 	activate_sound = 'code/modules/ziggers/sounds/celerity_activate.ogg'
 	leveldelay = TRUE
 
@@ -183,6 +185,7 @@
 
 /mob/living/carbon/human
 	var/celerity_visual = FALSE
+	var/potential = 0
 
 /mob/living/carbon/human/Move(atom/newloc, direct, glide_size_override)
 	..()
@@ -192,22 +195,70 @@
 		C.appearance = appearance
 		C.dir = dir
 		animate(C, pixel_x = rand(-16, 16), pixel_y = rand(-16, 16), alpha = 0, time = 5)
+		if(CheckEyewitness(src, src, 7, FALSE))
+			AdjustMasquerade(-1)
 
 /datum/movespeed_modifier/celerity
 	multiplicative_slowdown = -0.5
+
+/datum/movespeed_modifier/celerity2
+	multiplicative_slowdown = -0.75
+
+/datum/movespeed_modifier/celerity3
+	multiplicative_slowdown = -1
+
+/datum/movespeed_modifier/celerity4
+	multiplicative_slowdown = -1.25
+
+/datum/movespeed_modifier/celerity5
+	multiplicative_slowdown = -1.5
 
 /datum/movespeed_modifier/wing
 	multiplicative_slowdown = -0.25
 
 /datum/discipline/celerity/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
-	caster.add_movespeed_modifier(/datum/movespeed_modifier/celerity)
-	caster.celerity_visual = TRUE
-	spawn((delay*level_casting)+caster.discipline_time_plus)
-		if(caster)
-			playsound(caster.loc, 'code/modules/ziggers/sounds/celerity_deactivate.ogg', 50, FALSE)
-			caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity)
-			caster.celerity_visual = FALSE
+	switch(level_casting)
+		if(1)
+			caster.add_movespeed_modifier(/datum/movespeed_modifier/celerity)
+			caster.celerity_visual = TRUE
+			spawn((delay*level_casting)+caster.discipline_time_plus)
+				if(caster)
+					playsound(caster.loc, 'code/modules/ziggers/sounds/celerity_deactivate.ogg', 50, FALSE)
+					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity)
+					caster.celerity_visual = FALSE
+		if(2)
+			caster.add_movespeed_modifier(/datum/movespeed_modifier/celerity2)
+			caster.celerity_visual = TRUE
+			spawn((delay*level_casting)+caster.discipline_time_plus)
+				if(caster)
+					playsound(caster.loc, 'code/modules/ziggers/sounds/celerity_deactivate.ogg', 50, FALSE)
+					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity2)
+					caster.celerity_visual = FALSE
+		if(3)
+			caster.add_movespeed_modifier(/datum/movespeed_modifier/celerity3)
+			caster.celerity_visual = TRUE
+			spawn((delay*level_casting)+caster.discipline_time_plus)
+				if(caster)
+					playsound(caster.loc, 'code/modules/ziggers/sounds/celerity_deactivate.ogg', 50, FALSE)
+					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity3)
+					caster.celerity_visual = FALSE
+		if(4)
+			caster.add_movespeed_modifier(/datum/movespeed_modifier/celerity4)
+			caster.celerity_visual = TRUE
+			spawn((delay*level_casting)+caster.discipline_time_plus)
+				if(caster)
+					playsound(caster.loc, 'code/modules/ziggers/sounds/celerity_deactivate.ogg', 50, FALSE)
+					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity4)
+					caster.celerity_visual = FALSE
+		if(5)
+			caster.add_movespeed_modifier(/datum/movespeed_modifier/celerity5)
+			caster.celerity_visual = TRUE
+			spawn((delay*level_casting)+caster.discipline_time_plus)
+				if(caster)
+					playsound(caster.loc, 'code/modules/ziggers/sounds/celerity_deactivate.ogg', 50, FALSE)
+					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity5)
+					caster.celerity_visual = FALSE
 
 /datum/discipline/dominate
 	name = "Dominate"
@@ -224,6 +275,7 @@
 		return
 	if(iskindred(target))
 		if(target.generation < caster.generation)
+			to_chat(caster, "<span class='warning'>[target] is too powerful for you!</span>")
 			return
 	if(HAS_TRAIT(caster, TRAIT_MUTE))
 		to_chat(caster, "<span class='warning'>You find yourself unable to speak!</span>")
@@ -253,11 +305,11 @@
 		if(3)
 			to_chat(target, "<span class='userdanger'><b>THINK TWICE</b></span>")
 			caster.say("THINK TWICE!!")
-			target.Stun(25*level_casting)
+			target.Stun(10*level_casting)
 		if(4)
 			to_chat(target, "<span class='userdanger'><b>THINK TWICE</b></span>")
 			caster.say("THINK TWICE!!")
-			target.Stun(25*level_casting)
+			target.Stun(10*level_casting)
 		if(5)
 			if(!target.spell_immunity)
 				to_chat(target, "<span class='userdanger'><b>YOU SHOULD KILL YOURSELF NOW</b></span>")
@@ -433,6 +485,7 @@
 	caster.dna.species.meleemod += armah
 	caster.dna.species.attack_sound = 'code/modules/ziggers/sounds/heavypunch.ogg'
 	tackler = caster.AddComponent(/datum/component/tackler, stamina_cost=0, base_knockdown = 1 SECONDS, range = 2+level_casting, speed = 1, skill_mod = 0, min_distance = 0)
+	caster.potential = level_casting
 	spawn(delay+caster.discipline_time_plus)
 		if(caster)
 			if(caster.dna)
@@ -443,6 +496,7 @@
 					caster.dna.species.meleemod -= armah
 					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
 					caster.remove_overlay(POTENCE_LAYER)
+					caster.potential = 0
 					qdel(tackler)
 
 /datum/discipline/fortitude
@@ -490,39 +544,76 @@
 	caster.alpha = 10
 	spawn((delay*level_casting)+caster.discipline_time_plus)
 		if(caster)
-			playsound(caster.loc, 'code/modules/ziggers/sounds/obfuscate_deactivate.ogg', 50, FALSE)
-			caster.alpha = 255
+			if(caster.alpha != 255)
+				playsound(caster.loc, 'code/modules/ziggers/sounds/obfuscate_deactivate.ogg', 50, FALSE)
+				caster.alpha = 255
 
 /datum/discipline/presence
 	name = "Presence"
 	desc = "Makes targets in radius more vulnerable to damages."
 	icon_state = "presence"
 	cost = 1
-	ranged = FALSE
+	ranged = TRUE
 	delay = 50
 	activate_sound = 'code/modules/ziggers/sounds/presence_activate.ogg'
 	leveldelay = FALSE
 
 /datum/discipline/presence/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
-	var/mod = 0.3*level_casting
-	for(var/mob/living/carbon/human/L in viewers(6, caster))
-		if(L != caster)
-			var/mob/living/carbon/human/H = L
-			H.dna.species.brutemod += mod
-			H.dna.species.burnmod += mod
-			H.remove_overlay(MUTATIONS_LAYER)
-			var/mutable_appearance/presence_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "presence", -MUTATIONS_LAYER)
-			presence_overlay.pixel_z = 1
-			H.overlays_standing[MUTATIONS_LAYER] = presence_overlay
-			H.apply_overlay(MUTATIONS_LAYER)
-			spawn(delay+caster.discipline_time_plus)
-				if(H)
-					H.dna.species.brutemod -= mod
-					H.dna.species.burnmod -= mod
-					H.remove_overlay(MUTATIONS_LAYER)
-	if(caster)
-		playsound(caster.loc, 'code/modules/ziggers/sounds/presence_deactivate.ogg', 50, FALSE)
+	if(target.generation < caster.generation)
+		to_chat(caster, "<span class='warning'>[target] is too powerful for you!</span>")
+		return
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		H.remove_overlay(MUTATIONS_LAYER)
+		var/mutable_appearance/presence_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "presence", -MUTATIONS_LAYER)
+		presence_overlay.pixel_z = 1
+		H.overlays_standing[MUTATIONS_LAYER] = presence_overlay
+		H.apply_overlay(MUTATIONS_LAYER)
+		switch(level_casting)
+			if(1)
+				target.Immobilize(10)
+				walk_to(target, caster, 1, H.total_multiplicative_slowdown())
+				to_chat(target, "<span class='userlove'><b>COME HERE</b></span>")
+				caster.say("COME HERE!!")
+			if(2)
+				target.Stun(10)
+				to_chat(target, "<span class='userlove'><b>REST</b></span>")
+				caster.say("REST!!")
+				if(target.body_position == STANDING_UP)
+					target.toggle_resting()
+			if(3)
+				var/obj/item/I1 = H.get_active_held_item()
+				var/obj/item/I2 = H.get_inactive_held_item()
+				to_chat(target, "<span class='userlove'><b>PLEASE ME</b></span>")
+				caster.say("PLEASE ME!!")
+				target.face_atom(caster)
+				target.do_jitter_animation(30)
+				target.Immobilize(10)
+				target.drop_all_held_items()
+				if(I1)
+					I1.throw_at(get_turf(caster), 3, 1, target)
+				if(I2)
+					I2.throw_at(get_turf(caster), 3, 1, target)
+			if(4)
+				to_chat(target, "<span class='userlove'><b>FEAR ME</b></span>")
+				caster.say("FEAR ME!!")
+				target.Immobilize(10)
+				walk_away(target, caster, 20, H.total_multiplicative_slowdown())
+				target.emote("scream")
+				target.do_jitter_animation(30)
+			if(5)
+				to_chat(target, "<span class='userlove'><b>UNDRESS YOURSELF</b></span>")
+				caster.say("UNDRESS YOURSELF!!")
+				target.Immobilize(10)
+				for(var/obj/item/clothing/W in H.contents)
+					if(W)
+						H.dropItemToGround(W, TRUE)
+		spawn(delay+caster.discipline_time_plus)
+			if(H)
+				H.remove_overlay(MUTATIONS_LAYER)
+				if(caster)
+					playsound(caster.loc, 'code/modules/ziggers/sounds/presence_deactivate.ogg', 50, FALSE)
 
 /datum/discipline/protean
 	name = "Protean"
@@ -530,7 +621,7 @@
 	icon_state = "protean"
 	cost = 1
 	ranged = FALSE
-	delay = 150
+	delay = 100
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/ziggers/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
@@ -621,6 +712,8 @@
 			spawn(delay+caster.discipline_time_plus)
 				if(caster && caster.stat != DEAD)
 					GA.Restore(GA.myshape)
+					caster.Stun(30)
+					caster.do_jitter_animation(30)
 //					if(caster.dna)
 					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 //						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
@@ -650,6 +743,8 @@
 			spawn(delay+caster.discipline_time_plus)
 				if(caster && caster.stat != DEAD)
 					GA.Restore(GA.myshape)
+					caster.Stun(30)
+					caster.do_jitter_animation(30)
 //					if(caster.dna)
 					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 //						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
@@ -751,6 +846,7 @@
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/ziggers/sounds/thaum.ogg'
 	clane_restricted = TRUE
+	dead_restricted = FALSE
 
 /datum/discipline/thaumaturgy/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
@@ -827,6 +923,7 @@
 //	range_sh = 2
 	violates_masquerade = TRUE
 	clane_restricted = TRUE
+	dead_restricted = FALSE
 
 /datum/discipline/serpentis/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
@@ -1256,6 +1353,8 @@
 			spawn(delay+caster.discipline_time_plus)
 				if(caster && caster.stat != DEAD)
 					BAT.Restore(BAT.myshape)
+					caster.Stun(30)
+					caster.do_jitter_animation(30)
 					playsound(caster.loc, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 
 /datum/discipline/valeren

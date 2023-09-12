@@ -13,6 +13,11 @@
 			to_chat(usr, "[icon2html(getFlatIcon(H), usr)][H.true_real_name], [H.mind ? H.mind.assigned_role : "Citizen"]. Was last seen at [A.name]")
 
 /mob/living/proc/check_elysium(var/instant = FALSE)
+	if(alpha != 255)
+		playsound(loc, 'code/modules/ziggers/sounds/obfuscate_deactivate.ogg', 50, FALSE)
+		alpha = 255
+	if(!HAS_TRAIT(src, TRAIT_ELYSIUM))
+		return
 	if(!ishuman(src))
 		return
 	if(!client)

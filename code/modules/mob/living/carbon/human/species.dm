@@ -1345,8 +1345,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
-	if(HAS_TRAIT(user, TRAIT_ELYSIUM))
-		user.check_elysium(FALSE)
+	user.check_elysium(FALSE)
 	if(target.check_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s attack!</span>", \
 						"<span class='userdanger'>You block [user]'s attack!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
@@ -1403,6 +1402,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		target.visible_message("<span class='danger'>[user] [atk_verb]ed [target]!</span>", \
 						"<span class='userdanger'>You're [atk_verb]ed by [user]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, "<span class='danger'>You [atk_verb] [target]!</span>")
+
+		if(user.potential >= 5)
+			var/atom/throw_target = get_edge_target_turf(target, user.dir)
+			target.throw_at(throw_target, rand(5, 7), 4, user)
 
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey

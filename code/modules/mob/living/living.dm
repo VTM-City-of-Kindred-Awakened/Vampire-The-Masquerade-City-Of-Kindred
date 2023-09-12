@@ -871,7 +871,18 @@
 	set name = "Resist"
 	set category = "IC"
 
+	if(!can_resist())
+		return
+
 	changeNext_move(CLICK_CD_RESIST)
+
+	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
+
+	//resisting grabs (as if it helps anyone...)
+	if(!HAS_TRAIT(src, TRAIT_RESTRAINED) && pulledby)
+		log_combat(src, pulledby, "resisted grab")
+		resist_grab()
+		return
 
 	if(IsStun())
 		AdjustStun(-5)
@@ -888,17 +899,6 @@
 		do_attack_animation(src)
 		visible_message("<span class='danger'>[src] tries to stand up!</span>", \
 						"<span class='userdanger'>You try to stand up!</span>")
-
-	if(!can_resist())
-		return
-
-	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
-
-	//resisting grabs (as if it helps anyone...)
-	if(!HAS_TRAIT(src, TRAIT_RESTRAINED) && pulledby)
-		log_combat(src, pulledby, "resisted grab")
-		resist_grab()
-		return
 
 	//unbuckling yourself
 	if(buckled && last_special <= world.time)
@@ -1939,8 +1939,7 @@
 			if (INTENT_HARM)
 				if (HAS_TRAIT(src, TRAIT_PACIFISM))
 					return FALSE
-				if(HAS_TRAIT(src, TRAIT_ELYSIUM))
-					check_elysium(FALSE)
+				check_elysium(FALSE)
 				attack_result = style.harm_act(src, target)
 			if (INTENT_DISARM)
 				attack_result = style.disarm_act(src, target)

@@ -69,6 +69,8 @@
 				H.adjustBruteLoss(-5*round(BD.collected_blood/2), TRUE)
 				H.adjustFireLoss(-5*round(BD.collected_blood/2), TRUE)
 			BC.Restore(BC.myshape)
+			NG.Stun(30)
+			NG.do_jitter_animation(30)
 
 /datum/action/vicissitude_form
 	name = "Vicissitude Beast Form"
@@ -94,6 +96,8 @@
 	spawn(150)
 		if(TE)
 			TE.Restore(TE.myshape)
+			NG.Stun(30)
+			NG.do_jitter_animation(30)
 
 /datum/action/basic_vicissitude
 	name = "Vicissitude Upgrades"
@@ -385,6 +389,10 @@
 
 /mob/living/simple_animal/hostile/bloodcrawler/Move(NewLoc, direct)
 	. = ..()
+	var/obj/structure/vampdoor/V = locate() in NewLoc
+	if(V)
+		if(V.hackable)
+			forceMove(get_turf(V))
 	for(var/obj/effect/decal/cleanable/blood/B in range(1, NewLoc))
 		if(B)
 			if(B.bloodiness)
@@ -722,18 +730,18 @@
 /mob/living/simple_animal/hostile/gangrel/better
 	maxHealth = 500
 	health = 500
-	melee_damage_lower = 60
-	melee_damage_upper = 60
-	speed = -1
+	melee_damage_lower = 50
+	melee_damage_upper = 50
+	speed = 0
 
 /mob/living/simple_animal/hostile/gangrel/best
 	icon_state = "gangrel_m"
 	icon_living = "gangrel_m"
-	maxHealth = 700
-	health = 700
-	melee_damage_lower = 80
-	melee_damage_upper = 80
-	speed = -1
+	maxHealth = 500
+	health = 500
+	melee_damage_lower = 60
+	melee_damage_upper = 60
+	speed = 0
 
 /mob/living/simple_animal/hostile/gargoyle
 	name = "Gargoyle"
@@ -806,13 +814,13 @@
 	pixel_z = -16
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
-	speed = -1
+	speed = 0
 	maxHealth = 500
 	health = 500
 	butcher_results = list(/obj/item/stack/human_flesh = 20)
 	harm_intent_damage = 5
-	melee_damage_lower = 60
-	melee_damage_upper = 60
+	melee_damage_lower = 30
+	melee_damage_upper = 30
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
@@ -831,7 +839,7 @@
 	icon_living = "liquid"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
-	speed = -1
+	speed = 3
 	maxHealth = 100
 	health = 100
 	butcher_results = list(/obj/item/stack/human_flesh = 20)

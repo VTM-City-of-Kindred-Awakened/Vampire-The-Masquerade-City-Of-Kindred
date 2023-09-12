@@ -116,7 +116,7 @@
 	if(user.grab_state >= GRAB_AGGRESSIVE && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to risk hurting [src]!</span>")
 		return FALSE
-	if(user.grab_state >= GRAB_AGGRESSIVE && HAS_TRAIT(user, TRAIT_ELYSIUM))
+	if(user.grab_state >= GRAB_AGGRESSIVE)
 		user.check_elysium(FALSE)
 	grippedby(user)
 

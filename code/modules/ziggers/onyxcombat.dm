@@ -598,7 +598,7 @@
 		var/plus = 0
 		if(HAS_TRAIT(BD, TRAIT_HUNGRY))
 			plus = 1
-		if(BD.bloodpool < dscpln.cost+plus+(dscpln.level_casting-1))
+		if(BD.bloodpool < dscpln.cost+plus)
 			SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to use this discipline.</span>")
 			return

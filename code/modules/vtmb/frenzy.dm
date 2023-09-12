@@ -78,19 +78,18 @@
 	for(var/obj/effect/fire/F in GLOB.fires_list)
 		if(F)
 			if(get_dist(src, F) < 7 && F.z == src.z)
-				if(F in view(6, src))
-					if(get_dist(src, F) < 6)
-						fear = F
-					if(get_dist(src, F) < 5)
-						fear = F
-					if(get_dist(src, F) < 4)
-						fear = F
-					if(get_dist(src, F) < 3)
-						fear = F
-					if(get_dist(src, F) < 2)
-						fear = F
-					if(get_dist(src, F) < 1)
-						fear = F
+				if(get_dist(src, F) < 6)
+					fear = F
+				if(get_dist(src, F) < 5)
+					fear = F
+				if(get_dist(src, F) < 4)
+					fear = F
+				if(get_dist(src, F) < 3)
+					fear = F
+				if(get_dist(src, F) < 2)
+					fear = F
+				if(get_dist(src, F) < 1)
+					fear = F
 
 //	if(!fear && !frenzy_target)
 //		return
@@ -172,6 +171,8 @@
 		for(var/mob/living/carbon/human/U in viewers(7, src))
 			if(U.on_fire)
 				fearstack += 1
+
+		fearstack = min(fearstack, 10)
 
 		if(fearstack)
 			if(prob(fearstack*5))

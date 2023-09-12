@@ -146,9 +146,19 @@
 				if(N.y > y-3 && N.y < y+3)
 					possible_list += N
 		if(!length(possible_list))
-			return get_turf(pick(GLOB.npc_activities))
+			var/atom/shitshit
+			for(var/obj/effect/landmark/npcactivity/N in GLOB.npc_activities)
+				if(N)
+					if(!shitshit)
+						shitshit = N
+					if(get_dist(src, N) > 1 && get_dist(src, N) < get_dist(src, shitshit))
+						shitshit = N
+			if(shitshit)
+				return shitshit
+			else
+				return pick(GLOB.npc_activities)
 
-		return get_turf(pick(possible_list))
+		return pick(possible_list)
 	else
 		var/turf/north_steps = CreateWay(NORTH)
 		var/turf/south_steps = CreateWay(SOUTH)

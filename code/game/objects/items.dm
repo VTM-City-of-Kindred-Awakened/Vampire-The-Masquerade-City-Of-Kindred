@@ -963,14 +963,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if((item_flags & ABSTRACT) || HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	user.dropItemToGround(src, silent = TRUE)
-	if(throwforce && HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, "<span class='notice'>You set [src] down gently on the ground.</span>")
-		return
-	if(HAS_TRAIT(user, TRAIT_ELYSIUM))
-		if(istype(src, /obj/item/molotov))
-			user.check_elysium(TRUE)
-		else if(throwforce)
-			user.check_elysium(FALSE)
+	if(throwforce)
+		if(HAS_TRAIT(user, TRAIT_PACIFISM))
+			to_chat(user, "<span class='notice'>You set [src] down gently on the ground.</span>")
+			return
+		user.check_elysium(FALSE)
+	if(istype(src, /obj/item/molotov))
+		user.check_elysium(TRUE)
 	return src
 
 /**

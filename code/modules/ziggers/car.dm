@@ -53,6 +53,17 @@
 		playsound(get_turf(H), 'code/modules/ziggers/sounds/gas_splat.ogg', 50, TRUE)
 		user.visible_message("<span class='warning'>[user] covers [A] in something flammable!</span>")
 
+
+/obj/vampire_car/attack_hand(mob/user)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.a_intent == INTENT_HARM && H.potential >= 4)
+			var/atom/throw_target = get_edge_target_turf(src, user.dir)
+			playsound(get_turf(src), 'code/modules/ziggers/sounds/bump.ogg', 100, FALSE)
+			get_damage(10)
+			throw_at(throw_target, rand(4, 6), 4, user)
+
 /obj/vampire_car
 	name = "car"
 	desc = "Take me home, country roads..."
@@ -65,6 +76,7 @@
 	pixel_w = -32
 	pixel_z = -32
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	throwforce = 150
 
 	var/last_vzhzh = 0
 
@@ -606,9 +618,10 @@
 /obj/vampire_car/Bump(atom/A)
 	if(speed > 5)
 		return
-	if(istype(A, /mob/living/carbon/human/npc))
-		var/mob/living/carbon/human/npc/NPC = A
-		NPC.Aggro(driver, TRUE)
+	if(driver)
+		if(istype(A, /mob/living/carbon/human/npc))
+			var/mob/living/carbon/human/npc/NPC = A
+			NPC.Aggro(driver, TRUE)
 	playsound(src, 'code/modules/ziggers/sounds/bump.ogg', 50, TRUE)
 	last_speeded = world.time+20
 	do_attack_animation(A)
@@ -621,13 +634,15 @@
 				dam2 = 15
 			L.apply_damage(dam2*stage, BRUTE, BODY_ZONE_CHEST)
 			var/dam = 5
-			if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
-				dam = 1
+			if(driver)
+				if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
+					dam = 1
 			get_damage(dam)
 		else
 			var/dam = 10
-			if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
-				dam = 5
+			if(driver)
+				if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
+					dam = 5
 			get_damage(dam)
 			driver.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
 	else

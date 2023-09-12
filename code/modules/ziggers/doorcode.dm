@@ -147,16 +147,34 @@
 		if(N.a_intent != INTENT_HARM)
 			playsound(src, lock_sound, 75, TRUE)
 			to_chat(user, "<span class='warning'>[src] is locked!</span>")
-			return
 		else
-			pixel_z = pixel_z+rand(-1, 1)
-			pixel_w = pixel_w+rand(-1, 1)
-			playsound(src, 'code/modules/ziggers/sounds/knock.ogg', 75, TRUE)
-			to_chat(user, "<span class='warning'>[src] is locked!</span>")
-			spawn(2)
-				pixel_z = initial(pixel_z)
-				pixel_w = initial(pixel_w)
-			return
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				if(H.potential >= 3)
+					if(hackable)
+						playsound(get_turf(src), 'code/modules/ziggers/sounds/get_bent.ogg', 100, FALSE)
+						var/obj/item/shield/door/D = new(get_turf(src))
+						D.icon_state = baseicon
+						var/atom/throw_target = get_edge_target_turf(src, user.dir)
+						D.throw_at(throw_target, rand(2, 4), 4, user)
+						qdel(src)
+					else
+						pixel_z = pixel_z+rand(-1, 1)
+						pixel_w = pixel_w+rand(-1, 1)
+						playsound(get_turf(src), 'code/modules/ziggers/sounds/get_bent.ogg', 50, TRUE)
+						to_chat(user, "<span class='warning'>[src] is locked!</span>")
+						spawn(2)
+							pixel_z = initial(pixel_z)
+							pixel_w = initial(pixel_w)
+				else
+					pixel_z = pixel_z+rand(-1, 1)
+					pixel_w = pixel_w+rand(-1, 1)
+					playsound(src, 'code/modules/ziggers/sounds/knock.ogg', 75, TRUE)
+					to_chat(user, "<span class='warning'>[src] is locked!</span>")
+					spawn(2)
+						pixel_z = initial(pixel_z)
+						pixel_w = initial(pixel_w)
+		return
 
 	if(closed)
 		playsound(src, open_sound, 75, TRUE)

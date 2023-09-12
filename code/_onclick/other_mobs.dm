@@ -18,6 +18,9 @@
 		to_chat(src, "<span class='notice'>You look at your arm and sigh.</span>")
 		return
 
+	if(celerity_visual)
+		changeNext_move(CLICK_CD_RAPID)
+
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.

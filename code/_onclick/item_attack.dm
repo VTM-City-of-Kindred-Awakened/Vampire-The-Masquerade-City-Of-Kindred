@@ -87,7 +87,7 @@
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return
 
-	if(force && HAS_TRAIT(user, TRAIT_ELYSIUM))
+	if(force)
 		user.check_elysium(FALSE)
 
 	if(item_flags & EYE_STAB && user.zone_selected == BODY_ZONE_PRECISE_EYES)
