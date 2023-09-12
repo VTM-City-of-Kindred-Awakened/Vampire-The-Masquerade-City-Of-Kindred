@@ -644,7 +644,7 @@
 	icon_state = "protean"
 	cost = 1
 	ranged = FALSE
-	delay = 100
+	delay = 200
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/ziggers/sounds/protean_activate.ogg'
 	clane_restricted = TRUE

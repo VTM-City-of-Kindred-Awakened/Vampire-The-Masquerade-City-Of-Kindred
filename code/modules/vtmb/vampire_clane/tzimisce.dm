@@ -61,7 +61,7 @@
 		BC = new(owner)
 	H.bloodpool = max(0, H.bloodpool-2)
 	BC.Shapeshift(H)
-	spawn(100)
+	spawn(200)
 		if(BC)
 			var/mob/living/simple_animal/hostile/bloodcrawler/BD = BC.myshape
 			H.bloodpool = min(H.bloodpool+round(BD.collected_blood/2), H.maxbloodpool)
@@ -93,7 +93,7 @@
 		TE = new(owner)
 	H.bloodpool = max(0, H.bloodpool-3)
 	TE.Shapeshift(H)
-	spawn(150)
+	spawn(200)
 		if(TE)
 			TE.Restore(TE.myshape)
 			NG.Stun(30)
