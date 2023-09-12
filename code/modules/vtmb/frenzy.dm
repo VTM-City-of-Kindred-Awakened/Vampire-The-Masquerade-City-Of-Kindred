@@ -95,7 +95,7 @@
 //		return
 
 	if(fear)
-		step_away(src,fear,0)
+		step_away(src,fear,99)
 		if(prob(25))
 			emote("scream")
 	else

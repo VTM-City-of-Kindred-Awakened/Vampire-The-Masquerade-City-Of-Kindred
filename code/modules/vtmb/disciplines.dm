@@ -10,6 +10,7 @@
 	var/level = 1
 	var/activate_sound = 'code/modules/ziggers/sounds/bloodhealing.ogg'
 	var/leveldelay = FALSE
+	var/fearless = FALSE
 
 	var/level_casting = 1	//which level we want to cast
 	var/clane_restricted = FALSE	//Only for specified clans
@@ -48,7 +49,7 @@
 	else
 		to_chat(caster, "<span class='notice'>You activate the [name].</span>")
 	if(ranged)
-		if(isnpc(target))
+		if(isnpc(target) && !fearless)
 			var/mob/living/carbon/human/npc/NPC = target
 			NPC.Aggro(caster, TRUE)
 	if(activate_sound)
@@ -268,6 +269,7 @@
 	ranged = TRUE
 	delay = 150
 	activate_sound = 'code/modules/ziggers/sounds/dominate.ogg'
+	fearless = TRUE
 
 /datum/discipline/dominate/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
@@ -557,6 +559,24 @@
 	delay = 50
 	activate_sound = 'code/modules/ziggers/sounds/presence_activate.ogg'
 	leveldelay = FALSE
+	fearless = TRUE
+
+/mob/living/carbon/human
+	var/mob/living/my_nigga
+
+/mob/living/carbon/human/proc/walk_to_my_nigga()
+	walk(src, 0)
+	if(!CheckFrenzyMove())
+		set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
+		step_to(src,my_nigga,0)
+		face_atom(my_nigga)
+
+/mob/living/carbon/human/proc/step_away_my_nigga()
+	walk(src, 0)
+	if(!CheckFrenzyMove())
+		set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
+		step_away(src,my_nigga,99)
+		face_atom(my_nigga)
 
 /datum/discipline/presence/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
@@ -570,10 +590,12 @@
 		presence_overlay.pixel_z = 1
 		H.overlays_standing[MUTATIONS_LAYER] = presence_overlay
 		H.apply_overlay(MUTATIONS_LAYER)
+		H.my_nigga = caster
 		switch(level_casting)
 			if(1)
-				target.Immobilize(10)
-				walk_to(target, caster, 1, H.total_multiplicative_slowdown())
+				var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/walk_to_my_nigga)
+				for(var/i in 1 to 20)
+					addtimer(cb, (i - 1)*H.total_multiplicative_slowdown())
 				to_chat(target, "<span class='userlove'><b>COME HERE</b></span>")
 				caster.say("COME HERE!!")
 			if(2)
@@ -598,8 +620,9 @@
 			if(4)
 				to_chat(target, "<span class='userlove'><b>FEAR ME</b></span>")
 				caster.say("FEAR ME!!")
-				target.Immobilize(10)
-				walk_away(target, caster, 20, H.total_multiplicative_slowdown())
+				var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/step_away_my_nigga)
+				for(var/i in 1 to 20)
+					addtimer(cb, (i - 1)*H.total_multiplicative_slowdown())
 				target.emote("scream")
 				target.do_jitter_animation(30)
 			if(5)

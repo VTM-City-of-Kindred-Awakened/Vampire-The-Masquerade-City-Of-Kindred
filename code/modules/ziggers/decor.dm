@@ -706,16 +706,20 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	if(main)
 		news.can_send = TRUE
 	// Отправка почты на комп принца от всех, у кого owner это не none, а, например, regent
-	/* for(var/obj/vampire_computer/C in GLOB.vampire_computers)
-		if(C.main)
-			if(owner != "none")
-				var/datum/app/gmail/main_gmail = C.apps[3]
-				main_gmail.send_email("Hello! This is message from " + owner + "'s computer.", "Hello!", gmail.email_adress)
-	*/
 	apps.Add(icq)
 	apps.Add(notepad)
 	apps.Add(gmail)
 	apps.Add(news)
+
+	for(var/obj/vampire_computer/C in GLOB.vampire_computers)
+		if(C.main)
+			if(owner != "none")
+				var/datum/app/gmail/main_gmail = C.apps[3]
+				main_gmail.send_email("Hello! This message is from [owner]'s computer.", "Hello!", gmail.email_adress)
+
+/obj/vampire_computer/attack_hand(mob/user)
+	. = ..()
+	ui_interact(user)
 
 /obj/vampire_computer/Destroy()
 	. = ..()
@@ -860,8 +864,10 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 			return TRUE
 
 /obj/vampire_computer/ui_interact(mob/user, datum/tgui/ui)
+	if(!ishuman(user))
+		return
 	ui = SStgui.try_update_ui(user, src, ui)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, "WindowsXP", "WindowsXP")
 		ui.open()
 
@@ -1196,10 +1202,17 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	opacity = TRUE
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	var/matrixing = FALSE
 
 /obj/matrix/attack_hand(mob/user)
 	if(user.client)
-		cryoMob(user, src)
+		if(!matrixing)
+			matrixing = TRUE
+			if(do_after(user, 100, src))
+				cryoMob(user, src)
+				matrixing = FALSE
+			else
+				matrixing = FALSE
 	return TRUE
 
 /proc/cryoMob(mob/living/mob_occupant, obj/pod)
