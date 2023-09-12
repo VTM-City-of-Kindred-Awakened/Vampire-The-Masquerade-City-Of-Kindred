@@ -678,6 +678,7 @@
 
 GLOBAL_LIST_EMPTY(vampire_computers)
 
+
 /obj/vampire_computer
 	name = "computer"
 	desc = "See the news of Kindred City."
@@ -688,22 +689,33 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	var/main = FALSE
-	var/last_message = ""
+	var/datum/app/current_app
+	var/datum/app/focus_app
+	var/list/datum/app/apps = list()
+	var/owner = "none"
 
-/obj/vampire_computer/examine(mob/user)
-	. = ..()
-	if(iskindred(user))
-		var/mob/living/carbon/human/H = user
-		if(H.clane)
-			if(H.clane.name == "Lasombra")
-				return
-	icon_state = initial(icon_state)
-	. += "Last Message:<BR>"
-	. += "- [last_message]"
 
 /obj/vampire_computer/Initialize()
 	. = ..()
 	GLOB.vampire_computers += src
+	var/datum/app/icq/icq = new ()
+	var/datum/app/notepad/notepad = new ()
+	var/datum/app/gmail/gmail = new ()
+	var/datum/app/news/news = new ()
+	gmail.generate_email()
+	if(main)
+		news.can_send = TRUE
+	// Отправка почты на комп принца от всех, у кого owner это не none, а, например, regent
+	/* for(var/obj/vampire_computer/C in GLOB.vampire_computers)
+		if(C.main)
+			if(owner != "none")
+				var/datum/app/gmail/main_gmail = C.apps[3]
+				main_gmail.send_email("Hello! This is message from " + owner + "'s computer.", "Hello!", gmail.email_adress)
+	*/
+	apps.Add(icq)
+	apps.Add(notepad)
+	apps.Add(gmail)
+	apps.Add(news)
 
 /obj/vampire_computer/Destroy()
 	. = ..()
@@ -713,26 +725,332 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	icon_state = "computerprince"
 	main = TRUE
 
-/obj/vampire_computer/attack_hand(mob/user)
-	if(iskindred(user))
-		var/mob/living/carbon/human/H = user
-		if(H.clane)
-			if(H.clane.name == "Lasombra")
-				return
-	to_chat(user, "Last Message:<BR>")
-	to_chat(user, "- [last_message]")
-	if(!main)
-		return
-	var/announce = input(user, "Type a text to announce:", "Announce")  as text|null
-	if(announce)
-		for(var/obj/vampire_computer/C in GLOB.vampire_computers)
-			C.last_message = "[announce]"
-			message_admins("[user]([user.key]) send an announcement:\"- [announce]\"")
-			if(!C.main)
-				C.say("New announcement from Prince!")
-				C.icon_state = "computermessage"
+/obj/vampire_computer/ui_act(action, list/params)
+	. = ..()
+	switch(action)
+		if("set_notepad_text")
+			var/datum/app/notepad/app = locate(params["ref"]) in apps
+			app.text = params["text"]
+			return TRUE
+		if("set_current_app")
+			current_app = locate(params["ref"]) in apps
+			current_app.minimized = FALSE
+			return TRUE
+		if("set_focus_app")
+			var/datum/app/app = locate(params["ref"]) in apps
+			focus_app = app
+			return TRUE
+		if("launch_app")
+			var/datum/app/app = locate(params["ref"]) in apps
+			if(!app.launched)
+				app.launched = TRUE
 			else
-				C.say("Announcement sent.")
+				app.minimized = FALSE
+			current_app = app
+			focus_app = null
+			if(istype(app, /datum/app/news) && icon_state == "computermessage")
+				icon_state = initial(icon_state)
+			return TRUE
+		if("close")
+			var/datum/app/app = locate(params["ref"]) in apps
+			app.launched = FALSE
+			if(!app.desktop_app)
+				apps.Remove(app)
+			return TRUE
+		if("minimize")
+			var/datum/app/app = locate(params["ref"]) in apps
+			if(app.minimized)
+				app.minimized = FALSE
+			else
+				app.minimized = TRUE
+			current_app = null
+			return TRUE
+		if("set_app_cords")
+			var/datum/app/app = locate(params["ref"]) in apps
+			app.x = set_cords(params["rel_x"], 1185, 0)
+			app.y = set_cords(params["rel_y"], 600, 0)
+			return TRUE
+		if("send_message")
+			if(params["message"] != "" && params["message"])
+				var/datum/app/icq/app = locate(params["ref"]) in apps
+				app.SendMessage(params["message"])
+				return TRUE
+		if("icq_login_user")
+			if(params["username"] != "" && params["username"])
+				for(var/obj/vampire_computer/C in GLOB.vampire_computers)
+					var/datum/app/icq/icq = C.apps[1]
+					if(icq.username == params["username"])
+						throw_error("This name is already exists!")
+						return TRUE
+				var/datum/app/icq/app = locate(params["ref"]) in apps
+				app.username = params["username"]
+				return TRUE
+		if("set_email_check")
+			var/datum/app/gmail/gmail = apps[3]
+			var/datum/email/email = locate(params["ref"]) in gmail.emails
+			if(!email.checked)
+				email.checked = TRUE
+			else
+				email.checked = FALSE
+			return TRUE
+		if("set_email_star")
+			var/datum/app/gmail/gmail = apps[3]
+			var/datum/email/email = locate(params["ref"]) in gmail.emails
+			if(!email.stared)
+				email.stared = TRUE
+			else
+				email.stared = FALSE
+			return TRUE
+		if("select_all_emails")
+			var/datum/app/gmail/gmail = apps[3]
+			for(var/datum/email/email in gmail.emails)
+				email.checked = TRUE
+			return TRUE
+		if("deselect_all_emails")
+			var/datum/app/gmail/gmail = apps[3]
+			for(var/datum/email/email in gmail.emails)
+				email.checked = FALSE
+			return TRUE
+		if("delete_emails")
+			var/datum/app/gmail/gmail = apps[3]
+			for(var/datum/email/email in gmail.emails)
+				if(email.checked)
+					gmail.emails.Remove(email)
+			return TRUE
+		if("gmail_switch_screen")
+			var/datum/app/gmail/gmail = apps[3]
+			gmail.screen = params["screen"]
+			return TRUE
+		if("set_current_email")
+			var/datum/app/gmail/gmail = apps[3]
+			gmail.current_email = locate(params["ref"]) in gmail.emails
+			return TRUE
+		if("news_send_message")
+			if(params["message"] != "" && params["message"])
+				for(var/obj/vampire_computer/C in GLOB.vampire_computers)
+					var/datum/app/news/news = C.apps[4]
+					news.text = params["message"]
+					message_admins("[usr]([usr.key]) send an announcement:\"- [params["message"]]\"")
+					if(!C.main)
+						C.say("New announcement from Prince!")
+						C.icon_state = "computermessage"
+					else
+						C.say("Announcement sent.")
+			return TRUE
+		if("delete_email")
+			var/datum/app/gmail/gmail = apps[3]
+			var/datum/email/email = locate(params["ref"]) in gmail.emails
+			gmail.emails.Remove(email)
+			gmail.screen = 1
+			return TRUE
+		if("gmail_send_email")
+			var/datum/app/gmail/gmail = apps[3]
+			if(!params["message"])
+				throw_error("You must write a message!")
+				return TRUE
+			else if(!params["subject"])
+				throw_error("You must write a subject!")
+				return TRUE
+			else if(!params["to"])
+				throw_error("You must write a reciever adress!")
+				return TRUE
+			var/sended = gmail.send_email(params["message"], params["subject"], params["to"])
+			if(!sended)
+				throw_error("This email is not exists!")
+			return TRUE
+
+/obj/vampire_computer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "WindowsXP", "WindowsXP")
+		ui.open()
+
+/obj/vampire_computer/proc/throw_error(error)
+	playsound(loc, 'sound/winxp/error.wav', 100)
+	var/datum/app/error/error_app = new ()
+	error_app.error_message = error
+	error_app.launched = TRUE
+	current_app = error_app
+	apps.Add(error_app)
+
+/obj/vampire_computer/proc/set_cords(cord, max, min)
+	if(cord < max && cord > min)
+		return cord
+	else if(cord > max)
+		return max
+	else if(cord < min)
+		return min
+
+
+/obj/vampire_computer/ui_data(mob/user)
+	var/list/data = list()
+	var/list/data_apps = list()
+
+	for(var/datum/app/app in apps)
+		var/list/app_data = app.data()
+		app_data["reference"] =REF(app)
+		data_apps += list(app_data)
+
+	data["apps"] = data_apps
+	data["current_app"] = 0
+	if(current_app)
+		data["current_app"] = REF(current_app)
+
+	data["focus_ref"] = REF(focus_app)
+	return data
+
+
+/datum/app
+	var/title
+	var/x = 50
+	var/y = 50
+	var/minimized= FALSE
+	var/launched = FALSE
+	var/app_type
+	var/width = 660
+	var/height = 500
+	var/desktop_app = TRUE
+
+/datum/app/proc/data()
+	var/list/data = list()
+	data["launched"]= launched
+	data["type"]= app_type
+	data["title"]= title
+	data["minimized"]= minimized
+	data["x"]= x
+	data["y"]= y
+	data["width"]= width
+	data["height"]= height
+	data["desktop_app"]= desktop_app
+	return data
+
+/datum/app/icq
+	title = "ICQ"
+	app_type = "icq"
+	var/list/datum/message/messages = list()
+	var/username = ""
+
+/datum/app/icq/proc/SendMessage(message)
+	var/datum/message/send = new(username, message)
+	for(var/obj/vampire_computer/C in GLOB.vampire_computers)
+		var/datum/app/icq/app = C.apps[1]
+		app.messages += send
+
+/datum/app/icq/data()
+	. = ..()
+	. += list("username" = username)
+	var/list/data_messages = list()
+	for(var/datum/message/message in messages)
+		data_messages += list(list("author" = message.author, "message" = message.message))
+	. += list("messages" = data_messages)
+
+/datum/message
+	var/author
+	var/message
+
+/datum/message/New(param_author, param_message)
+	author = param_author
+	message = param_message
+
+/datum/app/error
+	title = "Error!"
+	app_type = "error"
+	width = 330
+	height = 100
+	x = 300
+	y = 300
+	desktop_app = FALSE
+	var/error_message
+
+/datum/app/error/data()
+	. = ..()
+	. += list("error_message" = error_message)
+
+/datum/app/notepad
+	title = "Notepad"
+	app_type = "notepad"
+	var/text
+	var/wordWrap = FALSE
+
+/datum/app/notepad/data()
+	. = ..()
+	. += list("text" = text)
+	. += list("wordWrap" = wordWrap)
+
+/datum/app/gmail
+	title = "Gmail"
+	app_type = "gmail"
+	var/list/datum/email/emails = list()
+	var/email_adress = "test@gmail.com"
+	var/screen = 1
+	var/datum/email/current_email
+
+/datum/app/gmail/data()
+	. = ..()
+	.+=list("email_adress" = email_adress)
+	var/list/data_emails = list()
+	for(var/datum/email/email in emails)
+		var/list/data_email = email.to_data()
+		data_email["reference"] = REF(email)
+		data_emails += list(data_email)
+	. += list("emails" = data_emails)
+	. += list("screen" = screen)
+	if(current_email)
+		var/list/data_current_email = current_email.to_data()
+		data_current_email["reference"] = REF(current_email)
+		. += list("current_email" = data_current_email)
+
+
+/datum/app/gmail/proc/send_email(param_message, params_subject, params_to)
+	var/datum/email/email = new (email_adress, param_message, params_subject)
+	for(var/obj/vampire_computer/C in GLOB.vampire_computers)
+		var/datum/app/gmail/gmail = C.apps[3]
+		if(gmail.email_adress == params_to)
+			gmail.emails.Add(email)
+			screen = 1
+			return TRUE
+	return FALSE
+
+/datum/app/gmail/proc/generate_email()
+	var/newEmail
+	newEmail += pick("the", "if", "of", "as", "in", "a", "you", "from", "to", "an", "too", "little", "snow", "dead", "drunk", "rosebud", "duck", "al", "le")
+	newEmail += pick("diamond", "beer", "mushroom", "assistant", "clown", "captain", "twinkie", "security", "nuke", "small", "big", "escape", "yellow", "gloves", "monkey", "engine", "nuclear", "ai")
+	newEmail += pick("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
+	newEmail += pick("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
+	newEmail += "@gmail.com"
+	email_adress = newEmail
+
+/datum/email
+	var/sender
+	var/message
+	var/date
+	var/checked = FALSE
+	var/stared = FALSE
+	var/email_title = "none"
+	var/subject
+
+/datum/email/New(param_sender, param_message, param_subject)
+	sender = param_sender
+	subject = param_subject
+	message = param_message
+	date = SScity_time.timeofnight
+
+/datum/email/proc/to_data()
+	var/list/data = list("subject"=subject, "sender" = sender, "message" = message, "date" = date, "checked" = checked, "stared" = stared)
+	return data
+
+/datum/app/news
+	title = "News"
+	app_type = "news"
+	var/text = "No messages"
+	var/can_send = FALSE
+
+/datum/app/news/data()
+	.=..()
+	. += list("text"=text)
+	. += list("can_send"=can_send)
+
+
 
 /obj/structure/rack/tacobell
 	name = "table"
