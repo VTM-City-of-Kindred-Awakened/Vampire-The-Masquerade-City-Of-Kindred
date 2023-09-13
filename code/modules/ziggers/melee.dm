@@ -90,7 +90,7 @@
 	throwforce = 10
 	attack_verb_continuous = list("beats", "smacks")
 	attack_verb_simple = list("beat", "smack")
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/melee/vampirearms/baseball/attack(mob/living/target, mob/living/user)
 	. = ..()
@@ -99,7 +99,7 @@
 	var/atom/throw_target = get_edge_target_turf(target, user.dir)
 	if(!target.anchored && !HAS_TRAIT(target, TRAIT_TOUGH_FLESH))
 		var/whack_speed = (prob(60) ? 1 : 4)
-		target.throw_at(throw_target, rand(1, 2), whack_speed, user)
+		target.throw_at(throw_target, 1, whack_speed, user)
 
 /obj/item/melee/vampirearms/baseball/hand
 	name = "ripped arm"

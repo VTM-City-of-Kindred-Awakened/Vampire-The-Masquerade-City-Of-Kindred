@@ -2552,6 +2552,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(generation < 13)
 			character.maxHealth = initial(character.maxHealth)+50*(13-generation)
 			character.health = initial(character.health)+50*(13-generation)
+	else
+		character.clane = null
 	character.humanity = humanity
 	character.masquerade = masquerade
 	if(!character_setup)

@@ -1,3 +1,7 @@
+/area
+	var/fire_controled = FALSE
+	var/fire_controling = FALSE
+
 /area/vtm
 	name = "San Francisco"
 	icon = 'code/modules/ziggers/tiles.dmi'
@@ -9,6 +13,11 @@
 	var/upper = TRUE
 	var/zone_type = "masquerade"
 	var/zone_owner
+
+/area/vtm/powered(chan)
+	if(!requires_power)
+		return TRUE
+	return FALSE
 
 /area/vtm/proc/break_elysium()
 	if(zone_type == "masquerade")
@@ -26,6 +35,7 @@
 	name = "Shop"
 	icon_state = "shop"
 	upper = FALSE
+	fire_controled = TRUE
 
 /area/vtm/interior/giovanni
 	name = "Giovanni Mansion"
@@ -33,16 +43,20 @@
 	upper = FALSE
 	zone_type = "elysium"
 	zone_owner = "Giovanni"
+	fire_controled = TRUE
 
 /area/vtm/interior/police
 	name = "Police Station"
 	icon_state = "police"
 	upper = FALSE
+	fire_controled = TRUE
 
 /area/vtm/interior/strip
 	name = "Strip Club"
 	icon_state = "strip"
+	music = /datum/vampiremusic/strip
 	upper = FALSE
+	fire_controled = TRUE
 
 /area/vtm/interior/mansion
 	name = "Abandoned Mansion"
@@ -106,6 +120,7 @@
 	upper = FALSE
 	zone_type = "elysium"
 	zone_owner = "Camarilla"
+	fire_controled = TRUE
 
 /area/vtm/city_elevator
 	name = "City Elevator"
@@ -114,6 +129,7 @@
 	upper = FALSE
 	zone_type = "elysium"
 	zone_owner = "Camarilla"
+	fire_controled = TRUE
 
 /area/vtm/prince
 	name = "Millenium Tower"
@@ -122,6 +138,7 @@
 	upper = FALSE
 	zone_type = "elysium"
 	zone_owner = "Camarilla"
+	fire_controled = TRUE
 
 /area/vtm/camarilla
 	name = "Millenium Appartements"
@@ -130,6 +147,7 @@
 	upper = FALSE
 	zone_type = "elysium"
 	zone_owner = "Camarilla"
+	fire_controled = TRUE
 
 /area/vtm/cabinet
 	name = "Millenium Upper Level"
@@ -139,12 +157,14 @@
 	upper = FALSE
 	zone_type = "elysium"
 	zone_owner = "Camarilla"
+	fire_controled = TRUE
 
 /area/vtm/clinic
 	name = "Clinic"
 	icon_state = "clinic"
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
+	fire_controled = TRUE
 
 /area/vtm/supply
 	name = "Supply"
@@ -157,18 +177,23 @@
 	icon_state = "anarch"
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
+	music = /datum/vampiremusic/bar
 	zone_type = "elysium"
 	zone_owner = "Anarch"
+	fire_controled = TRUE
 
 /area/vtm/hotel
 	name = "Hotel"
 	icon_state = "hotel"
+//	music = /datum/vampiremusic/bar
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
+	fire_controled = TRUE
 
 /area/vtm/church
 	name = "Church"
 	icon_state = "church"
+	music = /datum/vampiremusic/church
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 
@@ -198,8 +223,10 @@
 	icon_state = "theatre"
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
+	music = /datum/vampiremusic/theatre
 	zone_type = "elysium"
 	zone_owner = "Chantry"
+	fire_controled = TRUE
 
 /area/vtm/sewer
 	name = "Sewer"
@@ -213,6 +240,7 @@
 	name = "Underground Town"
 	icon_state = "hotel"
 	upper = FALSE
+	music = /datum/vampiremusic/nosferatu
 	zone_type = "elysium"
 	zone_owner = "Nosferatu"
 
@@ -223,6 +251,7 @@
 	upper = FALSE
 	zone_type = "elysium"
 	zone_owner = "Camarilla"
+	fire_controled = TRUE
 
 //MUSIC
 
@@ -255,6 +284,31 @@
 /datum/vampiremusic/prince
 	length = 314 SECONDS
 	sound = 'code/modules/ziggers/sounds/clairedelune.ogg'
+	forced = TRUE
+
+/datum/vampiremusic/church
+	length = 91 SECONDS
+	sound = 'code/modules/ziggers/sounds/hahihaho.ogg'
+	forced = TRUE
+
+/datum/vampiremusic/bar
+	length = 497 SECONDS
+	sound = 'code/modules/ziggers/sounds/naive.ogg'
+	forced = TRUE
+
+/datum/vampiremusic/theatre
+	length = 93 SECONDS
+	sound = 'code/modules/ziggers/sounds/theatre.ogg'
+	forced = TRUE
+
+/datum/vampiremusic/strip
+	length = 187 SECONDS
+	sound = 'code/modules/ziggers/sounds/strip.ogg'
+	forced = TRUE
+
+/datum/vampiremusic/nosferatu
+	length = 181 SECONDS
+	sound = 'code/modules/ziggers/sounds/nosferatu.ogg'
 	forced = TRUE
 
 /datum/vampiremusic/elevator

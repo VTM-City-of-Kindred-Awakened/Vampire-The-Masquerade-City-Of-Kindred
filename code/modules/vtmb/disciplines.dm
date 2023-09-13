@@ -338,7 +338,7 @@
 	desc = "Makes all humans in radius mentally ill for a moment, supressing their defending ability."
 	icon_state = "dementation"
 	cost = 2
-	ranged = FALSE
+	ranged = TRUE
 	delay = 100
 	activate_sound = 'code/modules/ziggers/sounds/insanity.ogg'
 	clane_restricted = TRUE
@@ -438,31 +438,55 @@
 
 /datum/discipline/dementation/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
-	var/mod = 0.3*level_casting
-	for(var/mob/living/carbon/human/H in viewers(6, caster))
-		if(H != caster)
-			H.dna.species.brutemod = H.dna.species.brutemod+mod
-			H.dna.species.burnmod = H.dna.species.burnmod+mod
-			H.remove_overlay(MUTATIONS_LAYER)
-			var/mutable_appearance/presence_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "presence", -MUTATIONS_LAYER)
-			presence_overlay.pixel_z = 1
-			H.overlays_standing[MUTATIONS_LAYER] = presence_overlay
-			H.apply_overlay(MUTATIONS_LAYER)
-			if(prob(50))
-				H.emote("laugh")
-			else
-				H.emote("scream")
-			H.Immobilize(20*level_casting)
+	//1 - instant laugh
+	//2 - hallucinations and less damage
+	//3 - victim dances
+	//4 - victim fake dies
+	//5 - victim starts to attack themself
+	if(target.spell_immunity)
+		return
+	if(iskindred(target))
+		if(target.generation < caster.generation)
+			to_chat(caster, "<span class='warning'>[target] is too powerful for you!</span>")
+			return
+	if(!ishuman(target))
+		to_chat(caster, "<span class='warning'>[target] doesn't have enough mind to get affected by this discipline!</span>")
+		return
+	var/mob/living/carbon/human/H = target
+	H.remove_overlay(MUTATIONS_LAYER)
+	var/mutable_appearance/dementation_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "dementation", -MUTATIONS_LAYER)
+	dementation_overlay.pixel_z = 1
+	H.overlays_standing[MUTATIONS_LAYER] = dementation_overlay
+	H.apply_overlay(MUTATIONS_LAYER)
+	switch(level_casting)
+		if(1)
+			H.Stun(5)
+			H.emote("laugh")
+			to_chat(target, "<span class='userdanger'><b>HAHAHAHAHAHAHAHAHAHAHAHA!!</b></span>")
+			playsound(get_turf(H), 'code/modules/ziggers/sounds/suicide.ogg', pick('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg'), 100, FALSE)
+			if(target.body_position == STANDING_UP)
+				target.toggle_resting()
+		if(2)
+			H.Immobilize(10)
+			H.hallucination += 50
+			new /datum/hallucination/oh_yeah(H, TRUE)
+		if(3)
+			H.Immobilize(30)
 			if(H.stat <= 2 && !H.IsSleeping() && !H.IsUnconscious() && !H.IsParalyzed() && !H.IsKnockdown() && !HAS_TRAIT(H, TRAIT_RESTRAINED))
 				if(prob(50))
 					dancefirst(H)
 				else
 					dancesecond(H)
-			spawn(delay+caster.discipline_time_plus)
-				if(H)
-					H.dna.species.brutemod = H.dna.species.brutemod-mod
-					H.dna.species.burnmod = H.dna.species.burnmod-mod
-					H.remove_overlay(MUTATIONS_LAYER)
+		if(4)
+			H.Immobilize(20)
+			new /datum/hallucination/death(H, TRUE)
+		if(5)
+			var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/attack_myself_shit)
+			for(var/i in 1 to 20)
+				addtimer(cb, (i - 1)*15)
+	spawn(delay+caster.discipline_time_plus)
+		if(H)
+			H.remove_overlay(MUTATIONS_LAYER)
 
 /datum/discipline/potence
 	name = "Potence"
@@ -578,6 +602,19 @@
 		step_away(src,my_nigga,99)
 		face_atom(my_nigga)
 
+/mob/living/carbon/human/proc/attack_myself_shit()
+	if(!CheckFrenzyMove())
+		a_intent = INTENT_HARM
+		var/obj/item/I = get_active_held_item()
+		if(I)
+			if(I.force)
+				ClickOn(src)
+			else
+				drop_all_held_items()
+				ClickOn(src)
+		else
+			ClickOn(src)
+
 /datum/discipline/presence/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
 	if(target.generation < caster.generation)
@@ -594,7 +631,7 @@
 		switch(level_casting)
 			if(1)
 				var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/walk_to_my_nigga)
-				for(var/i in 1 to 20)
+				for(var/i in 1 to 30)
 					addtimer(cb, (i - 1)*H.total_multiplicative_slowdown())
 				to_chat(target, "<span class='userlove'><b>COME HERE</b></span>")
 				caster.say("COME HERE!!")
@@ -621,7 +658,7 @@
 				to_chat(target, "<span class='userlove'><b>FEAR ME</b></span>")
 				caster.say("FEAR ME!!")
 				var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/step_away_my_nigga)
-				for(var/i in 1 to 20)
+				for(var/i in 1 to 30)
 					addtimer(cb, (i - 1)*H.total_multiplicative_slowdown())
 				target.emote("scream")
 				target.do_jitter_animation(30)

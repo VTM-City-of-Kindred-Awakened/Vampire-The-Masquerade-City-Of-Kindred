@@ -147,3 +147,82 @@
 	. = ..()
 	for(var/i in GLOB.phone_numbers_list)
 		to_chat(user, "- [i]")
+
+/obj/item/quran
+	name = "quran"
+	desc = "Inshallah..."
+	icon_state = "quran"
+	icon = 'code/modules/ziggers/items.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/quran/attack(mob/living/target, mob/living/user)
+	. = ..()
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		var/pathof = "Humanity"
+		if(H.clane)
+			if(H.clane.enlightement)
+				pathof = "Enlightement"
+		to_chat(user, "<b>[pathof]: [H.humanity]</b>")
+
+/obj/item/quran/testuser
+
+/obj/item/wire_cutters
+	name = "wirecutters"
+	desc = "With this item you can repair almost any electronics."
+	icon_state = "fixer"
+	icon = 'code/modules/ziggers/items.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/fusebox
+	name = "fuse box"
+	desc = "Power the controlled area with pure electricity."
+	icon = 'code/modules/ziggers/32x48.dmi'
+	icon_state = "fusebox"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	pixel_y = 32
+	var/damaged = 0
+	var/repairing = FALSE
+
+/obj/fusebox/proc/check_damage(var/mob/living/user)
+	if(damaged > 100 && icon_state != "fusebox_open")
+		icon_state = "fusebox_open"
+		var/area/A = get_area(src)
+		A.requires_power = TRUE
+		A.fire_controled = FALSE
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+		s.set_up(5, 1, get_turf(src))
+		s.start()
+		for(var/obj/machinery/light/L in A)
+			L.update(FALSE)
+		playsound(loc, 'code/modules/ziggers/sounds/explode.ogg', 100, TRUE)
+		user.electrocute_act(50, src, siemens_coeff = 1, flags = NONE)
+
+/obj/fusebox/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/wire_cutters))
+		if(!repairing)
+			repairing = TRUE
+			if(do_after(user, 100, src))
+				icon_state = "fusebox"
+				damaged = 0
+//				user.electrocute_act(50, src, siemens_coeff = 1, flags = NONE)
+				playsound(get_turf(src),'code/modules/ziggers/sounds/fix.ogg', 75, FALSE)
+				var/area/A = get_area(src)
+				A.requires_power = FALSE
+				if(initial(A.fire_controled))
+					A.fire_controled = TRUE
+				for(var/obj/machinery/light/L in A)
+					L.update(FALSE)
+				repairing = FALSE
+			else
+				repairing = FALSE
+	else
+		..()
+		if(I.force)
+			damaged += I.force
+			check_damage(user)

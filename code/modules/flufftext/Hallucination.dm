@@ -321,10 +321,10 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	image_state = "scary_clown"
 
 /obj/effect/hallucination/simple/bubblegum
-	name = "Bubblegum"
-	image_icon = 'icons/mob/lavaland/96x96megafauna.dmi'
-	image_state = "bubblegum"
-	px = -32
+	name = "Unknown Antediluvian"
+	image_icon = 'icons/mob/32x64.dmi'
+	image_state = "eva"
+//	px = -32
 
 /datum/hallucination/oh_yeah
 	var/obj/effect/hallucination/simple/bubblegum/bubblegum

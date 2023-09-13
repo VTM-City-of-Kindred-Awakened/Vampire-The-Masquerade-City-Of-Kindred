@@ -1206,6 +1206,10 @@
 	for(var/datum/action/A in H.actions)
 		if(A.vampiric)
 			qdel(A)
+	H.thaumaturgy_knowledge = FALSE
+	QDEL_NULL(H.clane)
+	var/obj/item/organ/eyes/NV = new()
+	NV.Insert(H, TRUE, FALSE)
 	if(H.mind)
 		H.mind.add_antag_datum(/datum/antagonist/hunter)
 

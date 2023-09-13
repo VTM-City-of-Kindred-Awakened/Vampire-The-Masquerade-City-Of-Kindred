@@ -420,6 +420,15 @@
 	switch(status)
 		if(LIGHT_BROKEN,LIGHT_BURNED,LIGHT_EMPTY)
 			on = FALSE
+	if(istype(get_area(src), /area/vtm))
+		var/area/A = get_area(src)
+		if(A.requires_power)
+			on = FALSE
+			set_light(0)
+			update_icon()
+		else
+			on = TRUE
+			update_icon()
 	emergency_mode = FALSE
 	if(on)
 		var/BR = brightness
@@ -646,6 +655,8 @@
 // true if area has power and lightswitch is on
 /obj/machinery/light/proc/has_power()
 	var/area/A = get_area(src)
+	if(istype(A, /area/vtm))
+		return !A.requires_power
 	return A.lightswitch && A.power_light
 
 // returns whether this light has emergency power
