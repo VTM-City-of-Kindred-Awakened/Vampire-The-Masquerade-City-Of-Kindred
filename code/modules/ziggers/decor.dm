@@ -731,6 +731,8 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 
 /obj/vampire_computer/ui_act(action, list/params)
 	. = ..()
+    if(.)
+        return
 	switch(action)
 		if("set_notepad_text")
 			var/datum/app/notepad/app = locate(params["ref"]) in apps
