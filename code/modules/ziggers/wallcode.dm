@@ -448,6 +448,7 @@
 /turf/open/floor/plating/vampgrass/Initialize()
 	..()
 	set_light(1, 0.5, "#a4b7ff")
+	icon_state = "grass[rand(1, 3)]"
 
 /turf/open/floor/plating/vampcarpet
 	gender = PLURAL

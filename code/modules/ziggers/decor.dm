@@ -731,8 +731,8 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 
 /obj/vampire_computer/ui_act(action, list/params)
 	. = ..()
-    if(.)
-        return
+//	if(.)
+//		return
 	switch(action)
 		if("set_notepad_text")
 			var/datum/app/notepad/app = locate(params["ref"]) in apps
@@ -1490,3 +1490,36 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 			var/datum/preferences/P = GLOB.preferences_datums[ckey(user.key)]
 			if(P)
 				P.exper = min(calculate_mob_max_exper(user), P.exper+15)
+
+/obj/structure/vamptree
+	name = "tree"
+	desc = "Cute and tall flora."
+	icon = 'code/modules/ziggers/trees.dmi'
+	icon_state = "tree1"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	density = TRUE
+	pixel_w = -32
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	var/burned = FALSE
+
+/obj/structure/vamptree/Initialize()
+	. = ..()
+	icon_state = "tree[rand(1, 11)]"
+
+/obj/structure/vamptree/proc/burnshit()
+	if(!burned)
+		burned = TRUE
+		icon_state = "dead[rand(1, 3)]"
+
+/obj/structure/vampstatue
+	name = "statue"
+	desc = "Epic kind of art."
+	icon = 'icons/effects/32x64.dmi'
+	icon_state = "statue"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
