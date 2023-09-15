@@ -501,18 +501,19 @@
 				if("C")
 					choosed_number = ""
 					.= TRUE
+					return
 //					ui_interact(usr)
 //					attack_self(usr)
 //					return
 				if("_")
 					choosed_number += " "
 					.= TRUE
+					return
 //					ui_interact(usr)
 ///					attack_self(usr)
 //					return
 
-			if(params["value"] != "C")
-				choosed_number += params["value"]
+			choosed_number += params["value"]
 			.= TRUE
 //			ui_interact(usr)
 //			attack_self(usr)
