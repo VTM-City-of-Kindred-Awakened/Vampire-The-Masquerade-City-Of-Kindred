@@ -30,7 +30,7 @@
 			return
 		for(var/mob/living/carbon/human/HU in SSbloodhunt.hunted)
 			if(HU)
-				if(HU.real_name == H.real_name)
+				if(HU.true_real_name == H.true_real_name)
 					return
 	to_chat(src, "<span class='userdanger'><b>You feel like your actions are against the rules...</b></span>")
 	if(instant)

@@ -1035,6 +1035,7 @@
 	range_sh = 2
 	violates_masquerade = TRUE
 	clane_restricted = TRUE
+	dead_restricted = FALSE
 
 /datum/discipline/vicissitude/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
@@ -1250,6 +1251,7 @@
 	delay = 50
 	violates_masquerade = TRUE
 	clane_restricted = TRUE
+	dead_restricted = FALSE
 
 /mob/living/simple_animal/hostile/ghost/level1
 	maxHealth = 20

@@ -162,7 +162,7 @@
 	icon_living = "cobra"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
-	speed = 0
+	speed = -1
 	maxHealth = 300
 	health = 300
 	butcher_results = list(/obj/item/stack/human_flesh = 20)
