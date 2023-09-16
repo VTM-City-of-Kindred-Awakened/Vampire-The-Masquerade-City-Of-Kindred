@@ -463,7 +463,7 @@
 			H.Stun(5)
 			H.emote("laugh")
 			to_chat(target, "<span class='userdanger'><b>HAHAHAHAHAHAHAHAHAHAHAHA!!</b></span>")
-			playsound(get_turf(H), 'code/modules/ziggers/sounds/suicide.ogg', pick('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg'), 100, FALSE)
+			playsound(get_turf(H), pick('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg'), 100, FALSE)
 			if(target.body_position == STANDING_UP)
 				target.toggle_resting()
 		if(2)
