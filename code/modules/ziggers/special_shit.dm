@@ -226,3 +226,10 @@
 		if(I.force)
 			damaged += I.force
 			check_damage(user)
+
+/mob/living/Life()
+	if(GLOB.canon_event)
+		if(client)
+			if(client.holder)
+				client.deadmin()
+	..()

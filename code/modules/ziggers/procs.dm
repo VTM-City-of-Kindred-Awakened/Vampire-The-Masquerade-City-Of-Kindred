@@ -1,6 +1,8 @@
 /mob/living/carbon/human/proc/AdjustHumanity(var/value, var/limit)
 	if(!iskindred(src))
 		return
+	if(!GLOB.canon_event)
+		return
 	var/special_role_name
 	if(mind)
 		if(mind.special_role)
@@ -38,6 +40,8 @@
 
 /mob/living/carbon/human/proc/AdjustMasquerade(var/value)
 	if(!iskindred(src) && !isghoul(src))
+		return
+	if(!GLOB.canon_event)
 		return
 	if(istype(get_area(src), /area/vtm))
 		var/area/vtm/V = get_area(src)

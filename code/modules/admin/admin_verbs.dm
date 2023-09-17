@@ -31,6 +31,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/verbs/menu/Admin/verb/playerpanel,
 	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
 	/client/proc/add_nigger,
+	/client/proc/toggle_canon,
 	/client/proc/reward_exp,
 	/client/proc/encipher_word,
 	/client/proc/uncipher_word,
@@ -436,6 +437,20 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 				message_admins("[nigger] ISN'T ACTUAL CKEY, YOU NIGGER [key_name_admin(usr)].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "NIGGER BAN")
 
+/client/proc/toggle_canon()
+	set name = "TOGGLE CANON"
+	set category = "Admin"
+	var/shit = "[ckey]"
+	if(shit != "badteammate")
+		to_chat(src, "Alright, I decided I let that too far away. Admins gonna be restricted to harmful and lore-breaking shitspawn for canon rounds and who will disobey - will get banned same as player. Я решил что это зашло слишком далеко. Админам отныне запрещён любой вредный или лороразрушительный щитспавн в канонических раундах и кто будет нарушать это правило - будет забанен также как и игрок.")
+		return
+	GLOB.canon_event = !GLOB.canon_event
+	SEND_SOUND(world, sound('code/modules/ziggers/sounds/canon.ogg'))
+	if(GLOB.canon_event)
+		to_chat(world, "<b>THE ROUND IS NOW CANON, PLEASE ROLEPLAY CORRECTLY</b>")
+	else
+		to_chat(world, "<b>THE ROUND IS NO MORE CANON, ANY PROGRESSION DEGRADING MECHANICS ARE NOW OFF</b>")
+
 /client/proc/encipher_word()
 	set name = "ENCRYPT WORD"
 	set category = "Admin"
@@ -769,6 +784,10 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Readmin"
 	set category = "Admin"
 	set desc = "Regain your admin powers."
+
+	if(GLOB.canon_event)
+		if(istype(mob, /mob/living))
+			return
 
 	var/datum/admins/A = GLOB.deadmins[ckey]
 

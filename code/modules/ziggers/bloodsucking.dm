@@ -87,8 +87,16 @@
 							vse_taki = TRUE
 					else
 						vse_taki = TRUE
+
+				if(!GLOB.canon_event)
+					to_chat(src, "<span class='warning'>It's not a canon event!</span>")
+					return
+
 				if(vse_taki)
 					to_chat(src, "<span class='userdanger'><b>YOU TRY TO COMMIT DIABLERIE OVER [mob].</b></span>")
+				else
+					to_chat(src, "<span class='warning'>You find the idea of drinking your own <b>KIND</b> disgusting!</span>")
+					return
 			else
 				to_chat(src, "<span class='warning'>You need [mob]'s attention to do that...</span>")
 				return

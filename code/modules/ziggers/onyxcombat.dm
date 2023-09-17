@@ -15,6 +15,7 @@
 	var/list/voted_for = list()
 	var/flavor_text
 	var/true_real_name
+	var/died_already = FALSE
 
 /datum/preferences
 	var/last_torpor = 0
@@ -39,7 +40,12 @@
 				allowed_to_loose = TRUE
 	if(!roundstart_vampire)
 		allowed_to_loose = FALSE
+	if(died_already)
+		allowed_to_loose = FALSE
+	if(!GLOB.canon_event)
+		allowed_to_loose = FALSE
 	if(allowed_to_loose)
+		died_already = TRUE
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
 		if(P)
 			var/max_death = 6
