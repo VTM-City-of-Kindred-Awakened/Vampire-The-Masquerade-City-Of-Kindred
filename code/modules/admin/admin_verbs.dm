@@ -440,8 +440,11 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 /client/proc/toggle_canon()
 	set name = "TOGGLE CANON"
 	set category = "Admin"
-	var/shit = "[ckey]"
-	if(shit != "badteammate")
+	var/cool_guy = FALSE
+	for(var/i in GLOB.kool_kids)
+		if(i == "[ckey]")
+			cool_guy = TRUE
+	if(!cool_guy)
 		to_chat(src, "Alright, I decided I let that too far away. Admins gonna be restricted to harmful and lore-breaking shitspawn for canon rounds and who will disobey - will get banned same as player. Я решил что это зашло слишком далеко. Админам отныне запрещён любой вредный или лороразрушительный щитспавн в канонических раундах и кто будет нарушать это правило - будет забанен также как и игрок.")
 		return
 	GLOB.canon_event = !GLOB.canon_event
