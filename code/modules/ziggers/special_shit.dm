@@ -232,7 +232,7 @@
 		if(client)
 			if(client.holder)
 				var/cool_guy = FALSE
-				for(var/i in GLOB.kool_kids)
+				for(var/i in GLOB.psychokids)
 					if(i == "[client.ckey]")
 						cool_guy = TRUE
 				if(!cool_guy)

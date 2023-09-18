@@ -441,7 +441,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "TOGGLE CANON"
 	set category = "Admin"
 	var/cool_guy = FALSE
-	for(var/i in GLOB.kool_kids)
+	for(var/i in GLOB.psychokids)
 		if(i == "[ckey]")
 			cool_guy = TRUE
 	if(!cool_guy)
@@ -791,7 +791,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if(GLOB.canon_event)
 		if(istype(mob, /mob/living))
 			var/cool_guy = FALSE
-			for(var/i in GLOB.kool_kids)
+			for(var/i in GLOB.psychokids)
 				if(i == "[ckey]")
 					cool_guy = TRUE
 			if(!cool_guy)
