@@ -1469,25 +1469,25 @@
 
 /datum/antagonist/ambitious/on_gain()
 	owner.special_role = src
-	var/objectve = rand(1, 2)
+	var/objectve = rand(1, 4)
 	switch(objectve)
 		if(1)
-			var/datum/objective/blood/blood_objective = new
-			blood_objective.owner = owner
 			var/list/niggas = list()
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				if(H.stat != DEAD && H.dna.real_name != owner.current.real_name)
+				if(H.stat != DEAD && H.true_real_name != owner.current.true_real_name && H.frakcja != "Sabbat")
 					niggas += H
 			if(length(niggas))
+				var/datum/objective/blood/blood_objective = new
+				blood_objective.owner = owner
 				var/mob/living/carbon/human/HU = pick(niggas)
 				blood_objective.owner = owner
-				blood_objective.target_name = HU.dna.real_name
+				blood_objective.target_name = HU.true_real_name
 				objectives += blood_objective
 				blood_objective.update_explanation_text()
 			else
 				var/datum/objective/money/money_objective = new
 				money_objective.owner = owner
-				money_objective.amount = rand(300, 1000)
+				money_objective.amount = rand(500, 5000)
 				objectives += money_objective
 				money_objective.update_explanation_text()
 		if(2)
@@ -1496,6 +1496,35 @@
 			money_objective.amount = rand(300, 1000)
 			objectives += money_objective
 			money_objective.update_explanation_text()
+		if(3)
+			var/list/niggas = list()
+			for(var/mob/living/carbon/human/H in GLOB.player_list)
+				if(H.stat != DEAD && H.true_real_name != owner.current.true_real_name && H.frakcja != "Sabbat")
+					niggas += H
+			if(length(niggas))
+				var/datum/objective/protect_niga/protect_objective = new
+				protect_objective.owner = owner
+				var/mob/living/carbon/human/HU = pick(niggas)
+				protect_objective.mine_target = HU
+				objectives += protect_objective
+				protect_objective.update_explanation_text()
+			else
+				var/datum/objective/money/money_objective = new
+				money_objective.owner = owner
+				money_objective.amount = rand(300, 1000)
+				objectives += money_objective
+				money_objective.update_explanation_text()
+		if(4)
+			var/list/available_factions = list("Camarilla", "Anarch", "Sabbat")
+			if(ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				if(H.frakcja == "Camarilla" || H.frakcja == "Anarch" || H.frakcja == "Sabbat")
+					available_factions -= H.frakcja
+			var/datum/objective/become_member/member_objective = new
+			member_objective.owner = owner
+			member_objective.faction = pick(available_factions)
+			objectives += member_objective
+			member_objective.update_explanation_text()
 	return ..()
 
 /datum/antagonist/ambitious/on_removal()

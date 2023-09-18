@@ -1012,3 +1012,35 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			if(i == target_name)
 				tru = TRUE
 	return tru
+
+/datum/objective/protect_niga
+	name = "protect the"
+	var/mob/living/carbon/human/mine_target
+
+/datum/objective/protect_niga/update_explanation_text()
+	..()
+	explanation_text = "Prevent [mine_target] from dying."
+
+/datum/objective/protect_niga/check_completion()
+	return !target || !considered_alive(target)
+
+/mob/living/carbon/human
+	var/last_repainted_mark
+
+/datum/objective/become_member
+	name = "become member of"
+	var/faction
+
+/datum/objective/become_member/update_explanation_text()
+	..()
+	explanation_text = "Become a member of [faction]. Help your faction by claiming at least one mark on the map."
+
+/datum/objective/become_member/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!ishuman(M.current))
+			continue
+		var/mob/living/carbon/human/L = M.current
+		if(L.last_repainted_mark == faction && L.frakcja == faction)
+			return TRUE
+	return FALSE

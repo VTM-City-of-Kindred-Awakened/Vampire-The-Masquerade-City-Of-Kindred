@@ -171,6 +171,9 @@ SUBSYSTEM_DEF(factionwar)
 						repainting = TRUE
 						if(do_mob(user, src, 10 SECONDS))
 							icon_state = L.frakcja
+							if(ishuman(user))
+								var/mob/living/carbon/human/H = user
+								H.last_repainted_mark = L.frakcja
 							if(L.frakcja == "Camarilla")
 								SSfactionwar.camarilla_power = max(0, SSfactionwar.camarilla_power-length(SSfactionwar.marks_camarilla)*5)
 							if(L.frakcja == "Anarch")

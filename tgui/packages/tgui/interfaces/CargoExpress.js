@@ -38,19 +38,11 @@ const CargoExpressContent = (props, context) => {
         <LabeledList>
           <LabeledList.Item label="Landing Location">
             <Button
-              content="Cargo Bay"
-              selected={!data.usingBeacon}
-              onClick={() => act('LZCargo')} />
-            <Button
               selected={data.usingBeacon}
               disabled={!data.hasBeacon}
               onClick={() => act('LZBeacon')}>
               {data.beaconzone} ({data.beaconName})
             </Button>
-            <Button
-              content={data.printMsg}
-              disabled={!data.canBuyBeacon}
-              onClick={() => act('printBeacon')} />
           </LabeledList.Item>
           <LabeledList.Item label="Notice">
             {data.message}

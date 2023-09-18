@@ -128,7 +128,7 @@
 	data["beaconzone"] = beacon ? get_area(beacon) : ""//where is the beacon located? outputs in the tgui
 	data["usingBeacon"] = usingBeacon //is the mode set to deliver to the beacon or the cargobay?
 	data["canBeacon"] = !usingBeacon || canBeacon //is the mode set to beacon delivery, and is the beacon in a valid location?
-	data["canBuyBeacon"] = cooldown <= 0 && account_balance >= BEACON_COST
+	data["canBuyBeacon"] = FALSE
 	data["beaconError"] = usingBeacon && !canBeacon ? "(BEACON ERROR)" : ""//changes button text to include an error alert if necessary
 	data["hasBeacon"] = beacon != null//is there a linked beacon?
 	data["beaconName"] = beacon ? beacon.name : "No Beacon Found"
@@ -205,18 +205,18 @@
 					if (istype(beacon) && usingBeacon)//prioritize beacons over landing in cargobay
 						LZ = get_turf(beacon)
 						beacon.update_status(SP_LAUNCH)
-					else if (!usingBeacon)//find a suitable supplypod landing zone in cargobay
-						landingzone = GLOB.areas_by_type[/area/vtm/supply]
-						if (!landingzone)
-							WARNING("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
-							landingzone = get_area(src)
-						for(var/turf/open/floor/T in landingzone.contents)//uses default landing zone
-							if(T.is_blocked_turf())
-								continue
-							LAZYADD(empty_turfs, T)
-							CHECK_TICK
-						if(empty_turfs?.len)
-							LZ = pick(empty_turfs)
+//					else if (!usingBeacon)//find a suitable supplypod landing zone in cargobay
+//						landingzone = GLOB.areas_by_type[/area/vtm/supply]
+//						if (!landingzone)
+//							WARNING("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
+//							landingzone = get_area(src)
+//						for(var/turf/open/floor/T in landingzone.contents)//uses default landing zone
+//							if(T.is_blocked_turf())
+//								continue
+//							LAZYADD(empty_turfs, T)
+//							CHECK_TICK
+//						if(empty_turfs?.len)
+//							LZ = pick(empty_turfs)
 					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
 						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 5 SECONDS)
 						account_balance = max(0, account_balance-SO.pack.cost)
