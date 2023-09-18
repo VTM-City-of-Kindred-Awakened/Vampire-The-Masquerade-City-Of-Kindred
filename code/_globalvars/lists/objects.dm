@@ -63,3 +63,5 @@ GLOBAL_LIST_EMPTY(cleanable_list)
 GLOBAL_LIST_EMPTY(malkavian_list)
 GLOBAL_LIST_EMPTY(stock_licenses)
 GLOBAL_LIST_EMPTY(npc_activities)
+
+GLOBAL_LIST_INIT(kool_kids, list("badteammate", "egorium", "andreykey", "d6ll1r10um"))

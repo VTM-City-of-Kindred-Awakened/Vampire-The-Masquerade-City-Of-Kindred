@@ -231,5 +231,10 @@
 	if(GLOB.canon_event)
 		if(client)
 			if(client.holder)
-				client.deadmin()
+				var/cool_guy = FALSE
+				for(var/i in GLOB.kool_kids)
+					if(i == "[client.ckey]")
+						cool_guy = TRUE
+				if(!cool_guy)
+					client.deadmin()
 	..()

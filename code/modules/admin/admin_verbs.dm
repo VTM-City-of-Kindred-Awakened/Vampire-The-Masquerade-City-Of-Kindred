@@ -787,7 +787,12 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	if(GLOB.canon_event)
 		if(istype(mob, /mob/living))
-			return
+			var/cool_guy = FALSE
+			for(var/i in GLOB.kool_kids)
+				if(i == "[ckey]")
+					cool_guy = TRUE
+			if(!cool_guy)
+				return
 
 	var/datum/admins/A = GLOB.deadmins[ckey]
 
