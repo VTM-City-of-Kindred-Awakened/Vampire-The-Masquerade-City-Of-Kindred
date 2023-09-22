@@ -37,7 +37,6 @@
  * Stops playing music through the browser.
  */
 /datum/tgui_panel/proc/stop_music()
-	return
 	if(!is_ready())
 		return
 	window.send_message("audio/stopMusic")
