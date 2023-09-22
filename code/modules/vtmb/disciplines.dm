@@ -1474,3 +1474,20 @@
 			caster.Beam(target, icon_state="sm_arc", time = 50, maxdistance = 9, beam_type = /obj/effect/ebeam/medical)
 			if(target.revive(full_heal = TRUE, admin_revive = TRUE))
 				target.grab_ghost(force = TRUE)
+
+/datum/discipline/melpominee
+	name = "Melpominee"
+	desc = "Use your third eye in healing or protecting needs."
+	icon_state = "valeren"
+	cost = 1
+	ranged = TRUE
+	delay = 50
+	violates_masquerade = FALSE
+	activate_sound = 'code/modules/ziggers/sounds/melpominee.ogg'
+	clane_restricted = TRUE
+	dead_restricted = FALSE
+
+/datum/discipline/melpominee/activate(mob/living/target, mob/living/carbon/human/caster)
+	. = ..()
+	switch(level_casting)
+		if(1)
