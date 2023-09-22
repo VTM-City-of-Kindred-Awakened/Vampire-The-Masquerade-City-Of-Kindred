@@ -152,6 +152,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/humanity = 7
 
 	var/exper = 1440	//Urovni
+	var/exper_plus = 0
 	var/torpor_count = 0
 
 	var/discipline1level = 1
@@ -436,7 +437,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Description:</b> [clane.desc]<BR>"
 				dat += "<b>Curse:</b> [clane.curse]<BR>"
 				dat += "<h2>[make_font_cool("DISCIPLINES")]</h2>"
-				dat += "Experience rewarded: [exper]/[calculate_max_exper()]<BR>"
+
+				if(exper_plus)
+					dat += "Experience rewarded: [exper]/[calculate_max_exper()] (+[exper_plus])<BR>"
+				else
+					dat += "Experience rewarded: [exper]/[calculate_max_exper()]<BR>"
+
 				if(discipline1type)
 					var/datum/discipline/AD = new discipline1type()
 					dat += "<b>[AD.name]</b>: •[discipline1level > 1 ? "•" : "o"][discipline1level > 2 ? "•" : "o"][discipline1level > 3 ? "•" : "o"][discipline1level > 4 ? "•" : "o"]([discipline1level])"
@@ -508,9 +514,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //			dat += "<a href='?_src_=prefs;preference=species;task=random'>Random Species</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SPECIES]'>Always Random Species: [(randomise[RANDOM_SPECIES]) ? "Yes" : "No"]</A><br>"
 
-			if(exper == calculate_max_exper() && slotlocked)
-				dat += "<a href='?_src_=prefs;preference=change_appearance;task=input'>Change Appearance [exper]/[calculate_max_exper()]</a><BR>"
-
+			if(exper >= calculate_max_exper() && slotlocked)
+				if(exper_plus)
+					dat += "<a href='?_src_=prefs;preference=change_appearance;task=input'>Change Appearance [exper]/[calculate_max_exper()] (+[exper_plus])</a><BR>"
+				else
+					dat += "<a href='?_src_=prefs;preference=change_appearance;task=input'>Change Appearance [exper]/[calculate_max_exper()]</a><BR>"
 			if(clane)
 				if(clane.name != "Caitiff")
 					if(generation_bonus)
@@ -1762,6 +1770,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(discipline1)
 						discipline1type = discipline1
 						exper = 0
+						if(exper_plus)
+							if(exper_plus > calculate_max_exper())
+								exper = calculate_max_exper()
+								exper_plus = exper_plus-calculate_max_exper()
+							else
+								exper = exper+exper_plus
+								exper_plus = 0
 
 				if("discipline2ghoul")
 					var/list/disc2 = list()
@@ -1772,6 +1787,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(discipline2)
 						discipline2type = discipline2
 						exper = 0
+						if(exper_plus)
+							if(exper_plus > calculate_max_exper())
+								exper = calculate_max_exper()
+								exper_plus = exper_plus-calculate_max_exper()
+							else
+								exper = exper+exper_plus
+								exper_plus = 0
 
 				if("discipline3ghoul")
 					var/list/disc3 = list()
@@ -1782,6 +1804,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(discipline3)
 						discipline3type = discipline3
 						exper = 0
+						if(exper_plus)
+							if(exper_plus > calculate_max_exper())
+								exper = calculate_max_exper()
+								exper_plus = exper_plus-calculate_max_exper()
+							else
+								exper = exper+exper_plus
+								exper_plus = 0
 
 				if("discipline4ghoul")
 					var/list/disc4 = list()
@@ -1792,6 +1821,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(discipline4)
 						discipline4type = discipline4
 						exper = 0
+						if(exper_plus)
+							if(exper_plus > calculate_max_exper())
+								exper = calculate_max_exper()
+								exper_plus = exper_plus-calculate_max_exper()
+							else
+								exper = exper+exper_plus
+								exper_plus = 0
 
 				if("clane")
 					if(slotlocked)
@@ -1863,18 +1899,46 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("discipline1")
 					discipline1level = min(5, discipline1level+1)
 					exper = 0
+					if(exper_plus)
+						if(exper_plus > calculate_max_exper())
+							exper = calculate_max_exper()
+							exper_plus = exper_plus-calculate_max_exper()
+						else
+							exper = exper+exper_plus
+							exper_plus = 0
 
 				if("discipline2")
 					discipline2level = min(5, discipline2level+1)
 					exper = 0
+					if(exper_plus)
+						if(exper_plus > calculate_max_exper())
+							exper = calculate_max_exper()
+							exper_plus = exper_plus-calculate_max_exper()
+						else
+							exper = exper+exper_plus
+							exper_plus = 0
 
 				if("discipline3")
 					discipline3level = min(5, discipline3level+1)
 					exper = 0
+					if(exper_plus)
+						if(exper_plus > calculate_max_exper())
+							exper = calculate_max_exper()
+							exper_plus = exper_plus-calculate_max_exper()
+						else
+							exper = exper+exper_plus
+							exper_plus = 0
 
 				if("discipline4")
 					discipline4level = min(5, discipline4level+1)
 					exper = 0
+					if(exper_plus)
+						if(exper_plus > calculate_max_exper())
+							exper = calculate_max_exper()
+							exper_plus = exper_plus-calculate_max_exper()
+						else
+							exper = exper+exper_plus
+							exper_plus = 0
 
 				if("pathof")
 					if(!slotlocked)
@@ -1883,6 +1947,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("torpor_restore")
 					torpor_count = 0
 					exper = 0
+					if(exper_plus)
+						if(exper_plus > calculate_max_exper())
+							exper = calculate_max_exper()
+							exper_plus = exper_plus-calculate_max_exper()
+						else
+							exper = exper+exper_plus
+							exper_plus = 0
 
 				if("generation")
 					if(clane)
@@ -1890,6 +1961,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							return
 					generation_bonus = min(generation_bonus+1, max(0, generation-7))
 					exper = 0
+					if(exper_plus)
+						if(exper_plus > calculate_max_exper())
+							exper = calculate_max_exper()
+							exper_plus = exper_plus-calculate_max_exper()
+						else
+							exper = exper+exper_plus
+							exper_plus = 0
 
 				if("flavor_text")
 					var/new_flavor = input(user, "Choose your character's flavor text:", "Character Preference")  as text|null
@@ -1903,6 +1981,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //					torpor_count = max(0, torpor_count-1)
 					slotlocked = 0
 					exper = 0
+					if(exper_plus)
+						if(exper_plus > calculate_max_exper())
+							exper = calculate_max_exper()
+							exper_plus = exper_plus-calculate_max_exper()
+						else
+							exper = exper+exper_plus
+							exper_plus = 0
 
 				if("reset_with_bonus")
 					if(clane)
@@ -1910,7 +1995,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							return
 					var/bonus = generation-generation_bonus
 					slotlocked = 0
-					exper = 0
+//					exper = 0
+//					if(exper_plus)
+//						if(exper_plus > calculate_max_exper())
+//							exper = calculate_max_exper()
+//							exper_plus = exper_plus-calculate_max_exper()
+//						else
+//							exper = exper+exper_plus
+//							exper_plus = 0
 					torpor_count = 0
 //					discipline1level = 1
 //					discipline2level = 1

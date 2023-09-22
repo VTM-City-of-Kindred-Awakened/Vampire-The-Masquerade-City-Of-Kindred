@@ -14,6 +14,10 @@
 		if(HAS_TRAIT(L, TRAIT_PROSOPAGNOSIA))
 			obscure_name = TRUE
 
+		if(HAS_TRAIT(src, TRAIT_CHARMER))
+			L.face_atom(src)
+			L.emote("blush")
+
 	var/my_shape = "average"
 	var/my_gender = "male"
 	if(gender == MALE)

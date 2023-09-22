@@ -39,8 +39,8 @@
 		return FALSE
 	if(HAS_TRAIT(caster, TRAIT_ELYSIUM) && violates_masquerade)
 		caster.check_elysium(FALSE)
-	if(target.spell_immunity)
-		to_chat(caster, "<span class='notice'>This being immune to magic</span>")
+	if(target.resistant_to_disciplines || target.spell_immunity)
+		to_chat(caster, "<span class='danger'>[target] resists your powers!</span>")
 		return FALSE
 	caster.bloodpool = max(0, caster.bloodpool-(cost+plus))
 	caster.update_blood_hud()
@@ -64,9 +64,6 @@
 	if(violates_masquerade)
 		if(caster.CheckEyewitness(target, caster, 7, TRUE))
 			caster.AdjustMasquerade(-1)
-	if(target.resistant_to_disciplines || target.spell_immunity)
-		to_chat(caster, "<span class='danger'>You failed to activate the [name].</span>")
-		return FALSE
 	return TRUE
 
 /datum/discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
@@ -1429,6 +1426,7 @@
 	violates_masquerade = FALSE
 	activate_sound = 'code/modules/ziggers/sounds/valeren.ogg'
 	clane_restricted = TRUE
+	dead_restricted = FALSE
 	var/datum/beam/current_beam
 
 /datum/discipline/valeren/activate(mob/living/target, mob/living/carbon/human/caster)

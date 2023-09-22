@@ -1523,3 +1523,86 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	anchored = TRUE
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+
+/obj/weapon_showcase
+	name = "weapon showcase"
+	desc = "Look, a gun."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "showcase"
+	density = TRUE
+	anchored = TRUE
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+
+/obj/weapon_showcase/Initialize()
+	. = ..()
+	icon_state = "showcase[rand(1, 7)]"
+
+/obj/effect/decal/carpet
+	name = "carpet"
+	pixel_w = -16
+	pixel_z = -16
+	icon = 'code/modules/ziggers/64x64.dmi'
+	icon_state = "kover"
+
+/obj/structure/vamprocks
+	name = "rock"
+	desc = "Rokk."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "rock1"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+
+/obj/structure/vamprocks/Initialize()
+	. = ..()
+	icon_state = "rock[rand(1, 9)]"
+
+/obj/structure/small_vamprocks
+	name = "rock"
+	desc = "Rokk."
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "smallrock1"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+
+/obj/structure/small_vamprocks/Initialize()
+	. = ..()
+	icon_state = "smallrock[rand(1, 6)]"
+
+/obj/structure/big_vamprocks
+	name = "rock"
+	desc = "Rokk."
+	icon = 'code/modules/ziggers/64x64.dmi'
+	icon_state = "rock1"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	pixel_w = -16
+
+/obj/structure/big_vamprocks/Initialize()
+	. = ..()
+	icon_state = "rock[rand(1, 4)]"
+
+/obj/structure/stalagmite
+	name = "stalagmite"
+	desc = "Rokk."
+	icon = 'code/modules/ziggers/64x64.dmi'
+	icon_state = "stalagmite1"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	pixel_w = -16
+
+/obj/structure/stalagmite/Initialize()
+	. = ..()
+	icon_state = "stalagmite[rand(1, 5)]"

@@ -187,9 +187,13 @@ Dancer
 	var/last_acrobate = 0
 
 /datum/action/acrobate/Trigger()
+	var/mob/living/carbon/human/H = owner
 	if(last_acrobate+15 > world.time)
 		return
 	last_acrobate = world.time
+
+	if(H.stat >= 2 || H.IsSleeping() || H.IsUnconscious() || H.IsParalyzed() || H.IsKnockdown() || H.IsStun() || HAS_TRAIT(H, TRAIT_RESTRAINED) || !isturf(H.loc))
+		return
 
 	if(!isturf(owner.loc))
 		return
@@ -233,8 +237,6 @@ Dancer
 				return
 
 		var/turf/open/LO = get_step(get_step(owner, owner.dir), owner.dir)
-
-		var/mob/living/carbon/human/H = owner
 		if(H.dancing)
 			return
 		H.Immobilize(2, TRUE)
@@ -286,7 +288,6 @@ Dancer
 				return
 
 		var/turf/open/LO = get_step(get_step(get_step(owner, owner.dir), owner.dir), owner.dir)
-		var/mob/living/carbon/human/H = owner
 		if(H.dancing)
 			return
 		H.Immobilize(2, TRUE)
@@ -502,3 +503,80 @@ Dancer
 /datum/quirk/italian/add()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.grant_language(/datum/language/sylvan)
+
+/datum/quirk/consumption
+	name = "Consumption"
+	desc = "Your blood is wrought with flesh eating bacteria that is literally eating you from inside out. You take some damage every random amount of time."
+	value = -4
+	gain_text = "<span class='danger'>You feel injured from inside.</span>"
+	lose_text = "<span class='notice'>You feel healthy again.</span>"
+	medical_record_text = "Patient has aggressive flesh eating bacteria in their boody."
+
+/datum/quirk/consumption/on_process(delta_time)
+	if(prob(5))
+		quirk_holder.adjustBruteLoss(5, TRUE)
+
+/datum/quirk/hunted
+	name = "Sir You Are Being Hunted"
+	desc = "You are in the Blood Hunt list from the start. Good luck!"
+	value = -3
+
+/datum/quirk/hunted/on_spawn()
+	if(isturf(quirk_holder.loc))
+		SSbloodhunt.announce_hunted(quirk_holder)
+
+/datum/quirk/diablerist
+	name = "Black Secret"
+	desc = "You have a small, ancient secret, somehow related to Diablerie."
+	value = -3
+
+/datum/quirk/diablerist/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.diablerist = TRUE
+
+/datum/quirk/badvision
+	name = "Nearsighted"
+	desc = "Your eye illness somehow did not become cured after the Embrace, and you need to wear perception glasses."
+	value = -1
+	gain_text = "<span class='danger'>Things far away from you start looking blurry.</span>"
+	lose_text = "<span class='notice'>You start seeing faraway things normally again.</span>"
+	medical_record_text = "Patient requires prescription glasses in order to counteract nearsightedness."
+
+/datum/quirk/badvision/add()
+	quirk_holder.become_nearsighted(ROUNDSTART_TRAIT)
+
+/datum/quirk/badvision/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/clothing/glasses/vampire/perception/glasses = new(get_turf(H))
+	if(!H.equip_to_slot_if_possible(glasses, ITEM_SLOT_EYES, bypass_equip_delay_self = TRUE))
+		H.put_in_hands(glasses)
+
+/datum/quirk/masquerade
+	name = "Masquerade Violator"
+	desc = "You start with massive Masquerade breach, lowering your Masquerade points to 2."
+	value = -2
+
+/datum/quirk/masquerade/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.masquerade = min(H.masquerade, 2)
+	if(isturf(H.loc))
+		if(H in GLOB.masquerade_breakers_list)
+			H.masquerade = min(H.masquerade, 2)
+		else
+			GLOB.masquerade_breakers_list += H
+
+/datum/quirk/irongullet
+	name = "Iron Gullet"
+	desc = "You don't mind sucking up cold blood from corpses. Though there's rarely that much left."
+	value = 3
+	mob_trait = TRAIT_GULLET
+	gain_text = "<span class='notice'>You feel necroresistant.</span>"
+	lose_text = "<span class='notice'>You don't want necrophilia anymore.</span>"
+
+/datum/quirk/charmer
+	name = "Charmer"
+	desc = "You charm people around you."
+	value = 2
+	mob_trait = TRAIT_CHARMER
+	gain_text = "<span class='notice'>You feel charismatic.</span>"
+	lose_text = "<span class='notice'>You don't feel charismatic anymore.</span>"
