@@ -33,6 +33,15 @@
 /datum/phonecontact/proc/check_global_contacts()
 	return FALSE
 
+/datum/phonecontact/brujah
+	name = "Primogen Brujah"
+
+/datum/phonecontact/brujah/check_global_contacts()
+	if(number != GLOB.brujahnumber)
+		number = GLOB.brujahnumber
+		return TRUE
+	..()
+
 /datum/phonecontact/malkavian
 	name = "Primogen Malkavian"
 
@@ -193,6 +202,8 @@
 	contacts += T
 	var/datum/phonecontact/ventrue/V = new()
 	contacts += V
+	var/datum/phonecontact/brujah/B = new()
+	contacts += B
 
 /obj/item/vamp/phone/sheriff
 	exchange_num = 267
@@ -265,6 +276,12 @@
 /obj/item/vamp/phone/toreador/Initialize()
 	..()
 	GLOB.toreadornumber = number
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+
+/obj/item/vamp/phone/brujah/Initialize()
+	..()
+	GLOB.brujahnumber = number
 	var/datum/phonecontact/prince/PRINCE = new()
 	contacts += PRINCE
 
