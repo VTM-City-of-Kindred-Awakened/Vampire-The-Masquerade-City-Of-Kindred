@@ -1769,4 +1769,4 @@
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	l_pocket = /obj/item/vamp/phone/brujah
 	r_pocket = /obj/item/cockclock
-	backpack_contents = list(/obj/item/melee/vampirearms/eguitar=1, /obj/item/passport=1, /obj/item/flashlight=1, /obj/item/stack/dollar/one=1)
+	backpack_contents = list(/obj/item/melee/vampirearms/eguitar=1, /obj/item/passport=1, /obj/item/flashlight=1, /obj/item/stack/dollar=1)
