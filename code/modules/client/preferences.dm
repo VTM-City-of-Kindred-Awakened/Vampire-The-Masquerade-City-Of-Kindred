@@ -174,6 +174,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/diablerist = 0
 
+	var/reason_of_death = "None"
+
 //	var/datum/vampireclane/Clane
 
 /proc/calculate_mob_max_exper(var/mob/M)
@@ -304,6 +306,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(istype(user, /mob/dead/new_player))
 							dat += "<a style='white-space:nowrap;' href='?_src_=prefs;preference=changeslot;num=[i];' [i == default_slot ? "class='linkOn'" : ""]>[name]</a> "
 					dat += "</center>"
+
+			if(reason_of_death != "None")
+				dat += "<center><b>Last death</b>: [reason_of_death]</center>"
 
 			dat += "<center><h2>[make_font_cool("OCCUPATION CHOISES")]</h2>"
 			dat += "<a href='?_src_=prefs;preference=job;task=menu'>Set Occupation Preferences</a><br></center>"
@@ -1773,9 +1778,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(exper_plus)
 							if(exper_plus > calculate_max_exper())
 								exper = calculate_max_exper()
-								exper_plus = exper_plus-calculate_max_exper()
+								exper_plus = max(0, exper_plus-calculate_max_exper())
 							else
-								exper = exper+exper_plus
+								exper = max(0, exper+exper_plus)
 								exper_plus = 0
 
 				if("discipline2ghoul")
@@ -1790,9 +1795,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(exper_plus)
 							if(exper_plus > calculate_max_exper())
 								exper = calculate_max_exper()
-								exper_plus = exper_plus-calculate_max_exper()
+								exper_plus = max(0, exper_plus-calculate_max_exper())
 							else
-								exper = exper+exper_plus
+								exper = max(0, exper+exper_plus)
 								exper_plus = 0
 
 				if("discipline3ghoul")
@@ -1807,9 +1812,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(exper_plus)
 							if(exper_plus > calculate_max_exper())
 								exper = calculate_max_exper()
-								exper_plus = exper_plus-calculate_max_exper()
+								exper_plus = max(0, exper_plus-calculate_max_exper())
 							else
-								exper = exper+exper_plus
+								exper = max(0, exper+exper_plus)
 								exper_plus = 0
 
 				if("discipline4ghoul")
@@ -1824,9 +1829,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(exper_plus)
 							if(exper_plus > calculate_max_exper())
 								exper = calculate_max_exper()
-								exper_plus = exper_plus-calculate_max_exper()
+								exper_plus = max(0, exper_plus-calculate_max_exper())
 							else
-								exper = exper+exper_plus
+								exper = max(0, exper+exper_plus)
 								exper_plus = 0
 
 				if("clane")
@@ -1902,9 +1907,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(exper_plus)
 						if(exper_plus > calculate_max_exper())
 							exper = calculate_max_exper()
-							exper_plus = exper_plus-calculate_max_exper()
+							exper_plus = max(0, exper_plus-calculate_max_exper())
 						else
-							exper = exper+exper_plus
+							exper = max(0, exper+exper_plus)
 							exper_plus = 0
 
 				if("discipline2")
@@ -1913,9 +1918,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(exper_plus)
 						if(exper_plus > calculate_max_exper())
 							exper = calculate_max_exper()
-							exper_plus = exper_plus-calculate_max_exper()
+							exper_plus = max(0, exper_plus-calculate_max_exper())
 						else
-							exper = exper+exper_plus
+							exper = max(0, exper+exper_plus)
 							exper_plus = 0
 
 				if("discipline3")
@@ -1924,9 +1929,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(exper_plus)
 						if(exper_plus > calculate_max_exper())
 							exper = calculate_max_exper()
-							exper_plus = exper_plus-calculate_max_exper()
+							exper_plus = max(0, exper_plus-calculate_max_exper())
 						else
-							exper = exper+exper_plus
+							exper = max(0, exper+exper_plus)
 							exper_plus = 0
 
 				if("discipline4")
@@ -1935,9 +1940,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(exper_plus)
 						if(exper_plus > calculate_max_exper())
 							exper = calculate_max_exper()
-							exper_plus = exper_plus-calculate_max_exper()
+							exper_plus = max(0, exper_plus-calculate_max_exper())
 						else
-							exper = exper+exper_plus
+							exper = max(0, exper+exper_plus)
 							exper_plus = 0
 
 				if("pathof")
@@ -1950,9 +1955,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(exper_plus)
 						if(exper_plus > calculate_max_exper())
 							exper = calculate_max_exper()
-							exper_plus = exper_plus-calculate_max_exper()
+							exper_plus = max(0, exper_plus-calculate_max_exper())
 						else
-							exper = exper+exper_plus
+							exper = max(0, exper+exper_plus)
 							exper_plus = 0
 
 				if("generation")
@@ -1964,9 +1969,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(exper_plus)
 						if(exper_plus > calculate_max_exper())
 							exper = calculate_max_exper()
-							exper_plus = exper_plus-calculate_max_exper()
+							exper_plus = max(0, exper_plus-calculate_max_exper())
 						else
-							exper = exper+exper_plus
+							exper = max(0, exper+exper_plus)
 							exper_plus = 0
 
 				if("flavor_text")
@@ -1984,9 +1989,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(exper_plus)
 						if(exper_plus > calculate_max_exper())
 							exper = calculate_max_exper()
-							exper_plus = exper_plus-calculate_max_exper()
+							exper_plus = max(0, exper_plus-calculate_max_exper())
 						else
-							exper = exper+exper_plus
+							exper = max(0, exper+exper_plus)
 							exper_plus = 0
 
 				if("reset_with_bonus")

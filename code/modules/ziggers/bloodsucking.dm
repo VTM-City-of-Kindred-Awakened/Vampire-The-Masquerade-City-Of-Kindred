@@ -140,19 +140,22 @@
 			if(ishuman(mob))
 				var/mob/living/carbon/human/K = mob
 				if(iskindred(mob))
+					var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
+					var/datum/preferences/P2 = GLOB.preferences_datums[ckey(mob.key)]
 					message_admins("[src]([key]) tries to diablerie [mob](mob.key])!")
 					AdjustHumanity(-1, 0)
 					AdjustMasquerade(-1)
 					if(K.generation >= generation)
 						message_admins("[src]([key]) successes in diablerie over [mob](mob.key])!")
+						mob.death()
 						if(K.client)
 							reset_shit(K)
 							K.ghostize(FALSE)
-						mob.death()
+						if(P2)
+							P2.reason_of_death =  "Diablerized by [true_real_name ? true_real_name : real_name] ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 						adjustBruteLoss(-50, TRUE)
 						adjustFireLoss(-50, TRUE)
 						if(key)
-							var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
 							if(P)
 								P.diablerist = 1
 							diablerist = 1
@@ -160,9 +163,11 @@
 						if(prob(20+((generation-K.generation)*10)))
 							to_chat(src, "<span class='userdanger'><b>[K]'s SOUL OVERCOMES YOURS AND GAIN CONTROL OF YOUR BODY.</b></span>")
 							message_admins("[src]([key]) failed to diablerie [mob](mob.key])!")
-							reset_shit(src)
-//							ghostize(FALSE)
 							death()
+							reset_shit(src)
+							if(P)
+								P.reason_of_death = "Failed the Diablerie ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
+//							ghostize(FALSE)
 //							key = K.key
 //							generation = K.generation
 //							maxHealth = initial(maxHealth)+100*(13-generation)
@@ -170,19 +175,19 @@
 //							mob.death()
 						else
 							message_admins("[src]([key]) successes in diablerie over [mob](mob.key])!")
-							if(key)
-								var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
-								if(P)
-									P.diablerist = 1
-									P.generation = K.generation
-									generation = P.generation
+							if(P)
+								P.diablerist = 1
+								P.generation = K.generation
+								generation = P.generation
 							diablerist = 1
 							maxHealth = initial(maxHealth)+max(0, 50*(13-generation))
 							health = initial(health)+max(0, 50*(13-generation))
+							mob.death()
 							if(K.client)
 								reset_shit(K)
 								K.ghostize(FALSE)
-							mob.death()
+							if(P2)
+								P2.reason_of_death = "Diablerized by [true_real_name ? true_real_name : real_name] ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 					if(client)
 						client.images -= suckbar
 					qdel(suckbar)

@@ -25,16 +25,23 @@
 	. = ..()
 	if(iskindred(M) || isghoul(M))
 		if(M in GLOB.masquerade_breakers_list)
+			if(!GLOB.canon_event)
+				to_chat(user, "This is not a canon event!")
+				return
+			if(!M.client)
+				to_chat(user, "You need [M] attention to do that.")
+				return
 			if(M.stat >= 2)
-				if(M.client)
-					reset_shit(M)
-					M.ghostize(FALSE)
+				var/datum/preferences/P = GLOB.preferences_datums[ckey(M.key)]
 				M.death()
+				if(P)
+					P.reason_of_death = "Executed to sustain the Masquerade ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
+					reset_shit(M)
+				M.ghostize(FALSE)
 				to_chat(user, "<b>Successfully punished masquerade breaker and restored the Masquerade.</b>")
 				var/mob/living/carbon/human/HM = user
 				HM.AdjustMasquerade(1)
 				if(user.key)
-					var/datum/preferences/P = GLOB.preferences_datums[ckey(user.key)]
 					if(P)
 						P.exper = min(calculate_mob_max_exper(user), P.exper+500)
 				return

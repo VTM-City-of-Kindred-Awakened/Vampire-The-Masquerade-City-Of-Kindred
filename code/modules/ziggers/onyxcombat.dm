@@ -80,6 +80,7 @@
 				P.masquerade = masquerade
 				P.save_character()
 				P.save_preferences()
+				P.reason_of_death = "Killed in action ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 	if(iskindred(src))
 		if(in_frenzy)
 			exit_frenzymod()
@@ -89,7 +90,7 @@
 		SEND_SOUND(src, sound('code/modules/ziggers/sounds/final_death.ogg', 0, 0, 50))
 		lying_fix()
 		dir = SOUTH
-		spawn(5)
+		spawn(10)
 			dust(1, 1)
 
 /mob/living/carbon/human/toggle_move_intent(mob/living/user)
