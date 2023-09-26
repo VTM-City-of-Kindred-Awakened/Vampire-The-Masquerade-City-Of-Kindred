@@ -693,15 +693,26 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	var/datum/app/focus_app
 	var/list/datum/app/apps = list()
 	var/owner = "none"
+	var/logged = FALSE
+	var/x_pos = 0
+	var/y_pos = 0
+	var/password
+	var/username
 
 
 /obj/vampire_computer/Initialize()
 	. = ..()
 	GLOB.vampire_computers += src
+	username = gen_username()
+	password = gen_pass()
+	var/obj/item/paper/password_paper = new (loc)
+	password_paper.name = "don't forget your password!"
+	password_paper.info = "<center><h2>Hello, [username]!</h2></center><br>I have to remind you about it again, but please don't forget your password - <b>[password]</b>"
 	var/datum/app/icq/icq = new ()
 	var/datum/app/notepad/notepad = new ()
 	var/datum/app/gmail/gmail = new ()
 	var/datum/app/news/news = new ()
+
 	gmail.generate_email()
 	if(main)
 		news.can_send = TRUE
@@ -864,10 +875,16 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 			if(!sended)
 				throw_error("This email is not exists!")
 			return TRUE
+		if("login")
+			if(params["username"] == username && params["password"] == password)
+				playsound(loc, 'sound/winxp/startup.wav', 100)
+				logged = TRUE
+				return TRUE
+			else
+				playsound(loc, 'sound/winxp/error.wav', 100)
+				return TRUE
 
 /obj/vampire_computer/ui_interact(mob/user, datum/tgui/ui)
-	if(!ishuman(user))
-		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "WindowsXP", "WindowsXP")
@@ -905,7 +922,26 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 		data["current_app"] = REF(current_app)
 
 	data["focus_ref"] = REF(focus_app)
+	data["logged"] = logged
+	data["password"] = password
+	data["x"] = x_pos
+	data["y"] = y_pos
 	return data
+
+/obj/vampire_computer/proc/gen_username()
+	var/name = pick(GLOB.first_names_male + GLOB.first_names_female)
+	name += pick("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
+	name += pick("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
+	return name
+
+/obj/vampire_computer/proc/gen_pass()
+	var/newPass
+	newPass += pick("the", "if", "of", "as", "in", "a", "you", "from", "to", "an", "too", "little", "snow", "dead", "drunk", "rosebud", "duck", "al", "le")
+	newPass += pick("diamond", "beer", "mushroom", "assistant", "clown", "captain", "twinkie", "security", "nuke", "small", "big", "escape", "yellow", "gloves", "monkey", "engine", "nuclear", "ai")
+	newPass += pick("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
+	return newPass
+
+
 
 
 /datum/app
@@ -1057,8 +1093,6 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	.=..()
 	. += list("text"=text)
 	. += list("can_send"=can_send)
-
-
 
 /obj/structure/rack/tacobell
 	name = "table"
