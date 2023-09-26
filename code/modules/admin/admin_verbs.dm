@@ -487,7 +487,12 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 				for(var/client/C in GLOB.clients)
 					if("[C.ckey]" == "[exper]")
 						to_chat(C, "<b>You've been rewarded with [amount] experience points. Reason: \"[reason]\"</b>")
-						C.prefs.exper = min(C.prefs.calculate_max_exper(), C.prefs.exper+amount)
+						if(C.prefs.exper+amount > C.prefs.calculate_max_exper())
+							var/shittaload = amount-C.prefs.calculate_max_exper()
+							C.prefs.exper = C.prefs.calculate_max_exper()
+							C.prefs.exper_plus = shittaload
+						else
+							C.prefs.exper = C.prefs.exper+amount
 						message_admins("[key_name_admin(usr)] REWARDED [exper] WITH [amount] EXPERIENCE POINTS. REASON: \"[reason]\".")
 
 /client/proc/poll_panel()

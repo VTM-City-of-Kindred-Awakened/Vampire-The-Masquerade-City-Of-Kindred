@@ -114,7 +114,8 @@
 				H.blood_volume = max(H.blood_volume-50, 150)
 			if(H.reagents)
 				if(length(H.reagents.reagent_list))
-					H.reagents.trans_to(src, min(10, H.reagents.total_volume), transfered_by = mob, methods = VAMPIRE)
+					if(prob(50))
+						H.reagents.trans_to(src, min(10, H.reagents.total_volume), transfered_by = mob, methods = VAMPIRE)
 		if(clane)
 			if(clane.name == "Giovanni")
 				mob.adjustBruteLoss(20, TRUE)
@@ -139,19 +140,22 @@
 			if(ishuman(mob))
 				var/mob/living/carbon/human/K = mob
 				if(iskindred(mob))
+					var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
+					var/datum/preferences/P2 = GLOB.preferences_datums[ckey(mob.key)]
 					message_admins("[src]([key]) tries to diablerie [mob](mob.key])!")
 					AdjustHumanity(-1, 0)
 					AdjustMasquerade(-1)
 					if(K.generation >= generation)
 						message_admins("[src]([key]) successes in diablerie over [mob](mob.key])!")
+						mob.death()
 						if(K.client)
 							reset_shit(K)
 							K.ghostize(FALSE)
-						mob.death()
+						if(P2)
+							P2.reason_of_death =  "Diablerized by [true_real_name ? true_real_name : real_name] ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 						adjustBruteLoss(-50, TRUE)
 						adjustFireLoss(-50, TRUE)
 						if(key)
-							var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
 							if(P)
 								P.diablerist = 1
 							diablerist = 1
@@ -159,9 +163,11 @@
 						if(prob(20+((generation-K.generation)*10)))
 							to_chat(src, "<span class='userdanger'><b>[K]'s SOUL OVERCOMES YOURS AND GAIN CONTROL OF YOUR BODY.</b></span>")
 							message_admins("[src]([key]) failed to diablerie [mob](mob.key])!")
-							reset_shit(src)
-//							ghostize(FALSE)
 							death()
+							reset_shit(src)
+							if(P)
+								P.reason_of_death = "Failed the Diablerie ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
+//							ghostize(FALSE)
 //							key = K.key
 //							generation = K.generation
 //							maxHealth = initial(maxHealth)+100*(13-generation)
@@ -169,19 +175,19 @@
 //							mob.death()
 						else
 							message_admins("[src]([key]) successes in diablerie over [mob](mob.key])!")
-							if(key)
-								var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
-								if(P)
-									P.diablerist = 1
-									P.generation = K.generation
-									generation = P.generation
+							if(P)
+								P.diablerist = 1
+								P.generation = K.generation
+								generation = P.generation
 							diablerist = 1
 							maxHealth = initial(maxHealth)+max(0, 50*(13-generation))
 							health = initial(health)+max(0, 50*(13-generation))
+							mob.death()
 							if(K.client)
 								reset_shit(K)
 								K.ghostize(FALSE)
-							mob.death()
+							if(P2)
+								P2.reason_of_death = "Diablerized by [true_real_name ? true_real_name : real_name] ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 					if(client)
 						client.images -= suckbar
 					qdel(suckbar)
@@ -189,20 +195,22 @@
 				else
 					K.blood_volume = 0
 			if(ishuman(mob) && !iskindred(mob))
-				if(isnpc(mob))
-					var/mob/living/carbon/human/npc/Npc = mob
-					Npc.last_attacker = null
-					killed_count = killed_count+1
-					if(killed_count >= 5)
-//						GLOB.fuckers |= src
-						SEND_SOUND(src, sound('code/modules/ziggers/sounds/humanity_loss.ogg', 0, 0, 75))
-						to_chat(src, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
-				SEND_SOUND(src, sound('code/modules/ziggers/sounds/feed_failed.ogg', 0, 0, 75))
-				to_chat(src, "<span class='warning'>This sad sacrifice for your own pleasure affects something deep in your mind.</span>")
-				AdjustHumanity(-1, 0)
-				mob.death()
+				if(mob.stat != DEAD)
+					if(isnpc(mob))
+						var/mob/living/carbon/human/npc/Npc = mob
+						Npc.last_attacker = null
+						killed_count = killed_count+1
+						if(killed_count >= 5)
+//							GLOB.fuckers |= src
+							SEND_SOUND(src, sound('code/modules/ziggers/sounds/humanity_loss.ogg', 0, 0, 75))
+							to_chat(src, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
+					SEND_SOUND(src, sound('code/modules/ziggers/sounds/feed_failed.ogg', 0, 0, 75))
+					to_chat(src, "<span class='warning'>This sad sacrifice for your own pleasure affects something deep in your mind.</span>")
+					AdjustHumanity(-1, 0)
+					mob.death()
 			if(!ishuman(mob))
-				mob.death()
+				if(mob.stat != DEAD)
+					mob.death()
 			stop_sound_channel(CHANNEL_BLOOD)
 			last_drinkblood_use = 0
 			if(client)

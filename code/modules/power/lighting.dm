@@ -417,18 +417,18 @@
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)
-	switch(status)
-		if(LIGHT_BROKEN,LIGHT_BURNED,LIGHT_EMPTY)
-			on = FALSE
 	if(istype(get_area(src), /area/vtm))
 		var/area/A = get_area(src)
 		if(A.requires_power)
 			on = FALSE
 			set_light(0)
-			update_icon()
 		else
 			on = TRUE
-			update_icon()
+	switch(status)
+		if(LIGHT_BROKEN,LIGHT_BURNED,LIGHT_EMPTY)
+			on = FALSE
+			set_light(0)
+	update_icon()
 	emergency_mode = FALSE
 	if(on)
 		var/BR = brightness

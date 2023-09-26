@@ -468,6 +468,7 @@
 	desc = "For reading books."
 	icon_state = "perception"
 	inhand_icon_state = "glasses"
+	vision_correction = TRUE
 
 //HATS
 

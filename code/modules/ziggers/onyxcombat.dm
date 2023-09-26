@@ -80,6 +80,7 @@
 				P.masquerade = masquerade
 				P.save_character()
 				P.save_preferences()
+				P.reason_of_death = "Killed in action ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 	if(iskindred(src))
 		if(in_frenzy)
 			exit_frenzymod()
@@ -89,7 +90,7 @@
 		SEND_SOUND(src, sound('code/modules/ziggers/sounds/final_death.ogg', 0, 0, 50))
 		lying_fix()
 		dir = SOUTH
-		spawn(5)
+		spawn(10)
 			dust(1, 1)
 
 /mob/living/carbon/human/toggle_move_intent(mob/living/user)
@@ -293,7 +294,7 @@
 		if(BD.grab_state > GRAB_PASSIVE)
 			if(ishuman(BD.pulling))
 				var/mob/living/carbon/human/PB = BD.pulling
-				if(PB.stat == 4)
+				if(PB.stat == 4 && !HAS_TRAIT(BD, TRAIT_GULLET))
 					SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
 					return
@@ -321,7 +322,7 @@
 					SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
-				if(LV.stat == 4)
+				if(LV.stat == 4 && !HAS_TRAIT(BD, TRAIT_GULLET))
 					SEND_SOUND(BD, sound('code/modules/ziggers/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
 					return

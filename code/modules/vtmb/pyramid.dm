@@ -171,8 +171,8 @@
 /obj/structure/fleshwall
 	name = "flesh wall"
 	desc = "Wall from FLESH."
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "necro1"
+	icon = 'code/modules/ziggers/icons.dmi'
+	icon_state = "fleshwall"
 	plane = GAME_PLANE
 	layer = ABOVE_MOB_LAYER
 	anchored = TRUE

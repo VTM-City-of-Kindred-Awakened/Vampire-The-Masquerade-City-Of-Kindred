@@ -214,6 +214,7 @@
 	duty = "Represent interest of the Prince to other kindred."
 	experience_addition = 15
 	minimal_age = 12
+	allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Lasombra")
 
 /datum/outfit/job/clerk
 	name = "Clerk"
@@ -268,6 +269,7 @@
 	duty = "Work for the Prince and follow orders."
 	minimal_masquerade = 4
 	experience_addition = 10
+	allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Lasombra")
 
 /datum/outfit/job/agent
 	name = "Camarilla Agent"
@@ -321,6 +323,7 @@
 	minimal_masquerade = 0
 	experience_addition = 25
 	minimal_age = 12
+	allowed_bloodlines = list("Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff")
 
 /datum/outfit/job/graveyard
 	name = "Graveyard Keeper"
@@ -369,7 +372,7 @@
 
 	duty = "Collect blood by helping mortals at the Clinic."
 	experience_addition = 15
-	allowed_bloodlines = list("Salubri", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce")
+	allowed_bloodlines = list("Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff")
 
 /datum/outfit/job/vdoctor
 	name = "Doctor"
@@ -412,7 +415,7 @@
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_STREETJAN
-	allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff")
+	allowed_bloodlines = list("Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff")
 
 	duty = "Clean up all traces of Masquerade violations."
 	minimal_masquerade = 0
@@ -817,7 +820,7 @@
 
 	duty = "Offer strip club services to humans or undead."
 	minimal_masquerade = 3
-	allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff")
+	allowed_bloodlines = list("Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff")
 	experience_addition = 10
 
 /datum/outfit/job/strip
@@ -1420,6 +1423,7 @@
 	duty = "Transfer people in the city."
 	minimal_masquerade = 0
 	experience_addition = 10
+	allowed_bloodlines = list("Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff")
 
 /datum/job/vamp/taxi/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
 	..()
@@ -1724,3 +1728,45 @@
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/primogen_toreador/female
 		shoes = /obj/item/clothing/shoes/vampire/heels/red
+
+
+/datum/job/vamp/primogen_brujah
+	title = "Primogen Brujah"
+	department_head = list("Justicar")
+	faction = "Vampire"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = " the Traditions"
+	selection_color = "#cb4aad"
+
+	outfit = /datum/outfit/job/brujah
+
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	paycheck = PAYCHECK_EASY
+	paycheck_department = ACCOUNT_SRV
+	display_order = JOB_DISPLAY_ORDER_BRUJAH
+	exp_type_department = EXP_TYPE_INDEPENDENT
+
+	kindred_only = TRUE
+	allowed_bloodlines = list("Brujah")
+	minimal_generation = 7	//Uncomment when players get exp enough
+
+	duty = "Offer your infinite knowledge to Prince of the City."
+	minimal_masquerade = 5
+	my_contact_is_important = TRUE
+	known_contacts = list("Prince")
+	minimal_age = 12
+
+/datum/outfit/job/brujah
+	name = "Primogen Brujah"
+	jobtype = /datum/job/vamp/primogen_brujah
+
+	id = /obj/item/card/id/primogen
+	glasses = /obj/item/clothing/glasses/vampire/yellow
+	uniform = /obj/item/clothing/under/vampire/punk
+	suit = /obj/item/clothing/suit/vampire/jacket/punk
+	shoes = /obj/item/clothing/shoes/vampire/jackboots
+	l_pocket = /obj/item/vamp/phone/brujah
+	r_pocket = /obj/item/cockclock
+	backpack_contents = list(/obj/item/melee/vampirearms/eguitar=1, /obj/item/passport=1, /obj/item/flashlight=1, /obj/item/stack/dollar=1)

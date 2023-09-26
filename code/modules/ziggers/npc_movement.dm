@@ -197,7 +197,7 @@
 /mob/living/carbon/human/npc/proc/CheckMove()
 	if(stat >= 2)
 		return TRUE
-	if(last_grab+30 > world.time)
+	if(last_grab+15 > world.time)
 		return TRUE
 	if(ghoulificated)
 		return TRUE
@@ -218,8 +218,11 @@
 	if(is_talking)
 		return TRUE
 	if(pulledby)
-		if(prob(20))
+		if(HAS_TRAIT(pulledby, TRAIT_CHARMER))
+			return TRUE
+		if(prob(30))
 			resist()
+			return TRUE
 		else
 			return TRUE
 	return FALSE
