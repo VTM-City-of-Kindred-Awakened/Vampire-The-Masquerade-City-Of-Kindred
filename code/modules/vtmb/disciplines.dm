@@ -1476,8 +1476,8 @@
 
 /datum/discipline/melpominee
 	name = "Melpominee"
-	desc = "Use your third eye in healing or protecting needs."
-	icon_state = "valeren"
+	desc = "Named for the Greek Muse of Tragedy, Melpominee is a unique discipline of the Daughters of Cacophony. It explores the power of the voice, shaking the very soul of those nearby and allowing the vampire to perform sonic feats otherwise impossible."
+	icon_state = "melpominee"
 	cost = 1
 	ranged = TRUE
 	delay = 50
@@ -1490,3 +1490,11 @@
 	. = ..()
 	switch(level_casting)
 		if(1)
+			var/new_say = input(user, "What will your target say?") as text|null
+			if(new_say)
+				target.say("[new_say]")
+//		if(2)
+//		if(3)
+//		if(4)
+//		if(5)
+//			'code/modules/ziggers/sounds/killscream.ogg'

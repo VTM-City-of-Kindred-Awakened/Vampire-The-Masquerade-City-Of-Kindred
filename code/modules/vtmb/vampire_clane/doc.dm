@@ -1,6 +1,6 @@
 /datum/vampireclane/doc
-	name = "Daughters of Cacaphony / Sons of Discord"
-	desc = "Currently composed mostly of women (due to the associated difficulty in educating someone with the vocal range of most males), the Daughters practice Melpominee, a Discipline which allows the Daughters to invoke strange effects through singing. The Daughters are the choralistes par excellence of the undead, and hosting a gathering of them is worth high prestige for the Toreador. Male kindred usually are called Sons of Discord."
+	name = "Daughters of Cacaphony"
+	desc = "Currently composed mostly of women (due to the associated difficulty in educating someone with the vocal range of most males), the Daughters practice Melpominee, a Discipline which allows the Daughters to invoke strange effects through singing. The Daughters are the choralistes par excellence of the undead, and hosting a gathering of them is worth high prestige for the Toreador."
 	curse = "Hunted and only con feeding."
 	clane_disciplines = list(/datum/discipline/fortitude = 1,
 														/datum/discipline/melpominee = 2,
