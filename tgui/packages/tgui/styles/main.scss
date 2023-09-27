@@ -56,6 +56,8 @@
 @include meta.load-css('./interfaces/WindowsXP/Error.scss');
 @include meta.load-css('./interfaces/WindowsXP/Gmail.scss');
 @include meta.load-css('./interfaces/WindowsXP/News.scss');
+@include meta.load-css('./interfaces/WindowsXP/LoginScreen.scss');
+@include meta.load-css('./interfaces/WindowsXP/Components.scss');
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');

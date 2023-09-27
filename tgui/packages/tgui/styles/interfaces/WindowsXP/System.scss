@@ -73,10 +73,18 @@
   }
   .footer__start:hover {
     filter: brightness(105%);
+    -ms-filter: brightness(105%);
+    -webkit-filter: brightness(105%);
+    backdrop-filter: brightness(105%);
+    -webkit-backdrop-filter: brightness(105%);
   }
   .footer__start:active {
     pointer-events: none;
     filter: brightness(85%);
+    -ms-filter: brightness(85%);
+    -webkit-filter: brightness(105%);
+    backdrop-filter: brightness(105%);
+    -webkit-backdrop-filter: brightness(105%);
   }
 
   .footer__start__menu {
@@ -276,13 +284,23 @@
     width: 2px;
     background-color: white;
   }
-
+  .header__button--close:hover {
+    filter: brightness(100%);
+    -ms-filter: brightness(100%);
+    -webkit-filter: brightness(100%);
+    backdrop-filter: brightness(100%);
+    -webkit-backdrop-filter: brightness(100%);
+  }
   .header__button--disable {
     outline: none;
     opacity: 0.5;
   }
   .header__button--disable :hover {
     filter: brightness(100%);
+    -ms-filter: brightness(100%);
+    -webkit-filter: brightness(100%);
+    backdrop-filter: brightness(100%);
+    -webkit-backdrop-filter: brightness(100%);
   }
 }
 
@@ -293,9 +311,6 @@
   flex-direction: column;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  .window.headerInvis {
-    padding: 0px;
-  }
   .header__bg {
     position: absolute;
     left: 0;

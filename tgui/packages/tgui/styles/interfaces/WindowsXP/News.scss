@@ -2,7 +2,7 @@
   animation: colorPulse 5s infinite ease-in-out;
   background-color: #000;
   box-sizing: border-box;
-  font-family: "Fira Mono", monospace;
+  font-family: 'Fira Mono', monospace;
   font-size: 20px;
   height: 100%;
   overflow: hidden;
@@ -16,26 +16,24 @@
   background-image: linear-gradient(transparent, transparent 3px, #222);
   background-size: 4px 4px;
   bottom: 0;
-  content: "";
+  content: '';
   left: 0;
   pointer-events: none;
   position: absolute;
   right: 0;
   top: 0;
-
-  .news__input {
-    display: flex;
-    justify-content: right;
-    width: 100%;
-    height: 15%;
-  }
 }
 
 .news__text:last-child:after {
   animation: blink 1s infinite;
-  content: "_";
+  content: '_';
 }
 
+.news__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 @keyframes colorPulse {
   0%,
   100% {

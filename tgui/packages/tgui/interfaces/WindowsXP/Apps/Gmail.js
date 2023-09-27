@@ -1,10 +1,10 @@
 import gmail_icon from '../../../assets/WindowsXP/gmail.png';
 import { Icon, Input, TextArea } from '../../../components';
 import { useLocalState } from '../../../backend';
-
+import { XPButton } from '../Components';
 
 export const Gmail = (props) => {
-  const { app, act } = props
+  const { app, act } = props;
   return (
     <div className="gmail">
       <div className="header">
@@ -16,26 +16,31 @@ export const Gmail = (props) => {
           <img src={gmail_icon} />
         </div>
         <Input className="search-input" />
-        <button>Search Mail</button>
+        <XPButton content="Search Mail" />
       </div>
       <div className="main-body">
         <div className="mail-nav-panel">
-          <div className={"nav-link" + (app.screen === 0 ? " active-nav-link" : "")}
-            onClick={() => act("gmail_switch_screen", { screen: 0 })}>
+          <div
+            className={
+              'nav-link' + (app.screen === 0 ? ' active-nav-link' : '')
+            }
+            onClick={() => act('gmail_switch_screen', { screen: 0 })}>
             Compose Mail
           </div>
           <div className="sidebar-links">
-            <div className={
-              "nav-link" + (app.screen === 1 ? " active-nav-link" : "")
-            }
-              onClick={() => act("gmail_switch_screen", { screen: 1 })}>
-              {"Inbox (" + app.emails.length + ")"}
+            <div
+              className={
+                'nav-link' + (app.screen === 1 ? ' active-nav-link' : '')
+              }
+              onClick={() => act('gmail_switch_screen', { screen: 1 })}>
+              {'Inbox (' + app.emails.length + ')'}
             </div>
-            <div className={
-              "nav-link" + (app.screen === 2 ? " active-nav-link" : "")
-            }
-              onClick={() => act("gmail_switch_screen", { screen: 2 })}>
-              Stared <Icon name="star" style={{ color: "#ff9f29" }} />
+            <div
+              className={
+                'nav-link' + (app.screen === 2 ? ' active-nav-link' : '')
+              }
+              onClick={() => act('gmail_switch_screen', { screen: 2 })}>
+              Stared <Icon name="star" style={{ color: '#ff9f29' }} />
             </div>
             <div className="nav-link">Chats</div>
             <div className="nav-link">Sent Mail</div>
@@ -47,165 +52,234 @@ export const Gmail = (props) => {
           {app.screen === 0 && <ComposeEmail act={act} />}
           {app.screen === 1 && <Emails emails={app.emails} act={act} />}
           {app.screen === 2 && <Stared emails={app.emails} act={act} />}
-          {app.screen === 4 && <EmailScreen email={app.current_email} act={act} />}
+          {app.screen === 4 && (
+            <EmailScreen email={app.current_email} act={act} />
+          )}
         </div>
       </div>
-    </div >
-  )
-}
+    </div>
+  );
+};
 
 const Emails = (props) => {
-  const { emails, act } = props
+  const { emails, act } = props;
   return (
     <>
       <div className="mails-title">Welcome to the Gmail!</div>
       <EmailActions act={act} />
       <div className="messages">
         {emails.map((email) => {
-          return (
-            <Email email={email} act={act} />
-          )
+          return <Email email={email} act={act} />;
         })}
       </div>
       <EmailActions act={act} />
     </>
-  )
-}
+  );
+};
 
 const Stared = (props) => {
-  const { emails, act } = props
+  const { emails, act } = props;
   return (
     <>
       <div className="mails-title">Welcome to the Gmail!</div>
       <EmailActions act={act} />
       <div className="messages">
         {emails.map((email) => {
-          return (
-            email.stared === 1 && <Email email={email} act={act} />
-          )
+          return email.stared === 1 && <Email email={email} act={act} />;
         })}
       </div>
       <EmailActions act={act} />
     </>
-  )
-}
+  );
+};
 
 const ComposeEmail = (props, context) => {
-  const { act } = props
-  const [to, setTo] = useLocalState(context, "gmail_to", "")
-  const [subject, setSubject] = useLocalState(context, "gmail_subject", "")
-  const [message, setMessage] = useLocalState(context, "gmail_message", "")
+  const { act } = props;
+  const [to, setTo] = useLocalState(context, 'gmail_to', '');
+  const [subject, setSubject] = useLocalState(context, 'gmail_subject', '');
+  const [message, setMessage] = useLocalState(context, 'gmail_message', '');
   return (
     <div className="compose">
       <ComposerActions
         act={act}
-        to={to} subject={subject} message={message}
-        setTo={setTo} setMessage={setMessage} setSubject={setSubject} />
+        to={to}
+        subject={subject}
+        message={message}
+        setTo={setTo}
+        setMessage={setMessage}
+        setSubject={setSubject}
+      />
       <div className="compose-body">
         <div className="compose-info">
           <div className="compose-reciever">
             <div className="reciever-info">To:</div>
-            <Input onInput={(e, value) => { setTo(value) }} value={to} className="reciever-input reciever-to" />
+            <Input
+              onInput={(e, value) => {
+                setTo(value);
+              }}
+              value={to}
+              className="reciever-input reciever-to"
+            />
           </div>
           <div className="compose-reciever">
             <div className="reciever-info">Subject:</div>
-            <TextArea onInput={(e, value) => { setSubject(value) }} value={subject} className="reciever-input" />
+            <TextArea
+              onInput={(e, value) => {
+                setSubject(value);
+              }}
+              value={subject}
+              className="reciever-input"
+            />
           </div>
         </div>
-        <TextArea onInput={(e, value) => { setMessage(value) }} value={message} className="compose-mail" />
+        <TextArea
+          onInput={(e, value) => {
+            setMessage(value);
+          }}
+          value={message}
+          className="compose-mail"
+        />
         <ComposerActions
           act={act}
-          to={to} subject={subject} message={message}
-          setTo={setTo} setMessage={setMessage} setSubject={setSubject} />
+          to={to}
+          subject={subject}
+          message={message}
+          setTo={setTo}
+          setMessage={setMessage}
+          setSubject={setSubject}
+        />
       </div>
     </div>
-  )
-}
+  );
+};
 
 const ComposerActions = (props) => {
-  const { act, to, message, subject, setTo, setMessage, setSubject } = props
+  const { act, to, message, subject, setTo, setMessage, setSubject } = props;
   return (
     <div className="compose-header">
-      <button onClick={() => { act("gmail_send_email", { to: to, subject: subject, message: message }); setTo(""); setMessage(""); setSubject(""); }}>
-        Send
-      </button>
-      <button onClick={() => act("gmail_switch_screen", { screen: 1 })}>
-        Discard
-      </button>
+      <XPButton
+        content="Send"
+        onClick={() => {
+          act('gmail_send_email', {
+            to: to,
+            subject: subject,
+            message: message,
+          });
+          setTo('');
+          setMessage('');
+          setSubject('');
+        }}
+      />
+      <XPButton
+        content="Discard"
+        onClick={() => act('gmail_switch_screen', { screen: 1 })}
+      />
     </div>
-
-  )
-}
+  );
+};
 
 const Email = (props) => {
-  const { email, act } = props
+  const { email, act } = props;
   return (
-    <div className="email" onDoubleClick={() => { act("set_current_email", { ref: email.reference }); act("gmail_switch_screen", { screen: 4 }) }}>
+    <div
+      className="email"
+      onDoubleClick={() => {
+        act('set_current_email', { ref: email.reference });
+        act('gmail_switch_screen', { screen: 4 });
+      }}>
       <div className="email-buttons">
-        <input type="checkbox"
+        <input
+          type="checkbox"
           checked={email.checked === 1}
-          onClick={() => { act("set_email_check", { ref: email.reference }) }}
+          onClick={() => {
+            act('set_email_check', { ref: email.reference });
+          }}
         />
         <Icon
           name="star"
           className="star"
-          onClick={() => { act("set_email_star", { ref: email.reference }) }}
-          style={email.stared && { color: "#ff9f29" }}
+          onClick={() => {
+            act('set_email_star', { ref: email.reference });
+          }}
+          style={email.stared && { color: '#ff9f29' }}
         />
       </div>
-      <div className="text-block">{email.sender.length > 13 ? email.sender.substring(0, 10) + "..." : email.sender}</div>
-      <div className="text-block email-message">{email.message.length > 11 ? email.message.substring(0, 8) + "..." : email.message}</div>
+      <div className="text-block">
+        {email.sender.length > 13
+          ? email.sender.substring(0, 10) + '...'
+          : email.sender}
+      </div>
+      <div className="text-block email-message">
+        {email.message.length > 11
+          ? email.message.substring(0, 8) + '...'
+          : email.message}
+      </div>
       <div className="text-block date">{email.date}</div>
     </div>
   );
-}
+};
 const EmailActions = (props) => {
-  const { act } = props
+  const { act } = props;
   return (
     <div className="mail-actions">
       <div className="actions basic">
-        <button className="action-button">Archive</button>
-        <button className="action-button">Report Spam</button>
-        <button className="action-button" onClick={() => act("delete_emails")}>Delete</button>
+        <XPButton content="Archive" />
+        <XPButton content="Report Spam" />
+        <XPButton content="Delete" onClick={() => act('delete_emails')} />
         <div className="action-link">Refresh</div>
-        <p></p>
+        <p />
       </div>
       <div className="actions">
-        <div style={{ display: "inline-block" }}>Select:</div>
-        <div className="action-link" onClick={() => { act("select_all_emails") }}>All, </div>
-        <div className="action-link" onClick={() => { act("deselect_all_emails") }}>None</div>
+        <div style={{ display: 'inline-block' }}>Select:</div>
+        <div
+          className="action-link"
+          onClick={() => {
+            act('select_all_emails');
+          }}>
+          All,{' '}
+        </div>
+        <div
+          className="action-link"
+          onClick={() => {
+            act('deselect_all_emails');
+          }}>
+          None
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const EmailScreen = (props) => {
-  const { email, act } = props
+  const { email, act } = props;
   return (
     <>
-      <div className="mails-title">
-        Your advertisement could be here
-      </div>
+      <div className="mails-title">Your advertisement could be here</div>
       <div className="message-actions">
-        <div className="back-to-inbox" onClick={() => act("gmail_switch_screen", { screen: 1 })}>« Back to inbox</div>
+        <div
+          className="back-to-inbox"
+          onClick={() => act('gmail_switch_screen', { screen: 1 })}>
+          « Back to inbox
+        </div>
       </div>
       <div className="message">
-        <div className="message-title"><b>{email.subject}</b></div>
+        <div className="message-title">
+          <b>{email.subject}</b>
+        </div>
         <div className="message-body">
           <div className="message-header">
             <div>
               from: <b>{email.sender}</b>
-              <button onClick={() => act("delete_email", { ref: email.reference })}>Delete</button>
+              <XPButton
+                content="Delete"
+                onClick={() => act('delete_email', { ref: email.reference })}
+              />
             </div>
-            <div>
-              {email.date}
-            </div>
+            <div>{email.date}</div>
           </div>
-          <div className="message-block">
-            {email.message}
-          </div>
+          <div className="message-block">{email.message}</div>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
