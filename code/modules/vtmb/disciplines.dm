@@ -1490,7 +1490,7 @@
 	. = ..()
 	switch(level_casting)
 		if(1)
-			var/new_say = input(user, "What will your target say?") as text|null
+			var/new_say = input(caster, "What will your target say?") as text|null
 			if(new_say)
 				target.say("[new_say]")
 //		if(2)
