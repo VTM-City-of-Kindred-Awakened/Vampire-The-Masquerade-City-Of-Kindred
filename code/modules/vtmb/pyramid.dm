@@ -180,9 +180,6 @@
 	max_integrity = 100
 	obj_integrity = 100
 
-/obj/structure/fleshwall/Initialize()
-	icon_state = "necro[rand(1, 3)]"
-
 /obj/ritualrune/identification
 	name = "Occult Items Identification"
 	desc = "Identificates single occult item"

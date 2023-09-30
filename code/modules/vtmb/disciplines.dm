@@ -1480,21 +1480,63 @@
 	icon_state = "melpominee"
 	cost = 1
 	ranged = TRUE
-	delay = 50
+	delay = 75
 	violates_masquerade = FALSE
 	activate_sound = 'code/modules/ziggers/sounds/melpominee.ogg'
 	clane_restricted = TRUE
 	dead_restricted = FALSE
 
+/mob/living/carbon/human/proc/create_walk_to(var/max)
+	var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/walk_to_my_nigga)
+	for(var/i in 1 to max)
+		addtimer(cb, (i - 1)*total_multiplicative_slowdown())
+
 /datum/discipline/melpominee/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
 	switch(level_casting)
 		if(1)
-			var/new_say = input(user, "What will your target say?") as text|null
+			var/new_say = input(caster, "What will your target hear?") as text|null
+			if(new_say)
+				var/datum/hallucination/chat/C = new(target, TRUE, FALSE, new_say)
+				to_chat(caster, "You throw \"[new_say]\" at [target]'s ears.")
+		if(2)
+			var/new_say = input(caster, "What will your target say?") as text|null
 			if(new_say)
 				target.say("[new_say]")
-//		if(2)
-//		if(3)
-//		if(4)
-//		if(5)
-//			'code/modules/ziggers/sounds/killscream.ogg'
+		if(3)
+			for(var/mob/living/carbon/human/HU in oviewers(7, caster))
+				if(HU)
+					HU.my_nigga = caster
+					HU.create_walk_to(20)
+					HU.remove_overlay(MUTATIONS_LAYER)
+					var/mutable_appearance/song_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "song", -MUTATIONS_LAYER)
+					HU.overlays_standing[MUTATIONS_LAYER] = song_overlay
+					HU.apply_overlay(MUTATIONS_LAYER)
+					spawn(20)
+						if(HU)
+							HU.remove_overlay(MUTATIONS_LAYER)
+		if(4)
+			playsound(caster.loc, 'code/modules/ziggers/sounds/killscream.ogg', 100, FALSE)
+			for(var/mob/living/carbon/human/HU in oviewers(7, caster))
+				if(HU)
+					HU.Stun(20)
+					HU.remove_overlay(MUTATIONS_LAYER)
+					var/mutable_appearance/song_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "song", -MUTATIONS_LAYER)
+					HU.overlays_standing[MUTATIONS_LAYER] = song_overlay
+					HU.apply_overlay(MUTATIONS_LAYER)
+					spawn(20)
+						if(HU)
+							HU.remove_overlay(MUTATIONS_LAYER)
+		if(5)
+			playsound(caster.loc, 'code/modules/ziggers/sounds/killscream.ogg', 100, FALSE)
+			for(var/mob/living/carbon/human/HU in oviewers(7, caster))
+				if(HU)
+					HU.Stun(20)
+					HU.apply_damage(50, BRUTE, BODY_ZONE_HEAD)
+					HU.remove_overlay(MUTATIONS_LAYER)
+					var/mutable_appearance/song_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "song", -MUTATIONS_LAYER)
+					HU.overlays_standing[MUTATIONS_LAYER] = song_overlay
+					HU.apply_overlay(MUTATIONS_LAYER)
+					spawn(20)
+						if(HU)
+							HU.remove_overlay(MUTATIONS_LAYER)
