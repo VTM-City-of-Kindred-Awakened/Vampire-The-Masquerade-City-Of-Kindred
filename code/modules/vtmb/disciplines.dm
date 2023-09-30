@@ -1487,7 +1487,7 @@
 	dead_restricted = FALSE
 
 /mob/living/carbon/human/proc/create_walk_to(var/max)
-	var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/walk_to_my_nigga)
+	var/datum/cb = CALLBACK(src,/mob/living/carbon/human/proc/walk_to_my_nigga)
 	for(var/i in 1 to max)
 		addtimer(cb, (i - 1)*total_multiplicative_slowdown())
 
@@ -1497,7 +1497,7 @@
 		if(1)
 			var/new_say = input(caster, "What will your target hear?") as text|null
 			if(new_say)
-				var/datum/hallucination/chat/C = new(target, TRUE, FALSE, new_say)
+				new /datum/hallucination/chat(target, TRUE, FALSE, new_say)
 				to_chat(caster, "You throw \"[new_say]\" at [target]'s ears.")
 		if(2)
 			var/new_say = input(caster, "What will your target say?") as text|null
