@@ -86,7 +86,7 @@
 			skip = TRUE
 	if(!skip)
 		spotted_bodies += H.real_name
-		SSmasquerade.total_level = max(0, SSmasquerade.total_level-35)
+		SSmasquerade.total_level = max(0, SSmasquerade.total_level-10)
 
 	if(pulledby)
 		if(!CheckMove() && prob(50))
