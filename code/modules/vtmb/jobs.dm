@@ -618,7 +618,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_BOUNCER
 	known_contacts = list("Baron")
-	allowed_bloodlines = list("Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff")
+	allowed_bloodlines = list("Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Lasombra")
 
 	duty = "Work for the Baron."
 	minimal_masquerade = 2
@@ -719,7 +719,7 @@
 	display_order = JOB_DISPLAY_ORDER_SUPPLY
 	bounty_types = CIV_JOB_RANDOM
 	known_contacts = list("Baron")
-	allowed_bloodlines = list("Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff")
+	allowed_bloodlines = list("Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Lasombra")
 
 	duty = "Manage deliveries and supplies for kindred in the City."
 	minimal_masquerade = 2
@@ -1107,6 +1107,8 @@
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 	worn_icon = 'code/modules/ziggers/worn.dmi'
 	worn_icon_state = "id12"
+
+
 
 /datum/outfit/job/caitiff
 	name = "Caitiff"
