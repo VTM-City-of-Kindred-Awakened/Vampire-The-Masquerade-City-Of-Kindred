@@ -16,7 +16,7 @@
 	. = ..()
 	if(istype(get_area(src), /area/vtm))
 		var/area/vtm/V = get_area(src)
-		if(V.upper)
+		if(V.zone_type == "masquerade")
 			SSmasquerade.total_level = min(1000, SSmasquerade.total_level+0.5)
 
 /obj/effect/decal/cleanable/blood/Initialize(mapload, list/datum/disease/diseases)

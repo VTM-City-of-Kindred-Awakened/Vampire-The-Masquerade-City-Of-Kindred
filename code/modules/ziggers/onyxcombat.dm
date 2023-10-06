@@ -24,7 +24,12 @@
 	. = ..()
 
 	if(iskindred(src) || isghoul(src))
-		SSmasquerade.total_level = min(1000, SSmasquerade.total_level+50)
+		SSmasquerade.total_level = min(1000, SSmasquerade.total_level+30)
+	else
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.zone_type == "masquerade")
+				SSmasquerade.total_level = max(0, SSmasquerade.total_level-10)
 
 	if(bloodhunted)
 		SSbloodhunt.hunted -= src

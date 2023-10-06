@@ -74,19 +74,6 @@
 	if(stat == DEAD)
 		return
 	..()
-	var/list/checklist = list()
-	for(var/mob/living/carbon/human/H in oviewers(5, src))
-		if(H)
-			if(H.stat == DEAD)
-				checklist += H
-	var/mob/living/carbon/human/H = pick(checklist)
-	var/skip = FALSE
-	for(var/i in spotted_bodies)
-		if(i == H.real_name)
-			skip = TRUE
-	if(!skip)
-		spotted_bodies += H.real_name
-		SSmasquerade.total_level = max(0, SSmasquerade.total_level-10)
 
 	if(pulledby)
 		if(!CheckMove() && prob(50))
