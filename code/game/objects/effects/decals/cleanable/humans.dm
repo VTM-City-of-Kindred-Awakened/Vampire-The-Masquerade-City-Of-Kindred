@@ -17,7 +17,7 @@
 	if(istype(get_area(src), /area/vtm))
 		var/area/vtm/V = get_area(src)
 		if(V.upper)
-			SSmasquerade.total_level = min(1000, SSmasquerade.total_level+5)
+			SSmasquerade.total_level = min(1000, SSmasquerade.total_level+2)
 
 /obj/effect/decal/cleanable/blood/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
@@ -25,8 +25,8 @@
 	pixel_y = rand(-8,8) //MOJAVE SUN EDIT - Blood Sprites
 	if(istype(get_area(src), /area/vtm))
 		var/area/vtm/V = get_area(src)
-		if(V.upper)
-			SSmasquerade.total_level = max(0, SSmasquerade.total_level-5)
+		if(V.zone_type == "masquerade")
+			SSmasquerade.total_level = max(0, SSmasquerade.total_level-2)
 	if(bloodiness)
 		start_drying()
 	else

@@ -198,6 +198,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			P.discipline2level = 1
 			P.discipline3level = 1
 			P.discipline4level = 1
+			P.diablerist = 0
 			P.masquerade = initial(P.masquerade)
 			P.generation = initial(P.generation)
 			qdel(P.clane)
