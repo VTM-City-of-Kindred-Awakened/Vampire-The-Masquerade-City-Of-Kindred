@@ -231,6 +231,7 @@
 		loh = TRUE
 	caster.update_sight()
 	caster.add_client_colour(/datum/client_colour/glass_colour/lightblue)
+	var/shitcasted = FALSE
 	if(level_casting >= 2)
 		var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
 		abductor_hud.add_hud_to(caster)
@@ -241,8 +242,12 @@
 		caster.auspex_examine = TRUE
 	if(level_casting >= 5)
 		caster.see_invisible = SEE_INVISIBLE_OBSERVER
+		GLOB.auspex_list += caster
+		shitcasted = TRUE
 	spawn((delay*level_casting)+caster.discipline_time_plus)
 		if(caster)
+			if(shitcasted)
+				GLOB.auspex_list -= caster
 			caster.auspex_examine = FALSE
 			caster.see_invisible = initial(caster.see_invisible)
 			var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]

@@ -4,6 +4,9 @@
 			var/obj/effect/dummy/chameleon/C = loc
 			C.say("[message]")
 			return
+		for(var/mob/living/carbon/human/H in GLOB.auspex_list)
+			if(H)
+				to_chat(H, "<b>[name]</b> says, \"[message]\"")
 		if(prob(25))
 			if(iskindred(src))
 				if(clane)
