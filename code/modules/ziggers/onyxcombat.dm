@@ -22,6 +22,10 @@
 
 /mob/living/carbon/human/death()
 	. = ..()
+
+	if(iskindred(src) || isghoul(src))
+		SSmasquerade.total_level = min(1000, SSmasquerade.total_level+50)
+
 	if(bloodhunted)
 		SSbloodhunt.hunted -= src
 		bloodhunted = FALSE

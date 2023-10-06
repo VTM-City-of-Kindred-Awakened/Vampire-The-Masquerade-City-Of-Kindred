@@ -90,9 +90,10 @@
 //This is on /cleanable because fuck this ancient mess
 /obj/effect/decal/cleanable/Crossed(atom/movable/AM)
 	..()
-	if(iscarbon(AM) && blood_state && bloodiness >= 40)
-		SEND_SIGNAL(AM, COMSIG_STEP_ON_BLOOD, src)
-		update_icon()
+	if(prob(bloodiness))
+		if(iscarbon(AM) && blood_state && bloodiness >= 40)
+			SEND_SIGNAL(AM, COMSIG_STEP_ON_BLOOD, src)
+			update_icon()
 
 /obj/effect/decal/cleanable/wash(clean_types)
 	. = ..()

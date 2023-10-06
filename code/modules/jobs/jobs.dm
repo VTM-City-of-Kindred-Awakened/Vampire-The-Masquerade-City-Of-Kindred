@@ -5,9 +5,9 @@ GLOBAL_LIST_INIT(leader_positions, list(
 
 GLOBAL_LIST_INIT(command_positions, list(
 	"Prince",
-	"Clerk",
+	"Seneschal",
 	"Sheriff",
-	"Camarilla Agent"))
+	"Scourge"))
 
 
 GLOBAL_LIST_INIT(engineering_positions, list(

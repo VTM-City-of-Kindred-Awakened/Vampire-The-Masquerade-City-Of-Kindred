@@ -32,6 +32,8 @@
 	var/lifespan = 0	//How many cycles. He'll be deleted if over than a ten thousand
 	var/old_movement = FALSE
 
+	var/list/spotted_bodies = list()
+
 /datum/socialrole
 	//For randomizing
 	var/list/s_tones = list("albino",

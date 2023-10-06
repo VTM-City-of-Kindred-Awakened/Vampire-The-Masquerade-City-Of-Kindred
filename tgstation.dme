@@ -3330,6 +3330,7 @@
 #include "code\modules\vtmb\pyramid.dm"
 #include "code\modules\vtmb\reflection.dm"
 #include "code\modules\vtmb\gamemodes\bloodhunt.dm"
+#include "code\modules\vtmb\gamemodes\masquerade.dm"
 #include "code\modules\vtmb\gamemodes\sarcophagus.dm"
 #include "code\modules\vtmb\gamemodes\subsystem.dm"
 #include "code\modules\vtmb\npc\defines.dm"

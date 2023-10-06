@@ -15,8 +15,14 @@
 			obscure_name = TRUE
 
 		if(HAS_TRAIT(src, TRAIT_CHARMER))
-			L.face_atom(src)
-			L.emote("blush")
+			if(gender == L.gender)
+				if(HAS_TRAIT(L, TRAIT_HOMOSEXUAL))
+					L.face_atom(src)
+					L.emote("blush")
+			else
+				if(!HAS_TRAIT(L, TRAIT_HOMOSEXUAL))
+					L.face_atom(src)
+					L.emote("blush")
 
 	var/my_shape = "average"
 	var/my_gender = "male"

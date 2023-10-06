@@ -11,26 +11,29 @@ SUBSYSTEM_DEF(statpanels)
 
 /datum/controller/subsystem/statpanels/fire(resumed = FALSE)
 	if (!resumed)
-		var/datum/map_config/cached = SSmapping.next_map_config
+//		var/datum/map_config/cached = SSmapping.next_map_config
 		var/round_time = world.time - SSticker.round_start_time
 		var/list/global_data = list(
-			"Map: [SSmapping.config?.map_name || "Loading..."]",
-			cached ? "Next Map: [cached.map_name]" : null,
+//			"Map: [SSmapping.config?.map_name || "Loading..."]",
+//			cached ? "Next Map: [cached.map_name]" : null,
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
-			"Canon: [GLOB.canon_event ? "Yes" : "No"]",
-			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]",
+//			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]",
 			"Round Time: [round_time > MIDNIGHT_ROLLOVER ? "[round(round_time/MIDNIGHT_ROLLOVER)]:[worldtime2text()]" : worldtime2text()]",
+			"---",
+			"Canon: [GLOB.canon_event ? "Yes" : "No"]",
+			"Masquerade: [SSmasquerade.get_description()] [SSmasquerade.total_level]/1000",
 			"Late Party: [length(SSbad_guys_party.candidates)]/[SSbad_guys_party.go_on_next_fire == TRUE ? SSbad_guys_party.max_candidates : "???"] in [round((SSbad_guys_party.next_fire-world.time)/10)]s",
+			"---",
 			"Camarilla Power: [length(SSfactionwar.marks_camarilla)]",
 			"Anarch Power: [length(SSfactionwar.marks_anarch)]",
-			"Sabbat Power: [length(SSfactionwar.marks_sabbat)]",
-			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)"
+			"Sabbat Power: [length(SSfactionwar.marks_sabbat)]"
+//			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)"
 		)
 
-		if(SSshuttle.emergency)
-			var/ETA = SSshuttle.emergency.getModeStr()
-			if(ETA)
-				global_data += "[ETA] [SSshuttle.emergency.getTimerStr()]"
+//		if(SSshuttle.emergency)
+//			var/ETA = SSshuttle.emergency.getModeStr()
+//			if(ETA)
+//				global_data += "[ETA] [SSshuttle.emergency.getTimerStr()]"
 		encoded_global_data = url_encode(json_encode(global_data))
 		src.currentrun = GLOB.clients.Copy()
 		mc_data_encoded = null

@@ -342,6 +342,10 @@
 		alert(src, "An administrator has disabled late join spawning.")
 		return FALSE
 
+	if(SSmasquerade.total_level <= 250)
+		alert(src, "Global Masquerade level is too low!")
+		return FALSE
+
 	var/arrivals_docked = TRUE
 	if(SSshuttle.arrivals)
 		close_spawn_windows()	//In case we get held up

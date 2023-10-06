@@ -360,29 +360,43 @@
 //				else
 //					clear_fullscreen("rain")
 
-			if(!(client && (client.prefs.toggles & SOUND_AMBIENCE)))
-				return
+			var/cacaphony = FALSE
 
-			if(!VTM.music)
-				client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
-				last_vampire_ambience = 0
-				wait_for_music = 0
-				return
-			var/datum/vampiremusic/VMPMSC = new VTM.music()
-			if(VMPMSC.forced && wait_for_music != VMPMSC.length)
-				client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
-				last_vampire_ambience = 0
-				wait_for_music = 0
-				wasforced = TRUE
+			if(iskindred(src))
+				var/mob/living/carbon/human/H = src
+				if(H.clane)
+					if(H.clane.name == "Daughters of Cacaphony")
+						cacaphony = TRUE
 
-			else if(wasforced && wait_for_music != VMPMSC.length)
-				client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
-				last_vampire_ambience = 0
-				wait_for_music = 0
-				wasforced = FALSE
+			if(!cacaphony)
+				if(!(client && (client.prefs.toggles & SOUND_AMBIENCE)))
+					return
 
-			if(last_vampire_ambience+wait_for_music+10 < world.time)
-				wait_for_music = VMPMSC.length
-				client << sound(VMPMSC.sound, 0, 0, CHANNEL_LOBBYMUSIC, 10)
-				last_vampire_ambience = world.time
-			qdel(VMPMSC)
+				if(!VTM.music)
+					client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
+					last_vampire_ambience = 0
+					wait_for_music = 0
+					return
+				var/datum/vampiremusic/VMPMSC = new VTM.music()
+				if(VMPMSC.forced && wait_for_music != VMPMSC.length)
+					client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
+					last_vampire_ambience = 0
+					wait_for_music = 0
+					wasforced = TRUE
+
+				else if(wasforced && wait_for_music != VMPMSC.length)
+					client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
+					last_vampire_ambience = 0
+					wait_for_music = 0
+					wasforced = FALSE
+
+				if(last_vampire_ambience+wait_for_music+10 < world.time)
+					wait_for_music = VMPMSC.length
+					client << sound(VMPMSC.sound, 0, 0, CHANNEL_LOBBYMUSIC, 10)
+					last_vampire_ambience = world.time
+				qdel(VMPMSC)
+			else
+				if(last_vampire_ambience+wait_for_music+10 < world.time)
+					wait_for_music = 1740
+					client << sound('code/modules/ziggers/sounds/daughters.ogg', 0, 0, CHANNEL_LOBBYMUSIC, 25)
+					last_vampire_ambience = world.time

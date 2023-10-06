@@ -78,6 +78,13 @@ SUBSYSTEM_DEF(bad_guys_party)
 	character.client.init_verbs() // init verbs for the late join
 
 /datum/controller/subsystem/bad_guys_party/fire()
+	switch(SSmasquerade.total_level)
+		if(0 to 250)
+			wait = 3000
+		if(251 to 500)
+			wait = 6000
+		if(501 to 1000)
+			wait = 12000
 	if(!setted_up)
 		setup_occupations()
 		setted_up = TRUE
@@ -98,16 +105,19 @@ SUBSYSTEM_DEF(bad_guys_party)
 				go_on_next_fire = FALSE
 			return
 		else
-			switch(threat)
-				if(0 to 10)
-					//ANYONE
-					if(prob(100-threat))
-						get_niggers(rand(1, 3))
-				if(11 to 40)
-					//HUNT OR CAITIFF
-					if(prob(100-threat))
-						get_niggers(rand(1, 2))
-				if(41 to 70)
-					//CAITIFF ONLY
-					if(prob(100-threat))
-						get_niggers(1)
+			if(SSmasquerade.total_level <= 500)
+				get_niggers(2)
+			else
+				switch(threat)
+					if(0 to 10)
+						//ANYONE
+						if(prob(100-threat))
+							get_niggers(rand(1, 3))
+					if(11 to 40)
+						//HUNT OR CAITIFF
+						if(prob(100-threat))
+							get_niggers(rand(1, 2))
+					if(41 to 70)
+						//CAITIFF ONLY
+						if(prob(100-threat))
+							get_niggers(1)

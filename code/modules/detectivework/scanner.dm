@@ -3,15 +3,12 @@
 // TODO: Split everything into easy to manage procs.
 
 /obj/item/detective_scanner
-	name = "forensic scanner"
-	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "forensicnew"
+	name = "forensic magnifier"
+	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can show a report of the findings."
+	icon = 'code/modules/ziggers/items.dmi'
+	icon_state = "magnifier"
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	inhand_icon_state = "electronic"
-	worn_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
@@ -33,10 +30,10 @@
 /obj/item/detective_scanner/attack_self(mob/user)
 	if(log.len && !scanning)
 		scanning = TRUE
-		to_chat(user, "<span class='notice'>Printing report, please wait...</span>")
-		addtimer(CALLBACK(src, .proc/PrintReport), 100)
+		to_chat(user, "<span class='notice'>Analyzing report...</span>")
+		displayDetectiveScanResults(user)
 	else
-		to_chat(user, "<span class='notice'>The scanner has no logs or is in use.</span>")
+		to_chat(user, "<span class='notice'>You find nothing interesting.</span>")
 
 /obj/item/detective_scanner/attack(mob/living/M, mob/user)
 	return

@@ -45,7 +45,7 @@
 
 	my_contact_is_important = TRUE
 	known_contacts = list("Sheriff",
-												"Clerk",
+												"Seneschal",
 												"Baron")
 
 	duty = "Represent interests of Camarilla and maintain Masquerade."
@@ -166,7 +166,7 @@
 	icon_state = "Sheriff"
 
 /datum/job/vamp/clerk
-	title = "Clerk"
+	title = "Seneschal"
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("Prince")
 	head_announce = list(RADIO_CHANNEL_SUPPLY, RADIO_CHANNEL_SERVICE)
@@ -217,7 +217,7 @@
 	allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Lasombra")
 
 /datum/outfit/job/clerk
-	name = "Clerk"
+	name = "Seneschal"
 	jobtype = /datum/job/vamp/clerk
 
 	id = /obj/item/card/id/clerk
@@ -236,11 +236,11 @@
 		shoes = /obj/item/clothing/shoes/vampire/heels
 
 /obj/effect/landmark/start/clerk
-	name = "Clerk"
+	name = "Seneschal"
 	icon_state = "Clerk"
 
 /datum/job/vamp/agent
-	title = "Camarilla Agent"
+	title = "Scourge"
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list("Prince")
 	faction = "Vampire"
@@ -272,7 +272,7 @@
 	allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Lasombra")
 
 /datum/outfit/job/agent
-	name = "Camarilla Agent"
+	name = "Scourge"
 	jobtype = /datum/job/vamp/agent
 
 	id = /obj/item/card/id/camarilla
@@ -295,14 +295,14 @@
 	H.frakcja = "Camarilla"
 
 /obj/effect/landmark/start/camarillaagent
-	name = "Camarilla Agent"
+	name = "Scourge"
 	icon_state = "Camarilla Agent"
 
 //NEUTRALS
 
 /datum/job/vamp/graveyard
 	title = "Graveyard Keeper"
-	department_head = list("Clerk")
+	department_head = list("Seneschal")
 	faction = "Vampire"
 	total_positions = 6
 	spawn_positions = 6
@@ -351,7 +351,7 @@
 
 /datum/job/vamp/vdoctor
 	title = "Doctor"
-	department_head = list("Clerk")
+	department_head = list("Seneschal")
 	faction = "Vampire"
 	total_positions = 4
 	spawn_positions = 4

@@ -97,7 +97,7 @@
 	..()
 
 /datum/phonecontact/clerk
-	name = "Clerk"
+	name = "Seneschal"
 
 /datum/phonecontact/clerk/check_global_contacts()
 	if(number != GLOB.clerknumber)

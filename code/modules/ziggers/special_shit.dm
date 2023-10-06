@@ -17,14 +17,15 @@
 		for(var/mob/living/carbon/human/H in GLOB.masquerade_breakers_list)
 			var/turf/TT = get_turf(H)
 			if(TT)
-				to_chat(user, "[H.true_real_name], Masquerade: [H.masquerade], [get_area_name(H)] X:[TT.x] Y:[TT.y]")
+				to_chat(user, "[H.true_real_name], Masquerade: [H.masquerade], Diablerist: [H.diablerist ? "<b>YES</b>" : "NO"], [get_area_name(H)] X:[TT.x] Y:[TT.y]")
 	else
 		to_chat(user, "No available Masquerade breakers in city...")
 
 /obj/item/masquerade_contract/attack(mob/living/M, mob/living/user)
 	. = ..()
 	if(iskindred(M) || isghoul(M))
-		if(M in GLOB.masquerade_breakers_list)
+		var/mob/living/carbon/human/D = M
+		if(M in GLOB.masquerade_breakers_list || D.diablerist)
 			if(!GLOB.canon_event)
 				to_chat(user, "This is not a canon event!")
 				return
@@ -33,17 +34,23 @@
 				return
 			if(M.stat >= 2)
 				var/datum/preferences/P = GLOB.preferences_datums[ckey(M.key)]
+				var/extra = FALSE
+				if(D.diablerist)
+					extra = TRUE
 				M.death()
 				if(P)
-					P.reason_of_death = "Executed to sustain the Masquerade ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
+					P.reason_of_death = "Executed to sustain the Traditions ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 					reset_shit(M)
 				M.ghostize(FALSE)
-				to_chat(user, "<b>Successfully punished masquerade breaker and restored the Masquerade.</b>")
+				to_chat(user, "<b>Successfully punished Traditions violator and restored the Masquerade.</b>")
 				var/mob/living/carbon/human/HM = user
 				HM.AdjustMasquerade(1)
 				if(user.key)
 					if(P)
-						P.exper = min(calculate_mob_max_exper(user), P.exper+500)
+						if(extra)
+							P.exper = min(calculate_mob_max_exper(user), P.exper+1000)
+						else
+							P.exper = min(calculate_mob_max_exper(user), P.exper+500)
 				return
 			else
 				to_chat(user, "Target must be in critical condition or torpor.")
