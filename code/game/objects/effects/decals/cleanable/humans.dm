@@ -57,6 +57,12 @@
 		bloodiness = 0
 		color =  COLOR_GRAY
 		STOP_PROCESSING(SSobj, src)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				animate(src, alpha = 0, time = 1200)
+				spawn(1200)
+					qdel(src)
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	if(C)
