@@ -1309,6 +1309,7 @@
 	..()
 	if(H.mind)
 		H.mind.add_antag_datum(/datum/antagonist/sabbatist)
+	GLOB.sabbatites += H
 
 	var/list/landmarkslist = list()
 	for(var/obj/effect/landmark/start/S in GLOB.start_landmarks_list)

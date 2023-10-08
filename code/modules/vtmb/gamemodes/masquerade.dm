@@ -19,6 +19,15 @@ SUBSYSTEM_DEF(masquerade)
 			return "STABLE"
 
 /datum/controller/subsystem/masquerade/fire()
+	var/masquerade_violators = 0
+	var/sabbat = 0
+	if(length(GLOB.masquerade_breakers_list))
+		masquerade_violators = (1000/length(GLOB.player_list))*length(GLOB.masquerade_breakers_list)
+	if(length(GLOB.sabbatites))
+		sabbat = (500/length(GLOB.player_list))*length(GLOB.sabbatites)
+
+	total_level = max(0, 1000-masquerade_violators-sabbat)
+
 	var/shit_happens = "stable"
 	switch(total_level)
 		if(0 to 250)

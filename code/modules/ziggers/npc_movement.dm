@@ -74,13 +74,7 @@
 	if(stat == DEAD)
 		return
 	..()
-
 	if(pulledby)
-		if(!CheckMove() && prob(50))
-			var/pre_intent = a_intent
-			a_intent = INTENT_DISARM
-			ClickOn(pulledby)
-			a_intent = pre_intent
 		if(prob(25))
 			Aggro(pulledby, TRUE)
 		if(fights_anyway)

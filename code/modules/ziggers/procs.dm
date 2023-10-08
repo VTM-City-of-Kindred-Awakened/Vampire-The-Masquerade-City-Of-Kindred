@@ -61,7 +61,7 @@
 					SEND_SOUND(src, sound('code/modules/ziggers/sounds/masquerade_violation.ogg', 0, 0, 75))
 					to_chat(src, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
 				SSbad_guys_party.next_fire = max(world.time, SSbad_guys_party.next_fire-1200)
-				SSmasquerade.total_level = max(0, SSmasquerade.total_level-10)
+//				SSmasquerade.total_level = max(0, SSmasquerade.total_level-10)
 			if(value > 0)
 				if(clane)
 					if(clane.enlightement)
@@ -73,7 +73,7 @@
 					SEND_SOUND(src, sound('code/modules/ziggers/sounds/general_good.ogg', 0, 0, 75))
 					to_chat(src, "<span class='userhelp'><b>MASQUERADE REINFORCEMENT</b></span>")
 				SSbad_guys_party.next_fire = max(world.time, SSbad_guys_party.next_fire+600)
-				SSmasquerade.total_level = min(1000, SSmasquerade.total_level+10)
+//				SSmasquerade.total_level = min(1000, SSmasquerade.total_level+10)
 
 	if(src in GLOB.masquerade_breakers_list)
 		if(masquerade > 2)

@@ -23,13 +23,13 @@
 /mob/living/carbon/human/death()
 	. = ..()
 
-	if(iskindred(src) || isghoul(src))
-		SSmasquerade.total_level = min(1000, SSmasquerade.total_level+30)
-	else
-		if(istype(get_area(src), /area/vtm))
-			var/area/vtm/V = get_area(src)
-			if(V.zone_type == "masquerade")
-				SSmasquerade.total_level = max(0, SSmasquerade.total_level-10)
+//	if(iskindred(src) || isghoul(src))
+//		SSmasquerade.total_level = min(1000, SSmasquerade.total_level+30)
+//	else
+//		if(istype(get_area(src), /area/vtm))
+//			var/area/vtm/V = get_area(src)
+//			if(V.zone_type == "masquerade")
+//				SSmasquerade.total_level = max(0, SSmasquerade.total_level-10)
 
 	if(bloodhunted)
 		SSbloodhunt.hunted -= src
@@ -38,6 +38,7 @@
 	for(var/obj/item/police_radio/R in GLOB.police_radios)
 		R.announce_crime("murder", get_turf(src))
 	GLOB.masquerade_breakers_list -= src
+	GLOB.sabbatites -= src
 	var/allowed_to_loose = FALSE
 	if(key)
 		var/special_role_name

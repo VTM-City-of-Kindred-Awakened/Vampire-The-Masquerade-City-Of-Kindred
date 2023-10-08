@@ -202,6 +202,7 @@
 							if(H.frakcja == "Sabbat")
 								if(BLOODBONDED.mind)
 									BLOODBONDED.mind.add_antag_datum(/datum/antagonist/sabbatist)
+									GLOB.sabbatites += BLOODBONDED
 							SSfactionwar.adjust_members()
 							to_chat(BLOODBONDED, "<span class='notice'>You are now member of <b>[H.frakcja]</b></span>")
 				BLOODBONDED.drunked_of |= "[H.dna.real_name]"
