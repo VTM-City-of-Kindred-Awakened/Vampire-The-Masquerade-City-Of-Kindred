@@ -275,7 +275,7 @@
 	user.check_elysium(TRUE)
 	if(!target.IsParalyzed() && iskindred(target) && !target.stakeimmune)
 		visible_message("<span class='warning'>[user] aims [src] straight to the [target]'s heart!</span>", "<span class='warning'>You aim [src] straight to the [target]'s heart!</span>")
-		if(do_after(user, 10, target))
+		if(do_after(user, 20, target))
 			user.do_attack_animation(target)
 			visible_message("<span class='warning'>[user] pierces [target]'s torso!</span>", "<span class='warning'>You pierce [target]'s torso!</span>")
 			target.Paralyze(1200)
