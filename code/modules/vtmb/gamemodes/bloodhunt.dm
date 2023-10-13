@@ -47,8 +47,8 @@
 SUBSYSTEM_DEF(bloodhunt)
 	name = "Blood Hunt"
 	init_order = INIT_ORDER_DEFAULT
-	wait = 300
-	priority = FIRE_PRIORITY_DEFAULT
+	wait = 600
+	priority = FIRE_PRIORITY_VERYLOW
 
 	var/list/hunted = list()
 

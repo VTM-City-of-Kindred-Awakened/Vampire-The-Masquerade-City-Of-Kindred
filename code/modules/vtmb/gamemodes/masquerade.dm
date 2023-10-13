@@ -1,8 +1,8 @@
 SUBSYSTEM_DEF(masquerade)
 	name = "Masquerade"
 	init_order = INIT_ORDER_DEFAULT
-	wait = 300
-	priority = FIRE_PRIORITY_DEFAULT
+	wait = 1200
+	priority = FIRE_PRIORITY_VERYLOW
 
 	var/total_level = 1000
 	var/last_level = "stable"

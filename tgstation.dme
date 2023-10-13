@@ -3333,6 +3333,7 @@
 #include "code\modules\vtmb\gamemodes\masquerade.dm"
 #include "code\modules\vtmb\gamemodes\sarcophagus.dm"
 #include "code\modules\vtmb\gamemodes\subsystem.dm"
+#include "code\modules\vtmb\npc\beastmaster.dm"
 #include "code\modules\vtmb\npc\defines.dm"
 #include "code\modules\vtmb\vampire_clane\baali.dm"
 #include "code\modules\vtmb\vampire_clane\banu_haqim.dm"

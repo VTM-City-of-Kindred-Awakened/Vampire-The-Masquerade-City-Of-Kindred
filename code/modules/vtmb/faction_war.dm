@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(factionwar)
 	name = "Faction War"
 	init_order = INIT_ORDER_DEFAULT
 	wait = 6000
-	priority = FIRE_PRIORITY_DEFAULT
+	priority = FIRE_PRIORITY_VERYLOW
 
 	var/list/marks_camarilla = list()
 	var/list/marks_anarch = list()
