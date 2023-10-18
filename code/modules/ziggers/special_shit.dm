@@ -21,11 +21,14 @@
 	else
 		to_chat(user, "No available Masquerade breakers in city...")
 
+/mob/living
+	var/total_contracted = 0
+
 /obj/item/masquerade_contract/attack(mob/living/M, mob/living/user)
 	. = ..()
 	if(iskindred(M) || isghoul(M))
 		var/mob/living/carbon/human/D = M
-		if(M in GLOB.masquerade_breakers_list || D.diablerist)
+		if(D.diablerist)
 			if(!GLOB.canon_event)
 				to_chat(user, "This is not a canon event!")
 				return
@@ -34,9 +37,9 @@
 				return
 			if(M.stat >= 2)
 				var/datum/preferences/P = GLOB.preferences_datums[ckey(M.key)]
-				var/extra = FALSE
-				if(D.diablerist)
-					extra = TRUE
+//				var/extra = FALSE
+//				if(D.diablerist)
+//					extra = TRUE
 				M.death()
 				if(P)
 					P.reason_of_death = "Executed to sustain the Traditions ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
@@ -45,12 +48,35 @@
 				to_chat(user, "<b>Successfully punished Traditions violator and restored the Masquerade.</b>")
 				var/mob/living/carbon/human/HM = user
 				HM.AdjustMasquerade(1)
-				if(user.key)
-					if(P)
-						if(extra)
-							P.exper = min(calculate_mob_max_exper(user), P.exper+1000)
-						else
-							P.exper = min(calculate_mob_max_exper(user), P.exper+500)
+				HM.total_contracted += 2
+				return
+		if(M in GLOB.masquerade_breakers_list)
+			if(!GLOB.canon_event)
+				to_chat(user, "This is not a canon event!")
+				return
+			if(!M.client)
+				to_chat(user, "You need [M] attention to do that.")
+				return
+			if(M.stat >= 2)
+				var/datum/preferences/P = GLOB.preferences_datums[ckey(M.key)]
+//				var/extra = FALSE
+//				if(D.diablerist)
+//					extra = TRUE
+				M.death()
+				if(P)
+					P.reason_of_death = "Executed to sustain the Traditions ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
+					reset_shit(M)
+				M.ghostize(FALSE)
+				to_chat(user, "<b>Successfully punished Traditions violator and restored the Masquerade.</b>")
+				var/mob/living/carbon/human/HM = user
+				HM.AdjustMasquerade(1)
+				HM.total_contracted += 1
+//				if(user.key)
+//					if(P)
+//						if(extra)
+//							P.exper = min(calculate_mob_max_exper(user), P.exper+1000)
+//						else
+//							P.exper = min(calculate_mob_max_exper(user), P.exper+500)
 				return
 			else
 				to_chat(user, "Target must be in critical condition or torpor.")

@@ -133,16 +133,18 @@
 			B.enemies = list()
 			B.LosePatience()
 
-/mob/living/simple_animal/hostile/retaliate/beastmaster/Life()
+/mob/living/simple_animal/hostile/retaliate/beastmaster/proc/gotomaster()
+	step_towards(src, beastmaster)
+
+/mob/living/simple_animal/hostile/retaliate/beastmaster/handle_automated_movement()
+	..()
 	if(follow && !target && stat != DEAD)
 		if(z != beastmaster.z)
 			forceMove(get_turf(beastmaster))
 		if(get_dist(src, beastmaster) > 15)
-			animate(src, pixel_x = (x-beastmaster.x)*-32, pixel_y = (y-beastmaster.y)*-32, time = 10)
-			spawn(10)
-				forceMove(get_turf(beastmaster))
-				pixel_x = 0
-				pixel_y = 0
+			forceMove(get_turf(beastmaster))
 		if(get_dist(src, beastmaster) > 3)
-			walk_to(src, beastmaster, 0, total_multiplicative_slowdown(), DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
-	..()
+			var/reqsteps = round((SSnpcpool.next_fire-world.time)/total_multiplicative_slowdown())
+			var/datum/cb = CALLBACK(src,/mob/living/simple_animal/hostile/retaliate/beastmaster/proc/gotomaster)
+			for(var/i in 1 to reqsteps)
+				addtimer(cb, (i - 1)*total_multiplicative_slowdown())

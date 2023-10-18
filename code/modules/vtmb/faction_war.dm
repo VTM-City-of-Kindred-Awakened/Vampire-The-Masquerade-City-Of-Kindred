@@ -34,22 +34,22 @@ SUBSYSTEM_DEF(factionwar)
 	anarch_members = list()
 	var/how_much_cam = length(marks_camarilla)
 	var/how_much_an = length(marks_anarch)
-	var/how_much_sab = length(marks_sabbat)
+//	var/how_much_sab = length(marks_sabbat)
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H)
-			var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
-			var/mode = 1
-			if(HAS_TRAIT(H, TRAIT_NON_INT))
-				mode = 2
-			if(P)
-				if(H.frakcja == "Camarilla")
-					camarilla_members += H
-					P.exper = min(calculate_mob_max_exper(H), P.exper+((4/mode)*how_much_cam))
-				if(H.frakcja == "Anarch")
-					anarch_members += H
-					P.exper = min(calculate_mob_max_exper(H), P.exper+((4/mode)*how_much_an))
-				if(H.frakcja == "Sabbat")
-					P.exper = min(calculate_mob_max_exper(H), P.exper+((4/mode)*how_much_sab))
+//			var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
+//			var/mode = 1
+//			if(HAS_TRAIT(H, TRAIT_NON_INT))
+//				mode = 2
+//			if(P)
+			if(H.frakcja == "Camarilla")
+				camarilla_members += H
+//					P.exper = min(calculate_mob_max_exper(H), P.exper+((4/mode)*how_much_cam))
+			if(H.frakcja == "Anarch")
+				anarch_members += H
+//					P.exper = min(calculate_mob_max_exper(H), P.exper+((4/mode)*how_much_an))
+//				if(H.frakcja == "Sabbat")
+//					P.exper = min(calculate_mob_max_exper(H), P.exper+((4/mode)*how_much_sab))
 	camarilla_power = max(0, camarilla_power-(how_much_cam*5))
 	if(camarilla_power == 0)
 		var/list/shit = list()

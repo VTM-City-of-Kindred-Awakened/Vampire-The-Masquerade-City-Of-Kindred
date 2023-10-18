@@ -9,6 +9,9 @@ SUBSYSTEM_DEF(graveyard)
 	var/clear_runs = 0
 	var/list/graves = list()
 
+	var/total_good = 0
+	var/total_bad = 0
+
 /datum/controller/subsystem/graveyard/fire()
 	if(alive_zombies < 20)
 		for(var/mob/living/carbon/human/L in GLOB.player_list)
@@ -34,6 +37,7 @@ SUBSYSTEM_DEF(graveyard)
 						if(L.client)
 							if(istype(get_area(L), /area/vtm/graveyard))
 								L.AdjustMasquerade(-1)
+								total_bad += 1
 		lost_points = 0
 
 	if(clear_runs > 2)
@@ -43,13 +47,14 @@ SUBSYSTEM_DEF(graveyard)
 				if(L.mind)
 					if(L.mind.assigned_role == "Graveyard Keeper")
 						if(L.client && L.key)
-							var/datum/preferences/P = GLOB.preferences_datums[ckey(L.key)]
-							if(P)
-								L.AdjustMasquerade(1)
-								var/mode = 1
-								if(HAS_TRAIT(L, TRAIT_NON_INT))
-									mode = 2
-								P.exper = min(calculate_mob_max_exper(L), P.exper+((250+L.experience_plus)/mode))
+							total_good += 1
+//							var/datum/preferences/P = GLOB.preferences_datums[ckey(L.key)]
+//							if(P)
+//								L.AdjustMasquerade(1)
+//								var/mode = 1
+//								if(HAS_TRAIT(L, TRAIT_NON_INT))
+//									mode = 2
+//								P.exper = min(calculate_mob_max_exper(L), P.exper+((250+L.experience_plus)/mode))
 
 /obj/vampgrave
 	icon = 'code/modules/ziggers/props.dmi'

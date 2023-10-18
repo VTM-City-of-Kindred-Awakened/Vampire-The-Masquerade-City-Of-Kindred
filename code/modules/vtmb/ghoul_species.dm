@@ -224,17 +224,17 @@
 				P.masquerade = H.masquerade
 				P.save_preferences()
 				P.save_character()
-			if(H.last_experience+600 <= world.time)
-				var/addd = 5
-				if(H.mind)
-					if(!H.JOB)
-						H.JOB = SSjob.GetJob(H.mind.assigned_role)
-						if(H.JOB)
-							addd = H.JOB.experience_addition
-				P.exper = min(calculate_mob_max_exper(H), P.exper+addd+H.experience_plus)
-				P.save_preferences()
-				P.save_character()
-				H.last_experience = world.time
+//			if(H.last_experience+600 <= world.time)
+//				var/addd = 5
+//				if(H.mind)
+//					if(!H.JOB)
+//						H.JOB = SSjob.GetJob(H.mind.assigned_role)
+//						if(H.JOB)
+//							addd = H.JOB.experience_addition
+//				P.exper = min(calculate_mob_max_exper(H), P.exper+addd+H.experience_plus)
+//				P.save_preferences()
+//				P.save_character()
+//				H.last_experience = world.time
 			if(H.humanity <= 2)
 				if(prob(5))
 					if(prob(50))
@@ -263,18 +263,18 @@
 		H.last_bloodpool_restore = world.time
 		H.bloodpool = min(H.maxbloodpool, H.bloodpool+1)
 
-	if(H.key && H.stat != DEAD)
-		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
-		if(P)
+//	if(H.key && H.stat != DEAD)
+//		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
+//		if(P)
 //			if(P.humanity != H.humanity)
 //				P.humanity = H.humanity
 //				P.save_preferences()
 //				P.save_character()
-			if(H.last_experience+600 <= world.time)
-				P.exper = min(calculate_mob_max_exper(H), P.exper+5+H.experience_plus)
-				P.save_preferences()
-				P.save_character()
-				H.last_experience = world.time
+//			if(H.last_experience+600 <= world.time)
+//				P.exper = min(calculate_mob_max_exper(H), P.exper+5+H.experience_plus)
+//				P.save_preferences()
+//				P.save_character()
+//				H.last_experience = world.time
 
 //			if(H.humanity <= 2)
 //				if(prob(5))

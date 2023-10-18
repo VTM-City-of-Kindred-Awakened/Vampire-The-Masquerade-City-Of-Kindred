@@ -21,6 +21,10 @@
 	name = "NPC Activity"
 	icon_state = "bullets"
 
+/obj/effect/landmark/npcability
+	name = "NPC Ability"
+	icon_state = "ability"
+
 /obj/effect/landmark/npcactivity/Initialize()
 	. = ..()
 	GLOB.npc_activities += src
@@ -97,15 +101,15 @@
 				var/turf/T = get_step(src, pick(NORTH, SOUTH, WEST, EAST))
 				face_atom(T)
 				step_to(src,T,0)
-		if(prob(5) && !danger_source)
-			var/activity = rand(1, 3)
-			switch(activity)
-				if(1)
-					StareAction()
-				if(2)
-					EmoteAction()
-				if(3)
-					SpeechAction()
+//		if(prob(5) && !danger_source)
+//			var/activity = rand(1, 3)
+//			switch(activity)
+//				if(1)
+//					StareAction()
+//				if(2)
+//					EmoteAction()
+//				if(3)
+//					SpeechAction()
 
 /mob/living/carbon/human/npc/proc/CreateWay(var/direction)
 	var/turf/location = get_turf(src)
@@ -118,12 +122,6 @@
 				return location
 			if(istype(A, /obj/effect/landmark/npcwall))
 				return get_step_towards(location, get_turf(src))
-			if(istype(A, /obj/effect/decal/cleanable/blood))
-				var/obj/effect/decal/cleanable/blood/B = A
-				if(B.bloodiness)
-					return get_step_towards(location, get_turf(src))
-			if(istype(A, /obj/effect/fire))
-				return get_turf(src)
 			if(isnpcbeacon(A) && prob(50))
 //				var/opposite_dir = turn(direction, 180)				Nado
 				stopturf = 1
@@ -135,11 +133,14 @@
 	if(!old_movement)
 		var/list/possible_list = list()
 		for(var/obj/effect/landmark/npcactivity/N in GLOB.npc_activities)
-			if(get_dist(src, N) > 40)
-				if(N.x > x-3 && N.x < x+3)
-					possible_list += N
-				if(N.y > y-3 && N.y < y+3)
-					possible_list += N
+			if(get_dist(src, N) < 64)
+				var/turf/T = get_step(N, turn(get_dir(src, N), 180))
+				var/obj/effect/landmark/npcability/A = locate() in T
+				if(A)
+					if(N.x > x-3 && N.x < x+3)
+						possible_list += N
+					if(N.y > y-3 && N.y < y+3)
+						possible_list += N
 		if(!length(possible_list))
 			var/atom/shitshit
 			for(var/obj/effect/landmark/npcactivity/N in GLOB.npc_activities)

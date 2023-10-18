@@ -238,6 +238,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 /mob/living
 	var/last_nigging
+	var/total_erp = 0
 
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
@@ -283,17 +284,14 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(ishuman(speaker))
 			var/mob/living/carbon/human/EX = speaker
 			if(EX.key && EX.client)
-				if(length(message) > 100 && EX.last_nigging != message)
+				if(length(message) > 150 && EX.last_nigging != message)
 					EX.last_nigging = message
-					var/datum/preferences/P = GLOB.preferences_datums[ckey(EX.key)]
-					if(P)
-						var/kal = 5
-						if(EX.clane)
-							if(EX.clane.name == "Toreador")
-								kal = 25
-						P.exper = min(calculate_mob_max_exper(EX), P.exper+kal)
-						P.save_preferences()
-						P.save_character()
+//					var/datum/preferences/P = GLOB.preferences_datums[ckey(EX.key)]
+//					if(P)
+					EX.total_erp += 1
+//						P.exper = min(calculate_mob_max_exper(EX), P.exper+kal)
+//						P.save_preferences()
+//						P.save_character()
 
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)

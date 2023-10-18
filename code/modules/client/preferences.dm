@@ -151,8 +151,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/enlightement = FALSE
 	var/humanity = 7
 
+//TOO OLD
 	var/exper = 1440	//Urovni
 	var/exper_plus = 0
+//TOO OLD
+
+	var/true_experience = 10
 	var/torpor_count = 0
 
 	var/discipline1level = 1
@@ -164,6 +168,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/discipline2type
 	var/discipline3type
 	var/discipline4type
+
+	var/physique = 1
+	var/social = 1
+	var/mentality = 1
+	var/blood = 1
 
 	var/friend = FALSE
 	var/enemy = FALSE
@@ -178,6 +187,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 //	var/datum/vampireclane/Clane
 
+/datum/preferences/proc/add_experience(var/amount)
+	if(amount)
+		true_experience = true_experience+amount
+
+/*
 /proc/calculate_mob_max_exper(var/mob/M)
 	if(M.key)
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(M.key)]
@@ -186,7 +200,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/calculate_max_exper()
 	return 360*(discipline1level+discipline2level+discipline3level+discipline4level-4) + 1440*(max(1, 13-generation)*max(1, generation_bonus))
-
+*/
 /proc/reset_shit(var/mob/M)
 	if(M.key)
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(M.key)]
@@ -194,6 +208,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			P.slotlocked = 0
 			P.torpor_count = 0
 			P.generation_bonus = 0
+			P.physique = 1
+			P.social = 1
+			P.mentality = 1
+			P.blood = 1
 			P.discipline1level = 1
 			P.discipline2level = 1
 			P.discipline3level = 1
@@ -215,7 +233,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //			P.random_species()
 //			P.random_character()
 			P.real_name = random_unique_name(P.gender)
-			P.exper = calculate_mob_max_exper(M)
+			P.true_experience = 16
 			P.save_character()
 			P.save_preferences()
 
@@ -408,8 +426,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(3)
 						max_death = 1
 			dat += "<b>[pref_species.name == "Vampire" ? "Torpor" : "Clinical Death"] Count:</b> [torpor_count]/[max_death]"
-			if(exper >= calculate_max_exper() && torpor_count > 0)
-				dat += " <a href='?_src_=prefs;preference=torpor_restore;task=input'>Restore</a><BR>"
+			if(true_experience >= 5*(14-generation) && torpor_count > 0)
+				dat += " <a href='?_src_=prefs;preference=torpor_restore;task=input'>Restore ([5*(14-generation)])</a><BR>"
 			dat += "<BR>"
 			dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_BODY]'>Always Random Body: [(randomise[RANDOM_BODY]) ? "Yes" : "No"]</A>"
@@ -432,8 +450,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(generation_allowed)
 					if(generation_bonus)
 						dat += " (+[generation_bonus]/[min(6, generation-7)])"
-					if(exper >= calculate_max_exper() && generation_bonus < max(0, generation-7))
-						dat += " <a href='?_src_=prefs;preference=generation;task=input'>Claim generation bonus</a><BR>"
+					if(true_experience >= 20 && generation_bonus < max(0, generation-7))
+						dat += " <a href='?_src_=prefs;preference=generation;task=input'>Claim generation bonus (20)</a><BR>"
 					else
 						dat += "<BR>"
 				else
@@ -444,40 +462,39 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Curse:</b> [clane.curse]<BR>"
 				dat += "<h2>[make_font_cool("DISCIPLINES")]</h2>"
 
-				if(exper_plus)
-					dat += "Experience rewarded: [exper]/[calculate_max_exper()] (+[exper_plus])<BR>"
-				else
-					dat += "Experience rewarded: [exper]/[calculate_max_exper()]<BR>"
+				dat += "Experience rewarded: [true_experience]<BR>"
+//				else
+//					dat += "Experience rewarded: [exper]/[calculate_max_exper()]<BR>"
 
 				if(discipline1type)
 					var/datum/discipline/AD = new discipline1type()
 					dat += "<b>[AD.name]</b>: •[discipline1level > 1 ? "•" : "o"][discipline1level > 2 ? "•" : "o"][discipline1level > 3 ? "•" : "o"][discipline1level > 4 ? "•" : "o"]([discipline1level])"
-					if(exper >= calculate_max_exper() && discipline1level != 5)
-						dat += "<a href='?_src_=prefs;preference=discipline1;task=input'>Learn</a><BR>"
+					if(true_experience >= discipline1level*5 && discipline1level != 5)
+						dat += "<a href='?_src_=prefs;preference=discipline1;task=input'>Learn ([discipline1level*5])</a><BR>"
 					else
 						dat += "<BR>"
 					dat += "-[AD.desc]<BR>"
 				if(discipline2type)
 					var/datum/discipline/AD = new discipline2type()
 					dat += "<b>[AD.name]</b>: •[discipline2level > 1 ? "•" : "o"][discipline2level > 2 ? "•" : "o"][discipline2level > 3 ? "•" : "o"][discipline2level > 4 ? "•" : "o"]([discipline2level])"
-					if(exper >= calculate_max_exper() && discipline2level != 5)
-						dat += "<a href='?_src_=prefs;preference=discipline2;task=input'>Learn</a><BR>"
+					if(true_experience >= discipline2level*5 && discipline2level != 5)
+						dat += "<a href='?_src_=prefs;preference=discipline2;task=input'>Learn ([discipline2level*5])</a><BR>"
 					else
 						dat += "<BR>"
 					dat += "-[AD.desc]<BR>"
 				if(discipline3type)
 					var/datum/discipline/AD = new discipline3type()
 					dat += "<b>[AD.name]</b>: •[discipline3level > 1 ? "•" : "o"][discipline3level > 2 ? "•" : "o"][discipline3level > 3 ? "•" : "o"][discipline3level > 4 ? "•" : "o"]([discipline3level])"
-					if(exper >= calculate_max_exper() && discipline3level != 5)
-						dat += "<a href='?_src_=prefs;preference=discipline3;task=input'>Learn</a><BR>"
+					if(true_experience >= discipline3level*5 && discipline3level != 5)
+						dat += "<a href='?_src_=prefs;preference=discipline3;task=input'>Learn ([discipline3level*5])</a><BR>"
 					else
 						dat += "<BR>"
 					dat += "-[AD.desc]<BR>"
 				if(discipline4type)
 					var/datum/discipline/AD = new discipline4type()
 					dat += "<b>[AD.name]</b>: •[discipline4level > 1 ? "•" : "o"][discipline4level > 2 ? "•" : "o"][discipline4level > 3 ? "•" : "o"][discipline4level > 4 ? "•" : "o"]([discipline4level])"
-					if(exper >= calculate_max_exper() && discipline4level != 5)
-						dat += "<a href='?_src_=prefs;preference=discipline4;task=input'>Learn</a><BR>"
+					if(true_experience >= discipline4level*5 && discipline4level != 5)
+						dat += "<a href='?_src_=prefs;preference=discipline4;task=input'>Learn ([discipline4level*5])</a><BR>"
 					else
 						dat += "<BR>"
 					dat += "-[AD.desc]<BR>"
@@ -486,21 +503,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(i == "[parent.ckey]")
 							dat += "<a href='?_src_=prefs;preference=disciplineplus;task=input'>Learn custom type of disciplines</a><BR>"
 			if(pref_species.name == "Ghoul")
-				dat += "Experience rewarded: [exper]/[calculate_max_exper()]<BR>"
-				if(!discipline1type && exper >= calculate_max_exper())
-					dat += "<a href='?_src_=prefs;preference=discipline1ghoul;task=input'>Learn new type of discipline</a><BR>"
+				dat += "Experience rewarded: [true_experience]<BR>"
+				if(!discipline1type && true_experience >= 5)
+					dat += "<a href='?_src_=prefs;preference=discipline1ghoul;task=input'>Learn new type of discipline (5)</a><BR>"
 				if(discipline1type)
 					var/datum/discipline/AD = new discipline1type()
 					dat += "<b>[AD.name]</b>: •(1)<BR>"
 					dat += "-[AD.desc]<BR>"
-				if(discipline1type && !discipline2type && exper >= calculate_max_exper())
-					dat += "<a href='?_src_=prefs;preference=discipline2ghoul;task=input'>Learn new type of discipline</a><BR>"
+				if(discipline1type && !discipline2type && true_experience >= 5)
+					dat += "<a href='?_src_=prefs;preference=discipline2ghoul;task=input'>Learn new type of discipline (5)</a><BR>"
 				if(discipline2type)
 					var/datum/discipline/AD = new discipline2type()
 					dat += "<b>[AD.name]</b>: •(1)<BR>"
 					dat += "-[AD.desc]<BR>"
-				if(discipline1type && discipline2type && !discipline3type && exper >= calculate_max_exper())
-					dat += "<a href='?_src_=prefs;preference=discipline3ghoul;task=input'>Learn new type of discipline</a><BR>"
+				if(discipline1type && discipline2type && !discipline3type && true_experience >= 5)
+					dat += "<a href='?_src_=prefs;preference=discipline3ghoul;task=input'>Learn new type of discipline (5)</a><BR>"
 				if(discipline3type)
 					var/datum/discipline/AD = new discipline3type()
 					dat += "<b>[AD.name]</b>: •(1)<BR>"
@@ -510,8 +527,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(i == "[parent.ckey]")
 						sponsor = TRUE
 				if(sponsor)
-					if(discipline1type && discipline2type && discipline3type && !discipline4type && exper >= calculate_max_exper())
-						dat += "<a href='?_src_=prefs;preference=discipline4ghoul;task=input'>Learn new type of discipline</a><BR>"
+					if(discipline1type && discipline2type && discipline3type && !discipline4type && true_experience >= 5)
+						dat += "<a href='?_src_=prefs;preference=discipline4ghoul;task=input'>Learn new type of discipline (5)</a><BR>"
 					if(discipline4type)
 						var/datum/discipline/AD = new discipline4type()
 						dat += "<b>[AD.name]</b>: •(1)<BR>"
@@ -520,11 +537,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //			dat += "<a href='?_src_=prefs;preference=species;task=random'>Random Species</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SPECIES]'>Always Random Species: [(randomise[RANDOM_SPECIES]) ? "Yes" : "No"]</A><br>"
 
-			if(exper >= calculate_max_exper() && slotlocked)
-				if(exper_plus)
-					dat += "<a href='?_src_=prefs;preference=change_appearance;task=input'>Change Appearance [exper]/[calculate_max_exper()] (+[exper_plus])</a><BR>"
-				else
-					dat += "<a href='?_src_=prefs;preference=change_appearance;task=input'>Change Appearance [exper]/[calculate_max_exper()]</a><BR>"
+			if(true_experience >= 4 && slotlocked)
+				dat += "<a href='?_src_=prefs;preference=change_appearance;task=input'>Change Appearance (4)</a><BR>"
 			if(clane)
 				if(clane.name != "Caitiff")
 					if(generation_bonus)
@@ -1774,15 +1788,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("discipline1ghoul")
 					var/discipline1 = input(user, "Select second discipline", "Discipline Selection") as null|anything in subtypesof(/datum/discipline)
 					if(discipline1)
-						discipline1type = discipline1
-						exper = 0
-						if(exper_plus)
-							if(exper_plus > calculate_max_exper())
-								exper = calculate_max_exper()
-								exper_plus = max(0, exper_plus-calculate_max_exper())
-							else
-								exper = max(0, exper+exper_plus)
-								exper_plus = 0
+						if(true_experience >= 5)
+							discipline1type = discipline1
+							true_experience = true_experience-5
 
 				if("discipline2ghoul")
 					var/list/disc2 = list()
@@ -1791,15 +1799,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							disc2 += i
 					var/discipline2 = input(user, "Select second discipline", "Discipline Selection") as null|anything in disc2
 					if(discipline2)
-						discipline2type = discipline2
-						exper = 0
-						if(exper_plus)
-							if(exper_plus > calculate_max_exper())
-								exper = calculate_max_exper()
-								exper_plus = max(0, exper_plus-calculate_max_exper())
-							else
-								exper = max(0, exper+exper_plus)
-								exper_plus = 0
+						if(true_experience >= 5)
+							discipline2type = discipline2
+							true_experience = true_experience-5
 
 				if("discipline3ghoul")
 					var/list/disc3 = list()
@@ -1808,15 +1810,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							disc3 += i
 					var/discipline3 = input(user, "Select second discipline", "Discipline Selection") as null|anything in disc3
 					if(discipline3)
-						discipline3type = discipline3
-						exper = 0
-						if(exper_plus)
-							if(exper_plus > calculate_max_exper())
-								exper = calculate_max_exper()
-								exper_plus = max(0, exper_plus-calculate_max_exper())
-							else
-								exper = max(0, exper+exper_plus)
-								exper_plus = 0
+						if(true_experience >= 5)
+							discipline3type = discipline3
+							true_experience = true_experience-5
 
 				if("discipline4ghoul")
 					var/list/disc4 = list()
@@ -1825,15 +1821,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							disc4 += i
 					var/discipline4 = input(user, "Select second discipline", "Discipline Selection") as null|anything in disc4
 					if(discipline4)
-						discipline4type = discipline4
-						exper = 0
-						if(exper_plus)
-							if(exper_plus > calculate_max_exper())
-								exper = calculate_max_exper()
-								exper_plus = max(0, exper_plus-calculate_max_exper())
-							else
-								exper = max(0, exper+exper_plus)
-								exper_plus = 0
+						if(true_experience >= 5)
+							discipline4type = discipline4
+							true_experience = true_experience-5
 
 				if("clane")
 					if(slotlocked)
@@ -1903,77 +1893,62 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //						real_name = clane.random_name(gender)		//potom sdelat
 
 				if("discipline1")
-					discipline1level = min(5, discipline1level+1)
-					exper = 0
-					if(exper_plus)
-						if(exper_plus > calculate_max_exper())
-							exper = calculate_max_exper()
-							exper_plus = max(0, exper_plus-calculate_max_exper())
-						else
-							exper = max(0, exper+exper_plus)
-							exper_plus = 0
+					if(true_experience >= discipline1level*5 && discipline1level != 5)
+						true_experience = true_experience-discipline1level*5
+						discipline1level = min(5, discipline1level+1)
+//					if(exper_plus)
+//						if(exper_plus > calculate_max_exper())
+//							exper = calculate_max_exper()
+//							exper_plus = max(0, exper_plus-calculate_max_exper())
+//						else
+//							exper = max(0, exper+exper_plus)
+//							exper_plus = 0
 
 				if("discipline2")
-					discipline2level = min(5, discipline2level+1)
-					exper = 0
-					if(exper_plus)
-						if(exper_plus > calculate_max_exper())
-							exper = calculate_max_exper()
-							exper_plus = max(0, exper_plus-calculate_max_exper())
-						else
-							exper = max(0, exper+exper_plus)
-							exper_plus = 0
+					if(true_experience >= discipline2level*5 && discipline2level != 5)
+						true_experience = true_experience-discipline2level*5
+						discipline2level = min(5, discipline2level+1)
 
 				if("discipline3")
-					discipline3level = min(5, discipline3level+1)
-					exper = 0
-					if(exper_plus)
-						if(exper_plus > calculate_max_exper())
-							exper = calculate_max_exper()
-							exper_plus = max(0, exper_plus-calculate_max_exper())
-						else
-							exper = max(0, exper+exper_plus)
-							exper_plus = 0
+					if(true_experience >= discipline3level*5 && discipline3level != 5)
+						true_experience = true_experience-discipline3level*5
+						discipline3level = min(5, discipline3level+1)
 
 				if("discipline4")
-					discipline4level = min(5, discipline4level+1)
-					exper = 0
-					if(exper_plus)
-						if(exper_plus > calculate_max_exper())
-							exper = calculate_max_exper()
-							exper_plus = max(0, exper_plus-calculate_max_exper())
-						else
-							exper = max(0, exper+exper_plus)
-							exper_plus = 0
+					if(true_experience >= discipline4level*5 && discipline4level != 5)
+						true_experience = true_experience-discipline4level*5
+						discipline4level = min(5, discipline4level+1)
 
 				if("pathof")
 					if(!slotlocked)
 						enlightement = !enlightement
 
 				if("torpor_restore")
-					torpor_count = 0
-					exper = 0
-					if(exper_plus)
-						if(exper_plus > calculate_max_exper())
-							exper = calculate_max_exper()
-							exper_plus = max(0, exper_plus-calculate_max_exper())
-						else
-							exper = max(0, exper+exper_plus)
-							exper_plus = 0
+					if(torpor_count != 0 && true_experience >= 5*(14-generation))
+						torpor_count = 0
+						true_experience = true_experience-(5*(14-generation))
+//					if(exper_plus)
+//						if(exper_plus > calculate_max_exper())
+//							exper = calculate_max_exper()
+//							exper_plus = max(0, exper_plus-calculate_max_exper())
+//						else
+//							exper = max(0, exper+exper_plus)
+//							exper_plus = 0
 
 				if("generation")
 					if(clane)
 						if(clane.name == "Caitiff")
 							return
-					generation_bonus = min(generation_bonus+1, max(0, generation-7))
-					exper = 0
-					if(exper_plus)
-						if(exper_plus > calculate_max_exper())
-							exper = calculate_max_exper()
-							exper_plus = max(0, exper_plus-calculate_max_exper())
-						else
-							exper = max(0, exper+exper_plus)
-							exper_plus = 0
+					if(true_experience >= 20)
+						true_experience = true_experience-20
+						generation_bonus = min(generation_bonus+1, max(0, generation-7))
+//					if(exper_plus)
+//						if(exper_plus > calculate_max_exper())
+//							exper = calculate_max_exper()
+//							exper_plus = max(0, exper_plus-calculate_max_exper())
+//						else
+//							exper = max(0, exper+exper_plus)
+//							exper_plus = 0
 
 				if("flavor_text")
 					var/new_flavor = input(user, "Choose your character's flavor text:", "Character Preference")  as text|null
@@ -1985,15 +1960,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("change_appearance")
 //					torpor_count = max(0, torpor_count-1)
-					slotlocked = 0
-					exper = 0
-					if(exper_plus)
-						if(exper_plus > calculate_max_exper())
-							exper = calculate_max_exper()
-							exper_plus = max(0, exper_plus-calculate_max_exper())
-						else
-							exper = max(0, exper+exper_plus)
-							exper_plus = 0
+					if(slotlocked)
+						slotlocked = 0
+						true_experience = true_experience-4
 
 				if("reset_with_bonus")
 					if(clane)
@@ -2581,7 +2550,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					random_species()
 					random_character()
 					body_model = rand(1, 3)
-					exper = calculate_max_exper()
+					true_experience = 10
 					real_name = random_unique_name(gender)
 					save_character()
 

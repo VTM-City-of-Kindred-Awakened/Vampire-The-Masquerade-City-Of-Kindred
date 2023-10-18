@@ -145,13 +145,13 @@
 			NPC.Aggro(caster, TRUE)
 	if(activate_sound)
 		playsound(caster, activate_sound, 50, FALSE)
-	if(caster.key)
-		var/datum/preferences/P = GLOB.preferences_datums[ckey(caster.key)]
-		if(P)
-			if(!HAS_TRAIT(caster, TRAIT_NON_INT))
-				P.exper = min(calculate_mob_max_exper(caster), P.exper+10+caster.experience_plus)
-			P.save_preferences()
-			P.save_character()
+//	if(caster.key)
+//		var/datum/preferences/P = GLOB.preferences_datums[ckey(caster.key)]
+//		if(P)
+//			if(!HAS_TRAIT(caster, TRAIT_NON_INT))
+//				P.exper = min(calculate_mob_max_exper(caster), P.exper+10+caster.experience_plus)
+//			P.save_preferences()
+//			P.save_character()
 	if(violates_masquerade)
 		if(caster.CheckEyewitness(target, caster, 7, TRUE))
 			caster.AdjustMasquerade(-1)
@@ -174,7 +174,7 @@
 	desc = "Summons Spectral Animals over your targets. Violates Masquerade."
 	icon_state = "animalism"
 	cost = 1
-	ranged = TRUE
+	ranged = FALSE
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/ziggers/sounds/wolves.ogg'
 	dead_restricted = FALSE
@@ -189,27 +189,15 @@
 
 /datum/discipline/animalism/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
-	var/antidir = NORTH
-	switch(target.dir)
-		if(NORTH)
-			antidir = SOUTH
-		if(SOUTH)
-			antidir = NORTH
-		if(WEST)
-			antidir = EAST
-		if(EAST)
-			antidir = WEST
-	var/obj/effect/spectral_wolf/W = new(get_step(target, antidir))
-	W.dir = target.dir
-	W.set_light(2, 2, "#6eeeff")
-	target.Immobilize(10)
-	spawn(10)
-		W.forceMove(get_turf(target))
-		playsound(W.loc, 'code/modules/ziggers/sounds/volk.ogg', 80, TRUE)
-		target.apply_damage(5*level_casting, BRUTE, BODY_ZONE_CHEST)
-		target.visible_message("<span class='warning'><b>[W] bites [target]!</b></span>", "<span class='warning'><b>[W] bites you!</b></span>")
-		spawn(20)
-			qdel(W)
+	var/mob/living/simple_animal/hostile/retaliate/beastmaster/B1 = new(get_turf(caster))
+	var/mob/living/simple_animal/hostile/retaliate/beastmaster/B2 = new(get_turf(caster))
+	var/mob/living/simple_animal/hostile/retaliate/beastmaster/B3 = new(get_turf(caster))
+	caster.beastmaster |= B1
+	caster.beastmaster |= B2
+	caster.beastmaster |= B3
+	B1.beastmaster = caster
+	B2.beastmaster = caster
+	B3.beastmaster = caster
 
 /datum/discipline/auspex
 	name = "Auspex"

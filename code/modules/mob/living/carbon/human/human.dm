@@ -725,13 +725,13 @@
 		if(last_cpr_exp+1200 < world.time)
 			last_cpr_exp = world.time
 			AdjustHumanity(1, 10)
-			if(key)
-				var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
-				if(P)
-					var/mode = 1
-					if(HAS_TRAIT(src, TRAIT_NON_INT))
-						mode = 2
-					P.exper = min(calculate_mob_max_exper(src), P.exper+(20/mode))
+//			if(key)
+//				var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
+//				if(P)
+//					var/mode = 1
+//					if(HAS_TRAIT(src, TRAIT_NON_INT))
+//						mode = 2
+//					P.exper = min(calculate_mob_max_exper(src), P.exper+(20/mode))
 		log_combat(src, target, "CPRed")
 
 		if (HAS_TRAIT(target, TRAIT_NOBREATH))
