@@ -208,18 +208,38 @@
 		B.death()
 	switch(level_casting)
 		if(1)
+			if(!length(caster.beastmaster))
+				var/datum/action/beastmaster_stay/E1 = new()
+				E1.Grant(caster)
+				var/datum/action/beastmaster_deaggro/E2 = new()
+				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/rat/R = new(get_turf(caster))
 			caster.beastmaster |= R
 			R.beastmaster = caster
 		if(2)
+			if(!length(caster.beastmaster))
+				var/datum/action/beastmaster_stay/E1 = new()
+				E1.Grant(caster)
+				var/datum/action/beastmaster_deaggro/E2 = new()
+				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/cat/C = new(get_turf(caster))
 			caster.beastmaster |= C
 			C.beastmaster = caster
 		if(3)
+			if(!length(caster.beastmaster))
+				var/datum/action/beastmaster_stay/E1 = new()
+				E1.Grant(caster)
+				var/datum/action/beastmaster_deaggro/E2 = new()
+				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/D = new(get_turf(caster))
 			caster.beastmaster |= D
 			D.beastmaster = caster
 		if(4)
+			if(!length(caster.beastmaster))
+				var/datum/action/beastmaster_stay/E1 = new()
+				E1.Grant(caster)
+				var/datum/action/beastmaster_deaggro/E2 = new()
+				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/rat/flying/F = new(get_turf(caster))
 			caster.beastmaster |= F
 			F.beastmaster = caster
