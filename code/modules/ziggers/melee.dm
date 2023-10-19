@@ -180,8 +180,8 @@
 	if(istype(I, /obj/item/quietus_upgrade))
 		if(!quieted)
 			quieted = TRUE
-			armour_penetration = min(100, armour_penetration+50)
-			force += 30
+			armour_penetration = min(100, armour_penetration+30)
+			force += 20
 			color = "#72b27c"
 			qdel(I)
 
