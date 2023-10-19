@@ -81,13 +81,13 @@
 	. = ..()
 	if(!.) //dead
 		walk(src, 0) //stops walking
-	else
-		if(!istype(src, /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire))
-			if(CheckEyewitness(src, src, 7, FALSE))
-				if(my_creator)
-					SEND_SOUND(src, sound('code/modules/ziggers/sounds/masquerade_violation.ogg', 0, 0, 75))
-					to_chat(src, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
-					my_creator.AdjustMasquerade(-1)
+//	else
+//		if(!istype(src, /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire))
+//			if(CheckEyewitness(src, src, 7, FALSE))
+//				if(my_creator)
+//					SEND_SOUND(src, sound('code/modules/ziggers/sounds/masquerade_violation.ogg', 0, 0, 75))
+//					to_chat(src, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
+//					my_creator.AdjustMasquerade(-1)
 
 /mob/living/simple_animal/hostile/handle_automated_action()
 	if(AIStatus == AI_OFF)
@@ -448,11 +448,12 @@
 
 
 /mob/living/simple_animal/hostile/Move(atom/newloc, dir , step_x , step_y)
-	for(var/mob/living/L in newloc)
-		if(L)
-			if(CanAttack(L))
-				ClickOn(L)
-				return
+	if(client)
+		for(var/mob/living/L in newloc)
+			if(L)
+				if(CanAttack(L))
+					ClickOn(L)
+					return
 	if(dodging && approaching_target && prob(dodge_prob) && moving_diagonally == 0 && isturf(loc) && isturf(newloc))
 		return dodge(newloc,dir)
 	else

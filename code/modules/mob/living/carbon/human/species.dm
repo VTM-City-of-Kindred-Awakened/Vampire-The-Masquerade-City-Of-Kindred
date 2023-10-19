@@ -1374,7 +1374,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			else
 				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
-		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
+		var/damage = (rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)/3)*user.physique
 		if(user.age < 16)
 			damage = round(damage/2)
 
@@ -1494,6 +1494,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				modifikator = USR.dna.species.meleemod
 		if(USR.age < 16)
 			modifikator = modifikator/2
+		if(ishuman(user))
+			modifikator = (modifikator/3)*user.physique
 	if(user != H)
 		if(H.check_shields(I, I.force, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
 			return FALSE

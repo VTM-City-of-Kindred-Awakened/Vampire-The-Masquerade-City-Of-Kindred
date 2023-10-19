@@ -17,7 +17,12 @@
 		AddElement(/datum/element/cleaning)
 
 /obj/vehicle/ridden/janicart/relaydrive(mob/living/user, direction)
-	user.total_cleaned += 1
+	var/really = FALSE
+	for(var/obj/effect/decal/cleanable/blood/B in get_turf(src))
+		if(B)
+			really = TRUE
+	if(really)
+		user.total_cleaned += 1
 //	if(ishuman(user))
 //		if(user.key)
 //			var/mob/living/carbon/human/H = user

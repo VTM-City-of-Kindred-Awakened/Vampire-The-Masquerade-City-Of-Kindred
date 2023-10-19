@@ -4,14 +4,14 @@
 /mob/living/simple_animal/hostile/retaliate/Found(atom/A)
 	if(isliving(A))
 		var/mob/living/L = A
-		if(!L.stat)
+		if(L.stat != DEAD)
 			return L
 		else
 			enemies -= L
-	else if(ismecha(A))
-		var/obj/vehicle/sealed/mecha/M = A
-		if(LAZYLEN(M.occupants))
-			return A
+//	else if(ismecha(A))
+//		var/obj/vehicle/sealed/mecha/M = A
+//		if(LAZYLEN(M.occupants))
+//			return A
 
 /mob/living/simple_animal/hostile/retaliate/ListTargets()
 	if(!enemies.len)

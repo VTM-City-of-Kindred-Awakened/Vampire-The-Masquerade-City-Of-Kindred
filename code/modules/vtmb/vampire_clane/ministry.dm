@@ -151,7 +151,7 @@
 	spawn(150)
 		if(BC)
 			BC.Restore(BC.myshape)
-			NG.Stun(30)
+			NG.Stun(15)
 			NG.do_jitter_animation(30)
 
 /mob/living/simple_animal/hostile/cobra

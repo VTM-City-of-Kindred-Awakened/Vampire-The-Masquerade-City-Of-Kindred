@@ -228,6 +228,45 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	Master.StartProcessing(0)
 
 /datum/controller/master/proc/SetRunLevel(new_runlevel)
+	if(new_runlevel == RUNLEVEL_POSTGAME)
+		GLOB.canon_event = FALSE
+		var/won
+		if(length(SSfactionwar.marks_camarilla) > length(SSfactionwar.marks_anarch) && length(SSfactionwar.marks_camarilla) > length(SSfactionwar.marks_sabbat))
+			won = "camarilla"
+		if(length(SSfactionwar.marks_anarch) > length(SSfactionwar.marks_camarilla) && length(SSfactionwar.marks_anarch) > length(SSfactionwar.marks_sabbat))
+			won = "anarch"
+		if(length(SSfactionwar.marks_sabbat) > length(SSfactionwar.marks_anarch) && length(SSfactionwar.marks_sabbat) > length(SSfactionwar.marks_camarilla))
+			won = "sabbat"
+		for(var/mob/living/carbon/human/H in GLOB.human_list)
+			if(H)
+				if(H.stat != DEAD)
+					if(H.key)
+						var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
+						if(P)
+							P.add_experience(1)
+							if(won)
+								if(H.frakcja == won)
+									P.add_experience(1)
+							if(H.total_contracted > 1)
+								P.add_experience(1)
+							var/toreador_bonus = 0
+							if(iskindred(H) && H.clane)
+								if(H.clane.name == "Toreador")
+									toreador_bonus = 1
+							if(H.total_erp > 150)
+								P.add_experience(1+toreador_bonus)
+							if(H.total_cleaned > 50)
+								P.add_experience(1)
+							if(H.mind)
+								if(H.mind.assigned_role == "Graveyard Keeper")
+									if(SSgraveyard.total_good > SSgraveyard.total_bad)
+										P.add_experience(1)
+								if(H.mind.special_role)
+									var/datum/antagonist/A = H.mind.special_role
+									if(A.check_completed())
+										P.add_experience(1)
+							P.save_preferences()
+							P.save_character()
 	var/old_runlevel = current_runlevel
 	if(isnull(old_runlevel))
 		old_runlevel = "NULL"
@@ -309,7 +348,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/error_level = 0
 	var/sleep_delta = 1
 	var/list/subsystems_to_check
-	
+
 	//setup the stack overflow detector
 	stack_end_detector = new()
 	var/datum/stack_canary/canary = stack_end_detector.prime_canary()

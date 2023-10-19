@@ -30,6 +30,80 @@ SUBSYSTEM_DEF(city_time)
 
 	timeofnight = "[get_watch_number(hour)]:[get_watch_number(minutes)]"
 
+	if(hour == 0 && minutes == 0)
+		var/won
+		if(length(SSfactionwar.marks_camarilla) > length(SSfactionwar.marks_anarch) && length(SSfactionwar.marks_camarilla) > length(SSfactionwar.marks_sabbat))
+			won = "camarilla"
+		if(length(SSfactionwar.marks_anarch) > length(SSfactionwar.marks_camarilla) && length(SSfactionwar.marks_anarch) > length(SSfactionwar.marks_sabbat))
+			won = "anarch"
+		if(length(SSfactionwar.marks_sabbat) > length(SSfactionwar.marks_anarch) && length(SSfactionwar.marks_sabbat) > length(SSfactionwar.marks_camarilla))
+			won = "sabbat"
+		for(var/mob/living/carbon/human/H in GLOB.human_list)
+			if(H)
+				if(H.stat != DEAD)
+					if(H.key)
+						var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
+						if(P)
+							if(won)
+								if(H.frakcja == won)
+									P.add_experience(1)
+							if(H.total_contracted > 1)
+								P.add_experience(1)
+							H.total_contracted = 0
+							var/toreador_bonus = 0
+							if(iskindred(H) && H.clane)
+								if(H.clane.name == "Toreador")
+									toreador_bonus = 1
+							if(H.total_erp > 150)
+								P.add_experience(1+toreador_bonus)
+							H.total_erp = 0
+							if(H.total_cleaned > 50)
+								P.add_experience(1)
+							H.total_cleaned = 0
+							if(H.mind)
+								if(H.mind.assigned_role == "Graveyard Keeper")
+									if(SSgraveyard.total_good > SSgraveyard.total_bad)
+										P.add_experience(1)
+							P.save_preferences()
+							P.save_character()
+
+	if(hour == 3 && minutes == 0)
+		var/won
+		if(length(SSfactionwar.marks_camarilla) > length(SSfactionwar.marks_anarch) && length(SSfactionwar.marks_camarilla) > length(SSfactionwar.marks_sabbat))
+			won = "camarilla"
+		if(length(SSfactionwar.marks_anarch) > length(SSfactionwar.marks_camarilla) && length(SSfactionwar.marks_anarch) > length(SSfactionwar.marks_sabbat))
+			won = "anarch"
+		if(length(SSfactionwar.marks_sabbat) > length(SSfactionwar.marks_anarch) && length(SSfactionwar.marks_sabbat) > length(SSfactionwar.marks_camarilla))
+			won = "sabbat"
+		for(var/mob/living/carbon/human/H in GLOB.human_list)
+			if(H)
+				if(H.stat != DEAD)
+					if(H.key)
+						var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
+						if(P)
+							if(won)
+								if(H.frakcja == won)
+									P.add_experience(1)
+							if(H.total_contracted > 1)
+								P.add_experience(1)
+							H.total_contracted = 0
+							var/toreador_bonus = 0
+							if(iskindred(H) && H.clane)
+								if(H.clane.name == "Toreador")
+									toreador_bonus = 1
+							if(H.total_erp > 150)
+								P.add_experience(1+toreador_bonus)
+							H.total_erp = 0
+							if(H.total_cleaned > 50)
+								P.add_experience(1)
+							H.total_cleaned = 0
+							if(H.mind)
+								if(H.mind.assigned_role == "Graveyard Keeper")
+									if(SSgraveyard.total_good > SSgraveyard.total_bad)
+										P.add_experience(1)
+							P.save_preferences()
+							P.save_character()
+
 	if(hour == 5 && minutes == 30)
 		to_chat(world, "<span class='ghostalert'>The night is ending...</span>")
 

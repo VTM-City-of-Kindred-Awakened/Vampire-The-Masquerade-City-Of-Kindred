@@ -83,14 +83,21 @@
 	thaumlevel = 3
 
 /obj/ritualrune/blood_guardian/complete()
-	var/mob/living/simple_animal/hostile/blood_guard/BG = new(loc)
+	var/mob/living/simple_animal/hostile/beastmaster/blood_guard/BG = new(loc)
+	var/datum/action/beastmaster_stay/E1 = new()
+	E1.Grant(last_activator)
+	var/datum/action/beastmaster_deaggro/E2 = new()
+	E2.Grant(last_activator)
+	BG.beastmaster = last_activator
+	var/mob/living/carbon/human/H = last_activator
+	H.beastmaster |= BG
 	BG.my_creator = last_activator
 	BG.melee_damage_lower = BG.melee_damage_lower+activator_bonus
 	BG.melee_damage_upper = BG.melee_damage_upper+activator_bonus
 	playsound(loc, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
 	qdel(src)
 
-/mob/living/simple_animal/hostile/blood_guard
+/mob/living/simple_animal/hostile/beastmaster/blood_guard
 	name = "blood guardian"
 	desc = "A clot of blood in humanoid form."
 	icon = 'code/modules/ziggers/mobs.dmi'
@@ -124,6 +131,8 @@
 	maxbodytemp = 1500
 	faction = list("Tremere")
 	pressure_resistance = 200
+	bloodpool = 1
+	maxbloodpool = 1
 
 /obj/ritualrune/blood_trap
 	name = "Blood Trap"

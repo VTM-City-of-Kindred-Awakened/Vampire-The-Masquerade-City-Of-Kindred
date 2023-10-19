@@ -21,7 +21,7 @@
 			return
 	if(W.cost > 0)
 		if(W.illegal == illegal)
-			for(var/i in 1 to W.cost)
+			for(var/i in 1 to (W.cost/3)*user.social)
 				new /obj/item/stack/dollar(loc)
 			playsound(loc, 'code/modules/ziggers/sounds/sell.ogg', 50, TRUE)
 			if(illegal)

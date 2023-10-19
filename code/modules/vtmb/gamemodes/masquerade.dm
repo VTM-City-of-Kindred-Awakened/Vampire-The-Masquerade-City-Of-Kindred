@@ -22,9 +22,9 @@ SUBSYSTEM_DEF(masquerade)
 	var/masquerade_violators = 0
 	var/sabbat = 0
 	if(length(GLOB.masquerade_breakers_list))
-		masquerade_violators = (1000/length(GLOB.player_list))*length(GLOB.masquerade_breakers_list)
+		masquerade_violators = (2000/length(GLOB.player_list))*length(GLOB.masquerade_breakers_list)
 	if(length(GLOB.sabbatites))
-		sabbat = (500/length(GLOB.player_list))*length(GLOB.sabbatites)
+		sabbat = (2000/length(GLOB.player_list))*length(GLOB.sabbatites)
 
 	total_level = max(0, 1000-masquerade_violators-sabbat)
 

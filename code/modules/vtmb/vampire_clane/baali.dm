@@ -57,10 +57,10 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
 	speed = 0
-	maxHealth = 300
-	health = 300
+	maxHealth = 1500
+	health = 1500
 	butcher_results = list(/obj/item/stack/human_flesh = 20)
-	harm_intent_damage = 5
+	harm_intent_damage = 40
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	attack_verb_continuous = "slashes"
@@ -72,3 +72,22 @@
 	bloodpool = 10
 	maxbloodpool = 10
 	faction = list("Baali")
+
+/mob/living/simple_animal/hostile/baali_guard/Initialize()
+	. = ..()
+	give_player()
+
+/mob/living/simple_animal/hostile/baali_guard/proc/give_player()
+	set waitfor = FALSE
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Infernal Creature?", null, null, null, 50, src)
+	for(var/mob/dead/observer/G in GLOB.player_list)
+		if(G.key)
+			to_chat(G, "<span class='ghostalert'>Someone is summoning a demon!</span>")
+	if(LAZYLEN(candidates))
+		var/mob/dead/observer/C = pick(candidates)
+		name = C.name
+		key = C.key
+		visible_message("<span class='danger'>[src] rises with fresh soul!</span>")
+		return TRUE
+	visible_message("<span class='warning'>[src] remains unsouled...</span>")
+	return FALSE

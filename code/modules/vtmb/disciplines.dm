@@ -174,10 +174,12 @@
 	desc = "Summons Spectral Animals over your targets. Violates Masquerade."
 	icon_state = "animalism"
 	cost = 1
+	delay = 20
 	ranged = FALSE
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/ziggers/sounds/wolves.ogg'
 	dead_restricted = FALSE
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/animalism/AN
 
 /obj/effect/spectral_wolf
 	name = "Spectral Wolf"
@@ -187,17 +189,54 @@
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER
 
+/obj/effect/proc_holder/spell/targeted/shapeshift/animalism
+	name = "Animalism Form"
+	desc = "Take on the shape a rat."
+	charge_max = 50
+	cooldown_min = 50
+	revert_on_death = TRUE
+	die_with_shapeshifted_form = FALSE
+	shapeshift_type = /mob/living/simple_animal/pet/rat
+
 /datum/discipline/animalism/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
-	var/mob/living/simple_animal/hostile/retaliate/beastmaster/B1 = new(get_turf(caster))
-	var/mob/living/simple_animal/hostile/retaliate/beastmaster/B2 = new(get_turf(caster))
-	var/mob/living/simple_animal/hostile/retaliate/beastmaster/B3 = new(get_turf(caster))
-	caster.beastmaster |= B1
-	caster.beastmaster |= B2
-	caster.beastmaster |= B3
-	B1.beastmaster = caster
-	B2.beastmaster = caster
-	B3.beastmaster = caster
+	if(!AN)
+		AN = new(caster)
+	var/limit = level*3+caster.social
+	if(length(caster.beastmaster) >= limit)
+		var/mob/living/simple_animal/hostile/beastmaster/B = pick(caster.beastmaster)
+		B.death()
+	switch(level_casting)
+		if(1)
+			var/mob/living/simple_animal/hostile/beastmaster/rat/R = new(get_turf(caster))
+			caster.beastmaster |= R
+			R.beastmaster = caster
+		if(2)
+			var/mob/living/simple_animal/hostile/beastmaster/cat/C = new(get_turf(caster))
+			caster.beastmaster |= C
+			C.beastmaster = caster
+		if(3)
+			var/mob/living/simple_animal/hostile/beastmaster/D = new(get_turf(caster))
+			caster.beastmaster |= D
+			D.beastmaster = caster
+		if(4)
+			var/mob/living/simple_animal/hostile/beastmaster/rat/flying/F = new(get_turf(caster))
+			caster.beastmaster |= F
+			F.beastmaster = caster
+		if(5)
+			AN.Shapeshift(caster)
+//			caster.dna.species.attack_verb = "slash"
+//			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
+//			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+20
+//			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh+20
+//			caster.add_movespeed_modifier(/datum/movespeed_modifier/protean3)
+//			caster.remove_overlay(PROTEAN_LAYER)
+//			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
+//			caster.apply_overlay(PROTEAN_LAYER)
+			spawn(200+caster.discipline_time_plus)
+				if(caster && caster.stat != DEAD)
+					AN.Restore(AN.myshape)
+					caster.Stun(15)
 
 /datum/discipline/auspex
 	name = "Auspex"
@@ -304,6 +343,9 @@
 /datum/movespeed_modifier/wing
 	multiplicative_slowdown = -0.25
 
+/datum/movespeed_modifier/dominate
+	multiplicative_slowdown = 5
+
 /datum/discipline/celerity/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
 	switch(level_casting)
@@ -362,10 +404,11 @@
 	. = ..()
 	if(target.spell_immunity)
 		return
-	if(iskindred(target))
-		if(target.generation < caster.generation)
-			to_chat(caster, "<span class='warning'>[target] is too powerful for you!</span>")
-			return
+	var/mypower = 13-caster.generation+caster.social
+	var/theirpower = 13-target.generation+target.mentality
+	if(theirpower > mypower)
+		to_chat(caster, "<span class='warning'>[target] is too powerful for you!</span>")
+		return
 	if(HAS_TRAIT(caster, TRAIT_MUTE))
 		to_chat(caster, "<span class='warning'>You find yourself unable to speak!</span>")
 		return
@@ -379,9 +422,12 @@
 		TRGT.apply_overlay(MUTATIONS_LAYER)
 	switch(level_casting)
 		if(1)
-			target.Immobilize(5)
 			to_chat(target, "<span class='userdanger'><b>FORGET ABOUT IT</b></span>")
 			caster.say("FORGET ABOUT IT!!")
+			ADD_TRAIT(target, TRAIT_BLIND, "dominate")
+			spawn(30)
+				if(target)
+					REMOVE_TRAIT(target, TRAIT_BLIND, "dominate")
 		if(2)
 			target.Immobilize(5)
 			if(target.body_position == STANDING_UP)
@@ -394,11 +440,17 @@
 		if(3)
 			to_chat(target, "<span class='userdanger'><b>THINK TWICE</b></span>")
 			caster.say("THINK TWICE!!")
-			target.Stun(10*level_casting)
+			target.add_movespeed_modifier(/datum/movespeed_modifier/dominate)
+			spawn(25)
+				if(target)
+					target.remove_movespeed_modifier(/datum/movespeed_modifier/dominate)
 		if(4)
 			to_chat(target, "<span class='userdanger'><b>THINK TWICE</b></span>")
 			caster.say("THINK TWICE!!")
-			target.Stun(10*level_casting)
+			target.add_movespeed_modifier(/datum/movespeed_modifier/dominate)
+			spawn(50)
+				if(target)
+					target.remove_movespeed_modifier(/datum/movespeed_modifier/dominate)
 		if(5)
 			if(!target.spell_immunity)
 				to_chat(target, "<span class='userdanger'><b>YOU SHOULD KILL YOURSELF NOW</b></span>")
@@ -532,10 +584,11 @@
 	//5 - victim starts to attack themself
 	if(target.spell_immunity)
 		return
-	if(iskindred(target))
-		if(target.generation < caster.generation)
-			to_chat(caster, "<span class='warning'>[target] is too powerful for you!</span>")
-			return
+	var/mypower = 13-caster.generation+caster.social
+	var/theirpower = 13-target.generation+target.mentality
+	if(theirpower > mypower)
+		to_chat(caster, "<span class='warning'>[target] is too powerful for you!</span>")
+		return
 	if(!ishuman(target))
 		to_chat(caster, "<span class='warning'>[target] doesn't have enough mind to get affected by this discipline!</span>")
 		return
@@ -554,18 +607,18 @@
 			if(target.body_position == STANDING_UP)
 				target.toggle_resting()
 		if(2)
-			H.Immobilize(10)
+//			H.Immobilize(10)
 			H.hallucination += 50
 			new /datum/hallucination/oh_yeah(H, TRUE)
 		if(3)
-			H.Immobilize(30)
+			H.Immobilize(20)
 			if(H.stat <= 2 && !H.IsSleeping() && !H.IsUnconscious() && !H.IsParalyzed() && !H.IsKnockdown() && !HAS_TRAIT(H, TRAIT_RESTRAINED))
 				if(prob(50))
 					dancefirst(H)
 				else
 					dancesecond(H)
 		if(4)
-			H.Immobilize(20)
+//			H.Immobilize(20)
 			new /datum/hallucination/death(H, TRUE)
 		if(5)
 			var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/attack_myself_shit)
@@ -587,8 +640,8 @@
 
 /datum/discipline/potence/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
-	var/mod = 10*level_casting
-	var/armah = 0.5*level_casting
+	var/mod = 8*level_casting
+	var/armah = 0.4*level_casting
 	caster.remove_overlay(POTENCE_LAYER)
 	var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "potence", -POTENCE_LAYER)
 	caster.overlays_standing[POTENCE_LAYER] = potence_overlay
@@ -648,6 +701,9 @@
 	activate_sound = 'code/modules/ziggers/sounds/obfuscate_activate.ogg'
 	leveldelay = TRUE
 
+/mob/living/carbon/human
+	var/obfuscate_level = 0
+
 /datum/discipline/obfuscate/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
 	for(var/mob/living/carbon/human/npc/NPC in GLOB.npc_list)
@@ -655,6 +711,7 @@
 			if(NPC.danger_source == caster)
 				NPC.danger_source = null
 	caster.alpha = 10
+	caster.obfuscate_level = level_casting
 	spawn((delay*level_casting)+caster.discipline_time_plus)
 		if(caster)
 			if(caster.alpha != 255)
@@ -704,7 +761,9 @@
 
 /datum/discipline/presence/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
-	if(target.generation < caster.generation)
+	var/mypower = 13-caster.generation+caster.social
+	var/theirpower = 13-target.generation+target.mentality
+	if(theirpower > mypower)
 		to_chat(caster, "<span class='warning'>[target] is too powerful for you!</span>")
 		return
 	if(ishuman(target))
@@ -859,7 +918,7 @@
 			spawn(delay+caster.discipline_time_plus)
 				if(caster && caster.stat != DEAD)
 					GA.Restore(GA.myshape)
-					caster.Stun(30)
+					caster.Stun(15)
 					caster.do_jitter_animation(30)
 //					if(caster.dna)
 					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
@@ -890,7 +949,7 @@
 			spawn(delay+caster.discipline_time_plus)
 				if(caster && caster.stat != DEAD)
 					GA.Restore(GA.myshape)
-					caster.Stun(30)
+					caster.Stun(15)
 					caster.do_jitter_animation(30)
 //					if(caster.dna)
 					playsound(caster, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
@@ -1339,92 +1398,69 @@
 	clane_restricted = TRUE
 	dead_restricted = FALSE
 
-/mob/living/simple_animal/hostile/ghost/level1
-	maxHealth = 20
-	health = 20
-/mob/living/simple_animal/hostile/ghost/level2
-	maxHealth = 40
-	health = 40
-	melee_damage_lower = 20
-	melee_damage_upper = 20
-/mob/living/simple_animal/hostile/ghost/player/level3
-	maxHealth = 60
-	health = 60
-	melee_damage_lower = 30
-	melee_damage_upper = 30
-/mob/living/simple_animal/hostile/ghost/player/level4
-	maxHealth = 80
-	health = 80
-	melee_damage_lower = 40
-	melee_damage_upper = 40
-/mob/living/simple_animal/hostile/ghost/player/level5
-	maxHealth = 100
-	health = 100
-	melee_damage_lower = 50
-	melee_damage_upper = 50
-
-/mob/living/simple_animal/hostile/ghost/player/Initialize()
-	. = ..()
-	give_player()
-
-/mob/living/simple_animal/hostile/ghost/player/proc/give_player()
-	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as summoned ghost?", null, null, null, 50, src)
-	for(var/mob/dead/observer/G in GLOB.player_list)
-		if(G.key)
-			to_chat(G, "<span class='ghostalert'>Someone is summoning a ghost!</span>")
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		name = C.name
-		key = C.key
-		return TRUE
-	return FALSE
-
 /datum/discipline/necromancy/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
 	playsound(target.loc, 'code/modules/ziggers/sounds/necromancy.ogg', 50, TRUE)
+	var/limit = level*3+caster.social
+	if(length(caster.beastmaster) >= limit)
+		var/mob/living/simple_animal/hostile/beastmaster/B = pick(caster.beastmaster)
+		B.death()
 	if(target.stat == DEAD)
 		switch(level_casting)
 			if(1)
-				var/mob/living/simple_animal/hostile/giovanni_zombie/M = new /mob/living/simple_animal/hostile/giovanni_zombie(caster.loc)
+				var/mob/living/simple_animal/hostile/beastmaster/giovanni_zombie/M = new /mob/living/simple_animal/hostile/beastmaster/giovanni_zombie/level1(caster.loc)
 				M.my_creator = caster
+				caster.beastmaster |= M
+				M.beastmaster = caster
+				var/datum/action/beastmaster_stay/E1 = new()
+				E1.Grant(caster)
+				var/datum/action/beastmaster_deaggro/E2 = new()
+				E2.Grant(caster)
 //				if(target.key)
 //					M.key = target.key
 //				else
 //					M.give_player()
-				qdel(target)
+				target.gib()
 			if(2)
-				var/mob/living/simple_animal/hostile/giovanni_zombie/M = new /mob/living/simple_animal/hostile/giovanni_zombie/level2(caster.loc)
+				var/mob/living/simple_animal/hostile/beastmaster/giovanni_zombie/M = new /mob/living/simple_animal/hostile/beastmaster/giovanni_zombie/level2(caster.loc)
 				M.my_creator = caster
-				if(target.key)
-					M.key = target.key
-				else
-					M.give_player()
-				qdel(target)
+				caster.beastmaster |= M
+				M.beastmaster = caster
+				var/datum/action/beastmaster_stay/E1 = new()
+				E1.Grant(caster)
+				var/datum/action/beastmaster_deaggro/E2 = new()
+				E2.Grant(caster)
+				target.gib()
 			if(3)
-				var/mob/living/simple_animal/hostile/giovanni_zombie/M = new /mob/living/simple_animal/hostile/giovanni_zombie/level3(caster.loc)
+				var/mob/living/simple_animal/hostile/beastmaster/giovanni_zombie/M = new /mob/living/simple_animal/hostile/beastmaster/giovanni_zombie/level3(caster.loc)
 				M.my_creator = caster
-				if(target.key)
-					M.key = target.key
-				else
-					M.give_player()
-				qdel(target)
+				caster.beastmaster |= M
+				M.beastmaster = caster
+				var/datum/action/beastmaster_stay/E1 = new()
+				E1.Grant(caster)
+				var/datum/action/beastmaster_deaggro/E2 = new()
+				E2.Grant(caster)
+				target.gib()
 			if(4)
-				var/mob/living/simple_animal/hostile/giovanni_zombie/M = new /mob/living/simple_animal/hostile/giovanni_zombie/level4(caster.loc)
+				var/mob/living/simple_animal/hostile/beastmaster/giovanni_zombie/M = new /mob/living/simple_animal/hostile/beastmaster/giovanni_zombie/level4(caster.loc)
 				M.my_creator = caster
-				if(target.key)
-					M.key = target.key
-				else
-					M.give_player()
-				qdel(target)
+				caster.beastmaster |= M
+				M.beastmaster = caster
+				var/datum/action/beastmaster_stay/E1 = new()
+				E1.Grant(caster)
+				var/datum/action/beastmaster_deaggro/E2 = new()
+				E2.Grant(caster)
+				target.gib()
 			if(5)
-				var/mob/living/simple_animal/hostile/giovanni_zombie/M = new /mob/living/simple_animal/hostile/giovanni_zombie/level5(caster.loc)
+				var/mob/living/simple_animal/hostile/beastmaster/giovanni_zombie/M = new /mob/living/simple_animal/hostile/beastmaster/giovanni_zombie/level5(caster.loc)
 				M.my_creator = caster
-				if(target.key)
-					M.key = target.key
-				else
-					M.give_player()
-				qdel(target)
+				caster.beastmaster |= M
+				M.beastmaster = caster
+				var/datum/action/beastmaster_stay/E1 = new()
+				E1.Grant(caster)
+				var/datum/action/beastmaster_deaggro/E2 = new()
+				E2.Grant(caster)
+				target.gib()
 	else
 		target.apply_damage(10*level_casting, BRUTE, BODY_ZONE_CHEST)
 		target.emote("scream")
@@ -1501,7 +1537,7 @@
 			spawn(delay+caster.discipline_time_plus)
 				if(caster && caster.stat != DEAD)
 					BAT.Restore(BAT.myshape)
-					caster.Stun(30)
+					caster.Stun(15)
 					caster.do_jitter_animation(30)
 					playsound(caster.loc, 'code/modules/ziggers/sounds/protean_deactivate.ogg', 50, FALSE)
 

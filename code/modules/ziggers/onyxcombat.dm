@@ -665,8 +665,7 @@
 	var/warrant = FALSE
 
 /mob/living/carbon/human/Life()
-	if(iskindred(src) || isghoul(src))
-		update_blood_hud()
+	update_blood_hud()
 	update_zone_hud()
 	update_shadow()
 	handle_vampire_music()
@@ -704,7 +703,7 @@
 /mob/living/proc/update_blood_hud()
 	if(!client || !hud_used)
 		return
-	maxbloodpool = 10+((13-generation)*5)
+	maxbloodpool = 10+((13-generation)*2)
 	if(hud_used.blood_icon)
 		var/emm = round((bloodpool/maxbloodpool)*10)
 		if(emm > 10)

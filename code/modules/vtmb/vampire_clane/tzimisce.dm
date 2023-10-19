@@ -69,7 +69,7 @@
 				H.adjustBruteLoss(-5*round(BD.collected_blood/2), TRUE)
 				H.adjustFireLoss(-5*round(BD.collected_blood/2), TRUE)
 			BC.Restore(BC.myshape)
-			NG.Stun(30)
+			NG.Stun(15)
 			NG.do_jitter_animation(30)
 
 /datum/action/vicissitude_form
@@ -96,7 +96,7 @@
 	spawn(200)
 		if(TE)
 			TE.Restore(TE.myshape)
-			NG.Stun(30)
+			NG.Stun(15)
 			NG.do_jitter_animation(30)
 
 /datum/action/basic_vicissitude

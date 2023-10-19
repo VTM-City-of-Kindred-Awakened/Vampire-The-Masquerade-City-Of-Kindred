@@ -27,7 +27,12 @@
 	var/total_cleaned = 0
 
 /obj/item/mop/proc/clean(turf/A, mob/living/cleaner)
-	cleaner.total_cleaned += 1
+	var/really = FALSE
+	for(var/obj/effect/decal/cleanable/blood/B in A)
+		if(A)
+			really = TRUE
+	if(really)
+		cleaner.total_cleaned += 1
 //	var/datum/preferences/P = GLOB.preferences_datums[ckey(cleaner.key)]
 //	P.exper = min(calculate_mob_max_exper(cleaner), P.exper+1)
 	if(reagents.has_reagent(/datum/reagent/water, 1) || reagents.has_reagent(/datum/reagent/water/holywater, 1) || reagents.has_reagent(/datum/reagent/consumable/ethanol/vodka, 1) || reagents.has_reagent(/datum/reagent/space_cleaner, 1))

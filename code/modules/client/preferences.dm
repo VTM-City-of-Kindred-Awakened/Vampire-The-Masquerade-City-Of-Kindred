@@ -187,6 +187,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 //	var/datum/vampireclane/Clane
 
+/mob/living
+	var/physique = 1
+	var/social = 1
+	var/mentality = 1
+
 /datum/preferences/proc/add_experience(var/amount)
 	if(amount)
 		true_experience = true_experience+amount
@@ -436,10 +441,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
 			dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
-			dat += "<b>Path of [enlightement == FALSE ? "Humanity" : "Enlightement"]:</b> [humanity]/10<BR>"
-			for(var/i in GLOB.donaters)
-				if(i == "[parent.ckey]" && !slotlocked)
-					dat += "<a href='?_src_=prefs;preference=pathof;task=input'>Switch Path</a><BR>"
+			if(pref_species.name == "Vampire")
+				dat += "<b>Path of [enlightement == FALSE ? "Humanity" : "Enlightement"]:</b> [humanity]/10<BR>"
+				for(var/i in GLOB.donaters)
+					if(i == "[parent.ckey]" && !slotlocked)
+						dat += "<a href='?_src_=prefs;preference=pathof;task=input'>Switch Path</a><BR>"
 			dat += "<b>Masquerade:</b> [masquerade]/5<BR>"
 			if(pref_species.name == "Vampire")
 				dat += "<b>Generation:</b> [generation]"
@@ -456,6 +462,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "<BR>"
 				else
 					dat += "<BR>"
+				dat += "<h2>[make_font_cool("ATTRIBUTES")]</h2>"
+				dat += "<b>Physique:</b> •[physique > 1 ? "•" : "o"][physique > 2 ? "•" : "o"][physique > 3 ? "•" : "o"][physique > 4 ? "•" : "o"]([physique])"
+				if(true_experience >= 4*physique)
+					dat += "<a href='?_src_=prefs;preference=physique;task=input'>Increase ([4*physique])</a><BR>"
+				dat += "<BR>"
+				dat += "<b>Social:</b> •[social > 1 ? "•" : "o"][social > 2 ? "•" : "o"][social > 3 ? "•" : "o"][social > 4 ? "•" : "o"]([social])"
+				if(true_experience >= 4*social)
+					dat += "<a href='?_src_=prefs;preference=social;task=input'>Increase ([4*social])</a><BR>"
+				dat += "<BR>"
+				dat += "<b>Mentality:</b> •[mentality > 1 ? "•" : "o"][mentality > 2 ? "•" : "o"][mentality > 3 ? "•" : "o"][mentality > 4 ? "•" : "o"]([mentality])"
+				if(true_experience >= 4*mentality)
+					dat += "<a href='?_src_=prefs;preference=social;task=input'>Increase ([4*mentality])</a><BR>"
+				dat += "<BR>"
 				dat += "<h2>[make_font_cool("CLANE")]</h2>"
 				dat += "<b>Clane/Bloodline:</b> <a href='?_src_=prefs;preference=clane;task=input'>[clane.name]</a><BR>"
 				dat += "<b>Description:</b> [clane.desc]<BR>"
@@ -1892,6 +1911,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							facial_hairstyle = "Shaved"
 //						real_name = clane.random_name(gender)		//potom sdelat
 
+				if("physique")
+					if(true_experience >= physique*4 && physique < 6)
+						true_experience = true_experience-physique*4
+						physique = min(5, physique+1)
+
+				if("social")
+					if(true_experience >= social*4 && social < 6)
+						true_experience = true_experience-social*4
+						social = min(5, social+1)
+
+				if("mentality")
+					if(true_experience >= mentality*4 && mentality < 6)
+						true_experience = true_experience-mentality*4
+						mentality = min(5, mentality+1)
+
 				if("discipline1")
 					if(true_experience >= discipline1level*5 && discipline1level != 5)
 						true_experience = true_experience-discipline1level*5
@@ -2609,19 +2643,27 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.name = character.real_name
 	character.diablerist = diablerist
 
+	character.physique = physique
+	character.social = social
+	character.mentality = mentality
+
 	if(pref_species.name == "Vampire")
 		var/datum/vampireclane/CLN = new clane.type()
 		character.clane = CLN
-		character.maxbloodpool = 10+((13-generation)*5)
+		character.maxbloodpool = 10+((13-generation)*2)
 		character.bloodpool = rand(2, character.maxbloodpool)
 		character.generation = generation
 		character.clane.enlightement = enlightement
-		if(generation < 13)
-			character.maxHealth = initial(character.maxHealth)+50*(13-generation)
-			character.health = initial(character.health)+50*(13-generation)
+//		if(generation < 13)
+//			character.maxHealth = initial(character.maxHealth)+50*(13-generation)
+//			character.health = initial(character.health)+50*(13-generation)
 	else
 		character.clane = null
-	character.humanity = humanity
+		character.generation = 13
+	character.maxHealth = round((initial(character.maxHealth)/3)*(character.physique+13-generation))
+	character.health = round((initial(character.health)/3)*(character.physique+13-generation))
+	if(pref_species.name == "Vampire")
+		character.humanity = humanity
 	character.masquerade = masquerade
 	if(!character_setup)
 		if(character in GLOB.masquerade_breakers_list)

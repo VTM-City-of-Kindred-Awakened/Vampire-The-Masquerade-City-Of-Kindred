@@ -295,3 +295,66 @@
 	icon_state = "cat[id]"
 	icon_living = "cat[id]"
 	icon_dead = "cat[id]_dead"
+
+/mob/living/simple_animal/hostile/beastmaster/cat
+	name = "cat"
+	desc = "Kitty!!"
+	icon = 'code/modules/ziggers/mobs.dmi'
+	icon_state = "cat2"
+	icon_living = "cat2"
+	icon_dead = "cat2_dead"
+	speak = list("Meow!", "Esp!", "Purr!", "HSSSSS")
+	speak_emote = list("purrs", "meows")
+	emote_hear = list("meows.", "mews.")
+	emote_see = list("shakes its head.", "shivers.")
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
+	attack_sound = 'code/modules/ziggers/sounds/cat.ogg'
+	speak_chance = 0
+	turns_per_move = 5
+	see_in_dark = 6
+	ventcrawler = VENTCRAWLER_ALWAYS
+	pass_flags = PASSTABLE
+	mob_size = MOB_SIZE_SMALL
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	minbodytemp = 200
+	maxbodytemp = 400
+	unsuitable_atmos_damage = 1
+	animal_species = /mob/living/simple_animal/pet/cat
+	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
+	butcher_results = list(/obj/item/food/meat/slab = 1, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1, /obj/item/stack/sheet/animalhide/cat = 1)
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
+	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
+	var/turns_since_scan = 0
+	var/mob/living/simple_animal/mouse/movement_target
+	///Limits how often cats can spam chasing mice.
+	var/emote_cooldown = 0
+	///Can this cat catch special mice?
+	var/inept_hunter = FALSE
+	gold_core_spawnable = FRIENDLY_SPAWN
+	can_be_held = TRUE
+	held_state = "cat2"
+	pet_bonus = TRUE
+	pet_bonus_emote = "purrs!"
+
+	footstep_type = FOOTSTEP_MOB_CLAW
+	bloodpool = 1
+	maxbloodpool = 1
+	maxHealth = 40
+	health = 40
+	harm_intent_damage = 20
+	melee_damage_lower = 20
+	melee_damage_upper = 20
+	speed = 0
+
+/mob/living/simple_animal/hostile/beastmaster/cat/Initialize()
+	. = ..()
+	var/id = rand(1, 7)
+	icon_state = "cat[id]"
+	icon_living = "cat[id]"
+	icon_dead = "cat[id]_dead"
