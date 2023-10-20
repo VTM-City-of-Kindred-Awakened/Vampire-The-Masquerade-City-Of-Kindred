@@ -113,6 +113,56 @@
 	name = "Conspiracy keys"
 	accesslocks = list("salubri")
 
+/obj/item/vamp/keys/malkav
+	name = "Insane keys"
+	accesslocks = list("malkav")
+	color = "#8cc4ff"
+
+/obj/item/vamp/keys/malkav/primogen
+	name = "Really insane keys"
+	accesslocks = list("primMalkav", "malkav")
+	color = "#2c92ff"
+
+/obj/item/vamp/keys/toreador
+	name = "Sexy keys"
+	accesslocks = list("toreador")
+	color = "#ffa7e6"
+
+/obj/item/vamp/keys/toreador/primogen
+	name = "Really sexy keys"
+	accesslocks = list("primToreador", "toreador")
+	color = "#ff2fc4"
+
+/obj/item/vamp/keys/nosferatu
+	name = "Ugly keys"
+	accesslocks = list("nosferatu")
+	color = "#93bc8e"
+
+/obj/item/vamp/keys/nosferatu/primogen
+	name = "Really ugly keys"
+	accesslocks = list("primNosferatu", "nosferatu")
+	color = "#367c31"
+
+/obj/item/vamp/keys/brujah
+	name = "Punk keys"
+	accesslocks = list("brujah")
+	color = "#ecb586"
+
+/obj/item/vamp/keys/brujah/primogen
+	name = "Really punk keys"
+	accesslocks = list("primBrujah", "brujah")
+	color = "#ec8f3e"
+
+/obj/item/vamp/keys/ventrue
+	name = "Businessy keys"
+	accesslocks = list("ventrue")
+	color = "#f6ffa7"
+
+/obj/item/vamp/keys/ventrue/primogen
+	name = "Really businessy keys"
+	accesslocks = list("primVentrue", "ventrue")
+	color = "#e8ff29"
+
 /obj/structure/vampdoor
 	name = "\improper door"
 	desc = "It opens and closes."
