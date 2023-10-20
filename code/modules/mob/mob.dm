@@ -441,7 +441,7 @@
 	set name = "Examine"
 	set category = "IC"
 
-	if(ishuman(sc))
+	if(ishuman(src))
 		var/mob/living/carbon/human/ueban = src
 		if(!do_mob(src, src, max(1, 30-ueban.mentality*6)))
 			return
