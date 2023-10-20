@@ -22,21 +22,24 @@
 	accesslocks = list("camarilla",
 											"prince",
 											"clerk",
-											"archive")
+											"archive",
+											"milleniumCommon")
 	color = "#bd3327"
 
 /obj/item/vamp/keys/sheriff
 	name = "Sheriff's keys"
 	accesslocks = list("camarilla",
 											"prince",
-											"archive")
+											"archive",
+											"milleniumCommon")
 	color = "#bd3327"
 
 /obj/item/vamp/keys/clerk
 	name = "Clerk's keys"
 	accesslocks = list("camarilla",
 											"clerk",
-											"archive")
+											"archive",
+											"milleniumCommon")
 	color = "#bd3327"
 
 /obj/item/vamp/keys/graveyard
@@ -155,12 +158,12 @@
 
 /obj/item/vamp/keys/ventrue
 	name = "Businessy keys"
-	accesslocks = list("ventrue")
+	accesslocks = list("ventrue", "milleniumCommon")
 	color = "#f6ffa7"
 
 /obj/item/vamp/keys/ventrue/primogen
 	name = "Really businessy keys"
-	accesslocks = list("primVentrue", "ventrue")
+	accesslocks = list("primVentrue", "ventrue", "milleniumCommon")
 	color = "#e8ff29"
 
 /obj/structure/vampdoor

@@ -283,6 +283,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
 		return
+	link_bug_fix = FALSE
 	var/donor = FALSE
 	for(var/i in GLOB.donaters)
 		if(i == "[parent.ckey]")
@@ -1443,7 +1444,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(C)
 			C.clear_character_previews()
 
+/datum/preferences
+	var/link_bug_fix = FALSE
+
 /datum/preferences/proc/process_link(mob/user, list/href_list)
+	if(link_bug_fix)
+		return
 	if(href_list["bancheck"])
 		var/list/ban_details = is_banned_from_with_details(user.ckey, user.client.address, user.client.computer_id, href_list["bancheck"])
 		var/admin = FALSE
@@ -1583,7 +1589,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					random_character(gender)
 
 		if("input")
-
+			link_bug_fix = TRUE
 			if(href_list["preference"] in GLOB.preferences_custom_names)
 				ask_for_custom_name(user,href_list["preference"])
 
@@ -1622,6 +1628,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("name")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					var/new_name = input(user, "Choose your character's name:", "Character Preference")  as text|null
 					if(new_name)
@@ -1633,6 +1640,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("age")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					var/new_age = input(user, "Choose your character's biological age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
 					if(new_age)
@@ -1640,6 +1648,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("total_age")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					var/new_age = input(user, "Choose your character's actual age:\n([age]-[age+1000])", "Character Preference") as num|null
 					if(new_age)
@@ -1647,6 +1656,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("hair")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference","#"+hair_color) as color|null
 					if(new_hair)
@@ -1654,6 +1664,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("hairstyle")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					if(clane.no_hair)
 						hairstyle = "Bald"
@@ -1673,6 +1684,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("next_hairstyle")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					if(clane.no_hair)
 						hairstyle = "Bald"
@@ -1688,6 +1700,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("previous_hairstyle")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					if(clane.no_hair)
 						hairstyle = "Bald"
@@ -1703,6 +1716,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("facial")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference","#"+facial_hair_color) as color|null
 					if(new_facial)
@@ -1710,6 +1724,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("facial_hairstyle")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					if(clane.no_facial)
 						facial_hairstyle = "Shaved"
@@ -1726,6 +1741,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("next_facehairstyle")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					if(clane.no_facial)
 						facial_hairstyle = "Shaved"
@@ -1739,6 +1755,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("previous_facehairstyle")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					if(clane.no_facial)
 						facial_hairstyle = "Shaved"
@@ -1785,6 +1802,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("eyes")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference","#"+eye_color) as color|null
 					if(new_eyes)
@@ -1792,6 +1810,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("disciplineplus")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					var/list/disc4 = list()
 					for(var/i in subtypesof(/datum/discipline))
@@ -1846,6 +1865,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("clane")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					var/list/shittedmyself = list()
 					for(var/i in GLOB.clanes_list)
@@ -1972,6 +1992,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("generation")
 					if(clane)
 						if(clane.name == "Caitiff")
+							link_bug_fix = FALSE
 							return
 					if(true_experience >= 20)
 						true_experience = true_experience-20
@@ -2001,6 +2022,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("reset_with_bonus")
 					if(clane)
 						if(clane.name == "Caitiff")
+							link_bug_fix = FALSE
 							return
 					var/bonus = generation-generation_bonus
 					slotlocked = 0
@@ -2038,6 +2060,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("species")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 //				var/newtype = GLOB.species_list["kindred"]
 //				pref_species = new newtype()
@@ -2071,6 +2094,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("mutant_color")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference","#"+features["mcolor"]) as color|null
 					if(new_mutantcolor)
@@ -2168,6 +2192,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("s_tone")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in GLOB.skin_tones
 					if(new_s_tone)
@@ -2268,6 +2293,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						toggles ^= MEMBER_PUBLIC
 				if("gender")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					var/list/friendlyGenders = list("Male" = "male", "Female" = "female")
 					var/pickedGender = input(user, "Choose your gender.", "Character Preference", gender) as null|anything in friendlyGenders
@@ -2287,6 +2313,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						body_type = MALE
 				if("body_model")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					if(body_model == 1)
 						body_model = 2
@@ -2365,6 +2392,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/choice = tgui_alert(user, "Would you prefer 'hotkey' or 'classic' defaults?", "Setup keybindings", list("Hotkey", "Classic", "Cancel"))
 					if(choice == "Cancel")
 						ShowChoices(user)
+						link_bug_fix = FALSE
 						return
 					hotkeys = (choice == "Hotkey")
 					key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
@@ -2424,6 +2452,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("toggle_random")
 					if(slotlocked)
+						link_bug_fix = FALSE
 						return
 					var/random_type = href_list["random_type"]
 					if(randomise[random_type])
