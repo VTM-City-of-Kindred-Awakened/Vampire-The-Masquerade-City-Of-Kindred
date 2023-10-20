@@ -119,6 +119,9 @@
 					humanity = "Am I <b>ENLIGHTED</b> or <b>HUMANE</b>?"
 
 		dat += "[humanity]<BR>"
+		dat += "<b>Physique</b>: [host.physique]<BR>"
+		dat += "<b>Social</b>: [host.social]<BR>"
+		dat += "<b>Mentality</b>: [host.mentality]<BR>"
 		if(host.hud_used)
 			dat += "<b>Known disciplines:</b><BR>"
 			if(host.hud_used.discipline1_icon.dscpln)
