@@ -665,15 +665,14 @@ SUBSYSTEM_DEF(ticker)
 	update_everything_flag_in_db()
 	if(!round_end_sound)
 		round_end_sound = pick(\
-		'sound/roundend/newroundsexy.ogg',
-		'sound/roundend/apcdestroyed.ogg',
-		'sound/roundend/bangindonk.ogg',
-		'sound/roundend/leavingtg.ogg',
-		'sound/roundend/its_only_game.ogg',
-		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg',
-		'sound/roundend/scrunglartiy.ogg',
-		'sound/roundend/petersondisappointed.ogg'\
+		'sound/roundend/9year.ogg',
+		'sound/roundend/diablery.ogg',
+		'sound/roundend/nuke.ogg',
+		'sound/roundend/malkavian.ogg',
+		'sound/roundend/cain.ogg',
+		'sound/roundend/huynia.ogg',
+		'sound/roundend/die.ogg',
+		'sound/roundend/punisher.ogg'\
 		)
 	///The reference to the end of round sound that we have chosen.
 	var/sound/end_of_round_sound_ref = sound(round_end_sound)
