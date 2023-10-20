@@ -474,7 +474,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<BR>"
 				dat += "<b>Mentality:</b> •[mentality > 1 ? "•" : "o"][mentality > 2 ? "•" : "o"][mentality > 3 ? "•" : "o"][mentality > 4 ? "•" : "o"]([mentality])"
 				if(true_experience >= 6*mentality)
-					dat += "<a href='?_src_=prefs;preference=social;task=input'>Increase ([4*mentality])</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=mentality;task=input'>Increase ([4*mentality])</a><BR>"
 				dat += "<BR>"
 				dat += "<h2>[make_font_cool("CLANE")]</h2>"
 				dat += "<b>Clane/Bloodline:</b> <a href='?_src_=prefs;preference=clane;task=input'>[clane.name]</a><BR>"
@@ -1448,8 +1448,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/link_bug_fix = FALSE
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
-	if(link_bug_fix)
-		return
+//	if(link_bug_fix)
+//		return
 	if(href_list["bancheck"])
 		var/list/ban_details = is_banned_from_with_details(user.ckey, user.client.address, user.client.computer_id, href_list["bancheck"])
 		var/admin = FALSE
