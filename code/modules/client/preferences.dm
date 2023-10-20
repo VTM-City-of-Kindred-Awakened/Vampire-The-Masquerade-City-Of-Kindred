@@ -465,15 +465,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<BR>"
 				dat += "<h2>[make_font_cool("ATTRIBUTES")]</h2>"
 				dat += "<b>Physique:</b> •[physique > 1 ? "•" : "o"][physique > 2 ? "•" : "o"][physique > 3 ? "•" : "o"][physique > 4 ? "•" : "o"]([physique])"
-				if(true_experience >= 6*physique)
+				if(true_experience >= 6*physique && physique != 5)
 					dat += "<a href='?_src_=prefs;preference=physique;task=input'>Increase ([4*physique])</a>"
 				dat += "<BR>"
 				dat += "<b>Social:</b> •[social > 1 ? "•" : "o"][social > 2 ? "•" : "o"][social > 3 ? "•" : "o"][social > 4 ? "•" : "o"]([social])"
-				if(true_experience >= 6*social)
+				if(true_experience >= 6*social && social != 5)
 					dat += "<a href='?_src_=prefs;preference=social;task=input'>Increase ([4*social])</a>"
 				dat += "<BR>"
 				dat += "<b>Mentality:</b> •[mentality > 1 ? "•" : "o"][mentality > 2 ? "•" : "o"][mentality > 3 ? "•" : "o"][mentality > 4 ? "•" : "o"]([mentality])"
-				if(true_experience >= 6*mentality)
+				if(true_experience >= 6*mentality && mentality != 5)
 					dat += "<a href='?_src_=prefs;preference=mentality;task=input'>Increase ([4*mentality])</a>"
 				dat += "<BR>"
 				dat += "<h2>[make_font_cool("CLANE")]</h2>"
@@ -2597,6 +2597,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					discipline2level = 1
 					discipline3level = 1
 					discipline4level = 1
+					physique = 1
+					mentality = 1
+					social = 1
+					blood = 1
 					masquerade = initial(masquerade)
 					generation = initial(generation)
 					qdel(clane)
