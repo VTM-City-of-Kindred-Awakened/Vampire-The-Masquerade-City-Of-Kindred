@@ -140,6 +140,8 @@
 	var/lock_sound = 'code/modules/ziggers/sounds/door_locked.ogg'
 	var/burnable = FALSE
 
+	var/hack_difficulty = 1
+
 /obj/structure/vampdoor/attack_hand(mob/user)
 	. = ..()
 	var/mob/living/N = user
@@ -202,7 +204,10 @@
 /obj/structure/vampdoor/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/vamp/keys/hack))
 		if(locked)
-			if(hackable || HAS_TRAIT(user, TRAIT_BONE_KEY))
+			var/additional_level = 0
+			if(HAS_TRAIT(user, TRAIT_BONE_KEY))
+				additional_level = 1
+			if(user.mentality+additional_level >= hack_difficulty)
 				hacking = TRUE
 				playsound(src, 'code/modules/ziggers/sounds/hack.ogg', 100, TRUE)
 				for(var/mob/living/carbon/human/npc/police/P in oviewers(7, src))
@@ -294,6 +299,7 @@
 	opacity = FALSE
 	baseicon = "shop"
 	glass = TRUE
+	hack_difficulty = 6
 
 /obj/structure/vampdoor/camarilla
 	icon_state = "cam-1"
@@ -301,6 +307,7 @@
 	locked = TRUE
 	lock_id = "camarilla"
 	hackable = FALSE
+	hack_difficulty = 5
 
 /obj/structure/vampdoor/clerk
 	icon_state = "shop-1"
@@ -308,7 +315,9 @@
 	baseicon = "shop"
 	glass = TRUE
 	locked = TRUE
+	hackable = FALSE
 	lock_id = "clerk"
+	hack_difficulty = 6
 
 /obj/structure/vampdoor/prince
 	icon_state = "glass-1"
@@ -319,6 +328,7 @@
 	lock_id = "prince"
 	hackable = FALSE
 	burnable = TRUE
+	hack_difficulty = 6
 
 /obj/structure/vampdoor/graveyard
 	icon_state = "oldwood-1"
@@ -326,6 +336,7 @@
 	locked = TRUE
 	lock_id = "graveyard"
 	burnable = TRUE
+	hack_difficulty = 2
 
 /obj/structure/vampdoor/church
 	icon_state = "oldwood-1"
@@ -334,6 +345,7 @@
 	lock_id = "church"
 	burnable = TRUE
 	hackable = FALSE
+	hack_difficulty = 6
 
 /obj/structure/vampdoor/clinic
 	icon_state = "shop-1"
@@ -341,13 +353,17 @@
 	baseicon = "shop"
 	glass = TRUE
 	locked = TRUE
+	hackable = FALSE
 	lock_id = "clinic"
+	hack_difficulty = 3
 
 /obj/structure/vampdoor/cleaning
 	icon_state = "reinf-1"
 	baseicon = "reinf"
 	locked = TRUE
+	hackable = FALSE
 	lock_id = "cleaning"
+	hack_difficulty = 3
 
 /obj/structure/vampdoor/archive
 	icon_state = "old-1"
@@ -355,12 +371,14 @@
 	locked = TRUE
 	lock_id = "archive"
 	hackable = FALSE
+	hack_difficulty = 6
 
 /obj/structure/vampdoor/anarch
 	icon_state = "cam-1"
 	baseicon = "cam"
 	locked = TRUE
 	lock_id = "anarch"
+	hack_difficulty = 6
 
 /obj/structure/vampdoor/bar
 	icon_state = "cam-1"
@@ -368,12 +386,14 @@
 	locked = TRUE
 	lock_id = "bar"
 	hackable = FALSE
+	hack_difficulty = 6
 
 /obj/structure/vampdoor/supply
 	icon_state = "cam-1"
 	baseicon = "cam"
 	locked = TRUE
 	lock_id = "supply"
+	hack_difficulty = 5
 
 /obj/structure/vampdoor/npc
 	icon_state = "wood-1"
@@ -381,6 +401,7 @@
 	locked = TRUE
 	lock_id = "npc"
 	burnable = TRUE
+	hack_difficulty = 3
 
 /obj/structure/vampdoor/npc/Initialize()
 	. = ..()
@@ -391,6 +412,7 @@
 	baseicon = "cam"
 	locked = TRUE
 	lock_id = "police"
+	hack_difficulty = 4
 
 /obj/structure/vampdoor/prison
 	icon_state = "prison-1"
@@ -399,12 +421,14 @@
 	glass = TRUE
 	hackable = FALSE
 	lock_id = "police"
+	hack_difficulty = 4
 
 /obj/structure/vampdoor/strip
 	icon_state = "cam-1"
 	baseicon = "cam"
 	locked = TRUE
 	lock_id = "strip"
+	hack_difficulty = 3
 
 /obj/structure/vampdoor/giovanni
 	icon_state = "wood-1"
@@ -412,6 +436,8 @@
 	locked = TRUE
 	lock_id = "giovanni"
 	burnable = TRUE
+	hackable = FALSE
+	hack_difficulty = 5
 
 /obj/structure/vampdoor/baali
 	icon_state = "oldwood-1"
@@ -420,6 +446,7 @@
 	lock_id = "baali"
 	burnable = FALSE
 	hackable = FALSE
+	hack_difficulty = 5
 
 /obj/structure/vampdoor/salubri
 	icon_state = "oldwood-1"
@@ -428,3 +455,4 @@
 	lock_id = "salubri"
 	burnable = FALSE
 	hackable = FALSE
+	hack_difficulty = 5

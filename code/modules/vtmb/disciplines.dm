@@ -202,7 +202,7 @@
 	. = ..()
 	if(!AN)
 		AN = new(caster)
-	var/limit = level*3+caster.social
+	var/limit = level*2+caster.social
 	if(length(caster.beastmaster) >= limit)
 		var/mob/living/simple_animal/hostile/beastmaster/B = pick(caster.beastmaster)
 		B.death()
@@ -461,14 +461,14 @@
 			to_chat(target, "<span class='userdanger'><b>THINK TWICE</b></span>")
 			caster.say("THINK TWICE!!")
 			target.add_movespeed_modifier(/datum/movespeed_modifier/dominate)
-			spawn(25)
+			spawn(30)
 				if(target)
 					target.remove_movespeed_modifier(/datum/movespeed_modifier/dominate)
 		if(4)
 			to_chat(target, "<span class='userdanger'><b>THINK TWICE</b></span>")
 			caster.say("THINK TWICE!!")
 			target.add_movespeed_modifier(/datum/movespeed_modifier/dominate)
-			spawn(50)
+			spawn(60)
 				if(target)
 					target.remove_movespeed_modifier(/datum/movespeed_modifier/dominate)
 		if(5)
@@ -1302,7 +1302,7 @@
 	name = "acid spit"
 	icon_state = "har4ok"
 	pass_flags = PASSTABLE
-	damage = 50
+	damage = 80
 	damage_type = BURN
 	hitsound = 'sound/weapons/effects/searwall.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
@@ -1331,6 +1331,9 @@
 				var/mutable_appearance/quietus_overlay = mutable_appearance('code/modules/ziggers/icons.dmi', "quietus", -MUTATIONS_LAYER)
 				H.overlays_standing[MUTATIONS_LAYER] = quietus_overlay
 				H.apply_overlay(MUTATIONS_LAYER)
+				if(H.get_confusion() < 15)
+					var/diff = 15 - H.get_confusion()
+					H.add_confusion(min(15, diff))
 				spawn(50)
 					if(H)
 						REMOVE_TRAIT(H, TRAIT_MUTE, "quietus")
@@ -1421,7 +1424,7 @@
 /datum/discipline/necromancy/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
 	playsound(target.loc, 'code/modules/ziggers/sounds/necromancy.ogg', 50, TRUE)
-	var/limit = level*3+caster.social
+	var/limit = level*2+caster.social
 	if(length(caster.beastmaster) >= limit)
 		var/mob/living/simple_animal/hostile/beastmaster/B = pick(caster.beastmaster)
 		B.death()
