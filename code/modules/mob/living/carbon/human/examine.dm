@@ -1,8 +1,4 @@
 /mob/living/carbon/human/examine(mob/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/ueban = user
-		if(!do_mob(user, user, max(1, 30-ueban.mentality*6)))
-			return
 //this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
 	var/t_He = p_they(TRUE)
 	var/t_His = p_their(TRUE)

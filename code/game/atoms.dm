@@ -593,10 +593,6 @@
  * Produces a signal [COMSIG_PARENT_EXAMINE]
  */
 /atom/proc/examine(mob/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/ueban = user
-		if(!do_mob(user, user, max(1, 30-ueban.mentality*6)))
-			return
 	. = list("[get_examine_string(user, TRUE)].")
 
 	. += get_name_chaser(user)
