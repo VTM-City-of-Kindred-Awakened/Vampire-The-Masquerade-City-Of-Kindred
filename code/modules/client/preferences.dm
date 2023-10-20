@@ -2597,6 +2597,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					discipline2level = 1
 					discipline3level = 1
 					discipline4level = 1
+					physique = 1
+					mentality = 1
+					social = 1
+					blood = 1
 					masquerade = initial(masquerade)
 					generation = initial(generation)
 					qdel(clane)
