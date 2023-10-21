@@ -83,18 +83,22 @@
 	thaumlevel = 3
 
 /obj/ritualrune/blood_guardian/complete()
-	var/mob/living/simple_animal/hostile/beastmaster/blood_guard/BG = new(loc)
-	var/datum/action/beastmaster_stay/E1 = new()
-	E1.Grant(last_activator)
-	var/datum/action/beastmaster_deaggro/E2 = new()
-	E2.Grant(last_activator)
-	BG.beastmaster = last_activator
 	var/mob/living/carbon/human/H = last_activator
+	if(!length(H.beastmaster))
+		var/datum/action/beastmaster_stay/E1 = new()
+		E1.Grant(last_activator)
+		var/datum/action/beastmaster_deaggro/E2 = new()
+		E2.Grant(last_activator)
+	var/mob/living/simple_animal/hostile/beastmaster/blood_guard/BG = new(loc)
+	BG.beastmaster = last_activator
 	H.beastmaster |= BG
 	BG.my_creator = last_activator
 	BG.melee_damage_lower = BG.melee_damage_lower+activator_bonus
 	BG.melee_damage_upper = BG.melee_damage_upper+activator_bonus
 	playsound(loc, 'code/modules/ziggers/sounds/thaum.ogg', 50, FALSE)
+	if(length(H.beastmaster) > 3+H.mentality)
+		var/mob/living/simple_animal/hostile/beastmaster/B = pick(H.beastmaster)
+		B.death()
 	qdel(src)
 
 /mob/living/simple_animal/hostile/beastmaster/blood_guard

@@ -253,9 +253,9 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 							if(iskindred(H) && H.clane)
 								if(H.clane.name == "Toreador")
 									toreador_bonus = 1
-							if(H.total_erp > 150)
+							if(H.total_erp > 1500)
 								P.add_experience(1+toreador_bonus)
-							if(H.total_cleaned > 50)
+							if(H.total_cleaned > 25)
 								P.add_experience(1)
 							if(H.mind)
 								if(H.mind.assigned_role == "Graveyard Keeper")

@@ -50,17 +50,17 @@ SUBSYSTEM_DEF(city_time)
 										P.add_experience(1)
 								if(H.total_contracted > 1)
 									P.add_experience(1)
-								H.total_contracted = 0
+									H.total_contracted = 0
 								var/toreador_bonus = 0
 								if(iskindred(H) && H.clane)
 									if(H.clane.name == "Toreador")
 										toreador_bonus = 1
-								if(H.total_erp > 150)
+								if(H.total_erp > 1500)
 									P.add_experience(1+toreador_bonus)
-								H.total_erp = 0
-								if(H.total_cleaned > 50)
+									H.total_erp = 0
+								if(H.total_cleaned > 25)
 									P.add_experience(1)
-								H.total_cleaned = 0
+									H.total_cleaned = 0
 								if(H.mind)
 									if(H.mind.assigned_role == "Graveyard Keeper")
 										if(SSgraveyard.total_good > SSgraveyard.total_bad)
@@ -88,17 +88,17 @@ SUBSYSTEM_DEF(city_time)
 										P.add_experience(1)
 								if(H.total_contracted > 1)
 									P.add_experience(1)
-								H.total_contracted = 0
+									H.total_contracted = 0
 								var/toreador_bonus = 0
 								if(iskindred(H) && H.clane)
 									if(H.clane.name == "Toreador")
 										toreador_bonus = 1
-								if(H.total_erp > 150)
+								if(H.total_erp > 1500)
 									P.add_experience(1+toreador_bonus)
-								H.total_erp = 0
-								if(H.total_cleaned > 50)
+									H.total_erp = 0
+								if(H.total_cleaned > 25)
 									P.add_experience(1)
-								H.total_cleaned = 0
+									H.total_cleaned = 0
 								if(H.mind)
 									if(H.mind.assigned_role == "Graveyard Keeper")
 										if(SSgraveyard.total_good > SSgraveyard.total_bad)

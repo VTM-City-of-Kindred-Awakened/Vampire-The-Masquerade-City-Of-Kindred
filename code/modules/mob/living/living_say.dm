@@ -284,11 +284,11 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(ishuman(speaker))
 			var/mob/living/carbon/human/EX = speaker
 			if(EX.key && EX.client)
-				if(length_char(message) > 120 && EX.last_nigging != message)
+				if(EX.last_nigging != message)
 					EX.last_nigging = message
 //					var/datum/preferences/P = GLOB.preferences_datums[ckey(EX.key)]
 //					if(P)
-					EX.total_erp += 1
+					EX.total_erp += length_char(message)
 //						P.exper = min(calculate_mob_max_exper(EX), P.exper+kal)
 //						P.save_preferences()
 //						P.save_character()
