@@ -256,7 +256,7 @@
 
 /obj/structure/vampdoor/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/vamp/keys/hack))
-		if(locked)
+		if(locked && !hacking)
 			var/additional_level = 0
 			if(HAS_TRAIT(user, TRAIT_BONE_KEY))
 				additional_level = 1
