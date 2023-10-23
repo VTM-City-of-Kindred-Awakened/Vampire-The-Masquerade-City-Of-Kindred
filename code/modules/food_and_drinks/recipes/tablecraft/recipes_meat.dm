@@ -128,7 +128,7 @@
 /datum/crafting_recipe/food/bearsteak
 	name = "Filet migrawr"
 	reqs = list(
-		/datum/reagent/consumable/ethanol/manly_dorf = 5,
+		/datum/reagent/consumable/ethanol/vodka = 5,
 		/obj/item/food/meat/steak/bear = 1,
 	)
 	tools = list(/obj/item/lighter)

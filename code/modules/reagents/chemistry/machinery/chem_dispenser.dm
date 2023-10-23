@@ -230,6 +230,8 @@
 	. = ..()
 	if(.)
 		return
+	if(istype(src, /obj/machinery/chem_dispenser/drinks))
+		beaker.required_eject = TRUE
 	switch(action)
 		if("amount")
 			if(!is_operational || QDELETED(beaker))
@@ -268,6 +270,9 @@
 				work_animation()
 				. = TRUE
 		if("eject")
+			if(beaker.required_eject == TRUE)
+				beaker.required_eject = FALSE
+				beaker.reagents.handle_reactions()
 			replace_beaker(usr)
 			. = TRUE
 		if("dispense_recipe")
@@ -459,10 +464,7 @@
 	dispensable_reagents = list(
 		/datum/reagent/water,
 		/datum/reagent/consumable/ice,
-		/datum/reagent/consumable/coffee,
 		/datum/reagent/consumable/cream,
-		/datum/reagent/consumable/tea,
-		/datum/reagent/consumable/icetea,
 		/datum/reagent/consumable/space_cola,
 		/datum/reagent/consumable/spacemountainwind,
 		/datum/reagent/consumable/dr_gibb,
@@ -479,11 +481,11 @@
 		/datum/reagent/consumable/limejuice,
 		/datum/reagent/consumable/tomatojuice,
 		/datum/reagent/consumable/lemonjuice,
+		/datum/reagent/consumable/berryjuice,
 		/datum/reagent/consumable/menthol
 	)
 	upgrade_reagents = null
 	emagged_reagents = list(
-		/datum/reagent/consumable/ethanol/thirteenloko,
 		/datum/reagent/consumable/ethanol/whiskey_cola,
 		/datum/reagent/toxin/mindbreaker,
 		/datum/reagent/toxin/staminatoxin
@@ -546,7 +548,6 @@
 		/datum/reagent/consumable/ethanol,
 		/datum/reagent/iron,
 		/datum/reagent/toxin/minttoxin,
-		/datum/reagent/consumable/ethanol/atomicbomb,
 		/datum/reagent/consumable/ethanol/fernet
 	)
 

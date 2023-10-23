@@ -173,10 +173,8 @@
 
 /obj/effect/spawner/lootdrop/refreshing_beverage
 	name = "good soda spawner"
-	loot = list(/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 15,
-				/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 15,
+	loot = list(/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 15,
 				/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy = 10,
-				/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko = 10,
 				/obj/item/reagent_containers/food/drinks/beer/light = 10,
 				/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 5,
 				/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game = 5,
@@ -189,8 +187,7 @@
 
 /obj/effect/spawner/lootdrop/maint_drugs
 	name = "maint drugs spawner"
-	loot = list(/obj/item/reagent_containers/food/drinks/bottle/hooch = 50,
-				/obj/item/clothing/mask/cigarette/rollie/cannabis = 15,
+	loot = list(/obj/item/clothing/mask/cigarette/rollie/cannabis = 15,
 				/obj/item/clothing/mask/cigarette/rollie/mindbreaker = 5,
 				/obj/item/reagent_containers/syringe = 15,
 				/obj/item/cigbutt/roach = 15)

@@ -45,4 +45,4 @@
 	trash_type = /obj/item/food/egg
 	bite_consumption_mod = 2
 	foodtypes = MEAT
-	distill_reagent = /datum/reagent/consumable/ethanol/eggnog
+	//distill_reagent = /datum/reagent/consumable/ethanol/eggnog

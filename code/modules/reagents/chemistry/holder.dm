@@ -721,9 +721,13 @@
 				var/matching_container = FALSE
 				var/matching_other = FALSE
 				var/required_temp = C.required_temp
+				var/required_eject = FALSE
 				var/is_cold_recipe = C.is_cold_recipe
 				var/meets_temp_requirement = FALSE
 
+				if(istype(cached_my_atom, /obj/item/reagent_containers))
+					var/obj/item/reagent_containers/drink_holder = cached_my_atom
+					required_eject = drink_holder.required_eject
 				for(var/B in cached_required_reagents)
 					if(!has_reagent(B, cached_required_reagents[B]))
 						break
@@ -757,7 +761,7 @@
 				if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
 					meets_temp_requirement = TRUE
 
-				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement)
+				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement && !required_eject)
 					possible_reactions  += C
 
 		if(possible_reactions.len)

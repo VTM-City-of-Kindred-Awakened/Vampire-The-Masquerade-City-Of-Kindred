@@ -26,7 +26,7 @@
 	bite_consumption = 5
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/banana = 0)
-	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
+	//distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
 
 /obj/item/food/grown/banana/generate_trash(atom/location)
 	. = ..()
@@ -95,7 +95,7 @@
 	desc = "It's an excellent prop for a mime."
 	icon_state = "mimana"
 	trash_type = /obj/item/grown/bananapeel/mimanapeel
-	distill_reagent = /datum/reagent/consumable/ethanol/silencer
+	//distill_reagent = /datum/reagent/consumable/ethanol/silencer
 
 /obj/item/grown/bananapeel/mimanapeel
 	seed = /obj/item/seeds/banana/mime

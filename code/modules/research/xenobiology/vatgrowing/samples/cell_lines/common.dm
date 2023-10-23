@@ -21,7 +21,6 @@
 	suppressive_reagents = list(
 							/datum/reagent/toxin/heparin = -6,
 							/datum/reagent/consumable/astrotame = -4, //Saccarin gives rats cancer.
-							/datum/reagent/consumable/ethanol/rubberneck = -3,
 							/datum/reagent/consumable/grey_bull = -1)
 
 	virus_suspectibility = 2
@@ -301,8 +300,6 @@
 						/datum/reagent/medicine/omnizine = 4,
 						/datum/reagent/consumable/nutriment/peptides = 3,
 						/datum/reagent/consumable/corn_syrup = 2,
-						/datum/reagent/consumable/ethanol/squirt_cider = 2,
-						/datum/reagent/consumable/doctor_delight = 1,
 						/datum/reagent/medicine/salglu_solution = 1,
 						/datum/reagent/liquidgibs = 1,
 						/datum/reagent/consumable/nutriment/vitamin = 1)
@@ -329,8 +326,7 @@
 
 	suppressive_reagents = list(
 							/datum/reagent/toxin/pestkiller = -2,
-							/datum/reagent/consumable/poisonberryjuice = -4,
-							/datum/reagent/consumable/ethanol/bug_spray = -4)
+							/datum/reagent/consumable/poisonberryjuice = -4)
 
 	virus_suspectibility = 0
 	resulting_atoms = list(/mob/living/simple_animal/hostile/cockroach = 5)
@@ -388,7 +384,6 @@
 	desc = "Aberrant residue"
 	required_reagents = list(//theme here: very odd requirements
 							/datum/reagent/water/hollowwater,//geyser reagent, so plentiful when found
-							/datum/reagent/consumable/ethanol/wizz_fizz, //EZ bartender drink, like brainless
 							/datum/reagent/yuck) //since the other two are easy to make tons of, this is kind of a limiter
 
 	supplementary_reagents = list( //all of these are just geyser stuff, rated by their rarity
@@ -437,7 +432,6 @@
 	suppressive_reagents = list(
 							/datum/reagent/consumable/clownstears = -8,
 							/datum/reagent/toxin/plantbgone = -4,
-							/datum/reagent/consumable/ethanol/silencer = -3,
 							/datum/reagent/consumable/nothing = -2,
 							/datum/reagent/fuel/oil = -1)
 
@@ -463,7 +457,6 @@
 	suppressive_reagents = list(
 							/datum/reagent/consumable/clownstears = -8,
 							/datum/reagent/toxin/minttoxin = -6,
-							/datum/reagent/consumable/ethanol/silencer = -3,
 							/datum/reagent/consumable/ethanol/fernet = -3,
 							/datum/reagent/toxin/lipolicide = -3,
 							/datum/reagent/consumable/nothing = -2,
@@ -487,8 +480,6 @@
 
 	suppressive_reagents = list(
 						/datum/reagent/consumable/clownstears = -8,
-						/datum/reagent/consumable/ethanol/beepsky_smash = -3,
-						/datum/reagent/consumable/ethanol/silencer = -3,
 						/datum/reagent/toxin/mutetoxin = -3,
 						/datum/reagent/consumable/nothing = -2,
 						/datum/reagent/sulfur = -1)

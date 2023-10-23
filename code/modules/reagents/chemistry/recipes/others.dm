@@ -78,7 +78,7 @@
 		new /obj/item/soap/homemade(location)
 
 /datum/chemical_reaction/omegasoapification
-	required_reagents = list(/datum/reagent/consumable/potato_juice = 10, /datum/reagent/consumable/ethanol/lizardwine = 10, /datum/reagent/monkey_powder = 10, /datum/reagent/drug/krokodil = 10, /datum/reagent/toxin/acid/nitracid = 10, /datum/reagent/baldium = 10, /datum/reagent/consumable/ethanol/hooch = 10, /datum/reagent/bluespace = 10, /datum/reagent/drug/pumpup = 10, /datum/reagent/consumable/space_cola = 10)
+	required_reagents = list(/datum/reagent/consumable/potato_juice = 10, /datum/reagent/consumable/ethanol/lizardwine = 10, /datum/reagent/monkey_powder = 10, /datum/reagent/drug/krokodil = 10, /datum/reagent/toxin/acid/nitracid = 10, /datum/reagent/baldium = 10, /datum/reagent/bluespace = 10, /datum/reagent/drug/pumpup = 10, /datum/reagent/consumable/space_cola = 10)
 	required_temp = 999
 	mob_react = FALSE
 
@@ -360,11 +360,6 @@
 	results = list(/datum/reagent/carpet/cyan = 2)
 	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/toxin/cyanide = 1)
 	//cyan = cyanide get it huehueuhuehuehheuhe
-
-/datum/chemical_reaction/carpet/green
-	results = list(/datum/reagent/carpet/green = 2)
-	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/consumable/ethanol/beer/green = 1)
-	//make green beer by grinding up green crayons and mixing with beer
 
 /datum/chemical_reaction/carpet/orange
 	results = list(/datum/reagent/carpet/orange = 2)
