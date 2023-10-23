@@ -149,7 +149,7 @@
 	icon_state = "syndi_cakes"
 	desc = "An extremely moist snack cake that tastes just as good after being nuked."
 	trash_type = /obj/item/trash/syndi_cakes
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/doctor_delight = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/cream = 5)
 	tastes = list("sweetness" = 3, "cake" = 1)
 	foodtypes = GRAIN | FRUIT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL

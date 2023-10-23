@@ -491,10 +491,6 @@
 			name = "carton of chocolate milk"
 			desc = "Milk for cool kids!"
 			foodtype = SUGAR
-		if(/datum/reagent/consumable/ethanol/eggnog)
-			name = "carton of eggnog"
-			desc = "For enjoying the most wonderful time of the year."
-			foodtype = MEAT
 
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/update_icon_state()
 	. = ..()
@@ -515,8 +511,6 @@
 			icon_state = "pineapplebox"
 		if(/datum/reagent/consumable/milk/chocolate_milk)
 			icon_state = "chocolatebox"
-		if(/datum/reagent/consumable/ethanol/eggnog)
-			icon_state = "nog2"
 
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(bartender_check(target) && ranged)
@@ -731,13 +725,6 @@
 	desc = "Blows right through you like a space wind."
 	icon_state = "space_mountain_wind"
 	list_reagents = list(/datum/reagent/consumable/spacemountainwind = 30)
-	foodtype = SUGAR | JUNKFOOD
-
-/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko
-	name = "Thirteen Loko"
-	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkenness, or even death. Please Drink Responsibly."
-	icon_state = "thirteen_loko"
-	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 30)
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb

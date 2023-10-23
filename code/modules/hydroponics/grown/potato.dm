@@ -63,4 +63,4 @@
 	name = "sweet potato"
 	desc = "It's sweet."
 	icon_state = "sweetpotato"
-	distill_reagent = /datum/reagent/consumable/ethanol/sbiten
+	//distill_reagent = /datum/reagent/consumable/ethanol/sbiten

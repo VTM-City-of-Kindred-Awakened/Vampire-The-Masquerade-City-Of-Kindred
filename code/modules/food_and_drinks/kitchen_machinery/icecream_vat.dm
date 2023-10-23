@@ -28,7 +28,7 @@
 		/datum/reagent/consumable/coco = 6,
 		/datum/reagent/consumable/vanilla = 6,
 		/datum/reagent/consumable/berryjuice = 6,
-		/datum/reagent/consumable/ethanol/singulo = 6)
+		/datum/reagent/consumable/ethanol = 6)
 
 /obj/machinery/icecream_vat/proc/get_ingredient_list(type)
 	switch(type)
@@ -37,7 +37,7 @@
 		if(ICECREAM_STRAWBERRY)
 			return list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/berryjuice)
 		if(ICECREAM_BLUE)
-			return list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/ethanol/singulo)
+			return list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/ethanol)
 		if(ICECREAM_CUSTOM)
 			return list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice)
 		if(CONE_WAFFLE)
@@ -250,7 +250,7 @@
 			reagents.add_reagent(/datum/reagent/consumable/berryjuice, 3)
 		if ("blue")
 			desc = "A delicious [cone_type] cone filled with blue ice cream. Made with real... blue?"
-			reagents.add_reagent(/datum/reagent/consumable/ethanol/singulo, 3)
+			reagents.add_reagent(/datum/reagent/consumable/ethanol, 3)
 		if ("mob")
 			desc = "A suspicious [cone_type] cone filled with bright red ice cream. That's probably not strawberry..."
 			reagents.add_reagent(/datum/reagent/liquidgibs, 3)

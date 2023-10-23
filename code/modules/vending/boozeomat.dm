@@ -3,7 +3,12 @@
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	icon_state = "boozeomat"
 	icon_deny = "boozeomat-deny"
-	products = list(/obj/item/reagent_containers/food/drinks/drinkingglass = 30,
+	products = list(/obj/item/reagent_containers/food/drinks/drinkingglass = 15,
+					/obj/item/reagent_containers/food/drinks/drinkingglass/martini_glass = 15,
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 15,
+					/obj/item/reagent_containers/food/drinks/drinkingglass/whiskey_shot = 15,
+					/obj/item/reagent_containers/food/drinks/drinkingglass/wine_glass = 15,
+					/obj/item/reagent_containers/food/drinks/drinkingglass/pint = 15,
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 12,
 					/obj/item/reagent_containers/food/drinks/flask = 3,
 					/obj/item/reagent_containers/food/drinks/ice = 10,
@@ -43,8 +48,7 @@
 		/obj/item/reagent_containers/food/drinks/bottle/fernet = 5,
 	)
 	premium = list(/obj/item/reagent_containers/glass/bottle/ethanol = 4,
-		/obj/item/reagent_containers/food/drinks/bottle/champagne = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/trappist = 5,
+		/obj/item/reagent_containers/food/drinks/bottle/champagne = 5
 	)
 
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"

@@ -137,7 +137,7 @@
 	name = "plump-helmet"
 	desc = "<I>Plumus Hellmus</I>: Plump, soft and s-so inviting~"
 	icon_state = "plumphelmet"
-	distill_reagent = /datum/reagent/consumable/ethanol/manly_dorf
+	//distill_reagent = /datum/reagent/consumable/ethanol/manly_dorf
 
 // Walking Mushroom
 /obj/item/seeds/plump/walkingmushroom

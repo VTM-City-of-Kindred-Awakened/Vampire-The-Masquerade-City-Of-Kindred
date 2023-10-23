@@ -14,6 +14,7 @@
 	var/spillable = FALSE
 	var/list/fill_icon_thresholds = null
 	var/fill_icon_state = null // Optional custom name for reagent fill icon_state prefix
+	var/required_eject = FALSE // Check for drinks in dispenser to proceed reaction
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
@@ -156,16 +157,16 @@
 
 /obj/item/reagent_containers/update_overlays()
 	. = ..()
-	if(!fill_icon_thresholds)
+	if(!fill_icon_thresholds || !fill_icon_state)
 		return
 	if(reagents.total_volume)
-		var/fill_name = fill_icon_state? fill_icon_state : icon_state
+		var/fill_name = fill_icon_state//? fill_icon_state : icon_state
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[fill_name][fill_icon_thresholds[1]]")
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		for(var/i in 1 to fill_icon_thresholds.len)
-			var/threshold = fill_icon_thresholds[i]
-			var/threshold_end = (i == fill_icon_thresholds.len)? INFINITY : fill_icon_thresholds[i+1]
+			var/threshold = round((fill_icon_thresholds[i] / volume) * 100)
+			var/threshold_end = (i == fill_icon_thresholds.len)? INFINITY : round((fill_icon_thresholds[i+1] / volume) * 100)
 			if(threshold <= percent && percent < threshold_end)
 				filling.icon_state = "[fill_name][fill_icon_thresholds[i]]"
 
