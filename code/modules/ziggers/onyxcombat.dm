@@ -82,8 +82,11 @@
 						P.discipline2level = max(1, P.discipline2level-1)
 						P.discipline3level = max(1, P.discipline3level-1)
 						P.discipline4level = max(1, P.discipline4level-1)
-						if(isghoul(src))
-							P.exper = 0
+						P.physique = max(2, P.physique-1)
+						P.social = max(2, P.social-1)
+						P.mentality = max(2, P.mentality-1)
+//						if(isghoul(src))
+//							P.exper = 0
 					generation = min(13, generation+1)
 					P.generation = generation
 				P.humanity = humanity

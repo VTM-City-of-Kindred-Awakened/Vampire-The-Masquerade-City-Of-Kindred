@@ -55,7 +55,7 @@
 							SEND_SOUND(HS.my_creator, sound('code/modules/ziggers/sounds/suspect.ogg', 0, 0, 75))
 							to_chat(HS.my_creator, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
 						else
-							SEND_SOUND(HS.my_creator, sound('code/modules/ziggers/sounds/suspect.ogg', 0, 0, 75))
+							SEND_SOUND(HS.my_creator, sound('code/modules/ziggers/sounds/sus.ogg', 0, 0, 75))
 							to_chat(HS.my_creator, "<span class='userdanger'><b>SUSPICIOUS ACTION (murder)</b></span>")
 			else
 				if(ishuman(last_attacker))
@@ -70,7 +70,7 @@
 							SEND_SOUND(HM, sound('code/modules/ziggers/sounds/suspect.ogg', 0, 0, 75))
 							to_chat(HM, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
 						else
-							SEND_SOUND(HM, sound('code/modules/ziggers/sounds/suspect.ogg', 0, 0, 75))
+							SEND_SOUND(HM, sound('code/modules/ziggers/sounds/sus.ogg', 0, 0, 75))
 							to_chat(HM, "<span class='userdanger'><b>SUSPICIOUS ACTION (murder)</b></span>")
 	remove_overlay(FIGHT_LAYER)
 	GLOB.npc_list -= src
