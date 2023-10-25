@@ -81,13 +81,11 @@
 	. = ..()
 	if(!.) //dead
 		walk(src, 0) //stops walking
-//	else
-//		if(!istype(src, /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire))
-//			if(CheckEyewitness(src, src, 7, FALSE))
-//				if(my_creator)
-//					SEND_SOUND(src, sound('code/modules/ziggers/sounds/masquerade_violation.ogg', 0, 0, 75))
-//					to_chat(src, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
-//					my_creator.AdjustMasquerade(-1)
+	else if(my_creator)
+		if(CheckEyewitness(src, src, 5, FALSE))
+			SEND_SOUND(src, sound('code/modules/ziggers/sounds/masquerade_violation.ogg', 0, 0, 75))
+			to_chat(src, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
+			my_creator.AdjustMasquerade(-1)
 
 /mob/living/simple_animal/hostile/handle_automated_action()
 	if(AIStatus == AI_OFF)

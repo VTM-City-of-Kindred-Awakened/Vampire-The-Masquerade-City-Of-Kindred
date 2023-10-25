@@ -193,7 +193,7 @@
 			if(giving)
 				return
 			giving = TRUE
-			to_chat(owner, "<span class='notice'>You started to feed [BLOODBONDED] with your own blood.</span>")
+			owner.visible_message("<span class='warning'>[owner] tries to feed [BLOODBONDED] with their own blood!</span>", "<span class='notice'>You started to feed [BLOODBONDED] with your own blood.</span>")
 			if(do_mob(owner, BLOODBONDED, 10 SECONDS))
 				var/new_master = FALSE
 				giving = FALSE

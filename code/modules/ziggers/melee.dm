@@ -5,6 +5,9 @@
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 	var/quieted = FALSE
 
+/obj/item
+	var/masquerade_violating = FALSE
+
 /obj/item/melee/vampirearms/fireaxe
 	icon = 'code/modules/ziggers/48x32weapons.dmi'
 	icon_state = "fireaxe0"
@@ -79,6 +82,7 @@
 	bare_wound_bonus = 25
 	pixel_w = -8
 	resistance_flags = FIRE_PROOF
+	masquerade_violating = TRUE
 
 /obj/item/melee/vampirearms/baseball
 	name = "baseball bat"
@@ -106,6 +110,7 @@
 	desc = "Wow, that was someone's arm."
 	icon_state = "hand"
 	force = 50
+	masquerade_violating = TRUE
 
 /obj/item/melee/vampirearms/tire
 	name = "tire iron"
@@ -142,11 +147,13 @@
 	w_class = WEIGHT_CLASS_BULKY
 	armour_penetration = 100	//It's magical damage
 	item_flags = DROPDEL
+	masquerade_violating = TRUE
 
 /obj/item/melee/vampirearms/knife/gangrel/lasombra
 	name = "shadow tentacle"
 	force = 50
 	icon_state = "lasombra"
+	masquerade_violating = TRUE
 
 /obj/item/melee/touch_attack/quietus
 	name = "\improper poison touch"
@@ -209,6 +216,7 @@
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5
 	resistance_flags = FIRE_PROOF
+	masquerade_violating = TRUE
 	var/on = FALSE
 	var/wielded = FALSE
 
@@ -321,6 +329,7 @@
 	wound_bonus = 5
 	bare_wound_bonus = 10
 	resistance_flags = FIRE_PROOF
+	masquerade_violating = TRUE
 
 /obj/item/melee/vampirearms/katana/kosa/egorium
 	name = "demonic scythe"

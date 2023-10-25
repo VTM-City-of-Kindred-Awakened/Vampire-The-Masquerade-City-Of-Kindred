@@ -85,16 +85,16 @@ SUBSYSTEM_DEF(city_time)
 							if(!HAS_TRAIT(H, TRAIT_NON_INT))
 								if(won)
 									if(H.frakcja == won)
-										P.add_experience(1)
+										P.add_experience(2)
 								if(H.total_contracted > 1)
-									P.add_experience(1)
+									P.add_experience(3)
 									H.total_contracted = 0
 								var/toreador_bonus = 0
 								if(iskindred(H) && H.clane)
 									if(H.clane.name == "Toreador")
-										toreador_bonus = 1
-								if(H.total_erp > 1500)
-									P.add_experience(1+toreador_bonus)
+										toreador_bonus = 2
+								if(H.total_erp > 9000)
+									P.add_experience(3+toreador_bonus)
 									H.total_erp = 0
 								if(H.total_cleaned > 25)
 									P.add_experience(1)
@@ -102,7 +102,7 @@ SUBSYSTEM_DEF(city_time)
 								if(H.mind)
 									if(H.mind.assigned_role == "Graveyard Keeper")
 										if(SSgraveyard.total_good > SSgraveyard.total_bad)
-											P.add_experience(1)
+											P.add_experience(3)
 							P.save_preferences()
 							P.save_character()
 

@@ -187,13 +187,14 @@
 	worn_icon_state = "rifle"
 	w_class = WEIGHT_CLASS_BULKY
 	mag_type = /obj/item/ammo_box/magazine/vamp556
-	burst_size = 1
+	burst_size = 2
 	fire_delay = 2
 	spread = 5
 	bolt_type = BOLT_TYPE_OPEN
 	show_bolt_icon = FALSE
 	mag_display = TRUE
 	fire_sound = 'code/modules/ziggers/sounds/rifle.ogg'
+	masquerade_violating = TRUE
 
 /obj/item/ammo_box/magazine/vampaug
 	name = "AUG magazine (5.56mm)"
@@ -224,6 +225,7 @@
 	show_bolt_icon = FALSE
 	mag_display = TRUE
 	fire_sound = 'code/modules/ziggers/sounds/rifle.ogg'
+	masquerade_violating = TRUE
 
 /obj/item/ammo_box/magazine/internal/vampire/sniper
 	name = "sniper rifle internal magazine"
@@ -261,6 +263,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	projectile_damage_multiplier = 1.5
 	actions_types = list()
+	masquerade_violating = TRUE
 
 /obj/item/ammo_box/magazine/internal/vampshotgun
 	name = "shotgun internal magazine"
@@ -268,6 +271,7 @@
 	caliber = CALIBER_12G
 	multiload = FALSE
 	max_ammo = 6
+	masquerade_violating = TRUE
 
 /obj/item/gun/ballistic/shotgun/vampire
 	name = "shotgun"
@@ -353,6 +357,7 @@
 	lefthand_file = 'code/modules/ziggers/righthand.dmi'
 	righthand_file = 'code/modules/ziggers/lefthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
+	masquerade_violating = TRUE
 	var/oil = 1000
 
 /obj/item/vampire_flamethrower/attackby(obj/item/W, mob/user, params)

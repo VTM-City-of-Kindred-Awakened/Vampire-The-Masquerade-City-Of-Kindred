@@ -442,9 +442,10 @@
 	set category = "IC"
 
 	if(ishuman(src))
-		var/mob/living/carbon/human/ueban = src
-		if(!do_mob(src, src, max(1, 30-ueban.mentality*6)))
-			return
+		if(ishuman(A) || isitem(A))
+			var/mob/living/carbon/human/ueban = src
+			if(!do_mob(src, src, max(1, 15-ueban.mentality*3)))
+				return
 
 	if(isturf(A) && !(sight & SEE_TURFS) && !(A in view(client ? client.view : world.view, src)))
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs

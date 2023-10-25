@@ -417,6 +417,8 @@
 	icon_state = "vest"
 	w_class = WEIGHT_CLASS_BULKY
 	armor = list(MELEE = 70, BULLET = 70, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
+//	clothing_traits = list(TRAIT_UNMASQUERADE)
+	masquerade_violating = TRUE
 
 /obj/item/clothing/suit/vampire/eod
 	name = "EOD suit"
@@ -430,6 +432,8 @@
 	slowdown = 2
 	w_class = WEIGHT_CLASS_BULKY
 	armor = list(MELEE = 90, BULLET = 90, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 0, RAD = 0, FIRE = 70, ACID = 90, WOUND = 50)
+//	clothing_traits = list(TRAIT_UNMASQUERADE)
+	masquerade_violating = TRUE
 
 /obj/item/clothing/suit/vampire/labcoat
 	name = "labcoat"
@@ -541,6 +545,8 @@
 	icon_state = "helmet"
 	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 40, BOMB = 20, BIO = 0, RAD = 0, FIRE = 20, ACID = 40, WOUND = 25)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+//	clothing_traits = list(TRAIT_UNMASQUERADE)
+	masquerade_violating = TRUE
 
 /obj/item/clothing/head/vampire/helmet/egorium
 	name = "strange mask"
@@ -550,6 +556,7 @@
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	masquerade_violating = FALSE
 
 /obj/item/clothing/head/vampire/helmet/spain
 	name = "spain helmet"
@@ -557,12 +564,15 @@
 	icon_state = "spain"
 	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 40, BOMB = 20, BIO = 0, RAD = 0, FIRE = 20, ACID = 40, WOUND = 25)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	masquerade_violating = FALSE
 
 /obj/item/clothing/head/vampire/army
 	name = "army helmet"
 	desc = "Looks dangerous. Provides great protection against blunt force."
 	icon_state = "helmet"
 	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 40, BIO = 0, RAD = 0, FIRE = 20, ACID = 40, WOUND = 25)
+//	clothing_traits = list(TRAIT_UNMASQUERADE)
+	masquerade_violating = TRUE
 
 /obj/item/clothing/head/vampire/eod
 	name = "EOD helmet"
@@ -574,6 +584,8 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	w_class = WEIGHT_CLASS_BULKY
+//	clothing_traits = list(TRAIT_UNMASQUERADE)
+	masquerade_violating = TRUE
 
 //GLOVES
 
