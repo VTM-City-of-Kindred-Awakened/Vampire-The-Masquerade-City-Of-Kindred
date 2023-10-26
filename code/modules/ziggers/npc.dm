@@ -234,9 +234,9 @@
 /mob/living/carbon/human/npc/proc/AssignSocialRole(var/datum/socialrole/S, var/dont_random = FALSE)
 	if(!S)
 		return
-	physique = rand(1, 4)
-	social = rand(1, 4)
-	mentality = rand(1, 4)
+	physique = rand(1, 2)
+	social = rand(1, 2)
+	mentality = rand(1, 2)
 	maxHealth = round(initial(maxHealth)+(initial(maxHealth)/3)*(physique))
 	health = round(initial(health)+(initial(health)/3)*(physique))
 	socialrole = new S()

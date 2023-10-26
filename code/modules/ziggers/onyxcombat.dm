@@ -23,13 +23,13 @@
 /mob/living/carbon/human/death()
 	. = ..()
 
-//	if(iskindred(src) || isghoul(src))
-//		SSmasquerade.total_level = min(1000, SSmasquerade.total_level+30)
-//	else
-//		if(istype(get_area(src), /area/vtm))
-//			var/area/vtm/V = get_area(src)
-//			if(V.zone_type == "masquerade")
-//				SSmasquerade.total_level = max(0, SSmasquerade.total_level-10)
+	if(iskindred(src))
+		SSmasquerade.dead_level = min(1000, SSmasquerade.dead_level+50)
+	else
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.zone_type == "masquerade")
+				SSmasquerade.dead_level = max(0, SSmasquerade.dead_level-25)
 
 	if(bloodhunted)
 		SSbloodhunt.hunted -= src
@@ -82,8 +82,11 @@
 						P.discipline2level = max(1, P.discipline2level-1)
 						P.discipline3level = max(1, P.discipline3level-1)
 						P.discipline4level = max(1, P.discipline4level-1)
-						if(isghoul(src))
-							P.exper = 0
+						P.physique = max(2, P.physique-1)
+						P.social = max(2, P.social-1)
+						P.mentality = max(2, P.mentality-1)
+//						if(isghoul(src))
+//							P.exper = 0
 					generation = min(13, generation+1)
 					P.generation = generation
 				P.humanity = humanity

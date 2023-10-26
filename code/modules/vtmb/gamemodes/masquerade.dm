@@ -5,6 +5,7 @@ SUBSYSTEM_DEF(masquerade)
 	priority = FIRE_PRIORITY_VERYLOW
 
 	var/total_level = 1000
+	var/dead_level = 0
 	var/last_level = "stable"
 
 /datum/controller/subsystem/masquerade/proc/get_description()
@@ -26,7 +27,7 @@ SUBSYSTEM_DEF(masquerade)
 	if(length(GLOB.sabbatites))
 		sabbat = (2000/length(GLOB.player_list))*length(GLOB.sabbatites)
 
-	total_level = max(0, 1000-masquerade_violators-sabbat)
+	total_level = max(0, 1000+dead_level-masquerade_violators-sabbat)
 
 	var/shit_happens = "stable"
 	switch(total_level)
@@ -53,6 +54,16 @@ SUBSYSTEM_DEF(masquerade)
 							to_chat(H, "People start noticing...")
 						if("breach")
 							to_chat(H, "Masquerade is about to fall...")
+
+	if(total_level <= 250)
+		for(var/mob/living/carbon/human/H in GLOB.player_list)
+			if(H)
+				if(iskindred(H))
+					if(!H.warrant)
+						H.last_nonraid = world.time
+						H.warrant = TRUE
+						SEND_SOUND(H, sound('code/modules/ziggers/sounds/humanity_loss.ogg', 0, 0, 75))
+						to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
 //Spotted body -25
 //Blood -5 for each
 //Masquerade violation -50

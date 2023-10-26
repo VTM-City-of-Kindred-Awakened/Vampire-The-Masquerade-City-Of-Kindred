@@ -247,13 +247,13 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 							if(won)
 								if(H.frakcja == won)
 									P.add_experience(1)
-							if(H.total_contracted > 1)
-								P.add_experience(1)
+//							if(H.total_contracted > 1)
+//								P.add_experience(1)
 							var/toreador_bonus = 0
 							if(iskindred(H) && H.clane)
 								if(H.clane.name == "Toreador")
-									toreador_bonus = 1
-							if(H.total_erp > 1500)
+									toreador_bonus = 2
+							if(H.total_erp > 9000)
 								P.add_experience(1+toreador_bonus)
 							if(H.total_cleaned > 25)
 								P.add_experience(1)
@@ -264,7 +264,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 								if(H.mind.special_role)
 									var/datum/antagonist/A = H.mind.special_role
 									if(A.check_completed())
-										P.add_experience(1)
+										P.add_experience(3)
 							P.save_preferences()
 							P.save_character()
 	var/old_runlevel = current_runlevel

@@ -125,14 +125,42 @@
 
 		playsound(src, 'sound/weapons/guillotine.ogg', 100, TRUE)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
+			var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
+			if(H in GLOB.masquerade_breakers_list)
+				if(P)
+					H.generation = min(13, H.generation+1)
+					P.generation = H.generation
+					if(!HAS_TRAIT(H, TRAIT_PHOENIX))
+						P.discipline1level = max(1, P.discipline1level-1)
+						P.discipline2level = max(1, P.discipline2level-1)
+						P.discipline3level = max(1, P.discipline3level-1)
+						P.discipline4level = max(1, P.discipline4level-1)
+						P.physique = max(2, P.physique-1)
+						P.social = max(2, P.social-1)
+						P.mentality = max(2, P.mentality-1)
+					P.torpor_count = 0
+			if(H.diablerist)
+				if(P)
+					H.generation = min(13, H.generation+1)
+					P.generation = H.generation
+					if(!HAS_TRAIT(H, TRAIT_PHOENIX))
+						P.discipline1level = max(1, P.discipline1level-1)
+						P.discipline2level = max(1, P.discipline2level-1)
+						P.discipline3level = max(1, P.discipline3level-1)
+						P.discipline4level = max(1, P.discipline4level-1)
+						P.physique = max(2, P.physique-1)
+						P.social = max(2, P.social-1)
+						P.mentality = max(2, P.mentality-1)
+					P.torpor_count = 0
 			head.dismember()
 			log_combat(user, H, "beheaded", src)
 			H.regenerate_icons()
 			unbuckle_all_mobs()
 			kill_count += 1
-
 			var/blood_overlay = "bloody"
-
+			if(P)
+				P.torpor_count = 0
+				P.reason_of_death = "Executed to sustain the Traditions ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 			if (kill_count == 2)
 				blood_overlay = "bloodier"
 			else if (kill_count > 2)
@@ -147,7 +175,16 @@
 			var/delay_offset = 0
 			for(var/mob/M in viewers(src, 7))
 				var/mob/living/carbon/human/C = M
-				if (ishuman(M))
+				if (ishuman(M) && M.stat != 4)
+					var/datum/preferences/P1 = GLOB.preferences_datums[ckey(M.key)]
+					if(H in GLOB.masquerade_breakers_list)
+						to_chat(M, "<span class='help'><b>Violator was punished</b></span>")
+						if(P1)
+							P.add_experience(1)
+					if(H.diablerist)
+						to_chat(M, "<span class='help'><b>Diablerist was punished</b></span>")
+						if(P1)
+							P.add_experience(1)
 					addtimer(CALLBACK(C, /mob/.proc/emote, "clap"), delay_offset * 0.3)
 					delay_offset++
 		else
@@ -155,8 +192,8 @@
 			log_combat(user, H, "dropped the blade on", src, " non-fatally")
 			H.emote("scream")
 
-		if (blade_sharpness > 1)
-			blade_sharpness -= 1
+//		if (blade_sharpness > 1)
+//			blade_sharpness -= 1
 
 	blade_status = GUILLOTINE_BLADE_DROPPED
 	icon_state = "guillotine"

@@ -23,7 +23,7 @@
 
 /mob/living
 	var/total_contracted = 0
-
+/*
 /obj/item/masquerade_contract/attack(mob/living/M, mob/living/user)
 	. = ..()
 	if(iskindred(M) || isghoul(M))
@@ -87,7 +87,7 @@
 	else
 		to_chat(user, "Target must be kindred or ghoul.")
 		return
-
+*/
 /obj/item/drinkable_bloodpack
 	name = "\improper drinkable blood pack (full)"
 	desc = "Fast way to feed your inner beast."

@@ -2694,8 +2694,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	else
 		character.clane = null
 		character.generation = 13
-	character.maxHealth = round(initial(character.maxHealth)+(initial(character.maxHealth)/3)*(character.physique+13-generation))
-	character.health = round(initial(character.health)+(initial(character.health)/3)*(character.physique+13-generation))
+	character.maxHealth = round((initial(character.maxHealth)-initial(character.maxHealth)/3)+(initial(character.maxHealth)/3)*(character.physique+13-generation))
+	character.health = round((initial(character.health)-initial(character.health)/3)+(initial(character.health)/3)*(character.physique+13-generation))
 	if(pref_species.name == "Vampire")
 		character.humanity = humanity
 	character.masquerade = masquerade
