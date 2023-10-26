@@ -16,7 +16,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 /turf/open/openspace
 	name = "open space"
 	desc = "Watch your step!"
-	icon_state = "transparent"
+	icon_state = "open space"
 	baseturfs = /turf/open/openspace
 //	CanAtmosPassVertical = ATMOS_PASS_YES
 	baseturfs = /turf/open/openspace
