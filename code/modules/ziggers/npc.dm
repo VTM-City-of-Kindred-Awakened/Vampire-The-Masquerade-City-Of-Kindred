@@ -31,6 +31,7 @@
 
 	var/lifespan = 0	//How many cycles. He'll be deleted if over than a ten thousand
 	var/old_movement = FALSE
+	var/max_stat = 2
 
 	var/list/spotted_bodies = list()
 
@@ -234,9 +235,9 @@
 /mob/living/carbon/human/npc/proc/AssignSocialRole(var/datum/socialrole/S, var/dont_random = FALSE)
 	if(!S)
 		return
-	physique = rand(1, 2)
-	social = rand(1, 2)
-	mentality = rand(1, 2)
+	physique = rand(1, max_stat)
+	social = rand(1, max_stat)
+	mentality = rand(1, max_stat)
 	maxHealth = round(initial(maxHealth)+(initial(maxHealth)/3)*(physique))
 	health = round(initial(health)+(initial(health)/3)*(physique))
 	socialrole = new S()

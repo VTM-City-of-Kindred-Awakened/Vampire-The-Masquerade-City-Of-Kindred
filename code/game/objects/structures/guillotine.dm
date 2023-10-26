@@ -128,6 +128,7 @@
 			var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
 			if(H in GLOB.masquerade_breakers_list)
 				if(P)
+					P.last_torpor = world.time
 					H.generation = min(13, H.generation+1)
 					P.generation = H.generation
 					if(!HAS_TRAIT(H, TRAIT_PHOENIX))
@@ -173,19 +174,18 @@
 			// The crowd is pleased
 			// The delay is to making large crowds have a longer laster applause
 			var/delay_offset = 0
-			for(var/mob/M in viewers(src, 7))
-				var/mob/living/carbon/human/C = M
-				if (ishuman(M) && M.stat != 4)
+			for(var/mob/living/carbon/human/M in viewers(src, 7))
+				if(M.stat != 4)
 					var/datum/preferences/P1 = GLOB.preferences_datums[ckey(M.key)]
 					if(H in GLOB.masquerade_breakers_list)
 						to_chat(M, "<span class='help'><b>Violator was punished</b></span>")
 						if(P1)
-							P.add_experience(1)
+							P1.add_experience(1)
 					if(H.diablerist)
 						to_chat(M, "<span class='help'><b>Diablerist was punished</b></span>")
 						if(P1)
-							P.add_experience(1)
-					addtimer(CALLBACK(C, /mob/.proc/emote, "clap"), delay_offset * 0.3)
+							P1.add_experience(2)
+					addtimer(CALLBACK(M, /mob/.proc/emote, "clap"), delay_offset * 0.3)
 					delay_offset++
 		else
 			H.apply_damage(15 * blade_sharpness, BRUTE, head)

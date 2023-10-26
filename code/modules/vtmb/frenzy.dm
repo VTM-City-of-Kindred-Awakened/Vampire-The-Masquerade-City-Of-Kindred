@@ -208,8 +208,8 @@
 						if(H.CheckEyewitness(H, H, 7, FALSE))
 							if(H.last_loot_check+50 <= world.time)
 								H.last_loot_check = world.time
-								H.killed_count = H.killed_count+1
 								H.last_nonraid = world.time
+								H.killed_count = H.killed_count+1
 								if(!H.warrant)
 									if(H.killed_count >= 5)
 										H.warrant = TRUE
@@ -225,8 +225,8 @@
 							if(H.CheckEyewitness(H, H, 7, FALSE))
 								if(H.last_loot_check+50 <= world.time)
 									H.last_loot_check = world.time
-									H.killed_count = H.killed_count+1
 									H.last_nonraid = world.time
+									H.killed_count = H.killed_count+1
 									if(!H.warrant)
 										if(H.killed_count >= 5)
 											H.warrant = TRUE

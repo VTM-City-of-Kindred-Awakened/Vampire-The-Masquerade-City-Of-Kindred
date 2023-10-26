@@ -726,6 +726,7 @@
 
 /mob/living/carbon/human/npc/bandit
 	frakcja = "City"
+	max_stat = 3
 
 /mob/living/carbon/human/npc/bandit/Initialize()
 	..()
@@ -1096,6 +1097,7 @@
 /mob/living/carbon/human/npc/police
 	frakcja = "City"
 	fights_anyway = TRUE
+	max_stat = 4
 
 /mob/living/carbon/human/npc/police/Initialize()
 	..()
@@ -1191,6 +1193,7 @@
 	frakcja = "City"
 	staying = TRUE
 	fights_anyway = TRUE
+	max_stat = 4
 
 /mob/living/carbon/human/npc/guard/Initialize()
 	..()
