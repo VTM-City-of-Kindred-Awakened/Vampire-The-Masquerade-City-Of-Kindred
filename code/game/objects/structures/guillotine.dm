@@ -118,7 +118,7 @@
 		if (!H)
 			return
 
-		var/obj/item/bodypart/head/head = H.get_bodypart("head")
+		var/obj/item/bodypart/head/head = H.get_bodypart("head") // What the actual fuck
 
 		if (QDELETED(head))
 			return
@@ -147,9 +147,9 @@
 			var/delay_offset = 0
 			for(var/mob/M in viewers(src, 7))
 				var/mob/living/carbon/human/C = M
-				if (ishuman(M))
-					addtimer(CALLBACK(C, /mob/.proc/emote, "clap"), delay_offset * 0.3)
-					delay_offset++
+				//if (ishuman(M)) // [ChillRaccoon] - we already have here human, nor something else
+				addtimer(CALLBACK(C, /mob/.proc/emote, "clap"), delay_offset * 0.3)
+				delay_offset++
 		else
 			H.apply_damage(15 * blade_sharpness, BRUTE, head)
 			log_combat(user, H, "dropped the blade on", src, " non-fatally")

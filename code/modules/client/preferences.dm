@@ -141,7 +141,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/persistent_scars = TRUE
 	///If we want to broadcast deadchat connect/disconnect messages
 	var/broadcast_login_logout = TRUE
-//Поколение
+//Generation // [ChillRaccoon] - Renamed, cause github fucking up russian lang, beware of it
 	var/generation = 13
 	var/generation_bonus = 0
 	var/datum/archetype/archtype
@@ -159,7 +159,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/true_experience = 10
 	var/torpor_count = 0
 
-	var/discipline1level = 1
+	var/discipline1level = 1 //Lol
 	var/discipline2level = 1
 	var/discipline3level = 1
 	var/discipline4level = 1
