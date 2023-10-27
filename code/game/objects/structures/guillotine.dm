@@ -147,6 +147,8 @@
 					H.generation = 13
 					P.generation = H.generation
 					P.torpor_count = 0
+					P.diablerist = 0
+					H.diablerist = 0
 			head.dismember()
 			log_combat(user, H, "beheaded", src)
 			H.regenerate_icons()
