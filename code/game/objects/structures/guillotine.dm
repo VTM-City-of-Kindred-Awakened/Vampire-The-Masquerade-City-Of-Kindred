@@ -125,6 +125,66 @@
 
 		playsound(src, 'sound/weapons/guillotine.ogg', 100, TRUE)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
+
+			//+ [ChillRaccoon] - debuffs for getting punishment
+
+			if(!user.key)
+				// world.log << "#DEBUG, !usr.key, C = [user], key = [user.key]"
+				return FALSE
+
+			var/datum/preferences/O = GLOB.preferences_datums[ckey(user.key)]
+
+			var/masquerade = 5-(O.masquerade-1) // For make sense for future improvements if they will be
+
+			if(O.masquerade >1)
+				O.masquerade--
+
+			// We should low current level's of user's disciplines //! I DIDN'T FUCKING UNDERSTAND, WHY DISCIPLINES CODED IN CLIENT? For god's sake, move it to mob type if it possible now
+			O.discipline1level -= masquerade
+			O.discipline2level -= masquerade
+			O.discipline3level -= masquerade
+			O.discipline4level -= masquerade
+
+			// We should prevent error of negative values or zero, so..
+			if(O.discipline1level < 1)
+				O.discipline1level = 1
+			if(O.discipline2level < 1)
+				O.discipline2level = 1
+			if(O.discipline3level < 1)
+				O.discipline3level = 1
+			if(O.discipline4level < 1)
+				O.discipline4level = 1
+
+			if(O.diablerist && O.generation == 13) // We should remove diablerist aura
+				hud_list[GLAND_HUD] = null
+			if(O.diablerist)
+				O.generation = 13 // Diablerist hating
+			else
+				O.generation += masquerade
+				if(O.generation > 13) // Preventing maximum generation level overload
+					O.generation = 13
+
+			// Literally, using variables that affecting on mobs and hold them in client, are god-killing features
+			O.physique -= masquerade
+			O.social 	-= masquerade
+			O.mentality-= masquerade
+			O.blood 	-= masquerade
+
+			// We should prevent error of negative values or zero, so..
+			if(O.physique < 1)
+				O.physique = 1
+			if(O.social < 1)
+				O.social = 1
+			if(O.mentality < 1)
+				O.mentality = 1
+			if(O.blood < 1)
+				O.blood = 1
+
+			// world.log << "#DEBUG, now you should have:\n O.physique = [O.physique]\n O.social = [O.social]\n O.mentality = [O.mentality]\n O.blood = [O.blood]\n generation = [O.generation]\n \
+			// O.discipline1level = [O.discipline1level]\n O.discipline2level = [O.discipline2level]\n O.discipline3level = [O.discipline3level]\n O.discipline4level = [O.discipline4level]\n O.masquerade = [O.masquerade]"
+
+			//- [ChillRaccoon] - debuffs for getting punishment
+
 			head.dismember()
 			log_combat(user, H, "beheaded", src)
 			H.regenerate_icons()
