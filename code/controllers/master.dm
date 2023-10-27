@@ -244,6 +244,9 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 						var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
 						if(P)
 							P.add_experience(1)
+							if(H.mind)
+								if("[H.mind.assigned_role]" == "Prince" || "[H.mind.assigned_role]" == "Sheriff" || "[H.mind.assigned_role]" == "Seneschal" || "[H.mind.assigned_role]" == "Chantry Regent" || "[H.mind.assigned_role]" == "Baron" || "[H.mind.assigned_role]" == "Dealer")
+									P.add_experience(3)
 							if(won)
 								if(H.frakcja == won)
 									P.add_experience(1)
