@@ -1111,11 +1111,12 @@
 
 /mob/living/carbon/human/npc/police/Life()
 	. = ..()
-	if(stat < 2)
-		for(var/mob/living/carbon/human/H in oviewers(6, src))
-			if(H)
-				if(H.warrant)
-					Aggro(H, FALSE)
+	if(stat < 1)
+		if(prob(10))
+			for(var/mob/living/carbon/human/H in oviewers(4, src))
+				if(H)
+					if(H.warrant)
+						Aggro(H, FALSE)
 
 /datum/socialrole/guard
 	s_tones = list("albino",

@@ -52,7 +52,7 @@
 	GLOB.frenzy_list -= src
 
 /mob/living/carbon/human/proc/CheckFrenzyMove()
-	if(stat > 1)
+	if(stat >= 1)
 		return TRUE
 	if(IsSleeping())
 		return TRUE
@@ -318,7 +318,8 @@
 				H.rollfrenzy()
 				if(H.clane)
 					if(H.clane.enlightement)
-						H.AdjustHumanity(1, 10)
+						if(!H.CheckFrenzyMove())
+							H.AdjustHumanity(1, 10)
 //	if(length(blood_fr) >= 10 && !H.in_frenzy)
 //		if(H.last_frenzy_check+400 <= world.time)
 //			H.last_frenzy_check = world.time
