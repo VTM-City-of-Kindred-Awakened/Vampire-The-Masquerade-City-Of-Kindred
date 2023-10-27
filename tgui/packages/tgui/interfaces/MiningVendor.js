@@ -51,7 +51,7 @@ export const MiningVendor = (props, context) => {
                       }}
                       disabled={!data.user
                         || product.price > data.user.points}
-                      content={product.price + ' points'}
+                      content={product.price + ' dollars'}
                       onClick={() => act('purchase', {
                         'ref': product.ref,
                       })} />
