@@ -126,32 +126,26 @@
 		playsound(src, 'sound/weapons/guillotine.ogg', 100, TRUE)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 			var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
+			var/how_much = max(1, 5-H.masquerade)
 			if(H in GLOB.masquerade_breakers_list)
 				if(P)
 					P.last_torpor = world.time
 					H.generation = min(13, H.generation+1)
 					P.generation = H.generation
 					if(!HAS_TRAIT(H, TRAIT_PHOENIX))
-						P.discipline1level = max(1, P.discipline1level-1)
-						P.discipline2level = max(1, P.discipline2level-1)
-						P.discipline3level = max(1, P.discipline3level-1)
-						P.discipline4level = max(1, P.discipline4level-1)
-						P.physique = max(2, P.physique-1)
-						P.social = max(2, P.social-1)
-						P.mentality = max(2, P.mentality-1)
+						P.discipline1level = max(1, P.discipline1level-1*how_much)
+						P.discipline2level = max(1, P.discipline2level-1*how_much)
+						P.discipline3level = max(1, P.discipline3level-1*how_much)
+						P.discipline4level = max(1, P.discipline4level-1*how_much)
+						P.physique = max(1, P.physique-1*how_much)
+						P.social = max(1, P.social-1*how_much)
+						P.mentality = max(1, P.mentality-1*how_much)
 					P.torpor_count = 0
 			if(H.diablerist)
 				if(P)
-					H.generation = min(13, H.generation+1)
+					P.last_torpor = world.time
+					H.generation = 13
 					P.generation = H.generation
-					if(!HAS_TRAIT(H, TRAIT_PHOENIX))
-						P.discipline1level = max(1, P.discipline1level-1)
-						P.discipline2level = max(1, P.discipline2level-1)
-						P.discipline3level = max(1, P.discipline3level-1)
-						P.discipline4level = max(1, P.discipline4level-1)
-						P.physique = max(2, P.physique-1)
-						P.social = max(2, P.social-1)
-						P.mentality = max(2, P.mentality-1)
 					P.torpor_count = 0
 			head.dismember()
 			log_combat(user, H, "beheaded", src)
@@ -178,11 +172,11 @@
 				if(M.stat != 4)
 					var/datum/preferences/P1 = GLOB.preferences_datums[ckey(M.key)]
 					if(H in GLOB.masquerade_breakers_list)
-						to_chat(M, "<span class='help'><b>Violator was punished</b></span>")
+						to_chat(M, "<span class='userhelp'><b>Violator was punished</b></span>")
 						if(P1)
 							P1.add_experience(1)
 					if(H.diablerist)
-						to_chat(M, "<span class='help'><b>Diablerist was punished</b></span>")
+						to_chat(M, "<span class='userhelp'><b>Diablerist was punished</b></span>")
 						if(P1)
 							P1.add_experience(2)
 					addtimer(CALLBACK(M, /mob/.proc/emote, "clap"), delay_offset * 0.3)
