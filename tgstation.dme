@@ -3362,6 +3362,7 @@
 #include "code\modules\ziggers\cargo.dm"
 #include "code\modules\ziggers\clock.dm"
 #include "code\modules\ziggers\clothcode.dm"
+#include "code\modules\ziggers\dagon.dm"
 #include "code\modules\ziggers\decor.dm"
 #include "code\modules\ziggers\doorcode.dm"
 #include "code\modules\ziggers\elevator.dm"
