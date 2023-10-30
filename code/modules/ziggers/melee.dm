@@ -28,6 +28,7 @@
 	bare_wound_bonus = 20
 	armour_penetration = 30
 	pixel_w = -8
+	masquerade_violating = FALSE
 	var/wielded = FALSE
 
 /obj/item/melee/vampirearms/fireaxe/Initialize()
@@ -302,6 +303,7 @@
 	attack_verb_simple = list("attack", "chop", "tear", "beat")
 	armor = list(MELEE = 25, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	resistance_flags = FIRE_PROOF
+	masquerade_violating = FALSE
 
 /obj/item/melee/vampirearms/shovel/attack(mob/living/target, mob/living/user)
 	. = ..()
@@ -329,7 +331,7 @@
 	wound_bonus = 5
 	bare_wound_bonus = 10
 	resistance_flags = FIRE_PROOF
-	masquerade_violating = TRUE
+	masquerade_violating = FALSE
 
 /obj/item/melee/vampirearms/katana/kosa/egorium
 	name = "demonic scythe"

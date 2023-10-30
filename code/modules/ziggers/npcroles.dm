@@ -726,6 +726,7 @@
 
 /mob/living/carbon/human/npc/bandit
 	frakcja = "City"
+	max_stat = 3
 
 /mob/living/carbon/human/npc/bandit/Initialize()
 	..()
@@ -1096,13 +1097,26 @@
 /mob/living/carbon/human/npc/police
 	frakcja = "City"
 	fights_anyway = TRUE
+	max_stat = 4
 
 /mob/living/carbon/human/npc/police/Initialize()
 	..()
 	if(prob(66))
 		base_body_mod = "f"
-	my_weapon = new /obj/item/gun/ballistic/automatic/vampire/deagle(src)
+	if(prob(50))
+		my_weapon = new /obj/item/gun/ballistic/automatic/vampire/deagle(src)
+	else
+		my_weapon = new /obj/item/gun/ballistic/automatic/vampire/ar15(src)
 	AssignSocialRole(/datum/socialrole/police)
+
+/mob/living/carbon/human/npc/police/Life()
+	. = ..()
+	if(stat < 1)
+		if(prob(10))
+			for(var/mob/living/carbon/human/H in oviewers(4, src))
+				if(H)
+					if(H.warrant)
+						Aggro(H, FALSE)
 
 /datum/socialrole/guard
 	s_tones = list("albino",
@@ -1191,6 +1205,7 @@
 	frakcja = "City"
 	staying = TRUE
 	fights_anyway = TRUE
+	max_stat = 4
 
 /mob/living/carbon/human/npc/guard/Initialize()
 	..()

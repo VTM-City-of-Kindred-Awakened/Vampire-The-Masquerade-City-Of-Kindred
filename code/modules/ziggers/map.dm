@@ -260,6 +260,7 @@
 	uniform = /obj/item/clothing/under/vampire/police
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	suit = /obj/item/clothing/suit/vampire/vest
+	belt = /obj/item/melee/classic_baton
 	id = /obj/item/cockclock
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/flashlight

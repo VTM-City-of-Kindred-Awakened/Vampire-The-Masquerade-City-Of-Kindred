@@ -9,6 +9,7 @@
 	limbs_id = "human"
 	wings_icon = "Dragon"
 	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
+	mutantbrain = /obj/item/organ/brain/vampire
 	brutemod = 0.5	//0.8 bilo
 	heatmod = 1		//Sosut ot peregreva	///UZHE NE SOSUT EPTA TOLKO OGON
 	burnmod = 2

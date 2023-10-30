@@ -52,7 +52,7 @@
 	GLOB.frenzy_list -= src
 
 /mob/living/carbon/human/proc/CheckFrenzyMove()
-	if(stat > 1)
+	if(stat >= 1)
 		return TRUE
 	if(IsSleeping())
 		return TRUE
@@ -208,8 +208,8 @@
 						if(H.CheckEyewitness(H, H, 7, FALSE))
 							if(H.last_loot_check+50 <= world.time)
 								H.last_loot_check = world.time
-								H.killed_count = H.killed_count+1
 								H.last_nonraid = world.time
+								H.killed_count = H.killed_count+1
 								if(!H.warrant)
 									if(H.killed_count >= 5)
 										H.warrant = TRUE
@@ -225,8 +225,8 @@
 							if(H.CheckEyewitness(H, H, 7, FALSE))
 								if(H.last_loot_check+50 <= world.time)
 									H.last_loot_check = world.time
-									H.killed_count = H.killed_count+1
 									H.last_nonraid = world.time
+									H.killed_count = H.killed_count+1
 									if(!H.warrant)
 										if(H.killed_count >= 5)
 											H.warrant = TRUE
@@ -318,7 +318,8 @@
 				H.rollfrenzy()
 				if(H.clane)
 					if(H.clane.enlightement)
-						H.AdjustHumanity(1, 10)
+						if(!H.CheckFrenzyMove())
+							H.AdjustHumanity(1, 10)
 //	if(length(blood_fr) >= 10 && !H.in_frenzy)
 //		if(H.last_frenzy_check+400 <= world.time)
 //			H.last_frenzy_check = world.time

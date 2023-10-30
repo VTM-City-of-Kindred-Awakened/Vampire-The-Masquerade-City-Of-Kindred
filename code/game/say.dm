@@ -37,12 +37,17 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language = null, list/message_mods = list())
 	var/turf/T = get_turf(src)
+	var/ending = copytext_char(message, -1)	//Better not to do like that..
 	if(T)
 		if(T.silented)
 			return
 	var/rendered = compose_message(src, message_language, message, , spans, message_mods)
+	if(ending == "!")
+		range = 15
 	for(var/_AM in get_hearers_in_view(range, source))
 		var/atom/movable/AM = _AM
+		if(get_dist(AM, src) > 7)
+			rendered = "<span class='scream_away'>[rendered]</span>" //! Take an attention, this will NOT overlap client font-size, fix it if you can
 		AM.Hear(rendered, src, message_language, message, , spans, message_mods)
 //	if(ishuman(src))
 //		var/mob/living/carbon/human/H = src
