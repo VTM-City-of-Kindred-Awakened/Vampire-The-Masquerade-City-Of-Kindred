@@ -218,7 +218,7 @@
 			H.AdjustMasquerade(-1)
 	if(istype(get_area(H), /area/vtm))
 		var/area/vtm/V = get_area(H)
-		if(V.zone_type == "masquerade")
+		if(V.zone_type == "masquerade" && V.upper)
 			if(H.pulling)
 				if(ishuman(H.pulling))
 					var/mob/living/carbon/human/pull = H.pulling
@@ -226,8 +226,8 @@
 						if(H.CheckEyewitness(H, H, 7, FALSE))
 							if(H.last_loot_check+50 <= world.time)
 								H.last_loot_check = world.time
-								H.killed_count = H.killed_count+1
 								H.last_nonraid = world.time
+								H.killed_count = H.killed_count+1
 								if(!H.warrant)
 									if(H.killed_count >= 5)
 										H.warrant = TRUE
@@ -243,8 +243,8 @@
 							if(H.CheckEyewitness(H, H, 7, FALSE))
 								if(H.last_loot_check+50 <= world.time)
 									H.last_loot_check = world.time
-									H.killed_count = H.killed_count+1
 									H.last_nonraid = world.time
+									H.killed_count = H.killed_count+1
 									if(!H.warrant)
 										if(H.killed_count >= 5)
 											H.warrant = TRUE
@@ -304,7 +304,7 @@
 			H.AdjustMasquerade(-1)
 	if(istype(get_area(H), /area/vtm))
 		var/area/vtm/V = get_area(H)
-		if(V.zone_type == "masquerade")
+		if(V.zone_type == "masquerade" && V.upper)
 			if(H.pulling)
 				if(ishuman(H.pulling))
 					var/mob/living/carbon/human/pull = H.pulling
@@ -312,8 +312,8 @@
 						if(H.CheckEyewitness(H, H, 7, FALSE))
 							if(H.last_loot_check+50 <= world.time)
 								H.last_loot_check = world.time
-								H.killed_count = H.killed_count+1
 								H.last_nonraid = world.time
+								H.killed_count = H.killed_count+1
 								if(!H.warrant)
 									if(H.killed_count >= 5)
 										H.warrant = TRUE
@@ -329,8 +329,8 @@
 							if(H.CheckEyewitness(H, H, 7, FALSE))
 								if(H.last_loot_check+50 <= world.time)
 									H.last_loot_check = world.time
-									H.killed_count = H.killed_count+1
 									H.last_nonraid = world.time
+									H.killed_count = H.killed_count+1
 									if(!H.warrant)
 										if(H.killed_count >= 5)
 											H.warrant = TRUE

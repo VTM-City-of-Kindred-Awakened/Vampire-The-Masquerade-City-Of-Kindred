@@ -963,6 +963,7 @@
 /mob/living/carbon/human/npc/shop
 	frakcja = "City"
 	staying = TRUE
+	is_talking = TRUE
 
 /mob/living/carbon/human/npc/shop/Initialize()
 	..()
@@ -1399,6 +1400,7 @@
 /mob/living/carbon/human/npc/illegal
 	frakcja = "City"
 	staying = TRUE
+	is_talking = TRUE
 
 /mob/living/carbon/human/npc/illegal/Initialize()
 	..()

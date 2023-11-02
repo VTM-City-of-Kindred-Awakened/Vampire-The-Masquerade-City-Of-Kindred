@@ -200,7 +200,7 @@
 			H.AdjustMasquerade(-1)
 	if(istype(get_area(H), /area/vtm))
 		var/area/vtm/V = get_area(H)
-		if(V.zone_type == "masquerade")
+		if(V.zone_type == "masquerade" && V.upper)
 			if(H.pulling)
 				if(ishuman(H.pulling))
 					var/mob/living/carbon/human/pull = H.pulling
