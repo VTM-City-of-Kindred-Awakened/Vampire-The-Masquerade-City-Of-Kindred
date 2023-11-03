@@ -432,7 +432,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(3)
 						max_death = 1
 			dat += "<b>[pref_species.name == "Vampire" ? "Torpor" : "Clinical Death"] Count:</b> [torpor_count]/[max_death]"
-			if(true_experience >= 5*(14-generation) && torpor_count > 0)
+			if(true_experience >= 3*(14-generation) && torpor_count > 0)
 				dat += " <a href='?_src_=prefs;preference=torpor_restore;task=input'>Restore ([5*(14-generation)])</a><BR>"
 			dat += "<BR>"
 			dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
@@ -457,7 +457,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(generation_allowed)
 					if(generation_bonus)
 						dat += " (+[generation_bonus]/[min(6, generation-7)])"
-					if(true_experience >= 20 && generation_bonus < max(0, generation-7))
+					if(true_experience >= 10 && generation_bonus < max(0, generation-7))
 						dat += " <a href='?_src_=prefs;preference=generation;task=input'>Claim generation bonus (20)</a><BR>"
 					else
 						dat += "<BR>"
@@ -465,15 +465,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<BR>"
 			dat += "<h2>[make_font_cool("ATTRIBUTES")]</h2>"
 			dat += "<b>Physique:</b> •[physique > 1 ? "•" : "o"][physique > 2 ? "•" : "o"][physique > 3 ? "•" : "o"][physique > 4 ? "•" : "o"]([physique])"
-			if(true_experience >= 6*physique && physique != 5)
+			if(true_experience >= 3*physique && physique != 5)
 				dat += "<a href='?_src_=prefs;preference=physique;task=input'>Increase ([6*physique])</a>"
 			dat += "<BR>"
 			dat += "<b>Social:</b> •[social > 1 ? "•" : "o"][social > 2 ? "•" : "o"][social > 3 ? "•" : "o"][social > 4 ? "•" : "o"]([social])"
-			if(true_experience >= 6*social && social != 5)
+			if(true_experience >= 3*social && social != 5)
 				dat += "<a href='?_src_=prefs;preference=social;task=input'>Increase ([6*social])</a>"
 			dat += "<BR>"
 			dat += "<b>Mentality:</b> •[mentality > 1 ? "•" : "o"][mentality > 2 ? "•" : "o"][mentality > 3 ? "•" : "o"][mentality > 4 ? "•" : "o"]([mentality])"
-			if(true_experience >= 6*mentality && mentality != 5)
+			if(true_experience >= 3*mentality && mentality != 5)
 				dat += "<a href='?_src_=prefs;preference=mentality;task=input'>Increase ([6*mentality])</a>"
 			dat += "<BR>"
 			if(pref_species.name == "Vampire")
@@ -490,7 +490,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(discipline1type)
 					var/datum/discipline/AD = new discipline1type()
 					dat += "<b>[AD.name]</b>: •[discipline1level > 1 ? "•" : "o"][discipline1level > 2 ? "•" : "o"][discipline1level > 3 ? "•" : "o"][discipline1level > 4 ? "•" : "o"]([discipline1level])"
-					if(true_experience >= discipline1level*8 && discipline1level != 5)
+					if(true_experience >= discipline1level*5 && discipline1level != 5)
 						dat += "<a href='?_src_=prefs;preference=discipline1;task=input'>Learn ([discipline1level*8])</a><BR>"
 					else
 						dat += "<BR>"
@@ -498,7 +498,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(discipline2type)
 					var/datum/discipline/AD = new discipline2type()
 					dat += "<b>[AD.name]</b>: •[discipline2level > 1 ? "•" : "o"][discipline2level > 2 ? "•" : "o"][discipline2level > 3 ? "•" : "o"][discipline2level > 4 ? "•" : "o"]([discipline2level])"
-					if(true_experience >= discipline2level*8 && discipline2level != 5)
+					if(true_experience >= discipline2level*5 && discipline2level != 5)
 						dat += "<a href='?_src_=prefs;preference=discipline2;task=input'>Learn ([discipline2level*8])</a><BR>"
 					else
 						dat += "<BR>"
@@ -506,7 +506,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(discipline3type)
 					var/datum/discipline/AD = new discipline3type()
 					dat += "<b>[AD.name]</b>: •[discipline3level > 1 ? "•" : "o"][discipline3level > 2 ? "•" : "o"][discipline3level > 3 ? "•" : "o"][discipline3level > 4 ? "•" : "o"]([discipline3level])"
-					if(true_experience >= discipline3level*8 && discipline3level != 5)
+					if(true_experience >= discipline3level*5 && discipline3level != 5)
 						dat += "<a href='?_src_=prefs;preference=discipline3;task=input'>Learn ([discipline3level*8])</a><BR>"
 					else
 						dat += "<BR>"
@@ -514,7 +514,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(discipline4type)
 					var/datum/discipline/AD = new discipline4type()
 					dat += "<b>[AD.name]</b>: •[discipline4level > 1 ? "•" : "o"][discipline4level > 2 ? "•" : "o"][discipline4level > 3 ? "•" : "o"][discipline4level > 4 ? "•" : "o"]([discipline4level])"
-					if(true_experience >= discipline4level*8 && discipline4level != 5)
+					if(true_experience >= discipline4level*5 && discipline4level != 5)
 						dat += "<a href='?_src_=prefs;preference=discipline4;task=input'>Learn ([discipline4level*8])</a><BR>"
 					else
 						dat += "<BR>"
@@ -525,19 +525,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							dat += "<a href='?_src_=prefs;preference=disciplineplus;task=input'>Learn custom type of disciplines</a><BR>"
 			if(pref_species.name == "Ghoul")
 				dat += "Experience rewarded: [true_experience]<BR>"
-				if(!discipline1type && true_experience >= 8)
+				if(!discipline1type && true_experience >= 5)
 					dat += "<a href='?_src_=prefs;preference=discipline1ghoul;task=input'>Learn new type of discipline (8)</a><BR>"
 				if(discipline1type)
 					var/datum/discipline/AD = new discipline1type()
 					dat += "<b>[AD.name]</b>: •(1)<BR>"
 					dat += "-[AD.desc]<BR>"
-				if(discipline1type && !discipline2type && true_experience >= 8)
+				if(discipline1type && !discipline2type && true_experience >= 5)
 					dat += "<a href='?_src_=prefs;preference=discipline2ghoul;task=input'>Learn new type of discipline (8)</a><BR>"
 				if(discipline2type)
 					var/datum/discipline/AD = new discipline2type()
 					dat += "<b>[AD.name]</b>: •(1)<BR>"
 					dat += "-[AD.desc]<BR>"
-				if(discipline1type && discipline2type && !discipline3type && true_experience >= 8)
+				if(discipline1type && discipline2type && !discipline3type && true_experience >= 5)
 					dat += "<a href='?_src_=prefs;preference=discipline3ghoul;task=input'>Learn new type of discipline (8)</a><BR>"
 				if(discipline3type)
 					var/datum/discipline/AD = new discipline3type()
@@ -548,7 +548,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(i == "[parent.ckey]")
 						sponsor = TRUE
 				if(sponsor)
-					if(discipline1type && discipline2type && discipline3type && !discipline4type && true_experience >= 8)
+					if(discipline1type && discipline2type && discipline3type && !discipline4type && true_experience >= 5)
 						dat += "<a href='?_src_=prefs;preference=discipline4ghoul;task=input'>Learn new type of discipline (8)</a><BR>"
 					if(discipline4type)
 						var/datum/discipline/AD = new discipline4type()
@@ -558,8 +558,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //			dat += "<a href='?_src_=prefs;preference=species;task=random'>Random Species</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SPECIES]'>Always Random Species: [(randomise[RANDOM_SPECIES]) ? "Yes" : "No"]</A><br>"
 
-			if(true_experience >= 4 && slotlocked)
-				dat += "<a href='?_src_=prefs;preference=change_appearance;task=input'>Change Appearance (4)</a><BR>"
+			if(true_experience >= 3 && slotlocked)
+				dat += "<a href='?_src_=prefs;preference=change_appearance;task=input'>Change Appearance (3)</a><BR>"
 			if(clane)
 				if(clane.name != "Caitiff")
 					if(generation_bonus)
@@ -1827,9 +1827,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("discipline1ghoul")
 					var/discipline1 = input(user, "Select second discipline", "Discipline Selection") as null|anything in subtypesof(/datum/discipline)
 					if(discipline1)
-						if(true_experience >= 8)
+						if(true_experience >= 5)
 							discipline1type = discipline1
-							true_experience = true_experience-8
+							true_experience = true_experience-5
 
 				if("discipline2ghoul")
 					var/list/disc2 = list()
@@ -1838,9 +1838,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							disc2 += i
 					var/discipline2 = input(user, "Select second discipline", "Discipline Selection") as null|anything in disc2
 					if(discipline2)
-						if(true_experience >= 8)
+						if(true_experience >= 5)
 							discipline2type = discipline2
-							true_experience = true_experience-8
+							true_experience = true_experience-5
 
 				if("discipline3ghoul")
 					var/list/disc3 = list()
@@ -1849,9 +1849,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							disc3 += i
 					var/discipline3 = input(user, "Select second discipline", "Discipline Selection") as null|anything in disc3
 					if(discipline3)
-						if(true_experience >= 8)
+						if(true_experience >= 5)
 							discipline3type = discipline3
-							true_experience = true_experience-8
+							true_experience = true_experience-5
 
 				if("discipline4ghoul")
 					var/list/disc4 = list()
@@ -1860,9 +1860,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							disc4 += i
 					var/discipline4 = input(user, "Select second discipline", "Discipline Selection") as null|anything in disc4
 					if(discipline4)
-						if(true_experience >= 8)
+						if(true_experience >= 5)
 							discipline4type = discipline4
-							true_experience = true_experience-8
+							true_experience = true_experience-5
 
 				if("clane")
 					if(slotlocked)
@@ -1933,23 +1933,23 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //						real_name = clane.random_name(gender)		//potom sdelat
 
 				if("physique")
-					if(true_experience >= physique*6 && physique < 6)
-						true_experience = true_experience-physique*6
+					if(true_experience >= physique*3 && physique < 6)
+						true_experience = true_experience-physique*3
 						physique = min(5, physique+1)
 
 				if("social")
-					if(true_experience >= social*6 && social < 6)
-						true_experience = true_experience-social*6
+					if(true_experience >= social*3 && social < 6)
+						true_experience = true_experience-social*3
 						social = min(5, social+1)
 
 				if("mentality")
-					if(true_experience >= mentality*6 && mentality < 6)
-						true_experience = true_experience-mentality*6
+					if(true_experience >= mentality*3 && mentality < 6)
+						true_experience = true_experience-mentality*3
 						mentality = min(5, mentality+1)
 
 				if("discipline1")
-					if(true_experience >= discipline1level*8 && discipline1level != 5)
-						true_experience = true_experience-discipline1level*8
+					if(true_experience >= discipline1level*5 && discipline1level != 5)
+						true_experience = true_experience-discipline1level*5
 						discipline1level = min(5, discipline1level+1)
 //					if(exper_plus)
 //						if(exper_plus > calculate_max_exper())
@@ -1960,18 +1960,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //							exper_plus = 0
 
 				if("discipline2")
-					if(true_experience >= discipline2level*8 && discipline2level != 5)
-						true_experience = true_experience-discipline2level*8
+					if(true_experience >= discipline2level*5 && discipline2level != 5)
+						true_experience = true_experience-discipline2level*5
 						discipline2level = min(5, discipline2level+1)
 
 				if("discipline3")
-					if(true_experience >= discipline3level*8 && discipline3level != 5)
-						true_experience = true_experience-discipline3level*8
+					if(true_experience >= discipline3level*5 && discipline3level != 5)
+						true_experience = true_experience-discipline3level*5
 						discipline3level = min(5, discipline3level+1)
 
 				if("discipline4")
-					if(true_experience >= discipline4level*8 && discipline4level != 5)
-						true_experience = true_experience-discipline4level*8
+					if(true_experience >= discipline4level*5 && discipline4level != 5)
+						true_experience = true_experience-discipline4level*5
 						discipline4level = min(5, discipline4level+1)
 
 				if("pathof")
@@ -1979,9 +1979,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						enlightement = !enlightement
 
 				if("torpor_restore")
-					if(torpor_count != 0 && true_experience >= 5*(14-generation))
+					if(torpor_count != 0 && true_experience >= 3*(14-generation))
 						torpor_count = 0
-						true_experience = true_experience-(5*(14-generation))
+						true_experience = true_experience-(3*(14-generation))
 //					if(exper_plus)
 //						if(exper_plus > calculate_max_exper())
 //							exper = calculate_max_exper()
@@ -1995,8 +1995,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(clane.name == "Caitiff")
 							link_bug_fix = FALSE
 							return
-					if(true_experience >= 20)
-						true_experience = true_experience-20
+					if(true_experience >= 10)
+						true_experience = true_experience-10
 						generation_bonus = min(generation_bonus+1, max(0, generation-7))
 //					if(exper_plus)
 //						if(exper_plus > calculate_max_exper())
@@ -2018,7 +2018,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //					torpor_count = max(0, torpor_count-1)
 					if(slotlocked)
 						slotlocked = 0
-						true_experience = true_experience-4
+						true_experience = true_experience-3
 
 				if("reset_with_bonus")
 					if(clane)
