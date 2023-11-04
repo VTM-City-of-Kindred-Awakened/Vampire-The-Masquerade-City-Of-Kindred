@@ -30,11 +30,12 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/glass_name = "glass of ...what?"
 	/// desc applied to glasses with this reagent
 	var/glass_desc = "You can't really tell what this is."
-	var/glass_icon = 'icons/obj/drinks.dmi' //temporary var, waiting for new cocktail sprites
 	/// Otherwise just sets the icon to a normal glass with the mixture of the reagents in the glass.
 	var/glass_icon_state = null
 	/// used for shot glasses, mostly for alcohol
 	var/shot_glass_icon_state = null
+	/// used to setup alcohol reagents icon only in the appropriate glass
+	var/empty_glass_icon_state = null
 	/// reagent holder this belongs to
 	var/datum/reagents/holder = null
 	/// LIQUID, SOLID, GAS

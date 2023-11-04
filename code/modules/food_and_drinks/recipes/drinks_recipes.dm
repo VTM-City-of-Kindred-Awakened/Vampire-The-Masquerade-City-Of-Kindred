@@ -103,9 +103,9 @@
 	required_container = /obj/item/reagent_containers/food/drinks/drinkingglass/martini_glass
 
 /datum/chemical_reaction/old_fashioned
-	results = list(/datum/reagent/consumable/ethanol/old_fashioned = 6)
-	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 5, /datum/reagent/consumable/sugar = 1)
-	required_container = /obj/item/reagent_containers/food/drinks/drinkingglass/whiskey_shot
+	results = list(/datum/reagent/consumable/ethanol/old_fashioned = 3)
+	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 2, /datum/reagent/consumable/sugar = 1)
+	required_container = /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass
 
 /datum/chemical_reaction/french_75
 	results = list(/datum/reagent/consumable/ethanol/french_75 = 8)

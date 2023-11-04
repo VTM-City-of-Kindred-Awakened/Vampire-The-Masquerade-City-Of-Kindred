@@ -114,14 +114,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A freezing pint of malt liquor."
 
 /datum/reagent/consumable/ethanol/beer/beer_pint
-	name = "Beer pint"
-	glass_icon = 'icons/obj/cocktails_1.dmi'
+	name = "bitter dark beer"
 	glass_icon_state = "dark_beer"
+	empty_glass_icon_state = "pint"
 
 /datum/reagent/consumable/ethanol/beer/light/beer_pint
-	name = "Light beer pint"
-	glass_icon = 'icons/obj/cocktails_1.dmi'
+	name = "refreshing light beer"
 	glass_icon_state = "beer"
+	empty_glass_icon_state = "pint"
 
 /datum/reagent/consumable/ethanol/kahlua
 	name = "Kahlua"
@@ -154,8 +154,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	//shot_glass_icon_state = "shotglassbrown"
 
 /datum/reagent/consumable/ethanol/whiskey/whiskey_shot
-	name = "Glass of whiskey"
-	glass_icon = 'icons/obj/cocktails_1.dmi'
+	name = "aged whiskey"
 	glass_icon_state = "whiskey"
 	glass_name = "glass of whiskey"
 	glass_desc = "The shot contain whiskey"
@@ -221,11 +220,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "shotglassclear"
 
 /datum/reagent/consumable/ethanol/vodka/vodka_shot
-	name = "Shot of vodka"
-	glass_icon = 'icons/obj/cocktails_1.dmi'
+	name = "clear vodka"
 	glass_icon_state = "vodka"
 	glass_name = "shot of vodka"
 	glass_desc = "The shot contain vodka"
+	empty_glass_icon_state = "vodka_shot"
 
 /datum/reagent/consumable/ethanol/vodka/on_mob_life(mob/living/carbon/M)
 	M.radiation = max(M.radiation-2,0)
@@ -259,11 +258,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "shotglassbrown"
 
 /datum/reagent/consumable/ethanol/rum/rum_shot
-	name = "Shot of rum"
-	glass_icon = 'icons/obj/cocktails_1.dmi'
+	name = "sweet rum"
 	glass_icon_state = "rum"
 	glass_name = "shot of rum"
 	glass_desc = "The shot contain rum"
+	empty_glass_icon_state = "whiskey_shot"
 
 /datum/reagent/consumable/ethanol/tequila
 	name = "Tequila"
@@ -277,11 +276,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "shotglassgold"
 
 /datum/reagent/consumable/ethanol/tequila/tequila_shot
-	name = "Shot of tequila"
-	glass_icon = 'icons/obj/cocktails_1.dmi'
+	name = "golden tequila"
 	glass_icon_state = "tequilla"
 	glass_name = "shot of tequila"
 	glass_desc = "The shot contain tequila"
+	empty_glass_icon_state = "vodka_shot"
 
 /datum/reagent/consumable/ethanol/vermouth
 	name = "Vermouth"
@@ -297,17 +296,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/wine
 	name = "Wine"
 	description = "A premium alcoholic beverage made from distilled grape juice."
-	color = "#7E4043" // rgb: 126, 64, 67
+	color = "#8C2A2A" // rgb: 140, 042, 042
 	boozepwr = 35
 	taste_description = "bitter sweetness"
 	glass_icon_state = "wineglass"
 	glass_name = "glass of wine"
 	glass_desc = "A very classy looking drink."
 	shot_glass_icon_state = "shotglassred"
+	empty_glass_icon_state = "wine_glass"
 
 /datum/reagent/consumable/ethanol/wine/wine_glass
-	name = "Glass of wine"
-	glass_icon = 'icons/obj/cocktails_1.dmi'
+	name = "red wine"
 	glass_icon_state = "wine"
 	glass_name = "glass of wine"
 	glass_desc = "The glass contain wine"
@@ -375,10 +374,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of absinthe"
 	glass_desc = "It's as strong as it smells."
 	shot_glass_icon_state = "shotglassgreen"
+	empty_glass_icon_state = "wine_glass"
 
 /datum/reagent/consumable/ethanol/absinthe/absinthe_glass
-	name = "Glass of absinthe"
-	glass_icon = 'icons/obj/cocktails_1.dmi'
+	name = "aromatic absinthe"
 	glass_icon_state = "abcent"
 	glass_name = "glass of absinthe"
 	glass_desc = "The glass contain absinthe"
@@ -459,10 +458,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 60
 	quality = DRINK_NICE
 	taste_description = "dry class"
-	glass_icon = 'icons/obj/cocktails_1.dmi'
 	glass_icon_state = "martini"
 	glass_name = "Classic Martini"
 	glass_desc = "Damn, the bartender even stirred it, not shook it."
+	empty_glass_icon_state = "martini_glass"
 
 /datum/reagent/consumable/ethanol/white_russian
 	name = "White Russian"
@@ -511,10 +510,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 40
 	quality = DRINK_VERYGOOD
 	taste_description = "Bittersweet harmony."
-	glass_icon = 'icons/obj/cocktails_1.dmi'
 	glass_icon_state = "negrino"
 	glass_name = "Negroni"
 	glass_desc = "Tomato juice, mixed with Vodka and a li'l bit of lime. Tastes like liquid murder."
+	empty_glass_icon_state = "whiskey_shot"
 
 /datum/reagent/consumable/ethanol/cosmopolitan
 	name = "Cosmopolitan"
@@ -523,10 +522,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 50
 	quality = DRINK_VERYGOOD
 	taste_description = ""
-	glass_icon = 'icons/obj/cocktails_1.dmi'
 	glass_icon_state = "cosmopolitan"
 	glass_name = "Cosmopolitan"
 	glass_desc = ""
+	empty_glass_icon_state = "martini_glass"
 
 /datum/reagent/consumable/ethanol/old_fashioned
 	name = "Old fashioned"
@@ -535,10 +534,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 40
 	quality = DRINK_GOOD
 	taste_description = ""
-	glass_icon = 'icons/obj/cocktails_1.dmi'
 	glass_icon_state = "old_fasioned"
 	glass_name = "Old fashioned"
 	glass_desc = ""
+	empty_glass_icon_state = "vodka_shot"
 
 /datum/reagent/consumable/ethanol/french_75
 	name = "French 75"
@@ -547,10 +546,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 30
 	quality = DRINK_VERYGOOD
 	taste_description = ""
-	glass_icon = 'icons/obj/cocktails_1.dmi'
 	glass_icon_state = "french_75"
 	glass_name = "French 75"
 	glass_desc = ""
+	empty_glass_icon_state = "wine_glass"
 
 /datum/reagent/consumable/ethanol/bloody_mary/on_mob_life(mob/living/carbon/C)
 	if(C.blood_volume < BLOOD_VOLUME_NORMAL)
@@ -637,10 +636,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 35
 	quality = DRINK_NICE
 	taste_description = "dry and salty"
-	glass_icon = 'icons/obj/cocktails_1.dmi'
 	glass_icon_state = "margarita"
 	glass_name = "Margarita"
 	glass_desc = "On the rocks with salt on the rim. Arriba~!"
+	empty_glass_icon_state = "whiskey_shot"
 
 /datum/reagent/consumable/ethanol/black_russian
 	name = "Black Russian"
@@ -1008,10 +1007,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 30
 	quality = DRINK_GOOD
 	taste_description = "refreshing mint"
-	glass_icon = 'icons/obj/cocktails_1.dmi'
 	glass_icon_state = "mojito"
 	glass_name = "Mojito"
 	glass_desc = "A drink that looks as refreshing as it tastes."
+	empty_glass_icon_state = "collins_glass"
 
 /datum/reagent/consumable/ethanol/moscow_mule
 	name = "Moscow Mule"
@@ -1241,5 +1240,3 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/pruno/on_mob_life(mob/living/carbon/M)
 	M.adjust_disgust(5)
 	..()
-
-
