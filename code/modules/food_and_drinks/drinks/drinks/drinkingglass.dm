@@ -34,11 +34,14 @@
 	if(!length(reagents.reagent_list))
 		fill_icon_state = initial(fill_icon_state)
 		icon_state = initial(icon_state)
+		desc = initial(desc)
+		name = initial(name)
 		return
 
 	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
 	if(largest_reagent.glass_icon_state)
-		if(largest_reagent.glass_icon == 'icons/obj/cocktails_1.dmi') //temporary check, waiting for new cocktail sprites
+		var/list/icon_states = icon_states(icon)
+		if((largest_reagent.empty_glass_icon_state in icon_states) && (largest_reagent.empty_glass_icon_state == initial(icon_state))) //temporary check, waiting for new cocktail sprites
 			fill_icon_state = null
 			icon_state = largest_reagent.glass_icon_state
 	return NONE
