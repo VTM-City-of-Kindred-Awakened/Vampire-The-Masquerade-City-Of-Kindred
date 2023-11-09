@@ -3,6 +3,7 @@
 	desc = "A fun way to get around."
 	icon_state = "scooter"
 	are_legs_exposed = TRUE
+	layer = OBJ_LAYER
 
 /obj/vehicle/ridden/scooter/Initialize()
 	. = ..()
@@ -86,6 +87,10 @@
 		density = FALSE
 	return ..()
 
+/obj/vehicle/ridden/scooter/skateboard/Moved()
+	. = ..()
+	layer = OBJ_LAYER
+
 /obj/vehicle/ridden/scooter/skateboard/Bump(atom/A)
 	. = ..()
 	if(!A.density || !has_buckled_mobs())
@@ -163,7 +168,7 @@
 	board_item_type = /obj/item/melee/skateboard/pro
 	instability = 6
 
-/obj/vehicle/ridden/scooter/skateboard/hoverboard/
+/obj/vehicle/ridden/scooter/skateboard/hoverboard
 	name = "hoverboard"
 	desc = "A blast from the past, so retro!"
 	board_item_type = /obj/item/melee/skateboard/hoverboard
