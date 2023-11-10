@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
-	var/max_save_slots = 2
+	var/max_save_slots = 3
 
 	//non-preference stuff
 	var/muted = 0
@@ -288,7 +288,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for(var/i in GLOB.donaters)
 		if(i == "[parent.ckey]")
 			donor = TRUE
-			max_save_slots = 4
+			max_save_slots = 6
+	if(discipline1level == 5 || discipline2level == 5 || discipline3level == 5 || generation < 9)
+		donor = TRUE
 	if(!donor)
 		discipline4type = null
 		discipline4level = 1
@@ -520,9 +522,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "<BR>"
 					dat += "-[AD.desc]<BR>"
 				if(!discipline4type && !slotlocked)
+					var/niggas = FALSE
 					for(var/i in GLOB.donaters)
 						if(i == "[parent.ckey]")
-							dat += "<a href='?_src_=prefs;preference=disciplineplus;task=input'>Learn custom type of disciplines</a><BR>"
+							niggas = TRUE
+					if(discipline1level == 5 || discipline2level == 5 || discipline3level == 5 || generation < 9)
+						niggas = TRUE
+					if(niggas)
+						dat += "<a href='?_src_=prefs;preference=disciplineplus;task=input'>Learn custom type of disciplines</a><BR>"
+
 			if(pref_species.name == "Ghoul")
 				dat += "Experience rewarded: [true_experience]<BR>"
 				if(!discipline1type && true_experience >= 5)
@@ -2855,6 +2863,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		for(var/i in GLOB.donaters)
 			if(i == "[client.ckey]")
 				donor = TRUE
+		if(client.prefs.discipline1level == 5 || client.prefs.discipline2level == 5 || client.prefs.discipline3level == 5 || client.prefs.generation < 9)
+			donor = TRUE
 		if(!donor)
 			client.prefs.discipline4type = null
 		if(client.prefs.discipline4type && discipline_pref)
