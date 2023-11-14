@@ -138,6 +138,7 @@
 /datum/component/riding/vehicle/scooter/handle_specials()
 	. = ..()
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0), TEXT_SOUTH = list(-2), TEXT_EAST = list(0), TEXT_WEST = list( 2)))
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 
 /datum/component/riding/vehicle/scooter/skateboard
 	vehicle_move_delay = 1.5
@@ -145,7 +146,7 @@
 
 /datum/component/riding/vehicle/scooter/skateboard/handle_specials()
 	. = ..()
-	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(SOUTH, OBJ_LAYER)
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
