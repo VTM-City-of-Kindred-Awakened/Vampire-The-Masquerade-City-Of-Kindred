@@ -2,14 +2,14 @@
 	name = "Dagon"
 	desc = "Волшебная палочка. Имеет разные градации силы"
 	icon_state = "wiredrod"
-	dagon_power = 400
-/obj/item/dagon/2
+	var/dagon_power = 400
+/obj/item/dagon/two
 	dagon_power = 500
-/obj/item/dagon/3
+/obj/item/dagon/three
 	dagon_power = 600
-/obj/item/dagon/4
+/obj/item/dagon/fourth
 	dagon_power = 700
-/obj/item/dagon/5
+/obj/item/dagon/five
 	dagon_power = 800
 /obj/item/dagon/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
