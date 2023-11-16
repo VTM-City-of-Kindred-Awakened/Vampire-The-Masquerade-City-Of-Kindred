@@ -324,6 +324,12 @@
 						"<span class='notice'>You wash your [washing_face ? "face" : "hands"] using [src].</span>")
 
 /obj/structure/sink/attackby(obj/item/O, mob/living/user, params)
+	if(istype(O, /obj/item/bailer))
+		var/obj/item/bailer/bailer = O
+		bailer.amount_of_water = 10
+		to_chat(user, "<span class='notice'>You fill [O] from [src].</span>")
+		playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
+		return
 	if(busy)
 		to_chat(user, "<span class='warning'>Someone's already washing here!</span>")
 		return

@@ -1428,6 +1428,15 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	. = ..()
 	to_chat(user, "<b>[SScity_time.timeofnight]</b>")
 
+/obj/structure/coclock/grandpa
+	icon = 'code/modules/ziggers/grandpa_cock.dmi'
+	icon_state = "cock"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+	density = TRUE
+	pixel_z = 0
+
 /turf/open/floor/plating/bloodshit
 	gender = PLURAL
 	name = "blood"
@@ -1546,6 +1555,30 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	if(!burned)
 		burned = TRUE
 		icon_state = "dead[rand(1, 3)]"
+
+/obj/structure/vamptree/pine
+	name = "pine"
+	desc = "Cute and tall flora."
+	icon = 'code/modules/ziggers/pines.dmi'
+	icon_state = "pine1"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	density = TRUE
+	pixel_w = -24
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+
+/obj/structure/vamptree/pine/Initialize()
+	. = ..()
+	icon_state = "pine[rand(1, 4)]"
+	if(prob(2))
+		burned = TRUE
+		icon_state = "dead[rand(1, 5)]"
+
+/obj/structure/vamptree/pine/burnshit()
+	if(!burned)
+		burned = TRUE
+		icon_state = "dead[rand(1, 5)]"
 
 /obj/structure/vampstatue
 	name = "statue"
