@@ -143,6 +143,7 @@ SUBSYSTEM_DEF(smokeweedeveryday)
 	icon = 'code/modules/ziggers/items.dmi'
 	icon_state = "bulbulator"
 	inhand_icon_state = "bulbulator"
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 
 	///The icon state when the bong is lit
 	var/icon_on = "bulbulator"
