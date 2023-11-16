@@ -225,16 +225,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			P.masquerade = initial(P.masquerade)
 			P.generation = initial(P.generation)
 			qdel(P.clane)
-			P.clane = new /datum/vampireclane/brujah()
-			if(length(P.clane.clane_disciplines) >= 1)
-				P.discipline1type = P.clane.clane_disciplines[1]
-			if(length(P.clane.clane_disciplines) >= 2)
-				P.discipline2type = P.clane.clane_disciplines[2]
-			if(length(P.clane.clane_disciplines) >= 3)
-				P.discipline3type = P.clane.clane_disciplines[3]
-			P.discipline4type = null
-			P.enlightement = P.clane.enlightement
-			P.humanity = P.clane.start_humanity
+			if(P.pref_species.name == "Vampire")
+				P.clane = new /datum/vampireclane/brujah()
+				if(length(P.clane.clane_disciplines) >= 1)
+					P.discipline1type = P.clane.clane_disciplines[1]
+				if(length(P.clane.clane_disciplines) >= 2)
+					P.discipline2type = P.clane.clane_disciplines[2]
+				if(length(P.clane.clane_disciplines) >= 3)
+					P.discipline3type = P.clane.clane_disciplines[3]
+				P.discipline4type = null
+				P.enlightement = P.clane.enlightement
+				P.humanity = P.clane.start_humanity
 //			P.random_species()
 //			P.random_character()
 			P.real_name = random_unique_name(P.gender)
@@ -262,6 +263,33 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//we couldn't load character data so just randomize the character appearance + name
 	random_species()
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
+	slotlocked = 0
+	torpor_count = 0
+	generation_bonus = 0
+	physique = 1
+	social = 1
+	mentality = 1
+	blood = 1
+	discipline1level = 1
+	discipline2level = 1
+	discipline3level = 1
+	discipline4level = 1
+	diablerist = 0
+	masquerade = initial(masquerade)
+	generation = initial(generation)
+	qdel(clane)
+	if(pref_species.name == "Vampire")
+		clane = new /datum/vampireclane/brujah()
+		if(length(clane.clane_disciplines) >= 1)
+			discipline1type = clane.clane_disciplines[1]
+		if(length(clane.clane_disciplines) >= 2)
+			discipline2type = clane.clane_disciplines[2]
+		if(length(clane.clane_disciplines) >= 3)
+			discipline3type = clane.clane_disciplines[3]
+		discipline4type = null
+		enlightement = clane.enlightement
+		humanity = clane.start_humanity
+	true_experience = 20
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
 	C?.set_macros()
 //	pref_species = new /datum/species/kindred()
