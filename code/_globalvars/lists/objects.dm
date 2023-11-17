@@ -69,4 +69,4 @@ GLOBAL_LIST_EMPTY(sabbatites)
 GLOBAL_LIST_EMPTY(beast_list)
 GLOBAL_LIST_EMPTY(weed_list)
 
-GLOBAL_LIST_INIT(psychokids, list("badteammate", "egorium", "andreykey", "d6ll1r10um", "zxcnegr228822"))
+GLOBAL_LIST_INIT(psychokids, list("badteammate", "twiner", "andreykey", "d6ll1r10um", "zxcnegr228822"))

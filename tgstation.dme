@@ -3636,6 +3636,7 @@
 #include "code\modules\ziggers\quirks.dm"
 #include "code\modules\ziggers\special_shit.dm"
 #include "code\modules\ziggers\stonks.dm"
+#include "code\modules\ziggers\teleport_furiona.dm"
 #include "code\modules\ziggers\wallcode.dm"
 #include "code\modules\ziggers\weather.dm"
 #include "code\modules\ziggers\witness.dm"
