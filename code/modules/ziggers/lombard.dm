@@ -69,6 +69,11 @@
 	illegal = TRUE
 	cost = 50
 
+/obj/item/weedseed
+	cost = 50
+/obj/item/weedpack
+	cost = 50
+
 /obj/item/clothing/under/vampire
 	cost = 10
 /obj/item/clothing/shoes/vampire
