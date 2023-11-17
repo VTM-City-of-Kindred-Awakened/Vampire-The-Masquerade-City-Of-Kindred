@@ -360,12 +360,15 @@
 /obj/machinery/mineral/equipment_vendor/fastfood/illegal
 	prize_list = list(new /datum/data/mining_equipment("morphine syringe",	/obj/item/reagent_containers/syringe/contraband/morphine,	100),
 		new /datum/data/mining_equipment("crank syringe",	/obj/item/reagent_containers/syringe/contraband/crank,	100),
-		new /datum/data/mining_equipment("krokodil syringe",	/obj/item/reagent_containers/syringe/contraband/krokodil,	100),
 		new /datum/data/mining_equipment("LSD pill bottle",		/obj/item/storage/pill_bottle/lsd,	50),
 		new /datum/data/mining_equipment("LSD pill",		/obj/item/reagent_containers/pill/lsd,	10),
-		new /datum/data/mining_equipment("cannabis puff",		/obj/item/clothing/mask/cigarette/rollie/cannabis,	25),
-		new /datum/data/mining_equipment("cannabis leaf",	/obj/item/food/grown/cannabis,	10),
-		new /datum/data/mining_equipment("incendiary 5.56 ammo",	/obj/item/ammo_box/vampire/c556/incendiary,	1000),
+		new /datum/data/mining_equipment("cannabis puff",		/obj/item/clothing/mask/cigarette/rollie/cannabis,	40),
+		new /datum/data/mining_equipment("cannabis package",		/obj/item/weedpack,	30),
+		new /datum/data/mining_equipment("cannabis leaf",	/obj/item/food/vampire/weed,	25),
+		new /datum/data/mining_equipment("cannabis seed",	/obj/item/weedseed,		10),
+		new /datum/data/mining_equipment("bong",	/obj/item/bong,		50),
+		new /datum/data/mining_equipment("bailer",	/obj/item/bailer,		20),
+		new /datum/data/mining_equipment("incendiary 5.56 ammo",	/obj/item/ammo_box/vampire/c556/incendiary,	3000),
 		new /datum/data/mining_equipment("stake",	/obj/item/vampire_stake,	100)
 		)
 

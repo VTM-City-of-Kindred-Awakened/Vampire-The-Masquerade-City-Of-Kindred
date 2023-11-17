@@ -16,7 +16,7 @@
 
 /obj/structure/bookcase
 	name = "bookcase"
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/library_vtm.dmi'
 	icon_state = "bookempty"
 	desc = "A great place for storing knowledge."
 	anchored = FALSE
@@ -24,6 +24,7 @@
 	opacity = FALSE
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
+	pixel_w = -16
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 0)
 	var/state = BOOKCASE_UNANCHORED
 	/// When enabled, books_to_load number of random books will be generated for this bookcase when first interacted with.
