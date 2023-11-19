@@ -202,7 +202,7 @@
 	. = ..()
 	if(!AN)
 		AN = new(caster)
-	var/limit = level+caster.social
+	var/limit = min(3, level)+caster.social-1
 	if(length(caster.beastmaster) >= limit)
 		var/mob/living/simple_animal/hostile/beastmaster/B = pick(caster.beastmaster)
 		B.death()
@@ -1428,7 +1428,7 @@
 /datum/discipline/necromancy/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
 	playsound(target.loc, 'code/modules/ziggers/sounds/necromancy.ogg', 50, TRUE)
-	var/limit = level+caster.social
+	var/limit = min(3, level)+caster.social-1
 	if(length(caster.beastmaster) >= limit)
 		var/mob/living/simple_animal/hostile/beastmaster/B = pick(caster.beastmaster)
 		B.death()
