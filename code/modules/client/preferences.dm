@@ -225,17 +225,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			P.masquerade = initial(P.masquerade)
 			P.generation = initial(P.generation)
 			qdel(P.clane)
-			if(P.pref_species.name == "Vampire")
-				P.clane = new /datum/vampireclane/brujah()
-				if(length(P.clane.clane_disciplines) >= 1)
-					P.discipline1type = P.clane.clane_disciplines[1]
-				if(length(P.clane.clane_disciplines) >= 2)
-					P.discipline2type = P.clane.clane_disciplines[2]
-				if(length(P.clane.clane_disciplines) >= 3)
-					P.discipline3type = P.clane.clane_disciplines[3]
-				P.discipline4type = null
-				P.enlightement = P.clane.enlightement
-				P.humanity = P.clane.start_humanity
+			P.clane = new /datum/vampireclane/brujah()
+			if(length(P.clane.clane_disciplines) >= 1)
+				P.discipline1type = P.clane.clane_disciplines[1]
+			if(length(P.clane.clane_disciplines) >= 2)
+				P.discipline2type = P.clane.clane_disciplines[2]
+			if(length(P.clane.clane_disciplines) >= 3)
+				P.discipline3type = P.clane.clane_disciplines[3]
+			P.discipline4type = null
+			P.enlightement = P.clane.enlightement
+			P.humanity = P.clane.start_humanity
 //			P.random_species()
 //			P.random_character()
 			P.real_name = random_unique_name(P.gender)
@@ -278,17 +277,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	masquerade = initial(masquerade)
 	generation = initial(generation)
 	qdel(clane)
-	if(pref_species.name == "Vampire")
-		clane = new /datum/vampireclane/brujah()
-		if(length(clane.clane_disciplines) >= 1)
-			discipline1type = clane.clane_disciplines[1]
-		if(length(clane.clane_disciplines) >= 2)
-			discipline2type = clane.clane_disciplines[2]
-		if(length(clane.clane_disciplines) >= 3)
-			discipline3type = clane.clane_disciplines[3]
-		discipline4type = null
-		enlightement = clane.enlightement
-		humanity = clane.start_humanity
+	clane = new /datum/vampireclane/brujah()
+	if(length(clane.clane_disciplines) >= 1)
+		discipline1type = clane.clane_disciplines[1]
+	if(length(clane.clane_disciplines) >= 2)
+		discipline2type = clane.clane_disciplines[2]
+	if(length(clane.clane_disciplines) >= 3)
+		discipline3type = clane.clane_disciplines[3]
+	discipline4type = null
+	enlightement = clane.enlightement
+	humanity = clane.start_humanity
 	true_experience = 20
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
 	C?.set_macros()
@@ -1863,7 +1861,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("discipline1ghoul")
 					var/discipline1 = input(user, "Select second discipline", "Discipline Selection") as null|anything in subtypesof(/datum/discipline)
 					if(discipline1)
-						if(true_experience >= 5)
+						if(true_experience >= 5 && pref_species.name == "Ghoul")
 							discipline1type = discipline1
 							true_experience = true_experience-5
 
@@ -1874,7 +1872,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							disc2 += i
 					var/discipline2 = input(user, "Select second discipline", "Discipline Selection") as null|anything in disc2
 					if(discipline2)
-						if(true_experience >= 5)
+						if(true_experience >= 5 && pref_species.name == "Ghoul")
 							discipline2type = discipline2
 							true_experience = true_experience-5
 
@@ -1885,7 +1883,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							disc3 += i
 					var/discipline3 = input(user, "Select second discipline", "Discipline Selection") as null|anything in disc3
 					if(discipline3)
-						if(true_experience >= 5)
+						if(true_experience >= 5 && pref_species.name == "Ghoul")
 							discipline3type = discipline3
 							true_experience = true_experience-5
 
@@ -1896,7 +1894,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							disc4 += i
 					var/discipline4 = input(user, "Select second discipline", "Discipline Selection") as null|anything in disc4
 					if(discipline4)
-						if(true_experience >= 5)
+						if(true_experience >= 5 && pref_species.name == "Ghoul")
 							discipline4type = discipline4
 							true_experience = true_experience-5
 
