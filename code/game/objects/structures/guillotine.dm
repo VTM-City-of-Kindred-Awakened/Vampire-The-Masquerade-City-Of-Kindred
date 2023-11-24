@@ -125,6 +125,42 @@
 
 		playsound(src, 'sound/weapons/guillotine.ogg', 100, TRUE)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
+			for(var/mob/living/carbon/human/M in viewers(src, 7))
+				if(M.stat == 0)
+					var/loved = TRUE
+					var/datum/preferences/P1 = GLOB.preferences_datums[ckey(M.key)]
+					if(H in GLOB.masquerade_breakers_list)
+						if(M.frakcja == "Sabbat")
+							to_chat(M, "<span class='userdanger'><b>You feel your interests being ignored</b></span>")
+							loved = FALSE
+						else
+							to_chat(M, "<span class='userhelp'><b>Violator was punished</b></span>")
+							if(P1)
+								P1.add_experience(1)
+					if(H.diablerist)
+						if(M.frakcja == "Camarilla")
+							to_chat(M, "<span class='userhelp'><b>Diablerist was punished</b></span>")
+							if(P1)
+								P1.add_experience(1)
+						else if(M.frakcja)
+							loved = FALSE
+							to_chat(M, "<span class='userdanger'><b>You feel your interests being ignored</b></span>")
+					if(H.bloodhunted)
+						if(M.frakcja == "Camarilla")
+							to_chat(M, "<span class='userhelp'><b>Blood Hunt after [H] is over</b></span>")
+							if(P1)
+								P1.add_experience(1)
+						else if(M.frakcja)
+							loved = FALSE
+							to_chat(M, "<span class='userdanger'><b>You feel your interests being ignored</b></span>")
+					if("[H.mind.assigned_role]" == "Prince" || "[H.mind.assigned_role]" == "Sheriff" || "[H.mind.assigned_role]" == "Seneschal" || "[H.mind.assigned_role]" == "Chantry Regent" || "[H.mind.assigned_role]" == "Baron" || "[H.mind.assigned_role]" == "Dealer")
+						if(M.frakcja == "Sabbat")
+							to_chat(M, "<span class='userhelp'><b>Authority increased</b></span>")
+							loved = TRUE
+							if(P1)
+								P1.add_experience(1)
+					if(loved)
+						M.emote("clap")
 			var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
 			var/how_much = max(1, 5-H.masquerade)
 			if(H in GLOB.masquerade_breakers_list)
@@ -167,22 +203,9 @@
 			cut_overlays()
 			add_overlay(mutable_appearance(icon, blood_overlay))
 
-			// The crowd is pleased
-			// The delay is to making large crowds have a longer laster applause
-			var/delay_offset = 0
-			for(var/mob/living/carbon/human/M in viewers(src, 7))
-				if(M.stat != 4)
-					var/datum/preferences/P1 = GLOB.preferences_datums[ckey(M.key)]
-					if(H in GLOB.masquerade_breakers_list)
-						to_chat(M, "<span class='userhelp'><b>Violator was punished</b></span>")
-						if(P1)
-							P1.add_experience(1)
-					if(H.diablerist)
-						to_chat(M, "<span class='userhelp'><b>Diablerist was punished</b></span>")
-						if(P1)
-							P1.add_experience(2)
-					addtimer(CALLBACK(M, /mob/.proc/emote, "clap"), delay_offset * 0.3)
-					delay_offset++
+			SSbloodhunt.hunted -= H
+			H.bloodhunted = FALSE
+			SSbloodhunt.update_shit()
 		else
 			H.apply_damage(15 * blade_sharpness, BRUTE, head)
 			log_combat(user, H, "dropped the blade on", src, " non-fatally")

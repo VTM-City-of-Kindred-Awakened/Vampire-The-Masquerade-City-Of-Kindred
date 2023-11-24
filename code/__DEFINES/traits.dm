@@ -258,6 +258,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PHOENIX			"phoenix"
 #define TRAIT_LAZY			"lazy"
 #define TRAIT_HOMOSEXUAL			"homosexual"
+#define TRAIT_HUNTED			"hunted"
+#define TRAIT_VIOLATOR			"violator"
+#define TRAIT_DIABLERIE			"diablerie"
 #define TRAIT_GULLET				"gullet"
 #define TRAIT_CHARMER				"charmer"
 #define TRAIT_UNMASQUERADE			"unmasquerade"	//For tzi clothing

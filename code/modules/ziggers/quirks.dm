@@ -350,6 +350,7 @@ Dancer
 /mob/living
 	var/isdwarfy = FALSE
 	var/ischildren = FALSE
+	var/istower = FALSE
 
 /datum/quirk/dwarf
 	name = "Dwarf"
@@ -518,8 +519,9 @@ Dancer
 
 /datum/quirk/hunted
 	name = "Sir You Are Being Hunted"
-	desc = "You are in the Blood Hunt list from the start. Good luck!"
+	desc = "You are in the Blood Hunt list from the start and can't leave it. Good luck!"
 	value = -3
+	mob_trait = TRAIT_HUNTED
 
 /datum/quirk/hunted/on_spawn()
 	if(isturf(quirk_holder.loc))
@@ -527,7 +529,7 @@ Dancer
 
 /datum/quirk/diablerist
 	name = "Black Secret"
-	desc = "You have a small, ancient secret, somehow related to Diablerie."
+	desc = "You have a small, ancient secret, somehow related to Diablerie, and this decreases your chance to survive another one. <b>This isn't a licence to diablerie anyone you want!</b>"
 	value = -3
 
 /datum/quirk/diablerist/on_spawn()
@@ -553,17 +555,9 @@ Dancer
 
 /datum/quirk/masquerade
 	name = "Masquerade Violator"
-	desc = "You start with massive Masquerade breach, lowering your Masquerade points to 2."
+	desc = "You can't recover your masquerade at all."
 	value = -2
-
-/datum/quirk/masquerade/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
-	H.masquerade = min(H.masquerade, 2)
-	if(isturf(H.loc))
-		if(H in GLOB.masquerade_breakers_list)
-			H.masquerade = min(H.masquerade, 2)
-		else
-			GLOB.masquerade_breakers_list += H
+	mob_trait = TRAIT_VIOLATOR
 
 /datum/quirk/irongullet
 	name = "Iron Gullet"
@@ -580,3 +574,65 @@ Dancer
 	mob_trait = TRAIT_CHARMER
 	gain_text = "<span class='notice'>You feel charismatic.</span>"
 	lose_text = "<span class='notice'>You don't feel charismatic anymore.</span>"
+
+/datum/quirk/tower
+	name = "Tower"
+	desc = "You are tall."
+	value = 0
+	gain_text = "<span class='notice'>You feel tall.</span>"
+	lose_text = "<span class='notice'>You don't feel tall anymore.</span>"
+
+/datum/quirk/tower/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H.age < 16)
+		to_chat(H, "<span class='userdanger'>You can't be a tall kid, looser!</span>")
+		return
+	H.AddElement(/datum/element/giantism, COMSIG_PARENT_PREQDELETED, src)
+	H.istower = TRUE
+
+#define TALL 1.16
+#define SHORT 0.86206896551
+
+///Very similar to squish, but for dwarves and shorties
+/datum/element/giantism
+	element_flags = ELEMENT_DETACH|ELEMENT_BESPOKE
+	id_arg_index = 2
+	var/comsig
+	var/list/attached_targets = list()
+
+/datum/element/giantism/Attach(datum/target, comsig, comsig_target)
+	. = ..()
+	if(!ishuman(target))
+		return ELEMENT_INCOMPATIBLE
+
+	src.comsig = comsig
+
+	var/mob/living/carbon/human/L = target
+	if(L.lying_angle != 0)
+		L.transform = L.transform.Scale(TALL, 1)
+		L.transform = L.transform.Translate(L.lying_angle == 90 ? 16*(TALL-1) : -(16*(TALL-1)), 0) //Makes sure you stand on the tile no matter the size - sand
+	else
+		L.transform = L.transform.Scale(1, TALL)
+		L.transform = L.transform.Translate(0, 16*(TALL-1)) //Makes sure you stand on the tile no matter the size - sand
+	attached_targets[target] = comsig_target
+	RegisterSignal(target, comsig, .proc/check_loss) //Second arg of the signal will be checked against the comsig_target.
+
+/datum/element/giantism/proc/check_loss(mob/living/L, comsig_target)
+	if(attached_targets[L] == comsig_target)
+		Detach(L)
+
+/datum/element/giantism/Detach(mob/living/L)
+	. = ..()
+	if(QDELETED(L))
+		return
+	if(L.lying_angle != 0)
+		L.transform = L.transform.Scale(SHORT, 1)
+		L.transform = L.transform.Translate(L.lying_angle == 90 ? 16*(SHORT-1) : -(16*(SHORT-1)), 0) //Makes sure you stand on the tile no matter the size - sand
+	else
+		L.transform = L.transform.Scale(1, SHORT)
+		L.transform = L.transform.Translate(0, 16*(SHORT-1)) //Makes sure you stand on the tile no matter the size - sand
+	UnregisterSignal(L, comsig)
+	attached_targets -= L
+
+#undef SHORT
+#undef TALL
