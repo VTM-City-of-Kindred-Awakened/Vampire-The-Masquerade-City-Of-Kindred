@@ -160,7 +160,10 @@
 								P.diablerist = 1
 							diablerist = 1
 					else
-						if(prob(20+((generation-K.generation)*10)))
+						var/start_prob = 10
+						if(HAS_TRAIT(src, TRAIT_DIABLERIE))
+							start_prob = 30
+						if(prob(min(99, start_prob+((generation-K.generation)*10))))
 							to_chat(src, "<span class='userdanger'><b>[K]'s SOUL OVERCOMES YOURS AND GAIN CONTROL OF YOUR BODY.</b></span>")
 							message_admins("[src]([key]) failed to diablerie [mob](mob.key])!")
 							death()

@@ -162,6 +162,9 @@
 			if(H)
 				if(H.true_real_name == chosen_name)
 					if(H in SSbloodhunt.hunted)
+						if(HAS_TRAIT(src, TRAIT_HUNTED))
+							to_chat(user, "<span class='warning'>You can't remove [chosen_name] from the list!</span>")
+							return
 						SSbloodhunt.hunted -= H
 						H.bloodhunted = FALSE
 						SSbloodhunt.update_shit()

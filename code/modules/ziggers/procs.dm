@@ -43,6 +43,9 @@
 		return
 	if(!GLOB.canon_event)
 		return
+	if(value > 0)
+		if(HAS_TRAIT(src, TRAIT_VIOLATOR))
+			return
 	if(istype(get_area(src), /area/vtm))
 		var/area/vtm/V = get_area(src)
 		if(V.zone_type != "masquerade")
