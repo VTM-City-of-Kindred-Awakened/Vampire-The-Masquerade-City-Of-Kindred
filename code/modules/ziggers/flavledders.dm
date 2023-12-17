@@ -33,6 +33,14 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	var/climbing = FALSE
 
+/obj/manholedown/Initialize()
+	. = ..()
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "[initial(icon_state)]-snow"
+
 /obj/manholedown/attack_hand(mob/user)
 	if(!climbing)
 		climbing = TRUE

@@ -64,6 +64,33 @@
  * * [obj/item/proc/afterattack] (atom,user,adjacent,params) - used both ranged and adjacent
  * * [mob/proc/RangedAttack] (atom,params) - used only ranged, only used for tk and laser eyes but could be changed
  */
+
+/mob/proc/claw_swing()
+	next_click = world.time+5
+	new /obj/effect/temp_visual/dir_setting/claw_effect(get_turf(src), dir)
+	playsound(loc, 'code/modules/ziggers/sounds/swing.ogg', 50, TRUE)
+	var/atom/M
+	var/turf/T = get_step(src, dir)
+	var/turf/T1 = get_step(T, turn(dir, -90))
+	var/turf/T2 = get_step(T, turn(dir, 90))
+	for(var/mob/living/MB in T)
+		if(MB)
+			M = MB
+	if(!M)
+		for(var/mob/living/MB in T1)
+			if(MB)
+				M = MB
+		for(var/mob/living/MB in T2)
+			if(MB)
+				M = MB
+
+	if(M)
+		return M
+	for(var/obj/OB in T)
+		if(OB)
+			M = OB
+	return M
+
 /mob/proc/melee_swing()
 	next_click = world.time+5
 	new /obj/effect/temp_visual/dir_setting/swing_effect(get_turf(src), dir)
@@ -174,6 +201,11 @@
 			forceMove(last_locc.loc)
 
 	if(!loc.AllowClick() && !last_locc)
+		return
+
+	if(iswerewolf(src))
+		var/atom/B = claw_swing()
+		UnarmedAttack(B,1)
 		return
 
 	if(istype(W, /obj/item/melee))

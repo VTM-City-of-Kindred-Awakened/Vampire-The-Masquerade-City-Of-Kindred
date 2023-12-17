@@ -319,6 +319,7 @@
 		on = FALSE
 		STOP_PROCESSING(SSobj, src)
 		set_light(0)
+		color = "#919191"
 		if(!exploded && prob(10))
 			exploded = TRUE
 			for(var/mob/living/L in src)

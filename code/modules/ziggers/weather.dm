@@ -8,6 +8,7 @@ SUBSYSTEM_DEF(cityweather)
 	var/list/forecast = list()
 	var/raining = FALSE
 	var/fogging = FALSE
+	var/snowing = FALSE
 
 /datum/controller/subsystem/cityweather/fire()
 	if(SScity_time.hour > 5 && SScity_time.hour < 21)
@@ -52,16 +53,78 @@ SUBSYSTEM_DEF(cityweather)
 		switch(forecast[cityhour])
 			if("Clear")
 				to_chat(world, "The night sky becomes clear...")
+				if(raining)
+					for(var/obj/effect/new_rain/R in GLOB.rain_suka)
+						if(R)
+							GLOB.rain_suka -= R
+							qdel(R)
 				raining = FALSE
+				if(fogging)
+					for(var/obj/effect/realistic_fog/F in GLOB.fog_suka)
+						if(F)
+							GLOB.fog_suka -= F
+							qdel(F)
 				fogging = FALSE
+				if(snowing)
+					for(var/obj/effect/new_snow/S in GLOB.snow_suka)
+						if(S)
+							GLOB.snow_suka -= S
+							qdel(S)
+				snowing = FALSE
 			if("Rain")
 				to_chat(world, "Clouds are uniting on the sky, small raindrops irrigate the city...")
 				raining = TRUE
+				if(fogging)
+					for(var/obj/effect/realistic_fog/F in GLOB.fog_suka)
+						if(F)
+							GLOB.fog_suka -= F
+							qdel(F)
 				fogging = FALSE
-//			if("Fog")
-//				to_chat(world, "Visibility range quickly decreases...")
-//				raining = FALSE
-//				fogging = TRUE
+				if(snowing)
+					for(var/obj/effect/new_snow/S in GLOB.snow_suka)
+						if(S)
+							GLOB.snow_suka -= S
+							qdel(S)
+				snowing = FALSE
+				for(var/area/vtm/V in world)
+					if(V.upper)
+						V.rain_setup()
+			if("Snow")
+				to_chat(world, "Clouds are uniting on the sky, small snowflakes irrigate the city...")
+				if(raining)
+					for(var/obj/effect/new_rain/R in GLOB.rain_suka)
+						if(R)
+							GLOB.rain_suka -= R
+							qdel(R)
+				raining = FALSE
+				if(fogging)
+					for(var/obj/effect/realistic_fog/F in GLOB.fog_suka)
+						if(F)
+							GLOB.fog_suka -= F
+							qdel(F)
+				fogging = FALSE
+				snowing = TRUE
+				for(var/area/vtm/V in world)
+					if(V.upper)
+						V.snow_setup()
+			if("Fog")
+				to_chat(world, "Visibility range quickly decreases...")
+				if(raining)
+					for(var/obj/effect/new_rain/R in GLOB.rain_suka)
+						if(R)
+							GLOB.rain_suka -= R
+							qdel(R)
+				raining = FALSE
+				fogging = TRUE
+				if(snowing)
+					for(var/obj/effect/new_snow/S in GLOB.snow_suka)
+						if(S)
+							GLOB.snow_suka -= S
+							qdel(S)
+				snowing = FALSE
+				for(var/area/vtm/V in world)
+					if(V.upper)
+						V.fog_setup()
 
 /datum/controller/subsystem/cityweather/Initialize()
 	. = ..()
@@ -71,8 +134,14 @@ SUBSYSTEM_DEF(cityweather)
 	for(var/i in 1 to 9)
 		forecast += i
 		var/weather = "Clear"
+		if(i == 1)
+			weather = "Snow"
 		if(i != 1 && i != 9)
-			weather = pick("Clear", "Rain")
+			if(prob(50))
+				if(GLOB.winter)
+					weather = pick("Clear", "Snow", "Fog")
+				else
+					weather = pick("Clear", "Rain", "Fog")
 		forecast[i] = weather
 
 /datum/controller/subsystem/cityweather/proc/get_forecast(mob/user)
@@ -99,3 +168,61 @@ SUBSYSTEM_DEF(cityweather)
 			if(9)
 				time = "05:00"
 		to_chat(user, "[time], [weath]")
+
+/obj/effect/realistic_fog
+	icon = 'code/modules/ziggers/fog.dmi'
+	icon_state = "fog"
+	alpha = 0
+	plane = GAME_PLANE
+	layer = SPACEVINE_LAYER
+	anchored = TRUE
+	density = FALSE
+	mouse_opacity = 0
+	pixel_w = -96
+	pixel_z = -96
+
+/obj/effect/realistic_fog/Initialize()
+	. = ..()
+	animate(src, pixel_x = rand(-96, 96), pixel_y = rand(-96, 96), alpha = rand(5, 21), transform = matrix()*rand(1, 3), transform = turn(matrix(), rand(0, 360)), time = rand(100, 200), loop = -1)
+	animate(transform = null, pixel_x = 0, pixel_y = 0, alpha = rand(5, 21), time = rand(100, 200))
+
+/obj/effect/new_rain
+	icon = 'code/modules/ziggers/newweather.dmi'
+	icon_state = "rain1"
+	alpha = 0
+	plane = GAME_PLANE
+	layer = SPACEVINE_LAYER
+	anchored = TRUE
+	density = FALSE
+	mouse_opacity = 0
+	pixel_w = -16
+	pixel_z = -32
+
+/obj/effect/new_rain/Initialize()
+	. = ..()
+	icon_state = "rain[rand(1, 15)]"
+	var/matrix/M = new
+	M.Scale(0.5, 0.5)
+	transform = M
+	animate(src, alpha = 64, time = 30)
+
+/obj/effect/new_rain/Cross(atom/movable/AM)
+	. = ..()
+	if(isitem(AM))
+		AM.wash(CLEAN_WASH)
+
+/obj/effect/new_snow
+	icon = 'code/modules/ziggers/newweather.dmi'
+	icon_state = "snow1"
+	alpha = 0
+	plane = GAME_PLANE
+	layer = SPACEVINE_LAYER
+	anchored = TRUE
+	density = FALSE
+	mouse_opacity = 0
+	pixel_w = -16
+
+/obj/effect/new_snow/Initialize()
+	. = ..()
+	icon_state = "snow[rand(1, 15)]"
+	animate(src, alpha = 128, time = 30)

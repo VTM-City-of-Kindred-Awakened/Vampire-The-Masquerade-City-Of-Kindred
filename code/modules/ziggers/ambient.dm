@@ -343,18 +343,12 @@
 			if(VTM.upper)
 				if(SScityweather.raining)
 					SEND_SOUND(src, sound('code/modules/ziggers/sounds/rain.ogg', 0, 0, CHANNEL_RAIN, 25))
-					overlay_fullscreen("rain", /atom/movable/screen/fullscreen/rain, 1)
-					clear_fullscreen("fog")
+//					overlay_fullscreen("rain", /atom/movable/screen/fullscreen/rain, 1)
 					wash(CLEAN_WASH)
-				if(SScityweather.fogging)
-					overlay_fullscreen("fog", /atom/movable/screen/fullscreen/fog, 1)
-					clear_fullscreen("rain")
-				if(!SScityweather.raining && !SScityweather.fogging)
-					clear_fullscreen("fog")
-					clear_fullscreen("rain")
-			else
-				clear_fullscreen("fog")
-				clear_fullscreen("rain")
+//				if(!SScityweather.raining)
+//					clear_fullscreen("rain")
+//			else
+//				clear_fullscreen("rain")
 //					clear_fullscreen("rain")
 //					overlay_fullscreen("rain", /atom/movable/screen/fullscreen/rain, 1)
 //				else

@@ -59,10 +59,25 @@
 
 /obj/effect/temp_visual/dir_setting/swing_effect
 	icon = 'icons/effects/96x96.dmi'
-	icon_state = "swing"
+	icon_state = "swing1"
 	pixel_w = -32
 	pixel_z = -32
 	duration = 3
+
+/obj/effect/temp_visual/dir_setting/claw_effect
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "claw1"
+	pixel_w = -32
+	pixel_z = -32
+	duration = 3
+
+/obj/effect/temp_visual/dir_setting/swing_effect/Initialize()
+	. = ..()
+	icon_state = "swing[rand(1, 2)]"
+
+/obj/effect/temp_visual/dir_setting/claw_effect/Initialize()
+	. = ..()
+	icon_state = "claw[rand(1, 2)]"
 
 /obj/effect/temp_visual/dir_setting/firing_effect/setDir(newdir)
 	switch(newdir)

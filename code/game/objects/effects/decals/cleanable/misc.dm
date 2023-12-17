@@ -322,3 +322,55 @@
 /obj/effect/decal/cleanable/garbage/Initialize()
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 15)
+
+/obj/effect/decal/cleanable/feet_trail
+	name = "trails"
+	desc = "Can lead somewhere... Or not."
+	icon = 'icons/effects/dirt.dmi'
+	icon_state = "feet_trail"
+
+/obj/effect/decal/cleanable/feet_trail/Initialize()
+	. = ..()
+	pixel_x = rand(-4, 4)
+	pixel_y = rand(-4, 4)
+
+/obj/effect/decal/cleanable/drag_trail
+	name = "trails"
+	desc = "Can lead somewhere... Or not."
+	icon = 'icons/effects/dirt.dmi'
+	icon_state = "drag_trail"
+
+/obj/effect/decal/cleanable/car_trail
+	name = "trails"
+	desc = "Can lead somewhere... Or not."
+	icon = 'icons/effects/dirt.dmi'
+	icon_state = "car_trail"
+
+/turf/open/floor/Exited(atom/movable/Obj, atom/newloc)
+	. = ..()
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				if(isliving(Obj))
+					if(ishuman(Obj))
+						var/mob/living/carbon/human/human = Obj
+						if(human.body_position != LYING_DOWN)
+							var/obj/effect/decal/cleanable/feet_trail/trail = new(src)
+							trail.dir = get_dir(src, newloc)
+						else
+							var/obj/effect/decal/cleanable/drag_trail/trail = new(src)
+							trail.dir = get_dir(src, newloc)
+					else
+						var/mob/living/living = Obj
+						if(!living.stat)
+							var/obj/effect/decal/cleanable/feet_trail/trail = new(src)
+							trail.dir = get_dir(src, newloc)
+						else
+							var/obj/effect/decal/cleanable/drag_trail/trail = new(src)
+							trail.dir = get_dir(src, newloc)
+				if(istype(Obj, /obj/vampire_car))
+					var/obj/vampire_car/car = Obj
+					if(car.on)
+						var/obj/effect/decal/cleanable/car_trail/trail = new(src)
+						trail.dir = Obj.dir

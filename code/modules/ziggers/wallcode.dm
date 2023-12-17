@@ -253,16 +253,30 @@
 	name = "asphalt"
 	icon = 'code/modules/ziggers/tiles.dmi'
 	icon_state = "decal1"
+	mouse_opacity = 0
 
 /obj/effect/decal/asphalt/Initialize()
 	..()
 	icon_state = "decal[rand(1, 24)]"
 	update_icon()
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				alpha = 25
+
+/obj/effect/decal/snow_overlay
+	name = "snow"
+	icon = 'code/modules/ziggers/tiles.dmi'
+	icon_state = "snow_overlay"
+	alpha = 200
+	mouse_opacity = 0
 
 /obj/effect/decal/asphaltline
 	name = "asphalt"
 	icon = 'code/modules/ziggers/tiles.dmi'
 	icon_state = "line"
+	mouse_opacity = 0
 
 /obj/effect/decal/asphaltline/alt
 	icon_state = "line_alt"
@@ -271,16 +285,27 @@
 	..()
 	icon_state = "[initial(icon_state)][rand(1, 3)]"
 	update_icon()
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "[initial(icon_state)][rand(1, 3)]-snow"
 
 /obj/effect/decal/crosswalk
 	name = "asphalt"
 	icon = 'code/modules/ziggers/tiles.dmi'
 	icon_state = "crosswalk1"
+	mouse_opacity = 0
 
 /obj/effect/decal/crosswalk/Initialize()
 	..()
 	icon_state = "crosswalk[rand(1, 3)]"
 	update_icon()
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "crosswalk[rand(1, 3)]-snow"
 
 /turf/open/floor/plating/asphalt
 	gender = PLURAL
@@ -297,6 +322,15 @@
 
 /turf/open/floor/plating/asphalt/Initialize()
 	..()
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				new /obj/effect/decal/snow_overlay(src)
+				footstep = FOOTSTEP_SNOW
+				barefootstep = FOOTSTEP_SNOW
+				clawfootstep = FOOTSTEP_SNOW
+				heavyfootstep = FOOTSTEP_SNOW
 	if(prob(50))
 		icon_state = "asphalt[rand(1, 3)]"
 		update_icon()
@@ -314,6 +348,7 @@
 	name = "stock"
 	icon = 'code/modules/ziggers/tiles.dmi'
 	icon_state = "stock"
+	mouse_opacity = 0
 
 /turf/open/floor/plating/sidewalkalt
 	gender = PLURAL
@@ -327,6 +362,18 @@
 	barefootstep = FOOTSTEP_TROTUAR
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/sidewalkalt/Initialize()
+	. = ..()
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "snow[rand(1, 14)]"
+				footstep = FOOTSTEP_SNOW
+				barefootstep = FOOTSTEP_SNOW
+				clawfootstep = FOOTSTEP_SNOW
+				heavyfootstep = FOOTSTEP_SNOW
 
 /turf/open/floor/plating/sidewalk
 	gender = PLURAL
@@ -344,9 +391,18 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/plating/sidewalk/Initialize()
-	..()
+	. = ..()
 	icon_state = "[based_icon_state][rand(1, number_of_variations)]"
 	set_light(1, 0.5, "#a4b7ff")
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "snow[rand(1, 14)]"
+				footstep = FOOTSTEP_SNOW
+				barefootstep = FOOTSTEP_SNOW
+				clawfootstep = FOOTSTEP_SNOW
+				heavyfootstep = FOOTSTEP_SNOW
 
 /turf/open/floor/plating/sidewalk/poor
 	icon_state = "sidewalk_poor1"
@@ -370,10 +426,35 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
+/turf/open/floor/plating/roofwalk/Initialize()
+	. = ..()
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "snow[rand(1, 14)]"
+				footstep = FOOTSTEP_SNOW
+				barefootstep = FOOTSTEP_SNOW
+				clawfootstep = FOOTSTEP_SNOW
+				heavyfootstep = FOOTSTEP_SNOW
+
 /obj/effect/decal/bordur
 	name = "sidewalk"
 	icon = 'code/modules/ziggers/tiles.dmi'
 	icon_state = "border"
+	mouse_opacity = 0
+
+/obj/effect/decal/bordur/Initialize()
+	. = ..()
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "[initial(icon_state)]-snow"
+//				footstep = FOOTSTEP_SNOW
+//				barefootstep = FOOTSTEP_SNOW
+//				clawfootstep = FOOTSTEP_SNOW
+//				heavyfootstep = FOOTSTEP_SNOW
 
 /obj/effect/decal/bordur/corner
 	icon_state = "border_corner"
@@ -449,6 +530,15 @@
 	..()
 	set_light(1, 0.5, "#a4b7ff")
 	icon_state = "grass[rand(1, 3)]"
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "snow[rand(1, 14)]"
+				footstep = FOOTSTEP_SNOW
+				barefootstep = FOOTSTEP_SNOW
+				clawfootstep = FOOTSTEP_SNOW
+				heavyfootstep = FOOTSTEP_SNOW
 
 /turf/open/floor/plating/vampcarpet
 	gender = PLURAL
@@ -477,12 +567,33 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/plating/vampdirt/Initialize()
-	..()
+	. = ..()
 	set_light(1, 0.5, "#a4b7ff")
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "snow[rand(1, 14)]"
+				footstep = FOOTSTEP_SNOW
+				barefootstep = FOOTSTEP_SNOW
+				clawfootstep = FOOTSTEP_SNOW
+				heavyfootstep = FOOTSTEP_SNOW
 
 /turf/open/floor/plating/vampdirt/rails
 	name = "rails"
 	icon_state = "dirt_rails"
+
+/turf/open/floor/plating/vampdirt/rails/Initialize()
+	. = ..()
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "snow_rails"
+				footstep = FOOTSTEP_SNOW
+				barefootstep = FOOTSTEP_SNOW
+				clawfootstep = FOOTSTEP_SNOW
+				heavyfootstep = FOOTSTEP_SNOW
 
 /turf/open/floor/plating/vampplating
 	gender = PLURAL
@@ -702,6 +813,15 @@
 /turf/open/floor/plating/vampwood/Initialize()
 	..()
 	set_light(1, 0.5, "#a4b7ff")
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "snow[rand(1, 14)]"
+				footstep = FOOTSTEP_SNOW
+				barefootstep = FOOTSTEP_SNOW
+				clawfootstep = FOOTSTEP_SNOW
+				heavyfootstep = FOOTSTEP_SNOW
 
 /turf/open/floor/plating/vampbeach
 	gender = PLURAL
@@ -720,6 +840,11 @@
 	..()
 	icon_state = "sand[rand(1, 4)]"
 	set_light(1, 0.5, "#a4b7ff")
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "snow[rand(1, 14)]"
 
 /turf/open/floor/plating/vampocean
 	gender = PLURAL
@@ -775,6 +900,11 @@
 	barefootstep = FOOTSTEP_WATER
 	clawfootstep = FOOTSTEP_WATER
 	heavyfootstep = FOOTSTEP_WATER
+
+/turf/open/floor/plating/shit/Initialize()
+	. = ..()
+	if(prob(50))
+		new /obj/effect/realistic_fog(src)
 
 /turf/open/floor/plating/shit/border
 	icon_state = "shit_border"

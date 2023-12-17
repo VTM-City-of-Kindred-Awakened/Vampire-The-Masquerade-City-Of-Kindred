@@ -13,35 +13,36 @@
 #define REVERSE_DIR(dir) ( ((dir & 85) << 1) | ((dir & 170) >> 1) )
 
 //Human Overlays Indexes/////////
-#define LUZHA_LAYER				39
-#define UNDERSHADOW_LAYER		38
-#define MUTATIONS_LAYER			37		//mutations. Tk headglows, cold resistance glow, etc
-#define BODY_BEHIND_LAYER		36		//certain mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODYPARTS_LAYER			35		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
-#define BODY_ADJ_LAYER			34		//certain mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_LAYER				33		//underwear, undershirts, socks, eyes, lips(makeup)
-#define FRONT_MUTATIONS_LAYER	32		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define DAMAGE_LAYER			31		//damage indicators (cuts and burns)
-#define UNIFORM_LAYER			30
-#define ID_LAYER				29 //lmao at the idiot who put both ids and hands on the same layer
-#define HANDS_PART_LAYER		28
-#define GLOVES_LAYER			27
-#define SHOES_LAYER				26
-#define EARS_LAYER				25
-#define SUIT_LAYER				24
-#define GLASSES_LAYER			23
-#define BELT_LAYER				22		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		21
-#define NECK_LAYER				20
-#define BACK_LAYER				19
-#define HAIR_LAYER				18		//TODO: make part of head layer?
-#define UPPER_EARS_LAYER		17
-#define FACEMASK_LAYER			16
-#define HEAD_LAYER				15
-#define HANDCUFF_LAYER			14
-#define LEGCUFF_LAYER			13
-#define HANDS_LAYER				12
-#define BODY_FRONT_LAYER		11
+#define LUZHA_LAYER				40
+#define UNDERSHADOW_LAYER		39
+#define MUTATIONS_LAYER			38		//mutations. Tk headglows, cold resistance glow, etc
+#define BODY_BEHIND_LAYER		37		//certain mutantrace features (tail when looking south) that must appear behind the body parts
+#define BODYPARTS_LAYER			36		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
+#define BODY_ADJ_LAYER			35		//certain mutantrace features (snout, body markings) that must appear above the body parts
+#define BODY_LAYER				34		//underwear, undershirts, socks, eyes, lips(makeup)
+#define FRONT_MUTATIONS_LAYER	33		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
+#define DAMAGE_LAYER			32		//damage indicators (cuts and burns)
+#define UNIFORM_LAYER			31
+#define ID_LAYER				30 //lmao at the idiot who put both ids and hands on the same layer
+#define HANDS_PART_LAYER		29
+#define GLOVES_LAYER			28
+#define SHOES_LAYER				27
+#define EARS_LAYER				26
+#define SUIT_LAYER				25
+#define GLASSES_LAYER			24
+#define BELT_LAYER				23		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		22
+#define NECK_LAYER				21
+#define BACK_LAYER				20
+#define HAIR_LAYER				19		//TODO: make part of head layer?
+#define UPPER_EARS_LAYER		18
+#define FACEMASK_LAYER			17
+#define HEAD_LAYER				16
+#define HANDCUFF_LAYER			15
+#define LEGCUFF_LAYER			14
+#define HANDS_LAYER				13
+#define BODY_FRONT_LAYER		12
+#define DECAPITATION_BLOOD_LAYER	11
 #define PROTEAN_LAYER			10
 #define UNICORN_LAYER			9
 #define POTENCE_LAYER			8
@@ -52,7 +53,7 @@
 #define BITE_LAYER				3
 #define FIGHT_LAYER				2
 #define SAY_LAYER				1
-#define TOTAL_LAYERS			39		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			40		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"

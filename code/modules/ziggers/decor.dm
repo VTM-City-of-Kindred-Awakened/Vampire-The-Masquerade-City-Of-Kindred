@@ -42,7 +42,7 @@
 	icon = 'code/modules/ziggers/lamppost.dmi'
 	base_icon_state = "base"
 	plane = GAME_PLANE
-	layer = ABOVE_ALL_MOB_LAYER
+	layer = SPACEVINE_LAYER
 	var/number_of_lamps
 	pixel_w = -32
 	anchored = TRUE
@@ -58,6 +58,11 @@
 
 /obj/structure/lamppost/Initialize()
 	. = ..()
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "[initial(icon_state)]-snow"
 	switch(number_of_lamps)
 		if(1)
 			switch(dir)
@@ -138,9 +143,17 @@
 	icon = 'code/modules/ziggers/lamppost.dmi'
 	icon_state = "traffic"
 	plane = GAME_PLANE
-	layer = ABOVE_ALL_MOB_LAYER
+	layer = SPACEVINE_LAYER
 	pixel_w = -32
 	anchored = TRUE
+
+/obj/structure/trafficlight/Initialize()
+	. = ..()
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "[initial(icon_state)]-snow"
 
 /obj/effect/decal/litter
 	name = "litter"
@@ -223,6 +236,11 @@
 	. = ..()
 	if(prob(25))
 		icon_state = "garbage_open"
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "[initial(icon_state)]-snow"
 
 /obj/structure/trashbag
 	name = "trash bag"
@@ -250,6 +268,11 @@
 /obj/structure/hotelsign/Initialize()
 	. = ..()
 	set_light(3, 3, "#8e509e")
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "[initial(icon_state)]-snow"
 
 /obj/structure/hotelbanner
 	name = "banner"
@@ -260,6 +283,14 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	anchored = TRUE
 	density = TRUE
+
+/obj/structure/hotelbanner/Initialize()
+	. = ..()
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "[initial(icon_state)]-snow"
 
 /obj/structure/milleniumsign
 	name = "sign"
@@ -286,6 +317,11 @@
 /obj/structure/anarchsign/Initialize()
 	. = ..()
 	set_light(3, 3, "#ffffff")
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "[initial(icon_state)]-snow"
 
 /obj/structure/chinesesign
 	name = "sign"
@@ -295,6 +331,14 @@
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER
 	anchored = TRUE
+
+/obj/structure/chinesesign/Initialize()
+	. = ..()
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "[initial(icon_state)]-snow"
 
 /obj/structure/chinesesign/alt
 	icon_state = "chinese2"
@@ -310,6 +354,14 @@
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER
 	anchored = TRUE
+
+/obj/structure/arc/Initialize()
+	. = ..()
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "[initial(icon_state)]-snow"
 
 /obj/structure/arc/add
 	icon_state = "ark2"
@@ -337,6 +389,14 @@
 	icon = 'code/modules/ziggers/props.dmi'
 	icon_state = "hydrant"
 	anchored = TRUE
+
+/obj/structure/hydrant/Initialize()
+	. = ..()
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "[initial(icon_state)]-snow"
 
 /obj/structure/vampcar
 	name = "car"
@@ -474,7 +534,7 @@
 
 /obj/structure/barrels/rand/Initialize()
 	. = ..()
-	icon_state = "barrel[rand(1, 18)]"
+	icon_state = "barrel[rand(1, 12)]"
 
 /obj/structure/bricks
 	name = "bricks"
@@ -1407,12 +1467,14 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 /obj/structure/fountain
 	name = "fountain"
 	desc = "Gothic water structure."
-	icon = 'code/modules/ziggers/icons.dmi'
+	icon = 'code/modules/ziggers/fountain.dmi'
 	icon_state = "fountain"
 	plane = GAME_PLANE
 	layer = CAR_LAYER
 	anchored = TRUE
 	density = TRUE
+	pixel_w = -16
+	pixel_z = -16
 
 /obj/structure/coclock
 	name = "clock"
@@ -1501,6 +1563,14 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	anchored = TRUE
 	density = TRUE
 
+/obj/structure/roofstuff/Initialize()
+	. = ..()
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "[initial(icon_state)]-snow"
+
 /obj/structure/roofstuff/alt1
 	icon_state = "roof2"
 	density = FALSE
@@ -1540,7 +1610,7 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	icon = 'code/modules/ziggers/trees.dmi'
 	icon_state = "tree1"
 	plane = GAME_PLANE
-	layer = ABOVE_ALL_MOB_LAYER
+	layer = SPACEVINE_LAYER
 	anchored = TRUE
 	density = TRUE
 	pixel_w = -32
@@ -1550,6 +1620,11 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 /obj/structure/vamptree/Initialize()
 	. = ..()
 	icon_state = "tree[rand(1, 11)]"
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "[initial(icon_state)][rand(1, 11)]-snow"
 
 /obj/structure/vamptree/proc/burnshit()
 	if(!burned)
@@ -1562,7 +1637,7 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	icon = 'code/modules/ziggers/pines.dmi'
 	icon_state = "pine1"
 	plane = GAME_PLANE
-	layer = ABOVE_ALL_MOB_LAYER
+	layer = SPACEVINE_LAYER
 	anchored = TRUE
 	density = TRUE
 	pixel_w = -24
