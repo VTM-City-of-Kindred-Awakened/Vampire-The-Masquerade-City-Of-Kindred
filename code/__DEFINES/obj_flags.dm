@@ -35,6 +35,7 @@
 #define HAND_ITEM				(1<<14) /// If an item is just your hand (circled hand, slapper) and shouldn't block things like riding
 #define EXAMINE_SKIP			(1<<15) /// Makes the Examine proc not read out this item.
 #define XENOMORPH_HOLDABLE		(1<<16) /// A Xenomorph can hold this item.
+#define WEREWOLF_HOLDABLE		(1<<17) /// A Werewolf can hold this item.
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

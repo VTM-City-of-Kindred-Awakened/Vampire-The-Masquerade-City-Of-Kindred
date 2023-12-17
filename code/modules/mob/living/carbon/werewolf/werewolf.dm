@@ -1,0 +1,180 @@
+/mob/living/carbon/werewolf
+	name = "alien"
+	icon = 'icons/mob/alien.dmi'
+	gender = MALE
+	dna = null
+	faction = list("Gaia")
+	ventcrawler = VENTCRAWLER_NONE
+	sight = SEE_MOBS
+	see_in_dark = 4
+	verb_say = "roars"
+
+	var/move_delay_add = 0 // movement delay to add
+
+	status_flags = CANUNCONSCIOUS|CANPUSH
+
+	heat_protection = 0.5 // minor heat insulation
+
+	var/leaping = FALSE
+	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
+	unique_name = TRUE
+	var/environment_smash = ENVIRONMENT_SMASH_STRUCTURES
+	melee_damage_lower = 50
+	melee_damage_upper = 50
+	var/obj_damage = 30
+	var/wound_bonus = 30
+	var/bare_wound_bonus = 30
+	var/sharpness = 100
+	var/armour_penetration = 100
+	var/melee_damage_type = BRUTE
+	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	var/attack_verb_continuous = "attacks"
+	var/attack_verb_simple = "attack"
+	var/friendly_verb_continuous = "nuzzles"
+	var/friendly_verb_simple = "nuzzle"
+	var/attack_sound = 'code/modules/ziggers/sounds/dog.ogg'
+
+	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
+
+/mob/living/carbon/werewolf/Initialize()
+	add_verb(src, /mob/living/proc/mob_sleep)
+	add_verb(src, /mob/living/proc/toggle_resting)
+
+	create_bodyparts() //initialize bodyparts
+
+	create_internal_organs()
+
+	ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, ROUNDSTART_TRAIT)
+
+	. = ..()
+
+/mob/living/carbon/werewolf/create_internal_organs()
+	internal_organs += new /obj/item/organ/brain/alien
+	internal_organs += new /obj/item/organ/alien/hivenode
+	internal_organs += new /obj/item/organ/tongue/alien
+	internal_organs += new /obj/item/organ/eyes/night_vision/alien
+	internal_organs += new /obj/item/organ/liver/alien
+	internal_organs += new /obj/item/organ/ears
+	..()
+
+/mob/living/carbon/werewolf/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) // beepsky won't hunt aliums
+	return -10
+
+/mob/living/carbon/werewolf/handle_environment(datum/gas_mixture/environment)
+	// Run base mob body temperature proc before taking damage
+	// this balances body temp to the environment and natural stabilization
+	. = ..()
+
+	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+		//Body temperature is too hot.
+		throw_alert("alien_fire", /atom/movable/screen/alert/alien_fire)
+		switch(bodytemperature)
+			if(360 to 400)
+				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
+			if(400 to 460)
+				apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
+			if(460 to INFINITY)
+				if(on_fire)
+					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
+				else
+					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
+	else
+		clear_alert("alien_fire")
+
+/mob/living/carbon/werewolf/reagent_check(datum/reagent/R) //can metabolize all reagents
+	return 0
+
+/mob/living/carbon/werewolf/get_status_tab_items()
+	. = ..()
+	. += "Intent: [a_intent]"
+
+/mob/living/carbon/werewolf/getTrail()
+	return pick (list("xltrails_1", "xltrails2"))
+
+/mob/living/carbon/werewolf/canBeHandcuffed()
+	return FALSE
+
+/mob/living/carbon/werewolf/can_hold_items(obj/item/I)
+	return (I && (I.item_flags & WEREWOLF_HOLDABLE || ISADVANCEDTOOLUSER(src)) && ..())
+
+/mob/living/carbon/werewolf/on_lying_down(new_lying_angle)
+	. = ..()
+	update_icons()
+
+/mob/living/carbon/werewolf/on_standing_up()
+	. = ..()
+	update_icons()
+
+/mob/living/carbon/werewolf/crinos
+	name = "alien"
+	icon_state = "alien"
+	pass_flags = PASSTABLE
+	butcher_results = list(/obj/item/food/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
+	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
+	limb_destroyer = 1
+	hud_type = /datum/hud/alien
+	melee_damage_lower = 20	//Refers to unarmed damage, aliens do unarmed attacks.
+	melee_damage_upper = 20
+	var/obj/item/r_store = null
+	var/obj/item/l_store = null
+	var/caste = ""
+	var/alt_icon = 'icons/mob/alienleap.dmi' //used to switch between the two alien icon files.
+	var/leap_on_click = 0
+	var/pounce_cooldown = 0
+	var/pounce_cooldown_time = 30
+	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
+	var/drooling = 0 //For Neruotoxic spit overlays
+	deathsound = 'sound/voice/hiss6.ogg'
+	bodyparts = list(
+		/obj/item/bodypart/chest/alien,
+		/obj/item/bodypart/head/alien,
+		/obj/item/bodypart/l_arm/alien,
+		/obj/item/bodypart/r_arm/alien,
+		/obj/item/bodypart/r_leg/alien,
+		/obj/item/bodypart/l_leg/alien,
+		)
+
+/mob/living/carbon/werewolf/crinos/Initialize()
+	. = ..()
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.5, -11)
+
+
+/mob/living/carbon/werewolf/crinos/show_inv(mob/user)
+	user.set_machine(src)
+	var/list/dat = list()
+	dat += "<table>"
+	for(var/i in 1 to held_items.len)
+		var/obj/item/I = get_item_for_held_index(i)
+		dat += "<tr><td><B>[get_held_index_name(i)]:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_HANDS];hand_index=[i]'>[(I && !(I.item_flags & ABSTRACT)) ? I : "<font color=grey>Empty</font>"]</a></td></tr>"
+	dat += "</td></tr><tr><td>&nbsp;</td></tr>"
+	dat += "<tr><td><A href='?src=[REF(src)];pouches=1'>Empty Pouches</A></td></tr>"
+
+	dat += {"</table>
+	<A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
+	"}
+
+	var/datum/browser/popup = new(user, "mob[REF(src)]", "[src]", 440, 510)
+	popup.set_content(dat.Join())
+	popup.open()
+
+
+/mob/living/carbon/werewolf/crinos/Topic(href, href_list)
+	//strip panel
+	if(href_list["pouches"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+		visible_message("<span class='danger'>[usr] tries to empty [src]'s pouches.</span>", \
+						"<span class='userdanger'>[usr] tries to empty your pouches.</span>")
+		if(do_mob(usr, src, POCKET_STRIP_DELAY * 0.5))
+			dropItemToGround(r_store)
+			dropItemToGround(l_store)
+
+	..()
+
+/mob/living/carbon/werewolf/crinos/resist_grab(moving_resist)
+	if(pulledby.grab_state)
+		visible_message("<span class='danger'>[src] breaks free of [pulledby]'s grip!</span>", \
+						"<span class='danger'>You break free of [pulledby]'s grip!</span>")
+	pulledby.stop_pulling()
+	. = 0
+
+/mob/living/carbon/werewolf/crinos/get_permeability_protection(list/target_zones)
+	return 0.8

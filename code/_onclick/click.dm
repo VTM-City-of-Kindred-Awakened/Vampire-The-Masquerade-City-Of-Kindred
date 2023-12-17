@@ -204,8 +204,19 @@
 		return
 
 	if(iswerewolf(src))
-		var/atom/B = claw_swing()
-		UnarmedAttack(B,1)
+		if(!W)
+			var/mob/living/carbon/werewolf/wolf = src
+			if(wolf.a_intent == INTENT_HARM)
+				var/atom/B = claw_swing()
+				UnarmedAttack(B)
+			else
+				UnarmedAttack(A)
+		else
+			if(istype(W, /obj/item/melee))
+				var/atom/B = melee_swing()
+				W.melee_attack_chain(src, B, params)
+			else if(CanReach(A,W))
+				W.melee_attack_chain(src, A, params)
 		return
 
 	if(istype(W, /obj/item/melee))

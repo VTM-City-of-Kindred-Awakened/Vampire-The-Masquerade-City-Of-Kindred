@@ -329,7 +329,6 @@
 				new /obj/effect/decal/snow_overlay(src)
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
-				clawfootstep = FOOTSTEP_SNOW
 				heavyfootstep = FOOTSTEP_SNOW
 	if(prob(50))
 		icon_state = "asphalt[rand(1, 3)]"
@@ -372,7 +371,6 @@
 				icon_state = "snow[rand(1, 14)]"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
-				clawfootstep = FOOTSTEP_SNOW
 				heavyfootstep = FOOTSTEP_SNOW
 
 /turf/open/floor/plating/sidewalk
@@ -401,7 +399,6 @@
 				icon_state = "snow[rand(1, 14)]"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
-				clawfootstep = FOOTSTEP_SNOW
 				heavyfootstep = FOOTSTEP_SNOW
 
 /turf/open/floor/plating/sidewalk/poor
@@ -435,7 +432,6 @@
 				icon_state = "snow[rand(1, 14)]"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
-				clawfootstep = FOOTSTEP_SNOW
 				heavyfootstep = FOOTSTEP_SNOW
 
 /obj/effect/decal/bordur
@@ -537,7 +533,6 @@
 				icon_state = "snow[rand(1, 14)]"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
-				clawfootstep = FOOTSTEP_SNOW
 				heavyfootstep = FOOTSTEP_SNOW
 
 /turf/open/floor/plating/vampcarpet
@@ -576,7 +571,6 @@
 				icon_state = "snow[rand(1, 14)]"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
-				clawfootstep = FOOTSTEP_SNOW
 				heavyfootstep = FOOTSTEP_SNOW
 
 /turf/open/floor/plating/vampdirt/rails
@@ -592,7 +586,6 @@
 				icon_state = "snow_rails"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
-				clawfootstep = FOOTSTEP_SNOW
 				heavyfootstep = FOOTSTEP_SNOW
 
 /turf/open/floor/plating/vampplating
@@ -820,7 +813,6 @@
 				icon_state = "snow[rand(1, 14)]"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
-				clawfootstep = FOOTSTEP_SNOW
 				heavyfootstep = FOOTSTEP_SNOW
 
 /turf/open/floor/plating/vampbeach

@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 //more carbon mobs
 
-#define iswerewolf(A) (istype(A, /mob/living/simple_animal/hostile/werewolf))
+#define iswerewolf(A) (istype(A, /mob/living/carbon/werewolf))
 
 #define isalien(A) (istype(A, /mob/living/carbon/alien))
 
