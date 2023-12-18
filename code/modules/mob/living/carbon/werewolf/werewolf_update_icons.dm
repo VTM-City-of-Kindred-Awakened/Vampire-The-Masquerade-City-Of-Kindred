@@ -9,50 +9,42 @@
 
 /mob/living/carbon/werewolf/crinos/update_icons()
 	cut_overlays()
-	for(var/I in overlays_standing)
-		add_overlay(I)
 
-	var/asleep = IsSleeping()
-	if(stat == DEAD)
-		//If we mostly took damage from fire
-		if(getFireLoss() > 125)
-			icon_state = "alien[caste]_husked"
-		else
-			icon_state = "alien[caste]_dead"
+	var/laid_down = FALSE
 
-	else if((stat == UNCONSCIOUS && !asleep) || stat == HARD_CRIT || stat == SOFT_CRIT || IsParalyzed())
-		icon_state = "alien[caste]_unconscious"
-	else if(leap_on_click)
-		icon_state = "alien[caste]_pounce"
-
-	else if(body_position == LYING_DOWN)
-		icon_state = "alien[caste]_sleep"
-	else if(mob_size == MOB_SIZE_LARGE)
-		icon_state = "alien[caste]"
-		if(drooling)
-			add_overlay("alienspit_[caste]")
+	if(stat == UNCONSCIOUS || IsSleeping() || stat == HARD_CRIT || stat == SOFT_CRIT || IsParalyzed() || stat == DEAD || body_position == LYING_DOWN)
+		icon_state = "[sprite_color]_rest"
+		laid_down = TRUE
 	else
-		icon_state = "alien[caste]"
-		if(drooling)
-			add_overlay("alienspit")
+		icon_state = "[sprite_color]"
 
-	if(leaping)
-		if(alt_icon == initial(alt_icon))
-			var/old_icon = icon
-			icon = alt_icon
-			alt_icon = old_icon
-		icon_state = "alien[caste]_leap"
-		pixel_x = base_pixel_x - 32
-		pixel_y = base_pixel_y - 32
-	else
-		if(alt_icon != initial(alt_icon))
-			var/old_icon = icon
-			icon = alt_icon
-			alt_icon = old_icon
-	pixel_x = base_pixel_x + body_position_pixel_x_offset
-	pixel_y = base_pixel_y + body_position_pixel_y_offset
+	if(sprite_scar)
+		var/mutable_appearance/scar_overlay = mutable_appearance(icon, "scar[sprite_scar][laid_down ? "_rest" : ""]")
+		add_overlay(scar_overlay)
+
+	switch(getFireLoss()+getBruteLoss())
+		if(25 to 50)
+			var/mutable_appearance/damage_overlay = mutable_appearance(icon, "damage1[laid_down ? "_rest" : ""]")
+			add_overlay(damage_overlay)
+		if(50 to 75)
+			var/mutable_appearance/damage_overlay = mutable_appearance(icon, "damage2[laid_down ? "_rest" : ""]")
+			add_overlay(damage_overlay)
+		if(75 to INFINITY)
+			var/mutable_appearance/damage_overlay = mutable_appearance(icon, "damage3[laid_down ? "_rest" : ""]")
+			add_overlay(damage_overlay)
+
+	if(sprite_hair)
+		var/mutable_appearance/hair_overlay = mutable_appearance(icon, "hair[sprite_hair][laid_down ? "_rest" : ""]")
+		hair_overlay.color = sprite_hair_color
+		add_overlay(hair_overlay)
+
+	var/mutable_appearance/eye_overlay = mutable_appearance(icon, "eyes[laid_down ? "_rest" : ""]")
+	eye_overlay.color = sprite_eye_color
+	eye_overlay.plane = ABOVE_LIGHTING_PLANE
+	eye_overlay.layer = ABOVE_LIGHTING_LAYER
+	add_overlay(eye_overlay)
+
 	update_inv_hands()
-	update_inv_handcuffed()
 
 /mob/living/carbon/werewolf/crinos/regenerate_icons()
 	if(!..())

@@ -1,4 +1,5 @@
 /mob/living/carbon/werewolf/Life()
+	update_icons()
 	return..()
 
 /mob/living/carbon/werewolf/check_breath(datum/gas_mixture/breath)

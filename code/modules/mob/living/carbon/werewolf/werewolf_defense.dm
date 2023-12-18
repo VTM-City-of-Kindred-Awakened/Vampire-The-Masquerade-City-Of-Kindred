@@ -26,14 +26,6 @@
 			return TRUE
 	return FALSE
 
-
-/mob/living/carbon/werewolf/attack_paw(mob/living/carbon/human/M)
-	if(..())
-		if (stat != DEAD)
-			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
-			apply_damage(rand(1, 3), BRUTE, affecting)
-
-
 /mob/living/carbon/werewolf/attack_animal(mob/living/simple_animal/M)
 	. = ..()
 	if(.)

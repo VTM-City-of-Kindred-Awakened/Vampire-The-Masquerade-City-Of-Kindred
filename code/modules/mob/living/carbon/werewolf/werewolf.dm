@@ -1,13 +1,14 @@
 /mob/living/carbon/werewolf
-	name = "alien"
-	icon = 'icons/mob/alien.dmi'
+	name = "werewolf"
+	icon = 'code/modules/ziggers/werewolf.dmi'
 	gender = MALE
 	dna = null
 	faction = list("Gaia")
 	ventcrawler = VENTCRAWLER_NONE
 	sight = SEE_MOBS
 	see_in_dark = 4
-	verb_say = "roars"
+	verb_say = "woofs"
+	pixel_w = -8
 
 	var/move_delay_add = 0 // movement delay to add
 
@@ -17,7 +18,7 @@
 
 	var/leaping = FALSE
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
-	unique_name = TRUE
+	unique_name = FALSE
 	var/environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	melee_damage_lower = 50
 	melee_damage_upper = 50
@@ -32,9 +33,33 @@
 	var/attack_verb_simple = "attack"
 	var/friendly_verb_continuous = "nuzzles"
 	var/friendly_verb_simple = "nuzzle"
-	var/attack_sound = 'code/modules/ziggers/sounds/dog.ogg'
+	var/attack_sound = 'code/modules/ziggers/sounds/werewolf_bite.ogg'
 
-	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
+	var/sprite_color = "black"
+	var/sprite_scar = 0
+	var/sprite_hair = 0
+	var/sprite_hair_color = "#000000"
+	var/sprite_eye_color = "#FFFFFF"
+
+	var/step_variable = 0
+
+/mob/living/carbon/werewolf/crinos/Move(NewLoc, direct)
+	if(isturf(loc))
+		step_variable = step_variable+1
+		if(step_variable == 2)
+			step_variable = 0
+			playsound(get_turf(src), 'code/modules/ziggers/sounds/werewolf_step.ogg', 100, FALSE)
+	..()
+
+/mob/living/carbon/werewolf/crinos/proc/fall()
+	playsound(get_turf(src), 'code/modules/ziggers/sounds/werewolf_fall.ogg', 100, FALSE)
+	new /obj/effect/temp_visual/dir_setting/crack_effect(get_turf(src))
+	new /obj/effect/temp_visual/dir_setting/fall_effect(get_turf(src))
+	for(var/mob/living/carbon/C in range(5, src))
+		C.Stun(30)
+		shake_camera(C, (6-get_dist(C, src))+1, (6-get_dist(C, src)))
+	Stun(20)
+	shake_camera(src, 5, 4)
 
 /mob/living/carbon/werewolf/Initialize()
 	add_verb(src, /mob/living/proc/mob_sleep)
@@ -49,11 +74,10 @@
 	. = ..()
 
 /mob/living/carbon/werewolf/create_internal_organs()
-	internal_organs += new /obj/item/organ/brain/alien
-	internal_organs += new /obj/item/organ/alien/hivenode
-	internal_organs += new /obj/item/organ/tongue/alien
-	internal_organs += new /obj/item/organ/eyes/night_vision/alien
-	internal_organs += new /obj/item/organ/liver/alien
+	internal_organs += new /obj/item/organ/brain
+	internal_organs += new /obj/item/organ/tongue
+	internal_organs += new /obj/item/organ/eyes/night_vision
+	internal_organs += new /obj/item/organ/liver
 	internal_organs += new /obj/item/organ/ears
 	..()
 
@@ -106,8 +130,8 @@
 	update_icons()
 
 /mob/living/carbon/werewolf/crinos
-	name = "alien"
-	icon_state = "alien"
+	name = "werewolf"
+	icon_state = "black"
 	pass_flags = PASSTABLE
 	butcher_results = list(/obj/item/food/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
@@ -117,21 +141,16 @@
 	melee_damage_upper = 20
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
-	var/caste = ""
-	var/alt_icon = 'icons/mob/alienleap.dmi' //used to switch between the two alien icon files.
-	var/leap_on_click = 0
 	var/pounce_cooldown = 0
 	var/pounce_cooldown_time = 30
-	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
-	var/drooling = 0 //For Neruotoxic spit overlays
 	deathsound = 'sound/voice/hiss6.ogg'
 	bodyparts = list(
-		/obj/item/bodypart/chest/alien,
-		/obj/item/bodypart/head/alien,
-		/obj/item/bodypart/l_arm/alien,
-		/obj/item/bodypart/r_arm/alien,
-		/obj/item/bodypart/r_leg/alien,
-		/obj/item/bodypart/l_leg/alien,
+		/obj/item/bodypart/chest,
+		/obj/item/bodypart/head,
+		/obj/item/bodypart/l_arm,
+		/obj/item/bodypart/r_arm,
+		/obj/item/bodypart/r_leg,
+		/obj/item/bodypart/l_leg,
 		)
 
 /mob/living/carbon/werewolf/crinos/Initialize()

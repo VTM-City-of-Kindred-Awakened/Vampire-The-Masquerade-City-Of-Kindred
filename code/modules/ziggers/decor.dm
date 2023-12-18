@@ -1646,6 +1646,11 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 /obj/structure/vamptree/pine/Initialize()
 	. = ..()
 	icon_state = "pine[rand(1, 4)]"
+	if(GLOB.winter)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.upper)
+				icon_state = "pine[rand(1, 4)]-snow"
 	if(prob(2))
 		burned = TRUE
 		icon_state = "dead[rand(1, 5)]"

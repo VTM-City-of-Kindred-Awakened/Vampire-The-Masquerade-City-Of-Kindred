@@ -71,6 +71,31 @@
 	pixel_z = -32
 	duration = 3
 
+/obj/effect/temp_visual/dir_setting/fall_effect
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "fall_damage"
+	pixel_w = -16
+	pixel_z = -16
+	duration = 5
+	alpha = 128
+
+/obj/effect/temp_visual/dir_setting/crack_effect
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "crack"
+	pixel_w = -32
+	pixel_z = -32
+	duration = 50
+	alpha = 196
+
+/obj/effect/temp_visual/dir_setting/crack_effect/Initialize()
+	. = ..()
+	animate(src, alpha = 0, time = 50)
+
+/obj/effect/temp_visual/dir_setting/fall_effect/Initialize()
+	. = ..()
+	var/size_matrix = matrix()*3
+	animate(src, transform = size_matrix, alpha = 0, time = 5)
+
 /obj/effect/temp_visual/dir_setting/swing_effect/Initialize()
 	. = ..()
 	icon_state = "swing[rand(1, 2)]"

@@ -206,17 +206,38 @@
 	if(iswerewolf(src))
 		if(!W)
 			var/mob/living/carbon/werewolf/wolf = src
-			if(wolf.a_intent == INTENT_HARM)
-				var/atom/B = claw_swing()
-				UnarmedAttack(B)
-			else
-				UnarmedAttack(A)
+			switch(wolf.a_intent)
+				if(INTENT_HARM)
+					var/atom/B = claw_swing()
+					if(isliving(B) || isobj(B))
+						UnarmedAttack(B)
+				if(INTENT_HELP)
+					return
+				if(INTENT_GRAB)
+					if(A != src)
+						if(isliving(A))
+							var/mob/living/living = A
+							living.grabbedby(wolf)
+							return
+						else
+							CtrlClickOn(A)
+							return
+				if(INTENT_DISARM)
+					if(A != src)
+						if(iscarbon(A))
+							var/mob/living/carbon/living = A
+							wolf.disarm(living)
+							do_attack_animation(A)
+							return
 		else
 			if(istype(W, /obj/item/melee))
 				var/atom/B = melee_swing()
 				W.melee_attack_chain(src, B, params)
 			else if(CanReach(A,W))
 				W.melee_attack_chain(src, A, params)
+
+		if(last_locc)
+			forceMove(last_locc)
 		return
 
 	if(istype(W, /obj/item/melee))
