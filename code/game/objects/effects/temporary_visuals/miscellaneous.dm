@@ -78,6 +78,8 @@
 	pixel_z = -16
 	duration = 5
 	alpha = 128
+	plane = GAME_PLANE
+	layer = HIGH_SIGIL_LAYER
 
 /obj/effect/temp_visual/dir_setting/crack_effect
 	icon = 'icons/effects/96x96.dmi'
@@ -86,6 +88,8 @@
 	pixel_z = -32
 	duration = 50
 	alpha = 196
+	plane = GAME_PLANE
+	layer = HIGH_SIGIL_LAYER
 
 /obj/effect/temp_visual/dir_setting/crack_effect/Initialize()
 	. = ..()

@@ -22,6 +22,7 @@
 	var/environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	melee_damage_lower = 50
 	melee_damage_upper = 50
+	layer = ABOVE_ALL_MOB_LAYER
 	var/obj_damage = 30
 	var/wound_bonus = 30
 	var/bare_wound_bonus = 30
