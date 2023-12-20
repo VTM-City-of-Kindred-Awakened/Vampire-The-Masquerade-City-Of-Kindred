@@ -42,6 +42,7 @@
 	var/ignore_source_check = FALSE
 	/// We are flagged PHASING temporarily to not stop moving when we Bump something but want to keep going anyways.
 	var/temporary_unstoppable_movement = FALSE
+	var/probed_to_crit = FALSE
 
 	/** PROJECTILE PIERCING
 	  * WARNING:
@@ -569,6 +570,13 @@
 	. = ..()
 	if(!fired)
 		return
+	if(firer && !probed_to_crit)
+		probed_to_crit = TRUE
+		if(ishuman(firer))
+			var/mob/living/carbon/human/frer = firer
+			if(frer.blood)
+				if(prob(frer.blood*10))
+					damage = initial(damage)*2
 	if(temporary_unstoppable_movement)
 		temporary_unstoppable_movement = FALSE
 		movement_type &= ~PHASING

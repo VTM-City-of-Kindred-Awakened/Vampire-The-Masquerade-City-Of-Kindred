@@ -373,6 +373,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["social"], social)
 	READ_FILE(S["mentality"], mentality)
 	READ_FILE(S["blood"], blood)
+	READ_FILE(S["archetype"], archetype)
 	READ_FILE(S["discipline1level"], discipline1level)
 	READ_FILE(S["discipline2level"], discipline2level)
 	READ_FILE(S["discipline3level"], discipline3level)
@@ -389,7 +390,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["reason_of_death"], reason_of_death)
 //	READ_FILE(S["clane"], clane)
 	READ_FILE(S["generation"], generation)
-	READ_FILE(S["archtype"], archtype)
 	READ_FILE(S["generation_bonus"], generation_bonus)
 	READ_FILE(S["masquerade"], masquerade)
 	READ_FILE(S["real_name"], real_name)
@@ -496,6 +496,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		facial_hairstyle			= sanitize_inlist(facial_hairstyle, GLOB.facial_hairstyles_list)
 		underwear		= sanitize_inlist(underwear, GLOB.underwear_list)
 		undershirt 		= sanitize_inlist(undershirt, GLOB.undershirt_list)
+
+	archetype 		= sanitize_inlist(archetype, subtypesof(/datum/archetype))
 
 	socks			= sanitize_inlist(socks, GLOB.socks_list)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
@@ -605,7 +607,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["reason_of_death"]			, reason_of_death)
 	WRITE_FILE(S["clane"]			, clane.name)
 	WRITE_FILE(S["generation"]			, generation)
-	WRITE_FILE(S["archtype"]			, archtype)
 	WRITE_FILE(S["generation_bonus"]			, generation_bonus)
 	WRITE_FILE(S["masquerade"]			, masquerade)
 	WRITE_FILE(S["real_name"]			, real_name)

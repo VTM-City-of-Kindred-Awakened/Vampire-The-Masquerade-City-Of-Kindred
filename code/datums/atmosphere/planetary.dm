@@ -50,3 +50,27 @@
 	minimum_temp = 180
 	maximum_temp = 180
 
+/datum/atmosphere/vampire_winter
+	id = WINTER_DEFAULT_ATMOS
+
+	base_gases = list(
+		/datum/gas/oxygen=21,
+		/datum/gas/nitrogen=79,
+	)
+	normal_gases = list(
+		/datum/gas/oxygen=21,
+		/datum/gas/nitrogen=78,
+		/datum/gas/carbon_dioxide=1,
+	)
+	restricted_gases = list(
+		/datum/gas/plasma=0.1,
+		/datum/gas/water_vapor=0.1,
+		/datum/gas/miasma=1.2,
+	)
+	restricted_chance = 0
+
+	minimum_pressure = 101
+	maximum_pressure = 101
+
+	minimum_temp = BODYTEMP_COLD_DAMAGE_LIMIT + 5
+	maximum_temp = BODYTEMP_COLD_DAMAGE_LIMIT + 5

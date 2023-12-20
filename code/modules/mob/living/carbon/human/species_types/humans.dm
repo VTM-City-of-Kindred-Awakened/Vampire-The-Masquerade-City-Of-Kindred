@@ -55,6 +55,7 @@
 		dat += "<b>Physique</b>: [host.physique]<BR>"
 		dat += "<b>Social</b>: [host.social]<BR>"
 		dat += "<b>Mentality</b>: [host.mentality]<BR>"
+		dat += "<b>Cruelty</b>: [host.blood]<BR>"
 		if(host.friend_name)
 			dat += "<b>Friend: [host.friend_name]</b><BR>"
 		if(host.enemy_name)
@@ -83,3 +84,6 @@
 
 /datum/species/human/check_roundstart_eligible()
 	return TRUE
+
+/datum/species/human/felinid/check_roundstart_eligible()
+	return FALSE

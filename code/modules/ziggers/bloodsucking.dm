@@ -147,10 +147,12 @@
 					AdjustMasquerade(-1)
 					if(K.generation >= generation)
 						message_admins("[src]([key]) successes in diablerie over [mob](mob.key])!")
-						mob.death()
 						if(K.client)
-							reset_shit(K)
-							K.ghostize(FALSE)
+							K.generation = 13
+							P2.generation = 13
+							var/datum/brain_trauma/special/imaginary_friend/trauma = gain_trauma(/datum/brain_trauma/special/imaginary_friend)
+							trauma.friend.key = K.key
+						mob.death()
 						if(P2)
 							P2.reason_of_death =  "Diablerized by [true_real_name ? true_real_name : real_name] ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 						adjustBruteLoss(-50, TRUE)
@@ -166,9 +168,10 @@
 						if(prob(min(99, start_prob+((generation-K.generation)*10))))
 							to_chat(src, "<span class='userdanger'><b>[K]'s SOUL OVERCOMES YOURS AND GAIN CONTROL OF YOUR BODY.</b></span>")
 							message_admins("[src]([key]) failed to diablerie [mob](mob.key])!")
+							generation = 13
 							death()
-							reset_shit(src)
 							if(P)
+								P.generation = 13
 								P.reason_of_death = "Failed the Diablerie ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 //							ghostize(FALSE)
 //							key = K.key
@@ -185,10 +188,12 @@
 							diablerist = 1
 							maxHealth = initial(maxHealth)+max(0, 50*(13-generation))
 							health = initial(health)+max(0, 50*(13-generation))
-							mob.death()
 							if(K.client)
-								reset_shit(K)
-								K.ghostize(FALSE)
+								K.generation = 13
+								P2.generation = 13
+								var/datum/brain_trauma/special/imaginary_friend/trauma = gain_trauma(/datum/brain_trauma/special/imaginary_friend)
+								trauma.friend.key = K.key
+							mob.death()
 							if(P2)
 								P2.reason_of_death = "Diablerized by [true_real_name ? true_real_name : real_name] ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 					if(client)

@@ -144,7 +144,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //Поколение
 	var/generation = 13
 	var/generation_bonus = 0
-	var/datum/archetype/archtype
 //maskarad
 	var/masquerade = 5
 
@@ -156,7 +155,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/exper_plus = 0
 //TOO OLD
 
-	var/true_experience = 20
+	var/true_experience = 10
 	var/torpor_count = 0
 
 	var/discipline1level = 1
@@ -185,12 +184,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/reason_of_death = "None"
 
+	var/archetype = /datum/archetype/average
+
 //	var/datum/vampireclane/Clane
 
 /mob/living
 	var/physique = 1
 	var/social = 1
 	var/mentality = 1
+	var/blood = 1
 
 /datum/preferences/proc/add_experience(var/amount)
 	if(amount)
@@ -217,6 +219,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			P.social = 1
 			P.mentality = 1
 			P.blood = 1
+			P.archetype = pick(subtypesof(/datum/archetype))
+			var/datum/archetype/A = new P.archetype()
+			P.physique = A.start_physique
+			P.social = A.start_social
+			P.mentality = A.start_mentality
+			P.blood = A.start_blood
 			P.discipline1level = 1
 			P.discipline2level = 1
 			P.discipline3level = 1
@@ -238,13 +246,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //			P.random_species()
 //			P.random_character()
 			P.real_name = random_unique_name(P.gender)
-			P.true_experience = 20
+			P.true_experience = 10
 			var/sponsor = FALSE
 			for(var/i in GLOB.donaters)
 				if(i == "[P.parent.ckey]")
 					sponsor = TRUE
 			if(sponsor)
-				P.true_experience = 60
+				P.true_experience = 30
 			P.save_character()
 			P.save_preferences()
 
@@ -279,6 +287,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	discipline2level = 1
 	discipline3level = 1
 	discipline4level = 1
+	archetype = pick(subtypesof(/datum/archetype))
+	var/datum/archetype/A = new archetype()
+	physique = A.start_physique
+	social = A.start_social
+	mentality = A.start_mentality
+	blood = A.start_blood
 	diablerist = 0
 	masquerade = initial(masquerade)
 	generation = initial(generation)
@@ -293,13 +307,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	discipline4type = null
 	enlightement = clane.enlightement
 	humanity = clane.start_humanity
-	true_experience = 20
+	true_experience = 10
 	var/sponsor = FALSE
 	for(var/i in GLOB.donaters)
 		if(i == "[parent.ckey]")
 			sponsor = TRUE
 	if(sponsor)
-		true_experience = 60
+		true_experience = 30
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
 	C?.set_macros()
 //	pref_species = new /datum/species/kindred()
@@ -504,6 +518,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				else
 					dat += "<BR>"
 			dat += "<h2>[make_font_cool("ATTRIBUTES")]</h2>"
+
+			dat += "<b>Archetype<b><BR>"
+			var/datum/archetype/A = new archetype()
+			dat += "<a href='?_src_=prefs;preference=archetype;task=input'>[A.name]</a> [A.specialization]<BR>"
+
 			dat += "<b>Physique:</b> •[physique > 1 ? "•" : "o"][physique > 2 ? "•" : "o"][physique > 3 ? "•" : "o"][physique > 4 ? "•" : "o"]([physique])"
 			if(true_experience >= 3*physique && physique != 5)
 				dat += "<a href='?_src_=prefs;preference=physique;task=input'>Increase ([3*physique])</a>"
@@ -515,6 +534,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Mentality:</b> •[mentality > 1 ? "•" : "o"][mentality > 2 ? "•" : "o"][mentality > 3 ? "•" : "o"][mentality > 4 ? "•" : "o"]([mentality])"
 			if(true_experience >= 3*mentality && mentality != 5)
 				dat += "<a href='?_src_=prefs;preference=mentality;task=input'>Increase ([3*mentality])</a>"
+			dat += "<BR>"
+			dat += "<b>Cruelty:</b> •[blood > 1 ? "•" : "o"][blood > 2 ? "•" : "o"][blood > 3 ? "•" : "o"][blood > 4 ? "•" : "o"]([blood])"
+			if(true_experience >= 6*blood && blood != 5)
+				dat += "<a href='?_src_=prefs;preference=blood;task=input'>Increase ([3*blood])</a>"
 			dat += "<BR>"
 			if(pref_species.name == "Vampire")
 				dat += "<h2>[make_font_cool("CLANE")]</h2>"
@@ -1999,6 +2022,25 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						true_experience = true_experience-mentality*3
 						mentality = min(5, mentality+1)
 
+				if("blood")
+					if(true_experience >= blood*6 && blood < 6)
+						true_experience = true_experience-blood*6
+						blood = min(5, blood+1)
+
+				if("archetype")
+					if(slotlocked)
+						link_bug_fix = FALSE
+						return
+					var/list/shitlist = list()
+					for(var/datum/archetype/i in subtypesof(/datum/archetype))
+						new i()
+						shitlist += i.name
+					var/result = input(user, "Select an archetype", "Attributes Selection") as null|anything in shitlist
+					if(result)
+						for(var/datum/archetype/a in shitlist)
+							if(a.name == result)
+								archetype = a.type
+
 				if("discipline1")
 					if(true_experience >= discipline1level*5 && discipline1level != 5)
 						true_experience = true_experience-discipline1level*5
@@ -2656,6 +2698,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					blood = 1
 					masquerade = initial(masquerade)
 					generation = initial(generation)
+					archetype = pick(subtypesof(/datum/archetype))
+					var/datum/archetype/A = new archetype()
+					physique = A.start_physique
+					mentality = A.start_mentality
+					social = A.start_social
+					blood = A.start_blood
 					qdel(clane)
 					clane = new /datum/vampireclane/brujah()
 					if(length(clane.clane_disciplines) >= 1)
@@ -2670,13 +2718,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					random_species()
 					random_character()
 					body_model = rand(1, 3)
-					true_experience = 20
+					true_experience = 10
 					var/sponsor = FALSE
 					for(var/i in GLOB.donaters)
 						if(i == "[parent.ckey]")
 							sponsor = TRUE
 					if(sponsor)
-						true_experience = 60
+						true_experience = 30
 					real_name = random_unique_name(gender)
 					save_character()
 
@@ -2738,6 +2786,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.physique = physique
 	character.social = social
 	character.mentality = mentality
+	character.blood = blood
+
+	var/datum/archetype/A = new archetype()
+	A.special_skill(character)
 
 	if(pref_species.name == "Vampire")
 		var/datum/vampireclane/CLN = new clane.type()

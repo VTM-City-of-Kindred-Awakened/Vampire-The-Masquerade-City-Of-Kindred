@@ -364,6 +364,14 @@
 /obj/item/clothing/suit/vampire/coat/alt
 	icon_state = "coat2"
 
+/obj/item/clothing/suit/vampire/coat/winter
+	name = "coat"
+	desc = "Warm and heavy clothing."
+	icon_state = "winter1"
+
+/obj/item/clothing/suit/vampire/coat/winter/alt
+	icon_state = "winter2"
+
 /obj/item/clothing/suit/vampire/jacket
 	name = "leather jacket"
 	desc = "True clothing for any punk. Provides some kind of protection."

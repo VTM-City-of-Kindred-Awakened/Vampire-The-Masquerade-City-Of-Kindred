@@ -1,3 +1,5 @@
+/*
+
 /mob/living/carbon/human
 	var/datum/archetype/__archetype
 /datum/archetype
@@ -11,3 +13,4 @@
 /datum/archetype/proc/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, TRAIT_GENERIC)
 
+*/

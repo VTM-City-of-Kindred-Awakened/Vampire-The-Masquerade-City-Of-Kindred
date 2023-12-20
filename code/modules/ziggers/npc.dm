@@ -238,9 +238,19 @@
 	physique = rand(1, max_stat)
 	social = rand(1, max_stat)
 	mentality = rand(1, max_stat)
+	blood = rand(1, 2)
 	maxHealth = round(initial(maxHealth)+(initial(maxHealth)/3)*(physique))
 	health = round(initial(health)+(initial(health)/3)*(physique))
 	socialrole = new S()
+	if(GLOB.winter && !length(socialrole.suits))
+		socialrole.suits = list(/obj/item/clothing/suit/vampire/coat/winter, /obj/item/clothing/suit/vampire/coat/winter/alt)
+	if(GLOB.winter && !length(socialrole.neck))
+		if(prob(50))
+			socialrole.neck = list(/obj/item/clothing/neck/vampire/scarf/red,
+							/obj/item/clothing/neck/vampire/scarf,
+							/obj/item/clothing/neck/vampire/scarf/blue,
+							/obj/item/clothing/neck/vampire/scarf/green,
+							/obj/item/clothing/neck/vampire/scarf/white)
 	if(!dont_random)
 		gender = pick(MALE, FEMALE)
 		if(socialrole.preferedgender)
