@@ -2034,12 +2034,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/list/shitlist = list()
 					for(var/datum/archetype/i in subtypesof(/datum/archetype))
 						new i()
-						shitlist += i.name
+						shitlist += "[i.name]"
 					var/result = input(user, "Select an archetype", "Attributes Selection") as null|anything in shitlist
 					if(result)
-						for(var/datum/archetype/a in shitlist)
-							if(a.name == result)
-								archetype = a.type
+						var/list/anothershitlist = list()
+						for(var/datum/archetype/a in subtypesof(/datum/archetype))
+							new a()
+							anothershitlist += a
+						for(var/datum/archetype/arch in anothershitlist)
+							if(arch.name == result)
+								archetype = arch.type
 
 				if("discipline1")
 					if(true_experience >= discipline1level*5 && discipline1level != 5)
