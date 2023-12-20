@@ -74,7 +74,7 @@
 /mob/living/carbon/werewolf/acid_act(acidpwr, acid_volume)
 	return FALSE//aliens are immune to acid.
 
-/mob/living/carbon/werewolf/crinos/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/werewolf/attack_hand(mob/living/carbon/human/M)
 	if(..())
 		switch(M.a_intent)
 			if ("harm")
@@ -125,4 +125,9 @@
 /mob/living/carbon/werewolf/crinos/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!no_effect && !visual_effect_icon)
 		visual_effect_icon = ATTACK_EFFECT_CLAW
+	..()
+
+/mob/living/carbon/werewolf/lupus/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
+	if(!no_effect && !visual_effect_icon)
+		visual_effect_icon = ATTACK_EFFECT_BITE
 	..()

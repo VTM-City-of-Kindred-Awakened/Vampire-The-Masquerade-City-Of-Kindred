@@ -2655,6 +2655,7 @@
 #include "code\modules\mob\living\carbon\werewolf\damage_procs.dm"
 #include "code\modules\mob\living\carbon\werewolf\emote.dm"
 #include "code\modules\mob\living\carbon\werewolf\life.dm"
+#include "code\modules\mob\living\carbon\werewolf\lupus.dm"
 #include "code\modules\mob\living\carbon\werewolf\status_procs.dm"
 #include "code\modules\mob\living\carbon\werewolf\werewolf.dm"
 #include "code\modules\mob\living\carbon\werewolf\werewolf_defense.dm"

@@ -203,7 +203,7 @@
 	if(!loc.AllowClick() && !last_locc)
 		return
 
-	if(iswerewolf(src))
+	if(iscrinos(src))
 		if(!W)
 			var/mob/living/carbon/werewolf/wolf = src
 			switch(wolf.a_intent)

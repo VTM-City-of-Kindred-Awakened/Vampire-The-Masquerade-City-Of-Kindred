@@ -367,6 +367,7 @@
 
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
 
+	humans_accessible = TRUE
 	display_order = JOB_DISPLAY_ORDER_DOCTOR
 	bounty_types = CIV_JOB_MED
 
@@ -413,6 +414,8 @@
 	minimal_access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS, ACCESS_MINERAL_STOREROOM)
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
+
+	humans_accessible = TRUE
 
 	display_order = JOB_DISPLAY_ORDER_STREETJAN
 	allowed_bloodlines = list("Daughters of Cacaphony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff")
@@ -718,6 +721,7 @@
 	paycheck_department = ACCOUNT_CAR
 	display_order = JOB_DISPLAY_ORDER_SUPPLY
 	bounty_types = CIV_JOB_RANDOM
+	humans_accessible = TRUE
 	known_contacts = list("Baron")
 	allowed_bloodlines = list("Daughters of Cacaphony", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Lasombra")
 
@@ -766,6 +770,8 @@
 
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_CITIZEN
+
+	humans_accessible = TRUE
 
 	duty = "Follow the Traditions, or other laws provided by the current authority among your kind."
 	minimal_masquerade = 0
@@ -817,6 +823,7 @@
 
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_STRIP
+	humans_accessible = TRUE
 
 	duty = "Offer strip club services to humans or undead."
 	minimal_masquerade = 3
@@ -1422,6 +1429,7 @@
 	exp_type_department = EXP_TYPE_INDEPENDENT
 
 //	minimal_generation = 11	//Uncomment when players get exp enough
+	humans_accessible = TRUE
 
 	duty = "Transfer people in the city."
 	minimal_masquerade = 0

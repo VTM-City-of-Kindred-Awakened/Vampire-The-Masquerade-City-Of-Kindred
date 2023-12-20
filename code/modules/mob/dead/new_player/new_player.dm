@@ -324,6 +324,9 @@
 	if(job.kindred_only)
 		if(client.prefs.pref_species.name != "Vampire")
 			return JOB_UNAVAILABLE_SPECIES
+	if(!job.humans_accessible)
+		if(client.prefs.pref_species.name == "Human")
+			return JOB_UNAVAILABLE_SPECIES
 	if(client.prefs.pref_species.name == "Vampire")
 		if(client.prefs.clane)
 			for(var/i in job.allowed_bloodlines)

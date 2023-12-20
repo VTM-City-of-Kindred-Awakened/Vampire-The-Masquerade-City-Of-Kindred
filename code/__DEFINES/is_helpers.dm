@@ -83,6 +83,10 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define iswerewolf(A) (istype(A, /mob/living/carbon/werewolf))
 
+#define iscrinos(A) (istype(A, /mob/living/carbon/werewolf/crinos))
+
+#define islupus(A) (istype(A, /mob/living/carbon/werewolf/lupus))
+
 #define isalien(A) (istype(A, /mob/living/carbon/alien))
 
 #define islarva(A) (istype(A, /mob/living/carbon/alien/larva))

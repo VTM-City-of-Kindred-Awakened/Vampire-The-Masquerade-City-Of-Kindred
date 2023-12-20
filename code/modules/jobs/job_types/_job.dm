@@ -77,6 +77,7 @@
 	var/minimal_age = 18
 //	var/list/allowed_species = list("kindred")
 	var/kindred_only = FALSE
+	var/humans_accessible = FALSE
 	var/list/allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry")
 
 	// List for phone shit

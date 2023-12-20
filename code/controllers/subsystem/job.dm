@@ -140,6 +140,10 @@ SUBSYSTEM_DEF(job)
 			if(player.client.prefs.pref_species.name != "Vampire")
 				JobDebug("FOC player species not allowed, Player: [player]")
 				continue
+		if(!job.humans_accessible)
+			if(player.client.prefs.pref_species.name == "Human")
+				JobDebug("FOC player species not allowed, Player: [player]")
+				continue
 		if(player.client.prefs.pref_species.name == "Vampire")
 			if(player.client.prefs.clane)
 				var/alloww = FALSE
@@ -202,6 +206,10 @@ SUBSYSTEM_DEF(job)
 
 		if(job.kindred_only)
 			if(player.client.prefs.pref_species.name != "Vampire")
+				JobDebug("GRJ player species not allowed, Player: [player]")
+				continue
+		if(!job.humans_accessible)
+			if(player.client.prefs.pref_species.name == "Human")
 				JobDebug("GRJ player species not allowed, Player: [player]")
 				continue
 		if(player.client.prefs.pref_species.name == "Vampire")
@@ -408,6 +416,10 @@ SUBSYSTEM_DEF(job)
 
 				if(job.kindred_only)
 					if(player.client.prefs.pref_species.name != "Vampire")
+						JobDebug("DO player species not allowed, Player: [player]")
+						continue
+				if(!job.humans_accessible)
+					if(player.client.prefs.pref_species.name == "Human")
 						JobDebug("DO player species not allowed, Player: [player]")
 						continue
 				if(player.client.prefs.pref_species.name == "Vampire")

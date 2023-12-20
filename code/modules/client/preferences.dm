@@ -156,7 +156,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/exper_plus = 0
 //TOO OLD
 
-	var/true_experience = 10
+	var/true_experience = 20
 	var/torpor_count = 0
 
 	var/discipline1level = 1
@@ -239,6 +239,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //			P.random_character()
 			P.real_name = random_unique_name(P.gender)
 			P.true_experience = 20
+			var/sponsor = FALSE
+			for(var/i in GLOB.donaters)
+				if(i == "[P.parent.ckey]")
+					sponsor = TRUE
+			if(sponsor)
+				P.true_experience = 60
 			P.save_character()
 			P.save_preferences()
 
@@ -288,6 +294,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	enlightement = clane.enlightement
 	humanity = clane.start_humanity
 	true_experience = 20
+	var/sponsor = FALSE
+	for(var/i in GLOB.donaters)
+		if(i == "[parent.ckey]")
+			sponsor = TRUE
+	if(sponsor)
+		true_experience = 60
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
 	C?.set_macros()
 //	pref_species = new /datum/species/kindred()
@@ -1262,6 +1274,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(pref_species.name != "Vampire")
 					HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[pref_species.name] RESTRICTED\]</font></td></tr>"
 					continue
+			if(!job.humans_accessible)
+				if(pref_species.name == "Human")
+					HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[pref_species.name] RESTRICTED\]</font></td></tr>"
+					continue
 			if(pref_species.name == "Vampire")
 				if(clane)
 					var/alloww = FALSE
@@ -1457,6 +1473,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/GetQuirkBalance()
 	var/bal = 0
+	if(pref_species.name == "Human")
+		bal = 6
 	for(var/V in all_quirks)
 		var/datum/quirk/T = SSquirks.quirks[V]
 		bal -= initial(T.value)
@@ -2653,6 +2671,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					random_character()
 					body_model = rand(1, 3)
 					true_experience = 20
+					var/sponsor = FALSE
+					for(var/i in GLOB.donaters)
+						if(i == "[parent.ckey]")
+							sponsor = TRUE
+					if(sponsor)
+						true_experience = 60
 					real_name = random_unique_name(gender)
 					save_character()
 

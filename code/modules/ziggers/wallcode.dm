@@ -24,6 +24,24 @@
 	var/low = FALSE
 	var/window
 
+/obj/effect/addwall/Uncross(atom/movable/AM, atom/newloc)
+	. = ..()
+	if(isliving(AM))
+		var/someoneshere = FALSE
+		for(var/mob/living/L in get_turf(src))
+			if(L)
+				if(L != AM)
+					someoneshere = TRUE
+		if(!someoneshere)
+			alpha = 255
+		else
+			alpha = 128
+
+/obj/effect/addwall/Cross(atom/movable/AM)
+	. = ..()
+	if(isliving(AM))
+		alpha = 128
+
 /turf/closed/wall/vampwall/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(low)

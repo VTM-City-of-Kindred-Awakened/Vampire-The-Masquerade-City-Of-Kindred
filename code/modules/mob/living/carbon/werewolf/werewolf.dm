@@ -8,7 +8,6 @@
 	sight = SEE_MOBS
 	see_in_dark = 4
 	verb_say = "woofs"
-	pixel_w = -8
 
 	var/move_delay_add = 0 // movement delay to add
 
@@ -20,8 +19,9 @@
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = FALSE
 	var/environment_smash = ENVIRONMENT_SMASH_STRUCTURES
-	melee_damage_lower = 50
-	melee_damage_upper = 50
+	melee_damage_lower = 20
+	melee_damage_upper = 20
+	butcher_results = list(/obj/item/food/meat/slab = 5)
 	layer = ABOVE_ALL_MOB_LAYER
 	var/obj_damage = 30
 	var/wound_bonus = 30
@@ -134,17 +134,18 @@
 	name = "werewolf"
 	icon_state = "black"
 	pass_flags = PASSTABLE
-	butcher_results = list(/obj/item/food/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
+	butcher_results = list(/obj/item/food/meat/slab = 5)
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	limb_destroyer = 1
 	hud_type = /datum/hud/alien
-	melee_damage_lower = 20	//Refers to unarmed damage, aliens do unarmed attacks.
-	melee_damage_upper = 20
+	melee_damage_lower = 50
+	melee_damage_upper = 50
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/pounce_cooldown = 0
 	var/pounce_cooldown_time = 30
-	deathsound = 'sound/voice/hiss6.ogg'
+	pixel_w = -8
+//	deathsound = 'sound/voice/hiss6.ogg'
 	bodyparts = list(
 		/obj/item/bodypart/chest,
 		/obj/item/bodypart/head,
@@ -158,6 +159,9 @@
 	. = ..()
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.5, -11)
 
+/mob/living/carbon/werewolf/lupus/Initialize()
+	. = ..()
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.5, -11)
 
 /mob/living/carbon/werewolf/crinos/show_inv(mob/user)
 	user.set_machine(src)
