@@ -591,6 +591,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["social"]			, social)
 	WRITE_FILE(S["mentality"]		, mentality)
 	WRITE_FILE(S["blood"]			, blood)
+	WRITE_FILE(S["archetype"]			, archetype)
 	WRITE_FILE(S["discipline1level"]			, discipline1level)
 	WRITE_FILE(S["discipline2level"]			, discipline2level)
 	WRITE_FILE(S["discipline3level"]			, discipline3level)
