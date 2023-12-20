@@ -2032,18 +2032,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						link_bug_fix = FALSE
 						return
 					var/list/shitlist = list()
-					for(var/datum/archetype/i in subtypesof(/datum/archetype))
-						new i()
-						shitlist += "[i.name]"
+					for(var/i in subtypesof(/datum/archetype))
+						shitlist += i
 					var/result = input(user, "Select an archetype", "Attributes Selection") as null|anything in shitlist
 					if(result)
-						var/list/anothershitlist = list()
-						for(var/datum/archetype/a in subtypesof(/datum/archetype))
-							new a()
-							anothershitlist += a
-						for(var/datum/archetype/arch in anothershitlist)
-							if(arch.name == result)
-								archetype = arch.type
+						archetype = result
 
 				if("discipline1")
 					if(true_experience >= discipline1level*5 && discipline1level != 5)
