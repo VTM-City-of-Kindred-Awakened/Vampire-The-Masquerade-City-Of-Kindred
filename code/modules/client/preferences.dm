@@ -519,7 +519,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<BR>"
 			dat += "<h2>[make_font_cool("ATTRIBUTES")]</h2>"
 
-			dat += "<b>Archetype<b><BR>"
+			dat += "<b>Archetype</b><BR>"
 			var/datum/archetype/A = new archetype()
 			dat += "<a href='?_src_=prefs;preference=archetype;task=input'>[A.name]</a> [A.specialization]<BR>"
 
