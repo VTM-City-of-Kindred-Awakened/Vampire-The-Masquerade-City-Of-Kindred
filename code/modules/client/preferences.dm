@@ -2037,6 +2037,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/result = input(user, "Select an archetype", "Attributes Selection") as null|anything in shitlist
 					if(result)
 						archetype = result
+						var/datum/archetype/archetip = new archetype()
+						physique = archetip.start_physique
+						mentality = archetip.start_mentality
+						social = archetip.start_social
+						blood = archetip.start_blood
 
 				if("discipline1")
 					if(true_experience >= discipline1level*5 && discipline1level != 5)
