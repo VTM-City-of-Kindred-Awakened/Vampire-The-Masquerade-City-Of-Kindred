@@ -246,13 +246,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //			P.random_species()
 //			P.random_character()
 			P.real_name = random_unique_name(P.gender)
-			P.true_experience = 10
+			P.true_experience = 20
 			var/sponsor = FALSE
 			for(var/i in GLOB.donaters)
 				if(i == "[P.parent.ckey]")
 					sponsor = TRUE
 			if(sponsor)
-				P.true_experience = 30
+				P.true_experience = 60
 			P.save_character()
 			P.save_preferences()
 
@@ -2720,13 +2720,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					random_species()
 					random_character()
 					body_model = rand(1, 3)
-					true_experience = 10
+					true_experience = 20
 					var/sponsor = FALSE
 					for(var/i in GLOB.donaters)
 						if(i == "[parent.ckey]")
 							sponsor = TRUE
 					if(sponsor)
-						true_experience = 30
+						true_experience = 60
 					real_name = random_unique_name(gender)
 					save_character()
 
