@@ -158,6 +158,9 @@
 	return TRUE
 
 /datum/discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	if(target.nigga_defense)
+		to_chat(caster, "stfu nigga")
+		return
 	if(!target)
 		return
 	if(!caster)
