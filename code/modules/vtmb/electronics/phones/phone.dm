@@ -1,6 +1,3 @@
-/mob/living/carbon/human
-	var/phonevoicetag = 10
-
 /proc/create_unique_phone_number(var/exchange = 513)
 	if(length(GLOB.subscribers_numbers_list) < 1)
 		create_subscribers_numbers()
@@ -21,107 +18,6 @@
 			if(1000 to 9999)
 				ii = "[i]"
 		GLOB.subscribers_numbers_list += ii
-
-/datum/phonecontact
-	var/name = "Unknown"
-	var/number = ""
-
-/datum/phonecontact/New()
-	..()
-	check_global_contacts()
-
-/datum/phonecontact/proc/check_global_contacts()
-	return FALSE
-
-/datum/phonecontact/brujah
-	name = "Primogen Brujah"
-
-/datum/phonecontact/brujah/check_global_contacts()
-	if(number != GLOB.brujahnumber)
-		number = GLOB.brujahnumber
-		return TRUE
-	..()
-
-/datum/phonecontact/malkavian
-	name = "Primogen Malkavian"
-
-/datum/phonecontact/malkavian/check_global_contacts()
-	if(number != GLOB.malkaviannumber)
-		number = GLOB.malkaviannumber
-		return TRUE
-	..()
-
-/datum/phonecontact/nosferatu
-	name = "Primogen Nosferatu"
-
-/datum/phonecontact/nosferatu/check_global_contacts()
-	if(number != GLOB.nosferatunumber)
-		number = GLOB.nosferatunumber
-		return TRUE
-	..()
-
-/datum/phonecontact/toreador
-	name = "Primogen Toreador"
-
-/datum/phonecontact/toreador/check_global_contacts()
-	if(number != GLOB.toreadornumber)
-		number = GLOB.toreadornumber
-		return TRUE
-	..()
-
-/datum/phonecontact/ventrue
-	name = "Primogen Ventrue"
-
-/datum/phonecontact/ventrue/check_global_contacts()
-	if(number != GLOB.ventruenumber)
-		number = GLOB.ventruenumber
-		return TRUE
-	..()
-
-/datum/phonecontact/prince
-	name = "Prince"
-
-/datum/phonecontact/prince/check_global_contacts()
-	if(number != GLOB.princenumber)
-		number = GLOB.princenumber
-		return TRUE
-	..()
-
-/datum/phonecontact/sheriff
-	name = "Sheriff"
-
-/datum/phonecontact/sheriff/check_global_contacts()
-	if(number != GLOB.sheriffnumber)
-		number = GLOB.sheriffnumber
-		return TRUE
-	..()
-
-/datum/phonecontact/clerk
-	name = "Seneschal"
-
-/datum/phonecontact/clerk/check_global_contacts()
-	if(number != GLOB.clerknumber)
-		number = GLOB.clerknumber
-		return TRUE
-	..()
-
-/datum/phonecontact/barkeeper
-	name = "Baron"
-
-/datum/phonecontact/barkeeper/check_global_contacts()
-	if(number != GLOB.barkeepernumber)
-		number = GLOB.barkeepernumber
-		return TRUE
-	..()
-
-/datum/phonecontact/dealer
-	name = "Dealer"
-
-/datum/phonecontact/dealer/check_global_contacts()
-	if(number != GLOB.dealernumber)
-		number = GLOB.dealernumber
-		return TRUE
-	..()
 
 /obj/item/vamp/phone
 	name = "\improper phone"
@@ -147,32 +43,13 @@
 	var/choosed_number = ""
 	var/last_call = 0
 	var/call_sound = 'code/modules/ziggers/sounds/call.ogg'
+	var/can_fold = 1
+	var/interface = "Telephone"
 
-/obj/item/vamp/phone/proc/add_important_contacts()
-	var/mob/living/L
-	if(isliving(loc))
-		L = loc
-	for(var/datum/phonecontact/PHNCNTCT in contacts)
-		if(PHNCNTCT)
-			if(PHNCNTCT.check_global_contacts())
-				if(L)
-					to_chat(L, "<span class='notice'>Some important contacts in your phone work again.</span>")
-
-/obj/phonevoice
-	name = "unknown voice"
-	speech_span = SPAN_ROBOT
-	anchored = FALSE
-	density = FALSE
-	opacity = FALSE
-
-/obj/phonevoice/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	if(message == "" || !message)
-		return
-	spans |= speech_span
-	if(!language)
-		language = get_selected_language()
-	send_speech(message, 2, src, , spans, message_language=language)
-//	speech_span = initial(speech_span)
+	/// Phone icon states
+	var/open_state = "phone2"
+	var/closed_state = "phone1"
+	var/folded_state = "phone0"
 
 /obj/item/vamp/phone/Initialize()
 	..()
@@ -182,136 +59,33 @@
 		GLOB.phone_numbers_list += number
 		GLOB.phones_list += src
 
-/obj/item/vamp/phone/prince
-	exchange_num = 267
-
-/obj/item/vamp/phone/prince/Initialize()
-	..()
-	GLOB.princenumber = number
-	var/datum/phonecontact/sheriff/SHERIFF = new()
-	contacts += SHERIFF
-	var/datum/phonecontact/clerk/CLERK = new()
-	contacts += CLERK
-	var/datum/phonecontact/barkeeper/BARKEEPER = new()
-	contacts += BARKEEPER
-	var/datum/phonecontact/malkavian/M = new()
-	contacts += M
-	var/datum/phonecontact/nosferatu/N = new()
-	contacts += N
-	var/datum/phonecontact/toreador/T = new()
-	contacts += T
-	var/datum/phonecontact/ventrue/V = new()
-	contacts += V
-	var/datum/phonecontact/brujah/B = new()
-	contacts += B
-
-/obj/item/vamp/phone/sheriff
-	exchange_num = 267
-
-/obj/item/vamp/phone/sheriff/Initialize()
-	..()
-	GLOB.sheriffnumber = number
-	var/datum/phonecontact/prince/PRINCE = new()
-	contacts += PRINCE
-
-/obj/item/vamp/phone/clerk
-	exchange_num = 267
-
-/obj/item/vamp/phone/clerk/Initialize()
-	..()
-	GLOB.clerknumber = number
-	var/datum/phonecontact/prince/PRINCE = new()
-	contacts += PRINCE
-
-/obj/item/vamp/phone/barkeeper
-	exchange_num = 485
-
-/obj/item/vamp/phone/barkeeper/Initialize()
-	..()
-	GLOB.barkeepernumber = number
-	var/datum/phonecontact/prince/PRINCE = new()
-	contacts += PRINCE
-	var/datum/phonecontact/dealer/DEALER = new()
-	contacts += DEALER
-
-/obj/item/vamp/phone/dealer
-	exchange_num = 485
-
-/obj/item/vamp/phone/dealer/Initialize()
-	..()
-	GLOB.dealernumber = number
-	var/datum/phonecontact/barkeeper/BARKEEPER = new()
-	contacts += BARKEEPER
-
-/obj/item/vamp/phone/camarilla
-	exchange_num = 267
-
-/obj/item/vamp/phone/camarilla/Initialize()
-	..()
-//	GLOB.dealernumber = number
-	var/datum/phonecontact/prince/PRINCE = new()
-	contacts += PRINCE
-
-/obj/item/vamp/phone/anarch
-	exchange_num = 485
-
-/obj/item/vamp/phone/anarch/Initialize()
-	..()
-//	GLOB.dealernumber = number
-	var/datum/phonecontact/barkeeper/BARKEEPER = new()
-	contacts += BARKEEPER
-
-/obj/item/vamp/phone/malkavian/Initialize()
-	..()
-	GLOB.malkaviannumber = number
-	var/datum/phonecontact/prince/PRINCE = new()
-	contacts += PRINCE
-
-/obj/item/vamp/phone/nosferatu/Initialize()
-	..()
-	GLOB.nosferatunumber = number
-	var/datum/phonecontact/prince/PRINCE = new()
-	contacts += PRINCE
-
-/obj/item/vamp/phone/toreador/Initialize()
-	..()
-	GLOB.toreadornumber = number
-	var/datum/phonecontact/prince/PRINCE = new()
-	contacts += PRINCE
-
-/obj/item/vamp/phone/brujah/Initialize()
-	..()
-	GLOB.brujahnumber = number
-	var/datum/phonecontact/prince/PRINCE = new()
-	contacts += PRINCE
-
-/obj/item/vamp/phone/ventrue/Initialize()
-	..()
-	GLOB.ventruenumber = number
-	var/datum/phonecontact/prince/PRINCE = new()
-	contacts += PRINCE
-
 /obj/item/vamp/phone/Destroy()
 	GLOB.phone_numbers_list -= number
 	GLOB.phones_list -= src
 	UnregisterSignal(src, COMSIG_MOVABLE_HEAR)
 	..()
 
+/obj/item/vamp/phone/attack_hand(mob/user)
+	. = ..()
+	ui_interact(user)
+
+/obj/item/vamp/phone/interact(mob/user)
+	. = ..()
+	ui_interact(user)
+
 /obj/item/vamp/phone/ui_interact(mob/user, datum/tgui/ui)
-	var/lasombra = FALSE
+	. = ..()
 	if(iskindred(user))
 		var/mob/living/carbon/human/H = user
 		if(H.clane)
 			if(H.clane.name == "Lasombra")
-				lasombra = TRUE
-	if(lasombra)
-		return
+				return
 	if(closed)
 		closed = FALSE
-		icon_state = "phone2"
+		icon_state = open_state
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Telephone", "Telephone")
+		ui = new(user, src, interface, interface)
 		ui.open()
 /*
 	else
@@ -339,9 +113,9 @@
 */
 
 /obj/item/vamp/phone/AltClick(mob/user)
-	if(!closed)
+	if(can_fold && !closed)
 		closed = TRUE
-		icon_state = "phone0"
+		icon_state = folded_state
 		talking = FALSE
 		if(online)
 			online.online = null
@@ -421,18 +195,12 @@
 				online.online = null
 				online = null
 			.= TRUE
-//			ui_interact(usr)
-//			attack_self(usr)
-//			return
 		if("accept")
 			if(online)
 				talking = TRUE
 				online.online = src
 				online.talking = TRUE
 			.= TRUE
-//			ui_interact(usr)
-//			attack_self(usr)
-//			return
 		if("decline")
 			talking = FALSE
 			if(online)
@@ -441,9 +209,6 @@
 				online.talking = FALSE
 				online = null
 			.= TRUE
-//			ui_interact(usr)
-//			attack_self(usr)
-//			return
 		if("call")
 			for(var/obj/item/vamp/phone/PHN in GLOB.phones_list)
 				if(PHN.number == choosed_number)
@@ -472,9 +237,6 @@
 				else
 					to_chat(usr, "<span class='notice'>Invalid number.</span>")
 			.= TRUE
-//			ui_interact(usr)
-//			attack_self(usr)
-//			return
 		if("contacts")
 			var/list/options = list("Add", "Choose", "My Number")
 			var/option =  input(usr, "Select an option", "Option Selection") as null|anything in options
@@ -509,9 +271,6 @@
 				if("My Number")
 					to_chat(usr, "[number]")
 			.= TRUE
-//			ui_interact(usr)
-//			attack_self(usr)
-//			return
 		if("keypad")
 			playsound(loc, 'sound/machines/terminal_select.ogg', 15, TRUE)
 			switch(params["value"])
@@ -519,24 +278,26 @@
 					choosed_number = ""
 					.= TRUE
 					return
-//					ui_interact(usr)
-//					attack_self(usr)
-//					return
 				if("_")
 					choosed_number += " "
 					.= TRUE
 					return
-//					ui_interact(usr)
-///					attack_self(usr)
-//					return
 
 			choosed_number += params["value"]
 			.= TRUE
-//			ui_interact(usr)
-//			attack_self(usr)
-//			return
 
 	return FALSE
+
+
+/obj/item/vamp/phone/proc/add_important_contacts()
+	var/mob/living/L
+	if(isliving(loc))
+		L = loc
+	for(var/datum/phonecontact/PHNCNTCT in contacts)
+		if(PHNCNTCT)
+			if(PHNCNTCT.check_global_contacts())
+				if(L)
+					to_chat(L, "<span class='notice'>Some important contacts in your phone work again.</span>")
 
 /obj/item/vamp/phone/proc/Recall(var/obj/item/vamp/phone/abonent, var/mob/usar)
 	if(last_call+100 <= world.time && !talking)
@@ -698,20 +459,142 @@
 				qdel(VOIC)
 
 /obj/item/vamp/phone/street
+	desc = "An ordinary street payphone"
 	icon = 'code/modules/ziggers/onfloor.dmi'
 	icon_state = "streetphone"
 	anchored = TRUE
-	closed = FALSE
 	number = "1447"
+	can_fold = 0
+
+	/// Phone icon states
+	open_state = "streetphone"
+	closed_state = "streetphone"
+	folded_state = "streetphone"
 
 /obj/item/vamp/phone/clean
+	desc = "The usual phone of a cleaning company used to communicate with employees"
 	icon = 'code/modules/ziggers/onfloor.dmi'
 	icon_state = "redphone"
 	anchored = TRUE
-	closed = FALSE
 	number = "700 4424"
+	can_fold = 0
+
+	open_state = "redphone"
+	closed_state = "redphone"
+	folded_state = "redphone"
 
 /obj/item/vamp/phone/clean/Initialize()
 	. = ..()
 	GLOB.phone_numbers_list += number
 	GLOB.phones_list += src
+
+/// Phone Types
+
+/obj/item/vamp/phone/prince
+	exchange_num = 267
+
+/obj/item/vamp/phone/prince/Initialize()
+	..()
+	GLOB.princenumber = number
+	var/datum/phonecontact/sheriff/SHERIFF = new()
+	contacts += SHERIFF
+	var/datum/phonecontact/clerk/CLERK = new()
+	contacts += CLERK
+	var/datum/phonecontact/barkeeper/BARKEEPER = new()
+	contacts += BARKEEPER
+	var/datum/phonecontact/malkavian/M = new()
+	contacts += M
+	var/datum/phonecontact/nosferatu/N = new()
+	contacts += N
+	var/datum/phonecontact/toreador/T = new()
+	contacts += T
+	var/datum/phonecontact/ventrue/V = new()
+	contacts += V
+	var/datum/phonecontact/brujah/B = new()
+	contacts += B
+
+/obj/item/vamp/phone/sheriff
+	exchange_num = 267
+
+/obj/item/vamp/phone/sheriff/Initialize()
+	..()
+	GLOB.sheriffnumber = number
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+
+/obj/item/vamp/phone/clerk
+	exchange_num = 267
+
+/obj/item/vamp/phone/clerk/Initialize()
+	..()
+	GLOB.clerknumber = number
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+
+/obj/item/vamp/phone/barkeeper
+	exchange_num = 485
+
+/obj/item/vamp/phone/barkeeper/Initialize()
+	..()
+	GLOB.barkeepernumber = number
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+	var/datum/phonecontact/dealer/DEALER = new()
+	contacts += DEALER
+
+/obj/item/vamp/phone/dealer
+	exchange_num = 485
+
+/obj/item/vamp/phone/dealer/Initialize()
+	..()
+	GLOB.dealernumber = number
+	var/datum/phonecontact/barkeeper/BARKEEPER = new()
+	contacts += BARKEEPER
+
+/obj/item/vamp/phone/camarilla
+	exchange_num = 267
+
+/obj/item/vamp/phone/camarilla/Initialize()
+	..()
+//	GLOB.dealernumber = number
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+
+/obj/item/vamp/phone/anarch
+	exchange_num = 485
+
+/obj/item/vamp/phone/anarch/Initialize()
+	..()
+//	GLOB.dealernumber = number
+	var/datum/phonecontact/barkeeper/BARKEEPER = new()
+	contacts += BARKEEPER
+
+/obj/item/vamp/phone/malkavian/Initialize()
+	..()
+	GLOB.malkaviannumber = number
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+
+/obj/item/vamp/phone/nosferatu/Initialize()
+	..()
+	GLOB.nosferatunumber = number
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+
+/obj/item/vamp/phone/toreador/Initialize()
+	..()
+	GLOB.toreadornumber = number
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+
+/obj/item/vamp/phone/brujah/Initialize()
+	..()
+	GLOB.brujahnumber = number
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+
+/obj/item/vamp/phone/ventrue/Initialize()
+	..()
+	GLOB.ventruenumber = number
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
