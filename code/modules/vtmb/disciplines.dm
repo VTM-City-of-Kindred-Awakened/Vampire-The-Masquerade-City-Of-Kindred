@@ -158,9 +158,6 @@
 	return TRUE
 
 /datum/discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
-	if(target.nigga_defense)
-		to_chat(caster, "stfu nigga")
-		return
 	if(!target)
 		return
 	if(!caster)
@@ -205,7 +202,7 @@
 	. = ..()
 	if(!AN)
 		AN = new(caster)
-	var/limit = min(3, level)+caster.social-1
+	var/limit = min(3, level)+caster.social-1+caster.more_companions
 	if(length(caster.beastmaster) >= limit)
 		var/mob/living/simple_animal/hostile/beastmaster/B = pick(caster.beastmaster)
 		B.death()
@@ -431,8 +428,8 @@
 	. = ..()
 	if(target.spell_immunity)
 		return
-	var/mypower = 13-caster.generation+caster.social
-	var/theirpower = 13-target.generation+target.mentality
+	var/mypower = 13-caster.generation+caster.social+caster.additional_mentality
+	var/theirpower = 13-target.generation+target.mentality+target.additional_mentality
 	if(theirpower > mypower)
 		to_chat(caster, "<span class='warning'>[target] is too powerful for you!</span>")
 		return
@@ -611,8 +608,8 @@
 	//5 - victim starts to attack themself
 	if(target.spell_immunity)
 		return
-	var/mypower = 13-caster.generation+caster.social
-	var/theirpower = 13-target.generation+target.mentality
+	var/mypower = 13-caster.generation+caster.social+caster.additional_mentality
+	var/theirpower = 13-target.generation+target.mentality+target.additional_mentality
 	if(theirpower > mypower)
 		to_chat(caster, "<span class='warning'>[target] is too powerful for you!</span>")
 		return
@@ -788,8 +785,8 @@
 
 /datum/discipline/presence/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
-	var/mypower = 13-caster.generation+caster.social
-	var/theirpower = 13-target.generation+target.mentality
+	var/mypower = 13-caster.generation+caster.social+caster.additional_mentality
+	var/theirpower = 13-target.generation+target.mentality+target.additional_mentality
 	if(theirpower > mypower)
 		to_chat(caster, "<span class='warning'>[target] is too powerful for you!</span>")
 		return
@@ -1431,7 +1428,7 @@
 /datum/discipline/necromancy/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
 	playsound(target.loc, 'code/modules/ziggers/sounds/necromancy.ogg', 50, TRUE)
-	var/limit = min(3, level)+caster.social-1
+	var/limit = min(3, level)+caster.social-1+caster.more_companions
 	if(length(caster.beastmaster) >= limit)
 		var/mob/living/simple_animal/hostile/beastmaster/B = pick(caster.beastmaster)
 		B.death()

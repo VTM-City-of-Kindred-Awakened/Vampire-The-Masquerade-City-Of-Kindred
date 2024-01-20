@@ -15,7 +15,7 @@
 	start_physique = 2
 	start_social = 2
 	start_mentality = 2
-	start_blood = 2
+	start_blood = 1
 
 /datum/archetype/warrior
 	name = "Warrior"
@@ -26,8 +26,7 @@
 	start_blood = 2
 
 /datum/archetype/warrior/special_skill(var/mob/living/carbon/human/H)
-	var/datum/martial_art/krav_maga/style = new()
-	style.teach(H,1)
+	H.melee_professional = TRUE
 
 /datum/archetype/gunfighter
 	name = "Gunfighter"
@@ -48,9 +47,12 @@
 	start_mentality = 2
 	start_blood = 1
 
+/datum/archetype/diplomatic/special_skill(var/mob/living/carbon/human/H)
+	H.more_companions = 3
+
 /datum/archetype/masochist
 	name = "Masochist"
-	specialization = "Takes more damage before passage."
+	specialization = "Takes more blows before passage."
 	start_physique = 4
 	start_social = 1
 	start_mentality = 1
@@ -61,14 +63,14 @@
 
 /datum/archetype/wiseman
 	name = "Wiseman"
-	specialization = "Total mental resistance."
-	start_physique = 2
+	specialization = "A lot more mental than you can expect."
+	start_physique = 1
 	start_social = 1
 	start_mentality = 4
 	start_blood = 1
 
 /datum/archetype/wiseman/special_skill(var/mob/living/carbon/human/H)
-	H.resistant_to_disciplines = TRUE
+	H.additional_mentality += 3
 
 /datum/archetype/beauty
 	name = "Sharp Beauty"
@@ -84,4 +86,12 @@
 	start_physique = 1
 	start_social = 1
 	start_mentality = 1
-	start_blood = 5
+	start_blood = 4
+
+/datum/archetype/homebrew
+	name = "Homebrew"
+	specialization = "Mommy's child."
+	start_physique = 1
+	start_social = 1
+	start_mentality = 1
+	start_blood = 1

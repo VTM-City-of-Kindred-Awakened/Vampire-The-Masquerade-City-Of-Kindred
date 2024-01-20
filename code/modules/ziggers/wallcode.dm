@@ -8,6 +8,7 @@
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYERS_LAYER
 	anchored = TRUE
+	mouse_opacity = 0
 //	vis_flags = VIS_HIDE
 
 /turf/closed/wall/vampwall

@@ -52,7 +52,7 @@
 			playsound(get_turf(src), 'code/modules/ziggers/sounds/werewolf_step.ogg', 100, FALSE)
 	..()
 
-/mob/living/carbon/werewolf/crinos/proc/fall()
+/mob/living/carbon/proc/epic_fall()
 	playsound(get_turf(src), 'code/modules/ziggers/sounds/werewolf_fall.ogg', 100, FALSE)
 	new /obj/effect/temp_visual/dir_setting/crack_effect(get_turf(src))
 	new /obj/effect/temp_visual/dir_setting/fall_effect(get_turf(src))

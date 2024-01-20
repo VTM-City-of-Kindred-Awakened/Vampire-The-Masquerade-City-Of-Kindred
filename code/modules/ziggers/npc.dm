@@ -11,6 +11,8 @@
 	var/mob/living/danger_source
 	var/atom/movable/less_danger
 	var/mob/living/last_attacker
+	var/last_health = 100
+	var/mob/living/last_damager
 
 	var/turf/walktarget	//dlya movementa
 
@@ -241,6 +243,7 @@
 	blood = rand(1, 2)
 	maxHealth = round(initial(maxHealth)+(initial(maxHealth)/3)*(physique))
 	health = round(initial(health)+(initial(health)/3)*(physique))
+	last_health = health
 	socialrole = new S()
 	if(GLOB.winter && !length(socialrole.suits))
 		socialrole.suits = list(/obj/item/clothing/suit/vampire/coat/winter, /obj/item/clothing/suit/vampire/coat/winter/alt)

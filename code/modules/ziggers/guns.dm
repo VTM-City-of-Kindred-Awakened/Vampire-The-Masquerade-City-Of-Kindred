@@ -313,11 +313,6 @@
 	caliber = CALIBER_FOAM
 	max_ammo = 2
 
-/obj/item/ammo_box/magazine/internal/vampcrossbowVIP
-	ammo_type = /obj/item/ammo_casing/caseless/bolt
-	caliber = CALIBER_FOAM
-	max_ammo = 30
-
 /obj/item/ammo_casing/caseless/bolt
 	name = "bolt"
 	desc = "Welcome to the Middle Ages!"

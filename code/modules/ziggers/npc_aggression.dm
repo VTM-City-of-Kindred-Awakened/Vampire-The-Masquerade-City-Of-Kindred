@@ -11,6 +11,9 @@
 		danger_source = M
 		if(attacked)
 			last_attacker = M
+			if(health != last_health)
+				last_health = health
+				last_damager = M
 	if(CheckMove())
 		return
 	if(last_danger_meet+50 < world.time)

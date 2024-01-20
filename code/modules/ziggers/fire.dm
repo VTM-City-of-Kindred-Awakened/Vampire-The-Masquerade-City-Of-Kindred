@@ -36,6 +36,8 @@ SUBSYSTEM_DEF(die_in_a_fire)
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/stage = 1
+	plane = ABOVE_LIGHTING_PLANE
+	layer = ABOVE_LIGHTING_LAYER
 
 /obj/structure
 	var/pepeled = FALSE

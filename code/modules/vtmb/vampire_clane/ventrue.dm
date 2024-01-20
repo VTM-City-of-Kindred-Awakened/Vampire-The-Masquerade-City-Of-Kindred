@@ -17,6 +17,7 @@
 /datum/discipline/dominate/post_gain(mob/living/carbon/human/H)
 	var/datum/action/dominate/D = new()
 	D.Grant(H)
+	H.additional_mentality += 3
 
 /datum/action/dominate
 	name = "Dominate"

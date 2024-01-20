@@ -31,4 +31,4 @@ GLOBAL_PROTECT(poll_options)
 GLOBAL_VAR_INIT(internal_tick_usage, 0.2 * world.tick_lag)
 
 
-GLOBAL_VAR_INIT(winter, TRUE)
+GLOBAL_VAR_INIT(winter, FALSE)

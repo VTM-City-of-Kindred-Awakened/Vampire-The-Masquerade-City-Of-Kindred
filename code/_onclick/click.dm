@@ -186,7 +186,14 @@
 			W.melee_attack_chain(src, A, params)
 		else
 			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
+				if(isliving(src))
+					var/mob/living/L = src
+					if(L.melee_professional)
+						changeNext_move(CLICK_CD_RANGE)
+					else
+						changeNext_move(CLICK_CD_MELEE)
+				else
+					changeNext_move(CLICK_CD_MELEE)
 			UnarmedAttack(A)
 		return
 
@@ -208,12 +215,14 @@
 			var/mob/living/carbon/werewolf/wolf = src
 			switch(wolf.a_intent)
 				if(INTENT_HARM)
+					changeNext_move(CLICK_CD_MELEE)
 					var/atom/B = claw_swing()
 					if(isliving(B) || isobj(B))
 						UnarmedAttack(B)
 				if(INTENT_HELP)
 					return
 				if(INTENT_GRAB)
+					changeNext_move(CLICK_CD_GRABBING)
 					if(A != src)
 						if(isliving(A))
 							var/mob/living/living = A
@@ -223,6 +232,7 @@
 							CtrlClickOn(A)
 							return
 				if(INTENT_DISARM)
+					changeNext_move(CLICK_CD_MELEE)
 					if(A != src)
 						if(iscarbon(A))
 							var/mob/living/carbon/living = A
@@ -260,7 +270,14 @@
 				W.melee_attack_chain(src, A, params)
 			else
 				if(ismob(A))
-					changeNext_move(CLICK_CD_MELEE)
+					if(isliving(src))
+						var/mob/living/L = src
+						if(L.melee_professional)
+							changeNext_move(CLICK_CD_RANGE)
+						else
+							changeNext_move(CLICK_CD_MELEE)
+					else
+						changeNext_move(CLICK_CD_MELEE)
 				UnarmedAttack(A,1)
 		else
 			if(W)

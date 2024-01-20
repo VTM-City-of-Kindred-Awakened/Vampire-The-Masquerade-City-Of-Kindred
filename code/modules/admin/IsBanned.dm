@@ -49,7 +49,7 @@
 		if(i == "[ckey]")
 			addclientmessage(ckey,"<span class='userdanger'>YOU NIGGER</span>")
 			return list("reason"="Banned", "desc" = "\nReason: Go fuck yourself.")
-		ckey << link("https://c.tenor.com/Oz-1_CNcxSsAAAAd/tenor.gif")
+
 	//Guest Checking
 	if(!real_bans_only && !C && IsGuestKey(key))
 		if (CONFIG_GET(flag/guest_ban))
@@ -231,7 +231,7 @@
 		var/desc = "\nReason:(StickyBan) You, or another user of this computer or connection ([bannedckey]) is banned from playing here. The ban reason is:\n[ban["message"]]\nThis ban was applied by [ban["admin"]]\nThis is a BanEvasion Detection System ban, if you think this ban is a mistake, please wait EXACTLY 6 seconds, then try again before filing an appeal.\n"
 		. = list("reason" = "Stickyban", "desc" = desc)
 		log_access("Failed Login: [key] [computer_id] [address] - StickyBanned [ban["message"]] Target Username: [bannedckey] Placed by [ban["admin"]]")
-		C << link("https://c.tenor.com/Oz-1_CNcxSsAAAAd/tenor.gif")
+
 	return .
 
 /proc/restore_stickybans()

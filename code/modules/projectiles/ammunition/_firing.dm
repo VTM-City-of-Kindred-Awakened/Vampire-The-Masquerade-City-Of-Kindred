@@ -17,9 +17,18 @@
 		SEND_SIGNAL(src, COMSIG_PELLET_CLOUD_INIT, target, user, fired_from, randomspread, spread, zone_override, params, distro)
 
 	if(click_cooldown_override)
-		user.changeNext_move(click_cooldown_override)
+		if(click_cooldown_override > CLICK_CD_RAPID)
+			if(user.no_fire_delay)
+				user.changeNext_move(max(CLICK_CD_RAPID, round(click_cooldown_override/2)))
+			else
+				user.changeNext_move(click_cooldown_override)
+		else
+			user.changeNext_move(click_cooldown_override)
 	else
-		user.changeNext_move(CLICK_CD_RANGE)
+		if(user.no_fire_delay)
+			user.changeNext_move(CLICK_CD_RAPID)
+		else
+			user.changeNext_move(CLICK_CD_RANGE)
 	user.newtonian_move(get_dir(target, user))
 	update_icon()
 	return TRUE

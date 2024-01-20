@@ -14,7 +14,7 @@
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 5
-	throwforce = 25
+	throwforce = 50
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("attacks", "chops", "cleaves", "tears", "lacerates", "cuts")
@@ -39,7 +39,7 @@
 /obj/item/melee/vampirearms/fireaxe/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound)
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=35, icon_wielded="fireaxe1")
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=70, icon_wielded="fireaxe1")
 
 /obj/item/melee/vampirearms/fireaxe/proc/on_wield(obj/item/source, mob/user)
 	SIGNAL_HANDLER
@@ -69,7 +69,7 @@
 	icon = 'code/modules/ziggers/48x32weapons.dmi'
 	icon_state = "katana"
 	flags_1 = CONDUCT_1
-	force = 45
+	force = 90
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BELT
@@ -83,14 +83,14 @@
 	bare_wound_bonus = 25
 	pixel_w = -8
 	resistance_flags = FIRE_PROOF
-	masquerade_violating = TRUE
+	masquerade_violating = FALSE
 
 /obj/item/melee/vampirearms/baseball
 	name = "baseball bat"
 	desc = "There ain't a skull in the league that can withstand a swatter."
 	icon = 'code/modules/ziggers/weapons.dmi'
 	icon_state = "baseball"
-	force = 20
+	force = 50
 	wound_bonus = -10
 	throwforce = 10
 	attack_verb_continuous = list("beats", "smacks")
@@ -110,7 +110,7 @@
 	name = "ripped arm"
 	desc = "Wow, that was someone's arm."
 	icon_state = "hand"
-	force = 50
+	force = 70
 	masquerade_violating = TRUE
 
 /obj/item/melee/vampirearms/tire
@@ -118,7 +118,7 @@
 	desc = "Can be used as a tool or as a weapon."
 	icon = 'code/modules/ziggers/weapons.dmi'
 	icon_state = "pipe"
-	force = 15
+	force = 50
 	wound_bonus = -10
 	throwforce = 10
 	attack_verb_continuous = list("beats", "smacks")
@@ -131,7 +131,7 @@
 	desc = "Don't cut yourself accidentely."
 	icon = 'code/modules/ziggers/weapons.dmi'
 	icon_state = "knife"
-	force = 25
+	force = 50
 	wound_bonus = -10
 	throwforce = 10
 	attack_verb_continuous = list("slashes", "cuts")
@@ -146,13 +146,22 @@
 	name = "claws"
 	icon_state = "gangrel"
 	w_class = WEIGHT_CLASS_BULKY
+	force = 5
 	armour_penetration = 100	//It's magical damage
 	item_flags = DROPDEL
 	masquerade_violating = TRUE
 
+/obj/item/melee/vampirearms/knife/gangrel/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity)
+		return
+	if(isliving(target))
+		var/mob/living/L = target
+		L.adjustCloneLoss(30)
+
 /obj/item/melee/vampirearms/knife/gangrel/lasombra
 	name = "shadow tentacle"
-	force = 50
+	force = 5
+	armour_penetration = 100
 	icon_state = "lasombra"
 	masquerade_violating = TRUE
 
@@ -204,7 +213,7 @@
 	icon_state = "chainsaw"
 	flags_1 = CONDUCT_1
 	force = 15
-	var/force_on = 55
+	var/force_on = 150
 	w_class = WEIGHT_CLASS_BULKY
 	throwforce = 10
 	throw_speed = 2
@@ -217,7 +226,6 @@
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5
 	resistance_flags = FIRE_PROOF
-	masquerade_violating = TRUE
 	var/on = FALSE
 	var/wielded = FALSE
 
@@ -296,7 +304,7 @@
 	icon_state = "shovel"
 	name = "shovel"
 	desc = "Great weapon against mortal or immortal."
-	force = 15
+	force = 50
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("attacks", "chops", "tears", "beats")
@@ -319,7 +327,7 @@
 	desc = "More instrument, than a weapon. Instrumentally cuts heads..."
 	icon = 'code/modules/ziggers/weapons.dmi'
 	icon_state = "kosa"
-	force = 35
+	force = 60
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = null
 	block_chance = 30
@@ -336,7 +344,7 @@
 /obj/item/melee/vampirearms/katana/kosa/egorium
 	name = "demonic scythe"
 	icon_state = "egorium"
-	force = 45
+	force = 70
 
 /obj/item/melee/vampirearms/katana/kosa/egorium/Initialize()
 	. = ..()
@@ -347,7 +355,7 @@
 	icon_state = "rock0"
 	name = "electric guitar"
 	desc = "You are pretty fly for a white guy..."
-	force = 40
+	force = 50
 	throwforce = 25
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
@@ -411,7 +419,7 @@
 	icon = 'code/modules/ziggers/weapons.dmi'
 	lefthand_file = 'code/modules/ziggers/righthand.dmi'
 	righthand_file = 'code/modules/ziggers/lefthand.dmi'
-	force = 10
+	force = 50
 	throwforce = 40
 	throw_speed = 2
 	throw_range = 3

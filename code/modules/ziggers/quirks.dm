@@ -244,6 +244,9 @@ Dancer
 		spawn(2)
 			H.forceMove(LO)
 			animate(H, pixel_z = 0, time = 2)
+			spawn(2)
+				if(H.potential > 0)
+					H.epic_fall()
 	else if(isopenturf(get_step(get_step(get_step(owner, owner.dir), owner.dir), owner.dir)))
 		for(var/atom/movable/A in get_step(owner, owner.dir))
 			if(istype(A, /obj/structure/vampdoor))
@@ -295,6 +298,9 @@ Dancer
 		spawn(2)
 			H.forceMove(LO)
 			animate(H, pixel_z = 0, time = 2)
+			spawn(2)
+				if(H.potential > 0)
+					H.epic_fall()
 
 /datum/action/fly_upper
 	name = "Fly Up"

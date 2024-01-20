@@ -246,13 +246,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //			P.random_species()
 //			P.random_character()
 			P.real_name = random_unique_name(P.gender)
-			P.true_experience = 20
+			P.true_experience = 10
 			var/sponsor = FALSE
 			for(var/i in GLOB.donaters)
 				if(i == "[P.parent.ckey]")
 					sponsor = TRUE
 			if(sponsor)
-				P.true_experience = 60
+				P.true_experience = 30
 			P.save_character()
 			P.save_preferences()
 
@@ -1497,7 +1497,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/GetQuirkBalance()
 	var/bal = 0
 	if(pref_species.name == "Human")
-		bal = 6
+		bal = 3
 	for(var/V in all_quirks)
 		var/datum/quirk/T = SSquirks.quirks[V]
 		bal -= initial(T.value)
@@ -2165,9 +2165,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/result = input(user, "Select a species", "Species Selection") as null|anything in GLOB.roundstart_races
 
 					if(result)
+						all_quirks = list()
+						SetQuirks(user)
 						var/newtype = GLOB.species_list[result]
 						pref_species = new newtype()
-						if(pref_species.id == "ghoul")
+						if(pref_species.id == "ghoul" || pref_species.id == "human")
 							discipline1type = null
 							discipline2type = null
 							discipline3type = null
@@ -2720,13 +2722,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					random_species()
 					random_character()
 					body_model = rand(1, 3)
-					true_experience = 20
+					true_experience = 10
 					var/sponsor = FALSE
 					for(var/i in GLOB.donaters)
 						if(i == "[parent.ckey]")
 							sponsor = TRUE
 					if(sponsor)
-						true_experience = 60
+						true_experience = 30
 					real_name = random_unique_name(gender)
 					save_character()
 
@@ -2750,6 +2752,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	save_character()
 	ShowChoices(user)
 	return 1
+
+/mob/living
+	var/additional_mentality = 0
+	var/more_companions = 0
+	var/melee_professional = FALSE
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, is_latejoiner = TRUE)
 

@@ -724,7 +724,10 @@
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
 		if(last_cpr_exp+1200 < world.time)
 			last_cpr_exp = world.time
-			AdjustHumanity(1, 10)
+			if(isnpc(target))
+				var/mob/living/carbon/human/npc/N = target
+				if(N.last_damager != src)
+					AdjustHumanity(1, 10)
 //			if(key)
 //				var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
 //				if(P)

@@ -56,6 +56,8 @@
 	pixel_w = -16
 	pixel_z = -16
 	duration = 2
+	plane = ABOVE_LIGHTING_PLANE
+	layer = ABOVE_LIGHTING_LAYER
 
 /obj/effect/temp_visual/dir_setting/swing_effect
 	icon = 'icons/effects/96x96.dmi'
