@@ -79,6 +79,14 @@
 	desc = "Some punk clothes."
 	icon_state = "dirty"
 
+/obj/item/clothing/under/vampire/napoleon
+	desc = "Some historical clothes."
+	icon_state = "napoleon"
+
+/obj/item/clothing/under/vampire/nazi
+	desc = "Some historical clothes."
+	icon_state = "nazi"
+
 //FOR NPC
 
 //NGERS n BANDITS
@@ -313,6 +321,11 @@
 	desc = "Robust-looking boots."
 	icon_state = "jackboots"
 
+/obj/item/clothing/shoes/vampire/jackboots/high
+	name = "high boots"
+	desc = "High boots. What else did you expect?"
+	icon_state = "tall_boots"
+
 /obj/item/clothing/shoes/vampire/jackboots/punk
 	icon_state = "daboots"
 
@@ -356,6 +369,33 @@
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 	body_worn = TRUE
 
+/obj/item/clothing/suit/hooded/heisenberg
+	name = "chemical costume"
+	desc = "A costume made for chemical protection."
+	icon = 'code/modules/ziggers/clothing.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	icon_state = "heisenberg"
+	inhand_icon_state = "heisenberg"
+	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	armor = list(MELEE = 0, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 50, BIO = 0, RAD = 0, FIRE = 50, ACID = 100, WOUND = 10)
+	hoodtype = /obj/item/clothing/head/hooded/heisenberg_hood
+
+/obj/item/clothing/head/hooded/heisenberg_hood
+	name = "chemical hood"
+	desc = "A hood attached to a cchemical costume."
+	icon_state = "heisenberg_helm"
+	icon = 'code/modules/ziggers/clothing.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	body_parts_covered = HEAD
+	cold_protection = HEAD
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	flags_inv = HIDEHAIR|HIDEEARS
+	armor = list(MELEE = 0, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 50, BIO = 0, RAD = 0, FIRE = 50, ACID = 100, WOUND = 10)
+
 /obj/item/clothing/suit/vampire/coat
 	name = "coat"
 	desc = "Warm and heavy clothing."
@@ -376,6 +416,12 @@
 	name = "leather jacket"
 	desc = "True clothing for any punk. Provides some kind of protection."
 	icon_state = "jacket1"
+	armor = list(MELEE = 25, BULLET = 25, LASER = 10, ENERGY = 10, BOMB = 25, BIO = 0, RAD = 0, FIRE = 25, ACID = 10, WOUND = 25)
+
+/obj/item/clothing/suit/vampire/jacket/fbi
+	name = "Federal Bureau of Investigation jacket"
+	desc = "\"FBI OPEN UP!!\""
+	icon_state = "fbi"
 	armor = list(MELEE = 25, BULLET = 25, LASER = 10, ENERGY = 10, BOMB = 25, BIO = 0, RAD = 0, FIRE = 25, ACID = 10, WOUND = 25)
 
 /obj/item/clothing/suit/vampire/jacket/punk
@@ -533,6 +579,18 @@
 	name = "british police hat"
 	desc = "Want some tea? Provides some kind of protection."
 	icon_state = "briish"
+	armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
+
+/obj/item/clothing/head/vampire/napoleon
+	name = "french admiral hat"
+	desc = "Dans mon esprit tout divague, je me perds dans tes yeux... Je me noie dans la vague de ton regard amoureux..."
+	icon_state = "french"
+	armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
+
+/obj/item/clothing/head/vampire/nazi
+	name = "german bad guy hat"
+	desc = "\"Du wirst immer ein Schwein sein!\""
+	icon_state = "ss"
 	armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 
 /obj/item/clothing/head/vampire/top

@@ -1781,3 +1781,49 @@
 	l_pocket = /obj/item/vamp/phone/brujah
 	r_pocket = /obj/item/cockclock
 	backpack_contents = list(/obj/item/vamp/keys/brujah/primogen=1, /obj/item/melee/vampirearms/eguitar=1, /obj/item/passport=1, /obj/item/flashlight=1, /obj/item/stack/dollar=1)
+
+//HUMANS
+
+/datum/job/vamp/police_officer
+	title = "Police Officer"
+	department_head = list("Police Department")
+	faction = "Human"
+	total_positions = 5
+	spawn_positions = 5
+	supervisors = " the SFPD"
+	selection_color = "#ffa400"
+
+	outfit = /datum/outfit/job/police_officer
+
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	paycheck = PAYCHECK_EASY
+	paycheck_department = ACCOUNT_SRV
+	display_order = JOB_DISPLAY_ORDER_POLICE
+	exp_type_department = EXP_TYPE_INDEPENDENT
+
+	kindred_only = FALSE
+	human_only = TRUE
+	allowed_bloodlines = list()
+	minimal_generation = 13
+
+	duty = "Enforce the Law."
+	minimal_masquerade = 0
+	my_contact_is_important = FALSE
+	known_contacts = list("Investigator")
+	minimal_age = 12
+
+/datum/outfit/job/police_officer
+	name = "Police Officer"
+	jobtype = /datum/job/vamp/police_officer
+
+	uniform = /obj/item/clothing/under/vampire/police
+	shoes = /obj/item/clothing/shoes/vampire/jackboots
+	suit = /obj/item/clothing/suit/vampire/vest
+	belt = /obj/item/melee/classic_baton
+	id = /obj/item/cockclock
+	l_pocket = /obj/item/vamp/phone
+	r_pocket = /obj/item/flashlight
+	l_hand = /obj/item/vamp/keys/police
+	r_hand = /obj/item/police_radio
+	backpack_contents = list(/obj/item/passport=1, /obj/item/stack/dollar=1)

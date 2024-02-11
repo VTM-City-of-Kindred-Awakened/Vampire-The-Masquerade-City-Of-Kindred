@@ -67,46 +67,46 @@
 	pockets = list(/obj/item/stack/dollar/rand,
 					/obj/item/vamp/keys/hack)
 
-	male_phrases = list("Ну и на что уставился, олух?",
-											"Чмоня, я тебя сейчас не понял. Ты чё домагаешься до меня?",
-											"Что тебе от меня нужно, мазафака?",
-											"Я вижу тебе удалось проебать где-то свой страх, чумба.",
-											"Пиздуй, пока я тебе промеж глаз не зарядил битой!",
-											"Отвали, чёртова либераха...",
-											"Тебе на более понятном языке объяснить?",
-											"Съеби.",
-											"Отвянь.",
-											"Иди нахуй.")
-	neutral_phrases = list("Ну и на что уставился, олух?",
-											"Чмоня, я тебя сейчас не понял. Ты чё домагаешься до меня?",
-											"Что тебе от меня нужно, мазафака?",
-											"Я вижу тебе удалось проебать где-то свой страх, чумба.",
-											"Пиздуй, пока я тебе промеж глаз не зарядил битой!",
-											"Отвали, чёртова либераха...",
-											"Тебе на более понятном языке объяснить?",
-											"Съеби.",
-											"Отвянь.",
-											"Иди нахуй.")
-	random_phrases = list("Йоу, нигга!",
-												"Эхх, сейчас бы грабануть цыпочку...",
-												"В чём дело, бро?",
-												"Хочу, блять, поздороваться.",
-												"Я тебя видал на рынке, бурда!",
-												"Слыхал? Жопа нам всем скоро...",
-												"Оо-о, братюня...")
-	answer_phrases = list("Да держусь как-то...",
-												"Вообще пиздец.",
-												"Хуёво, нигга.",
-												"Я тебя вообще знаю, чертила?",
-												"Точняк.",
-												"Ээ-эумм...",
-												"Хорошенько я посрал.")
-	help_phrases = list("Срань Господня!",
-											"УЙДИ, СГИНЬ НАХУЙ!!",
-											"Чё за херня?!",
-											"Ебать тебя в жопу, гавно!",
-											"Валыны достаём, братва!",
-											"Пиу-пау, лежау-сосау!!")
+	male_phrases = list("What are you staring at, bitch?",
+											"Are you threating me?",
+											"What do you need, motherfucker?",
+											"I see you lost your fear, bitch ass.",
+											"Fuck off, before I smash you!",
+											"Get lost, liberal...",
+											"Do I need to explain it to you?",
+											"Go away.",
+											"Piss off.",
+											"Fuck you.")
+	neutral_phrases = list("What are you staring at, bitch?",
+											"Are you threating me?",
+											"What do you need, motherfucker?",
+											"I see you lost your fear, bitch ass.",
+											"Fuck off, before I smash you!",
+											"Get lost, liberal...",
+											"Do I need to explain it to you?",
+											"Go away.",
+											"Piss off.",
+											"Fuck you.")
+	random_phrases = list("Nigga!",
+												"I miss my lady...",
+												"What's wrong bro?",
+												"Good, fucking, evening.",
+												"Saw you selling weed!",
+												"We will die...",
+												"Guh...")
+	answer_phrases = list("I have it...",
+												"Fucking apocalypse.",
+												"Shit, nigga.",
+												"Choom, do I know you?",
+												"Right.",
+												"Uhmm...",
+												"I shitted well.")
+	help_phrases = list("God damn!",
+											"FUCKING FUCK OFF!!",
+											"What the hell?!",
+											"Fucking hell!",
+											"Get gunned, bros!",
+											"Lay down and get yo ass ready!!")
 
 /datum/socialrole/usualmale
 	s_tones = list("albino",
@@ -179,46 +179,46 @@
 	pockets = list(/obj/item/vamp/keys/npc,
 					/obj/item/stack/dollar/rand)
 
-	male_phrases = list("Что тебе нужно, дружище?",
-											"Я не понимаю, что вам от меня нужно?",
-											"Вы что-то хотели?",
-											"Я спешу, не задерживайте меня пожалуйста.",
-											"Сходи поищи себе компанию в баре...",
-											"Не могу говорить сейчас.",
-											"Хорошая ночь, правда?",
-											"Эхх...",
-											"Даже не знаю, что сказать.",
-											"У меня всё.")
-	neutral_phrases = list("Что тебе нужно, дружище?",
-												"Я не понимаю, что вам от меня нужно?",
-												"Вы что-то хотели?",
-												"Я спешу, не задерживайте меня пожалуйста.",
-												"Сходи поищи себе компанию в баре...",
-												"Не могу говорить сейчас.",
-												"Хорошая ночь, правда?",
-												"Эхх...",
-												"Даже не знаю, что сказать.",
-												"У меня всё.")
-	random_phrases = list("Хэй, приятель!",
-												"Эхх, сейчас бы пинту пива...",
-												"В чём дело, друг?",
-												"Хочу поприветствоваться.",
-												"Ого, а мы встречались раньше?",
-												"Слышали? Что-то неладное творится в городе.",
-												"Оо-о, чувак...")
-	answer_phrases = list("Стараюсь...",
-												"Неописуемо.",
-												"Плохо, друг.",
-												"Вы кажется перепутали меня с кем-то.",
-												"Да, точно.",
-												"О'ке-ей...",
-												"Хорошо.")
-	help_phrases = list("О Боже!",
-											"Уйдите, не подходите ко мне!!",
-											"Что же это такое творится?!",
-											"Прекратите!",
-											"Кто-нибудь, помогите!",
-											"Мамочка!")
+	male_phrases = list("What do you need, mate?",
+											"Do you need something?",
+											"Can you repeat what you were saying?",
+											"I'm late, don't interrupt me.",
+											"Check bar for new company...",
+											"Can't speak right now.",
+											"Good night I guess?",
+											"Guh...",
+											"I dunno what to say.",
+											"That's all, folks.")
+	neutral_phrases = list("What do you need, mate?",
+											"Do you need something?",
+											"Can you repeat what you were saying?",
+											"I'm late, don't interrupt me.",
+											"Check bar for new company...",
+											"Can't speak right now.",
+											"Good night I guess?",
+											"Guh...",
+											"I dunno what to say.",
+											"That's all, folks.")
+	random_phrases = list("Hey, mate!",
+												"I miss my beer...",
+												"Everything okay?",
+												"Hello.",
+												"Didn't I meet you?",
+												"Something wrong here.",
+												"Oooh, dude...")
+	answer_phrases = list("Trying...",
+												"Awesome.",
+												"Bad, mate.",
+												"You picked wrong person.",
+												"Yeah, right.",
+												"O'kaay...",
+												"Nice.")
+	help_phrases = list("Oh God!",
+											"Go away!!",
+											"What the heck is happening?!",
+											"Stop!",
+											"Someone, help!",
+											"Mommy!")
 
 /datum/socialrole/usualfemale
 	s_tones = list("albino",
@@ -300,26 +300,24 @@
 	pockets = list(/obj/item/vamp/keys/npc,
 					/obj/item/stack/dollar/rand)
 
-	female_phrases = list("Что вы задумали?",
-											"Я не понимаю, что вам от меня нужно?",
-											"Вы что-то хотели?",
-											"Я спешу, не задерживайте меня пожалуйста.",
-											"Поищите какую-нибудь другую подружку...",
-											"Не могу говорить сейчас.",
-											"Хорошая ночь, правда?",
-											"Эхх...",
-											"Даже не знаю, что сказать.",
-											"У меня всё.")
-	neutral_phrases = list("Что вы задумали?",
-												"Я не понимаю, что вам от меня нужно?",
-												"Вы что-то хотели?",
-												"Я спешу, не задерживайте меня пожалуйста.",
-												"Поищите какую-нибудь другую подружку...",
-												"Не могу говорить сейчас.",
-												"Хорошая ночь, правда?",
-												"Эхх...",
-												"Даже не знаю, что сказать.",
-												"У меня всё.")
+	female_phrases = list("What do you need?",
+											"Do you need something?",
+											"Do I really need to answer?",
+											"I'm late.",
+											"Pervert...",
+											"Can't speak right now.",
+											"Buy yourself a watch",
+											"Hey.",
+											"Go away.")
+	neutral_phrases = list("What do you need?",
+											"Do you need something?",
+											"Do I really need to answer?",
+											"I'm late.",
+											"Pervert...",
+											"Can't speak right now.",
+											"Buy yourself a watch",
+											"Hey.",
+											"Go away.")
 	random_phrases = list("Хэй, пышка!",
 												"Эхх, сейчас бы вина...",
 												"В чём дело?",
@@ -334,12 +332,12 @@
 												"Да, точно.",
 												"О'ке-ей...",
 												"Хорошо.")
-	help_phrases = list("О Боже!",
-											"Уйдите, не подходите ко мне!!",
-											"Что же это такое творится?!",
-											"Прекратите!",
-											"Кто-нибудь, помогите!",
-											"На помощь!")
+	help_phrases = list("Oh God!",
+											"Go away!!",
+											"What the heck is happening?!",
+											"Stop!",
+											"Someone, help!",
+											"Mommy!")
 
 /datum/socialrole/poormale
 	s_tones = list("albino",
@@ -410,32 +408,32 @@
 							/obj/item/clothing/neck/vampire/scarf/green,
 							/obj/item/clothing/neck/vampire/scarf/white)
 
-	male_phrases = list("Ох, блять, пиздец...",
-											"Нам всем пиздец!",
-											"Уэ-э...",
-											"Бррр.",
-											"Жахнуть бы сто грамчиков...")
-	neutral_phrases = list("Ох, блять, пиздец...",
-												"Нам всем пиздец!",
-												"Уэ-э...",
-												"Бррр.",
-												"Жахнуть бы сто грамчиков...")
-	random_phrases = list("Ох, блять, пиздец...",
-												"Нам всем пиздец!",
-												"Уэ-э...",
-												"Бррр.",
-												"Жахнуть бы сто грамчиков...")
-	answer_phrases = list("Ох, блять, пиздец...",
-												"Нам всем пиздец!",
-												"Уэ-э...",
-												"Бррр.",
-												"Жахнуть бы сто грамчиков...")
-	help_phrases = list("ААаа!",
-											"У-ААА!!",
-											"Что за хуета? Где моя водка?!",
-											"Говно!",
-											"Жопа!",
-											"Хой!")
+	male_phrases = list("Fuck, shit, daa-amn...",
+											"We're fucked!",
+											"Grubrhggsmm...",
+											"Brrr.",
+											"Drunk...")
+	neutral_phrases = list("Fuck, shit, daa-amn...",
+											"We're fucked!",
+											"Grubrhggsmm...",
+											"Brrr.",
+											"Drunk...")
+	random_phrases = list("Fuck, shit, daa-amn...",
+											"We're fucked!",
+											"Grubrhggsmm...",
+											"Brrr.",
+											"Drunk...")
+	answer_phrases = list("Fuck, shit, daa-amn...",
+											"We're fucked!",
+											"Grubrhggsmm...",
+											"Brrr.",
+											"Drunk...")
+	help_phrases = list("Aaaugh!",
+											"AAAAHHHH!!",
+											"Wut de fuck? WHOM'RE YOU?!",
+											"Shit!",
+											"Ass!",
+											"Dick!")
 
 /datum/socialrole/poorfemale
 	s_tones = list("albino",
@@ -513,32 +511,32 @@
 	suits = list(/obj/item/clothing/suit/vampire/coat/alt)
 	hats = list(/obj/item/clothing/head/vampire/beanie/homeless)
 
-	female_phrases = list("Ох, блять, пиздец...",
-											"Нам всем пиздец!",
-											"Уэ-э...",
-											"Бррр.",
-											"Жахнуть бы сто грамчиков...")
-	neutral_phrases = list("Ох, блять, пиздец...",
-											"Нам всем пиздец!",
-											"Уэ-э...",
-											"Бррр.",
-											"Жахнуть бы сто грамчиков...")
-	random_phrases = list("Ох, блять, пиздец...",
-											"Нам всем пиздец!",
-											"Уэ-э...",
-											"Бррр.",
-											"Жахнуть бы сто грамчиков...")
-	answer_phrases = list("Ох, блять, пиздец...",
-											"Нам всем пиздец!",
-											"Уэ-э...",
-											"Бррр.",
-											"Жахнуть бы сто грамчиков...")
-	help_phrases = list("ААаа!",
-											"У-ААА!!",
-											"Что за хуета? Где моя водка?!",
-											"Говно!",
-											"Жопа!",
-											"Хой!")
+	female_phrases = list("Fuck, shit, daa-amn...",
+											"We're fucked!",
+											"Grubrhggsmm...",
+											"Brrr.",
+											"Drunk...")
+	neutral_phrases = list("Fuck, shit, daa-amn...",
+											"We're fucked!",
+											"Grubrhggsmm...",
+											"Brrr.",
+											"Drunk...")
+	random_phrases = list("Fuck, shit, daa-amn...",
+											"We're fucked!",
+											"Grubrhggsmm...",
+											"Brrr.",
+											"Drunk...")
+	answer_phrases = list("Fuck, shit, daa-amn...",
+											"We're fucked!",
+											"Grubrhggsmm...",
+											"Brrr.",
+											"Drunk...")
+	help_phrases = list("Aaaugh!",
+											"AAAAHHHH!!",
+											"Wut de fuck? WHOM'RE YOU?!",
+											"Shit!",
+											"Ass!",
+											"Dick!")
 
 /datum/socialrole/richmale
 	s_tones = list("albino")
@@ -590,26 +588,20 @@
 					/obj/item/stack/dollar/fifty,
 					/obj/item/stack/dollar/hundred)
 
-	male_phrases = list("Что тебе нужно, дружище?",
-											"Я не понимаю, что вам от меня нужно?",
-											"Вы что-то хотели?",
-											"Я спешу, не задерживайте меня пожалуйста.",
-											"Сходи поищи себе компанию в баре...",
-											"Не могу говорить сейчас.",
-											"Хорошая ночь, правда?",
-											"Эхх...",
-											"Даже не знаю, что сказать.",
-											"У меня всё.")
-	neutral_phrases = list("Что тебе нужно, дружище?",
-												"Я не понимаю, что вам от меня нужно?",
-												"Вы что-то хотели?",
-												"Я спешу, не задерживайте меня пожалуйста.",
-												"Сходи поищи себе компанию в баре...",
-												"Не могу говорить сейчас.",
-												"Хорошая ночь, правда?",
-												"Эхх...",
-												"Даже не знаю, что сказать.",
-												"У меня всё.")
+	male_phrases = list("Did you ask something?",
+											"Excuse me?",
+											"What?",
+											"I'm going somewhere important.",
+											"Get lost, peasant...",
+											"Whaa-aat...",
+											"Stop doing that, imbecile.")
+	neutral_phrases = list("Did you ask something?",
+											"Excuse me?",
+											"What?",
+											"I'm going somewhere important.",
+											"Get lost, peasant...",
+											"Whaa-aat...",
+											"Stop doing that, imbecile.")
 	random_phrases = list("Хэй, приятель!",
 												"Эхх, сейчас бы пинту пива...",
 												"В чём дело, друг?",
@@ -624,12 +616,11 @@
 												"Да, точно.",
 												"О'ке-ей...",
 												"Хорошо.")
-	help_phrases = list("О Боже!",
-											"Уйдите, не подходите ко мне!!",
-											"Что же это такое творится?!",
-											"Прекратите!",
-											"Кто-нибудь, помогите!",
-											"Мамочка!")
+	help_phrases = list("What in the god damn?!",
+											"Go away or I will call the cops!!",
+											"What is happening?!",
+											"Stop doing this!",
+											"Someone, call the ambulance!")
 
 /datum/socialrole/richfemale
 	s_tones = list("albino")
@@ -683,26 +674,20 @@
 					/obj/item/stack/dollar/fifty,
 					/obj/item/stack/dollar/hundred)
 
-	female_phrases = list("Что вы задумали?",
-											"Я не понимаю, что вам от меня нужно?",
-											"Вы что-то хотели?",
-											"Я спешу, не задерживайте меня пожалуйста.",
-											"Поищите какую-нибудь другую подружку...",
-											"Не могу говорить сейчас.",
-											"Хорошая ночь, правда?",
-											"Эхх...",
-											"Даже не знаю, что сказать.",
-											"У меня всё.")
-	neutral_phrases = list("Что вы задумали?",
-												"Я не понимаю, что вам от меня нужно?",
-												"Вы что-то хотели?",
-												"Я спешу, не задерживайте меня пожалуйста.",
-												"Поищите какую-нибудь другую подружку...",
-												"Не могу говорить сейчас.",
-												"Хорошая ночь, правда?",
-												"Эхх...",
-												"Даже не знаю, что сказать.",
-												"У меня всё.")
+	female_phrases = list("Did you ask something?",
+											"Excuse me?",
+											"What?",
+											"I'm going somewhere important.",
+											"Get lost, peasant...",
+											"Whaa-aat...",
+											"Stop doing that, imbecile.")
+	neutral_phrases = list("Did you ask something?",
+											"Excuse me?",
+											"What?",
+											"I'm going somewhere important.",
+											"Get lost, peasant...",
+											"Whaa-aat...",
+											"Stop doing that, imbecile.")
 	random_phrases = list("Хэй, пышка!",
 												"Эхх, сейчас бы вина...",
 												"В чём дело?",
@@ -717,12 +702,11 @@
 												"Да, точно.",
 												"О'ке-ей...",
 												"Хорошо.")
-	help_phrases = list("О Боже!",
-											"Уйдите, не подходите ко мне!!",
-											"Что же это такое творится?!",
-											"Прекратите!",
-											"Кто-нибудь, помогите!",
-											"На помощь!")
+	help_phrases = list("What in the god damn?!",
+											"Go away or I will call the cops!!",
+											"What is happening?!",
+											"Stop doing this!",
+											"Someone, call the ambulance!")
 
 /mob/living/carbon/human/npc/bandit
 	frakcja = "City"
@@ -942,23 +926,21 @@
 	pockets = list(/obj/item/vamp/keys/npc,
 					/obj/item/stack/dollar/rand)
 
-	male_phrases = list("Вы что-то хотите приобрести?",
-											"Я могу чем-нибудь помочь?",
-											"Вы что-то хотели?")
-	neutral_phrases = list("Вы что-то хотите приобрести?",
-											"Я могу чем-нибудь помочь?",
-											"Вы что-то хотели?")
-	random_phrases = list("Вам стоит взглянуть, сегодня у нас скидки!",
-												"Вы что-то хотите приобрести?",
-												"Я могу чем-нибудь помочь?",
-												"Вы что-то хотели?")
-	answer_phrases = list("Я просто здесь работаю...")
-	help_phrases = list("О Боже!",
-											"Уйдите, не подходите ко мне!!",
-											"Что же это такое творится?!",
-											"Прекратите!",
-											"Кто-нибудь, помогите!",
-											"Мамочка!")
+	male_phrases = list("Wanna buy something?",
+											"Can I help?",
+											"Hey, wanna buy it?")
+	neutral_phrases = list("Wanna buy something?",
+											"Can I help?",
+											"Hey, wanna buy it?")
+	random_phrases = list("Check this!",
+												"Can I help?",
+												"Hey, wanna buy it?")
+	answer_phrases = list("I just work here...")
+	help_phrases = list("What in the god damn?!",
+											"Go away or I will call the cops!!",
+											"What is happening?!",
+											"Stop doing this!",
+											"Someone, call the ambulance!")
 
 /mob/living/carbon/human/npc/shop
 	frakcja = "City"
@@ -1076,24 +1058,27 @@
 	pockets = list(/obj/item/vamp/keys/police,
 					/obj/item/stack/dollar/rand)
 
-	male_phrases = list("Я слежу за каждым твоим шагом.",
-											"Выглядишь подозрительно...",
-											"У меня есть пара лишних патрон, если хочешь податься в криминал.",
-											"Я здесь на службе у закона.")
-	neutral_phrases = list("Я слежу за каждым твоим шагом.",
-											"Выглядишь подозрительно...",
-											"У меня есть пара лишних патрон, если хочешь податься в криминал.",
-											"Я здесь на службе у закона.",
-											"Не мешайте работе полиции.")
-	random_phrases = list("Не видели подозрительного брюнета в чёрном плаще и бледной кожей?",
-												"Подозрительно тихо здесь...",
-												"Хм?")
-	answer_phrases = list("Я всегда готов защитить невиновных.")
-	help_phrases = list("Руки за голову!",
-											"Стоять не двигаться!!",
-											"Брось оружие!",
-											"Приказываю немедленно остановиться!!",
-											"Это полиция, выходите с поднятыми руками!")
+	male_phrases = list("I see you.",
+											"Looking suspicious...",
+											"I got some bullets if you got some crime-ass ideas.",
+											"I'm the law.",
+											"Have you seen man in black coat with black hair?")
+	neutral_phrases = list("I see you.",
+											"Looking suspicious...",
+											"I got some bullets if you got some crime-ass ideas.",
+											"I'm the law.",
+											"Have you seen man in black coat with black hair?")
+	random_phrases = list("I see you.",
+											"Looking suspicious...",
+											"I got some bullets if you got some crime-ass ideas.",
+											"I'm the law.",
+											"Have you seen man in black coat with black hair?")
+	answer_phrases = list("I'm here to protect you.")
+	help_phrases = list("Lay down!",
+											"Stop right there!!",
+											"Drop your weapon!",
+											"Stop there right now!!",
+											"This is SFPD, stay down!")
 
 /mob/living/carbon/human/npc/police
 	frakcja = "City"
@@ -1183,24 +1168,27 @@
 	pockets = list(/obj/item/vamp/keys/npc,
 					/obj/item/stack/dollar/rand)
 
-	male_phrases = list("Я слежу за каждым твоим шагом.",
-											"Выглядишь подозрительно...",
-											"У меня есть пара лишних патрон, если хочешь податься в криминал.",
-											"Я здесь на службе у закона.")
-	neutral_phrases = list("Я слежу за каждым твоим шагом.",
-											"Выглядишь подозрительно...",
-											"У меня есть пара лишних патрон, если хочешь податься в криминал.",
-											"Я здесь на службе у закона.",
-											"Не мешайте работе полиции.")
-	random_phrases = list("Не видели подозрительного брюнета в чёрном плаще и бледной кожей?",
-												"Подозрительно тихо здесь...",
-												"Хм?")
-	answer_phrases = list("Я всегда готов защитить невиновных.")
-	help_phrases = list("Руки за голову!",
-											"Стоять не двигаться!!",
-											"Брось оружие!",
-											"Приказываю немедленно остановиться!!",
-											"Это полиция, выходите с поднятыми руками!")
+	male_phrases = list("I see you.",
+											"Looking suspicious...",
+											"I got some bullets if you got some crime-ass ideas.",
+											"I'm the law.",
+											"Have you seen man in black coat with black hair?")
+	neutral_phrases = list("I see you.",
+											"Looking suspicious...",
+											"I got some bullets if you got some crime-ass ideas.",
+											"I'm the law.",
+											"Have you seen man in black coat with black hair?")
+	random_phrases = list("I see you.",
+											"Looking suspicious...",
+											"I got some bullets if you got some crime-ass ideas.",
+											"I'm the law.",
+											"Have you seen man in black coat with black hair?")
+	answer_phrases = list("I'm here to protect you.")
+	help_phrases = list("Lay down!",
+											"Stop right there!!",
+											"Drop your weapon!",
+											"Stop there right now!!",
+											"This is SFPD, stay down!")
 
 /mob/living/carbon/human/npc/guard
 	frakcja = "City"
@@ -1310,40 +1298,40 @@
 	uniforms = list(/obj/item/clothing/under/vampire/whore)
 	backpacks = list()
 
-	female_phrases = list("Хочешь поглазеть, пупсик?",
-											"Мм, тебе нравятся эти формы?",
-											"Хочешь поиграть со мной?",
-											"Хи-хи.",
-											"Для тебя любой танец...",
-											"Присаживайся, отдохни.",
-											"Ты такое любишь?",
-											"Ахх...")
-	neutral_phrases = list("Хочешь поглазеть, пупсик?",
-											"Мм, тебе нравятся эти формы?",
-											"Хочешь поиграть со мной?",
-											"Хи-хи.",
-											"Для тебя любой танец...",
-											"Присаживайся, отдохни.",
-											"Ты такое любишь?",
-											"Ахх...")
-	random_phrases = list("Хочешь поглазеть, пупсик?",
-											"Мм, тебе нравятся эти формы?",
-											"Хочешь поиграть со мной?",
-											"Хи-хи.",
-											"Для тебя любой танец...",
-											"Присаживайся, отдохни.",
-											"Ты такое любишь?",
-											"Ахх...")
-	answer_phrases = list("Это будет стоить...",
-												"Хи-хи-хи.",
-												"Двадцать баксов.",
-												"Без проблем, пупсик...")
-	help_phrases = list("О Боже!",
-											"Уйдите, не подходите ко мне!!",
-											"Что же это такое творится?!",
-											"Прекратите!",
-											"Кто-нибудь, помогите!",
-											"На помощь!")
+	female_phrases = list("Wanna touch this boobies?",
+											"Do you like my butt?",
+											"Wanna play?",
+											"He-he.",
+											"Any dance for you...",
+											"Sit and rest.",
+											"Do you like this?",
+											"Ahh...")
+	neutral_phrases = list("Wanna touch this boobies?",
+											"Do you like my butt?",
+											"Wanna play?",
+											"He-he.",
+											"Any dance for you...",
+											"Sit and rest.",
+											"Do you like this?",
+											"Ahh...")
+	random_phrases = list("Wanna touch this boobies?",
+											"Do you like my butt?",
+											"Wanna play?",
+											"He-he.",
+											"Any dance for you...",
+											"Sit and rest.",
+											"Do you like this?",
+											"Ahh...")
+	answer_phrases = list("That'll cost...",
+												"He-he-he.",
+												"Twenty bucks.",
+												"Sure you do...")
+	help_phrases = list("Oh God!",
+											"Ahhh!!",
+											"I'm just a strip worker!",
+											"Stop!",
+											"Help me!",
+											"Help!")
 
 /mob/living/carbon/human/npc/stripper
 	frakcja = "City"
@@ -1383,19 +1371,19 @@
 	uniforms = list(/obj/item/clothing/under/vampire/emo)
 	pockets = list(/obj/item/stack/dollar/rand)
 
-	male_phrases = list("Псс... Покупай...",
-											"Эй... Бродяга...",
-											"Смотри на мой товар...")
-	neutral_phrases = list("Псс... Покупай...",
-											"Эй... Бродяга...",
-											"Смотри на мой товар...")
-	random_phrases = list("Псс... Покупай...",
-											"Эй... Бродяга...",
-											"Смотри на мой товар...")
-	answer_phrases = list("Ничего личного...")
-	help_phrases = list("Копы!",
-											"Пошёл нахуй, это моя точка!!",
-											"Легавые?!")
+	male_phrases = list("Pss... wanna try some weed?",
+											"Hey, vagabond...",
+											"Check this shit...")
+	neutral_phrases = list("Pss... wanna try some weed?",
+											"Hey, vagabond...",
+											"Check this shit...")
+	random_phrases = list("Pss... wanna try some weed?",
+											"Hey, vagabond...",
+											"Check this shit...")
+	answer_phrases = list("Nothing personal...")
+	help_phrases = list("Cops!",
+											"Fuck the police!!",
+											"COPS?!!")
 
 /mob/living/carbon/human/npc/illegal
 	frakcja = "City"

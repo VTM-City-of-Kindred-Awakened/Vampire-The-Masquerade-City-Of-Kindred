@@ -138,6 +138,80 @@
 	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
 	fire_sound_volume = 75
 
+/obj/item/ammo_box/magazine/vamp45acp
+	name = "pistol magazine (.45 ACP)"
+	icon = 'code/modules/ziggers/ammo.dmi'
+//	lefthand_file = 'code/modules/ziggers/righthand.dmi'
+//	righthand_file = 'code/modules/ziggers/lefthand.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	icon_state = "m1911"
+	ammo_type = /obj/item/ammo_casing/vampire/c44
+	caliber = CALIBER_45
+	max_ammo = 8
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+
+/obj/item/gun/ballistic/automatic/vampire/m1911
+	name = "\improper Colt 1911"
+	desc = "A reliable .45 ACP handgun."
+	icon_state = "m1911"
+	inhand_icon_state = "m1911"
+	worn_icon_state = "m1911"
+	w_class = WEIGHT_CLASS_SMALL
+	mag_type = /obj/item/ammo_box/magazine/vamp45acp
+	burst_size = 1
+	fire_delay = 0
+	actions_types = list()
+	bolt_type = BOLT_TYPE_LOCKING
+	fire_sound = 'code/modules/ziggers/sounds/m1911.ogg'
+	dry_fire_sound = 'sound/weapons/gun/pistol/dry_fire.ogg'
+	load_sound = 'sound/weapons/gun/pistol/mag_insert.ogg'
+	load_empty_sound = 'sound/weapons/gun/pistol/mag_insert.ogg'
+	eject_sound = 'sound/weapons/gun/pistol/mag_release.ogg'
+	eject_empty_sound = 'sound/weapons/gun/pistol/mag_release.ogg'
+	vary_fire_sound = FALSE
+	rack_sound = 'sound/weapons/gun/pistol/rack_small.ogg'
+	lock_back_sound = 'sound/weapons/gun/pistol/lock_small.ogg'
+	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
+	fire_sound_volume = 100
+
+/obj/item/ammo_box/magazine/glock9mm
+	name = "automatic pistol magazine (9mm)"
+	icon = 'code/modules/ziggers/ammo.dmi'
+//	lefthand_file = 'code/modules/ziggers/righthand.dmi'
+//	righthand_file = 'code/modules/ziggers/lefthand.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	icon_state = "glock19"
+	ammo_type = /obj/item/ammo_casing/vampire/c44
+	caliber = CALIBER_45
+	max_ammo = 15
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+
+/obj/item/gun/ballistic/automatic/vampire/glock19
+	name = "\improper Glock 19"
+	desc = "Very fast 9mm handgun."
+	icon_state = "glock19"
+	inhand_icon_state = "glock19"
+	worn_icon_state = "glock19"
+	w_class = WEIGHT_CLASS_SMALL
+	mag_type = /obj/item/ammo_box/magazine/glock9mm
+	burst_size = 5
+	fire_delay = 0
+	actions_types = list()
+	bolt_type = BOLT_TYPE_LOCKING
+	fire_sound = 'code/modules/ziggers/sounds/glock.ogg'
+	dry_fire_sound = 'sound/weapons/gun/pistol/dry_fire.ogg'
+	load_sound = 'sound/weapons/gun/pistol/mag_insert.ogg'
+	load_empty_sound = 'sound/weapons/gun/pistol/mag_insert.ogg'
+	eject_sound = 'sound/weapons/gun/pistol/mag_release.ogg'
+	eject_empty_sound = 'sound/weapons/gun/pistol/mag_release.ogg'
+	vary_fire_sound = FALSE
+	rack_sound = 'sound/weapons/gun/pistol/rack_small.ogg'
+	lock_back_sound = 'sound/weapons/gun/pistol/lock_small.ogg'
+	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
+	fire_sound_volume = 100
+
 /obj/item/ammo_box/magazine/vamp9mm
 	name = "uzi magazine (9mm)"
 	icon = 'code/modules/ziggers/ammo.dmi'
@@ -164,6 +238,34 @@
 	mag_display = TRUE
 	rack_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 	fire_sound = 'code/modules/ziggers/sounds/uzi.ogg'
+
+/obj/item/ammo_box/magazine/vamp9mp5
+	name = "mp5 magazine (9mm)"
+	icon = 'code/modules/ziggers/ammo.dmi'
+//	lefthand_file = 'code/modules/ziggers/righthand.dmi'
+//	righthand_file = 'code/modules/ziggers/lefthand.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	icon_state = "mp5"
+	ammo_type = /obj/item/ammo_casing/vampire/c9mm
+	caliber = CALIBER_9MM
+	max_ammo = 25
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+
+/obj/item/gun/ballistic/automatic/vampire/mp5
+	name = "\improper HK MP5"
+	desc = "A lightweight, burst-fire submachine gun, for when you really want to do some dirty cool job. Uses 9mm rounds."
+	icon_state = "mp5"
+	icon = 'code/modules/ziggers/48x32weapons.dmi'
+	inhand_icon_state = "mp5"
+	worn_icon_state = "mp5"
+	mag_type = /obj/item/ammo_box/magazine/vamp9mp5
+	burst_size = 3
+	bolt_type = BOLT_TYPE_OPEN
+	show_bolt_icon = FALSE
+	mag_display = TRUE
+	rack_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
+	fire_sound = 'code/modules/ziggers/sounds/mp5.ogg'
 
 /obj/item/ammo_box/magazine/vamp556
 	name = "carbine magazine (5.56mm)"
@@ -196,6 +298,37 @@
 	fire_sound = 'code/modules/ziggers/sounds/rifle.ogg'
 	masquerade_violating = TRUE
 
+/obj/item/ammo_box/magazine/vamp545
+	name = "rifle magazine (5.45mm)"
+	icon = 'code/modules/ziggers/ammo.dmi'
+//	lefthand_file = 'code/modules/ziggers/righthand.dmi'
+//	righthand_file = 'code/modules/ziggers/lefthand.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	icon_state = "ak"
+	ammo_type = /obj/item/ammo_casing/vampire/c545mm
+	caliber = CALIBER_556
+	max_ammo = 30
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+
+/obj/item/gun/ballistic/automatic/vampire/ak74
+	name = "\improper Kalashnikov's Automatic Rifle 74"
+	desc = "Pretty old, but also easy fireable and cleanable by vodka."
+	icon = 'code/modules/ziggers/48x32weapons.dmi'
+	icon_state = "ak74"
+	inhand_icon_state = "ak74"
+	worn_icon_state = "ak74"
+	w_class = WEIGHT_CLASS_BULKY
+	mag_type = /obj/item/ammo_box/magazine/vamp545
+	burst_size = 3
+	fire_delay = 2
+	spread = 5
+	bolt_type = BOLT_TYPE_OPEN
+	show_bolt_icon = FALSE
+	mag_display = TRUE
+	fire_sound = 'code/modules/ziggers/sounds/ak.ogg'
+	masquerade_violating = TRUE
+
 /obj/item/ammo_box/magazine/vampaug
 	name = "AUG magazine (5.56mm)"
 	icon = 'code/modules/ziggers/ammo.dmi'
@@ -226,6 +359,36 @@
 	mag_display = TRUE
 	fire_sound = 'code/modules/ziggers/sounds/rifle.ogg'
 	masquerade_violating = TRUE
+
+/obj/item/ammo_box/magazine/vampthompson
+	name = "tommy gun magazine (.45 ACP)"
+	icon = 'code/modules/ziggers/ammo.dmi'
+//	lefthand_file = 'code/modules/ziggers/righthand.dmi'
+//	righthand_file = 'code/modules/ziggers/lefthand.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	icon_state = "thompson"
+	ammo_type = /obj/item/ammo_casing/vampire/c45acp
+	caliber = CALIBER_45
+	max_ammo = 50
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+
+/obj/item/gun/ballistic/automatic/vampire/thompson
+	name = "\improper Thompson Submachine Gun"
+	desc = "\"Mamma-mia, Mercurio! Yu shot 'im in da head, he can't speek now! Yu guappo, Mercurio, yu naturale guappo!\""
+	icon = 'code/modules/ziggers/48x32weapons.dmi'
+	icon_state = "thompson"
+	inhand_icon_state = "thompson"
+	worn_icon_state = "thompson"
+	w_class = WEIGHT_CLASS_NORMAL
+	mag_type = /obj/item/ammo_box/magazine/vampthompson
+	burst_size = 10
+	fire_delay = 1
+	spread = 5
+	bolt_type = BOLT_TYPE_OPEN
+	show_bolt_icon = FALSE
+	mag_display = TRUE
+	fire_sound = 'code/modules/ziggers/sounds/thompson.ogg'
 
 /obj/item/ammo_box/magazine/internal/vampire/sniper
 	name = "sniper rifle internal magazine"

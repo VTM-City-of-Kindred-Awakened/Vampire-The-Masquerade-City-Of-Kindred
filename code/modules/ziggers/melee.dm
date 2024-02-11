@@ -69,7 +69,7 @@
 	icon = 'code/modules/ziggers/48x32weapons.dmi'
 	icon_state = "katana"
 	flags_1 = CONDUCT_1
-	force = 90
+	force = 60
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BELT
@@ -90,7 +90,7 @@
 	desc = "There ain't a skull in the league that can withstand a swatter."
 	icon = 'code/modules/ziggers/weapons.dmi'
 	icon_state = "baseball"
-	force = 50
+	force = 30
 	wound_bonus = -10
 	throwforce = 10
 	attack_verb_continuous = list("beats", "smacks")
@@ -110,7 +110,7 @@
 	name = "ripped arm"
 	desc = "Wow, that was someone's arm."
 	icon_state = "hand"
-	force = 70
+	force = 50
 	masquerade_violating = TRUE
 
 /obj/item/melee/vampirearms/tire
@@ -118,7 +118,7 @@
 	desc = "Can be used as a tool or as a weapon."
 	icon = 'code/modules/ziggers/weapons.dmi'
 	icon_state = "pipe"
-	force = 50
+	force = 20
 	wound_bonus = -10
 	throwforce = 10
 	attack_verb_continuous = list("beats", "smacks")
@@ -131,7 +131,7 @@
 	desc = "Don't cut yourself accidentely."
 	icon = 'code/modules/ziggers/weapons.dmi'
 	icon_state = "knife"
-	force = 50
+	force = 30
 	wound_bonus = -10
 	throwforce = 10
 	attack_verb_continuous = list("slashes", "cuts")
@@ -304,7 +304,7 @@
 	icon_state = "shovel"
 	name = "shovel"
 	desc = "Great weapon against mortal or immortal."
-	force = 50
+	force = 40
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("attacks", "chops", "tears", "beats")
@@ -327,7 +327,7 @@
 	desc = "More instrument, than a weapon. Instrumentally cuts heads..."
 	icon = 'code/modules/ziggers/weapons.dmi'
 	icon_state = "kosa"
-	force = 60
+	force = 50
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = null
 	block_chance = 30
@@ -344,7 +344,7 @@
 /obj/item/melee/vampirearms/katana/kosa/egorium
 	name = "demonic scythe"
 	icon_state = "egorium"
-	force = 70
+	force = 60
 
 /obj/item/melee/vampirearms/katana/kosa/egorium/Initialize()
 	. = ..()
@@ -355,7 +355,7 @@
 	icon_state = "rock0"
 	name = "electric guitar"
 	desc = "You are pretty fly for a white guy..."
-	force = 50
+	force = 40
 	throwforce = 25
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
@@ -419,7 +419,7 @@
 	icon = 'code/modules/ziggers/weapons.dmi'
 	lefthand_file = 'code/modules/ziggers/righthand.dmi'
 	righthand_file = 'code/modules/ziggers/lefthand.dmi'
-	force = 50
+	force = 20
 	throwforce = 40
 	throw_speed = 2
 	throw_range = 3

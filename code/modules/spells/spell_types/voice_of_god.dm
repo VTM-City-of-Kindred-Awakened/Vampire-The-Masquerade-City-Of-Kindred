@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/voice_of_god
-	name = "Voice of God"
+	name = "Voice of Domination"
 	desc = "Speak with an incredibly compelling voice, forcing listeners to obey your commands."
 	charge_max = 1200 //variable
 	cooldown_min = 0
@@ -23,7 +23,7 @@
 /obj/effect/proc_holder/spell/voice_of_god/choose_targets(mob/user = usr)
 	perform(user=user)
 /obj/effect/proc_holder/spell/voice_of_god/perform(list/targets, recharge = 1, mob/user = usr)
-	command = input(user, "Speak with the Voice of God", "Command")
+	command = input(user, "Speak with the Voice of Domination", "Command")
 	if(QDELETED(src) || QDELETED(user))
 		return
 	if(!command)

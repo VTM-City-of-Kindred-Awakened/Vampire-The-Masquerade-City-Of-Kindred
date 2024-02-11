@@ -34,6 +34,8 @@
 #define CALIBER_75			".75"
 /// The caliber used by [one revolver variant][/obj/item/gun/ballistic/revolver/nagant].
 #define CALIBER_N762		"n762"
+
+#define CALIBER_545		"545mm"
 /// The caliber used by the the M-90gl Carbine, and NT-ARG 'Boarder'.
 #define CALIBER_A556		"a556"
 /// The caliber used by bolt action rifles.

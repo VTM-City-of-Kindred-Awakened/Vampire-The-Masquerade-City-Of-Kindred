@@ -19,3 +19,67 @@
 	else
 		to_chat(src, "Nowhere to jump to!", confidential = TRUE)
 		return
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/atom
+
+/turf
+/object
+/mob
+/area
+
+
+/datum/discipline
+	var/name = "Otrezat huy"
+	var/desc = "Otrezaet huy"
+	var/sound = 'sound/huy.ogg'
+
+/atom/hud/disciplina
+	icon = 'icon/huy.dmi'
+	position = NORTH:1|SOUTH:1
+
+/atom/hud/OnClick(client/C)
+	kill.nigger()
+
+/atom/hud/disciplina/OnClick(client/C)
+	. = ..()
+	playsound(C.loc, 'sound/hallucinations/huy.ogg', 100, FALSE)
+	killniger(C)
+
+/atom
+	var/huy
+
+/atom/proc/killnigger(var/mob/nigger)
+	nigger.health = 0

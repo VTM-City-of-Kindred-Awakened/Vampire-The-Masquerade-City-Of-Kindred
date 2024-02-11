@@ -45,6 +45,10 @@
 	name = "9mm bullet"
 	damage = 25
 
+/obj/projectile/beam/beam_rifle/vampire/vamp45acp
+	name = ".45 ACP bullet"
+	damage = 25
+
 /obj/projectile/beam/beam_rifle/vampire/vamp44
 	name = ".44 bullet"
 	damage = 35
@@ -52,6 +56,11 @@
 
 /obj/projectile/beam/beam_rifle/vampire/vamp556mm
 	name = "5.56mm bullet"
+	damage = 45
+	armour_penetration = 30
+
+/obj/projectile/beam/beam_rifle/vampire/vamp545mm
+	name = "5.45mm bullet"
 	damage = 45
 	armour_penetration = 30
 
@@ -96,6 +105,14 @@
 	icon_state = "9"
 	base_iconstate = "9"
 
+/obj/item/ammo_casing/vampire/c45acp
+	name = ".45 ACP bullet casing"
+	desc = "A .45 ACP bullet casing."
+	caliber = CALIBER_45
+	projectile_type = /obj/projectile/beam/beam_rifle/vampire/vamp45acp
+	icon_state = "45"
+	base_iconstate = "45"
+
 /obj/item/ammo_casing/vampire/c44
 	name = ".44 bullet casing"
 	desc = "A .44 bullet casing."
@@ -111,6 +128,14 @@
 	projectile_type = /obj/projectile/beam/beam_rifle/vampire/vamp556mm
 	icon_state = "556"
 	base_iconstate = "556"
+
+/obj/item/ammo_casing/vampire/c545mm
+	name = "5.45mm bullet casing"
+	desc = "A 5.45mm bullet casing."
+	caliber = CALIBER_545
+	projectile_type = /obj/projectile/beam/beam_rifle/vampire/vamp545mm
+	icon_state = "545"
+	base_iconstate = "545"
 
 /obj/item/ammo_casing/vampire/c556mm/incendiary
 	projectile_type = /obj/projectile/beam/beam_rifle/vampire/vamp556mm/incendiary
@@ -159,12 +184,19 @@
 
 /obj/item/ammo_box/vampire
 	icon = 'code/modules/ziggers/ammo.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 
 /obj/item/ammo_box/vampire/c9mm
 	name = "ammo box (9mm)"
 	icon_state = "9box"
 	ammo_type = /obj/item/ammo_casing/vampire/c9mm
-	max_ammo = 60
+	max_ammo = 100
+
+/obj/item/ammo_box/vampire/c45acp
+	name = "ammo box (.45 ACP)"
+	icon_state = "45box"
+	ammo_type = /obj/item/ammo_casing/vampire/c45acp
+	max_ammo = 100
 
 /obj/item/ammo_box/vampire/c44
 	name = "ammo box (.44)"
@@ -176,6 +208,12 @@
 	name = "ammo box (5.56)"
 	icon_state = "556box"
 	ammo_type = /obj/item/ammo_casing/vampire/c556mm
+	max_ammo = 60
+
+/obj/item/ammo_box/vampire/c545
+	name = "ammo box (5.45)"
+	icon_state = "545box"
+	ammo_type = /obj/item/ammo_casing/vampire/c545mm
 	max_ammo = 60
 
 /obj/item/ammo_box/vampire/c556/incendiary
