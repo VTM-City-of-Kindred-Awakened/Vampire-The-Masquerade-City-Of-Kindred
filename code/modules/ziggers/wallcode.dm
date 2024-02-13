@@ -432,6 +432,11 @@
 	number_of_variations = 6
 	based_icon_state = "sidewalk_rich"
 
+/turf/open/floor/plating/sidewalk/old
+	icon_state = "sidewalk_old1"
+	number_of_variations = 4
+	based_icon_state = "sidewalk_old"
+
 /turf/open/floor/plating/roofwalk
 	gender = PLURAL
 	name = "roof"

@@ -383,6 +383,14 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	anchored = TRUE
 
+/obj/structure/vamproofwall
+	name = "wall"
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "the_wall"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+
 /obj/structure/hydrant
 	name = "hydrant"
 	desc = "Used for firefighting."

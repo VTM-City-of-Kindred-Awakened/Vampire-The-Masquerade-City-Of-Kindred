@@ -55,3 +55,31 @@
 		else
 			climbing = FALSE
 	..()
+
+
+/obj/transfer_point_vamp
+	icon = 'code/modules/ziggers/props.dmi'
+	icon_state = "matrix_go"
+	name = "transfer point"
+	plane = GAME_PLANE
+	layer = ABOVE_NORMAL_TURF_LAYER
+	anchored = TRUE
+	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	var/obj/transfer_point_vamp/exit
+	var/id = 1
+
+/obj/transfer_point_vamp/Initialize()
+	. = ..()
+	if(!exit)
+		for(var/obj/transfer_point_vamp/T in world)
+			if(T.id == id && T != src)
+				exit = T
+				T.exit = src
+
+/obj/transfer_point_vamp/Bumped(atom/movable/AM)
+	. = ..()
+	var/turf/T = get_step(exit, get_dir(AM, src))
+//	to_chat(world, "Moving from [x] [y] [z] to [exit.x] [exit.y] [exit.z]")
+//	to_chat(world, "Actually [T.x] [T.y] [T.z]")
+	AM.forceMove(T)

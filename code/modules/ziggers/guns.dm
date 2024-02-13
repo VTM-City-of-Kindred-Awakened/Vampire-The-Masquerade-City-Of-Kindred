@@ -196,8 +196,8 @@
 	worn_icon_state = "glock19"
 	w_class = WEIGHT_CLASS_SMALL
 	mag_type = /obj/item/ammo_box/magazine/glock9mm
-	burst_size = 5
-	fire_delay = 0
+	burst_size = 3
+	fire_delay = 1
 	actions_types = list()
 	bolt_type = BOLT_TYPE_LOCKING
 	fire_sound = 'code/modules/ziggers/sounds/glock.ogg'

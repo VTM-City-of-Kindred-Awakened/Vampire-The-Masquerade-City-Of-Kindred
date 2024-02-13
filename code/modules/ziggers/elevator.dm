@@ -33,9 +33,9 @@
 	D.riding = TRUE
 	say("Moving...")
 	spawn(50)
-		for(var/mob/living/L in view(3, src))
+		for(var/mob/living/L in range(1, src))
 			L.forceMove(D.loc)
-		for(var/obj/item/B in view(3, src))
+		for(var/obj/item/B in range(1, src))
 			B.forceMove(D.loc)
 		for(var/obj/elevator_door/V in D.doors)
 			V.open()
@@ -65,7 +65,7 @@
 			if(W.id == id)
 				U = W
 				W.D = src
-	for(var/obj/elevator_door/E in range(src, 4))
+	for(var/obj/elevator_door/E in range(src, 3))
 		doors += E
 		if(!E.density)
 			here = TRUE
@@ -81,9 +81,9 @@
 	U.riding = TRUE
 	say("Moving...")
 	spawn(50)
-		for(var/mob/living/L in view(3, src))
+		for(var/mob/living/L in range(1, src))
 			L.forceMove(U.loc)
-		for(var/obj/item/B in view(3, src))
+		for(var/obj/item/B in range(1, src))
 			B.forceMove(U.loc)
 		for(var/obj/elevator_door/V in U.doors)
 			V.open()
@@ -105,11 +105,11 @@
 
 /obj/elevator_button/Initialize()
 	. = ..()
-	for(var/obj/elevator_button_up/W in range(7, src))
+	for(var/obj/elevator_button_up/W in range(3, src))
 		if(W)
 			if(W.id == id)
 				O = W
-	for(var/obj/elevator_button_down/D in range(7, src))
+	for(var/obj/elevator_button_down/D in range(3, src))
 		if(D)
 			if(D.id == id)
 				I = D
@@ -125,9 +125,9 @@
 			I.riding = TRUE
 			I.U.riding = TRUE
 			spawn(50)
-				for(var/mob/living/L in view(3, I.U))
+				for(var/mob/living/L in range(1, I.U))
 					L.forceMove(I.loc)
-				for(var/obj/item/B in view(3, I.U))
+				for(var/obj/item/B in range(1, I.U))
 					B.forceMove(I.loc)
 				for(var/obj/elevator_door/V in I.doors)
 					V.open()
@@ -143,9 +143,9 @@
 			O.riding = TRUE
 			O.D.riding = TRUE
 			spawn(50)
-				for(var/mob/living/L in view(3, O.D))
+				for(var/mob/living/L in range(1, O.D))
 					L.forceMove(O.loc)
-				for(var/obj/item/B in view(3, O.D))
+				for(var/obj/item/B in range(1, O.D))
 					B.forceMove(O.loc)
 				for(var/obj/elevator_door/V in O.doors)
 					V.open()

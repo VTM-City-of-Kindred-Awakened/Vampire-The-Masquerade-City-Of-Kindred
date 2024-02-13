@@ -3653,6 +3653,7 @@
 #include "code\modules\ziggers\wallcode.dm"
 #include "code\modules\ziggers\weather.dm"
 #include "code\modules\ziggers\witness.dm"
+#include "code\modules\ziggers\za_rozziu.dm"
 #include "code\modules\zombie\items.dm"
 #include "code\modules\zombie\organs.dm"
 #include "interface\interface.dm"

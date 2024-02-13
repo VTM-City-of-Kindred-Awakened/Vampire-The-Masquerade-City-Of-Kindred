@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/zombie
 	name = "Shambling Corpse"
-	desc = "When there is no more room in hell, the dead will walk on Earth."
+	desc = "When there is no more room in Hell, the dead will walk on Earth."
 	icon = 'code/modules/ziggers/mobs.dmi'
 	icon_state = "zombie"
 	icon_living = "zombie"
@@ -23,10 +23,61 @@
 	bloodpool = 0
 	maxbloodpool = 0
 	speed = 1
+	AIStatus = AI_OFF
+	var/mob/living/target_to_zombebe
 
 /mob/living/simple_animal/hostile/zombie/Destroy()
 	. = ..()
 	SSgraveyard.alive_zombies = max(0, SSgraveyard.alive_zombies-1)
+
+/mob/living/simple_animal/hostile/zombie/Initialize()
+	. = ..()
+	GLOB.zombie_list += src
+
+/mob/living/simple_animal/hostile/zombie/proc/handle_automated_patriotification()
+	if(target_to_zombebe)
+		if(get_dist(src, target_to_zombebe) > 7)
+			target_to_zombebe = null
+		else
+			var/totalshit = 1
+			if(total_multiplicative_slowdown() > 0)
+				totalshit = total_multiplicative_slowdown()
+
+			var/reqsteps = round((SSzombiepool.next_fire-world.time)/totalshit)
+			walk_to(src, target_to_zombebe, reqsteps, total_multiplicative_slowdown())
+			if(get_dist(src, target_to_zombebe) <= 1)
+				ClickOn(target_to_zombebe)
+			//code to attack pepol
+	else
+		//code to find target
+		for(var/mob/living/L in view(4, src))
+			if(!iszomboid(L))
+				target_to_zombebe = L
+		//else, if we have no target :((( NO ONE TO BITE... BRAAAAAAAAAHH(ins)... FUCK IM LOOKING FOR GATE TO BRRRRRRR
+		if(!target_to_zombebe)
+			if(GLOB.vampgate)
+				var/obj/structure/vampgate/V = GLOB.vampgate
+				if(get_area(V) == get_area(src))
+					var/totalshit = 1
+					if(total_multiplicative_slowdown() > 0)
+						totalshit = total_multiplicative_slowdown()
+					var/reqsteps = round((SSzombiepool.next_fire-world.time)/totalshit)
+					walk_to(src, V, reqsteps, total_multiplicative_slowdown())
+					if(get_dist(V, src) <= 1)
+						if(!V.density)
+							if(prob(20))
+								for(var/mob/living/carbon/human/L in GLOB.player_list)
+									if(L)
+										if(L.mind)
+											if(L.mind.assigned_role == "Graveyard Keeper")
+												if(L.client)
+													if(istype(get_area(L), /area/vtm/graveyard))
+														L.AdjustMasquerade(-1)
+														SSgraveyard.total_bad += 1
+								qdel(src)
+						else
+							V.punched()
+							do_attack_animation(V)
 
 /mob/living/simple_animal/hostile/beastmaster/giovanni_zombie
 	name = "Shambling Corpse"

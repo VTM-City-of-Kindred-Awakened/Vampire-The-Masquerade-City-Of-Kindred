@@ -1,12 +1,14 @@
 /mob/living/carbon/human/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	. = ..()
 	if(message)
-		if(istype(loc, /obj/effect/dummy/chameleon))
-			var/obj/effect/dummy/chameleon/C = loc
-			C.say("[message]")
-			return
-		for(var/mob/living/carbon/human/H in GLOB.auspex_list)
-			if(H)
-				to_chat(H, "<b>[name]</b> says, \"[message]\"")
+//		if(istype(loc, /obj/effect/dummy/chameleon))
+//			var/obj/effect/dummy/chameleon/C = loc
+//			C.say("[message]")
+//			return
+		if(length(GLOB.auspex_list))
+			for(var/mob/living/carbon/human/H in GLOB.auspex_list)
+				if(H)
+					to_chat(H, "<span class='scream_away'><b>[name]</b> says, \"[message]\"</span>")
 		if(prob(25))
 			if(iskindred(src))
 				if(clane)
@@ -15,7 +17,25 @@
 							if(H)
 //							if(H != src)
 								to_chat(H, "<span class='ghostalert'>[message]</span>")
-	..()
+		var/ending = copytext_char(message, -1)
+		var/list/message_mods = list()
+		message = get_message_mods(message, message_mods)
+		if(message_mods[WHISPER_MODE] != MODE_WHISPER)
+			if(ending == "?")
+				if(gender == FEMALE)
+					playsound(get_turf(src), pick('code/modules/ziggers/sounds/female_ask1.ogg', 'code/modules/ziggers/sounds/female_ask2.ogg'), 75, TRUE)
+				else
+					playsound(get_turf(src), pick('code/modules/ziggers/sounds/male_ask1.ogg', 'code/modules/ziggers/sounds/male_ask2.ogg'), 75, TRUE)
+			else if(ending == "!")
+				if(gender == FEMALE)
+					playsound(get_turf(src), pick('code/modules/ziggers/sounds/female_yell1.ogg', 'code/modules/ziggers/sounds/female_yell2.ogg'), 100, TRUE)
+				else
+					playsound(get_turf(src), pick('code/modules/ziggers/sounds/male_yell1.ogg', 'code/modules/ziggers/sounds/male_yell2.ogg'), 100, TRUE)
+			else
+				if(gender == FEMALE)
+					playsound(get_turf(src), 'code/modules/ziggers/sounds/female_speak.ogg', 75, TRUE)
+				else
+					playsound(get_turf(src), 'code/modules/ziggers/sounds/male_speak.ogg', 75, TRUE)
 
 /obj/item/chameleon
 	name = "Vicissitude Projector"
