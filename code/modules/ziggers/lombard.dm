@@ -70,9 +70,15 @@
 	cost = 50
 
 /obj/item/weedseed
+	illegal = TRUE
 	cost = 50
 /obj/item/weedpack
+	illegal = TRUE
 	cost = 50
+
+/obj/item/reagent_containers/food/drinks/meth
+	illegal = TRUE
+	cost = 300
 
 /obj/item/clothing/under/vampire
 	cost = 10

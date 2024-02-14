@@ -146,7 +146,7 @@
 	worn_icon = 'code/modules/ziggers/worn.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 	icon_state = "m1911"
-	ammo_type = /obj/item/ammo_casing/vampire/c44
+	ammo_type = /obj/item/ammo_casing/vampire/c45acp
 	caliber = CALIBER_45
 	max_ammo = 8
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
