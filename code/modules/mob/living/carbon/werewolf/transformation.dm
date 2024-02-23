@@ -22,23 +22,6 @@
 
 /atom/transformation/Initialize()
 	. = ..()
-	if(isliving(loc))
-		var/mob/living/L = loc
-		if(L.key)
-			form_datum.pref_transition("[L.key]")
-		if(istype(loc, /mob/living/carbon/werewolf/lupus))
-			lupus_form = loc
-		if(istype(loc, /mob/living/carbon/werewolf/crinos))
-			crinos_form = loc
-		if(istype(loc, /mob/living/carbon/human))
-			human_form = loc
-
-		if(!human_form)
-			human_form = new(src)
-		if(!crinos_form)
-			crinos_form = new(src)
-		if(!lupus_form)
-			lupus_form = new(src)
 
 /atom/transformation/proc/trans_gender(mob/trans, form)
 	var/current_loc = get_turf(owner)
