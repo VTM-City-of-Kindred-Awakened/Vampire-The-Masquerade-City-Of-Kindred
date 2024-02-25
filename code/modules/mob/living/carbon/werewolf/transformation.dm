@@ -13,6 +13,7 @@
 	return
 
 /atom/transformation
+	var/mob/living/carbon/owner
 	var/datum/weretransing/form_datum
 
 	var/mob/living/carbon/human/human_form
@@ -21,35 +22,25 @@
 
 /atom/transformation/Initialize()
 	. = ..()
-	if(isliving(loc))
-		var/mob/living/L = loc
-		if(L.key)
-			form_datum.pref_transition("[L.key]")
-		if(istype(loc, /mob/living/carbon/werewolf/lupus))
-			lupus_form = loc
-		if(istype(loc, /mob/living/carbon/werewolf/crinos))
-			crinos_form = loc
-		if(istype(loc, /mob/living/carbon/human))
-			human_form = loc
 
-		if(!human_form)
-			human_form = new(src)
-		if(!crinos_form)
-			crinos_form = new(src)
-		if(!lupus_form)
-			lupus_form = new(src)
-
-/datum/weretransing/proc/trans_to(var/mob/client/C, var/new_form)
-	if(!C)
-		return
-
-	switch(new_form)
-		if("Human")
-			if(istype(C.loc, /mob/living/carbon/werewolf/lupus))
-			if(istype(C.loc, /mob/living/carbon/werewolf/crinos))
+/atom/transformation/proc/trans_gender(mob/trans, form)
+	var/current_loc = get_turf(owner)
+	switch(form)
 		if("Lupus")
-			if(istype(C.loc, /mob/living/carbon/human))
-			if(istype(C.loc, /mob/living/carbon/werewolf/crinos))
+			if(trans == lupus_form)
+				return
+			lupus_form.forceMove(current_loc)
+			trans.forceMove(src)
+			lupus_form.key = trans.key
 		if("Crinos")
-			if(istype(C.loc, /mob/living/carbon/werewolf/lupus))
-			if(istype(C.loc, /mob/living/carbon/human))
+			if(trans == crinos_form)
+				return
+			crinos_form.forceMove(current_loc)
+			trans.forceMove(src)
+			crinos_form.key = trans.key
+		if("Human")
+			if(trans == human_form)
+				return
+			human_form.forceMove(current_loc)
+			trans.forceMove(src)
+			human_form.key = trans.key
