@@ -530,9 +530,10 @@
 
 /obj/effect/decal/gut_floor/Initialize()
 	. = ..()
-	var/turf/open/T = get_turf(src)
-	if(T)
-		T.slowdown = -1
+	if(isopenturf(get_turf(src)))
+		var/turf/open/T = get_turf(src)
+		if(T)
+			T.slowdown = 1
 
 /obj/effect/decal/gut_floor/Destroy()
 	. = ..()

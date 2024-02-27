@@ -5,17 +5,20 @@
 	pass_flags = PASSTABLE
 	butcher_results = list(/obj/item/food/meat/slab = 5)
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
-	hud_type = /datum/hud/alien
+	hud_type = /datum/hud/werewolf
 	limb_destroyer = 1
+	has_limbs = 0
+//	dextrous = FALSE
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	bodyparts = list(
-		/obj/item/bodypart/chest,
-		/obj/item/bodypart/head,
-		/obj/item/bodypart/r_arm,
-		/obj/item/bodypart/r_leg,
-		/obj/item/bodypart/l_leg,
-		)
+//	bodyparts = list(
+//		/obj/item/bodypart/chest,
+//		/obj/item/bodypart/head,
+//		/obj/item/bodypart/r_arm,
+//		/obj/item/bodypart/l_arm,
+//		/obj/item/bodypart/r_leg,
+//		/obj/item/bodypart/l_leg,
+//		)
 
 /mob/living/carbon/werewolf/lupus/update_icons()
 	cut_overlays()

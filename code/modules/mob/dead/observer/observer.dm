@@ -105,7 +105,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 				name = random_unique_name(gender)
 
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
-
 		set_suicide(body.suiciding) // Transfer whether they committed suicide.
 
 //		if(ishuman(body))
@@ -118,6 +117,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 //				facial_hair_color = brighten_color(body_human.facial_hair_color)
 
 	update_icon()
+	appearance = body.appearance
+	alpha = 130
 
 	if(!T)
 		var/list/turfs = get_area_turfs(/area/shuttle/arrival)
@@ -328,6 +329,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(updatedir)
 		setDir(direct)//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
 	var/oldloc = loc
+
+	dir = get_dir(oldloc, NewLoc)
 
 	if(glide_size_override)
 		set_glide_size(glide_size_override)

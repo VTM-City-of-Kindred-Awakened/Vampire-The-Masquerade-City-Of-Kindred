@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //сюд�
 //		H.hairstyle = "Bald"
 //		H.update_hair()
 
-/mob/living/carbon/human
+/mob/living/carbon
 	var/friend_name
 	var/enemy_name
 	var/lover_name

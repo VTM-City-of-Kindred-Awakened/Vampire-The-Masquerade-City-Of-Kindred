@@ -363,11 +363,11 @@
 /obj/item/ammo_box/magazine/vampthompson
 	name = "tommy gun magazine (.45 ACP)"
 	icon = 'code/modules/ziggers/ammo.dmi'
+	icon_state = "thompson"
 //	lefthand_file = 'code/modules/ziggers/righthand.dmi'
 //	righthand_file = 'code/modules/ziggers/lefthand.dmi'
 	worn_icon = 'code/modules/ziggers/worn.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
-	icon_state = "thompson"
 	ammo_type = /obj/item/ammo_casing/vampire/c45acp
 	caliber = CALIBER_45
 	max_ammo = 50

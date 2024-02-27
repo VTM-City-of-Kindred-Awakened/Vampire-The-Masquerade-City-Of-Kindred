@@ -274,7 +274,7 @@
 	icon = 'code/modules/ziggers/props.dmi'
 	icon_state = "box_take"
 	plane = GAME_PLANE
-	layer = CAR_LAYER
+	layer = BELOW_OBJ_LAYER
 	anchored = TRUE
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
@@ -283,7 +283,9 @@
 /obj/structure/cargo_take/attack_hand(mob/user)
 	if(last_take+30 < world.time)
 		last_take = world.time
-		new /obj/item/cargo_box(loc)
+		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
+		to_chat(user, "<span class='notice'>You take the box from [src].</span>")
+		new /obj/item/cargo_box(get_turf(user))
 		return
 	..()
 
@@ -293,7 +295,7 @@
 	icon = 'code/modules/ziggers/props.dmi'
 	icon_state = "box_put"
 	plane = GAME_PLANE
-	layer = CAR_LAYER
+	layer = BELOW_OBJ_LAYER
 	anchored = TRUE
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
@@ -301,6 +303,8 @@
 /obj/structure/cargo_put/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/cargo_box))
 		qdel(I)
-		new /obj/item/stack/dollar/five(loc)
+		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
+		to_chat(user, "<span class='notice'>You place the box at [src].</span>")
+		new /obj/item/stack/dollar/five(get_turf(user))
 		return
 	..()

@@ -171,7 +171,7 @@
 			G.stored_gasoline = max(0, G.stored_gasoline-gas_to_transfer)
 			gas = min(1000, gas+gas_to_transfer)
 			playsound(loc, 'code/modules/ziggers/sounds/gas_fill.ogg', 25, TRUE)
-			to_chat(user, "<span class='notice'>You transfer [gas_to_transfer] to [src].</span>")
+			to_chat(user, "<span class='notice'>You transfer [gas_to_transfer] fuel to [src].</span>")
 		return
 	if(istype(I, /obj/item/vamp/keys))
 		var/obj/item/vamp/keys/K = I

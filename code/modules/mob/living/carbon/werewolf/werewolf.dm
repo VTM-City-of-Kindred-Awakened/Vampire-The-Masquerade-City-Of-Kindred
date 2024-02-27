@@ -1,3 +1,25 @@
+/mob/living/carbon/werewolf/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	. = ..()
+	if(message)
+//		if(istype(loc, /obj/effect/dummy/chameleon))
+//			var/obj/effect/dummy/chameleon/C = loc
+//			C.say("[message]")
+//			return
+		if(length(GLOB.auspex_list))
+			for(var/mob/living/carbon/human/H in GLOB.auspex_list)
+				if(H)
+					to_chat(H, "<span class='scream_away'><b>[name]</b> says, \"[message]\"</span>")
+//		var/ending = copytext_char(message, -1)
+//		var/list/message_mods = list()
+//		message = get_message_mods(message, message_mods)
+//		if(message_mods[WHISPER_MODE] != MODE_WHISPER)
+//			if(ending == "?")
+//				playsound(get_turf(src), 'code/modules/ziggers/sounds/wolf_ask.ogg', 75, TRUE)
+//			else if(ending == "!")
+//				playsound(get_turf(src), 'code/modules/ziggers/sounds/wolf_yell.ogg', 100, TRUE)
+//			else
+//				playsound(get_turf(src), 'code/modules/ziggers/sounds/wolf_speak.ogg', 75, TRUE)
+
 /mob/living/carbon/werewolf
 	name = "werewolf"
 	icon = 'code/modules/ziggers/werewolf.dmi'
@@ -16,7 +38,7 @@
 	heat_protection = 0.5 // minor heat insulation
 
 	var/leaping = FALSE
-	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
+	gib_type = /obj/effect/decal/cleanable/blood/gibs
 	unique_name = FALSE
 	var/environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	melee_damage_lower = 20
@@ -41,15 +63,23 @@
 	var/sprite_hair = 0
 	var/sprite_hair_color = "#000000"
 	var/sprite_eye_color = "#FFFFFF"
+	var/sprite_apparel
 
 	var/step_variable = 0
+
+/mob/living/carbon/werewolf/update_resting()
+	if(resting)
+		ADD_TRAIT(src, TRAIT_IMMOBILIZED, RESTING_TRAIT)
+	else
+		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, RESTING_TRAIT)
+	return ..()
 
 /mob/living/carbon/werewolf/crinos/Move(NewLoc, direct)
 	if(isturf(loc))
 		step_variable = step_variable+1
 		if(step_variable == 2)
 			step_variable = 0
-			playsound(get_turf(src), 'code/modules/ziggers/sounds/werewolf_step.ogg', 100, FALSE)
+			playsound(get_turf(src), 'code/modules/ziggers/sounds/werewolf_step.ogg', 50, FALSE)
 	..()
 
 /mob/living/carbon/proc/epic_fall()
@@ -114,7 +144,7 @@
 	. += "Intent: [a_intent]"
 
 /mob/living/carbon/werewolf/getTrail()
-	return pick (list("xltrails_1", "xltrails2"))
+	return pick (list("trails_1", "trails2"))
 
 /mob/living/carbon/werewolf/canBeHandcuffed()
 	return FALSE
@@ -137,7 +167,7 @@
 	butcher_results = list(/obj/item/food/meat/slab = 5)
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	limb_destroyer = 1
-	hud_type = /datum/hud/alien
+	hud_type = /datum/hud/werewolf
 	melee_damage_lower = 50
 	melee_damage_upper = 50
 	var/obj/item/r_store = null
@@ -155,9 +185,9 @@
 		/obj/item/bodypart/l_leg,
 		)
 
-/mob/living/carbon/werewolf/crinos/Initialize()
-	. = ..()
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.5, -11)
+//mob/living/carbon/werewolf/crinos/Initialize()
+//	. = ..()
+//	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.5, -11)
 
 /mob/living/carbon/werewolf/lupus/Initialize()
 	. = ..()

@@ -17,25 +17,25 @@
 							if(H)
 //							if(H != src)
 								to_chat(H, "<span class='ghostalert'>[message]</span>")
-		var/ending = copytext_char(message, -1)
-		var/list/message_mods = list()
-		message = get_message_mods(message, message_mods)
-		if(message_mods[WHISPER_MODE] != MODE_WHISPER)
-			if(ending == "?")
-				if(gender == FEMALE)
-					playsound(get_turf(src), pick('code/modules/ziggers/sounds/female_ask1.ogg', 'code/modules/ziggers/sounds/female_ask2.ogg'), 75, TRUE)
-				else
-					playsound(get_turf(src), pick('code/modules/ziggers/sounds/male_ask1.ogg', 'code/modules/ziggers/sounds/male_ask2.ogg'), 75, TRUE)
-			else if(ending == "!")
-				if(gender == FEMALE)
-					playsound(get_turf(src), pick('code/modules/ziggers/sounds/female_yell1.ogg', 'code/modules/ziggers/sounds/female_yell2.ogg'), 100, TRUE)
-				else
-					playsound(get_turf(src), pick('code/modules/ziggers/sounds/male_yell1.ogg', 'code/modules/ziggers/sounds/male_yell2.ogg'), 100, TRUE)
-			else
-				if(gender == FEMALE)
-					playsound(get_turf(src), 'code/modules/ziggers/sounds/female_speak.ogg', 75, TRUE)
-				else
-					playsound(get_turf(src), 'code/modules/ziggers/sounds/male_speak.ogg', 75, TRUE)
+//		var/ending = copytext_char(message, -1)
+//		var/list/message_mods = list()
+//		message = get_message_mods(message, message_mods)
+//		if(message_mods[WHISPER_MODE] != MODE_WHISPER)
+//			if(ending == "?")
+//				if(gender == FEMALE)
+//					playsound(get_turf(src), pick('code/modules/ziggers/sounds/female_ask1.ogg', 'code/modules/ziggers/sounds/female_ask2.ogg'), 75, TRUE)
+//				else
+//					playsound(get_turf(src), pick('code/modules/ziggers/sounds/male_ask1.ogg', 'code/modules/ziggers/sounds/male_ask2.ogg'), 75, TRUE)
+//			else if(ending == "!")
+//				if(gender == FEMALE)
+//					playsound(get_turf(src), pick('code/modules/ziggers/sounds/female_yell1.ogg', 'code/modules/ziggers/sounds/female_yell2.ogg'), 100, TRUE)
+//				else
+//					playsound(get_turf(src), pick('code/modules/ziggers/sounds/male_yell1.ogg', 'code/modules/ziggers/sounds/male_yell2.ogg'), 100, TRUE)
+//			else
+//				if(gender == FEMALE)
+//					playsound(get_turf(src), 'code/modules/ziggers/sounds/female_speak.ogg', 75, TRUE)
+//				else
+//					playsound(get_turf(src), 'code/modules/ziggers/sounds/male_speak.ogg', 75, TRUE)
 
 /obj/item/chameleon
 	name = "Vicissitude Projector"

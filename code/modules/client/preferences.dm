@@ -186,6 +186,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/archetype = /datum/archetype/average
 
+	var/werewolf_color = "black"
+	var/werewolf_scar = 0
+	var/werewolf_hair = 0
+	var/werewolf_hair_color = "#000000"
+	var/werewolf_eye_color = "#FFFFFF"
+	var/werewolf_apparel
+
 //	var/datum/vampireclane/Clane
 
 /mob/living

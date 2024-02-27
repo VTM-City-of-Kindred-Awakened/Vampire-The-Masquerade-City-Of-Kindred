@@ -77,12 +77,19 @@
 #define ui_alert5 "EAST-1:28,CENTER+1:19"
 
 //Middle right (status indicators)
-#define ui_healthdoll "EAST-1:28,CENTER-2:13"
-#define ui_health "EAST-1:32,CENTER-3:16"
-#define ui_bloodpool "EAST-1:16,CENTER-1"
-#define ui_internal "EAST-1:28,CENTER-3:10"
-#define ui_mood "EAST-1:28,CENTER:17"
-#define ui_spacesuit "EAST-1:28,CENTER-4:10"
+
+#define ui_werewolf_lupus "EAST,CENTER+1:16"
+#define ui_werewolf_crinos "EAST-1,CENTER+1:16"
+#define ui_werewolf_homid "EAST-2,CENTER+1:16"
+#define ui_werewolf_auspice "EAST-2:16,CENTER:16"
+#define ui_werewolf_rage "EAST-2:20,CENTER-1:16"
+
+#define ui_healthdoll "EAST-1:28,CENTER-3:13"
+#define ui_health "EAST-1:32,CENTER-4:16"
+#define ui_bloodpool "EAST-1:16,CENTER-2"
+#define ui_internal "EAST-1:28,CENTER-4:10"
+#define ui_mood "EAST-1:28,CENTER-1:17"
+#define ui_spacesuit "EAST-1:28,CENTER-5:10"
 
 //Pop-up inventory
 #define ui_shoes "WEST+1:6,SOUTH:5"

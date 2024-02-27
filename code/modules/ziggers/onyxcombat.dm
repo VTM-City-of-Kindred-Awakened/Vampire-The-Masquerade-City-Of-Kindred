@@ -268,7 +268,7 @@
 	plane = HUD_PLANE
 
 /atom/movable/screen/blood/Click()
-	if(ishuman(usr))
+	if(iscarbon(usr))
 		var/mob/living/carbon/human/BD = usr
 		BD.update_blood_hud()
 		if(BD.bloodpool > 0)
@@ -688,12 +688,17 @@
 	var/last_nonraid = 0
 	var/warrant = FALSE
 
+/mob/living/carbon/werewolf/Life()
+	. = ..()
+	update_blood_hud()
+
 /mob/living/carbon/human/Life()
 	if(!iskindred(src))
 		if(prob(5))
 			adjustCloneLoss(-1, TRUE)
 	update_blood_hud()
 	update_zone_hud()
+	update_rage_hud()
 	update_shadow()
 	handle_vampire_music()
 	update_auspex_hud()
@@ -726,6 +731,14 @@
 			killed_count = max(0, killed_count-1)
 	..()
 
+
+/mob/living/proc/update_rage_hud()
+	if(!client || !hud_used)
+		return
+	if(isgarou(src) || iswerewolf(src))
+		if(hud_used.rage_icon)
+			var/mob/living/carbon/C = src
+			hud_used.rage_icon.icon_state = "rage[C.rage]"
 
 /mob/living/proc/update_blood_hud()
 	if(!client || !hud_used)

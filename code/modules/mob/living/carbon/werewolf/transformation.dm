@@ -1,46 +1,36 @@
-/datum/weretransing		//NO TRAINS ALLOWED
-	var/atom/transformation/transformation
-
-	var/damage = 0
-
-	var/sprite_color = "black"
-	var/sprite_scar = 0
-	var/sprite_hair = 0
-	var/sprite_hair_color = "#000000"
-	var/sprite_eye_color = "#FFFFFF"
-
-/datum/weretransing/proc/pref_transition(var/my_key)
-	return
-
-/atom/transformation
-	var/mob/living/carbon/owner
-	var/datum/weretransing/form_datum
-
+/obj/werewolf_holder/transformation
 	var/mob/living/carbon/human/human_form
 	var/mob/living/carbon/werewolf/crinos/crinos_form
 	var/mob/living/carbon/werewolf/lupus/lupus_form
 
-/atom/transformation/Initialize()
+/obj/werewolf_holder/transformation/Initialize()
 	. = ..()
+	crinos_form = new()
+	crinos_form.transformator = src
+	lupus_form = new()
+	lupus_form.transformator = src
 
-/atom/transformation/proc/trans_gender(mob/trans, form)
-	var/current_loc = get_turf(owner)
+/obj/werewolf_holder/transformation/proc/trans_gender(mob/trans, form)
+	var/current_loc = get_turf(trans)
 	switch(form)
 		if("Lupus")
 			if(trans == lupus_form)
 				return
 			lupus_form.forceMove(current_loc)
-			trans.forceMove(src)
 			lupus_form.key = trans.key
+			forceMove(lupus_form)
+			trans.forceMove(src)
 		if("Crinos")
 			if(trans == crinos_form)
 				return
 			crinos_form.forceMove(current_loc)
-			trans.forceMove(src)
 			crinos_form.key = trans.key
-		if("Human")
+			forceMove(crinos_form)
+			trans.forceMove(src)
+		if("Homid")
 			if(trans == human_form)
 				return
 			human_form.forceMove(current_loc)
-			trans.forceMove(src)
 			human_form.key = trans.key
+			forceMove(human_form)
+			trans.forceMove(src)
