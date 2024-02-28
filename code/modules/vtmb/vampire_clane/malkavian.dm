@@ -17,7 +17,7 @@
 
 /datum/action/malk_hivemind
 	name = "Hivemind"
-	desc = "Fall in torpor-like condition and ignore physical damage."
+	desc = "Talk."
 	button_icon_state = "hivemind"
 	check_flags = AB_CHECK_CONSCIOUS
 	vampiric = TRUE
@@ -34,4 +34,4 @@
 		for(var/mob/living/carbon/human/H in GLOB.player_list)
 			if(H.clane)
 				if(H.clane.name == "Malkavian")
-					to_chat(H, "<span class='ghostalert'>[new_thought]</span>")
+					to_chat(H, "<span class='ghostalert'>[sanitize_text(new_thought)]</span>")

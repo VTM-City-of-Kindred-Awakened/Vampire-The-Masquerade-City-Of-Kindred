@@ -19,8 +19,8 @@
 
 /datum/archetype/warrior
 	name = "Warrior"
-	specialization = "Close quarter combat skills."
-	start_physique = 3
+	specialization = "Better melee combat skills."
+	start_physique = 2
 	start_social = 1
 	start_mentality = 2
 	start_blood = 2
@@ -33,7 +33,7 @@
 	specialization = "Better shooting technique."
 	start_physique = 2
 	start_social = 1
-	start_mentality = 3
+	start_mentality = 2
 	start_blood = 2
 
 /datum/archetype/gunfighter/special_skill(var/mob/living/carbon/human/H)
@@ -43,7 +43,7 @@
 	name = "Diplomatic"
 	specialization = "More allies available."
 	start_physique = 2
-	start_social = 3
+	start_social = 2
 	start_mentality = 2
 	start_blood = 1
 
@@ -53,7 +53,7 @@
 /datum/archetype/masochist
 	name = "Masochist"
 	specialization = "Takes more blows before passage."
-	start_physique = 4
+	start_physique = 3
 	start_social = 1
 	start_mentality = 1
 	start_blood = 1
@@ -66,7 +66,7 @@
 	specialization = "A lot more mental than you can expect."
 	start_physique = 1
 	start_social = 1
-	start_mentality = 4
+	start_mentality = 3
 	start_blood = 1
 
 /datum/archetype/wiseman/special_skill(var/mob/living/carbon/human/H)
@@ -78,7 +78,7 @@
 	start_physique = 1
 	start_social = 3
 	start_mentality = 1
-	start_blood = 3
+	start_blood = 2
 
 /datum/archetype/dude
 	name = "Dude"
@@ -86,7 +86,7 @@
 	start_physique = 1
 	start_social = 1
 	start_mentality = 1
-	start_blood = 4
+	start_blood = 3
 
 /datum/archetype/homebrew
 	name = "Homebrew"

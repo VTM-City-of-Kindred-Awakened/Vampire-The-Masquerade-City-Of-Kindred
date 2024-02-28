@@ -107,6 +107,9 @@
 	vampiric = TRUE
 	var/used = FALSE
 
+/mob/living/carbon/human
+	var/unique_body_sprite
+
 /datum/action/basic_vicissitude/Trigger()
 	. = ..()
 	var/mob/living/carbon/human/H = owner
@@ -123,13 +126,14 @@
 		switch(upgrade)
 			if("Skin armor")
 				H.additional_armor = TRUE
-				H.dna.species.limbs_id = "tziarmor"
+				H.unique_body_sprite = "tziarmor"
 				H.skin_tone = "albino"
 				H.hairstyle = "Bald"
 				H.base_body_mod = ""
 				H.physiology.armor.melee = H.physiology.armor.melee+50
 				H.physiology.armor.bullet = H.physiology.armor.bullet+50
 				H.update_body()
+				H.update_body_parts()
 				H.update_hair()
 			if("Centipede legs")
 				H.additional_centipede = TRUE
@@ -169,7 +173,7 @@
 			H.remove_overlay(PROTEAN_LAYER)
 			H.remove_movespeed_modifier(/datum/movespeed_modifier/centipede)
 		if(additional_armor)
-			H.dna.species.limbs_id = initial(H.dna.species.limbs_id)
+			H.unique_body_sprite = FALSE
 			H.update_body()
 	else
 		hided = FALSE
@@ -196,7 +200,7 @@
 			H.apply_overlay(PROTEAN_LAYER)
 			H.add_movespeed_modifier(/datum/movespeed_modifier/centipede)
 		if(additional_armor)
-			H.dna.species.limbs_id = "tziarmor"
+			H.unique_body_sprite = "tziarmor"
 			H.update_body()
 
 /datum/discipline/vicissitude/post_gain(mob/living/carbon/human/H)
@@ -421,7 +425,7 @@
 				original_bodytype = H.body_type
 				original_haircolor = H.hair_color
 				original_facialhaircolor = H.facial_hair_color
-				original_bodysprite = H.dna.species.limbs_id
+				original_bodysprite = H.unique_body_sprite
 				original_eyecolor = H.eye_color
 				original_realname = H.real_name
 				original_age = H.age
@@ -436,7 +440,7 @@
 				H.body_type = last_bodytype
 				H.hair_color = last_haircolor
 				H.facial_hair_color = last_facialhaircolor
-				H.dna.species.limbs_id = last_bodysprite
+				H.unique_body_sprite = last_bodysprite
 				H.eye_color = last_eyecolor
 				H.real_name = last_realname
 				H.name = H.real_name
@@ -458,7 +462,7 @@
 				original_bodytype = H.body_type
 				original_haircolor = H.hair_color
 				original_facialhaircolor = H.facial_hair_color
-				original_bodysprite = H.dna.species.limbs_id
+				original_bodysprite = H.unique_body_sprite
 				original_eyecolor = H.eye_color
 				original_realname = H.real_name
 				original_age = H.age
@@ -474,7 +478,7 @@
 				H.body_type = ZV.body_type
 				H.hair_color = ZV.hair_color
 				H.facial_hair_color = ZV.facial_hair_color
-				H.dna.species.limbs_id = ZV.dna.species.limbs_id
+				H.unique_body_sprite = ZV.unique_body_sprite
 				H.eye_color = ZV.eye_color
 				H.real_name = ZV.real_name
 				H.name = H.real_name
@@ -490,7 +494,7 @@
 				last_bodytype = H.body_type
 				last_haircolor = H.hair_color
 				last_facialhaircolor = H.facial_hair_color
-				last_bodysprite = H.dna.species.limbs_id
+				last_bodysprite = H.unique_body_sprite
 				last_eyecolor = H.eye_color
 				last_realname = H.real_name
 				last_age = H.age
@@ -514,9 +518,9 @@
 		H.body_type = original_bodytype
 		H.hair_color = original_haircolor
 		H.facial_hair_color = original_facialhaircolor
-		H.dna.species.limbs_id = original_bodysprite
+		H.unique_body_sprite = original_bodysprite
 		if(H.additional_armor)
-			H.dna.species.limbs_id = "tziarmor"
+			H.unique_body_sprite = "tziarmor"
 		H.eye_color = original_eyecolor
 		H.real_name = original_realname
 		H.name = H.real_name

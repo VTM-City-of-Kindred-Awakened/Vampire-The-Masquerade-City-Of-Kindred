@@ -186,6 +186,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/archetype = /datum/archetype/average
 
+	var/breed = "Homid"
+	var/datum/auspice/auspice = new /datum/auspice/ahroun()
 	var/werewolf_color = "black"
 	var/werewolf_scar = 0
 	var/werewolf_hair = 0
@@ -546,6 +548,31 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(true_experience >= 6*blood && blood != 5)
 				dat += "<a href='?_src_=prefs;preference=blood;task=input'>Increase ([3*blood])</a>"
 			dat += "<BR>"
+			if(pref_species.name == "Werewolf")
+				dat += "<h2>[make_font_cool("TRIBE")]</h2>"
+				dat += "<b>Auspice:</b> <a href='?_src_=prefs;preference=auspice;task=input'>[auspice.name]</a><BR>"
+				dat += "Description: [auspice.desc]<BR>"
+				dat += "Initial Rage: [auspice.start_rage]<BR>"
+				var/mob/living/carbon/werewolf/crinos/DAWOF = new(get_turf(parent.mob))
+				var/mob/living/carbon/werewolf/lupus/DAWOF2 = new(get_turf(parent.mob))
+				DAWOF.sprite_color = werewolf_color
+				DAWOF.sprite_scar = werewolf_scar
+				DAWOF.sprite_hair = werewolf_hair
+				DAWOF.sprite_hair_color = werewolf_hair_color
+				DAWOF.sprite_eye_color = werewolf_eye_color
+				DAWOF2.sprite_color = werewolf_color
+				DAWOF2.sprite_eye_color = werewolf_eye_color
+				DAWOF.update_icons()
+				DAWOF2.update_icons()
+				dat += "[icon2html(getFlatIcon(DAWOF), user)][icon2html(getFlatIcon(DAWOF2), user)]<BR>"
+				qdel(DAWOF)
+				qdel(DAWOF2)
+				dat += "<b>Breed:</b> <a href='?_src_=prefs;preference=breed;task=input'>[breed]</a><BR>"
+				dat += "Color: <a href='?_src_=prefs;preference=werewolf_color;task=input'>[werewolf_color]</a><BR>"
+				dat += "Scars: <a href='?_src_=prefs;preference=werewolf_scar;task=input'>[werewolf_scar]</a><BR>"
+				dat += "Hair: <a href='?_src_=prefs;preference=werewolf_hair;task=input'>[werewolf_hair]</a><BR>"
+				dat += "Hair Color: <a href='?_src_=prefs;preference=werewolf_hair_color;task=input'>[werewolf_hair_color]</a><BR>"
+				dat += "Eyes: <a href='?_src_=prefs;preference=werewolf_eye_color;task=input'>[werewolf_eye_color]</a><BR>"
 			if(pref_species.name == "Vampire")
 				dat += "<h2>[make_font_cool("CLANE")]</h2>"
 				dat += "<b>Clane/Bloodline:</b> <a href='?_src_=prefs;preference=clane;task=input'>[clane.name]</a><BR>"
@@ -1946,6 +1973,65 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							discipline4type = discipline4
 							true_experience = true_experience-5
 
+				if("werewolf_color")
+					if(slotlocked)
+						link_bug_fix = FALSE
+						return
+					var/list/colors = list("black", "gray", "red", "white", "ginger", "brown")
+					var/result = input(user, "Select fur color:", "Appearance Selection") as null|anything in colors
+					if(result)
+						werewolf_color = result
+
+				if("werewolf_scar")
+					if(slotlocked)
+						link_bug_fix = FALSE
+						return
+					if(werewolf_scar == 7)
+						werewolf_scar = 0
+					else
+						werewolf_scar = min(7, werewolf_scar+1)
+
+				if("werewolf_hair")
+					if(slotlocked)
+						link_bug_fix = FALSE
+						return
+					if(werewolf_hair == 4)
+						werewolf_hair = 0
+					else
+						werewolf_hair = min(4, werewolf_hair+1)
+
+				if("werewolf_hair_color")
+					if(slotlocked)
+						link_bug_fix = FALSE
+						return
+					var/new_hair = input(user, "Select hair color:", "Appearance Selection","#"+werewolf_hair_color) as color|null
+					if(new_hair)
+						werewolf_hair_color = sanitize_hexcolor(new_hair)
+
+				if("werewolf_eye_color")
+					if(slotlocked)
+						link_bug_fix = FALSE
+						return
+					var/new_eye = input(user, "Select eye color:", "Appearance Selection","#"+werewolf_eye_color) as color|null
+					if(new_eye)
+						werewolf_eye_color = sanitize_hexcolor(new_eye)
+
+				if("auspice")
+					if(slotlocked)
+						link_bug_fix = FALSE
+						return
+					var/list/shittedmyself = list()
+					for(var/i in GLOB.auspices_list)
+						var/a = GLOB.auspices_list[i]
+						var/datum/auspice/V = new a
+						shittedmyself[V.name] += GLOB.auspices_list[i]
+						qdel(V)
+					var/result = input(user, "Select an Auspice", "Auspice Selection") as null|anything in shittedmyself
+					if(result)
+						var/newtype = GLOB.auspices_list[result]
+						var/datum/auspice/Auspic = new newtype()
+						auspice = Auspic
+
 				if("clane")
 					if(slotlocked)
 						link_bug_fix = FALSE
@@ -2033,6 +2119,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(true_experience >= blood*6 && blood < 6)
 						true_experience = true_experience-blood*6
 						blood = min(5, blood+1)
+
+				if("breed")
+					if(slotlocked)
+						link_bug_fix = FALSE
+						return
+					if(breed == "Homid")
+						breed = "Lupus"
+					if(breed == "Lupus")
+						breed = "Metis"
+					if(breed == "Metis")
+						breed = "Homid"
 
 				if("archetype")
 					if(slotlocked)
@@ -2832,7 +2929,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		else if(character.masquerade < 3)
 			GLOB.masquerade_breakers_list += character
 
-	character.flavor_text = flavor_text
+	character.flavor_text = sanitize_text(flavor_text)
 	character.gender = gender
 	character.age = age
 	if(gender == MALE || gender == FEMALE)
@@ -2892,6 +2989,32 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(character.clane)
 		character.clane.on_gain(character)
 
+	if(pref_species.name == "Werewolf")
+		var/datum/auspice/CLN = new auspice.type()
+		character.auspice = CLN
+		character.auspice.on_gain(character)
+		character.transformator.crinos_form.sprite_color = werewolf_color
+		character.transformator.crinos_form.sprite_scar = werewolf_scar
+		character.transformator.crinos_form.sprite_hair = werewolf_hair
+		character.transformator.crinos_form.sprite_hair_color = werewolf_hair_color
+		character.transformator.crinos_form.sprite_eye_color = werewolf_eye_color
+		character.transformator.lupus_form.sprite_color = werewolf_color
+		character.transformator.lupus_form.sprite_eye_color = werewolf_eye_color
+		character.transformator.crinos_form.update_icons()
+		character.transformator.lupus_form.update_icons()
+		switch(breed)
+			if("Homid")
+				character.gnosis = 1
+				character.max_gnosis = 1
+				character.base_breed = "Homid"
+			if("Lupus")
+				character.gnosis = 5
+				character.max_gnosis = 5
+				character.base_breed = "Lupus"
+			if("Metis")
+				character.gnosis = 3
+				character.max_gnosis = 3
+				character.base_breed = "Crinos"
 	if(pref_species.mutant_bodyparts["tail_lizard"])
 		character.dna.species.mutant_bodyparts["tail_lizard"] = pref_species.mutant_bodyparts["tail_lizard"]
 	if(pref_species.mutant_bodyparts["spines"])
@@ -2915,6 +3038,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			character.have_enemy = TRUE
 		if(lover)
 			character.have_lover = TRUE
+
+	if(pref_species.name == "Werewolf")
+		character.transformator.fast_trans_gender(character, character.base_breed)
 
 /mob/living/carbon/human/proc/create_disciplines(var/discipline_pref = TRUE, var/discipline1, var/discipline2, var/discipline3)	//EMBRACE BASIC
 	if(client)

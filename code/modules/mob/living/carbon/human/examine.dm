@@ -420,11 +420,11 @@
 	if (!isnull(trait_exam))
 		. += trait_exam
 
-	if(flavor_text)
-		. += "[flavor_text]\n"
-
 	if(ishuman(user))
 		. += "<a href='?src=[REF(src)];masquerade=1'>Spot a Masquerade violation</a>"
+
+	if(flavor_text)
+		. += "[sanitize_text(flavor_text)]\n"
 
 	var/perpname = get_face_name(get_id_name(""))
 	if(perpname && (HAS_TRAIT(user, TRAIT_SECURITY_HUD) || HAS_TRAIT(user, TRAIT_MEDICAL_HUD)))

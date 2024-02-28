@@ -60,10 +60,19 @@ There are several things that need to be remembered:
 	var/given_penis = FALSE
 
 /mob/living/carbon/human/update_body()
-	dna.species.limbs_id = "[base_body_mod]human"
+	if(dna.species.id == "mannequin")
+		base_body_mod = ""
+		dna.species.limbs_id = "[base_body_mod]mannequin"
+	else
+		dna.species.limbs_id = "[base_body_mod]human"
+
 	if(clane)
 		if(clane.alt_sprite)
 			dna.species.limbs_id = "[base_body_mod][clane.alt_sprite]"
+
+	if(unique_body_sprite)
+		dna.species.limbs_id = "[base_body_mod][unique_body_sprite]"
+
 	if(base_body_mod == "s")
 		if(gender == FEMALE)
 			body_sprite = 'code/modules/ziggers/worn_slim_f.dmi'

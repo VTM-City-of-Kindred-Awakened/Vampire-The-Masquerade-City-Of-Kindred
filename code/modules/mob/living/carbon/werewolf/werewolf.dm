@@ -27,9 +27,12 @@
 	dna = null
 	faction = list("Gaia")
 	ventcrawler = VENTCRAWLER_NONE
+	pass_flags = 0
 	sight = SEE_MOBS
 	see_in_dark = 4
 	verb_say = "woofs"
+	density = TRUE
+	anchored = TRUE
 
 	var/move_delay_add = 0 // movement delay to add
 
@@ -44,7 +47,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	butcher_results = list(/obj/item/food/meat/slab = 5)
-	layer = ABOVE_ALL_MOB_LAYER
+	layer = LARGE_MOB_LAYER
 	var/obj_damage = 30
 	var/wound_bonus = 30
 	var/bare_wound_bonus = 30
@@ -163,7 +166,7 @@
 /mob/living/carbon/werewolf/crinos
 	name = "werewolf"
 	icon_state = "black"
-	pass_flags = PASSTABLE
+	mob_size = MOB_SIZE_LARGE
 	butcher_results = list(/obj/item/food/meat/slab = 5)
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	limb_destroyer = 1

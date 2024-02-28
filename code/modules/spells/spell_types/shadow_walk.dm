@@ -57,12 +57,12 @@
 	. = ..()
 
 /obj/effect/dummy/phased_mob/shadow/process(delta_time)
-	var/turf/T = get_turf(src)
-	var/light_amount = T.get_lumcount()
+//	var/turf/T = get_turf(src)
+//	var/light_amount = T.get_lumcount()
 	if(!jaunter || jaunter.loc != src)
 		qdel(src)
-	if (light_amount < 0.2 && (!QDELETED(jaunter))) //heal in the dark
-		jaunter.heal_overall_damage((SHADOW_REGEN_RATE * delta_time), (SHADOW_REGEN_RATE * delta_time), 0, BODYPART_ORGANIC)
+//	if (light_amount < 0.2 && (!QDELETED(jaunter))) //heal in the dark
+//		jaunter.heal_overall_damage((SHADOW_REGEN_RATE * delta_time), (SHADOW_REGEN_RATE * delta_time), 0, BODYPART_ORGANIC)
 	check_light_level()
 
 

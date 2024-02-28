@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(city_time)
 	name = "City Time"
 	init_order = INIT_ORDER_DEFAULT
-	wait = 200
+	wait = 150
 	priority = FIRE_PRIORITY_DEFAULT
 
 	var/hour = 21

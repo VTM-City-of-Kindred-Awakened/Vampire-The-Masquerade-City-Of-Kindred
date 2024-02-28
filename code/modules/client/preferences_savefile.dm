@@ -361,6 +361,21 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(newtype)
 			clane = new newtype
 
+	var/auspice_id
+	READ_FILE(S["auspice"], auspice_id)
+	if(auspice_id)
+		var/newtype = GLOB.auspices_list[auspice_id]
+		if(newtype)
+			auspice = new newtype
+
+	READ_FILE(S["breed"], breed)
+	READ_FILE(S["werewolf_color"], werewolf_color)
+	READ_FILE(S["werewolf_scar"], werewolf_scar)
+	READ_FILE(S["werewolf_hair"], werewolf_hair)
+	READ_FILE(S["werewolf_hair_color"], werewolf_hair_color)
+	READ_FILE(S["werewolf_eye_color"], werewolf_eye_color)
+//	READ_FILE(S["werewolf_apparel"], werewolf_apparel)
+
 	//Character
 	READ_FILE(S["slotlocked"], slotlocked)
 	READ_FILE(S["diablerist"], diablerist)
@@ -499,6 +514,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	archetype 		= sanitize_inlist(archetype, subtypesof(/datum/archetype))
 
+	breed			= sanitize_inlist(breed, list("Homid", "Lupus", "Metis"))
+	werewolf_color	= sanitize_inlist(werewolf_color, list("black", "gray", "red", "white", "ginger", "brown"))
+	werewolf_scar	= sanitize_integer(werewolf_scar, 0, 7, initial(werewolf_scar))
+	werewolf_hair	= sanitize_integer(werewolf_hair, 0, 4, initial(werewolf_hair))
+	werewolf_hair_color		= sanitize_hexcolor(werewolf_hair_color, 3, 0)
+	werewolf_eye_color		= sanitize_hexcolor(werewolf_eye_color, 3, 0)
+	flavor_text		= sanitize_text(flavor_text)
 	socks			= sanitize_inlist(socks, GLOB.socks_list)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	diablerist				= sanitize_integer(diablerist, 0, 1, initial(diablerist))
@@ -578,6 +600,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S.cd = "/character[default_slot]"
 
 	WRITE_FILE(S["version"]			, SAVEFILE_VERSION_MAX)	//load_character will sanitize any bad data, so assume up-to-date.)
+
+	WRITE_FILE(S["breed"], breed)
+	WRITE_FILE(S["werewolf_color"], werewolf_color)
+	WRITE_FILE(S["werewolf_scar"], werewolf_scar)
+	WRITE_FILE(S["werewolf_hair"], werewolf_hair)
+	WRITE_FILE(S["werewolf_hair_color"], werewolf_hair_color)
+	WRITE_FILE(S["werewolf_eye_color"], werewolf_eye_color)
+	WRITE_FILE(S["auspice"]			, auspice.name)
 
 	//Character
 	WRITE_FILE(S["slotlocked"]			, slotlocked)

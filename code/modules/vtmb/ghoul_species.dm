@@ -4,7 +4,7 @@
 	default_color = "FFFFFF"
 	toxic_food = RAW
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, HAS_FLESH, HAS_BONE)
-	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_VIRUSIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_LIMBATTACHMENT)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_VIRUSIMMUNE, TRAIT_NOCRITDAMAGE)
 	use_skintones = TRUE
 	limbs_id = "human"
 	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")

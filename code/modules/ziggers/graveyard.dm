@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(graveyard)
 	name = "Graveyard"
 	init_order = INIT_ORDER_DEFAULT
-	wait = 12000
+	wait = 6000
 	priority = FIRE_PRIORITY_DEFAULT
 
 	var/alive_zombies = 0	//MAX - 20, respawn every 10 minutes

@@ -2,7 +2,7 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 
 /obj/vampire_computer
 	name = "computer"
-	desc = "See the news of Kindred City."
+	desc = "See the Internet."
 	icon = 'code/modules/ziggers/props.dmi'
 	icon_state = "computer"
 	plane = GAME_PLANE

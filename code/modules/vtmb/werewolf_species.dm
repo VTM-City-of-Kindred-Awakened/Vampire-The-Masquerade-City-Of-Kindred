@@ -20,6 +20,8 @@
 	var/datum/auspice/auspice
 	var/rage = 0
 	var/gnosis = 0
+	var/max_gnosis = 0
+	var/base_breed
 	var/obj/werewolf_holder/transformation/transformator
 
 /datum/action/garouinfo
@@ -101,3 +103,12 @@
 
 /datum/species/garou/check_roundstart_eligible()
 	return TRUE
+
+/proc/adjust_rage(var/amount, var/mob/living/carbon/C)
+	if(amount > 0)
+		C.rage = min(C.auspice.start_rage, C.rage+amount)
+	if(amount < 0)
+		C.rage = max(0, C.rage+amount)
+		if(C.rage == 0)
+			C.transformator.trans_gender(C, C.base_breed)
+	C.update_rage_hud()
