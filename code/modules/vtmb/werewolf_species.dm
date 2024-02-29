@@ -18,10 +18,6 @@
 
 /mob/living/carbon
 	var/datum/auspice/auspice
-	var/rage = 0
-	var/gnosis = 0
-	var/max_gnosis = 0
-	var/base_breed
 	var/obj/werewolf_holder/transformation/transformator
 
 /datum/action/garouinfo
@@ -48,6 +44,7 @@
 			dat += "[host.real_name],"
 		if(!host.real_name)
 			dat += "Unknown,"
+		dat += " [host.auspice.tribe] [host.auspice.base_breed]"
 //		if(host.clane)
 //			dat += " the [host.clane.name]"
 //		if(!host.clane)
@@ -106,9 +103,13 @@
 
 /proc/adjust_rage(var/amount, var/mob/living/carbon/C)
 	if(amount > 0)
-		C.rage = min(C.auspice.start_rage, C.rage+amount)
+		SEND_SOUND(C, sound('code/modules/ziggers/sounds/rage_increase.ogg', 0, 0, 75))
+		to_chat(C, "<span class='userdanger'><b>RAGE INCREASES</b></span>")
+		C.auspice.rage = min(C.auspice.start_rage, C.auspice.rage+amount)
 	if(amount < 0)
-		C.rage = max(0, C.rage+amount)
-		if(C.rage == 0)
+		C.auspice.rage = max(0, C.auspice.rage+amount)
+		SEND_SOUND(C, sound('code/modules/ziggers/sounds/rage_decrease.ogg', 0, 0, 75))
+		to_chat(C, "<span class='userdanger'><b>RAGE DECREASES</b></span>")
+		if(C.auspice.rage == 0)
 			C.transformator.trans_gender(C, C.base_breed)
 	C.update_rage_hud()

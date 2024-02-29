@@ -9,14 +9,17 @@
 	. = ..()
 	crinos_form = new()
 	crinos_form.transformator = src
+//	crinos_form.forceMove(src)
 	lupus_form = new()
 	lupus_form.transformator = src
+//	lupus_form.forceMove(src)
 
 /obj/werewolf_holder/transformation/proc/trans_gender(mob/trans, form)
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
 	if(iscarbon(trans))
 		var/mob/living/carbon/C = trans
-		if(C.rage <= 1 && form != C.base_breed)
+		if(C.auspice.rage <= 1 && form != C.auspice.base_breed)
+			to_chat(trans, "Not enough rage to transform into anything but [C.auspice.base_breed]")
 			return
 	switch(form)
 		if("Lupus")
@@ -53,7 +56,9 @@
 					trans.forceMove(src)
 					transformating = FALSE
 					animate(trans, transform = null, color = "#FFFFFF", time = 1)
-					adjust_rage(-1, lupus_form)
+					lupus_form.update_icons()
+					if(lupus_form.auspice.base_breed != "Lupus")
+						adjust_rage(-1, lupus_form)
 			if("Crinos")
 				if(trans == crinos_form)
 					transformating = FALSE
@@ -70,7 +75,9 @@
 					trans.forceMove(src)
 					transformating = FALSE
 					animate(trans, transform = null, color = "#FFFFFF", time = 1)
-					adjust_rage(-1, crinos_form)
+					crinos_form.update_icons()
+					if(crinos_form.auspice.base_breed != "Crinos")
+						adjust_rage(-1, crinos_form)
 			if("Homid")
 				if(trans == human_form)
 					transformating = FALSE
@@ -87,7 +94,8 @@
 					trans.forceMove(src)
 					transformating = FALSE
 					animate(trans, transform = null, color = "#FFFFFF", time = 1)
-					adjust_rage(-1, human_form)
+					if(human_form.auspice.base_breed != "Homid")
+						adjust_rage(-1, human_form)
 
 /obj/werewolf_holder/transformation/proc/fast_trans_gender(mob/trans, form)
 	switch(form)

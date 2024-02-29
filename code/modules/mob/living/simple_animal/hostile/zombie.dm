@@ -93,8 +93,8 @@
 	health = 50
 	speed = 1
 	harm_intent_damage = 5
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	melee_damage_lower = 15
+	melee_damage_upper = 15
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
@@ -147,8 +147,8 @@
 	maxbloodpool = 0
 
 /mob/living/simple_animal/hostile/beastmaster/giovanni_zombie/level2
-	maxHealth = 100
-	health = 100
+	maxHealth = 75
+	health = 75
 	harm_intent_damage = 20
 	melee_damage_lower = 20
 	melee_damage_upper = 20
@@ -158,40 +158,39 @@
 	give_player()
 */
 /mob/living/simple_animal/hostile/beastmaster/giovanni_zombie/level3
-	maxHealth = 200
-	health = 200
+	maxHealth = 100
+	health = 100
 	icon_state = "zombieup"
 	icon_living = "zombieup"
 	icon_dead = "zombieup_dead"
-	harm_intent_damage = 30
-	melee_damage_lower = 30
-	melee_damage_upper = 30
+	harm_intent_damage = 25
+	melee_damage_lower = 25
+	melee_damage_upper = 25
 /*
 /mob/living/simple_animal/hostile/giovanni_zombie/level3/Initialize()
 	. = ..()
 	give_player()
 */
 /mob/living/simple_animal/hostile/beastmaster/giovanni_zombie/level4
-	maxHealth = 300
-	health = 300
-	harm_intent_damage = 40
-	melee_damage_lower = 40
-	melee_damage_upper = 40
+	maxHealth = 150
+	health = 150
+	harm_intent_damage = 30
+	melee_damage_lower = 30
+	melee_damage_upper = 30
 	icon_state = "skeleton"
 	icon_living = "skeleton"
 	icon_dead = "skeleton_dead"
-	speed = -1
 /*
 /mob/living/simple_animal/hostile/giovanni_zombie/level4/Initialize()
 	. = ..()
 	give_player()
 */
 /mob/living/simple_animal/hostile/beastmaster/giovanni_zombie/level5
-	maxHealth = 1000
-	health = 1000
-	harm_intent_damage = 100
-	melee_damage_lower = 100
-	melee_damage_upper = 100
+	maxHealth = 350
+	health = 350
+	harm_intent_damage = 35
+	melee_damage_lower = 35
+	melee_damage_upper = 35
 	icon_state = "zombietop"
 	icon_living = "zombietop"
 	icon_dead = "zombietop_dead"

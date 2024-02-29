@@ -552,16 +552,51 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h2>[make_font_cool("TRIBE")]</h2>"
 				dat += "<b>Auspice:</b> <a href='?_src_=prefs;preference=auspice;task=input'>[auspice.name]</a><BR>"
 				dat += "Description: [auspice.desc]<BR>"
-				dat += "Initial Rage: [auspice.start_rage]<BR>"
+				dat += "<b>Initial Rage:</b> •[auspice.start_rage > 1 ? "•" : "o"][auspice.start_rage > 2 ? "•" : "o"][auspice.start_rage > 3 ? "•" : "o"][auspice.start_rage > 4 ? "•" : "o"]([auspice.start_rage])<BR>"
+				var/gifts_text = ""
+				var/num_of_gifts = 0
+				for(var/i in auspice.gifts)
+					var/datum/action/A = new i()
+					num_of_gifts = min(num_of_gifts+1, length(auspice.gifts))
+					if(num_of_gifts != length(auspice.gifts))
+						gifts_text += "[A.name], "
+					else
+						gifts_text += "[A.name].<BR>"
+					qdel(A)
+				dat += "<b>Initial Gifts:</b> [gifts_text]"
 				var/mob/living/carbon/werewolf/crinos/DAWOF = new(get_turf(parent.mob))
 				var/mob/living/carbon/werewolf/lupus/DAWOF2 = new(get_turf(parent.mob))
+
 				DAWOF.sprite_color = werewolf_color
-				DAWOF.sprite_scar = werewolf_scar
-				DAWOF.sprite_hair = werewolf_hair
-				DAWOF.sprite_hair_color = werewolf_hair_color
-				DAWOF.sprite_eye_color = werewolf_eye_color
 				DAWOF2.sprite_color = werewolf_color
-				DAWOF2.sprite_eye_color = werewolf_eye_color
+
+				var/obj/overlay/eyes_crinos = new(DAWOF)
+				eyes_crinos.icon = 'code/modules/ziggers/werewolf.dmi'
+				eyes_crinos.icon_state = "eyes"
+				eyes_crinos.layer = ABOVE_HUD_LAYER
+				eyes_crinos.color = werewolf_eye_color
+				DAWOF.overlays |= eyes_crinos
+
+				var/obj/overlay/scar_crinos = new(DAWOF)
+				scar_crinos.icon = 'code/modules/ziggers/werewolf.dmi'
+				scar_crinos.icon_state = "scar[werewolf_scar]"
+				scar_crinos.layer = ABOVE_HUD_LAYER
+				DAWOF.overlays |= scar_crinos
+
+				var/obj/overlay/hair_crinos = new(DAWOF)
+				hair_crinos.icon = 'code/modules/ziggers/werewolf.dmi'
+				hair_crinos.icon_state = "hair[werewolf_hair]"
+				hair_crinos.layer = ABOVE_HUD_LAYER
+				hair_crinos.color = werewolf_hair_color
+				DAWOF.overlays |= hair_crinos
+
+				var/obj/overlay/eyes_lupus = new(DAWOF2)
+				eyes_lupus.icon = 'code/modules/ziggers/werewolf_lupus.dmi'
+				eyes_lupus.icon_state = "eyes"
+				eyes_lupus.layer = ABOVE_HUD_LAYER
+				eyes_lupus.color = werewolf_eye_color
+				DAWOF2.overlays |= eyes_lupus
+
 				DAWOF.update_icons()
 				DAWOF2.update_icons()
 				dat += "[icon2html(getFlatIcon(DAWOF), user)][icon2html(getFlatIcon(DAWOF2), user)]<BR>"
@@ -2004,17 +2039,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(slotlocked)
 						link_bug_fix = FALSE
 						return
-					var/new_hair = input(user, "Select hair color:", "Appearance Selection","#"+werewolf_hair_color) as color|null
+					var/new_hair = input(user, "Select hair color:", "Appearance Selection",werewolf_hair_color) as color|null
 					if(new_hair)
-						werewolf_hair_color = sanitize_hexcolor(new_hair)
+						werewolf_hair_color = sanitize_ooccolor(new_hair)
 
 				if("werewolf_eye_color")
 					if(slotlocked)
 						link_bug_fix = FALSE
 						return
-					var/new_eye = input(user, "Select eye color:", "Appearance Selection","#"+werewolf_eye_color) as color|null
+					var/new_eye = input(user, "Select eye color:", "Appearance Selection",werewolf_eye_color) as color|null
 					if(new_eye)
-						werewolf_eye_color = sanitize_hexcolor(new_eye)
+						werewolf_eye_color = sanitize_ooccolor(new_eye)
 
 				if("auspice")
 					if(slotlocked)
@@ -2126,9 +2161,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						return
 					if(breed == "Homid")
 						breed = "Lupus"
-					if(breed == "Lupus")
+					else if(breed == "Lupus")
 						breed = "Metis"
-					if(breed == "Metis")
+					else if(breed == "Metis")
 						breed = "Homid"
 
 				if("archetype")
@@ -2993,28 +3028,30 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		var/datum/auspice/CLN = new auspice.type()
 		character.auspice = CLN
 		character.auspice.on_gain(character)
-		character.transformator.crinos_form.sprite_color = werewolf_color
-		character.transformator.crinos_form.sprite_scar = werewolf_scar
-		character.transformator.crinos_form.sprite_hair = werewolf_hair
-		character.transformator.crinos_form.sprite_hair_color = werewolf_hair_color
-		character.transformator.crinos_form.sprite_eye_color = werewolf_eye_color
-		character.transformator.lupus_form.sprite_color = werewolf_color
-		character.transformator.lupus_form.sprite_eye_color = werewolf_eye_color
-		character.transformator.crinos_form.update_icons()
-		character.transformator.lupus_form.update_icons()
 		switch(breed)
 			if("Homid")
-				character.gnosis = 1
-				character.max_gnosis = 1
-				character.base_breed = "Homid"
+				character.auspice.gnosis = 1
+				character.auspice.start_gnosis = 1
+				character.auspice.base_breed = "Homid"
 			if("Lupus")
-				character.gnosis = 5
-				character.max_gnosis = 5
-				character.base_breed = "Lupus"
+				character.auspice.gnosis = 5
+				character.auspice.start_gnosis = 5
+				character.auspice.base_breed = "Lupus"
 			if("Metis")
-				character.gnosis = 3
-				character.max_gnosis = 3
-				character.base_breed = "Crinos"
+				character.auspice.gnosis = 3
+				character.auspice.start_gnosis = 3
+				character.auspice.base_breed = "Crinos"
+		if(character.transformator)
+			if(character.transformator.crinos_form && character.transformator.lupus_form)
+				character.transformator.crinos_form.sprite_color = werewolf_color
+				character.transformator.crinos_form.sprite_scar = werewolf_scar
+				character.transformator.crinos_form.sprite_hair = werewolf_hair
+				character.transformator.crinos_form.sprite_hair_color = werewolf_hair_color
+				character.transformator.crinos_form.sprite_eye_color = werewolf_eye_color
+				character.transformator.lupus_form.sprite_color = werewolf_color
+				character.transformator.lupus_form.sprite_eye_color = werewolf_eye_color
+//		character.transformator.crinos_form.update_icons()
+//		character.transformator.lupus_form.update_icons()
 	if(pref_species.mutant_bodyparts["tail_lizard"])
 		character.dna.species.mutant_bodyparts["tail_lizard"] = pref_species.mutant_bodyparts["tail_lizard"]
 	if(pref_species.mutant_bodyparts["spines"])
@@ -3025,6 +3062,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_hair()
 		character.update_body_parts()
 	if(!character_setup)
+//		if(pref_species.name == "Werewolf")
+//			character.transformator.fast_trans_gender(character, character.base_breed)
 		character.roundstart_vampire = TRUE
 		if(character.age < 16)
 			if(!character.ischildren)
@@ -3038,9 +3077,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			character.have_enemy = TRUE
 		if(lover)
 			character.have_lover = TRUE
-
-	if(pref_species.name == "Werewolf")
-		character.transformator.fast_trans_gender(character, character.base_breed)
 
 /mob/living/carbon/human/proc/create_disciplines(var/discipline_pref = TRUE, var/discipline1, var/discipline2, var/discipline3)	//EMBRACE BASIC
 	if(client)

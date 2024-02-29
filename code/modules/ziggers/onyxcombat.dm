@@ -738,7 +738,7 @@
 	if(isgarou(src) || iswerewolf(src))
 		if(hud_used.rage_icon)
 			var/mob/living/carbon/C = src
-			hud_used.rage_icon.icon_state = "rage[C.rage]"
+			hud_used.rage_icon.icon_state = "rage[C.auspice.rage]"
 
 /mob/living/proc/update_blood_hud()
 	if(!client || !hud_used)
