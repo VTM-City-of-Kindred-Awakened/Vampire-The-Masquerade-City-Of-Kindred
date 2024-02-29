@@ -513,14 +513,14 @@
 
 /atom/MouseEntered(location,control,params)
 	if(isturf(src) || ismob(src) || isobj(src))
-		if(loc && ishuman(usr))
-			var/mob/living/carbon/human/H = usr
+		if(loc && iscarbon(usr))
+			var/mob/living/carbon/H = usr
 			if(H.a_intent == INTENT_HARM)
 				if(!H.IsSleeping() && !H.IsUnconscious() && !H.IsParalyzed() && !H.IsKnockdown() && !H.IsStun() && !HAS_TRAIT(H, TRAIT_RESTRAINED))
 					H.face_atom(src)
 					H.harm_focus = H.dir
 
-/mob/living/carbon/human/Move(atom/newloc, direct, glide_size_override)
+/mob/living/carbon/Move(atom/newloc, direct, glide_size_override)
 	..()
 	if(a_intent == INTENT_HARM && client)
 		setDir(harm_focus)
@@ -733,21 +733,26 @@
 	..()
 
 
+/mob/living
+	var/obj/overlay/gnosis
+
+/mob/living/Initialize()
+	. = ..()
+	gnosis = new(src)
+	gnosis.icon = 'code/modules/ziggers/48x48.dmi'
+	gnosis.plane = ABOVE_HUD_PLANE
+	gnosis.layer = ABOVE_HUD_LAYER
+
 /mob/living/proc/update_rage_hud()
 	if(!client || !hud_used)
 		return
 	if(isgarou(src) || iswerewolf(src))
 		if(hud_used.rage_icon)
+			hud_used.rage_icon.overlays -= gnosis
 			var/mob/living/carbon/C = src
 			hud_used.rage_icon.icon_state = "rage[C.auspice.rage]"
-			hud_used.rage_icon.cut_overlays()
-			var/obj/overlay/gnosis = new(hud_used.rage_icon)
-			gnosis.icon = 'code/modules/ziggers/48x48.dmi'
 			gnosis.icon_state = "gnosis[C.auspice.gnosis]"
-			gnosis.layer = ABOVE_HUD_LAYER
 			hud_used.rage_icon.overlays |= gnosis
-
-
 
 /mob/living/proc/update_blood_hud()
 	if(!client || !hud_used)

@@ -1,5 +1,7 @@
 GLOBAL_LIST_EMPTY(roundstart_races)
 
+GLOBAL_LIST_EMPTY(donation_races)
+
 /**
  * # species datum
  *
@@ -192,6 +194,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///List of results you get from knife-butchering. null means you cant butcher it. Associated by resulting type - value of amount
 	var/list/knife_butcher_results
 
+	var/donation = FALSE
+
 ///////////
 // PROCS //
 ///////////
@@ -214,7 +218,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/datum/species/S = new I
 		if(S.check_roundstart_eligible())
 			GLOB.roundstart_races += S.id
+			GLOB.donation_races += S.id
 			qdel(S)
+		if(S.donation)
+			GLOB.donation_races += S.id
 	if(!GLOB.roundstart_races.len)
 		GLOB.roundstart_races += "kindred"
 

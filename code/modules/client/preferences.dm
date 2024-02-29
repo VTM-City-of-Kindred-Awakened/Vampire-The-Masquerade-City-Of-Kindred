@@ -262,7 +262,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(i == "[P.parent.ckey]")
 					sponsor = TRUE
 			if(sponsor)
-				P.true_experience = 30
+				P.true_experience = 30+round(GLOB.donaters_amount["[P.parent.ckey]"])
 			P.save_character()
 			P.save_preferences()
 
@@ -323,7 +323,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(i == "[parent.ckey]")
 			sponsor = TRUE
 	if(sponsor)
-		true_experience = 30
+		true_experience = 30+round(GLOB.donaters_amount["[parent.ckey]"])
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
 	C?.set_macros()
 //	pref_species = new /datum/species/kindred()
@@ -2162,8 +2162,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						link_bug_fix = FALSE
 						return
 					if(tribe == "Wendigo")
-						tribe = "Glasswalker"
-					else if(tribe == "Glasswalker")
+						tribe = "Glasswalkers"
+					else if(tribe == "Glasswalkers")
 						tribe = "Wendigo"
 
 				if("breed")
@@ -2311,35 +2311,68 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						return
 //				var/newtype = GLOB.species_list["kindred"]
 //				pref_species = new newtype()
+					var/donator = FALSE
+					for(var/i in GLOB.donaters)
+						if(i == "[parent.ckey]")
+							donator = TRUE
+					if(donator)
+						var/result = input(user, "Select a species", "Species Selection") as null|anything in GLOB.donation_races
 
-					var/result = input(user, "Select a species", "Species Selection") as null|anything in GLOB.roundstart_races
+						if(result)
+							all_quirks = list()
+							SetQuirks(user)
+							var/newtype = GLOB.species_list[result]
+							pref_species = new newtype()
+							if(pref_species.id == "ghoul" || pref_species.id == "human")
+								discipline1type = null
+								discipline2type = null
+								discipline3type = null
+								discipline4type = null
+							if(pref_species.id == "kindred")
+								qdel(clane)
+								clane = new /datum/vampireclane/brujah()
+								if(length(clane.clane_disciplines) >= 1)
+									discipline1type = clane.clane_disciplines[1]
+								if(length(clane.clane_disciplines) >= 2)
+									discipline2type = clane.clane_disciplines[2]
+								if(length(clane.clane_disciplines) >= 3)
+									discipline3type = clane.clane_disciplines[3]
+								discipline4type = null
+							//Now that we changed our species, we must verify that the mutant colour is still allowed.
+							var/temp_hsv = RGBtoHSV(features["mcolor"])
+							if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
+								features["mcolor"] = pref_species.default_color
+							if(randomise[RANDOM_NAME])
+								real_name = pref_species.random_name(gender)
+					else
+						var/result = input(user, "Select a species", "Species Selection") as null|anything in GLOB.roundstart_races
 
-					if(result)
-						all_quirks = list()
-						SetQuirks(user)
-						var/newtype = GLOB.species_list[result]
-						pref_species = new newtype()
-						if(pref_species.id == "ghoul" || pref_species.id == "human")
-							discipline1type = null
-							discipline2type = null
-							discipline3type = null
-							discipline4type = null
-						if(pref_species.id == "kindred")
-							qdel(clane)
-							clane = new /datum/vampireclane/brujah()
-							if(length(clane.clane_disciplines) >= 1)
-								discipline1type = clane.clane_disciplines[1]
-							if(length(clane.clane_disciplines) >= 2)
-								discipline2type = clane.clane_disciplines[2]
-							if(length(clane.clane_disciplines) >= 3)
-								discipline3type = clane.clane_disciplines[3]
-							discipline4type = null
-						//Now that we changed our species, we must verify that the mutant colour is still allowed.
-						var/temp_hsv = RGBtoHSV(features["mcolor"])
-						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
-							features["mcolor"] = pref_species.default_color
-						if(randomise[RANDOM_NAME])
-							real_name = pref_species.random_name(gender)
+						if(result)
+							all_quirks = list()
+							SetQuirks(user)
+							var/newtype = GLOB.species_list[result]
+							pref_species = new newtype()
+							if(pref_species.id == "ghoul" || pref_species.id == "human")
+								discipline1type = null
+								discipline2type = null
+								discipline3type = null
+								discipline4type = null
+							if(pref_species.id == "kindred")
+								qdel(clane)
+								clane = new /datum/vampireclane/brujah()
+								if(length(clane.clane_disciplines) >= 1)
+									discipline1type = clane.clane_disciplines[1]
+								if(length(clane.clane_disciplines) >= 2)
+									discipline2type = clane.clane_disciplines[2]
+								if(length(clane.clane_disciplines) >= 3)
+									discipline3type = clane.clane_disciplines[3]
+								discipline4type = null
+							//Now that we changed our species, we must verify that the mutant colour is still allowed.
+							var/temp_hsv = RGBtoHSV(features["mcolor"])
+							if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
+								features["mcolor"] = pref_species.default_color
+							if(randomise[RANDOM_NAME])
+								real_name = pref_species.random_name(gender)
 
 				if("mutant_color")
 					if(slotlocked)
@@ -2878,7 +2911,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(i == "[parent.ckey]")
 							sponsor = TRUE
 					if(sponsor)
-						true_experience = 30
+						true_experience = 30+round(GLOB.donaters_amount["[parent.ckey]"])
 					real_name = random_unique_name(gender)
 					save_character()
 
@@ -3024,7 +3057,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/datum/species/chosen_species
 	chosen_species = pref_species.type
-	if(roundstart_checks && !(pref_species.id in GLOB.roundstart_races) && !(pref_species.id in (CONFIG_GET(keyed_list/roundstart_no_hard_check))))
+	if(roundstart_checks && !(pref_species.id in GLOB.donation_races) && !(pref_species.id in (CONFIG_GET(keyed_list/roundstart_no_hard_check))))
 		chosen_species = /datum/species/human
 		pref_species = new /datum/species/human
 		save_character()

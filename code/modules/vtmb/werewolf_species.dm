@@ -15,6 +15,7 @@
 	punchdamagelow = 10
 	punchdamagehigh = 20
 	dust_anim = "dust-h"
+	donation = TRUE
 
 /mob/living/carbon
 	var/datum/auspice/auspice
@@ -99,13 +100,13 @@
 		qdel(VI)
 
 /datum/species/garou/check_roundstart_eligible()
-	return TRUE
+	return FALSE
 
 /proc/adjust_rage(var/amount, var/mob/living/carbon/C)
 	if(amount > 0)
 		SEND_SOUND(C, sound('code/modules/ziggers/sounds/rage_increase.ogg', 0, 0, 75))
 		to_chat(C, "<span class='userdanger'><b>RAGE INCREASES</b></span>")
-		C.auspice.rage = min(C.auspice.start_rage, C.auspice.rage+amount)
+		C.auspice.rage = min(10, C.auspice.rage+amount)
 	if(amount < 0)
 		C.auspice.rage = max(0, C.auspice.rage+amount)
 		SEND_SOUND(C, sound('code/modules/ziggers/sounds/rage_decrease.ogg', 0, 0, 75))

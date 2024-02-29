@@ -9,11 +9,20 @@
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	var/tribe
-	var/totem_health = 300
+	var/totem_health = 500
 	var/obj/overlay/totem_light_overlay
 	var/totem_overlay_color = "#FFFFFF"
 
 	var/last_rage = 0
+
+/obj/structure/werewolf_totem/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(I.force)
+		adjust_totem_health(round(I.force/2))
+
+/obj/structure/werewolf_totem/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
+	. = ..()
+	adjust_totem_health(round(P.damage/2))
 
 /obj/structure/werewolf_totem/Initialize()
 	. = ..()
@@ -27,10 +36,14 @@
 
 /obj/structure/werewolf_totem/proc/adjust_totem_health(var/amount)
 	if(amount > 0)
+		if(totem_health == 0)
+			return
 		totem_health = max(0, totem_health-amount)
 		if(totem_health == 0)
 			icon_state = "[initial(icon_state)]_broken"
+			overlays -= totem_light_overlay
 			totem_light_overlay.icon_state = "[icon_state]_overlay"
+			overlays |= totem_light_overlay
 			for(var/mob/living/carbon/C in GLOB.player_list)
 				if(iswerewolf(C) || isgarou(C))
 					if(C.stat != DEAD)
@@ -38,15 +51,16 @@
 							to_chat(C, "<span class='userdanger'><b>YOUR TOTEM IS DESTROYED</b></span>")
 							SEND_SOUND(C, sound('sound/effects/tendril_destroyed.ogg', 0, 0, 75))
 							adjust_gnosis(-5, C)
-		for(var/mob/living/carbon/C in GLOB.player_list)
-			if(iswerewolf(C) || isgarou(C))
-				if(C.stat != DEAD)
-					if(C.auspice.tribe == tribe)
-						if(last_rage+50 < world.time)
-							last_rage = world.time
-							to_chat(C, "<span class='userdanger'><b>YOUR TOTEM IS BREAKING DOWN</b></span>")
-							SEND_SOUND(C, sound('code/modules/ziggers/sounds/bumps.ogg', 0, 0, 75))
-							adjust_rage(1, C)
+		else
+			for(var/mob/living/carbon/C in GLOB.player_list)
+				if(iswerewolf(C) || isgarou(C))
+					if(C.stat != DEAD)
+						if(C.auspice.tribe == tribe)
+							if(last_rage+50 < world.time)
+								last_rage = world.time
+								to_chat(C, "<span class='userdanger'><b>YOUR TOTEM IS BREAKING DOWN</b></span>")
+//								SEND_SOUND(C, sound('code/modules/ziggers/sounds/bumps.ogg', 0, 0, 75))
+								adjust_rage(1, C)
 	if(amount < 0)
 		totem_health = min(initial(totem_health), totem_health-amount)
 		if(totem_health > 0)
@@ -59,7 +73,9 @@
 								SEND_SOUND(C, sound('code/modules/ziggers/sounds/inspire.ogg', 0, 0, 75))
 								adjust_gnosis(1, C)
 				icon_state = "[initial(icon_state)]"
+				overlays -= totem_light_overlay
 				totem_light_overlay.icon_state = "[icon_state]_overlay"
+				overlays |= totem_light_overlay
 
 /obj/structure/werewolf_totem/wendigo
 	name = "Wendigo Totem"
@@ -72,7 +88,7 @@
 	name = "Glasswalker Totem"
 	desc = "Gives power to all Garou of that tribe and steals it from others."
 	icon_state = "glassw"
-	tribe = "Glasswalker"
+	tribe = "Glasswalkers"
 	totem_overlay_color = "#35b0ff"
 
 /obj/structure/werewolf_totem/spiral
