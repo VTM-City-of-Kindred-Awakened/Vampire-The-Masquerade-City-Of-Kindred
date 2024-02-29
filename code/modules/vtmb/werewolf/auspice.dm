@@ -45,7 +45,7 @@
 	name = "Theurge"
 	desc = "The Crescent Moons can be strange and enigmatic, prone to falling into the convoluted symbolic logic of the spirits they truck with rather than the more familiar logic of humanity. Those Theurges born under the waning moon frequently have a harsher, more adversarial relationship with the spirit world - they tend to excel at binding and forcing spirits to their will, and are more vicious when battling spirits. Theurges born under the waxing moon tend to be more generous and open with the spirits, charming and cajoling rather than intimidating and threatening."
 	start_rage = 2
-	gifts = list(/datum/action/gift/mothers_touch, /datum/action/gift/umbral_tether, /datum/action/gift/spirit_speech)
+	gifts = list(/datum/action/gift/mothers_touch, /datum/action/gift/sense_wyrm, /datum/action/gift/spirit_speech)
 
 /datum/auspice/ragabash
 	name = "Ragabash"

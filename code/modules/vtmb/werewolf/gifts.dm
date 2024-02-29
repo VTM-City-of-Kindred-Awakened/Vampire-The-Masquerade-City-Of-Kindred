@@ -5,10 +5,32 @@
 	var/gnosis_req = 0
 	var/cool_down = 0
 
+	var/allowed_to_proceed = FALSE
+
 /datum/action/gift/Trigger()
 	. = ..()
-	if(cool_down+200 >= world.time)
-		return
+	if(istype(owner, /mob/living/carbon))
+		var/mob/living/carbon/H = owner
+		if(rage_req)
+			if(H.auspice.rage < rage_req)
+				to_chat(owner, "<span class='warning'>You don't have enough <b>RAGE</b> to do that!</span>")
+				SEND_SOUND(owner, sound('code/modules/ziggers/sounds/werewolf_cast_failed.ogg', 0, 0, 75))
+				allowed_to_proceed = FALSE
+				return
+			if(H.auspice.gnosis < gnosis_req)
+				to_chat(owner, "<span class='warning'>You don't have enough <b>GNOSIS</b> to do that!</span>")
+				SEND_SOUND(owner, sound('code/modules/ziggers/sounds/werewolf_cast_failed.ogg', 0, 0, 75))
+				allowed_to_proceed = FALSE
+				return
+		if(cool_down+200 >= world.time)
+			allowed_to_proceed = FALSE
+			return
+		cool_down = world.time
+		allowed_to_proceed = TRUE
+		if(rage_req)
+			adjust_rage(rage_req, owner)
+		if(gnosis_req)
+			adjust_gnosis(gnosis_req, owner)
 
 /datum/action/gift/falling_touch
 	name = "Falling Touch"
@@ -60,10 +82,12 @@
 	desc = "The Garou is able to heal the wounds of any living creature, aggravated or otherwise, simply by laying hands over the afflicted area."
 	button_icon_state = "mothers_touch"
 
-/datum/action/gift/umbral_tether
-	name = "Umbral Tether"
-	desc = "This Gift allows the werewolf to spin a spiritual line, resembling spider silk, behind her as she explores the Umbra."
-	button_icon_state = "umbral_tether"
+/datum/action/gift/sense_wyrm
+	name = "Sense Wyrm"
+	desc = "This Gift allows the werewolf to sense the presence of Wyrm."
+	button_icon_state = "sense_wyrm"
+
+//	sight = SEE_MOBS
 
 /datum/action/gift/spirit_speech
 	name = "Spirit Speech"

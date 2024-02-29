@@ -57,8 +57,8 @@
 					transformating = FALSE
 					animate(trans, transform = null, color = "#FFFFFF", time = 1)
 					lupus_form.update_icons()
-					if(lupus_form.auspice.base_breed != "Lupus")
-						adjust_rage(-1, lupus_form)
+//					if(lupus_form.auspice.base_breed != "Lupus")
+//						adjust_rage(-1, lupus_form)
 			if("Crinos")
 				if(trans == crinos_form)
 					transformating = FALSE
@@ -76,8 +76,8 @@
 					transformating = FALSE
 					animate(trans, transform = null, color = "#FFFFFF", time = 1)
 					crinos_form.update_icons()
-					if(crinos_form.auspice.base_breed != "Crinos")
-						adjust_rage(-1, crinos_form)
+//					if(crinos_form.auspice.base_breed != "Crinos")
+//						adjust_rage(-1, crinos_form)
 			if("Homid")
 				if(trans == human_form)
 					transformating = FALSE
@@ -94,8 +94,8 @@
 					trans.forceMove(src)
 					transformating = FALSE
 					animate(trans, transform = null, color = "#FFFFFF", time = 1)
-					if(human_form.auspice.base_breed != "Homid")
-						adjust_rage(-1, human_form)
+//					if(human_form.auspice.base_breed != "Homid")
+//						adjust_rage(-1, human_form)
 
 /obj/werewolf_holder/transformation/proc/fast_trans_gender(mob/trans, form)
 	switch(form)

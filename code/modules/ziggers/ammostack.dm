@@ -232,3 +232,109 @@
 	icon_state = "arrows"
 	ammo_type = /obj/item/ammo_casing/caseless/bolt
 	max_ammo = 30
+
+/obj/projectile/beam/beam_rifle/vampire/vamp556mm/silver
+	name = "5.56mm silver bullet"
+	armour_penetration = 10
+	damage = 30
+
+/obj/projectile/beam/beam_rifle/vampire/vamp556mm/silver/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(iswerewolf(target) || isgarou(target))
+		var/mob/living/carbon/M = target
+		if(M.auspice.gnosis)
+			if(prob(40))
+				adjust_gnosis(-1, M)
+		else
+			M.Stun(10)
+			M.adjustBruteLoss(50, TRUE)
+
+/obj/projectile/beam/beam_rifle/vampire/vamp9mm/silver
+	name = "9mm silver bullet"
+	damage = 25
+
+/obj/projectile/beam/beam_rifle/vampire/vamp9mm/silver/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(iswerewolf(target) || isgarou(target))
+		var/mob/living/carbon/M = target
+		if(M.auspice.gnosis)
+			if(prob(40))
+				adjust_gnosis(-1, M)
+		else
+			M.Stun(10)
+			M.adjustBruteLoss(50, TRUE)
+
+/obj/projectile/beam/beam_rifle/vampire/vamp45acp/silver
+	name = ".45 ACP silver bullet"
+	damage = 25
+
+/obj/projectile/beam/beam_rifle/vampire/vamp45acp/silver/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(iswerewolf(target) || isgarou(target))
+		var/mob/living/carbon/M = target
+		if(M.auspice.gnosis)
+			if(prob(40))
+				adjust_gnosis(-1, M)
+		else
+			M.Stun(10)
+			M.adjustBruteLoss(50, TRUE)
+
+/obj/projectile/beam/beam_rifle/vampire/vamp44/silver
+	name = ".44 silver bullet"
+	damage = 35
+	armour_penetration = 15
+
+/obj/projectile/beam/beam_rifle/vampire/vamp44/silver/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(iswerewolf(target) || isgarou(target))
+		var/mob/living/carbon/M = target
+		if(M.auspice.gnosis)
+			if(prob(40))
+				adjust_gnosis(-1, M)
+		else
+			M.Stun(10)
+			M.adjustBruteLoss(50, TRUE)
+
+/obj/item/ammo_casing/vampire/c9mm/silver
+	name = "9mm silver bullet casing"
+	desc = "A 9mm silver bullet casing."
+	projectile_type = /obj/projectile/beam/beam_rifle/vampire/vamp9mm/silver
+
+/obj/item/ammo_casing/vampire/c45acp/silver
+	name = ".45 ACP silver bullet casing"
+	desc = "A .45 ACP silver bullet casing."
+	projectile_type = /obj/projectile/beam/beam_rifle/vampire/vamp45acp/silver
+
+/obj/item/ammo_casing/vampire/c44/silver
+	name = ".44 silver bullet casing"
+	desc = "A .44 silver bullet casing."
+	projectile_type = /obj/projectile/beam/beam_rifle/vampire/vamp44/silver
+
+/obj/item/ammo_casing/vampire/c556mm/silver
+	name = "5.56mm silver bullet casing"
+	desc = "A 5.56mm silver bullet casing."
+	projectile_type = /obj/projectile/beam/beam_rifle/vampire/vamp556mm/silver
+
+/obj/item/ammo_box/vampire/c9mm/silver
+	name = "ammo box (9mm silver)"
+	icon_state = "9box-silver"
+	ammo_type = /obj/item/ammo_casing/vampire/c9mm/silver
+	max_ammo = 100
+
+/obj/item/ammo_box/vampire/c45acp/silver
+	name = "ammo box (.45 ACP silver)"
+	icon_state = "45box-silver"
+	ammo_type = /obj/item/ammo_casing/vampire/c45acp/silver
+	max_ammo = 100
+
+/obj/item/ammo_box/vampire/c44/silver
+	name = "ammo box (.44 silver)"
+	icon_state = "44box-silver"
+	ammo_type = /obj/item/ammo_casing/vampire/c44/silver
+	max_ammo = 60
+
+/obj/item/ammo_box/vampire/c556/silver
+	name = "ammo box (5.56 silver)"
+	icon_state = "556box-silver"
+	ammo_type = /obj/item/ammo_casing/vampire/c556mm/silver
+	max_ammo = 60

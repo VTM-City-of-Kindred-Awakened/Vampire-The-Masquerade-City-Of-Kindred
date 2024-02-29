@@ -28,8 +28,8 @@
 	faction = list("Gaia")
 	ventcrawler = VENTCRAWLER_NONE
 	pass_flags = 0
-	sight = SEE_MOBS
-	see_in_dark = 4
+//	sight = SEE_MOBS
+	see_in_dark = 2
 	verb_say = "woofs"
 	density = TRUE
 	anchored = TRUE

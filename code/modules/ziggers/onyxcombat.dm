@@ -691,6 +691,7 @@
 /mob/living/carbon/werewolf/Life()
 	. = ..()
 	update_blood_hud()
+	update_rage_hud()
 
 /mob/living/carbon/human/Life()
 	if(!iskindred(src))
@@ -739,6 +740,14 @@
 		if(hud_used.rage_icon)
 			var/mob/living/carbon/C = src
 			hud_used.rage_icon.icon_state = "rage[C.auspice.rage]"
+			hud_used.rage_icon.cut_overlays()
+			var/obj/overlay/gnosis = new(hud_used.rage_icon)
+			gnosis.icon = 'code/modules/ziggers/48x48.dmi'
+			gnosis.icon_state = "gnosis[C.auspice.gnosis]"
+			gnosis.layer = ABOVE_HUD_LAYER
+			hud_used.rage_icon.overlays |= gnosis
+
+
 
 /mob/living/proc/update_blood_hud()
 	if(!client || !hud_used)

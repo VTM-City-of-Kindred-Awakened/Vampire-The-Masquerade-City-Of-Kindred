@@ -187,6 +187,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/archetype = /datum/archetype/average
 
 	var/breed = "Homid"
+	var/tribe = "Wendigo"	//Spiral are available only as antags
 	var/datum/auspice/auspice = new /datum/auspice/ahroun()
 	var/werewolf_color = "black"
 	var/werewolf_scar = 0
@@ -603,6 +604,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				qdel(DAWOF)
 				qdel(DAWOF2)
 				dat += "<b>Breed:</b> <a href='?_src_=prefs;preference=breed;task=input'>[breed]</a><BR>"
+				dat += "<b>Tribe:</b> <a href='?_src_=prefs;preference=tribe;task=input'>[tribe]</a><BR>"
 				dat += "Color: <a href='?_src_=prefs;preference=werewolf_color;task=input'>[werewolf_color]</a><BR>"
 				dat += "Scars: <a href='?_src_=prefs;preference=werewolf_scar;task=input'>[werewolf_scar]</a><BR>"
 				dat += "Hair: <a href='?_src_=prefs;preference=werewolf_hair;task=input'>[werewolf_hair]</a><BR>"
@@ -2155,6 +2157,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						true_experience = true_experience-blood*6
 						blood = min(5, blood+1)
 
+				if("tribe")
+					if(slotlocked)
+						link_bug_fix = FALSE
+						return
+					if(tribe == "Wendigo")
+						tribe = "Glasswalker"
+					else if(tribe == "Glasswalker")
+						tribe = "Wendigo"
+
 				if("breed")
 					if(slotlocked)
 						link_bug_fix = FALSE
@@ -3028,6 +3039,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		var/datum/auspice/CLN = new auspice.type()
 		character.auspice = CLN
 		character.auspice.on_gain(character)
+		character.auspice.tribe = tribe
 		switch(breed)
 			if("Homid")
 				character.auspice.gnosis = 1
