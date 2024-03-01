@@ -222,6 +222,7 @@
 
 /obj/item/reagent_containers/food/condiment/vampiremilk
 	name = "milk"
+	desc = "More milk..."
 	icon_state = "milk"
 	icon = 'code/modules/ziggers/items.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'

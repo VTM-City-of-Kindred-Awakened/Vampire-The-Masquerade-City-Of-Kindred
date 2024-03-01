@@ -262,7 +262,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(i == "[P.parent.ckey]")
 					sponsor = TRUE
 			if(sponsor)
-				P.true_experience = 30+round(GLOB.donaters_amount["[P.parent.ckey]"])
+				P.true_experience = 30+round(4*GLOB.donaters_amount["[P.parent.ckey]"])
 			P.save_character()
 			P.save_preferences()
 
@@ -323,7 +323,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(i == "[parent.ckey]")
 			sponsor = TRUE
 	if(sponsor)
-		true_experience = 30+round(GLOB.donaters_amount["[parent.ckey]"])
+		true_experience = 30+round(4*GLOB.donaters_amount["[parent.ckey]"])
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
 	C?.set_macros()
 //	pref_species = new /datum/species/kindred()
@@ -549,6 +549,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(true_experience >= 6*blood && blood != 5)
 				dat += "<a href='?_src_=prefs;preference=blood;task=input'>Increase ([3*blood])</a>"
 			dat += "<BR>"
+			dat += "Experience rewarded: [true_experience]<BR>"
 			if(pref_species.name == "Werewolf")
 				dat += "<h2>[make_font_cool("TRIBE")]</h2>"
 				dat += "<b>Auspice:</b> <a href='?_src_=prefs;preference=auspice;task=input'>[auspice.name]</a><BR>"
@@ -617,7 +618,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Curse:</b> [clane.curse]<BR>"
 				dat += "<h2>[make_font_cool("DISCIPLINES")]</h2>"
 
-				dat += "Experience rewarded: [true_experience]<BR>"
 //				else
 //					dat += "Experience rewarded: [exper]/[calculate_max_exper()]<BR>"
 
@@ -664,7 +664,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "<a href='?_src_=prefs;preference=disciplineplus;task=input'>Learn custom type of disciplines</a><BR>"
 
 			if(pref_species.name == "Ghoul")
-				dat += "Experience rewarded: [true_experience]<BR>"
 				if(!discipline1type && true_experience >= 5)
 					dat += "<a href='?_src_=prefs;preference=discipline1ghoul;task=input'>Learn new type of discipline (5)</a><BR>"
 				if(discipline1type)
@@ -2911,7 +2910,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(i == "[parent.ckey]")
 							sponsor = TRUE
 					if(sponsor)
-						true_experience = 30+round(GLOB.donaters_amount["[parent.ckey]"])
+						true_experience = 30+round(4*GLOB.donaters_amount["[parent.ckey]"])
 					real_name = random_unique_name(gender)
 					save_character()
 
@@ -2996,8 +2995,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	else
 		character.clane = null
 		character.generation = 13
-	character.maxHealth = round((initial(character.maxHealth)-initial(character.maxHealth)/3)+(initial(character.maxHealth)/3)*(character.physique+13-generation))
-	character.health = round((initial(character.health)-initial(character.health)/3)+(initial(character.health)/3)*(character.physique+13-generation))
+	if(pref_species.name == "Werewolf")
+		character.maxHealth = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*character.physique))
+		character.health = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*character.physique))
+	else
+		character.maxHealth = round((initial(character.maxHealth)-initial(character.maxHealth)/4)+(initial(character.maxHealth)/4)*(character.physique+13-generation))
+		character.health = round((initial(character.health)-initial(character.health)/4)+(initial(character.health)/4)*(character.physique+13-generation))
 	if(pref_species.name == "Vampire")
 		character.humanity = humanity
 	character.masquerade = masquerade
@@ -3095,6 +3098,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				character.transformator.crinos_form.sprite_eye_color = werewolf_eye_color
 				character.transformator.lupus_form.sprite_color = werewolf_color
 				character.transformator.lupus_form.sprite_eye_color = werewolf_eye_color
+
+				character.transformator.lupus_form.maxHealth = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*character.physique))
+				character.transformator.lupus_form.health = character.transformator.lupus_form.maxHealth
+				character.transformator.crinos_form.maxHealth = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*character.physique))
+				character.transformator.crinos_form.health = character.transformator.crinos_form.maxHealth
 //		character.transformator.crinos_form.update_icons()
 //		character.transformator.lupus_form.update_icons()
 	if(pref_species.mutant_bodyparts["tail_lizard"])

@@ -12,8 +12,8 @@
 	brutemod = 1
 	heatmod = 1
 	burnmod = 1
-	punchdamagelow = 10
-	punchdamagehigh = 20
+//	punchdamagelow = 5
+//	punchdamagehigh = 7
 	dust_anim = "dust-h"
 	donation = TRUE
 
@@ -102,27 +102,31 @@
 /datum/species/garou/check_roundstart_eligible()
 	return FALSE
 
-/proc/adjust_rage(var/amount, var/mob/living/carbon/C)
+/proc/adjust_rage(var/amount, var/mob/living/carbon/C, var/sound = TRUE)
 	if(amount > 0)
-		SEND_SOUND(C, sound('code/modules/ziggers/sounds/rage_increase.ogg', 0, 0, 75))
+		if(sound)
+			SEND_SOUND(C, sound('code/modules/ziggers/sounds/rage_increase.ogg', 0, 0, 75))
 		to_chat(C, "<span class='userdanger'><b>RAGE INCREASES</b></span>")
 		C.auspice.rage = min(10, C.auspice.rage+amount)
 	if(amount < 0)
 		C.auspice.rage = max(0, C.auspice.rage+amount)
-		SEND_SOUND(C, sound('code/modules/ziggers/sounds/rage_decrease.ogg', 0, 0, 75))
+		if(sound)
+			SEND_SOUND(C, sound('code/modules/ziggers/sounds/rage_decrease.ogg', 0, 0, 75))
 		to_chat(C, "<span class='userdanger'><b>RAGE DECREASES</b></span>")
 		if(C.auspice.rage == 0)
 			C.transformator.trans_gender(C, C.auspice.base_breed)
 	C.update_rage_hud()
 
-/proc/adjust_gnosis(var/amount, var/mob/living/carbon/C)
+/proc/adjust_gnosis(var/amount, var/mob/living/carbon/C, var/sound = TRUE)
 	if(amount > 0)
-		SEND_SOUND(C, sound('code/modules/ziggers/sounds/rage_increase.ogg', 0, 0, 75))
+		if(sound)
+			SEND_SOUND(C, sound('code/modules/ziggers/sounds/rage_increase.ogg', 0, 0, 75))
 		to_chat(C, "<span class='boldnotice'><b>GNOSIS INCREASES</b></span>")
 		C.auspice.gnosis = min(C.auspice.start_gnosis, C.auspice.gnosis+amount)
 	if(amount < 0)
 		C.auspice.gnosis = max(0, C.auspice.gnosis+amount)
-		SEND_SOUND(C, sound('code/modules/ziggers/sounds/rage_decrease.ogg', 0, 0, 75))
+		if(sound)
+			SEND_SOUND(C, sound('code/modules/ziggers/sounds/rage_decrease.ogg', 0, 0, 75))
 		to_chat(C, "<span class='boldnotice'><b>GNOSIS DECREASES</b></span>")
 //		if(C.auspice.gnosis == 0)
 //			C.transformator.trans_gender(C, C.auspice.base_breed)

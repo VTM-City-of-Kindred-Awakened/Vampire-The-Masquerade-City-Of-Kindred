@@ -63,7 +63,8 @@
 //equippable shit
 
 //hands
-	build_hand_slots()
+	if(iscrinos(owner))
+		build_hand_slots()
 
 //begin buttons
 
@@ -168,6 +169,8 @@
 
 /datum/hud/werewolf/persistent_inventory_update()
 	if(!mymob)
+		return
+	if(!iscrinos(mymob))
 		return
 	var/mob/living/carbon/werewolf/H = mymob
 	if(hud_version != HUD_STYLE_NOHUD)

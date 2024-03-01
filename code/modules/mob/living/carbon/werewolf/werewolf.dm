@@ -215,6 +215,9 @@
 	popup.open()
 
 
+/mob/living/carbon/werewolf/crinos/can_hold_items(obj/item/I)
+	return TRUE
+
 /mob/living/carbon/werewolf/crinos/Topic(href, href_list)
 	//strip panel
 	if(href_list["pouches"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))

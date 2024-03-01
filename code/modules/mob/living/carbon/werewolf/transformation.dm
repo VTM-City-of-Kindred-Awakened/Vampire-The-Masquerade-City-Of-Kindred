@@ -14,13 +14,19 @@
 	lupus_form.transformator = src
 //	lupus_form.forceMove(src)
 
-/obj/werewolf_holder/transformation/proc/trans_gender(mob/trans, form)
+/obj/werewolf_holder/transformation/proc/transfer_damage(mob/living/carbon/first, mob/living/carbon/second)
+	var/percentage = (100/first.maxHealth)*second.maxHealth
+	second.adjustBruteLoss(round((first.getBruteLoss()/100)*percentage)-second.getBruteLoss())
+	second.adjustFireLoss(round((first.getFireLoss()/100)*percentage)-second.getFireLoss())
+	second.adjustToxLoss(round((first.getToxLoss()/100)*percentage)-second.getToxLoss())
+	second.adjustCloneLoss(round((first.getCloneLoss()/100)*percentage)-second.getCloneLoss())
+
+/obj/werewolf_holder/transformation/proc/trans_gender(mob/living/carbon/trans, form)
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
-	if(iscarbon(trans))
-		var/mob/living/carbon/C = trans
-		if(C.auspice.rage <= 1 && form != C.auspice.base_breed)
-			to_chat(trans, "Not enough rage to transform into anything but [C.auspice.base_breed]")
-			return
+	if(trans.auspice.rage == 0 && form != trans.auspice.base_breed)
+		to_chat(trans, "Not enough rage to transform into anything but [trans.auspice.base_breed]")
+		return
+	trans.inspired = FALSE
 	switch(form)
 		if("Lupus")
 			if(iscrinos(trans))
@@ -53,6 +59,9 @@
 					animate(lupus_form, color = "#FFFFFF", time = 10)
 					lupus_form.key = trans.key
 					forceMove(lupus_form)
+					lupus_form.bloodpool = trans.bloodpool
+					lupus_form.update_blood_hud()
+					transfer_damage(trans, lupus_form)
 					trans.forceMove(src)
 					transformating = FALSE
 					animate(trans, transform = null, color = "#FFFFFF", time = 1)
@@ -72,6 +81,9 @@
 					animate(crinos_form, color = "#FFFFFF", time = 10)
 					crinos_form.key = trans.key
 					forceMove(crinos_form)
+					crinos_form.bloodpool = trans.bloodpool
+					crinos_form.update_blood_hud()
+					transfer_damage(trans, crinos_form)
 					trans.forceMove(src)
 					transformating = FALSE
 					animate(trans, transform = null, color = "#FFFFFF", time = 1)
@@ -91,6 +103,9 @@
 					animate(human_form, color = "#FFFFFF", time = 10)
 					human_form.key = trans.key
 					forceMove(human_form)
+					human_form.bloodpool = trans.bloodpool
+					human_form.update_blood_hud()
+					transfer_damage(trans, human_form)
 					trans.forceMove(src)
 					transformating = FALSE
 					animate(trans, transform = null, color = "#FFFFFF", time = 1)

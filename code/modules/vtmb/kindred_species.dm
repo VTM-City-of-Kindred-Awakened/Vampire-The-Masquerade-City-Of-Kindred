@@ -229,11 +229,11 @@
 								BLOODBONDED.skin_tone = "albino"
 								BLOODBONDED.update_body()
 							BLOODBONDED.create_disciplines(FALSE, H.client.prefs.discipline1type, H.client.prefs.discipline2type, H.client.prefs.discipline3type)
-							BLOODBONDED.maxbloodpool = 10+((13-BLOODBONDED.generation)*5)
+							BLOODBONDED.maxbloodpool = 10+((13-min(13, BLOODBONDED.generation))*3)
 							BLOODBONDED.clane.enlightement = H.clane.enlightement
 							if(BLOODBONDED.generation < 13)
-								BLOODBONDED.maxHealth = initial(BLOODBONDED.maxHealth)+50*(13-BLOODBONDED.generation)
-								BLOODBONDED.health = initial(BLOODBONDED.health)+50*(13-BLOODBONDED.generation)
+								BLOODBONDED.maxHealth = round((initial(BLOODBONDED.maxHealth)-initial(BLOODBONDED.maxHealth)/4)+(initial(BLOODBONDED.maxHealth)/4)*(BLOODBONDED.physique+13-BLOODBONDED.generation))
+								BLOODBONDED.health = round((initial(BLOODBONDED.maxHealth)-initial(BLOODBONDED.maxHealth)/4)+(initial(BLOODBONDED.maxHealth)/4)*(BLOODBONDED.physique+13-BLOODBONDED.generation))
 						else
 							BLOODBONDED.clane = new /datum/vampireclane/caitiff()
 						BLOODBONDED.hud_used.drinkblood_icon.icon_state = "drink"

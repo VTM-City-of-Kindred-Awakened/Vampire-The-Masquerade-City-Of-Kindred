@@ -217,10 +217,9 @@
 				if(INTENT_HARM)
 					changeNext_move(CLICK_CD_MELEE)
 					var/atom/B = claw_swing()
-					if(isliving(B) || isobj(B))
-						UnarmedAttack(B)
+					UnarmedAttack(B)
 				if(INTENT_HELP)
-					return
+					UnarmedAttack(A)
 				if(INTENT_GRAB)
 					changeNext_move(CLICK_CD_GRABBING)
 					if(A != src)
@@ -229,8 +228,7 @@
 							living.grabbedby(wolf)
 							return
 						else
-							CtrlClickOn(A)
-							return
+							UnarmedAttack(A)
 				if(INTENT_DISARM)
 					changeNext_move(CLICK_CD_MELEE)
 					if(A != src)
@@ -239,6 +237,8 @@
 							wolf.disarm(living)
 							do_attack_animation(A)
 							return
+						else
+							UnarmedAttack(A)
 		else
 			if(istype(W, /obj/item/melee))
 				var/atom/B = melee_swing()

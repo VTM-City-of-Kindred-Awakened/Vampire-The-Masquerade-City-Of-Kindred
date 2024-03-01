@@ -184,6 +184,27 @@
 		L.adjustStaminaLoss(50)
 	return ..()
 
+/obj/item/melee/touch_attack/werewolf
+	name = "\improper falling touch"
+	desc = "This is kind of like when you rub your feet on a shag rug so you can zap your friends, only a lot less safe."
+	icon = 'code/modules/ziggers/weapons.dmi'
+	catchphrase = null
+	on_use_sound = 'sound/magic/disintegrate.ogg'
+	icon_state = "falling"
+	inhand_icon_state = "disintegrate"
+
+/obj/item/melee/touch_attack/werewolf/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity)
+		return
+	if(isliving(target))
+		var/mob/living/L = target
+		L.AdjustKnockdown(2 SECONDS)
+		L.adjustStaminaLoss(50)
+		L.Immobilize(20)
+		if(L.body_position != LYING_DOWN)
+			L.toggle_resting()
+	return ..()
+
 /obj/item/quietus_upgrade
 	name = "poison for weapons"
 	desc = "Upgrade your melee weapons with it."

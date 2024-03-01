@@ -50,7 +50,7 @@
 						if(C.auspice.tribe == tribe)
 							to_chat(C, "<span class='userdanger'><b>YOUR TOTEM IS DESTROYED</b></span>")
 							SEND_SOUND(C, sound('sound/effects/tendril_destroyed.ogg', 0, 0, 75))
-							adjust_gnosis(-5, C)
+							adjust_gnosis(-5, C, FALSE)
 		else
 			for(var/mob/living/carbon/C in GLOB.player_list)
 				if(iswerewolf(C) || isgarou(C))
@@ -59,8 +59,8 @@
 							if(last_rage+50 < world.time)
 								last_rage = world.time
 								to_chat(C, "<span class='userdanger'><b>YOUR TOTEM IS BREAKING DOWN</b></span>")
-//								SEND_SOUND(C, sound('code/modules/ziggers/sounds/bumps.ogg', 0, 0, 75))
-								adjust_rage(1, C)
+								SEND_SOUND(C, sound('code/modules/ziggers/sounds/bumps.ogg', 0, 0, 75))
+								adjust_rage(1, C, FALSE)
 	if(amount < 0)
 		totem_health = min(initial(totem_health), totem_health-amount)
 		if(totem_health > 0)
@@ -71,7 +71,7 @@
 							if(C.auspice.tribe == tribe)
 								to_chat(C, "<span class='userhelp'><b>YOUR TOTEM IS RESTORED</b></span>")
 								SEND_SOUND(C, sound('code/modules/ziggers/sounds/inspire.ogg', 0, 0, 75))
-								adjust_gnosis(1, C)
+								adjust_gnosis(1, C, FALSE)
 				icon_state = "[initial(icon_state)]"
 				overlays -= totem_light_overlay
 				totem_light_overlay.icon_state = "[icon_state]_overlay"
@@ -98,3 +98,4 @@
 	icon_state = "spiral"
 	tribe = "Spiral"
 	totem_overlay_color = "#ff5235"
+	pixel_w = -16

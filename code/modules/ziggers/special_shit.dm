@@ -2,6 +2,7 @@
 	name = "Masquerade Contract"
 	desc = "See where to search the shitty Masquerade breakers. <b>CLICK ON the Contract to see possible breakers for catching. PUSH the target in torpor, to restore the Masquerade</b>"
 	icon = 'code/modules/ziggers/items.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 	icon_state = "masquerade"
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL
@@ -355,8 +356,8 @@
 /mob/living/Life()
 	if(GLOB.canon_event)
 		if(client)
-			if(client.holder.rank.rights & R_ADMIN)
-				if(client.holder)
+			if(client.holder)
+				if(client.holder.rank.rights & R_ADMIN)
 					var/cool_guy = FALSE
 					for(var/i in GLOB.psychokids)
 						if(i == "[client.ckey]")
@@ -364,3 +365,16 @@
 					if(!cool_guy)
 						client.deadmin()
 	..()
+
+/obj/item/argemia
+	name = "strange plushie"
+	desc = "Voiding..."
+	icon_state = "argemia"
+	icon = 'code/modules/ziggers/items.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/argemia/microwave_act(obj/machinery/microwave/M)
+	playsound(M.loc, 'code/modules/ziggers/sounds/aeaeae.ogg', 100, FALSE)
+	spawn(50)
+		explosion(M.loc, 0, 1, 2)

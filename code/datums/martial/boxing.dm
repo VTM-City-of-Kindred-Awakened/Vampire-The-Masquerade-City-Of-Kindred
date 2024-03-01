@@ -19,7 +19,8 @@
 
 	var/atk_verb = pick("left hook","right hook","straight punch")
 
-	var/damage = rand(5, 8) + species.punchdamagelow
+	var/damage = 5 + species.punchdamagelow
+	damage = min(damage, 20)
 	if(!damage)
 		playsound(D.loc, species.miss_sound, 25, TRUE, -1)
 		D.visible_message("<span class='warning'>[A]'s [atk_verb] misses [D]!</span>", \
@@ -40,9 +41,9 @@
 
 	D.apply_damage(damage, STAMINA, affecting, armor_block)
 	log_combat(A, D, "punched (boxing) ")
-	if(D.getStaminaLoss() > 50 && istype(D.mind?.martial_art, /datum/martial_art/boxing))
-		var/knockout_prob = D.getStaminaLoss() + rand(-15,15)
-		if((D.stat != DEAD) && prob(knockout_prob))
+	if(D.getStaminaLoss() > 60 && istype(D.mind?.martial_art, /datum/martial_art/boxing))
+		var/knockout_prob = D.getStaminaLoss()-20
+		if((D.stat != DEAD) && prob(knockout_prob) && !iskindred(D) && !iscrinos(D) && !iswerewolf(D))
 			D.visible_message("<span class='danger'>[A] knocks [D] out with a haymaker!</span>", \
 							"<span class='userdanger'>You're knocked unconscious by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 			to_chat(A, "<span class='danger'>You knock [D] out with a haymaker!</span>")

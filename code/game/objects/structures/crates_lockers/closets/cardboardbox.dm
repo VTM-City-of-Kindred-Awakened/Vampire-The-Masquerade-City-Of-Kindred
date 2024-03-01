@@ -25,8 +25,14 @@
 		return
 	move_delay = TRUE
 	var/oldloc = loc
+	set_glide_size(DELAY_TO_GLIDE_SIZE(CONFIG_GET(number/movedelay/walk_delay) * move_speed_multiplier))
 	step(src, direction)
 	if(oldloc != loc)
+		animate(src, pixel_z = 4, time = 0)
+		var/prev_trans = matrix(transform)
+		animate(pixel_z = 0, transform = turn(transform, pick(-6, 0, 6)), time=2)
+		animate(pixel_z = 0, transform = prev_trans, time = 0)
+		playsound(loc, 'code/modules/ziggers/sounds/snake_move.ogg', 25, FALSE)
 		addtimer(CALLBACK(src, .proc/ResetMoveDelay), CONFIG_GET(number/movedelay/walk_delay) * move_speed_multiplier)
 	else
 		move_delay = FALSE
@@ -53,7 +59,7 @@
 				if(!L.incapacitated(ignore_restraints = 1))
 					L.face_atom(src)
 				L.do_alert_animation()
-		playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)
+		playsound(loc, 'code/modules/ziggers/sounds/snake.ogg', 50, FALSE, -5)
 
 /// Does the MGS ! animation
 /atom/proc/do_alert_animation()

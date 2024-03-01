@@ -117,8 +117,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 //				facial_hair_color = brighten_color(body_human.facial_hair_color)
 
 	update_icon()
-	appearance = body.appearance
-	alpha = 130
+//	appearance = body.appearance
+//	alpha = 130
 
 	if(!T)
 		var/list/turfs = get_area_turfs(/area/shuttle/arrival)

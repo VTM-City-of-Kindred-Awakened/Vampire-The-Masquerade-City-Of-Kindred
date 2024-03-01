@@ -36,12 +36,7 @@
 	var/turf/T = get_turf(H)
 	var/light_amount = T.get_lumcount()
 	if(light_amount < 0.2)
-		var/also_do_spooky = TRUE
-		for(var/mob/living/L in oviewers(2, H))
-			if(L.client)
-				also_do_spooky = FALSE
-		if(also_do_spooky)
-			do_spooky(H)
+		do_spooky(H)
 	else
 		var/allowed_to_do = TRUE
 		for(var/mob/living/L in oviewers(8, H))
@@ -57,23 +52,25 @@
 //	if(last_spooked_out+10 > world.time)
 //		return
 //	last_spooked_out = world.time
+	for(var/mob/living/L in range(7, man))
+		if(L.client)
+			man.face_atom(L)
+			if(prob(50))
+				walk_to(man, L, 0, man.total_multiplicative_slowdown())
+
+	for(var/mob/living/carbon/human/H in range(1, man))
+		if(H.client)
+			if(!H.lock_on_by_mannequin)
+				H.lock_on_by_mannequin = TRUE
+				man.forceMove(get_turf(H))
+				if(get_dist(man, H) < 2)
+					var/obj/item/bodypart/affected = H.get_bodypart(pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+					if(affected != null)
+						man.visible_message("[man] slices off [H]'s [affected]!", "<span class='notice'>You slice [man]'s [affected] off.</span>")
+						affected.dismember(BRUTE)
+					H.lock_on_by_mannequin = FALSE
+
 	if(prob(33))
 		var/turf/T = get_step(man, pick(NORTH, SOUTH, WEST, EAST))
 //		man.face_atom(T)
 		step_to(man,T,0)
-	for(var/mob/living/L in oviewers(5, man))
-		if(L.client)
-			man.face_atom(L)
-
-	if(prob(20))
-		for(var/mob/living/carbon/human/H in oviewers(5, man))
-			if(H.client)
-				if(!H.lock_on_by_mannequin)
-					H.lock_on_by_mannequin = TRUE
-					man.forceMove(get_turf(H))
-					if(get_dist(man, H) < 2)
-						var/obj/item/bodypart/affected = H.get_bodypart(pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-						if(affected != null)
-							man.visible_message("[man] slices off [H]'s [affected]!", "<span class='notice'>You slice [man]'s [affected] off.</span>")
-							affected.dismember(BRUTE)
-						H.lock_on_by_mannequin = FALSE

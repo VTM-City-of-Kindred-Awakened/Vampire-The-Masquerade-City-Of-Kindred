@@ -14,7 +14,7 @@
 	melee_damage_upper = 21
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/hallucinations/growl1.ogg'
+	attack_sound = 'code/modules/ziggers/sounds/zombuzi.ogg'
 	a_intent = INTENT_HARM
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -29,6 +29,7 @@
 /mob/living/simple_animal/hostile/zombie/Destroy()
 	. = ..()
 	SSgraveyard.alive_zombies = max(0, SSgraveyard.alive_zombies-1)
+	GLOB.zombie_list -= src
 
 /mob/living/simple_animal/hostile/zombie/Initialize()
 	. = ..()
@@ -44,13 +45,13 @@
 				totalshit = total_multiplicative_slowdown()
 
 			var/reqsteps = round((SSzombiepool.next_fire-world.time)/totalshit)
-			walk_to(src, target_to_zombebe, reqsteps, total_multiplicative_slowdown())
+			walk_to(src, target_to_zombebe, reqsteps+1, total_multiplicative_slowdown())
 			if(get_dist(src, target_to_zombebe) <= 1)
 				ClickOn(target_to_zombebe)
 			//code to attack pepol
 	else
 		//code to find target
-		for(var/mob/living/L in view(4, src))
+		for(var/mob/living/L in oviewers(6, src))
 			if(!iszomboid(L))
 				target_to_zombebe = L
 		//else, if we have no target :((( NO ONE TO BITE... BRAAAAAAAAAHH(ins)... FUCK IM LOOKING FOR GATE TO BRRRRRRR

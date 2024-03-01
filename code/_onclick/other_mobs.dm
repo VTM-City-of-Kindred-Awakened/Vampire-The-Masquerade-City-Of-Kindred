@@ -198,6 +198,15 @@
 		update_inv_hands()
 
 
+/mob/living/carbon/werewolf/crinos/UnarmedAttack(atom/A, proximity)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
+	if(A)
+		if(a_intent == INTENT_HARM)
+			return ..()
+		A.attack_hand(src)
+		update_inv_hands()
+
 /*
 	Hostile animals
 */
