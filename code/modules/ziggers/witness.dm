@@ -38,16 +38,16 @@
 	. = ..()
 	GLOB.police_radios -= src
 
-/mob/living/carbon/human
+/mob/living/carbon
 	var/diablerist = FALSE
 	var/antifrenzy = FALSE
 
-/mob/living/carbon/human/Initialize()
+/mob/living/carbon/Initialize()
 	. = ..()
 	var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]
 	hud.add_to_hud(src)
 
-/mob/living/carbon/human/proc/update_auspex_hud()
+/mob/living/carbon/proc/update_auspex_hud()
 	var/image/holder = hud_list[GLAND_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
@@ -61,6 +61,9 @@
 			holder.icon_state = "aura"
 	else
 		holder.icon_state = "aura"
+		if(isgarou(src) || iswerewolf(src))
+			holder.icon_state = "aura_bright"
+
 		if(isnpc(src))
 			var/mob/living/carbon/human/npc/N = src
 			if(N.danger_source)
@@ -72,3 +75,7 @@
 				holder.color = "#ff0000"
 			else
 				holder.color = "#0000ff"
+
+		if(mind)
+			if(mind.holy_role == HOLY_ROLE_PRIEST)
+				holder.color = "#ffe12f"

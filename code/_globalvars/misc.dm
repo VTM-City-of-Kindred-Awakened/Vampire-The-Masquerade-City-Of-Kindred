@@ -34,3 +34,5 @@ GLOBAL_VAR_INIT(internal_tick_usage, 0.2 * world.tick_lag)
 GLOBAL_VAR_INIT(winter, FALSE)
 
 GLOBAL_DATUM(vampgate, /obj/structure/vampgate)
+
+GLOBAL_VAR_INIT(moon_state, pick("New", "Crescent", "Half", "Gibbous", "Full"))

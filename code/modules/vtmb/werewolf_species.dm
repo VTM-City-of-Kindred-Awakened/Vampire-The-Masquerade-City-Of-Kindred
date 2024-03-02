@@ -91,6 +91,8 @@
 	var/datum/action/garouinfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
+	var/datum/action/gift/rage_heal/GH = new()
+	GH.Grant(C)
 	C.transformator = new(C)
 	C.transformator.human_form = C
 

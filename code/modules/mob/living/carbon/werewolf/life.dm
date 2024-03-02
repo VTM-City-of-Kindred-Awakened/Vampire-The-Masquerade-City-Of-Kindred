@@ -24,24 +24,20 @@
 				if(W.totem_health)
 					if(W.tribe == auspice.tribe)
 						if(get_area(W) == get_area(src) && client)
-							if(iscrinos(src))
-								if(auspice.base_breed == "Crinos")
-									gaining_rage = FALSE
-									if(last_gnosis_buff+300 < world.time)
-										last_gnosis_buff = world.time
-										adjust_gnosis(1, src, TRUE)
-							if(islupus(src))
-								if(auspice.base_breed == "Lupus")
-									gaining_rage = FALSE
-									if(last_gnosis_buff+300 < world.time)
-										last_gnosis_buff = world.time
-										adjust_gnosis(1, src, TRUE)
-							if(ishuman(src))
-								if(auspice.base_breed == "Homid")
-									gaining_rage = FALSE
-									if(last_gnosis_buff+300 < world.time)
-										last_gnosis_buff = world.time
-										adjust_gnosis(1, src, TRUE)
+							gaining_rage = FALSE
+							if(last_gnosis_buff+300 < world.time)
+								last_gnosis_buff = world.time
+								adjust_gnosis(1, src, TRUE)
+		if(iscrinos(src))
+			if(auspice.base_breed == "Crinos")
+				gaining_rage = FALSE
+		if(islupus(src))
+			if(auspice.base_breed == "Lupus")
+				gaining_rage = FALSE
+		if(ishuman(src))
+			if(auspice.base_breed == "Homid")
+				gaining_rage = FALSE
+
 		if(gaining_rage && client)
 			if(last_rage_penis+3000 < world.time)
 				last_rage_penis = world.time
@@ -76,9 +72,15 @@
 		return
 	adjust_bodytemperature(BODYTEMP_HEATING_MAX) //If you're on fire, you heat up!
 
+/mob/living/carbon
+	var/last_veil_adjusting = 0
+
 /mob/living/carbon/proc/adjust_veil(var/amount)
 	if(!GLOB.canon_event)
 		return
+	if(last_veil_adjusting+100 >= world.time)
+		return
+	last_veil_adjusting = world.time
 	var/special_role_name
 	if(mind)
 		if(mind.special_role)

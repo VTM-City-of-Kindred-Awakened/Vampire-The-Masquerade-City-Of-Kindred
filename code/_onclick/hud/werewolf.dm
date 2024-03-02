@@ -20,6 +20,8 @@
 
 /atom/movable/screen/transform_homid/Click()
 	var/mob/living/carbon/C = usr
+	if(C.stat >= 1 || C.IsSleeping() || C.IsUnconscious() || C.IsParalyzed() || C.IsKnockdown() || C.IsStun())
+		return
 	if(C.transformator)
 		C.transformator.trans_gender(C, "Homid")
 
@@ -32,6 +34,8 @@
 
 /atom/movable/screen/transform_crinos/Click()
 	var/mob/living/carbon/C = usr
+	if(C.stat >= 1 || C.IsSleeping() || C.IsUnconscious() || C.IsParalyzed() || C.IsKnockdown() || C.IsStun())
+		return
 	if(C.transformator)
 		C.transformator.trans_gender(C, "Crinos")
 
@@ -44,6 +48,8 @@
 
 /atom/movable/screen/transform_lupus/Click()
 	var/mob/living/carbon/C = usr
+	if(C.stat >= 1 || C.IsSleeping() || C.IsUnconscious() || C.IsParalyzed() || C.IsKnockdown() || C.IsStun())
+		return
 	if(C.transformator)
 		C.transformator.trans_gender(C, "Lupus")
 
@@ -53,6 +59,35 @@
 	icon_state = "auspice_bar"
 	layer = HUD_LAYER
 	plane = HUD_PLANE
+
+/mob/living/carbon
+	var/last_moon_look = 0
+
+/atom/movable/screen/auspice/Click()
+	if(!GLOB.moon_state)
+		GLOB.moon_state = pick("Full", "Gibbous", "Half", "Crescent", "New")
+	var/mob/living/carbon/C = usr
+	if(C.stat >= 1 || C.IsSleeping() || C.IsUnconscious() || C.IsParalyzed() || C.IsKnockdown() || C.IsStun())
+		return
+	var/area/vtm/V = get_area(C)
+	if(!V.upper)
+		to_chat(C, "<span class='warning'>You need to be outside to look at the moon!</span>")
+		return
+	if(C.last_moon_look == 0 || C.last_moon_look+6000 < world.time)
+//		last_moon_look = world.time
+		C.transformator.lupus_form.last_moon_look = world.time
+		C.transformator.crinos_form.last_moon_look = world.time
+		C.transformator.human_form.last_moon_look = world.time
+		to_chat(C, "<span class='notice'>The Moon is [GLOB.moon_state].</span>")
+//		icon_state = "[GLOB.moon_state]"
+		C.emote("howl")
+		playsound(get_turf(C), pick('code/modules/ziggers/sounds/awo1.ogg', 'code/modules/ziggers/sounds/awo2.ogg'), 100, FALSE)
+		icon_state = "[GLOB.moon_state]"
+		spawn(10)
+			adjust_rage(1, C, TRUE)
+
+/datum/hud
+	var/atom/movable/screen/auspice_icon
 
 /datum/hud/werewolf/New(mob/living/carbon/werewolf/owner)
 	..()
@@ -83,10 +118,10 @@
 	transform_werewolf.hud = src
 	static_inventory += transform_werewolf
 
-	transform_werewolf = new /atom/movable/screen/auspice()
-	transform_werewolf.screen_loc = ui_werewolf_auspice
-	transform_werewolf.hud = src
-	static_inventory += transform_werewolf
+	auspice_icon = new /atom/movable/screen/auspice()
+	auspice_icon.screen_loc = ui_werewolf_auspice
+	auspice_icon.hud = src
+	static_inventory += auspice_icon
 
 	rage_icon = new /atom/movable/screen/rage()
 	rage_icon.screen_loc = ui_werewolf_rage
