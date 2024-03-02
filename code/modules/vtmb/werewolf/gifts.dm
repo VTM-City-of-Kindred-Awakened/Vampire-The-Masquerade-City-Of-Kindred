@@ -50,7 +50,7 @@
 	name = "Inspiration"
 	desc = "The Garou with this Gift lends new resolve and righteous anger to his brethren."
 	button_icon_state = "inspiration"
-	gnosis_req = 1
+//	rage_req = 1
 
 /mob/living/carbon
 	var/inspired = FALSE
@@ -157,7 +157,7 @@
 	name = "Truth Of Gaia"
 	desc = "As judges of the Litany, Philodox have the ability to sense whether others have spoken truth or falsehood."
 	button_icon_state = "truth_of_gaia"
-//	gnosis_req = 1
+//	rage_req = 1
 
 /datum/action/gift/mothers_touch
 	name = "Mother's Touch"
@@ -165,13 +165,28 @@
 	button_icon_state = "mothers_touch"
 	gnosis_req = 1
 
+/datum/action/gift/mothers_touch/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		var/mob/living/carbon/H = owner
+		H.put_in_active_hand(new /obj/item/melee/touch_attack/mothers_touch(H))
+
 /datum/action/gift/sense_wyrm
 	name = "Sense Wyrm"
 	desc = "This Gift allows the werewolf to sense the presence of Wyrm."
 	button_icon_state = "sense_wyrm"
-//	gnosis_req = 1
+	rage_req = 1
 
-//	sight = SEE_MOBS
+/datum/action/gift/sense_wyrm/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		var/mob/living/carbon/C = owner
+		C.sight = SEE_MOBS|SEE_OBJS
+		playsound(get_turf(owner), 'code/modules/ziggers/sounds/sense_wyrm.ogg', 75, FALSE)
+		to_chat(owner, "<span class='notice'>You feel your sense sharpening...</span>")
+		spawn(200)
+			C.sight = initial(C.sight)
+			to_chat(owner, "<span class='warning'>You no longer sense anything more than normal...</span>")
 
 /datum/action/gift/spirit_speech
 	name = "Spirit Speech"
@@ -185,6 +200,17 @@
 	button_icon_state = "blur_of_the_milky_eye"
 	gnosis_req = 1
 
+/datum/action/gift/infectious_laughter/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		var/mob/living/carbon/C = owner
+		C.obfuscate_level = 3
+		C.alpha = 36
+		playsound(get_turf(owner), 'code/modules/ziggers/sounds/milky_blur.ogg', 75, FALSE)
+		spawn(200)
+			C.obfuscate_level = 0
+			C.alpha = 255
+
 /datum/action/gift/open_seal
 	name = "Open Seal"
 	desc = "With this Gift, the Garou can open nearly any sort of closed or locked physical device."
@@ -195,4 +221,16 @@
 	name = "Infectious Laughter"
 	desc = "When the Ragabash laughs, those around her are compelled to follow along, forgetting their grievances."
 	button_icon_state = "infectious_laughter"
-//	gnosis_req = 1
+	rage_req = 1
+
+/datum/action/gift/infectious_laughter/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		var/mob/living/carbon/C = owner
+		C.emote("laugh")
+		C.Stun(10)
+		playsound(get_turf(owner), 'code/modules/ziggers/sounds/infectious_laughter.ogg', 100, FALSE)
+		for(var/mob/living/L in oviewers(4, src))
+			if(L)
+				L.emote("laugh")
+				L.Stun(20)

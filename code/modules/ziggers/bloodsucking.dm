@@ -122,7 +122,7 @@
 			if(clane.name == "Ventrue" && mob.bloodquality < BLOOD_QUALITY_NORMAL)	//Ventrue mozhet sosat norm, no ne bomzhei i zhivotnih. BLOOD_QUALITY_LOW - 1, BLOOD_QUALITY_NORMAL - 2, BLOOD_QUALITY_HIGH - 3. Golubaya krov daet +1 k otsosu
 				to_chat(src, "<span class='warning'>You are too privileged to drink that awful <b>BLOOD</b>. Go get something better.</span>")
 				visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
-				playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
+				playsound(get_turf(src), 'code/modules/ziggers/sounds/vomit.ogg', 75, TRUE)
 				if(isturf(loc))
 					add_splatter_floor(loc)
 				stop_sound_channel(CHANNEL_BLOOD)

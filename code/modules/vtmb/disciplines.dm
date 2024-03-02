@@ -715,7 +715,7 @@
 	activate_sound = 'code/modules/ziggers/sounds/obfuscate_activate.ogg'
 	leveldelay = TRUE
 
-/mob/living/carbon/human
+/mob/living/carbon
 	var/obfuscate_level = 0
 
 /datum/discipline/obfuscate/activate(mob/living/target, mob/living/carbon/human/caster)
@@ -1094,14 +1094,12 @@
 			H.level = 2
 			H.fire(direct_target = target)
 		else
-			if(iskindred(target))
-				var/turf/start = get_turf(caster)
-				var/obj/projectile/thaumaturgy/H = new(start)
-				H.firer = caster
-				H.damage = (5*level_casting)+caster.thaum_damage_plus
-				H.preparePixelProjectile(target, start)
-				H.level = round(level_casting/2)
-				H.fire(direct_target = target)
+			if(iscarbon(target))
+				target.Stun(30)
+				target.visible_message("<span class='danger'>[target] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
+				playsound(get_turf(target), 'code/modules/ziggers/sounds/vomit.ogg', 75, TRUE)
+				target.add_splatter_floor(get_turf(target))
+				target.add_splatter_floor(get_turf(get_step(target, target.dir)))
 			else
 				caster.bloodpool = min(caster.maxbloodpool, caster.bloodpool+target.bloodpool)
 				if(!istype(target, /mob/living/simple_animal/hostile/megafauna))

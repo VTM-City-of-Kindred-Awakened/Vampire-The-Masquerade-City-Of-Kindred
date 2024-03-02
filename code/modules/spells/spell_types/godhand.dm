@@ -110,6 +110,29 @@
 	M.petrify()
 	return ..()
 
+/obj/item/melee/touch_attack/mothers_touch
+	name = "\improper mother's touch"
+	desc = "That's the bottom line, because flesh to stone said so!"
+	on_use_sound = 'code/modules/ziggers/sounds/restore_cast.ogg'
+	icon_state = "fleshtostone"
+	inhand_icon_state = "fleshtostone"
+
+/obj/item/melee/touch_attack/mothers_touch/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity || target == user || !isliving(target) || !iscarbon(user)) //getting hard after touching yourself would also be bad
+		return
+	if(!(user.mobility_flags & MOBILITY_USE))
+		to_chat(user, "<span class='warning'>You can't reach out!</span>")
+		return
+	var/mob/living/M = target
+	if(M.anti_magic_check())
+		to_chat(user, "<span class='warning'>The spell can't seem to affect [M]!</span>")
+		to_chat(M, "<span class='warning'>You feel your flesh turn to stone for a moment, then revert back!</span>")
+		..()
+		return
+	M.adjustBruteLoss(-30, TRUE)
+	M.adjustFireLoss(-30, TRUE)
+	M.adjustCloneLoss(-20, TRUE)
+	return ..()
 
 /obj/item/melee/touch_attack/duffelbag
 	name = "\improper burdening touch"
@@ -145,7 +168,7 @@
 		to_chat(user, "<span class='warning'>The burden of [duffelvictim]'s duffel bag becomes too much, shoving them to the floor!</span>")
 		to_chat(duffelvictim, "<span class='warning'>The weight of this bag becomes overburdening!</span>")
 		return ..()
-	
+
 	var/obj/item/storage/backpack/duffelbag/cursed/conjuredduffel= new get_turf(target)
 
 	duffelvictim.visible_message("<span class='danger'>A growling duffel bag appears on [duffelvictim]!</span>", \

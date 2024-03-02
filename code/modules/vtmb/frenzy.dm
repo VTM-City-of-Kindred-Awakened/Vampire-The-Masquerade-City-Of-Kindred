@@ -3,7 +3,7 @@
 //add_client_colour(/datum/client_colour/glass_colour/red)
 //remove_client_colour(/datum/client_colour/glass_colour/red)
 
-/mob/living/carbon/human
+/mob/living/carbon
 	var/in_frenzy = FALSE
 	var/frenzy_hardness = 1
 	var/last_frenzy_check = 0
@@ -21,37 +21,46 @@
 /mob/living
 	var/frenzy_chance_boost = 10
 
-/mob/living/carbon/human/proc/rollfrenzy()
-	if(clane && client)
+/mob/living/carbon/proc/rollfrenzy()
+	if(client)
+		var/mob/living/carbon/human/H
+		if(ishuman(src))
+			H = src
 		to_chat(src, "I need <span class='danger'><b>BLOOD</b></span>. The <span class='danger'><b>BEAST</b></span> is calling. Rolling...")
 		SEND_SOUND(src, sound('code/modules/ziggers/sounds/bloodneed.ogg', 0, 0, 50))
 		var/check = vampireroll(max(1, round(humanity/2)), min(frenzy_chance_boost, frenzy_hardness), src)
 		switch(check)
 			if(DICE_FAILURE)
 				enter_frenzymod()
-				addtimer(CALLBACK(src, .proc/exit_frenzymod), 100*clane.frenzymod)
+				if(iskindred(src))
+					addtimer(CALLBACK(src, .proc/exit_frenzymod), 100*H.clane.frenzymod)
+				else
+					addtimer(CALLBACK(src, .proc/exit_frenzymod), 100)
 				frenzy_hardness = 1
 			if(DICE_CRIT_FAILURE)
 				enter_frenzymod()
-				addtimer(CALLBACK(src, .proc/exit_frenzymod), 200*clane.frenzymod)
+				if(iskindred(src))
+					addtimer(CALLBACK(src, .proc/exit_frenzymod), 200*H.clane.frenzymod)
+				else
+					addtimer(CALLBACK(src, .proc/exit_frenzymod), 200)
 				frenzy_hardness = 1
 			if(DICE_CRIT_WIN)
 				frenzy_hardness = max(1, frenzy_hardness-1)
 			else
 				frenzy_hardness = min(10, frenzy_hardness+1)
 
-/mob/living/carbon/human/proc/enter_frenzymod()
+/mob/living/carbon/proc/enter_frenzymod()
 	SEND_SOUND(src, sound('code/modules/ziggers/sounds/frenzy.ogg', 0, 0, 50))
 	in_frenzy = TRUE
 	add_client_colour(/datum/client_colour/glass_colour/red)
 	GLOB.frenzy_list += src
 
-/mob/living/carbon/human/proc/exit_frenzymod()
+/mob/living/carbon/proc/exit_frenzymod()
 	in_frenzy = FALSE
 	remove_client_colour(/datum/client_colour/glass_colour/red)
 	GLOB.frenzy_list -= src
 
-/mob/living/carbon/human/proc/CheckFrenzyMove()
+/mob/living/carbon/proc/CheckFrenzyMove()
 	if(stat >= 1)
 		return TRUE
 	if(IsSleeping())
@@ -67,7 +76,7 @@
 	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
 		return TRUE
 
-/mob/living/carbon/human/proc/frenzystep()
+/mob/living/carbon/proc/frenzystep()
 	if(!isturf(loc) || CheckFrenzyMove())
 		return
 	if(m_intent == MOVE_INTENT_WALK)
@@ -94,43 +103,62 @@
 //	if(!fear && !frenzy_target)
 //		return
 
-	if(fear)
-		step_away(src,fear,99)
-		if(prob(25))
-			emote("scream")
+	if(iskindred(src))
+		if(fear)
+			step_away(src,fear,99)
+			if(prob(25))
+				emote("scream")
+		else
+			var/mob/living/carbon/human/H = src
+			if(get_dist(frenzy_target, src) <= 1)
+				if(isliving(frenzy_target))
+					var/mob/living/L = frenzy_target
+					if(L.bloodpool && L.stat != DEAD && last_drinkblood_use+95 <= world.time)
+						L.grabbedby(src)
+						if(ishuman(L))
+							L.emote("scream")
+							var/mob/living/carbon/human/BT = L
+							BT.add_bite_animation()
+						if(CheckEyewitness(L, src, 7, FALSE))
+							H.AdjustMasquerade(-1)
+						playsound(src, 'code/modules/ziggers/sounds/drinkblood1.ogg', 50, TRUE)
+						L.visible_message("<span class='warning'><b>[src] bites [L]'s neck!</b></span>", "<span class='warning'><b>[src] bites your neck!</b></span>")
+						face_atom(L)
+						H.drinksomeblood(L)
+			else
+				step_to(src,frenzy_target,0)
+				face_atom(frenzy_target)
 	else
 		if(get_dist(frenzy_target, src) <= 1)
 			if(isliving(frenzy_target))
 				var/mob/living/L = frenzy_target
-				if(L.bloodpool && L.stat != DEAD && last_drinkblood_use+95 <= world.time)
-					L.grabbedby(src)
-					if(ishuman(L))
-						L.emote("scream")
-						var/mob/living/carbon/human/BT = L
-						BT.add_bite_animation()
-					if(CheckEyewitness(L, src, 7, FALSE))
-						AdjustMasquerade(-1)
-					playsound(src, 'code/modules/ziggers/sounds/drinkblood1.ogg', 50, TRUE)
-					L.visible_message("<span class='warning'><b>[src] bites [L]'s neck!</b></span>", "<span class='warning'><b>[src] bites your neck!</b></span>")
-					face_atom(L)
-					drinksomeblood(L)
+				if(L.stat != DEAD)
+					a_intent = INTENT_HARM
+					UnarmedAttack(L)
 		else
 			step_to(src,frenzy_target,0)
 			face_atom(frenzy_target)
 
-/mob/living/carbon/human/proc/get_frenzy_targets()
+/mob/living/carbon/proc/get_frenzy_targets()
 	var/list/targets = list()
-	for(var/mob/living/L in oviewers(7, src))
-		if(!iskindred(L) && L.bloodpool && L.stat != DEAD)
-			targets += L
-			if(L == frenzy_target)
-				return L
+	if(iskindred(src))
+		for(var/mob/living/L in oviewers(7, src))
+			if(!iskindred(L) && L.bloodpool && L.stat != DEAD)
+				targets += L
+				if(L == frenzy_target)
+					return L
+	else
+		for(var/mob/living/L in oviewers(7, src))
+			if(L.stat != DEAD)
+				targets += L
+				if(L == frenzy_target)
+					return L
 	if(length(targets) > 0)
 		return pick(targets)
 	else
 		return null
 
-/mob/living/carbon/human/proc/handle_automated_frenzy()
+/mob/living/carbon/proc/handle_automated_frenzy()
 	for(var/mob/living/carbon/human/npc/NPC in viewers(5, src))
 		NPC.Aggro(src)
 	if(isturf(loc))

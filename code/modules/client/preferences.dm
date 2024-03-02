@@ -511,7 +511,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				for(var/i in GLOB.donaters)
 					if(i == "[parent.ckey]" && !slotlocked)
 						dat += "<a href='?_src_=prefs;preference=pathof;task=input'>Switch Path</a><BR>"
-			dat += "<b>Masquerade:</b> [masquerade]/5<BR>"
+			if(pref_species.name == "Werewolf")
+				dat += "<b>Veil:</b> [masquerade]/5<BR>"
+			if(pref_species.name == "Vampire" || pref_species.name == "Ghoul")
+				dat += "<b>Masquerade:</b> [masquerade]/5<BR>"
 			if(pref_species.name == "Vampire")
 				dat += "<b>Generation:</b> [generation]"
 				var/generation_allowed = TRUE
@@ -2995,6 +2998,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	else
 		character.clane = null
 		character.generation = 13
+		character.bloodpool = character.maxbloodpool
 	if(pref_species.name == "Werewolf")
 		character.maxHealth = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*character.physique))
 		character.health = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*character.physique))

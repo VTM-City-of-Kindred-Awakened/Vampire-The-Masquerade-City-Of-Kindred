@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(frenzypool)
 	var/list/currentrun = src.currentrun
 
 	while(currentrun.len)
-		var/mob/living/carbon/human/H = currentrun[currentrun.len]
+		var/mob/living/carbon/H = currentrun[currentrun.len]
 		--currentrun.len
 
 		if (QDELETED(H)) // Some issue causes nulls to get into this list some times. This keeps it running, but the bug is still there.

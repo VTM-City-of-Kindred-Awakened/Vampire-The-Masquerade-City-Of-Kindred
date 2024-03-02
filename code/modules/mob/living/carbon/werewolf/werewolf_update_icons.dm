@@ -17,6 +17,10 @@
 		laid_down = TRUE
 	else
 		icon_state = "[sprite_color]"
+		var/mutable_appearance/shadow_overlay = mutable_appearance(icon, "undershadow")
+		shadow_overlay.pixel_z = -4
+		shadow_overlay.alpha = 64
+		shadow_overlay.layer = layer-1
 
 	if(sprite_scar)
 		var/mutable_appearance/scar_overlay = mutable_appearance(icon, "scar[sprite_scar][laid_down ? "_rest" : ""]")

@@ -15,6 +15,7 @@
 //	lupus_form.forceMove(src)
 
 /obj/werewolf_holder/transformation/proc/transfer_damage(mob/living/carbon/first, mob/living/carbon/second)
+	second.masquerade = first.masquerade
 	var/percentage = (100/first.maxHealth)*second.maxHealth
 	second.adjustBruteLoss(round((first.getBruteLoss()/100)*percentage)-second.getBruteLoss())
 	second.adjustFireLoss(round((first.getFireLoss()/100)*percentage)-second.getFireLoss())
@@ -50,6 +51,12 @@
 				if(trans == lupus_form)
 					transformating = FALSE
 					return
+				var/items = trans.get_contents()
+				for(var/obj/item/item_worn in items)
+					if(item_worn)
+						if(!ismob(item_worn.loc))
+							continue
+						trans.dropItemToGround(item_worn, TRUE)
 				animate(trans, transform = ntransform, color = "#000000", time = 30)
 				playsound(get_turf(trans), 'code/modules/ziggers/sounds/transform.ogg', 50, FALSE)
 				spawn(30)
@@ -72,6 +79,12 @@
 				if(trans == crinos_form)
 					transformating = FALSE
 					return
+				var/items = trans.get_contents()
+				for(var/obj/item/item_worn in items)
+					if(item_worn)
+						if(!ismob(item_worn.loc))
+							continue
+						trans.dropItemToGround(item_worn, TRUE)
 				animate(trans, transform = ntransform, color = "#000000", time = 30)
 				playsound(get_turf(trans), 'code/modules/ziggers/sounds/transform.ogg', 50, FALSE)
 				spawn(30)
@@ -94,6 +107,12 @@
 				if(trans == human_form)
 					transformating = FALSE
 					return
+				var/items = trans.get_contents()
+				for(var/obj/item/item_worn in items)
+					if(item_worn)
+						if(!ismob(item_worn.loc))
+							continue
+						trans.dropItemToGround(item_worn, TRUE)
 				animate(trans, transform = ntransform, color = "#000000", time = 30)
 				playsound(get_turf(trans), 'code/modules/ziggers/sounds/transform.ogg', 50, FALSE)
 				spawn(30)

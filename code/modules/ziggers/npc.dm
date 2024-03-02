@@ -402,17 +402,19 @@
 		if(a_intent != INTENT_HELP)
 			NPC.Annoy(src)
 
-/mob/living/carbon/human/Move(NewLoc, direct)
+/mob/living/carbon/Move(NewLoc, direct)
 	if(obfuscate_level < 2)
-		if(alpha != 255)
+		if(alpha < 200)
 			playsound(loc, 'code/modules/ziggers/sounds/obfuscate_deactivate.ogg', 50, FALSE)
 			alpha = 255
 	if(m_intent != MOVE_INTENT_WALK)
 		if(obfuscate_level < 3)
-			if(alpha != 255)
+			if(alpha < 200)
 				playsound(loc, 'code/modules/ziggers/sounds/obfuscate_deactivate.ogg', 50, FALSE)
 				alpha = 255
-	update_shadow()
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		H.update_shadow()
 	if(istype(src, /mob/living/carbon/human/npc))
 		var/mob/living/carbon/human/npc/CPN = src
 		if(CPN.CheckMove())

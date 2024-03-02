@@ -26,6 +26,7 @@
 
 /obj/structure/werewolf_totem/Initialize()
 	. = ..()
+	GLOB.totems += src
 	totem_light_overlay = new(src)
 	totem_light_overlay.icon = icon
 	totem_light_overlay.icon_state = "[icon_state]_overlay"
