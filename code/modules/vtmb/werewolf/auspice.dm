@@ -14,11 +14,15 @@
 
 	var/list/wendigo = list(/datum/action/gift/stoic_pose = 1,
 							/datum/action/gift/freezing_wind = 2,
-							/datum/action/gift/bloody_feast = 3,)
+							/datum/action/gift/bloody_feast = 3)
 
-	var/list/glasswalker = list()
+	var/list/glasswalker = list(/datum/action/gift/smooth_move = 1,
+								/datum/action/gift/digital_feelings = 2,
+								/datum/action/gift/elemental_improvement = 3)
 
-	var/list/spiral = list()
+	var/list/spiral = list(/datum/action/gift/stinky_fur = 1,
+							/datum/action/gift/venom_claws = 2,
+							/datum/action/gift/burning_scars = 3)
 
 /datum/auspice/proc/on_gain(var/mob/living/carbon/C)
 	C.update_rage_hud()
@@ -33,6 +37,20 @@
 			A2.Grant(C.transformator.lupus_form)
 			var/datum/action/A3 = new i()
 			A3.Grant(C.transformator.crinos_form)
+
+	switch(tribe)
+		if("Glasswalkers")
+			for(var/i in 1 to level)
+				var/datum/action/A = new glasswalker[i]
+				A.Grant(C)
+		if("Wendigo")
+			for(var/i in 1 to level)
+				var/datum/action/A = new wendigo[i]
+				A.Grant(C)
+		if("Spiral")
+			for(var/i in 1 to level)
+				var/datum/action/A = new spiral[i]
+				A.Grant(C)
 
 /datum/auspice/ahroun
 	name = "Ahroun"

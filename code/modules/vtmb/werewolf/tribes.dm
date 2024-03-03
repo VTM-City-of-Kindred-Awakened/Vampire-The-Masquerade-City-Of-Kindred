@@ -56,3 +56,33 @@
 				if(L.stat == DEAD)
 					qdel(L)
 					C.revive(full_heal = TRUE, admin_revive = TRUE)
+
+/datum/action/gift/stinky_fur
+	name = "Stinky Fur"
+	desc = "Garou creates an aura of very toxic smell, which disorientates everyone around."
+	button_icon_state = "stinky_fur"
+
+/datum/action/gift/venom_claws
+	name = "Venom Claws"
+	desc = "While this ability is active, strikes with claws poison foes of garou."
+	button_icon_state = "venom_claws"
+
+/datum/action/gift/burning_scars
+	name = "Burning Scars"
+	desc = "Garou creates an aura of very hot air, which burns everyone around."
+	button_icon_state = "burning_scars"
+
+/datum/action/gift/smooth_move
+	name = "Smooth Move"
+	desc = "Garou jumps forward, avoiding every damage for a moment."
+	button_icon_state = "smooth_move"
+
+/datum/action/gift/digital_feelings
+	name = "Digital Feelings"
+	desc = "Every technology creates an electrical strike, which hits garou's enemies."
+	button_icon_state = "digital_feelings"
+
+/datum/action/gift/elemental_improvement
+	name = "Elemental Improvement"
+	desc = "Garou flesh replaces itself with prothesis, making it less vulnerable to brute damage, but more for burn damage."
+	button_icon_state = "elemental_improvement"
