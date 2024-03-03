@@ -70,6 +70,7 @@
 					lupus_form.key = trans.key
 					forceMove(lupus_form)
 					lupus_form.bloodpool = trans.bloodpool
+					lupus_form.masquerade = trans.masquerade
 					lupus_form.update_blood_hud()
 					transfer_damage(trans, lupus_form)
 					trans.forceMove(src)
@@ -101,6 +102,7 @@
 					crinos_form.key = trans.key
 					forceMove(crinos_form)
 					crinos_form.bloodpool = trans.bloodpool
+					crinos_form.masquerade = trans.masquerade
 					crinos_form.update_blood_hud()
 					transfer_damage(trans, crinos_form)
 					trans.forceMove(src)
@@ -132,6 +134,7 @@
 					human_form.key = trans.key
 					forceMove(human_form)
 					human_form.bloodpool = trans.bloodpool
+					human_form.masquerade = trans.masquerade
 					human_form.update_blood_hud()
 					transfer_damage(trans, human_form)
 					trans.forceMove(src)

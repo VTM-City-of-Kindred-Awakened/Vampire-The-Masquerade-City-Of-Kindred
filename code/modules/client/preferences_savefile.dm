@@ -410,6 +410,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["generation_bonus"], generation_bonus)
 	READ_FILE(S["masquerade"], masquerade)
 	READ_FILE(S["real_name"], real_name)
+	READ_FILE(S["werewolf_name"], werewolf_name)
 	READ_FILE(S["gender"], gender)
 	READ_FILE(S["body_type"], body_type)
 	READ_FILE(S["body_model"], body_model)
@@ -475,6 +476,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Sanitize
 	real_name = reject_bad_name(real_name)
+	werewolf_name = reject_bad_name(werewolf_name)
 	gender = sanitize_gender(gender)
 	body_type = sanitize_gender(body_type, FALSE, FALSE, gender)
 	body_model = sanitize_integer(body_model, 1, 3, initial(body_model))
@@ -647,6 +649,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["generation_bonus"]			, generation_bonus)
 	WRITE_FILE(S["masquerade"]			, masquerade)
 	WRITE_FILE(S["real_name"]			, real_name)
+	WRITE_FILE(S["werewolf_name"]			, werewolf_name)
 	WRITE_FILE(S["gender"]			, gender)
 	WRITE_FILE(S["body_type"]		, body_type)
 	WRITE_FILE(S["body_model"]		, body_model)

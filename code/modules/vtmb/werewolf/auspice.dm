@@ -9,8 +9,8 @@
 	var/base_breed = "Homid"
 	var/tribe = "Wendigo"
 	var/list/gifts = list()
-	var/list/gifts2 = list()
-	var/list/gifts3 = list()
+//	var/list/gifts2 = list()
+//	var/list/gifts3 = list()
 
 	var/list/wendigo = list(/datum/action/gift/stoic_pose = 1,
 							/datum/action/gift/freezing_wind = 2,
@@ -27,7 +27,11 @@
 /datum/auspice/proc/on_gain(var/mob/living/carbon/C)
 	C.update_rage_hud()
 	C.transformator.lupus_form.auspice = src
+	C.transformator.lupus_form.dna = C.dna
 	C.transformator.crinos_form.auspice = src
+	C.transformator.crinos_form.dna = C.dna
+	SSquirks.AssignQuirks(C.transformator.lupus_form, C.client)
+	SSquirks.AssignQuirks(C.transformator.crinos_form, C.client)
 	rage = start_rage
 	if(length(gifts))
 		for(var/i in gifts)
@@ -49,7 +53,7 @@
 				var/zalupa = wendigo[i]
 				var/datum/action/A = new zalupa()
 				A.Grant(C)
-		if("Spiral")
+		if("Black Spiral")
 			for(var/i in 1 to level)
 				var/zalupa = spiral[i]
 				var/datum/action/A = new zalupa()

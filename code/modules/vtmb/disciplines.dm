@@ -334,7 +334,7 @@
 	spawn(5)
 		qdel(src)
 
-/mob/living/carbon/human
+/mob/living/carbon
 	var/celerity_visual = FALSE
 	var/potential = 0
 

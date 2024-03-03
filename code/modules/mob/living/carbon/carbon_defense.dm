@@ -256,9 +256,9 @@
 
 /mob/living/carbon/proc/do_werewolf_rage_from_attack()
 	if(isgarou(src) || iswerewolf(src))
-		if(last_rage_from_attack == 0 || last_rage_from_attack+600 < world.time)
+		if(last_rage_from_attack == 0 || last_rage_from_attack+50 < world.time)
 			last_rage_from_attack = world.time
-			adjust_rage(src, 1, TRUE)
+			adjust_rage(1, src, TRUE)
 
 /mob/living/carbon/proc/disarm(mob/living/carbon/target)
 	target.do_werewolf_rage_from_attack()

@@ -286,7 +286,7 @@
 	button_icon_state = "blur_of_the_milky_eye"
 	gnosis_req = 1
 
-/datum/action/gift/infectious_laughter/Trigger()
+/datum/action/gift/blur_of_the_milky_eye/Trigger()
 	. = ..()
 	if(allowed_to_proceed)
 		var/mob/living/carbon/C = owner
@@ -348,7 +348,7 @@
 	. = ..()
 	if(allowed_to_proceed)
 		var/mob/living/carbon/C = owner
-		if(C.stat >= 1)
-			C.adjustBruteLoss(-100, TRUE)
-			C.adjustFireLoss(-100, TRUE)
-			C.adjustCloneLoss(-100, TRUE)
+		playsound(get_turf(owner), 'code/modules/ziggers/sounds/rage_heal.ogg', 100, FALSE)
+		C.adjustBruteLoss(-50*C.auspice.level, TRUE)
+		C.adjustFireLoss(-50*C.auspice.level, TRUE)
+		C.adjustCloneLoss(-50*C.auspice.level, TRUE)

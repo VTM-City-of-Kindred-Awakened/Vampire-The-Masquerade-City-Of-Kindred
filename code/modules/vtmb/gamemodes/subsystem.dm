@@ -33,14 +33,14 @@ SUBSYSTEM_DEF(bad_guys_party)
 /datum/controller/subsystem/bad_guys_party/proc/get_niggers(var/level)
 	switch(level)
 		if(1)
-			if(prob(25))
+			if(prob(20))
 				//spiral
 				if(Next)
 					qdel(Next)
 				threat = min(100, threat+60)
 				max_candidates = 2
 				go_on_next_fire = TRUE
-				Next = new /datum/outfit/job/hunter()
+				Next = new /datum/outfit/job/spiral()
 			else
 				//caitiff
 				if(Next)
@@ -50,14 +50,14 @@ SUBSYSTEM_DEF(bad_guys_party)
 				go_on_next_fire = TRUE
 				Next = new /datum/outfit/job/caitiff()
 		if(2)
-			if(prob(33))
+			if(prob(30))
 				//spiral
 				if(Next)
 					qdel(Next)
 				threat = min(100, threat+60)
 				max_candidates = 4
 				go_on_next_fire = TRUE
-				Next = new /datum/outfit/job/hunter()
+				Next = new /datum/outfit/job/spiral()
 			else
 				//hunt
 				if(Next)
@@ -74,7 +74,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 				threat = min(100, threat+60)
 				max_candidates = 6
 				go_on_next_fire = TRUE
-				Next = new /datum/outfit/job/hunter()
+				Next = new /datum/outfit/job/spiral()
 			else
 				//sabbat
 				if(Next)

@@ -117,8 +117,6 @@
 			if(sound)
 				SEND_SOUND(C, sound('code/modules/ziggers/sounds/rage_decrease.ogg', 0, 0, 75))
 			to_chat(C, "<span class='userdanger'><b>RAGE DECREASES</b></span>")
-			if(C.auspice.rage == 0)
-				C.transformator.trans_gender(C, C.auspice.base_breed)
 	C.update_rage_hud()
 
 /proc/adjust_gnosis(var/amount, var/mob/living/carbon/C, var/sound = TRUE)

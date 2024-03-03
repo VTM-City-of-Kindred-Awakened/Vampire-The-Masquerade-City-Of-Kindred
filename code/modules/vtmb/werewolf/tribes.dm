@@ -7,6 +7,7 @@
 /datum/action/gift/stoic_pose/Trigger()
 	. = ..()
 	if(allowed_to_proceed)
+		playsound(get_turf(owner), 'code/modules/ziggers/sounds/wind_cast.ogg', 50, FALSE)
 		var/mob/living/carbon/C = owner
 		if(isgarou(C))
 			var/obj/were_ice/W = new (get_turf(owner))
@@ -38,6 +39,12 @@
 
 /datum/action/gift/freezing_wind/Trigger()
 	. = ..()
+	if(allowed_to_proceed)
+		for(var/turf/T in range(3, get_step(get_step(owner, owner.dir), owner.dir)))
+			if(owner.loc != T)
+				var/obj/effect/wind/W = new(T)
+				W.dir = owner.dir
+				W.strength = 100
 //	if(allowed_to_proceed)
 
 /datum/action/gift/bloody_feast
@@ -54,6 +61,7 @@
 			if(isliving(C.pulling))
 				var/mob/living/L = C.pulling
 				if(L.stat == DEAD)
+					playsound(get_turf(owner), 'code/modules/ziggers/sounds/bloody_feast.ogg', 50, FALSE)
 					qdel(L)
 					C.revive(full_heal = TRUE, admin_revive = TRUE)
 
@@ -61,6 +69,8 @@
 	name = "Stinky Fur"
 	desc = "Garou creates an aura of very toxic smell, which disorientates everyone around."
 	button_icon_state = "stinky_fur"
+
+
 
 /datum/action/gift/venom_claws
 	name = "Venom Claws"

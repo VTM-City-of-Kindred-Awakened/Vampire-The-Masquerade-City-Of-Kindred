@@ -196,6 +196,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/werewolf_eye_color = "#FFFFFF"
 	var/werewolf_apparel
 
+	var/werewolf_name
 	var/auspice_level = 1
 
 //	var/datum/vampireclane/Clane
@@ -557,6 +558,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "Experience rewarded: [true_experience]<BR>"
 			if(pref_species.name == "Werewolf")
 				dat += "<h2>[make_font_cool("TRIBE")]</h2>"
+				dat += "<br><b>Werewolf Name:</b> "
+				dat += "<a href='?_src_=prefs;preference=werewolf_name;task=input'>[werewolf_name]</a><BR>"
 				dat += "<b>Auspice:</b> <a href='?_src_=prefs;preference=auspice;task=input'>[auspice.name]</a><BR>"
 				dat += "Description: [auspice.desc]<BR>"
 				dat += "<b>Power:</b> •[auspice_level > 1 ? "•" : "o"][auspice_level > 2 ? "•" : "o"]([auspice_level])"
@@ -1791,6 +1794,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(GHOST_OTHERS_SIMPLE_NAME)
 							ghost_others = GHOST_OTHERS_SIMPLE
 
+				if("werewolf_name")
+					if(slotlocked)
+						link_bug_fix = FALSE
+						return
+					var/new_name = input(user, "Choose your character's werewolf name:", "Character Preference")  as text|null
+					if(new_name)
+						new_name = reject_bad_name(new_name)
+						if(new_name)
+							werewolf_name = new_name
+						else
+							to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and . It must not contain any words restricted by IC chat and name filters.</font>")
 				if("name")
 					if(slotlocked)
 						link_bug_fix = FALSE
@@ -3125,6 +3139,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				character.transformator.lupus_form.sprite_color = werewolf_color
 				character.transformator.lupus_form.sprite_eye_color = werewolf_eye_color
 
+				if(werewolf_name)
+					character.transformator.crinos_form.name = werewolf_name
+					character.transformator.lupus_form.name = werewolf_name
+				else
+					character.transformator.crinos_form.name = real_name
+					character.transformator.lupus_form.name = real_name
+
 				character.transformator.crinos_form.physique = physique
 				character.transformator.crinos_form.mentality = mentality
 				character.transformator.crinos_form.social = social
@@ -3135,9 +3156,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				character.transformator.lupus_form.social = social
 				character.transformator.lupus_form.blood = blood
 
-				character.transformator.lupus_form.maxHealth = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*character.physique))
+				character.transformator.lupus_form.maxHealth = round((initial(character.transformator.lupus_form.maxHealth)+(initial(character.maxHealth)/4)*character.physique))
 				character.transformator.lupus_form.health = character.transformator.lupus_form.maxHealth
-				character.transformator.crinos_form.maxHealth = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*character.physique))
+				character.transformator.crinos_form.maxHealth = round((initial(character.transformator.crinos_form.maxHealth)+(initial(character.maxHealth)/4)*character.physique))
 				character.transformator.crinos_form.health = character.transformator.crinos_form.maxHealth
 //		character.transformator.crinos_form.update_icons()
 //		character.transformator.lupus_form.update_icons()

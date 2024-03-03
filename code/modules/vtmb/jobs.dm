@@ -1201,8 +1201,8 @@
 		qdel(H.clane)
 	H.set_species(/datum/species/human)
 	H.generation = 13
-	H.maxHealth = 100
-	H.health = 100
+	H.maxHealth = round((initial(H.maxHealth)-initial(H.maxHealth)/4)+(initial(H.maxHealth)/4)*(H.physique+13-H.generation))
+	H.health = round((initial(H.health)-initial(H.health)/4)+(initial(H.health)/4)*(H.physique+13-H.generation))
 	for(var/atom/movable/screen/blood/B in H.hud_used.infodisplay)
 		B.icon_state = null
 	for(var/atom/movable/screen/healths/HE in H.hud_used.infodisplay)

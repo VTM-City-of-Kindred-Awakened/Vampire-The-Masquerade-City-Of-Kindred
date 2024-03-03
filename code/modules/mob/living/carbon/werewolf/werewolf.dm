@@ -179,8 +179,10 @@
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	limb_destroyer = 1
 	hud_type = /datum/hud/werewolf
-	melee_damage_lower = 50
-	melee_damage_upper = 50
+	melee_damage_lower = 40
+	melee_damage_upper = 40
+	health = 500
+	maxHealth = 500
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/pounce_cooldown = 0
