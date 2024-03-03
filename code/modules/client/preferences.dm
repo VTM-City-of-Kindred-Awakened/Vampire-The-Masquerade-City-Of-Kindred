@@ -568,11 +568,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				switch(tribe)
 					if("Glasswalkers")
 						for(var/i in 1 to auspice_level)
-							var/datum/action/T = new auspice.glasswalker[i]
+							var/zalupa = auspice.glasswalker[i]
+							var/datum/action/T = new zalupa()
 							gifts_text += "[T.name], "
 					if("Wendigo")
 						for(var/i in 1 to auspice_level)
-							var/datum/action/T = new auspice.wendigo[i]
+							var/zalupa = auspice.wendigo[i]
+							var/datum/action/T = new zalupa()
 							gifts_text += "[T.name], "
 				for(var/i in auspice.gifts)
 					var/datum/action/A = new i()

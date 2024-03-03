@@ -41,15 +41,18 @@
 	switch(tribe)
 		if("Glasswalkers")
 			for(var/i in 1 to level)
-				var/datum/action/A = new glasswalker[i]
+				var/zalupa = glasswalker[i]
+				var/datum/action/A = new zalupa()
 				A.Grant(C)
 		if("Wendigo")
 			for(var/i in 1 to level)
-				var/datum/action/A = new wendigo[i]
+				var/zalupa = wendigo[i]
+				var/datum/action/A = new zalupa()
 				A.Grant(C)
 		if("Spiral")
 			for(var/i in 1 to level)
-				var/datum/action/A = new spiral[i]
+				var/zalupa = spiral[i]
+				var/datum/action/A = new zalupa()
 				A.Grant(C)
 
 /datum/auspice/ahroun
