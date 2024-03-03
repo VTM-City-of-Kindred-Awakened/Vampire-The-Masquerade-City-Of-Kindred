@@ -1,6 +1,7 @@
 /datum/auspice
 	var/name = "Loh"
 	var/desc = "Furry ebaka"
+	var/level = 1
 	var/start_rage = 1
 	var/rage = 1
 	var/start_gnosis = 1
@@ -8,6 +9,16 @@
 	var/base_breed = "Homid"
 	var/tribe = "Wendigo"
 	var/list/gifts = list()
+	var/list/gifts2 = list()
+	var/list/gifts3 = list()
+
+	var/list/wendigo = list(/datum/action/gift/stoic_pose = 1,
+							/datum/action/gift/freezing_wind = 2,
+							/datum/action/gift/bloody_feast = 3,)
+
+	var/list/glasswalker = list()
+
+	var/list/spiral = list()
 
 /datum/auspice/proc/on_gain(var/mob/living/carbon/C)
 	C.update_rage_hud()

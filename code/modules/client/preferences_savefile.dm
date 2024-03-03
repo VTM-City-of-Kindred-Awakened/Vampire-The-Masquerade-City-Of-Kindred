@@ -380,6 +380,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Character
 	READ_FILE(S["slotlocked"], slotlocked)
 	READ_FILE(S["diablerist"], diablerist)
+	READ_FILE(S["auspice_level"], auspice_level)
 	READ_FILE(S["humanity"], humanity)
 	READ_FILE(S["enlightement"], enlightement)
 	READ_FILE(S["exper"], exper)
@@ -540,6 +541,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	social					= sanitize_integer(social, 1, 10, initial(social))
 	mentality				= sanitize_integer(mentality, 1, 10, initial(mentality))
 	blood					= sanitize_integer(blood, 1, 10, initial(blood))
+	auspice_level			= sanitize_integer(auspice_level, 1, 5, initial(auspice_level))
 	discipline1level				= sanitize_integer(discipline1level, 1, 5, initial(discipline1level))
 	discipline2level				= sanitize_integer(discipline2level, 1, 5, initial(discipline2level))
 	discipline3level				= sanitize_integer(discipline3level, 1, 5, initial(discipline3level))
@@ -620,6 +622,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["exper"]			, exper)
 	WRITE_FILE(S["exper_plus"]			, exper_plus)
 	WRITE_FILE(S["true_experience"]			, true_experience)
+	WRITE_FILE(S["auspice_level"]			, auspice_level)
 	WRITE_FILE(S["physique"]		, physique)
 	WRITE_FILE(S["social"]			, social)
 	WRITE_FILE(S["mentality"]		, mentality)

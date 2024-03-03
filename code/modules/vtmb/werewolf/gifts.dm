@@ -272,6 +272,14 @@
 	button_icon_state = "spirit_speech"
 	gnosis_req = 1
 
+/datum/action/gift/spirit_speech/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		var/mob/living/carbon/C = owner
+		C.see_invisible = SEE_INVISIBLE_OBSERVER
+		spawn(200)
+			C.see_invisible = initial(C.see_invisible)
+
 /datum/action/gift/blur_of_the_milky_eye
 	name = "Blur Of The Milky Eye"
 	desc = "The Garou’s form becomes a shimmering blur, allowing him to pass unnoticed among others."
@@ -294,6 +302,22 @@
 	desc = "With this Gift, the Garou can open nearly any sort of closed or locked physical device."
 	button_icon_state = "open_seal"
 //	gnosis_req = 1
+
+/datum/action/gift/open_seal/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		for(var/obj/structure/vampdoor/V in range(5, owner))
+			if(V)
+				if(V.closed)
+					if(V.hack_difficulty < 6)
+						V.locked = FALSE
+						playsound(V, V.open_sound, 75, TRUE)
+						V.icon_state = "[V.baseicon]-0"
+						V.density = FALSE
+						V.opacity = FALSE
+						V.layer = OPEN_DOOR_LAYER
+						to_chat(owner, "<span class='notice'>You open [V].</span>")
+						V.closed = FALSE
 
 /datum/action/gift/infectious_laughter
 	name = "Infectious Laughter"

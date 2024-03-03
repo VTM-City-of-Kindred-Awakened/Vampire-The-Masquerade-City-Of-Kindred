@@ -1346,3 +1346,20 @@
 /obj/structure/stalagmite/Initialize()
 	. = ..()
 	icon_state = "stalagmite[rand(1, 5)]"
+
+/obj/were_ice
+	name = "ice block"
+	desc = "Stores some precious organs..."
+	icon = 'code/modules/ziggers/werewolf_lupus.dmi'
+	icon_state = "ice_man"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+
+/obj/were_ice/lupus
+	icon_state = "ice_wolf"
+
+/obj/were_ice/crinos
+	icon = 'code/modules/ziggers/werewolf.dmi'
+	icon_state = "ice"
+	pixel_w = -8

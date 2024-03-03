@@ -35,6 +35,9 @@
 	anchored = TRUE
 	rotate_on_lying = 0
 
+	bloodpool = 10
+	maxbloodpool = 10
+
 	var/move_delay_add = 0 // movement delay to add
 
 	status_flags = CANUNCONSCIOUS|CANPUSH
