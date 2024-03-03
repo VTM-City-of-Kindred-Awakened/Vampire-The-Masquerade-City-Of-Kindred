@@ -196,6 +196,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/werewolf_eye_color = "#FFFFFF"
 	var/werewolf_apparel
 
+	var/werewolf_name
+	var/auspice_level = 1
+
 //	var/datum/vampireclane/Clane
 
 /mob/living
@@ -262,7 +265,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(i == "[P.parent.ckey]")
 					sponsor = TRUE
 			if(sponsor)
-				P.true_experience = 30+round(4*GLOB.donaters_amount["[P.parent.ckey]"])
+				P.true_experience = 20+round(4*GLOB.donaters_amount["[P.parent.ckey]"])
 			P.save_character()
 			P.save_preferences()
 
@@ -323,7 +326,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(i == "[parent.ckey]")
 			sponsor = TRUE
 	if(sponsor)
-		true_experience = 30+round(4*GLOB.donaters_amount["[parent.ckey]"])
+		true_experience = 20+round(4*GLOB.donaters_amount["[parent.ckey]"])
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
 	C?.set_macros()
 //	pref_species = new /datum/species/kindred()
@@ -555,11 +558,27 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "Experience rewarded: [true_experience]<BR>"
 			if(pref_species.name == "Werewolf")
 				dat += "<h2>[make_font_cool("TRIBE")]</h2>"
+				dat += "<br><b>Werewolf Name:</b> "
+				dat += "<a href='?_src_=prefs;preference=werewolf_name;task=input'>[werewolf_name]</a><BR>"
 				dat += "<b>Auspice:</b> <a href='?_src_=prefs;preference=auspice;task=input'>[auspice.name]</a><BR>"
 				dat += "Description: [auspice.desc]<BR>"
+				dat += "<b>Power:</b> •[auspice_level > 1 ? "•" : "o"][auspice_level > 2 ? "•" : "o"]([auspice_level])"
+				if(true_experience >= 10*auspice_level && auspice_level != 3)
+					dat += "<a href='?_src_=prefs;preference=auspice_level;task=input'>Increase ([10*auspice_level])</a>"
 				dat += "<b>Initial Rage:</b> •[auspice.start_rage > 1 ? "•" : "o"][auspice.start_rage > 2 ? "•" : "o"][auspice.start_rage > 3 ? "•" : "o"][auspice.start_rage > 4 ? "•" : "o"]([auspice.start_rage])<BR>"
 				var/gifts_text = ""
 				var/num_of_gifts = 0
+				switch(tribe)
+					if("Glasswalkers")
+						for(var/i in 1 to auspice_level)
+							var/zalupa = auspice.glasswalker[i]
+							var/datum/action/T = new zalupa()
+							gifts_text += "[T.name], "
+					if("Wendigo")
+						for(var/i in 1 to auspice_level)
+							var/zalupa = auspice.wendigo[i]
+							var/datum/action/T = new zalupa()
+							gifts_text += "[T.name], "
 				for(var/i in auspice.gifts)
 					var/datum/action/A = new i()
 					num_of_gifts = min(num_of_gifts+1, length(auspice.gifts))
@@ -1370,6 +1389,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(pref_species.name != "Vampire")
 					HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[pref_species.name] RESTRICTED\]</font></td></tr>"
 					continue
+			if(!job.garou_allowed)
+				if(pref_species.name == "Werewolf")
+					HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[pref_species.name] RESTRICTED\]</font></td></tr>"
+					continue
 			if(!job.humans_accessible)
 				if(pref_species.name == "Human")
 					HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[pref_species.name] RESTRICTED\]</font></td></tr>"
@@ -1775,6 +1798,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(GHOST_OTHERS_SIMPLE_NAME)
 							ghost_others = GHOST_OTHERS_SIMPLE
 
+				if("werewolf_name")
+					if(slotlocked)
+						link_bug_fix = FALSE
+						return
+					var/new_name = input(user, "Choose your character's werewolf name:", "Character Preference")  as text|null
+					if(new_name)
+						new_name = reject_bad_name(new_name)
+						if(new_name)
+							werewolf_name = new_name
+						else
+							to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and . It must not contain any words restricted by IC chat and name filters.</font>")
 				if("name")
 					if(slotlocked)
 						link_bug_fix = FALSE
@@ -2138,6 +2172,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(clane.no_facial)
 							facial_hairstyle = "Shaved"
 //						real_name = clane.random_name(gender)		//potom sdelat
+				if("auspice_level")
+					if(true_experience >= auspice_level*10 && auspice_level < 3)
+						true_experience = true_experience-auspice_level*10
+						auspice_level = min(3, auspice_level+1)
 
 				if("physique")
 					if(true_experience >= physique*3 && physique < 6)
@@ -2913,7 +2951,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(i == "[parent.ckey]")
 							sponsor = TRUE
 					if(sponsor)
-						true_experience = 30+round(4*GLOB.donaters_amount["[parent.ckey]"])
+						true_experience = 20+round(4*GLOB.donaters_amount["[parent.ckey]"])
 					real_name = random_unique_name(gender)
 					save_character()
 
@@ -2999,6 +3037,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.clane = null
 		character.generation = 13
 		character.bloodpool = character.maxbloodpool
+
 	if(pref_species.name == "Werewolf")
 		character.maxHealth = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*character.physique))
 		character.health = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*character.physique))
@@ -3078,8 +3117,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(pref_species.name == "Werewolf")
 		var/datum/auspice/CLN = new auspice.type()
 		character.auspice = CLN
-		character.auspice.on_gain(character)
+		character.auspice.level = auspice_level
 		character.auspice.tribe = tribe
+		character.auspice.on_gain(character)
 		switch(breed)
 			if("Homid")
 				character.auspice.gnosis = 1
@@ -3103,9 +3143,26 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				character.transformator.lupus_form.sprite_color = werewolf_color
 				character.transformator.lupus_form.sprite_eye_color = werewolf_eye_color
 
-				character.transformator.lupus_form.maxHealth = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*character.physique))
+				if(werewolf_name)
+					character.transformator.crinos_form.name = werewolf_name
+					character.transformator.lupus_form.name = werewolf_name
+				else
+					character.transformator.crinos_form.name = real_name
+					character.transformator.lupus_form.name = real_name
+
+				character.transformator.crinos_form.physique = physique
+				character.transformator.crinos_form.mentality = mentality
+				character.transformator.crinos_form.social = social
+				character.transformator.crinos_form.blood = blood
+
+				character.transformator.lupus_form.physique = physique
+				character.transformator.lupus_form.mentality = mentality
+				character.transformator.lupus_form.social = social
+				character.transformator.lupus_form.blood = blood
+
+				character.transformator.lupus_form.maxHealth = round((initial(character.transformator.lupus_form.maxHealth)+(initial(character.maxHealth)/4)*character.physique))
 				character.transformator.lupus_form.health = character.transformator.lupus_form.maxHealth
-				character.transformator.crinos_form.maxHealth = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*character.physique))
+				character.transformator.crinos_form.maxHealth = round((initial(character.transformator.crinos_form.maxHealth)+(initial(character.maxHealth)/4)*character.physique))
 				character.transformator.crinos_form.health = character.transformator.crinos_form.maxHealth
 //		character.transformator.crinos_form.update_icons()
 //		character.transformator.lupus_form.update_icons()

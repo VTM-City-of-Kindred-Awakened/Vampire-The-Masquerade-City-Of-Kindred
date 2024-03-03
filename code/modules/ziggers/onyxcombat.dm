@@ -692,6 +692,7 @@
 	. = ..()
 	update_blood_hud()
 	update_rage_hud()
+	update_auspex_hud()
 
 /mob/living/carbon/human/Life()
 	if(!iskindred(src))
@@ -753,6 +754,10 @@
 			hud_used.rage_icon.icon_state = "rage[C.auspice.rage]"
 			gnosis.icon_state = "gnosis[C.auspice.gnosis]"
 			hud_used.rage_icon.overlays |= gnosis
+		if(hud_used.auspice_icon)
+			var/mob/living/carbon/C = src
+			if(C.last_moon_look != 0)
+				hud_used.auspice_icon.icon_state = "[GLOB.moon_state]"
 
 /mob/living/proc/update_blood_hud()
 	if(!client || !hud_used)

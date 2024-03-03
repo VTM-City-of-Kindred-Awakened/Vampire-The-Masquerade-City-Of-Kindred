@@ -11,6 +11,9 @@
 	. = ..()
 	if(istype(owner, /mob/living/carbon))
 		var/mob/living/carbon/H = owner
+		if(H.stat == DEAD)
+			allowed_to_proceed = FALSE
+			return
 		if(rage_req)
 			if(H.auspice.rage < rage_req)
 				to_chat(owner, "<span class='warning'>You don't have enough <b>RAGE</b> to do that!</span>")
@@ -126,20 +129,65 @@
 	name = "Beast Speech"
 	desc = "The werewolf with this Gift may communicate with any animals from fish to mammals."
 	button_icon_state = "beast_speech"
-//	gnosis_req = 1
+	gnosis_req = 1
+
+/datum/action/gift/beast_speech/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		var/mob/living/carbon/C = owner
+		if(length(C.beastmaster) > 3)
+			var/mob/living/simple_animal/hostile/beastmaster/B = pick(C.beastmaster)
+			qdel(B)
+		playsound(get_turf(owner), 'code/modules/ziggers/sounds/wolves.ogg', 75, FALSE)
+		if(!length(C.beastmaster))
+			var/datum/action/beastmaster_stay/E1 = new()
+			E1.Grant(C)
+			var/datum/action/beastmaster_deaggro/E2 = new()
+			E2.Grant(C)
+		var/mob/living/simple_animal/hostile/beastmaster/D = new(get_turf(C))
+		D.my_creator = C
+		C.beastmaster |= D
+		D.beastmaster = C
 
 /datum/action/gift/call_of_the_wyld
 	name = "Call Of The Wyld"
 	desc = "The werewolf may send her howl far beyond the normal range of hearing and imbue it with great emotion, stirring the hearts of fellow Garou and chilling the bones of all others."
 	button_icon_state = "call_of_the_wyld"
 	rage_req = 1
+
+/datum/action/gift/call_of_the_wyld/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		var/mob/living/carbon/C = owner
+		C.emote("howl")
+		playsound(get_turf(C), pick('code/modules/ziggers/sounds/awo1.ogg', 'code/modules/ziggers/sounds/awo2.ogg'), 100, FALSE)
+		for(var/mob/living/carbon/A in orange(6, owner))
+			if(A)
+				if(isgarou(A) || iswerewolf(A))
+					A.emote("howl")
+					playsound(get_turf(A), pick('code/modules/ziggers/sounds/awo1.ogg', 'code/modules/ziggers/sounds/awo2.ogg'), 100, FALSE)
+					spawn(10)
+						adjust_gnosis(1, A, TRUE)
 //	awo1
 
 /datum/action/gift/mindspeak
 	name = "Mindspeak"
 	desc = "By invoking the power of waking dreams, the Garou can place any chosen characters into silent communion."
 	button_icon_state = "mindspeak"
-	gnosis_req = 1
+//	gnosis_req = 1
+
+/datum/action/gift/mindspeak/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		var/new_thought = input(owner, "What do you want to tell to your Tribe?") as text|null
+		if(new_thought)
+			var/mob/living/carbon/C = owner
+			to_chat(C, "You transfer this message to your tribe members nearby: <b>[sanitize_text(new_thought)]</b>")
+			for(var/mob/living/carbon/A in orange(9, owner))
+				if(A)
+					if(isgarou(A) || iswerewolf(A))
+						if(A.auspice.tribe == C.auspice.tribe)
+							to_chat(C, "You hear a message in your head... <b>[sanitize_text(new_thought)]</b>")
 
 /datum/action/gift/resist_pain
 	name = "Resist Pain"
@@ -147,11 +195,41 @@
 	button_icon_state = "resist_pain"
 	rage_req = 1
 
+/datum/action/gift/resist_pain/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		if(ishuman(owner))
+			playsound(get_turf(owner), 'code/modules/ziggers/sounds/resist_pain.ogg', 75, FALSE)
+			var/mob/living/carbon/human/H = owner
+			H.physiology.armor.melee = 90
+			H.physiology.armor.bullet = 90
+			to_chat(owner, "<span class='notice'>You feel your skin thickering...</span>")
+			spawn(200)
+				H.physiology.armor.melee = initial(H.physiology.armor.melee)
+				H.physiology.armor.bullet = initial(H.physiology.armor.bullet)
+				to_chat(owner, "<span class='warning'>Your skin is thin again...</span>")
+		else
+			playsound(get_turf(owner), 'code/modules/ziggers/sounds/resist_pain.ogg', 75, FALSE)
+			var/mob/living/carbon/werewolf/H = owner
+			H.werewolf_armor = 90
+			to_chat(owner, "<span class='notice'>You feel your skin thickering...</span>")
+			spawn(200)
+				H.werewolf_armor = initial(H.werewolf_armor)
+				to_chat(owner, "<span class='warning'>Your skin is thin again...</span>")
+
 /datum/action/gift/scent_of_the_true_form
 	name = "Scent Of The True Form"
 	desc = "This Gift allows the Garou to determine the true nature of a person."
 	button_icon_state = "scent_of_the_true_form"
 	gnosis_req = 1
+
+/datum/action/gift/scent_of_the_true_form/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
+		abductor_hud.add_hud_to(owner)
+		spawn(200)
+			abductor_hud.remove_hud_from(owner)
 
 /datum/action/gift/truth_of_gaia
 	name = "Truth Of Gaia"
@@ -194,13 +272,21 @@
 	button_icon_state = "spirit_speech"
 	gnosis_req = 1
 
+/datum/action/gift/spirit_speech/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		var/mob/living/carbon/C = owner
+		C.see_invisible = SEE_INVISIBLE_OBSERVER
+		spawn(200)
+			C.see_invisible = initial(C.see_invisible)
+
 /datum/action/gift/blur_of_the_milky_eye
 	name = "Blur Of The Milky Eye"
 	desc = "The Garou’s form becomes a shimmering blur, allowing him to pass unnoticed among others."
 	button_icon_state = "blur_of_the_milky_eye"
 	gnosis_req = 1
 
-/datum/action/gift/infectious_laughter/Trigger()
+/datum/action/gift/blur_of_the_milky_eye/Trigger()
 	. = ..()
 	if(allowed_to_proceed)
 		var/mob/living/carbon/C = owner
@@ -216,6 +302,22 @@
 	desc = "With this Gift, the Garou can open nearly any sort of closed or locked physical device."
 	button_icon_state = "open_seal"
 //	gnosis_req = 1
+
+/datum/action/gift/open_seal/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		for(var/obj/structure/vampdoor/V in range(5, owner))
+			if(V)
+				if(V.closed)
+					if(V.hack_difficulty < 6)
+						V.locked = FALSE
+						playsound(V, V.open_sound, 75, TRUE)
+						V.icon_state = "[V.baseicon]-0"
+						V.density = FALSE
+						V.opacity = FALSE
+						V.layer = OPEN_DOOR_LAYER
+						to_chat(owner, "<span class='notice'>You open [V].</span>")
+						V.closed = FALSE
 
 /datum/action/gift/infectious_laughter
 	name = "Infectious Laughter"
@@ -234,3 +336,19 @@
 			if(L)
 				L.emote("laugh")
 				L.Stun(20)
+
+/datum/action/gift/rage_heal
+	name = "Rage Heal"
+	desc = "This Gift allows the Garou to heal severe injuries with rage."
+	button_icon_state = "rage_heal"
+	rage_req = 1
+	check_flags = null
+
+/datum/action/gift/rage_heal/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		var/mob/living/carbon/C = owner
+		playsound(get_turf(owner), 'code/modules/ziggers/sounds/rage_heal.ogg', 100, FALSE)
+		C.adjustBruteLoss(-50*C.auspice.level, TRUE)
+		C.adjustFireLoss(-50*C.auspice.level, TRUE)
+		C.adjustCloneLoss(-50*C.auspice.level, TRUE)

@@ -63,10 +63,13 @@
 							"<span class='userdanger'>You catch [I] in mid-air!</span>")
 			throw_mode_off()
 			return TRUE
+	do_werewolf_rage_from_attack()
 	return ..()
 
 
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
+	if(I.force)
+		do_werewolf_rage_from_attack()
 	var/obj/item/bodypart/affecting
 	if(user == src)
 		affecting = get_bodypart(check_zone(user.zone_selected)) //we're self-mutilating! yay!
@@ -141,6 +144,9 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
+
+	if(user.a_intent == INTENT_HARM)
+		do_werewolf_rage_from_attack()
 
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		. = TRUE
@@ -244,7 +250,18 @@
  * Will shove the target mob back, and drop them if they're in front of something dense
  * or another carbon.
 */
+
+/mob/living/carbon
+	var/last_rage_from_attack = 0
+
+/mob/living/carbon/proc/do_werewolf_rage_from_attack()
+	if(isgarou(src) || iswerewolf(src))
+		if(last_rage_from_attack == 0 || last_rage_from_attack+50 < world.time)
+			last_rage_from_attack = world.time
+			adjust_rage(1, src, TRUE)
+
 /mob/living/carbon/proc/disarm(mob/living/carbon/target)
+	target.do_werewolf_rage_from_attack()
 	if(zone_selected == BODY_ZONE_PRECISE_MOUTH)
 		var/target_on_help_and_unarmed = target.a_intent == INTENT_HELP && !target.get_active_held_item()
 		if(target_on_help_and_unarmed || HAS_TRAIT(target, TRAIT_RESTRAINED))
@@ -394,6 +411,7 @@
 	. = ..()
 	if(!.)
 		return
+	do_werewolf_rage_from_attack()
 	//Propagation through pulling, fireman carry
 	if(!(flags & SHOCK_ILLUSION))
 		var/list/shocking_queue = list()
@@ -450,7 +468,7 @@
 					null, "<span class='hear'>You hear a soft patter.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, "<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
 		to_chat(src, "<span class='notice'>[M] gives you a pat on the head to make you feel better! </span>")
-		
+
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(M, "<span class='warning'>[src] looks visibly upset as you pat [p_them()] on the head.</span>")
 
@@ -492,7 +510,7 @@
 				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
 			else if (hugger_mood.sanity >= SANITY_DISTURBED)
 				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
-		
+
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(M, "<span class='warning'>[src] looks visibly upset as you hug [p_them()].</span>")
 
@@ -669,6 +687,7 @@
 			. += (limb.brute_dam * limb.body_damage_coeff) + (limb.burn_dam * limb.body_damage_coeff)
 
 /mob/living/carbon/grabbedby(mob/living/carbon/user, supress_message = FALSE)
+	do_werewolf_rage_from_attack()
 	if(user != src)
 		return ..()
 

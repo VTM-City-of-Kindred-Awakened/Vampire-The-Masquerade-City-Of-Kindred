@@ -31,7 +31,10 @@ GLOBAL_LIST_INIT(anarch_positions, list(
 GLOBAL_LIST_INIT(supply_positions, list(
 	))
 GLOBAL_LIST_INIT(citizen_positions, list(
-	"Citizen"
+	"Citizen",
+	"Taxi Driver",
+	"Police Officer",
+	"Federal Investigator"
 ))
 
 GLOBAL_LIST_INIT(neutral_positions, list(
@@ -44,7 +47,6 @@ GLOBAL_LIST_INIT(independent_positions, list(
 	"Chantry Regent",
 	"Chantry Archivist",
 	"Giovanni Member",
-	"Taxi Driver",
 	"Primogen Malkavian",
 	"Primogen Nosferatu",
 	"Primogen Toreador",

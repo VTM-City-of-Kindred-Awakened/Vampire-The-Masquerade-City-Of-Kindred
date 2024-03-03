@@ -33,6 +33,10 @@
 	verb_say = "woofs"
 	density = TRUE
 	anchored = TRUE
+	rotate_on_lying = 0
+
+	bloodpool = 10
+	maxbloodpool = 10
 
 	var/move_delay_add = 0 // movement delay to add
 
@@ -70,6 +74,8 @@
 
 	var/step_variable = 0
 
+	var/werewolf_armor = 0
+
 /mob/living/carbon/werewolf/update_resting()
 	if(resting)
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, RESTING_TRAIT)
@@ -96,6 +102,8 @@
 	shake_camera(src, 5, 4)
 
 /mob/living/carbon/werewolf/Initialize()
+	var/datum/action/gift/rage_heal/GH = new()
+	GH.Grant(src)
 	add_verb(src, /mob/living/proc/mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
@@ -112,6 +120,9 @@
 	internal_organs += new /obj/item/organ/tongue
 	internal_organs += new /obj/item/organ/eyes/night_vision
 	internal_organs += new /obj/item/organ/liver
+	internal_organs += new /obj/item/organ/stomach
+	internal_organs += new /obj/item/organ/heart
+	internal_organs += new /obj/item/organ/lungs
 	internal_organs += new /obj/item/organ/ears
 	..()
 
@@ -171,8 +182,10 @@
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	limb_destroyer = 1
 	hud_type = /datum/hud/werewolf
-	melee_damage_lower = 50
-	melee_damage_upper = 50
+	melee_damage_lower = 40
+	melee_damage_upper = 40
+	health = 500
+	maxHealth = 500
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/pounce_cooldown = 0
@@ -187,6 +200,8 @@
 		/obj/item/bodypart/r_leg,
 		/obj/item/bodypart/l_leg,
 		)
+
+	werewolf_armor = 25
 
 //mob/living/carbon/werewolf/crinos/Initialize()
 //	. = ..()

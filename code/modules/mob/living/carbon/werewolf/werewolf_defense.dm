@@ -131,3 +131,9 @@
 	if(!no_effect && !visual_effect_icon)
 		visual_effect_icon = ATTACK_EFFECT_BITE
 	..()
+
+/mob/living/carbon/werewolf/getarmor(def_zone, type)
+	if(type == BRUTE)
+		return werewolf_armor
+	else
+		return 0

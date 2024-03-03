@@ -33,29 +33,56 @@ SUBSYSTEM_DEF(bad_guys_party)
 /datum/controller/subsystem/bad_guys_party/proc/get_niggers(var/level)
 	switch(level)
 		if(1)
-			//caitiff
-			if(Next)
-				qdel(Next)
-			threat = min(100, threat+30)
-			max_candidates = 3
-			go_on_next_fire = TRUE
-			Next = new /datum/outfit/job/caitiff()
+			if(prob(20))
+				//spiral
+				if(Next)
+					qdel(Next)
+				threat = min(100, threat+60)
+				max_candidates = 2
+				go_on_next_fire = TRUE
+				Next = new /datum/outfit/job/spiral()
+			else
+				//caitiff
+				if(Next)
+					qdel(Next)
+				threat = min(100, threat+30)
+				max_candidates = 3
+				go_on_next_fire = TRUE
+				Next = new /datum/outfit/job/caitiff()
 		if(2)
-			//hunt
-			if(Next)
-				qdel(Next)
-			threat = min(100, threat+60)
-			max_candidates = 5
-			go_on_next_fire = TRUE
-			Next = new /datum/outfit/job/hunter()
+			if(prob(30))
+				//spiral
+				if(Next)
+					qdel(Next)
+				threat = min(100, threat+60)
+				max_candidates = 4
+				go_on_next_fire = TRUE
+				Next = new /datum/outfit/job/spiral()
+			else
+				//hunt
+				if(Next)
+					qdel(Next)
+				threat = min(100, threat+60)
+				max_candidates = 5
+				go_on_next_fire = TRUE
+				Next = new /datum/outfit/job/hunter()
 		if(3)
-			//sabbat
-			if(Next)
-				qdel(Next)
-			threat = min(100, threat+90)
-			max_candidates = 7
-			go_on_next_fire = TRUE
-			Next = new /datum/outfit/job/sabbatist()
+			if(prob(50))
+				//spiral
+				if(Next)
+					qdel(Next)
+				threat = min(100, threat+60)
+				max_candidates = 6
+				go_on_next_fire = TRUE
+				Next = new /datum/outfit/job/spiral()
+			else
+				//sabbat
+				if(Next)
+					qdel(Next)
+				threat = min(100, threat+90)
+				max_candidates = 7
+				go_on_next_fire = TRUE
+				Next = new /datum/outfit/job/sabbatist()
 
 /mob/dead/new_player/proc/ForceLateSpawn()
 	if(SSticker.late_join_disabled)

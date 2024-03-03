@@ -24,17 +24,18 @@ Dancer
 	lose_text = "<span class='warning'>You don't feel rich anymore.</span>"
 
 /datum/quirk/broker/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/stocks_license/pills = new()
-	pills.whose = H.real_name
-	pills.name = "[H.real_name]'s stocks trading license"
-	var/list/slots = list(
-		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
-		LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
-		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
-		LOCATION_HANDS = ITEM_SLOT_HANDS
-	)
-	H.equip_in_one_of_slots(pills, slots, FALSE)
+	if(!iswerewolf(quirk_holder))
+		var/mob/living/carbon/human/H = quirk_holder
+		var/obj/item/stocks_license/pills = new()
+		pills.whose = H.real_name
+		pills.name = "[H.real_name]'s stocks trading license"
+		var/list/slots = list(
+			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+			LOCATION_HANDS = ITEM_SLOT_HANDS
+		)
+		H.equip_in_one_of_slots(pills, slots, FALSE)
 
 /datum/quirk/experienced_driver
 	name = "Experienced Driver"
@@ -60,8 +61,9 @@ Dancer
 	lose_text = "<span class='warning'>You don't feel anonymous anymore.</span>"
 
 /datum/quirk/annonymus/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/vampire/balaclava(H), ITEM_SLOT_MASK)
+	if(!iswerewolf(quirk_holder))
+		var/mob/living/carbon/human/H = quirk_holder
+		H.equip_to_slot_or_del(new /obj/item/clothing/mask/vampire/balaclava(H), ITEM_SLOT_MASK)
 
 /datum/quirk/bloody_lover
 	name = "Bloody Lover"
@@ -90,7 +92,7 @@ Dancer
 	lose_text = "<span class='notice'>You can feel a normal speed again.</span>"
 
 /datum/quirk/slowpoke/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
+	var/mob/living/carbon/H = quirk_holder
 	H.add_movespeed_modifier(/datum/movespeed_modifier/slowpoke)
 
 /datum/quirk/bloody_sucker
@@ -117,15 +119,16 @@ Dancer
 	lose_text = "<span class='notice'>You feel both of your arms again.</span>"
 
 /datum/quirk/one_hand/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/bodypart/B1 = H.get_bodypart(BODY_ZONE_R_ARM)
-	var/obj/item/bodypart/B2 = H.get_bodypart(BODY_ZONE_L_ARM)
-	if(prob(50))
-		B1.drop_limb()
-		qdel(B1)
-	else
-		B2.drop_limb()
-		qdel(B2)
+	if(!iswerewolf(quirk_holder))
+		var/mob/living/carbon/human/H = quirk_holder
+		var/obj/item/bodypart/B1 = H.get_bodypart(BODY_ZONE_R_ARM)
+		var/obj/item/bodypart/B2 = H.get_bodypart(BODY_ZONE_L_ARM)
+		if(prob(50))
+			B1.drop_limb()
+			qdel(B1)
+		else
+			B2.drop_limb()
+			qdel(B2)
 
 /datum/quirk/non_int
 	name = "Non Intellectual"
@@ -175,7 +178,7 @@ Dancer
 	lose_text = "<span class='warning'>Now you aren't as agile as you were.</span>"
 
 /datum/quirk/acrobatic/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
+	var/mob/living/carbon/H = quirk_holder
 	var/datum/action/acrobate/DA = new()
 	DA.Grant(H)
 
@@ -187,12 +190,12 @@ Dancer
 	var/last_acrobate = 0
 
 /datum/action/acrobate/Trigger()
-	var/mob/living/carbon/human/H = owner
+	var/mob/living/carbon/H = owner
 	if(last_acrobate+15 > world.time)
 		return
 	last_acrobate = world.time
 
-	if(H.stat >= 2 || H.IsSleeping() || H.IsUnconscious() || H.IsParalyzed() || H.IsKnockdown() || H.IsStun() || HAS_TRAIT(H, TRAIT_RESTRAINED) || !isturf(H.loc))
+	if(H.stat >= 1 || H.IsSleeping() || H.IsUnconscious() || H.IsParalyzed() || H.IsKnockdown() || H.IsStun() || HAS_TRAIT(H, TRAIT_RESTRAINED) || !isturf(H.loc))
 		return
 
 	if(!isturf(owner.loc))
@@ -301,6 +304,8 @@ Dancer
 			spawn(2)
 				if(H.potential > 0)
 					H.epic_fall()
+				else if(iscrinos(H))
+					H.epic_fall()
 
 /datum/action/fly_upper
 	name = "Fly Up"
@@ -314,7 +319,7 @@ Dancer
 		return
 	if(get_step_multiz(owner, UP))
 		if(istype(get_step_multiz(owner, UP), /turf/open/openspace))
-			var/mob/living/carbon/human/H = owner
+			var/mob/living/carbon/H = owner
 			H.Immobilize(20)
 			animate(owner, pixel_y = 32, time = 20)
 			spawn(20)
@@ -328,7 +333,7 @@ Dancer
 	lose_text = "<span class='warning'>You don't want to dance anymore.</span>"
 
 /datum/quirk/dancer/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
+	var/mob/living/carbon/H = quirk_holder
 	var/datum/action/dance/DA = new()
 	DA.Grant(H)
 
@@ -340,7 +345,7 @@ Dancer
 	var/last_added_humanity = 0
 
 /datum/action/dance/Trigger()
-	var/mob/living/carbon/human/H = owner
+//	var/mob/living/carbon/H = owner
 	if(prob(50))
 		dancefirst(owner)
 	else
@@ -350,8 +355,10 @@ Dancer
 		for(var/obj/machinery/jukebox/J in range(7, owner))
 			if(J)
 				if(J.active)
-					H.AdjustHumanity(1, 8)
-					last_added_humanity = world.time
+					if(ishuman(owner))
+						var/mob/living/carbon/human/human = owner
+						human.AdjustHumanity(1, 8)
+						last_added_humanity = world.time
 
 /mob/living
 	var/isdwarfy = FALSE
@@ -369,6 +376,8 @@ Dancer
 	var/mob/living/carbon/human/H = quirk_holder
 	if(H.age < 16)
 		to_chat(H, "<span class='userdanger'>You can't be a dwarf kid, looser!</span>")
+		return
+	if(iswerewolf(quirk_holder))
 		return
 	H.AddElement(/datum/element/dwarfism, COMSIG_PARENT_PREQDELETED, src)
 	H.isdwarfy = TRUE
@@ -468,11 +477,11 @@ Dancer
 	medical_record_text = "Patient does not speak English and may require an interpreter."
 
 /datum/quirk/foreign/add()
-	var/mob/living/carbon/human/H = quirk_holder
+	var/mob/living/carbon/H = quirk_holder
 	H.add_blocked_language(/datum/language/common)
 
 /datum/quirk/foreign/remove()
-	var/mob/living/carbon/human/H = quirk_holder
+	var/mob/living/carbon/H = quirk_holder
 	H.remove_blocked_language(/datum/language/common)
 
 /datum/quirk/espanol
@@ -481,7 +490,7 @@ Dancer
 	value = 1
 
 /datum/quirk/espanol/add()
-	var/mob/living/carbon/human/H = quirk_holder
+	var/mob/living/carbon/H = quirk_holder
 	H.grant_language(/datum/language/uncommon)
 
 /datum/quirk/chinese
@@ -490,7 +499,7 @@ Dancer
 	value = 1
 
 /datum/quirk/chinese/add()
-	var/mob/living/carbon/human/H = quirk_holder
+	var/mob/living/carbon/H = quirk_holder
 	H.grant_language(/datum/language/draconic)
 
 /datum/quirk/russian
@@ -499,7 +508,7 @@ Dancer
 	value = 1
 
 /datum/quirk/russian/add()
-	var/mob/living/carbon/human/H = quirk_holder
+	var/mob/living/carbon/H = quirk_holder
 	H.grant_language(/datum/language/moffic)
 
 /datum/quirk/italian
@@ -508,7 +517,7 @@ Dancer
 	value = 1
 
 /datum/quirk/italian/add()
-	var/mob/living/carbon/human/H = quirk_holder
+	var/mob/living/carbon/H = quirk_holder
 	H.grant_language(/datum/language/sylvan)
 
 /datum/quirk/consumption
@@ -530,6 +539,8 @@ Dancer
 	mob_trait = TRAIT_HUNTED
 
 /datum/quirk/hunted/on_spawn()
+	if(iswerewolf(quirk_holder) || isgarou(quirk_holder))
+		return
 	if(isturf(quirk_holder.loc))
 		SSbloodhunt.announce_hunted(quirk_holder)
 
@@ -539,6 +550,8 @@ Dancer
 	value = -3
 
 /datum/quirk/diablerist/on_spawn()
+	if(iswerewolf(quirk_holder) || isgarou(quirk_holder))
+		return
 	var/mob/living/carbon/human/H = quirk_holder
 	H.diablerist = TRUE
 
@@ -554,6 +567,8 @@ Dancer
 	quirk_holder.become_nearsighted(ROUNDSTART_TRAIT)
 
 /datum/quirk/badvision/on_spawn()
+	if(iswerewolf(quirk_holder))
+		return
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/vampire/perception/glasses = new(get_turf(H))
 	if(!H.equip_to_slot_if_possible(glasses, ITEM_SLOT_EYES, bypass_equip_delay_self = TRUE))
@@ -592,6 +607,8 @@ Dancer
 	var/mob/living/carbon/human/H = quirk_holder
 	if(H.age < 16)
 		to_chat(H, "<span class='userdanger'>You can't be a tall kid, looser!</span>")
+		return
+	if(iswerewolf(quirk_holder))
 		return
 	H.AddElement(/datum/element/giantism, COMSIG_PARENT_PREQDELETED, src)
 	H.istower = TRUE

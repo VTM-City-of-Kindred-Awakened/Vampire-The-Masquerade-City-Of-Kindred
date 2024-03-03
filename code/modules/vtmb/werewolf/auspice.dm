@@ -1,6 +1,7 @@
 /datum/auspice
 	var/name = "Loh"
 	var/desc = "Furry ebaka"
+	var/level = 1
 	var/start_rage = 1
 	var/rage = 1
 	var/start_gnosis = 1
@@ -8,11 +9,29 @@
 	var/base_breed = "Homid"
 	var/tribe = "Wendigo"
 	var/list/gifts = list()
+//	var/list/gifts2 = list()
+//	var/list/gifts3 = list()
+
+	var/list/wendigo = list(/datum/action/gift/stoic_pose = 1,
+							/datum/action/gift/freezing_wind = 2,
+							/datum/action/gift/bloody_feast = 3)
+
+	var/list/glasswalker = list(/datum/action/gift/smooth_move = 1,
+								/datum/action/gift/digital_feelings = 2,
+								/datum/action/gift/elemental_improvement = 3)
+
+	var/list/spiral = list(/datum/action/gift/stinky_fur = 1,
+							/datum/action/gift/venom_claws = 2,
+							/datum/action/gift/burning_scars = 3)
 
 /datum/auspice/proc/on_gain(var/mob/living/carbon/C)
 	C.update_rage_hud()
 	C.transformator.lupus_form.auspice = src
+	C.transformator.lupus_form.dna = C.dna
 	C.transformator.crinos_form.auspice = src
+	C.transformator.crinos_form.dna = C.dna
+	SSquirks.AssignQuirks(C.transformator.lupus_form, C.client)
+	SSquirks.AssignQuirks(C.transformator.crinos_form, C.client)
 	rage = start_rage
 	if(length(gifts))
 		for(var/i in gifts)
@@ -22,6 +41,23 @@
 			A2.Grant(C.transformator.lupus_form)
 			var/datum/action/A3 = new i()
 			A3.Grant(C.transformator.crinos_form)
+
+	switch(tribe)
+		if("Glasswalkers")
+			for(var/i in 1 to level)
+				var/zalupa = glasswalker[i]
+				var/datum/action/A = new zalupa()
+				A.Grant(C)
+		if("Wendigo")
+			for(var/i in 1 to level)
+				var/zalupa = wendigo[i]
+				var/datum/action/A = new zalupa()
+				A.Grant(C)
+		if("Black Spiral")
+			for(var/i in 1 to level)
+				var/zalupa = spiral[i]
+				var/datum/action/A = new zalupa()
+				A.Grant(C)
 
 /datum/auspice/ahroun
 	name = "Ahroun"

@@ -97,6 +97,6 @@
 	desc = "Gives power to all Garou of that tribe and steals it from others."
 	icon = 'code/modules/ziggers/64x32.dmi'
 	icon_state = "spiral"
-	tribe = "Spiral"
+	tribe = "Black Spiral"
 	totem_overlay_color = "#ff5235"
 	pixel_w = -16

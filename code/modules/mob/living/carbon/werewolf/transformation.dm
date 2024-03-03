@@ -51,15 +51,18 @@
 				if(trans == lupus_form)
 					transformating = FALSE
 					return
-				var/items = trans.get_contents()
-				for(var/obj/item/item_worn in items)
-					if(item_worn)
-						if(!ismob(item_worn.loc))
-							continue
-						trans.dropItemToGround(item_worn, TRUE)
 				animate(trans, transform = ntransform, color = "#000000", time = 30)
 				playsound(get_turf(trans), 'code/modules/ziggers/sounds/transform.ogg', 50, FALSE)
+				for(var/mob/living/simple_animal/hostile/beastmaster/B in trans.beastmaster)
+					if(B)
+						qdel(B)
 				spawn(30)
+					var/items = trans.get_contents()
+					for(var/obj/item/item_worn in items)
+						if(item_worn)
+							if(!ismob(item_worn.loc))
+								continue
+							trans.dropItemToGround(item_worn, TRUE)
 					var/current_loc = get_turf(trans)
 					lupus_form.color = "#000000"
 					lupus_form.forceMove(current_loc)
@@ -67,6 +70,8 @@
 					lupus_form.key = trans.key
 					forceMove(lupus_form)
 					lupus_form.bloodpool = trans.bloodpool
+					lupus_form.masquerade = trans.masquerade
+					lupus_form.nutrition = trans.nutrition
 					lupus_form.update_blood_hud()
 					transfer_damage(trans, lupus_form)
 					trans.forceMove(src)
@@ -79,15 +84,18 @@
 				if(trans == crinos_form)
 					transformating = FALSE
 					return
-				var/items = trans.get_contents()
-				for(var/obj/item/item_worn in items)
-					if(item_worn)
-						if(!ismob(item_worn.loc))
-							continue
-						trans.dropItemToGround(item_worn, TRUE)
 				animate(trans, transform = ntransform, color = "#000000", time = 30)
 				playsound(get_turf(trans), 'code/modules/ziggers/sounds/transform.ogg', 50, FALSE)
+				for(var/mob/living/simple_animal/hostile/beastmaster/B in trans.beastmaster)
+					if(B)
+						qdel(B)
 				spawn(30)
+					var/items = trans.get_contents()
+					for(var/obj/item/item_worn in items)
+						if(item_worn)
+							if(!ismob(item_worn.loc))
+								continue
+							trans.dropItemToGround(item_worn, TRUE)
 					var/current_loc = get_turf(trans)
 					crinos_form.color = "#000000"
 					crinos_form.forceMove(current_loc)
@@ -95,6 +103,8 @@
 					crinos_form.key = trans.key
 					forceMove(crinos_form)
 					crinos_form.bloodpool = trans.bloodpool
+					crinos_form.masquerade = trans.masquerade
+					crinos_form.nutrition = trans.nutrition
 					crinos_form.update_blood_hud()
 					transfer_damage(trans, crinos_form)
 					trans.forceMove(src)
@@ -107,15 +117,18 @@
 				if(trans == human_form)
 					transformating = FALSE
 					return
-				var/items = trans.get_contents()
-				for(var/obj/item/item_worn in items)
-					if(item_worn)
-						if(!ismob(item_worn.loc))
-							continue
-						trans.dropItemToGround(item_worn, TRUE)
 				animate(trans, transform = ntransform, color = "#000000", time = 30)
 				playsound(get_turf(trans), 'code/modules/ziggers/sounds/transform.ogg', 50, FALSE)
+				for(var/mob/living/simple_animal/hostile/beastmaster/B in trans.beastmaster)
+					if(B)
+						qdel(B)
 				spawn(30)
+					var/items = trans.get_contents()
+					for(var/obj/item/item_worn in items)
+						if(item_worn)
+							if(!ismob(item_worn.loc))
+								continue
+							trans.dropItemToGround(item_worn, TRUE)
 					var/current_loc = get_turf(trans)
 					human_form.color = "#000000"
 					human_form.forceMove(current_loc)
@@ -123,6 +136,8 @@
 					human_form.key = trans.key
 					forceMove(human_form)
 					human_form.bloodpool = trans.bloodpool
+					human_form.masquerade = trans.masquerade
+					human_form.nutrition = trans.nutrition
 					human_form.update_blood_hud()
 					transfer_damage(trans, human_form)
 					trans.forceMove(src)

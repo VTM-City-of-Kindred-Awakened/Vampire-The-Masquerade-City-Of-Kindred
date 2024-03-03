@@ -21,6 +21,7 @@
 		shadow_overlay.pixel_z = -4
 		shadow_overlay.alpha = 64
 		shadow_overlay.layer = layer-1
+		add_overlay(shadow_overlay)
 
 	if(sprite_scar)
 		var/mutable_appearance/scar_overlay = mutable_appearance(icon, "scar[sprite_scar][laid_down ? "_rest" : ""]")

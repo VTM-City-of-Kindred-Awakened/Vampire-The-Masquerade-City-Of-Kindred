@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(beastmastering)
 			return
 		NPC.handle_automated_beasting()
 
-/mob/living/carbon/human
+/mob/living/carbon
 	var/list/beastmaster = list()
 
 /mob/living/simple_animal/hostile/beastmaster/Initialize()
@@ -139,7 +139,7 @@ SUBSYSTEM_DEF(beastmastering)
 		if(get_dist(src, targa) <= 1)
 			ClickOn(targa)
 	else
-		if(follow)
+		if(follow && isturf(beastmaster.loc))
 			if(z != beastmaster.z)
 				forceMove(get_turf(beastmaster))
 			else if(get_dist(src, beastmaster) > 15)

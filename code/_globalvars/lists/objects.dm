@@ -161,4 +161,4 @@ GLOBAL_LIST_EMPTY(beast_list)
 GLOBAL_LIST_EMPTY(weed_list)
 GLOBAL_LIST_EMPTY(zombie_list)
 
-GLOBAL_LIST_INIT(psychokids, list("badteammate", "twiner", "andreykey", "d6ll1r10um", "zxcnegr228822", "leonko"))
+GLOBAL_LIST_INIT(psychokids, list("badteammate", "meomoor", "twiner", "andreykey", "d6ll1r10um", "zxcnegr228822", "leonko"))

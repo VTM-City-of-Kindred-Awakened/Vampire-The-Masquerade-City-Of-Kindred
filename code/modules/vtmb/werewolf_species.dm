@@ -91,6 +91,8 @@
 	var/datum/action/garouinfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
+	var/datum/action/gift/rage_heal/GH = new()
+	GH.Grant(C)
 	C.transformator = new(C)
 	C.transformator.human_form = C
 
@@ -115,9 +117,20 @@
 			if(sound)
 				SEND_SOUND(C, sound('code/modules/ziggers/sounds/rage_decrease.ogg', 0, 0, 75))
 			to_chat(C, "<span class='userdanger'><b>RAGE DECREASES</b></span>")
-			if(C.auspice.rage == 0)
-				C.transformator.trans_gender(C, C.auspice.base_breed)
 	C.update_rage_hud()
+
+	if(amount && sound)
+		if(prob(20))
+			C.emote("growl")
+			if(iscrinos(C))
+				playsound(get_turf(C), 'code/modules/ziggers/sounds/crinos_growl.ogg', 75, FALSE)
+			if(islupus(C))
+				playsound(get_turf(C), 'code/modules/ziggers/sounds/lupus_growl.ogg', 75, FALSE)
+			if(isgarou(C))
+				if(C.gender == FEMALE)
+					playsound(get_turf(C), 'code/modules/ziggers/sounds/female_growl.ogg', 75, FALSE)
+				else
+					playsound(get_turf(C), 'code/modules/ziggers/sounds/male_growl.ogg', 75, FALSE)
 
 /proc/adjust_gnosis(var/amount, var/mob/living/carbon/C, var/sound = TRUE)
 	if(amount > 0)
