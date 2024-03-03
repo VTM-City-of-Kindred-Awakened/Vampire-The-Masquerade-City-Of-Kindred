@@ -9,10 +9,11 @@
 		C.parallax_layers_cached = list()
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_1(null, C.view)
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_2(null, C.view)
-		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet(null, C.view)
-		if(SSparallax.random_layer)
-			C.parallax_layers_cached += new SSparallax.random_layer
-		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_3(null, C.view)
+//		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet(null, C.view)
+		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/umbra(null, C.view)
+//		if(SSparallax.random_layer)
+//			C.parallax_layers_cached += new SSparallax.random_layer
+//		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_3(null, C.view)
 
 	C.parallax_layers = C.parallax_layers_cached.Copy()
 
@@ -321,6 +322,19 @@
 	if(!posobj)
 		return
 	invisibility = is_station_level(posobj.z) ? 0 : INVISIBILITY_ABSTRACT
+
+/atom/movable/screen/parallax_layer/umbra
+	icon_state = "umbra"
+	blend_mode = BLEND_OVERLAY
+	absolute = TRUE //Status of seperation
+	speed = 0.6
+	layer = 3
+
+/atom/movable/screen/parallax_layer/umbra/update_status(mob/M)
+	var/turf/posobj = get_turf(M)
+	if(!posobj)
+		return
+	invisibility = posobj.umbra? 0 : INVISIBILITY_ABSTRACT
 
 /atom/movable/screen/parallax_layer/planet/update_o()
 	return //Shit won't move

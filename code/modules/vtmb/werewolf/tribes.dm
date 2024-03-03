@@ -7,7 +7,7 @@
 /datum/action/gift/stoic_pose/Trigger()
 	. = ..()
 	if(allowed_to_proceed)
-		playsound(get_turf(owner), 'code/modules/ziggers/sounds/wind_cast.ogg', 50, FALSE)
+		playsound(get_turf(owner), 'code/modules/ziggers/sounds/ice_blocking.ogg', 100, FALSE)
 		var/mob/living/carbon/C = owner
 		if(isgarou(C))
 			var/obj/were_ice/W = new (get_turf(owner))
@@ -40,11 +40,14 @@
 /datum/action/gift/freezing_wind/Trigger()
 	. = ..()
 	if(allowed_to_proceed)
+		playsound(get_turf(owner), 'code/modules/ziggers/sounds/wind_cast.ogg', 100, FALSE)
 		for(var/turf/T in range(3, get_step(get_step(owner, owner.dir), owner.dir)))
 			if(owner.loc != T)
 				var/obj/effect/wind/W = new(T)
 				W.dir = owner.dir
 				W.strength = 100
+				spawn(200)
+					qdel(W)
 //	if(allowed_to_proceed)
 
 /datum/action/gift/bloody_feast
@@ -70,7 +73,18 @@
 	desc = "Garou creates an aura of very toxic smell, which disorientates everyone around."
 	button_icon_state = "stinky_fur"
 
+/datum/action/gift/stinky_fur/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		playsound(get_turf(owner), 'code/modules/ziggers/sounds/necromancy.ogg', 75, FALSE)
+		for(var/mob/living/carbon/C in orange(5, src))
+			if(C)
+				if(prob(25))
+					C.vomit()
+				C.dizziness += 10
+				C.add_confusion(10)
 
+/mob/living/carbon
 
 /datum/action/gift/venom_claws
 	name = "Venom Claws"

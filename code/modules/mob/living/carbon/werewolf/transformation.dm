@@ -71,6 +71,7 @@
 					forceMove(lupus_form)
 					lupus_form.bloodpool = trans.bloodpool
 					lupus_form.masquerade = trans.masquerade
+					lupus_form.nutrition = trans.nutrition
 					lupus_form.update_blood_hud()
 					transfer_damage(trans, lupus_form)
 					trans.forceMove(src)
@@ -103,6 +104,7 @@
 					forceMove(crinos_form)
 					crinos_form.bloodpool = trans.bloodpool
 					crinos_form.masquerade = trans.masquerade
+					crinos_form.nutrition = trans.nutrition
 					crinos_form.update_blood_hud()
 					transfer_damage(trans, crinos_form)
 					trans.forceMove(src)
@@ -135,6 +137,7 @@
 					forceMove(human_form)
 					human_form.bloodpool = trans.bloodpool
 					human_form.masquerade = trans.masquerade
+					human_form.nutrition = trans.nutrition
 					human_form.update_blood_hud()
 					transfer_damage(trans, human_form)
 					trans.forceMove(src)

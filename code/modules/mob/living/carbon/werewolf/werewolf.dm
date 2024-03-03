@@ -120,6 +120,9 @@
 	internal_organs += new /obj/item/organ/tongue
 	internal_organs += new /obj/item/organ/eyes/night_vision
 	internal_organs += new /obj/item/organ/liver
+	internal_organs += new /obj/item/organ/stomach
+	internal_organs += new /obj/item/organ/heart
+	internal_organs += new /obj/item/organ/lungs
 	internal_organs += new /obj/item/organ/ears
 	..()
 

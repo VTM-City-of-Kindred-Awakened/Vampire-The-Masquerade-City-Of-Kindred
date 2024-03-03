@@ -481,3 +481,9 @@
 	key_third_person = "howls"
 	message = "howls!"
 	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/growl
+	key = "growl"
+	key_third_person = "growls"
+	message = "growls!"
+	emote_type = EMOTE_AUDIBLE

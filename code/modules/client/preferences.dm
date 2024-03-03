@@ -265,7 +265,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(i == "[P.parent.ckey]")
 					sponsor = TRUE
 			if(sponsor)
-				P.true_experience = 10+round(4*GLOB.donaters_amount["[P.parent.ckey]"])
+				P.true_experience = 20+round(4*GLOB.donaters_amount["[P.parent.ckey]"])
 			P.save_character()
 			P.save_preferences()
 
@@ -326,7 +326,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(i == "[parent.ckey]")
 			sponsor = TRUE
 	if(sponsor)
-		true_experience = 10+round(4*GLOB.donaters_amount["[parent.ckey]"])
+		true_experience = 20+round(4*GLOB.donaters_amount["[parent.ckey]"])
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
 	C?.set_macros()
 //	pref_species = new /datum/species/kindred()
@@ -1387,6 +1387,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				continue
 			if(job.kindred_only)
 				if(pref_species.name != "Vampire")
+					HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[pref_species.name] RESTRICTED\]</font></td></tr>"
+					continue
+			if(!job.garou_allowed)
+				if(pref_species.name == "Werewolf")
 					HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[pref_species.name] RESTRICTED\]</font></td></tr>"
 					continue
 			if(!job.humans_accessible)
@@ -2947,7 +2951,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(i == "[parent.ckey]")
 							sponsor = TRUE
 					if(sponsor)
-						true_experience = 10+round(4*GLOB.donaters_amount["[parent.ckey]"])
+						true_experience = 20+round(4*GLOB.donaters_amount["[parent.ckey]"])
 					real_name = random_unique_name(gender)
 					save_character()
 

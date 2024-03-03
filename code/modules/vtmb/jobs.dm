@@ -772,6 +772,7 @@
 	display_order = JOB_DISPLAY_ORDER_CITIZEN
 
 	humans_accessible = TRUE
+	garou_allowed = TRUE
 
 	duty = "Follow the Traditions, or other laws provided by the current authority among your kind."
 	minimal_masquerade = 0
@@ -887,6 +888,9 @@
 	return
 
 /obj/item/card/id/primogen/AltClick(mob/user)
+	return
+
+/obj/item/card/id/police/AltClick(mob/user)
 	return
 
 /obj/item/card/id/hunter
@@ -1115,7 +1119,18 @@
 	worn_icon = 'code/modules/ziggers/worn.dmi'
 	worn_icon_state = "id12"
 
-
+/obj/item/card/id/police
+	name = "law department badge"
+	id_type_name = "law department badge"
+	desc = "Sponsored by the Government."
+	icon = 'code/modules/ziggers/items.dmi'
+	icon_state = "id13"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	worn_icon = 'code/modules/ziggers/worn.dmi'
+	worn_icon_state = "id13"
 
 /datum/outfit/job/caitiff
 	name = "Caitiff"
@@ -1430,6 +1445,7 @@
 
 //	minimal_generation = 11	//Uncomment when players get exp enough
 	humans_accessible = TRUE
+	garou_allowed = TRUE
 
 	duty = "Transfer people in the city."
 	minimal_masquerade = 0
@@ -1810,7 +1826,7 @@
 	duty = "Enforce the Law."
 	minimal_masquerade = 0
 	my_contact_is_important = FALSE
-	known_contacts = list("Investigator")
+//	known_contacts = list("Investigator")
 	minimal_age = 12
 
 /datum/outfit/job/police_officer
@@ -1821,9 +1837,56 @@
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	suit = /obj/item/clothing/suit/vampire/vest
 	belt = /obj/item/melee/classic_baton
-	id = /obj/item/cockclock
+	gloves = /obj/item/cockclock
+	id = /obj/item/card/id/police
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/flashlight
 	l_hand = /obj/item/vamp/keys/police
 	r_hand = /obj/item/police_radio
-	backpack_contents = list(/obj/item/passport=1, /obj/item/stack/dollar=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/implant/radio=1, /obj/item/stack/dollar=1)
+
+
+/datum/job/vamp/fbi
+	title = "Federal Investigator"
+	department_head = list("Federal Bureau of Investigation")
+	faction = "Human"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = " the FBI"
+	selection_color = "#ffa400"
+
+	outfit = /datum/outfit/job/fbi
+
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	paycheck = PAYCHECK_EASY
+	paycheck_department = ACCOUNT_SRV
+	display_order = JOB_DISPLAY_ORDER_POLICE
+	exp_type_department = EXP_TYPE_INDEPENDENT
+
+	kindred_only = FALSE
+	human_only = TRUE
+	allowed_bloodlines = list()
+	minimal_generation = 13
+
+	duty = "Enforce the Law."
+	minimal_masquerade = 0
+	my_contact_is_important = FALSE
+//	known_contacts = list("Investigator")
+	minimal_age = 12
+
+/datum/outfit/job/fbi
+	name = "Federal Investigator"
+	jobtype = /datum/job/vamp/fbi
+
+	uniform = /obj/item/clothing/under/vampire/office
+	shoes = /obj/item/clothing/shoes/vampire
+	suit = /obj/item/clothing/suit/vampire/jacket/fbi
+//	belt = /obj/item/melee/classic_baton
+	id = /obj/item/card/id/police
+	gloves = /obj/item/cockclock
+	l_pocket = /obj/item/vamp/phone
+	r_pocket = /obj/item/flashlight
+	l_hand = /obj/item/vamp/keys/police
+	r_hand = /obj/item/police_radio
+	backpack_contents = list(/obj/item/passport=1, /obj/item/implant/radio=1, /obj/item/gun/ballistic/automatic/vampire/m1911=1, /obj/item/camera/detective=1, /obj/item/camera_film=1, /obj/item/taperecorder=1, /obj/item/tape=1, /obj/item/stack/dollar=1)

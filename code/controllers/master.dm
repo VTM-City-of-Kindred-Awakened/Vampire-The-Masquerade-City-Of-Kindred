@@ -237,6 +237,13 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			won = "anarch"
 		if(length(SSfactionwar.marks_sabbat) > length(SSfactionwar.marks_anarch) && length(SSfactionwar.marks_sabbat) > length(SSfactionwar.marks_camarilla))
 			won = "sabbat"
+		for(var/mob/living/carbon/werewolf/W in GLOB.player_list)
+			if(W)
+				if(W.stat != DEAD)
+					if(W.key)
+						var/datum/preferences/P = GLOB.preferences_datums[ckey(W.key)]
+						if(P)
+							P.add_experience(3)
 		for(var/mob/living/carbon/human/H in GLOB.human_list)
 			if(H)
 				if(H.stat != DEAD)

@@ -119,6 +119,19 @@
 			to_chat(C, "<span class='userdanger'><b>RAGE DECREASES</b></span>")
 	C.update_rage_hud()
 
+	if(amount && sound)
+		if(prob(20))
+			C.emote("growl")
+			if(iscrinos(C))
+				playsound(get_turf(C), 'code/modules/ziggers/sounds/crinos_growl.ogg', 75, FALSE)
+			if(islupus(C))
+				playsound(get_turf(C), 'code/modules/ziggers/sounds/lupus_growl.ogg', 75, FALSE)
+			if(isgarou(C))
+				if(C.gender == FEMALE)
+					playsound(get_turf(C), 'code/modules/ziggers/sounds/female_growl.ogg', 75, FALSE)
+				else
+					playsound(get_turf(C), 'code/modules/ziggers/sounds/male_growl.ogg', 75, FALSE)
+
 /proc/adjust_gnosis(var/amount, var/mob/living/carbon/C, var/sound = TRUE)
 	if(amount > 0)
 		if(C.auspice.gnosis < C.auspice.start_gnosis)

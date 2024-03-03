@@ -378,3 +378,23 @@
 	playsound(M.loc, 'code/modules/ziggers/sounds/aeaeae.ogg', 100, FALSE)
 	spawn(50)
 		explosion(M.loc, 0, 1, 2)
+
+/obj/item/ravnos
+	name = "illusion"
+	desc = "What the..."
+	icon_state = "argemia"
+	icon = 'code/modules/ziggers/items.dmi'
+	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+	var/activated = FALSE
+
+/obj/item/ravnos/proc/create_illusion(atom/A)
+	return
+
+/obj/item/ravnos/item
+
+/obj/item/ravnos/structure
+
+/obj/item/ravnos_illusion/mob
+
+/obj/item/ravnos_illusion/human
