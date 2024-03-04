@@ -168,3 +168,28 @@
 	name = "Elemental Improvement"
 	desc = "Garou flesh replaces itself with prothesis, making it less vulnerable to brute damage, but more for burn damage."
 	button_icon_state = "elemental_improvement"
+
+/datum/action/gift/elemental_improvement/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		animate(owner, color = "#6a839a", time = 10)
+		if(ishuman(owner))
+			playsound(get_turf(owner), 'code/modules/ziggers/sounds/electro_cast.ogg', 75, FALSE)
+			var/mob/living/carbon/human/H = owner
+			H.physiology.armor.melee = 99
+			H.physiology.armor.bullet = 99
+			to_chat(owner, "<span class='notice'>You feel your skin replaced with the machine...</span>")
+			spawn(100)
+				H.physiology.armor.melee = initial(H.physiology.armor.melee)
+				H.physiology.armor.bullet = initial(H.physiology.armor.bullet)
+				to_chat(owner, "<span class='warning'>Your skin is natural again...</span>")
+				owner.color = "#FFFFFF"
+		else
+			playsound(get_turf(owner), 'code/modules/ziggers/sounds/electro_cast.ogg', 75, FALSE)
+			var/mob/living/carbon/werewolf/H = owner
+			H.werewolf_armor = 99
+			to_chat(owner, "<span class='notice'>You feel your skin replaced with the machine...</span>")
+			spawn(100)
+				H.werewolf_armor = initial(H.werewolf_armor)
+				to_chat(owner, "<span class='warning'>Your skin is natural again...</span>")
+				owner.color = "#FFFFFF"

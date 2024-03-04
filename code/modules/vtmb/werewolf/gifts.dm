@@ -201,8 +201,8 @@
 		if(ishuman(owner))
 			playsound(get_turf(owner), 'code/modules/ziggers/sounds/resist_pain.ogg', 75, FALSE)
 			var/mob/living/carbon/human/H = owner
-			H.physiology.armor.melee = 90
-			H.physiology.armor.bullet = 90
+			H.physiology.armor.melee = 50
+			H.physiology.armor.bullet = 50
 			to_chat(owner, "<span class='notice'>You feel your skin thickering...</span>")
 			spawn(200)
 				H.physiology.armor.melee = initial(H.physiology.armor.melee)
@@ -211,7 +211,7 @@
 		else
 			playsound(get_turf(owner), 'code/modules/ziggers/sounds/resist_pain.ogg', 75, FALSE)
 			var/mob/living/carbon/werewolf/H = owner
-			H.werewolf_armor = 90
+			H.werewolf_armor = 50
 			to_chat(owner, "<span class='notice'>You feel your skin thickering...</span>")
 			spawn(200)
 				H.werewolf_armor = initial(H.werewolf_armor)
