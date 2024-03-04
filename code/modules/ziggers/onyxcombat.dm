@@ -97,8 +97,8 @@
 	if(iskindred(src))
 		if(in_frenzy)
 			exit_frenzymod()
-		fire_stacks += 5
-		IgniteMob()
+//		fire_stacks += 5
+//		IgniteMob()
 		playsound(src, 'code/modules/ziggers/sounds/burning_death.ogg', 80, TRUE)
 		SEND_SOUND(src, sound('code/modules/ziggers/sounds/final_death.ogg', 0, 0, 50))
 		lying_fix()

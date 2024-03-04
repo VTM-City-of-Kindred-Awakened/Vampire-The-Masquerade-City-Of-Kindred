@@ -70,7 +70,7 @@
 	var/sprite_hair = 0
 	var/sprite_hair_color = "#000000"
 	var/sprite_eye_color = "#FFFFFF"
-	var/sprite_apparel
+	var/sprite_apparel = 0
 
 	var/step_variable = 0
 
@@ -205,8 +205,10 @@
 
 	werewolf_armor = 25
 
-//mob/living/carbon/werewolf/crinos/Initialize()
-//	. = ..()
+/mob/living/carbon/werewolf/crinos/Initialize()
+	. = ..()
+	var/datum/action/change_apparel/A = new()
+	A.Grant(src)
 //	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.5, -11)
 
 /mob/living/carbon/werewolf/lupus/Initialize()

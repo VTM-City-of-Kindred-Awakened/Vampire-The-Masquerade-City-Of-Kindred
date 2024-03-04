@@ -383,6 +383,10 @@
 		new /datum/data/mining_equipment("bong",	/obj/item/bong,		50),
 		new /datum/data/mining_equipment("bailer",	/obj/item/bailer,		20),
 		new /datum/data/mining_equipment("incendiary 5.56 ammo",	/obj/item/ammo_box/vampire/c556/incendiary,	3000),
+		new /datum/data/mining_equipment("silver 9mm ammo",	/obj/item/ammo_box/vampire/c9mm/silver,	1000),
+		new /datum/data/mining_equipment("silver .45 ACP ammo",	/obj/item/ammo_box/vampire/c45acp/silver,	1000),
+		new /datum/data/mining_equipment("silver .44 ammo",	/obj/item/ammo_box/vampire/c44/silver,	1000),
+		new /datum/data/mining_equipment("silver 5.56 ammo",	/obj/item/ammo_box/vampire/c556/silver,	1000),
 		new /datum/data/mining_equipment("stake",	/obj/item/vampire_stake,	100)
 		)
 

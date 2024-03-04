@@ -348,7 +348,24 @@
 	. = ..()
 	if(allowed_to_proceed)
 		var/mob/living/carbon/C = owner
-		playsound(get_turf(owner), 'code/modules/ziggers/sounds/rage_heal.ogg', 100, FALSE)
-		C.adjustBruteLoss(-50*C.auspice.level, TRUE)
-		C.adjustFireLoss(-50*C.auspice.level, TRUE)
-		C.adjustCloneLoss(-50*C.auspice.level, TRUE)
+		if(C.stat != DEAD)
+			playsound(get_turf(owner), 'code/modules/ziggers/sounds/rage_heal.ogg', 100, FALSE)
+			C.adjustBruteLoss(-50*C.auspice.level, TRUE)
+			C.adjustFireLoss(-50*C.auspice.level, TRUE)
+			C.adjustCloneLoss(-50*C.auspice.level, TRUE)
+
+/datum/action/change_apparel
+	name = "Change Apparel"
+	desc = "Choose the clothes of your Crinos form."
+	button_icon_state = "change_apparel"
+	icon_icon = 'code/modules/ziggers/werewolf_abilities.dmi'
+	check_flags = AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
+
+/datum/action/change_apparel/Trigger()
+	. = ..()
+	var/mob/living/carbon/werewolf/crinos/C = owner
+	if(C.stat < 1)
+		if(C.sprite_apparel == 4)
+			C.sprite_apparel = 0
+		else
+			C.sprite_apparel = min(4, C.sprite_apparel+1)

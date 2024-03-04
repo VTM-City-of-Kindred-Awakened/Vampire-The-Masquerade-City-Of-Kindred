@@ -38,6 +38,18 @@
 			var/mutable_appearance/damage_overlay = mutable_appearance(icon, "damage3[laid_down ? "_rest" : ""]")
 			add_overlay(damage_overlay)
 
+	if(sprite_apparel)
+		switch(auspice.tribe)
+			if("Wendigo")
+				var/mutable_appearance/clothing_overlay = mutable_appearance(icon, "wendigo[sprite_apparel][laid_down ? "_rest" : ""]")
+				add_overlay(clothing_overlay)
+			if("Glasswalkers")
+				var/mutable_appearance/clothing_overlay = mutable_appearance(icon, "glasswalker[sprite_apparel][laid_down ? "_rest" : ""]")
+				add_overlay(clothing_overlay)
+			if("Black Spiral")
+				var/mutable_appearance/clothing_overlay = mutable_appearance(icon, "spiral[sprite_apparel][laid_down ? "_rest" : ""]")
+				add_overlay(clothing_overlay)
+
 	if(sprite_hair)
 		var/mutable_appearance/hair_overlay = mutable_appearance(icon, "hair[sprite_hair][laid_down ? "_rest" : ""]")
 		hair_overlay.color = sprite_hair_color

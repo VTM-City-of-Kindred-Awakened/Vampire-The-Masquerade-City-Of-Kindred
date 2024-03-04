@@ -68,13 +68,11 @@
 					lupus_form.forceMove(current_loc)
 					animate(lupus_form, color = "#FFFFFF", time = 10)
 					lupus_form.key = trans.key
-					if(!lupus_form.assigned_quirks)
-						lupus_form.assigned_quirks = TRUE
-						SSquirks.AssignQuirks(lupus_form, lupus_form.client)
 					forceMove(lupus_form)
 					lupus_form.bloodpool = trans.bloodpool
 					lupus_form.masquerade = trans.masquerade
 					lupus_form.nutrition = trans.nutrition
+					lupus_form.mind = trans.mind
 					lupus_form.update_blood_hud()
 					transfer_damage(trans, lupus_form)
 					trans.forceMove(src)
@@ -104,13 +102,11 @@
 					crinos_form.forceMove(current_loc)
 					animate(crinos_form, color = "#FFFFFF", time = 10)
 					crinos_form.key = trans.key
-					if(!crinos_form.assigned_quirks)
-						crinos_form.assigned_quirks = TRUE
-						SSquirks.AssignQuirks(crinos_form, crinos_form.client)
 					forceMove(crinos_form)
 					crinos_form.bloodpool = trans.bloodpool
 					crinos_form.masquerade = trans.masquerade
 					crinos_form.nutrition = trans.nutrition
+					crinos_form.mind = trans.mind
 					crinos_form.update_blood_hud()
 					transfer_damage(trans, crinos_form)
 					trans.forceMove(src)
@@ -144,6 +140,7 @@
 					human_form.bloodpool = trans.bloodpool
 					human_form.masquerade = trans.masquerade
 					human_form.nutrition = trans.nutrition
+					human_form.mind = trans.mind
 					human_form.update_blood_hud()
 					transfer_damage(trans, human_form)
 					trans.forceMove(src)
