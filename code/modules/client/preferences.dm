@@ -1577,9 +1577,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(initial(T.value) != 0)
 				font_color = initial(T.value) > 0 ? "#AAFFAA" : "#FFAAAA"
 
-			if(length(T.allowed_species))
+			if(length(initial(T.allowed_species)))
 				var/species_restricted = TRUE
-				for(var/i in T.allowed_species)
+				for(var/i in initial(T.allowed_species))
 					if(i == pref_species.name)
 						species_restricted = FALSE
 				if(species_restricted)
