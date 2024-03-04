@@ -1803,7 +1803,7 @@
 /datum/job/vamp/police_officer
 	title = "Police Officer"
 	department_head = list("Police Department")
-	faction = "Human"
+	faction = "Vampire"
 	total_positions = 5
 	spawn_positions = 5
 	supervisors = " the SFPD"
@@ -1820,7 +1820,7 @@
 
 	kindred_only = FALSE
 	human_only = TRUE
-	allowed_bloodlines = list()
+//	allowed_bloodlines = list()
 	minimal_generation = 13
 
 	duty = "Enforce the Law."
@@ -1849,7 +1849,7 @@
 /datum/job/vamp/fbi
 	title = "Federal Investigator"
 	department_head = list("Federal Bureau of Investigation")
-	faction = "Human"
+	faction = "Vampire"
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = " the FBI"
@@ -1866,7 +1866,7 @@
 
 	kindred_only = FALSE
 	human_only = TRUE
-	allowed_bloodlines = list()
+//	allowed_bloodlines = list()
 	minimal_generation = 13
 
 	duty = "Enforce the Law."

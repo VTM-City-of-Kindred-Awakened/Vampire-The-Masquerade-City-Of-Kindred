@@ -72,6 +72,7 @@ Dancer
 	value = 2
 	gain_text = "<span class='notice'>You feel more experienced in love.</span>"
 	lose_text = "<span class='warning'>You feel more clueless in love.</span>"
+	allowed_species = list("Vampire")
 
 /datum/quirk/tough_flesh
 	name = "Tough Flesh"
@@ -102,6 +103,7 @@ Dancer
 	value = -2
 	gain_text = "<span class='warning'>You feel anxious about the way you feed.</span>"
 	lose_text = "<span class='warning'>You can feed normal again.</span>"
+	allowed_species = list("Vampire")
 
 /datum/quirk/lazy
 	name = "Lazy"
@@ -137,6 +139,7 @@ Dancer
 	value = -5
 	gain_text = "<span class='warning'>You feel dumb.</span>"
 	lose_text = "<span class='notice'>You don't feel dumb anymore.</span>"
+	allowed_species = list("Vampire", "Human", "Ghoul")
 
 /datum/quirk/coffin_therapy
 	name = "Coffin Therapy"
@@ -145,6 +148,7 @@ Dancer
 	value = -2
 	gain_text = "<span class='warning'>You feel like you need a coffin.</span>"
 	lose_text = "<span class='notice'>You don't need a coffin anymore.</span>"
+	allowed_species = list("Vampire", "Ghoul")
 
 /datum/quirk/rubicon
 	name = "Crossing the Rubicon"
@@ -153,6 +157,7 @@ Dancer
 	value = -1
 	gain_text = "<span class='warning'>You feel afraid of water.</span>"
 	lose_text = "<span class='notice'>You aren't afraid of water anymore.</span>"
+	allowed_species = list("Vampire", "Ghoul")
 
 /datum/quirk/hungry
 	name = "Hungry"
@@ -161,6 +166,7 @@ Dancer
 	value = -3
 	gain_text = "<span class='warning'>You feel extra <b>HUNGRY</b>.</span>"
 	lose_text = "<span class='notice'>You don't feel extra <b>HUNGRY</b> anymore.</span>"
+	allowed_species = list("Vampire", "Ghoul")
 
 /datum/quirk/phoenix
 	name = "Phoenix"
@@ -169,11 +175,13 @@ Dancer
 	value = 5
 	gain_text = "<span class='notice'>You feel like you can burn without permanent consequences.</span>"
 	lose_text = "<span class='warning'>You don't feel like you can burn without consequences anymore.</span>"
+	allowed_species = list("Vampire")
 
 /datum/quirk/acrobatic
 	name = "Acrobatic"
 	desc = "You know a couple of acrobatic moves."
 	value = 3
+	mob_trait = TRAIT_ACROBATIC
 	gain_text = "<span class='notice'>You feel like you can jump higher.</span>"
 	lose_text = "<span class='warning'>Now you aren't as agile as you were.</span>"
 
@@ -329,6 +337,7 @@ Dancer
 	name = "Dancer"
 	desc = "You know a couple of dance moves."
 	value = 2
+	mob_trait = TRAIT_DANCER
 	gain_text = "<span class='notice'>You want to dance.</span>"
 	lose_text = "<span class='warning'>You don't want to dance anymore.</span>"
 
@@ -527,6 +536,7 @@ Dancer
 	gain_text = "<span class='danger'>You feel injured from inside.</span>"
 	lose_text = "<span class='notice'>You feel healthy again.</span>"
 	medical_record_text = "Patient has aggressive flesh eating bacteria in their boody."
+	allowed_species = list("Vampire", "Ghoul", "Human")
 
 /datum/quirk/consumption/on_process(delta_time)
 	if(prob(5))
@@ -537,6 +547,7 @@ Dancer
 	desc = "You are in the Blood Hunt list from the start and can't leave it. Good luck!"
 	value = -3
 	mob_trait = TRAIT_HUNTED
+	allowed_species = list("Vampire", "Ghoul")
 
 /datum/quirk/hunted/on_spawn()
 	if(iswerewolf(quirk_holder) || isgarou(quirk_holder))
@@ -548,6 +559,7 @@ Dancer
 	name = "Black Secret"
 	desc = "You have a small, ancient secret, somehow related to Diablerie, and this decreases your chance to survive another one. <b>This isn't a licence to diablerie anyone you want!</b>"
 	value = -3
+	allowed_species = list("Vampire")
 
 /datum/quirk/diablerist/on_spawn()
 	if(iswerewolf(quirk_holder) || isgarou(quirk_holder))
@@ -579,6 +591,7 @@ Dancer
 	desc = "You can't recover your masquerade at all."
 	value = -2
 	mob_trait = TRAIT_VIOLATOR
+	allowed_species = list("Vampire", "Ghoul")
 
 /datum/quirk/irongullet
 	name = "Iron Gullet"
@@ -587,14 +600,16 @@ Dancer
 	mob_trait = TRAIT_GULLET
 	gain_text = "<span class='notice'>You feel necroresistant.</span>"
 	lose_text = "<span class='notice'>You don't want necrophilia anymore.</span>"
+	allowed_species = list("Vampire")
 
 /datum/quirk/charmer
-	name = "Charmer"
+	name = "Abnormal Charmer"
 	desc = "You charm people around you."
 	value = 2
 	mob_trait = TRAIT_CHARMER
 	gain_text = "<span class='notice'>You feel charismatic.</span>"
 	lose_text = "<span class='notice'>You don't feel charismatic anymore.</span>"
+	allowed_species = list("Vampire")
 
 /datum/quirk/tower
 	name = "Tower"

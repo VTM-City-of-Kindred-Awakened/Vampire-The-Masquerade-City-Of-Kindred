@@ -50,7 +50,8 @@ GLOBAL_LIST_INIT(independent_positions, list(
 	"Primogen Malkavian",
 	"Primogen Nosferatu",
 	"Primogen Toreador",
-	"Primogen Ventrue"))
+	"Primogen Ventrue",
+	"Primogen Brujah"))
 
 GLOBAL_LIST_INIT(security_positions, list(
 	))

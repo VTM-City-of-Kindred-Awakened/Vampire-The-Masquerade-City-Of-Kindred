@@ -1573,6 +1573,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/font_color = "#AAAAFF"
 			if(initial(T.value) != 0)
 				font_color = initial(T.value) > 0 ? "#AAFFAA" : "#FFAAAA"
+
+			if(length(T.allowed_species))
+				var/species_restricted = TRUE
+				for(var/i in T.allowed_species)
+					if(i == pref_species.name)
+						species_restricted = FALSE
+				if(species_restricted)
+					lock_reason = "[pref_species.name] restricted."
+					quirk_conflict = TRUE
+
 			if(quirk_conflict && lock_reason != "Mood is disabled.")
 				dat += "<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)] \
 				<font color='red'><b>LOCKED: [lock_reason]</b></font><br>"
@@ -2059,10 +2069,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(slotlocked)
 						link_bug_fix = FALSE
 						return
-					if(werewolf_scar == 7)
-						werewolf_scar = 0
+					if(tribe == "Glasswalkers")
+						if(werewolf_scar == 9)
+							werewolf_scar = 0
+						else
+							werewolf_scar = min(7, werewolf_scar+1)
 					else
-						werewolf_scar = min(7, werewolf_scar+1)
+						if(werewolf_scar == 7)
+							werewolf_scar = 0
+						else
+							werewolf_scar = min(7, werewolf_scar+1)
 
 				if("werewolf_hair")
 					if(slotlocked)

@@ -14,6 +14,8 @@
 	var/hardcore_value = 0
 	var/mob/living/quirk_holder
 
+	var/list/allowed_species = list()
+
 /datum/quirk/New(mob/living/quirk_mob, spawn_effects)
 	..()
 	if(!quirk_mob || (human_only && !ishuman(quirk_mob)) || quirk_mob.has_quirk(type))

@@ -30,6 +30,16 @@
 	C.transformator.lupus_form.dna = C.dna
 	C.transformator.crinos_form.auspice = src
 	C.transformator.crinos_form.dna = C.dna
+	if(HAS_TRAIT(C, TRAIT_ACROBATIC))
+		var/datum/action/acrobate/DA = new()
+		DA.Grant(C.transformator.lupus_form)
+		var/datum/action/acrobate/NE = new()
+		NE.Grant(C.transformator.crinos_form)
+	if(HAS_TRAIT(C, TRAIT_DANCER))
+		var/datum/action/dance/DA = new()
+		DA.Grant(C.transformator.lupus_form)
+		var/datum/action/dance/NE = new()
+		NE.Grant(C.transformator.crinos_form)
 	rage = start_rage
 	if(length(gifts))
 		for(var/i in gifts)
