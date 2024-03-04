@@ -1820,6 +1820,7 @@
 
 	kindred_only = FALSE
 	human_only = TRUE
+	humans_accessible = TRUE
 //	allowed_bloodlines = list()
 	minimal_generation = 13
 
@@ -1866,6 +1867,7 @@
 
 	kindred_only = FALSE
 	human_only = TRUE
+	humans_accessible = TRUE
 //	allowed_bloodlines = list()
 	minimal_generation = 13
 
