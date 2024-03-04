@@ -38,15 +38,14 @@
 	. = ..()
 	var/turf/T = get_turf(H)
 	var/light_amount = T.get_lumcount()
-	if(light_amount < 0.2)
-		do_spooky(H)
-	else
-		var/allowed_to_do = TRUE
-		for(var/mob/living/L in oviewers(8, H))
-			if(L.client)
-				allowed_to_do = FALSE
-		if(allowed_to_do)
+	var/area/vtm/V = get_area(H)
+	if(!V.upper)
+		if(light_amount < 0.2)
 			do_spooky(H)
+		else
+			walk_to(H, 0)
+	else
+		walk_to(H, 0)
 
 /mob/living/carbon
 	var/lock_on_by_mannequin = FALSE

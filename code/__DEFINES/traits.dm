@@ -246,6 +246,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 
+
+#define TRAIT_ACROBATIC			"acrobatic"
+#define TRAIT_DANCER			"dancer"
 #define TRAIT_EXP_DRIVER			"experienced_driver"
 #define TRAIT_BONE_KEY			"bone_key"
 #define TRAIT_BLOODY_LOVER			"bloody_lover"

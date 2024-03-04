@@ -764,6 +764,11 @@ SUBSYSTEM_DEF(job)
 		if(H.clane)
 			if(H.clane.violating_appearance)
 				destination = pick(GLOB.masquerade_latejoin)
+		if(isgarou(H))
+			for(var/obj/structure/werewolf_totem/W in GLOB.totems)
+				if(W)
+					if(W.tribe == H.auspice.tribe)
+						destination = W
 		destination.JoinPlayerHere(M, buckle)
 		return TRUE
 
