@@ -8,13 +8,16 @@
 			return									// seems legit.
 
 	// Things you might plausibly want to follow
-	if(ismovable(A))
-		ManualFollow(A)
+
+	// [ChillRaccoon] - Removed due to request
+
+	//if(ismovable(A))
+	//	ManualFollow(A)
 
 	// Otherwise jump
-	else if(A.loc)
-		forceMove(get_turf(A))
-		update_parallax_contents()
+	//else if(A.loc)
+	//	forceMove(get_turf(A))
+	//	update_parallax_contents()
 
 /mob/dead/observer/ClickOn(atom/A, params)
 	if(check_click_intercept(params,A))

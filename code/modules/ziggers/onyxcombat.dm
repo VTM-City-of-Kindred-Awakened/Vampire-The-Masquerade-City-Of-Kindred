@@ -539,10 +539,12 @@
 	..()
 
 /atom/Click(location,control,params)
+/* // [ChillRaccoon] - that's bad, define it for client please - **one time in a row**, not update it every click
 	if(!isobserver(usr))
 		usr.client.show_popup_menus = FALSE
 	else
 		usr.client.show_popup_menus = TRUE
+*/
 	if(ishuman(usr))
 		if(isopenturf(src.loc) || isopenturf(src))
 			var/list/modifiers = params2list(params)

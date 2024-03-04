@@ -3,12 +3,17 @@ GLOBAL_LIST_EMPTY(ghost_images_simple) //this is a list of all ghost images as t
 
 GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
+var/list/CMNoir = list(0.3,0.3,0.3,0,\
+			 		   0.3,0.3,0.3,0,\
+					   0.3,0.3,0.3,0,\
+					   0.0,0.0,0.0,1,)// [ChillRaccoon] - more about "color matrix" you can read in BYOND documentation
+
 /mob
 	var/respawntimeofdeath = 0
 
 /mob/dead/observer
 	name = "ghost"
-	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
+	//desc = "It's a g-g-g-g-ghooooost" //jinkies! //[ChillRaccon] - maggot
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
 	layer = GHOST_LAYER
@@ -25,12 +30,14 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	light_range = 1
 	light_power = 2
 	light_on = FALSE
+	sight = 0
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
 							//If you died in the game and are a ghost - this will remain as null.
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
+	var/movement_delay = 2 // [ChillRaccoon] - movement delay
 	var/atom/movable/following = null
 	var/fun_verbs = 0
 	var/image/ghostimage_default = null //this mobs ghost image without accessories and dirs
@@ -65,6 +72,13 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/deadchat_name
 	var/datum/orbit_menu/orbit_menu
 	var/datum/spawners_menu/spawners_menu
+
+/mob/dead/observer/Login()
+	..()
+	if(client)
+		client.color = CMNoir
+		if(client.prefs.toggles & SOUND_SHIP_AMBIENCE)
+			client << sound('sound/effects/ghost_ambient.ogg', 1, 0, 99, 30)
 
 /mob/dead/observer/Initialize()
 	set_invisibility(GLOB.observer_default_invisibility)
@@ -154,7 +168,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
-		return "You can also see a g-g-g-g-ghooooost!"
+		return "You can also see a g-g-g-g-ghooooost!" // [ChillRaccoon] - maggot
 
 /mob/dead/observer/narsie_act()
 	var/old_color = color
@@ -280,16 +294,28 @@ Works together with spawning an observer, noted above.
 
 /mob/proc/ghostize(can_reenter_corpse = TRUE)
 	if(key)
+	/*
 		if(client)
-			client.show_popup_menus = TRUE
+			client.show_popup_menus = TRUE // [ChillRaccoon] - i a little bit rewrote that system, so we do not need it here anymore, else it can broke the things
+	*/
 		if(key[1] != "@") // Skip aghosts.
 			stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
 			var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
 			SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
 			ghost.respawntimeofdeath = respawntimeofdeath
 			ghost.can_reenter_corpse = can_reenter_corpse
+			// [ChillRaccoon] - setting mob icons
+			ghost.icon = src.icon // [ChillRaccoon] - We should transfer mob visuals to the ghost
+			ghost.overlays = src.overlays // [ChillRaccoon] - Overlays too, else we will not see wounds, hair, skin, and etc.
+			ghost.color = CMNoir // [ChillRaccoon] - it makes our ghost
+			// -------
 			ghost.key = key
 			ghost.client.init_verbs()
+			ghost.client = src.client
+			ghost.client.color = CMNoir // [ChillRaccoon] - noir screen effect
+			if(client.prefs.toggles & SOUND_SHIP_AMBIENCE)
+				ghost.client << sound('sound/effects/ghost_ambient.ogg', 1, 5, 99, 30)
+
 			if(!can_reenter_corpse)	// Disassociates observer mind from the body mind
 				ghost.mind = null
 			return ghost
@@ -326,6 +352,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	ghostize(FALSE)
 
 /mob/dead/observer/Move(NewLoc, direct, glide_size_override = 32)
+	..()
+/*
 	if(updatedir)
 		setDir(direct)//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
 	var/oldloc = loc
@@ -349,7 +377,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			x--
 
 	Moved(oldloc, direct)
-
+*/
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
 	set name = "Re-enter Corpse"
