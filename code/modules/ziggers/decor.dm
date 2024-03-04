@@ -1174,6 +1174,13 @@
 /obj/structure/roofstuff/alt3
 	icon_state = "roof4"
 
+/obj/effect/decal/kopatich
+	name = "hide carpet"
+	pixel_w = -16
+	pixel_z = -16
+	icon = 'code/modules/ziggers/64x64.dmi'
+	icon_state = "kopatich"
+
 /obj/effect/decal/baalirune
 	name = "satanic rune"
 	pixel_w = -16

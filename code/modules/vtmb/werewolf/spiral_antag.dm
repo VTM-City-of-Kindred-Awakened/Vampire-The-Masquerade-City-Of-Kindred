@@ -88,12 +88,9 @@
 	if(H.mind)
 		H.mind.add_antag_datum(/datum/antagonist/spiral)
 
-	var/list/landmarkslist = list()
-	for(var/obj/effect/landmark/start/S in GLOB.start_landmarks_list)
-		if(S.name == name)
-			landmarkslist += S
-	var/obj/effect/landmark/start/D = pick(landmarkslist)
-	H.forceMove(D.loc)
+	for(var/obj/structure/werewolf_totem/spiral/S in GLOB.totems)
+		if(S)
+			H.forceMove(get_turf(S))
 
 /obj/effect/landmark/start/spiral
 	name = "Black Spiral Dancer"

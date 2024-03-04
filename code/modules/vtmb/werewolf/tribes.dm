@@ -85,26 +85,84 @@
 				C.add_confusion(10)
 
 /mob/living/carbon
+	var/tox_damage_plus = 0
 
 /datum/action/gift/venom_claws
 	name = "Venom Claws"
 	desc = "While this ability is active, strikes with claws poison foes of garou."
 	button_icon_state = "venom_claws"
 
+/datum/action/gift/venom_claws/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		if(ishuman(owner))
+			playsound(get_turf(owner), 'code/modules/ziggers/sounds/venom_claws.ogg', 75, FALSE)
+			var/mob/living/carbon/human/H = owner
+			H.tox_damage_plus = 25
+			to_chat(owner, "<span class='notice'>You feel your claws filling with pure venom...</span>")
+			spawn(150)
+				H.tox_damage_plus = 0
+				to_chat(owner, "<span class='warning'>Your claws are not poison anymore...</span>")
+		else
+			playsound(get_turf(owner), 'code/modules/ziggers/sounds/venom_claws.ogg', 75, FALSE)
+			var/mob/living/carbon/H = owner
+			H.melee_damage_lower = initial(H.melee_damage_lower)+20
+			H.melee_damage_upper = initial(H.melee_damage_upper)+20
+			H.tox_damage_plus = 25
+			to_chat(owner, "<span class='notice'>You feel your claws filling with pure venom...</span>")
+			spawn(150)
+				H.tox_damage_plus = 0
+				H.melee_damage_lower = initial(H.melee_damage_lower)
+				H.melee_damage_upper = initial(H.melee_damage_upper)
+				to_chat(owner, "<span class='warning'>Your claws are not poison anymore...</span>")
+
 /datum/action/gift/burning_scars
 	name = "Burning Scars"
 	desc = "Garou creates an aura of very hot air, which burns everyone around."
 	button_icon_state = "burning_scars"
+
+/datum/action/gift/burning_scars/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		for(var/mob/living/L in orange(5, owner))
+			if(L)
+				L.adjustFireLoss(40)
+		for(var/turf/T in orange(4, get_turf(owner)))
+			var/obj/effect/fire/F = new(T)
+			spawn(5)
+				qdel(F)
 
 /datum/action/gift/smooth_move
 	name = "Smooth Move"
 	desc = "Garou jumps forward, avoiding every damage for a moment."
 	button_icon_state = "smooth_move"
 
+/datum/action/gift/smooth_move/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		var/turf/T = get_turf(get_step(get_step(get_step(owner, owner.dir), owner.dir), owner.dir))
+		if(!T || T == owner.loc)
+			return
+		owner.visible_message("<span class='danger'>[owner] charges!</span>")
+		owner.setDir(get_dir(owner, T))
+		var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(owner.loc,owner)
+		animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 1)
+		spawn(3)
+			owner.throw_at(T, get_dist(owner, T), 1, owner, 0)
+
 /datum/action/gift/digital_feelings
 	name = "Digital Feelings"
 	desc = "Every technology creates an electrical strike, which hits garou's enemies."
 	button_icon_state = "digital_feelings"
+
+/datum/action/gift/digital_feelings/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		playsound(src, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
+		tesla_zap(owner, 3, 30, ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_ALLOW_DUPLICATES)
+		for(var/mob/living/L in orange(6, owner))
+			if(L)
+				L.electrocute_act(30, owner, siemens_coeff = 1, flags = NONE)
 
 /datum/action/gift/elemental_improvement
 	name = "Elemental Improvement"
