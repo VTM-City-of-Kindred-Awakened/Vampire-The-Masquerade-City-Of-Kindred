@@ -87,6 +87,7 @@
 				H.transformator.crinos_form.health = H.transformator.crinos_form.maxHealth
 	if(H.mind)
 		H.mind.add_antag_datum(/datum/antagonist/spiral)
+	H.auspice.tribe = "Black Spiral"
 
 	for(var/obj/structure/werewolf_totem/spiral/S in GLOB.totems)
 		if(S)
