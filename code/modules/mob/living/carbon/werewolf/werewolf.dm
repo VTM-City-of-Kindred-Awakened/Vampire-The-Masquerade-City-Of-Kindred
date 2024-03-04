@@ -186,8 +186,8 @@
 	hud_type = /datum/hud/werewolf
 	melee_damage_lower = 40
 	melee_damage_upper = 40
-	health = 500
-	maxHealth = 500
+	health = 200
+	maxHealth = 200
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/pounce_cooldown = 0
