@@ -64,6 +64,7 @@ GLOBAL_LIST_INIT(donaters, list("badteammate", "meomoor", "terain1", "egorium", 
 //6.9 - developers, noddists, other
 //1.01 - not known
 
+// [ChillRaccoon] - better to make it through DataBase connection, DB data updates server data every round start
 GLOBAL_LIST_INIT(donaters_amount, list("badteammate" = 666.6,
 								"meomoor" = 666.6,
 								"terain1" = 1.01,
@@ -162,4 +163,4 @@ GLOBAL_LIST_EMPTY(beast_list)
 GLOBAL_LIST_EMPTY(weed_list)
 GLOBAL_LIST_EMPTY(zombie_list)
 
-GLOBAL_LIST_INIT(psychokids, list("badteammate", "meomoor", "twiner", "andreykey", "d6ll1r10um", "zxcnegr228822", "leonko"))
+GLOBAL_LIST_INIT(psychokids, list("badteammate", "meomoor", "twiner", "andreykey", "d6ll1r10um", "zxcnegr228822", "leonko", "chillraccoon"))
