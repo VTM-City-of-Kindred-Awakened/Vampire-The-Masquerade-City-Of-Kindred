@@ -1,3 +1,5 @@
+#define ceil(x) (-round(-(x)))
+
 /**
  * If your mob is concious, drop the item in the active hand
  *
@@ -94,7 +96,7 @@
 	if(mob.force_moving)
 		return FALSE
 
-	var/mob/living/L = mob  //Already checked for isliving earlier
+	var/mob/living/L = mob  //Already checked for isliving earlier // [ChillRaccoon] - actually didn't know why does it should work only for living
 	if(L.incorporeal_move)	//Move though walls
 		Process_Incorpmove(direct)
 		return FALSE
@@ -161,6 +163,8 @@
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)
 		mob.setDir(turn(mob.dir, 180))
+
+	// to_chat(src, "Move called")
 
 /**
  * Checks to see if you're being grabbed and if so attempts to break it
@@ -538,3 +542,35 @@
 /// Can this mob move between z levels
 /mob/proc/canZMove(direction, turf/target)
 	return FALSE
+
+
+/mob/dead/Move()
+	if(!istype(src, /mob/dead))
+		return FALSE
+	if(world.time < move_delay) //do not move anything ahead of this check please
+		return FALSE
+	else
+		next_move_dir_add = 0
+		next_move_dir_sub = 0
+	var/old_move_delay = move_delay
+	move_delay = world.time + world.tick_lag //this is here because Move() can now be called mutiple times per tick
+
+	var/mob/dead/observer/O
+	if(istype(src, /mob/dead/observer))
+		O = src
+
+	var/add_delay = 2
+
+	if(O != null)
+		add_delay = O.movement_delay
+
+	if(old_move_delay + (add_delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
+		move_delay = old_move_delay + add_delay
+	else
+		move_delay = world.time
+
+	..()
+
+	glide_size = (world.icon_size / ceil(add_delay / world.tick_lag))
+
+	// to_chat(src, "Observer Movement called, add_delay = [add_delay], move_delay = [move_delay]")
