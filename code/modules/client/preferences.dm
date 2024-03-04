@@ -1577,14 +1577,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(initial(T.value) != 0)
 				font_color = initial(T.value) > 0 ? "#AAFFAA" : "#FFAAAA"
 
-			if(length(initial(T.allowed_species)))
+			var/datum/quirk/Q = new T()
+
+			if(length(Q.allowed_species))
 				var/species_restricted = TRUE
-				for(var/i in initial(T.allowed_species))
+				for(var/i in Q.allowed_species)
 					if(i == pref_species.name)
 						species_restricted = FALSE
 				if(species_restricted)
 					lock_reason = "[pref_species.name] restricted."
 					quirk_conflict = TRUE
+			qdel(Q)
 
 			if(quirk_conflict && lock_reason != "Mood is disabled.")
 				dat += "<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)] \
