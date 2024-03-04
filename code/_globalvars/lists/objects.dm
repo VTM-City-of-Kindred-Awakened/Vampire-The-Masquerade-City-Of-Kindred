@@ -58,7 +58,7 @@ GLOBAL_LIST_EMPTY(niggers)
 GLOBAL_LIST_EMPTY(generators)
 GLOBAL_LIST_EMPTY(totems)
 //Dear God
-GLOBAL_LIST_INIT(donaters, list("badteammate", "meomoor", "terain1", "egorium", "vanotyan", "takyon69", "lemshake", "happypala44", "kerststf", "oneplusone", "leonko", "twiner", "sishtis", "shirumic", "kommando", "nehoroshka", "raikyh", "themaskedman2", "xilvahphyre", "nikroszero", "foxfiredogs", "d6ll1r10um", "drdreidel", "stinkethstonketh", "neepbeep666", "parchment", "blackcat055", "laoziofcitium", "aniotaess", "andreykey", "mosasauruss", "animusin", "mercuryarrow", "keebo885", "homuhomu", "ivanzarax", "testuser", "cmdrgungnir", "psewdoplot", "dyzennon", "looptyloo", "heimy", "notaspider", "fourty2", "mormaethor", "odin933", "feudeytf", "awakethedemon", "noxesdeadwish", "ifrickfracki", "gruesomeborg68915", "asskek", "suriyel", "kayzach", "darkincarnate", "weredeaddeeds", "tonybito", "darkrixd", "justben201", "redruse", "deendoor24", "ambrosiafumari", "0nemore", "dangitmaster", "kirichi", "parasoul", "athiny", "swatogor", "adverseking", "mrfier", "agatickpapugatick", "huivn", "cocko", "shiranaisan", "4ejltbi", "prostoxorek", "danchsa", "otuskursky", "akayenthefake"))
+GLOBAL_LIST_INIT(donaters, list("badteammate", "meomoor", "terain1", "egorium", "vanotyan", "takyon69", "lemshake", "happypala44", "kerststf", "oneplusone", "leonko", "twiner", "sishtis", "shirumic", "kommando", "nehoroshka", "raikyh", "themaskedman2", "xilvahphyre", "nikroszero", "foxfiredogs", "d6ll1r10um", "drdreidel", "stinkethstonketh", "neepbeep666", "parchment", "blackcat055", "laoziofcitium", "aniotaess", "andreykey", "mosasauruss", "animusin", "mercuryarrow", "keebo885", "homuhomu", "ivanzarax", "testuser", "cmdrgungnir", "psewdoplot", "dyzennon", "looptyloo", "heimy", "notaspider", "fourty2", "mormaethor", "odin933", "feudeytf", "awakethedemon", "noxesdeadwish", "ifrickfracki", "gruesomeborg68915", "asskek", "suriyel", "kayzach", "darkincarnate", "weredeaddeeds", "tonybito", "darkrixd", "justben201", "redruse", "deendoor24", "ambrosiafumari", "0nemore", "dangitmaster", "kirichi", "parasoul", "athiny", "swatogor", "adverseking", "mrfier", "agatickpapugatick", "huivn", "cocko", "shiranaisan", "4ejltbi", "prostoxorek", "danchsa", "otuskursky", "akayenthefake", "blockbatr"))
 
 //666.6 - owners
 //6.9 - developers, noddists, other
@@ -143,7 +143,8 @@ GLOBAL_LIST_INIT(donaters_amount, list("badteammate" = 666.6,
 								"prostoxorek" = 5,
 								"danchsa" = 20,
 								"otuskursky" = 1,
-								"akayenthefake" = 5))
+								"akayenthefake" = 5,
+								"blockbatr" = 1.01))
 
 GLOBAL_LIST_EMPTY(fucking_joined)
 
