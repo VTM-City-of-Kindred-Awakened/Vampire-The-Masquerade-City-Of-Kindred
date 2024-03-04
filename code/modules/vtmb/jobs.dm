@@ -1807,7 +1807,7 @@
 	total_positions = 5
 	spawn_positions = 5
 	supervisors = " the SFPD"
-	selection_color = "#ffa400"
+	selection_color = "#7e7e7e"
 
 	outfit = /datum/outfit/job/police_officer
 
@@ -1853,7 +1853,7 @@
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = " the FBI"
-	selection_color = "#ffa400"
+	selection_color = "#7e7e7e"
 
 	outfit = /datum/outfit/job/fbi
 
@@ -1861,7 +1861,7 @@
 	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
-	display_order = JOB_DISPLAY_ORDER_POLICE
+	display_order = JOB_DISPLAY_ORDER_FBI
 	exp_type_department = EXP_TYPE_INDEPENDENT
 
 	kindred_only = FALSE
