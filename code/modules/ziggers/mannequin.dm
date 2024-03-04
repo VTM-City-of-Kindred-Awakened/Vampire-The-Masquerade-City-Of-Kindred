@@ -41,12 +41,7 @@
 	if(light_amount < 0.2)
 		do_spooky(H)
 	else
-		var/allowed_to_do = TRUE
-		for(var/mob/living/L in oviewers(8, H))
-			if(L.client)
-				allowed_to_do = FALSE
-		if(allowed_to_do)
-			do_spooky(H)
+		walk_to(H, 0)
 
 /mob/living/carbon
 	var/lock_on_by_mannequin = FALSE
