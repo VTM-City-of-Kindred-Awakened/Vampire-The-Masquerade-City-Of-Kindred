@@ -388,7 +388,7 @@
 			to_chat(BD, "<span class='notice'>You use blood to heal your wounds.</span>")
 			if(BD.getBruteLoss() + BD.getBruteLoss() >= 25)
 				BD.visible_message("<span class='warning'>Some of [BD]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
-			BD.adjustBruteLoss(-15*min(4, 13-BD.generation), TRUE)
+			BD.adjustBruteLoss(-15*min(4, 15-BD.generation), TRUE)
 			if(length(BD.all_wounds))
 				var/datum/wound/W = pick(BD.all_wounds)
 				W.remove_wound()
@@ -404,7 +404,7 @@
 			if(length(BD.all_wounds))
 				var/datum/wound/W = pick(BD.all_wounds)
 				W.remove_wound()
-			BD.adjustFireLoss(-10*min(4, 13-BD.generation), TRUE)
+			BD.adjustFireLoss(-10*min(4, 15-BD.generation), TRUE)
 			BD.adjustCloneLoss(-5, TRUE)
 			var/obj/item/organ/eyes/eyes = BD.getorganslot(ORGAN_SLOT_EYES)
 			if(eyes)
@@ -539,12 +539,10 @@
 	..()
 
 /atom/Click(location,control,params)
-/* // [ChillRaccoon] - that's bad, define it for client please - **one time in a row**, not update it every click
 	if(!isobserver(usr))
 		usr.client.show_popup_menus = FALSE
 	else
 		usr.client.show_popup_menus = TRUE
-*/
 	if(ishuman(usr))
 		if(isopenturf(src.loc) || isopenturf(src))
 			var/list/modifiers = params2list(params)
