@@ -211,6 +211,8 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
+		if(H.tox_damage_plus)
+			adjustToxLoss(H.tox_damage_plus)
 		dna.species.spec_attack_hand(H, src)
 
 /mob/living/carbon/human/attack_paw(mob/living/carbon/human/M)

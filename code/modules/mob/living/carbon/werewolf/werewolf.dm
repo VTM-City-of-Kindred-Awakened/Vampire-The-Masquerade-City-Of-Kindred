@@ -76,6 +76,8 @@
 
 	var/werewolf_armor = 0
 
+	var/assigned_quirks = FALSE
+
 /mob/living/carbon/werewolf/update_resting()
 	if(resting)
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, RESTING_TRAIT)

@@ -270,6 +270,21 @@
 	icon_state = "bar-window"
 	window = /obj/structure/window/fulltile
 
+/turf/closed/wall/vampwall/wood
+	name = "wood wall"
+	desc = "A huge chunk of dirty logs used to separate rooms."
+	icon_state = "wood-0"
+	base_icon_state = "wood"
+
+/turf/closed/wall/vampwall/wood/low
+	icon = 'code/modules/ziggers/lowwalls.dmi'
+	opacity = FALSE
+	low = TRUE
+
+/turf/closed/wall/vampwall/wood/low/window
+	icon_state = "wood-window"
+	window = /obj/structure/window/fulltile
+
 //TURFS
 
 /obj/effect/decal/asphalt

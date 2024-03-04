@@ -5,6 +5,8 @@
 	var/hit_percent = (100-blocked)/100
 	if(!damage || (!forced && hit_percent <= 0))
 		return 0
+	if(iswerewolf(src))
+		hit_percent = (100-getarmor(def_zone, damagetype))/100
 
 	var/obj/item/bodypart/BP = null
 	if(!spread_damage)

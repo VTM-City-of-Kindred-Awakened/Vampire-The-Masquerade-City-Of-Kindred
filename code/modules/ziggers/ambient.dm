@@ -253,12 +253,39 @@
 	zone_owner = "Camarilla"
 	fire_controled = TRUE
 
+/area/vtm/forest
+	name = "Forest"
+	icon_state = "park"
+	upper = TRUE
+	zone_type = "battle"
+	music = /datum/vampiremusic/forest
+
+/area/vtm/interior/glasswalker
+	name = "Glasswalker's Lab"
+	icon_state = "supply"
+	upper = FALSE
+	zone_type = "battle"
+	music = /datum/vampiremusic/forest
+	fire_controled = TRUE
+
+/area/vtm/interior/wyrm_corrupted
+	name = "Corrupted by Wyrm"
+	icon_state = "graveyard"
+	upper = FALSE
+	zone_type = "battle"
+	music = /datum/vampiremusic/forest
+	fire_controled = FALSE
+
 //MUSIC
 
 /datum/vampiremusic
 	var/length = 30 SECONDS
 	var/sound
 	var/forced = FALSE
+
+/datum/vampiremusic/forest
+	length = 389 SECONDS
+	sound = 'code/modules/ziggers/sounds/night_ambience.ogg'
 
 /datum/vampiremusic/santamonica
 	length = 304 SECONDS

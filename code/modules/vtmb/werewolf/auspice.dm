@@ -30,8 +30,6 @@
 	C.transformator.lupus_form.dna = C.dna
 	C.transformator.crinos_form.auspice = src
 	C.transformator.crinos_form.dna = C.dna
-	SSquirks.AssignQuirks(C.transformator.lupus_form, C.client)
-	SSquirks.AssignQuirks(C.transformator.crinos_form, C.client)
 	rage = start_rage
 	if(length(gifts))
 		for(var/i in gifts)

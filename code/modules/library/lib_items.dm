@@ -25,6 +25,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
 	pixel_w = -16
+	pixel_z = -8
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 0)
 	var/state = BOOKCASE_UNANCHORED
 	/// When enabled, books_to_load number of random books will be generated for this bookcase when first interacted with.
@@ -52,6 +53,9 @@
 	. = ..()
 	if(!mapload)
 		return
+	var/matrix/ntransform = matrix(transform)
+	ntransform.Scale(0.5, 0.5)
+	animate(src, transform = ntransform, time = 1)
 	set_anchored(TRUE)
 	state = BOOKCASE_FINISHED
 	for(var/obj/item/I in loc)

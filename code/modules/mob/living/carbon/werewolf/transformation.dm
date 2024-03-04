@@ -68,6 +68,9 @@
 					lupus_form.forceMove(current_loc)
 					animate(lupus_form, color = "#FFFFFF", time = 10)
 					lupus_form.key = trans.key
+					if(!lupus_form.assigned_quirks)
+						lupus_form.assigned_quirks = TRUE
+						SSquirks.AssignQuirks(lupus_form, lupus_form.client)
 					forceMove(lupus_form)
 					lupus_form.bloodpool = trans.bloodpool
 					lupus_form.masquerade = trans.masquerade
@@ -101,6 +104,9 @@
 					crinos_form.forceMove(current_loc)
 					animate(crinos_form, color = "#FFFFFF", time = 10)
 					crinos_form.key = trans.key
+					if(!crinos_form.assigned_quirks)
+						crinos_form.assigned_quirks = TRUE
+						SSquirks.AssignQuirks(crinos_form, crinos_form.client)
 					forceMove(crinos_form)
 					crinos_form.bloodpool = trans.bloodpool
 					crinos_form.masquerade = trans.masquerade

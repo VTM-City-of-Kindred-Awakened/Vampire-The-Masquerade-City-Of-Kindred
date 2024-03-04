@@ -9,7 +9,6 @@
 	punchdamagelow = 5
 	punchdamagehigh = 5
 	punchstunthreshold = 0 //about 40% chance to stun
-	no_equip = list(ITEM_SLOT_MASK,ITEM_SLOT_FEET)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	damage_overlay_type = ""
 	meat = /obj/item/food/meat/slab/human/mutant/golem
@@ -27,6 +26,10 @@
 	C.update_body_parts()
 	C.update_body()
 	C.update_icon()
+	C.dna.real_name = "mannequin"
+	C.real_name = "mannequin"
+	C.true_real_name = "mannequin"
+	C.real_name = "mannequin"
 
 /datum/species/vamp_mannequin/check_roundstart_eligible()
 	return FALSE
