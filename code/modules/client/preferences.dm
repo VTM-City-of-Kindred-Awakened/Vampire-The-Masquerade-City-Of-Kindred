@@ -1577,17 +1577,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(initial(T.value) != 0)
 				font_color = initial(T.value) > 0 ? "#AAFFAA" : "#FFAAAA"
 
-			var/datum/quirk/Q = new T()
+			if(!initial(T.mood_quirk))
+				var/datum/quirk/Q = new T()
 
-			if(length(Q.allowed_species))
-				var/species_restricted = TRUE
-				for(var/i in Q.allowed_species)
-					if(i == pref_species.name)
-						species_restricted = FALSE
-				if(species_restricted)
-					lock_reason = "[pref_species.name] restricted."
-					quirk_conflict = TRUE
-			qdel(Q)
+				if(length(Q.allowed_species))
+					var/species_restricted = TRUE
+					for(var/i in Q.allowed_species)
+						if(i == pref_species.name)
+							species_restricted = FALSE
+					if(species_restricted)
+						lock_reason = "[pref_species.name] restricted."
+						quirk_conflict = TRUE
+				qdel(Q)
 
 			if(quirk_conflict && lock_reason != "Mood is disabled.")
 				dat += "<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)] \
@@ -2079,7 +2080,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(werewolf_scar == 9)
 							werewolf_scar = 0
 						else
-							werewolf_scar = min(7, werewolf_scar+1)
+							werewolf_scar = min(9, werewolf_scar+1)
 					else
 						if(werewolf_scar == 7)
 							werewolf_scar = 0

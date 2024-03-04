@@ -11,8 +11,8 @@
 //	dextrous = FALSE
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	health = 250
-	maxHealth = 250
+	health = 200
+	maxHealth = 200
 //	bodyparts = list(
 //		/obj/item/bodypart/chest,
 //		/obj/item/bodypart/head,

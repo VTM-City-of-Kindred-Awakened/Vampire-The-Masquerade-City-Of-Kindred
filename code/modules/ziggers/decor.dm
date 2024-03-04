@@ -907,6 +907,10 @@
 /proc/cryoMob(mob/living/mob_occupant, obj/pod)
 	if(isnpc(mob_occupant))
 		return
+	if(iscarbon(mob_occupant))
+		var/mob/living/carbon/C = mob_occupant
+		if(C.transformator)
+			qdel(C.transformator)
 	var/list/crew_member = list()
 	crew_member["name"] = mob_occupant.real_name
 

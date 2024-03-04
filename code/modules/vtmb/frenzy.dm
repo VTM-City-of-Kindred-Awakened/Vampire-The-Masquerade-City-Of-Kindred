@@ -82,6 +82,9 @@
 	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
 		return TRUE
 
+/mob/living/carbon
+	var/last_rage_hit = 0
+
 /mob/living/carbon/proc/frenzystep()
 	if(!isturf(loc) || CheckFrenzyMove())
 		return
@@ -140,7 +143,9 @@
 				var/mob/living/L = frenzy_target
 				if(L.stat != DEAD)
 					a_intent = INTENT_HARM
-					UnarmedAttack(L)
+					if(last_rage_hit+5 < world.time)
+						last_rage_hit = world.time
+						UnarmedAttack(L)
 		else
 			step_to(src,frenzy_target,0)
 			face_atom(frenzy_target)
