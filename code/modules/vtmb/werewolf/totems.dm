@@ -26,6 +26,7 @@
 
 /obj/structure/werewolf_totem/Initialize()
 	. = ..()
+	set_light(3, 0.5, totem_overlay_color)
 	GLOB.totems += src
 	totem_light_overlay = new(src)
 	totem_light_overlay.icon = icon
@@ -49,6 +50,7 @@
 				if(iswerewolf(C) || isgarou(C))
 					if(C.stat != DEAD)
 						if(C.auspice.tribe == tribe)
+							set_light(0)
 							to_chat(C, "<span class='userdanger'><b>YOUR TOTEM IS DESTROYED</b></span>")
 							SEND_SOUND(C, sound('sound/effects/tendril_destroyed.ogg', 0, 0, 75))
 							adjust_gnosis(-5, C, FALSE)

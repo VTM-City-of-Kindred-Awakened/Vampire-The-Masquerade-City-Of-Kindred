@@ -109,7 +109,7 @@
 				var/turf/T = get_step(src, pick(NORTH, SOUTH, WEST, EAST))
 				face_atom(T)
 				step_to(src,T,0)
-				if(walktarget)
+				if(walktarget && !old_movement)
 					if(route_optimisation())
 						forceMove(get_turf(walktarget))
 //		if(prob(5) && !danger_source)
