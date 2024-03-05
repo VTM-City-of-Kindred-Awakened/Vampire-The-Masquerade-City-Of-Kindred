@@ -374,7 +374,7 @@
 /datum/action/change_apparel
 	name = "Change Apparel"
 	desc = "Choose the clothes of your Crinos form."
-	button_icon_state = "change_apparel"
+	button_icon_state = "choose_apparel"
 	icon_icon = 'code/modules/ziggers/werewolf_abilities.dmi'
 	check_flags = AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
 
