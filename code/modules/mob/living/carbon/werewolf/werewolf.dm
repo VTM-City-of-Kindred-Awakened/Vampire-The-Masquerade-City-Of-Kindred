@@ -35,6 +35,8 @@
 	anchored = TRUE
 	rotate_on_lying = 0
 
+	movement_type = GROUND // [ChillRaccoon] - fucking flying werewolfes is a meme
+
 	bloodpool = 10
 	maxbloodpool = 10
 

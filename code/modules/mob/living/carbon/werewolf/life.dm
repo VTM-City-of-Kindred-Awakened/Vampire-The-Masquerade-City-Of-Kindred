@@ -31,18 +31,18 @@
 		if(iscrinos(src))
 			if(auspice.base_breed == "Crinos")
 				gaining_rage = FALSE
-			else if(auspice.rage == 0)
-				transformator.trans_gender(src, auspice.base_breed)
+			//else if(auspice.rage == 0) //! [ChillRaccoon] - FIXME
+			//	transformator.trans_gender(src, auspice.base_breed)
 		if(islupus(src))
 			if(auspice.base_breed == "Lupus")
 				gaining_rage = FALSE
-			else if(auspice.rage == 0)
-				transformator.trans_gender(src, auspice.base_breed)
+			//else if(auspice.rage == 0)
+			//	transformator.trans_gender(src, auspice.base_breed)
 		if(ishuman(src))
 			if(auspice.base_breed == "Homid")
 				gaining_rage = FALSE
-			else if(auspice.rage == 0)
-				transformator.trans_gender(src, auspice.base_breed)
+			//else if(auspice.rage == 0)
+			//	transformator.trans_gender(src, auspice.base_breed)
 
 		if(gaining_rage && client)
 			if(last_rage_penis+600 < world.time)

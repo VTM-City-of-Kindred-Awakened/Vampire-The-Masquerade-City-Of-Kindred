@@ -32,7 +32,12 @@
 						humanity = max(limit, humanity+(value*mod))
 						SEND_SOUND(src, sound('code/modules/ziggers/sounds/humanity_loss.ogg', 0, 0, 75))
 						to_chat(src, "<span class='userdanger'><b>HUMANITY DECREASES</b></span>")
-				if(value > 0)
+						if(humanity == limit)
+							to_chat(src, "<span class='userdanger'><b>If i don't stop the beast will devour me...</b></span>")
+					else
+						var/msgShit = pick("<span class='userdanger'><b>I'm already on the edge of my awareness...</b></span>", "<span class='userdanger'><b>I SHOULD STOP.</b></span>", "<span class='userdanger'><b>It's not right...</b></span>")
+						to_chat(src, msgShit) // [ChillRaccoon] - I think we should make's players more scared
+				if(value > 0)				  // so please, do not say about that, they're in safety after they're humanity drops to limit
 					if(humanity < limit)
 						humanity = min(limit, humanity+(value*mod))
 						SEND_SOUND(src, sound('code/modules/ziggers/sounds/humanity_gain.ogg', 0, 0, 75))
