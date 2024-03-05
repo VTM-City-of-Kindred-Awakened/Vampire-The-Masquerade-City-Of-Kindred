@@ -46,16 +46,28 @@
 				var/zalupa = glasswalker[i]
 				var/datum/action/A = new zalupa()
 				A.Grant(C)
+				var/datum/action/A1 = new zalupa()
+				A1.Grant(C.transformator.lupus_form)
+				var/datum/action/A2 = new zalupa()
+				A2.Grant(C.transformator.crinos_form)
 		if("Wendigo")
 			for(var/i in 1 to level)
 				var/zalupa = wendigo[i]
 				var/datum/action/A = new zalupa()
 				A.Grant(C)
+				var/datum/action/A1 = new zalupa()
+				A1.Grant(C.transformator.lupus_form)
+				var/datum/action/A2 = new zalupa()
+				A2.Grant(C.transformator.crinos_form)
 		if("Black Spiral")
 			for(var/i in 1 to level)
 				var/zalupa = spiral[i]
 				var/datum/action/A = new zalupa()
 				A.Grant(C)
+				var/datum/action/A1 = new zalupa()
+				A1.Grant(C.transformator.lupus_form)
+				var/datum/action/A2 = new zalupa()
+				A2.Grant(C.transformator.crinos_form)
 
 /datum/auspice/ahroun
 	name = "Ahroun"

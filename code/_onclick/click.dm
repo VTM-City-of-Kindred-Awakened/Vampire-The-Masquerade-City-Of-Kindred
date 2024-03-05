@@ -212,33 +212,34 @@
 
 	if(iscrinos(src))
 		if(!W)
-			var/mob/living/carbon/werewolf/wolf = src
-			switch(wolf.a_intent)
-				if(INTENT_HARM)
-					changeNext_move(CLICK_CD_MELEE)
-					var/atom/B = claw_swing()
-					UnarmedAttack(B)
-				if(INTENT_HELP)
-					UnarmedAttack(A)
-				if(INTENT_GRAB)
-					changeNext_move(CLICK_CD_GRABBING)
-					if(A != src)
-						if(isliving(A))
-							var/mob/living/living = A
-							living.grabbedby(wolf)
-							return
-						else
-							UnarmedAttack(A)
-				if(INTENT_DISARM)
-					changeNext_move(CLICK_CD_MELEE)
-					if(A != src)
-						if(iscarbon(A))
-							var/mob/living/carbon/living = A
-							wolf.disarm(living)
-							do_attack_animation(A)
-							return
-						else
-							UnarmedAttack(A)
+			if(CanReach(A,src))
+				var/mob/living/carbon/werewolf/wolf = src
+				switch(wolf.a_intent)
+					if(INTENT_HARM)
+						changeNext_move(CLICK_CD_MELEE)
+						var/atom/B = claw_swing()
+						UnarmedAttack(B)
+					if(INTENT_HELP)
+						UnarmedAttack(A)
+					if(INTENT_GRAB)
+						changeNext_move(CLICK_CD_GRABBING)
+						if(A != src)
+							if(isliving(A))
+								var/mob/living/living = A
+								living.grabbedby(wolf)
+								return
+							else
+								UnarmedAttack(A)
+					if(INTENT_DISARM)
+						changeNext_move(CLICK_CD_MELEE)
+						if(A != src)
+							if(iscarbon(A))
+								var/mob/living/carbon/living = A
+								wolf.disarm(living)
+								do_attack_animation(A)
+								return
+							else
+								UnarmedAttack(A)
 		else
 			if(istype(W, /obj/item/melee))
 				var/atom/B = melee_swing()
