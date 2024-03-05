@@ -80,7 +80,7 @@ var/list/CMNoir = list(0.3,0.3,0.3,0,\
 		animate(client, color = CMNoir, time = 30)
 		client.color = CMNoir
 		if(client.prefs.toggles & CHANNEL_AMBIENCE)
-			client << sound('sound/effects/ghost_ambient.ogg', 1, 5, CHANNEL_AMBIENCE, 20)
+			client << sound('sound/effects/ghost_ambient.ogg', 1, 5, CHANNEL_AMBIENCE, 10)
 
 /mob/dead/observer/Initialize()
 	set_invisibility(GLOB.observer_default_invisibility)
@@ -322,7 +322,7 @@ Works together with spawning an observer, noted above.
 			else
 				ghost.client.color = CMNoir // [ChillRaccoon] - noir screen effect
 				if(ghost.client.prefs.toggles & CHANNEL_AMBIENCE)
-					ghost.client << sound('sound/effects/ghost_ambient.ogg', 1, 5, CHANNEL_AMBIENCE, 20)
+					ghost.client << sound('sound/effects/ghost_ambient.ogg', 1, 5, CHANNEL_AMBIENCE, 10)
 
 			if(!can_reenter_corpse)	// Disassociates observer mind from the body mind
 				ghost.mind = null
