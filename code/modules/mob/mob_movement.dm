@@ -567,7 +567,7 @@
 	if(old_move_delay + (add_delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
 		move_delay = old_move_delay + add_delay
 	else
-		move_delay = world.time
+		move_delay = world.time + add_delay
 
 	..()
 

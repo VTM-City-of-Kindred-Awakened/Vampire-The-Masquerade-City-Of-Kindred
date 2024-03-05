@@ -521,16 +521,24 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(isobserver(M))
 			var/rendered_message = message
 
+			var/mob/dead/observer/O = M
+
 			if(follow_target)
 				var/F
 				if(turf_target)
 					F = FOLLOW_OR_TURF_LINK(M, follow_target, turf_target)
 				else
 					F = FOLLOW_LINK(M, follow_target)
-				rendered_message = "[F] [message]"
+				if(O.aghosted)
+					rendered_message = "[F] [message]"
+				else
+					rendered_message = "[message]"
 			else if(turf_target)
 				var/turf_link = TURF_LINK(M, turf_target)
-				rendered_message = "[turf_link] [message]"
+				if(O.aghosted)
+					rendered_message = "[turf_link] [message]"
+				else
+					rendered_message = "[message]"
 
 			to_chat(M, rendered_message)
 		else

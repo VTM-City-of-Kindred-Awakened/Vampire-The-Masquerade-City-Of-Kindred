@@ -343,9 +343,6 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	to_chat(src, "<span class='interface'>All of your adminverbs are now visible.</span>", confidential = TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Adminverbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-
-
 /client/proc/admin_ghost()
 	set category = "Admin.Game"
 	set name = "Aghost"
@@ -361,6 +358,23 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 			log_admin("[key_name(usr)] re-entered corpse")
 			message_admins("[key_name_admin(usr)] re-entered corpse")
 		ghost.can_reenter_corpse = 1 //force re-entering even when otherwise not possible
+		ghost.aghosted = !ghost.aghosted
+		if(ghost.aghosted)
+			ghost.client.show_popup_menus = 1
+			ghost.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
+			ghost.movement_type = FLYING | PHASING | GROUND
+			ghost.client.color = null
+			usr.stop_sound_channel(CHANNEL_AMBIENCE)
+			to_chat(src, "Now you should've been enter in admin ghost mode")
+		if(!ghost.aghosted)
+			ghost.client.show_popup_menus = 0
+			ghost.sight = 0
+			ghost.movement_type = FLYING | GROUND // [ChillRaccoon] - makes us available to go through dens objects
+			ghost.client.color = CMNoir
+			to_chat(src, "Now you leave from admin ghost mode")
+		if(ghost.hud_used)
+			ghost.client.screen = null
+			ghost.hud_used.show_hud(ghost.hud_used.hud_version)
 		ghost.reenter_corpse()
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin Reenter") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else if(isnewplayer(mob))
@@ -371,7 +385,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		log_admin("[key_name(usr)] admin ghosted.")
 		message_admins("[key_name_admin(usr)] admin ghosted.")
 		var/mob/body = mob
-		body.ghostize(1)
+		body.ghostize(1, 1)
 		init_verbs()
 		if(body && !body.key)
 			body.key = "@[key]"	//Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
