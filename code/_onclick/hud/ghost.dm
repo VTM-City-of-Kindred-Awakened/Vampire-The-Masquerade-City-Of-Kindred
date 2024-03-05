@@ -65,12 +65,13 @@
 /atom/movable/screen/fullscreen/ghost/lfwbLike/screenLayer1 // [ChillRaccoon] - this layer should overlap screenLayer2
 	name = ""
 	icon_state = "ghost1"
+	alpha = 170
 	plane = 43
 
 /atom/movable/screen/fullscreen/ghost/lfwbLike/screenLayer2
 	name = ""
 	icon_state = "ghost2"
-	alpha = 200
+	alpha = 100
 	plane = 42
 
 /datum/hud/ghost/New(mob/owner)
