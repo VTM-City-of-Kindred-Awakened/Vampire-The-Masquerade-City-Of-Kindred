@@ -132,6 +132,23 @@
 	M.adjustBruteLoss(-30, TRUE)
 	M.adjustFireLoss(-30, TRUE)
 	M.adjustCloneLoss(-20, TRUE)
+	if(ishuman(M))
+		var/mob/living/carbon/human/BD = M
+		if(length(BD.all_wounds))
+			var/datum/wound/W = pick(BD.all_wounds)
+			W.remove_wound()
+		if(length(BD.all_wounds))
+			var/datum/wound/W = pick(BD.all_wounds)
+			W.remove_wound()
+		if(length(BD.all_wounds))
+			var/datum/wound/W = pick(BD.all_wounds)
+			W.remove_wound()
+		if(length(BD.all_wounds))
+			var/datum/wound/W = pick(BD.all_wounds)
+			W.remove_wound()
+		if(length(BD.all_wounds))
+			var/datum/wound/W = pick(BD.all_wounds)
+			W.remove_wound()
 	return ..()
 
 /obj/item/melee/touch_attack/duffelbag

@@ -183,8 +183,8 @@
 	worn_icon = 'code/modules/ziggers/worn.dmi'
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 	icon_state = "glock19"
-	ammo_type = /obj/item/ammo_casing/vampire/c44
-	caliber = CALIBER_45
+	ammo_type = /obj/item/ammo_casing/vampire/c9mm
+	caliber = CALIBER_9MM
 	max_ammo = 15
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 
@@ -307,7 +307,7 @@
 	onflooricon = 'code/modules/ziggers/onfloor.dmi'
 	icon_state = "ak"
 	ammo_type = /obj/item/ammo_casing/vampire/c545mm
-	caliber = CALIBER_556
+	caliber = CALIBER_545
 	max_ammo = 30
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 

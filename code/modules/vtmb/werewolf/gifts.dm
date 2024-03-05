@@ -349,10 +349,27 @@
 	if(allowed_to_proceed)
 		var/mob/living/carbon/C = owner
 		if(C.stat != DEAD)
-			playsound(get_turf(owner), 'code/modules/ziggers/sounds/rage_heal.ogg', 100, FALSE)
+			SEND_SOUND(owner, sound('code/modules/ziggers/sounds/rage_heal.ogg', 0, 0, 75))
 			C.adjustBruteLoss(-50*C.auspice.level, TRUE)
 			C.adjustFireLoss(-50*C.auspice.level, TRUE)
 			C.adjustCloneLoss(-50*C.auspice.level, TRUE)
+			if(ishuman(owner))
+				var/mob/living/carbon/human/BD = owner
+				if(length(BD.all_wounds))
+					var/datum/wound/W = pick(BD.all_wounds)
+					W.remove_wound()
+				if(length(BD.all_wounds))
+					var/datum/wound/W = pick(BD.all_wounds)
+					W.remove_wound()
+				if(length(BD.all_wounds))
+					var/datum/wound/W = pick(BD.all_wounds)
+					W.remove_wound()
+				if(length(BD.all_wounds))
+					var/datum/wound/W = pick(BD.all_wounds)
+					W.remove_wound()
+				if(length(BD.all_wounds))
+					var/datum/wound/W = pick(BD.all_wounds)
+					W.remove_wound()
 
 /datum/action/change_apparel
 	name = "Change Apparel"
