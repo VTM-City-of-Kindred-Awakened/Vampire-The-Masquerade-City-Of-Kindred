@@ -373,7 +373,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 			ghost.movement_type = FLYING | GROUND // [ChillRaccoon] - makes us available to go through dens objects
 			ghost.client.color = CMNoir
 			// chat_toggles -= CHAT_GHOSTEARS
-			client << sound('sound/effects/ghost_ambient.ogg', 1, 5, CHANNEL_AMBIENCE, 10)
+//			ghost.client << sound('sound/effects/ghost_ambient.ogg', 1, 5, CHANNEL_AMBIENCE, 10)
 			to_chat(src, "Now you leave from admin ghost mode")
 		if(ghost.hud_used)
 			ghost.client.screen = null
