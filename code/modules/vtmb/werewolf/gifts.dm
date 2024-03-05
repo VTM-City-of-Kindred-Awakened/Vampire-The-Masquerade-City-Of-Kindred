@@ -187,7 +187,7 @@
 				if(A)
 					if(isgarou(A) || iswerewolf(A))
 						if(A.auspice.tribe == C.auspice.tribe)
-							to_chat(C, "You hear a message in your head... <b>[sanitize_text(new_thought)]</b>")
+							to_chat(A, "You hear a message in your head... <b>[sanitize_text(new_thought)]</b>")
 
 /datum/action/gift/resist_pain
 	name = "Resist Pain"
