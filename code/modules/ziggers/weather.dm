@@ -148,11 +148,7 @@ SUBSYSTEM_DEF(cityweather)
 	for(var/i in 1 to 9)
 		forecast += i
 		var/weather = "Clear"
-		if(i == 1)
-			weather = "Rain"
-		if(i == 2)
-			weather = "Fog"
-		if(i != 1 && i != 2 && i != 9)
+		if(i != 1 && i != 9)
 			if(prob(50))
 				if(GLOB.winter)
 					weather = pick("Clear", "Snow", "Fog")
