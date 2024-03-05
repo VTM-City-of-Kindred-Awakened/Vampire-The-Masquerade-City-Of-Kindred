@@ -212,7 +212,12 @@
 
 	if(iscrinos(src))
 		if(!W)
+			var/allowed_to_proceed = FALSE
 			if(CanReach(A,src))
+				allowed_to_proceed = TRUE
+			if(wolf.a_intent == INTENT_HARM && !isitem(A))
+				allowed_to_proceed = TRUE
+			if(allowed_to_proceed)
 				var/mob/living/carbon/werewolf/wolf = src
 				switch(wolf.a_intent)
 					if(INTENT_HARM)
