@@ -352,7 +352,7 @@
 		if(last_sound_played+40 <= world.time)
 			last_sound_played = world.time
 			playsound(loc, 'code/modules/ziggers/sounds/guh.ogg', 50, FALSE)
-
+/*
 /mob/living/Life()
 	if(GLOB.canon_event)
 		if(client)
@@ -365,7 +365,7 @@
 					if(!cool_guy)
 						client.deadmin()
 	..()
-
+*/
 /obj/item/argemia
 	name = "strange plushie"
 	desc = "Voiding..."
