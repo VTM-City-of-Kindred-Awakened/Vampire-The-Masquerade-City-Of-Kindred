@@ -37,7 +37,7 @@ var/list/CMNoir = list(0.3,0.3,0.3,0,\
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
 							//If you died in the game and are a ghost - this will remain as null.
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
-	var/movement_delay = 2 // [ChillRaccoon] - movement delay
+	var/movement_delay = 1.5 // [ChillRaccoon] - movement delay
 	var/atom/movable/following = null
 	var/fun_verbs = 0
 	var/image/ghostimage_default = null //this mobs ghost image without accessories and dirs
@@ -72,13 +72,15 @@ var/list/CMNoir = list(0.3,0.3,0.3,0,\
 	var/deadchat_name
 	var/datum/orbit_menu/orbit_menu
 	var/datum/spawners_menu/spawners_menu
+	var/aghosted = 0
 
 /mob/dead/observer/Login()
 	..()
-	if(client)
+	if(client && !aghosted)
+		animate(client, color = CMNoir, time = 30)
 		client.color = CMNoir
-		if(client.prefs.toggles & SOUND_SHIP_AMBIENCE)
-			client << sound('sound/effects/ghost_ambient.ogg', 1, 0, 99, 30)
+		if(client.prefs.toggles & CHANNEL_AMBIENCE)
+			client << sound('sound/effects/ghost_ambient.ogg', 1, 5, CHANNEL_AMBIENCE, 20)
 
 /mob/dead/observer/Initialize()
 	set_invisibility(GLOB.observer_default_invisibility)
@@ -292,7 +294,7 @@ Transfer_mind is there to check if mob is being deleted/not going to have a body
 Works together with spawning an observer, noted above.
 */
 
-/mob/proc/ghostize(can_reenter_corpse = TRUE)
+/mob/proc/ghostize(can_reenter_corpse = TRUE, aghosted = 0)
 	if(key)
 	/*
 		if(client)
@@ -307,14 +309,20 @@ Works together with spawning an observer, noted above.
 			// [ChillRaccoon] - setting mob icons
 			ghost.icon = src.icon // [ChillRaccoon] - We should transfer mob visuals to the ghost
 			ghost.overlays = src.overlays // [ChillRaccoon] - Overlays too, else we will not see wounds, hair, skin, and etc.
-			ghost.color = CMNoir // [ChillRaccoon] - it makes our ghost
+			ghost.color = CMNoir // [ChillRaccoon] - it makes our ghost looks like noir
 			// -------
 			ghost.key = key
 			ghost.client.init_verbs()
 			ghost.client = src.client
-			ghost.client.color = CMNoir // [ChillRaccoon] - noir screen effect
-			if(ghost.client.prefs.toggles & SOUND_SHIP_AMBIENCE)
-				ghost.client << sound('sound/effects/ghost_ambient.ogg', 1, 5, 99, 30)
+			ghost.aghosted = aghosted
+			if(aghosted)
+				// to_chat(ghost.client, "Check rights - [check_rights_for(ghost.client, R_ADMIN)]")
+				ghost.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
+				ghost.movement_type += PHASING // [ChillRaccoon] - makes us available to go through dens objects
+			else
+				ghost.client.color = CMNoir // [ChillRaccoon] - noir screen effect
+				if(ghost.client.prefs.toggles & CHANNEL_AMBIENCE)
+					ghost.client << sound('sound/effects/ghost_ambient.ogg', 1, 5, CHANNEL_AMBIENCE, 20)
 
 			if(!can_reenter_corpse)	// Disassociates observer mind from the body mind
 				ghost.mind = null
@@ -393,7 +401,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>")
 		return
 	client.view_size.setDefault(getScreenSize(client.prefs.widescreenpref))//Let's reset so people can't become allseeing gods
-	client.show_popup_menus = FALSE
+	// client.show_popup_menus = FALSE
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
 	mind.current.key = key
 	mind.current.client.init_verbs()

@@ -134,10 +134,14 @@
 	if(!.)
 		return
 	var/mob/screenmob = viewmob || mymob
+	/* // [ChillRaccoon] - do a little trolling
 	if(!screenmob.client.prefs.ghost_hud)
 		screenmob.client.screen -= static_inventory
-	else
-		screenmob.client.screen += static_inventory
+	else*/
+	//if(!check_rights_for(screenmob.client, R_ADMIN)) // [ChillRaccoon] - administration shouldn't see overlays
+	// to_chat(screenmob.client, "Check rights (overlays) - [check_rights_for(screenmob.client, R_ADMIN)]")
+
+	screenmob.client.screen += static_inventory
 
 //We should only see observed mob alerts.
 /datum/hud/ghost/reorganize_alerts(mob/viewmob)

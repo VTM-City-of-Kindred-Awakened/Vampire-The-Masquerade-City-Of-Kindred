@@ -9,15 +9,18 @@
 
 	// Things you might plausibly want to follow
 
-	// [ChillRaccoon] - Removed due to request
+	// [ChillRaccoon] - follow and teleport should make only admins
 
-	//if(ismovable(A))
-	//	ManualFollow(A)
+	if(!aghosted)
+		return FALSE
+
+	if(ismovable(A))
+		ManualFollow(A)
 
 	// Otherwise jump
-	//else if(A.loc)
-	//	forceMove(get_turf(A))
-	//	update_parallax_contents()
+	else if(A.loc)
+		forceMove(get_turf(A))
+		update_parallax_contents()
 
 /mob/dead/observer/ClickOn(atom/A, params)
 	if(check_click_intercept(params,A))
