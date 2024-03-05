@@ -54,125 +54,91 @@ SUBSYSTEM_DEF(cityweather)
 			if("Clear")
 				to_chat(world, "The night sky becomes clear...")
 				if(raining)
-					for(var/area/vtm/V in world)
-						if(V.upper)
-							animate(V, transform = null)
-							V.layer = initial(V.layer)
-							V.plane = initial(V.plane)
-							V.icon = 'icons/turf/areas.dmi'
-							V.icon_state = ""
+					for(var/obj/effect/vamp_weather/V in GLOB.rain_suka)
+						V.invisibility = INVISIBILITY_MAXIMUM
+						animate(V, transform = null, pixel_w = 0, pixel_z = 0, alpha = 255)
 				raining = FALSE
 				if(fogging)
-					for(var/area/vtm/V in world)
-						if(V.upper)
-							animate(V, transform = null)
-							V.layer = initial(V.layer)
-							V.plane = initial(V.plane)
-							V.icon = 'icons/turf/areas.dmi'
-							V.icon_state = ""
+					for(var/obj/effect/vamp_weather/V in GLOB.rain_suka)
+						V.invisibility = INVISIBILITY_MAXIMUM
+						animate(V, transform = null, pixel_w = 0, pixel_z = 0, alpha = 255)
 				fogging = FALSE
 				if(snowing)
-					for(var/area/vtm/V in world)
-						if(V.upper)
-							animate(V, transform = null)
-							V.layer = initial(V.layer)
-							V.plane = initial(V.plane)
-							V.icon = 'icons/turf/areas.dmi'
-							V.icon_state = ""
+					for(var/obj/effect/vamp_weather/V in GLOB.rain_suka)
+						V.invisibility = INVISIBILITY_MAXIMUM
+						animate(V, transform = null, pixel_w = 0, pixel_z = 0, alpha = 255)
 				snowing = FALSE
 			if("Rain")
 				to_chat(world, "Clouds are uniting on the sky, small raindrops irrigate the city...")
 				raining = TRUE
 				if(fogging)
-					for(var/area/vtm/V in world)
-						if(V.upper)
-							animate(V, transform = null)
-							V.layer = initial(V.layer)
-							V.plane = initial(V.plane)
-							V.icon = 'icons/turf/areas.dmi'
-							V.icon_state = ""
+					for(var/obj/effect/vamp_weather/V in GLOB.rain_suka)
+						V.invisibility = INVISIBILITY_MAXIMUM
+						animate(V, transform = null, pixel_w = 0, pixel_z = 0, alpha = 255)
 				fogging = FALSE
 				if(snowing)
-					for(var/area/vtm/V in world)
-						if(V.upper)
-							animate(V, transform = null)
-							V.layer = initial(V.layer)
-							V.plane = initial(V.plane)
-							V.icon = 'icons/turf/areas.dmi'
-							V.icon_state = ""
+					for(var/obj/effect/vamp_weather/V in GLOB.rain_suka)
+						V.invisibility = INVISIBILITY_MAXIMUM
+						animate(V, transform = null, pixel_w = 0, pixel_z = 0, alpha = 255)
 				snowing = FALSE
-				for(var/area/vtm/V in world)
-					if(V.upper)
-						animate(V, transform = null)
-						V.layer = SPACEVINE_LAYER
-						V.plane = GAME_PLANE
-						V.icon = 'code/modules/ziggers/newweather.dmi'
-						V.icon_state = "rain[rand(1, 15)]"
-						V.pixel_w = -16
-						V.pixel_z = -32
-						var/matrix/M = new
-						M.Scale(0.5, 0.5)
-						V.transform = M
+				for(var/obj/effect/vamp_weather/V in GLOB.rain_suka)
+					V.invisibility = 0
+					animate(V, transform = null, pixel_w = 0, pixel_z = 0, alpha = 255)
+					V.layer = SPACEVINE_LAYER
+					V.plane = GAME_PLANE
+					V.icon = 'code/modules/ziggers/newweather.dmi'
+					V.icon_state = "rain[rand(1, 15)]"
+					V.pixel_w = -16
+					V.pixel_z = -32
+					var/matrix/M = new
+					M.Scale(0.5, 0.5)
+					V.transform = M
 			if("Snow")
 				to_chat(world, "Clouds are uniting on the sky, small snowflakes irrigate the city...")
 				if(raining)
-					for(var/area/vtm/V in world)
-						if(V.upper)
-							animate(V, transform = null)
-							V.layer = initial(V.layer)
-							V.plane = initial(V.plane)
-							V.icon = 'icons/turf/areas.dmi'
-							V.icon_state = ""
+					for(var/obj/effect/vamp_weather/V in GLOB.rain_suka)
+						V.invisibility = INVISIBILITY_MAXIMUM
+						animate(V, transform = null, pixel_w = 0, pixel_z = 0, alpha = 255)
 				raining = FALSE
 				if(fogging)
-					for(var/area/vtm/V in world)
-						if(V.upper)
-							animate(V, transform = null)
-							V.layer = initial(V.layer)
-							V.plane = initial(V.plane)
-							V.icon = 'icons/turf/areas.dmi'
-							V.icon_state = ""
+					for(var/obj/effect/vamp_weather/V in GLOB.rain_suka)
+						V.invisibility = INVISIBILITY_MAXIMUM
+						animate(V, transform = null, pixel_w = 0, pixel_z = 0, alpha = 255)
 				fogging = FALSE
 				snowing = TRUE
-				for(var/area/vtm/V in world)
-					if(V.upper)
-						animate(V, transform = null)
-						V.layer = SPACEVINE_LAYER
-						V.plane = GAME_PLANE
-						V.icon = 'code/modules/ziggers/newweather.dmi'
-						V.icon_state = "snow[rand(1, 15)]"
-						V.pixel_w = -16
-						V.pixel_z = 0
+				for(var/obj/effect/vamp_weather/V in GLOB.rain_suka)
+					V.invisibility = 0
+					animate(V, transform = null, pixel_w = 0, pixel_z = 0, alpha = 255)
+					V.layer = SPACEVINE_LAYER
+					V.plane = GAME_PLANE
+					V.icon = 'code/modules/ziggers/newweather.dmi'
+					V.icon_state = "snow[rand(1, 15)]"
+					V.pixel_w = -16
+					V.pixel_z = 0
 			if("Fog")
 				to_chat(world, "Visibility range quickly decreases...")
 				if(raining)
-					for(var/area/vtm/V in world)
-						if(V.upper)
-							V.layer = initial(V.layer)
-							V.plane = initial(V.plane)
-							V.icon = 'icons/turf/areas.dmi'
-							V.icon_state = ""
+					for(var/obj/effect/vamp_weather/V in GLOB.rain_suka)
+						V.invisibility = INVISIBILITY_MAXIMUM
+						animate(V, transform = null, pixel_w = 0, pixel_z = 0, alpha = 255)
 				raining = FALSE
 				fogging = TRUE
 				if(snowing)
-					for(var/area/vtm/V in world)
-						if(V.upper)
-							V.layer = initial(V.layer)
-							V.plane = initial(V.plane)
-							V.icon = 'icons/turf/areas.dmi'
-							V.icon_state = ""
+					for(var/obj/effect/vamp_weather/V in GLOB.rain_suka)
+						V.invisibility = INVISIBILITY_MAXIMUM
+						animate(V, transform = null, pixel_w = 0, pixel_z = 0, alpha = 255)
 				snowing = FALSE
-				for(var/area/vtm/V in world)
-					if(V.upper)
-						animate(V, transform = null)
-						V.layer = SPACEVINE_LAYER
-						V.plane = GAME_PLANE
-						V.icon = 'code/modules/ziggers/fog.dmi'
-						V.icon_state = "fog"
-						V.pixel_w = -96
-						V.pixel_z = -96
-						animate(V, pixel_x = rand(-96, 96), pixel_y = rand(-96, 96), alpha = rand(5, 21), transform = matrix()*rand(1, 3), transform = turn(matrix(), rand(0, 360)), time = rand(100, 200), loop = -1)
-						animate(transform = null, pixel_x = 0, pixel_y = 0, alpha = rand(5, 21), time = rand(100, 200))
+				for(var/obj/effect/vamp_weather/V in GLOB.rain_suka)
+					V.invisibility = 0
+					animate(V, transform = null, pixel_w = 0, pixel_z = 0, alpha = 255)
+					V.layer = SPACEVINE_LAYER
+					V.plane = GAME_PLANE
+					V.icon = 'code/modules/ziggers/fog.dmi'
+					V.icon_state = "fog"
+					V.pixel_w = -96
+					V.pixel_z = -96
+					animate(V, pixel_x = rand(-96, 96), pixel_y = rand(-96, 96), alpha = rand(5, 21), transform = matrix()*rand(1, 3), transform = turn(matrix(), rand(0, 360)), time = rand(100, 200), loop = -1)
+					animate(transform = null, pixel_x = 0, pixel_y = 0, alpha = rand(5, 21), time = rand(100, 200))
 
 /datum/controller/subsystem/cityweather/Initialize()
 	. = ..()
@@ -276,3 +242,21 @@ SUBSYSTEM_DEF(cityweather)
 	. = ..()
 	icon_state = "snow[rand(1, 15)]"
 	animate(src, alpha = 128, time = 30)
+
+/obj/effect/vamp_weather
+	plane = GAME_PLANE
+	layer = SPACEVINE_LAYER
+	anchored = TRUE
+	density = FALSE
+	mouse_opacity = 0
+
+/obj/effect/vamp_weather/Initialize()
+	. = ..()
+	GLOB.rain_suka += src
+
+/turf/open/Initialize()
+	. = ..()
+	if(istype(get_area(src), /area/vtm))
+		var/area/vtm/V = get_area(src)
+		if(V.upper)
+			new /obj/effect/vamp_weather(src)
