@@ -313,7 +313,7 @@ Works together with spawning an observer, noted above.
 			ghost.client.init_verbs()
 			ghost.client = src.client
 			ghost.client.color = CMNoir // [ChillRaccoon] - noir screen effect
-			if(client.prefs.toggles & SOUND_SHIP_AMBIENCE)
+			if(ghost.client.prefs.toggles & SOUND_SHIP_AMBIENCE)
 				ghost.client << sound('sound/effects/ghost_ambient.ogg', 1, 5, 99, 30)
 
 			if(!can_reenter_corpse)	// Disassociates observer mind from the body mind
