@@ -807,14 +807,14 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set category = "Admin"
 	set desc = "Regain your admin powers."
 
-	if(GLOB.canon_event)
-		if(istype(mob, /mob/living))
-			var/cool_guy = FALSE
-			for(var/i in GLOB.psychokids)
-				if(i == "[ckey]")
-					cool_guy = TRUE
-			if(!cool_guy)
-				return
+//	if(GLOB.canon_event)
+//		if(istype(mob, /mob/living))
+//			var/cool_guy = FALSE
+//			for(var/i in GLOB.psychokids)
+//				if(i == "[ckey]")
+//					cool_guy = TRUE
+//			if(!cool_guy)
+//				return
 
 	var/datum/admins/A = GLOB.deadmins[ckey]
 

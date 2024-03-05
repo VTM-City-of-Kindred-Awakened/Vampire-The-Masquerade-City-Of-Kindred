@@ -4,6 +4,7 @@
 	var/mob/living/carbon/werewolf/lupus/lupus_form
 
 	var/transformating = FALSE
+	var/given_quirks = FALSE
 
 /obj/werewolf_holder/transformation/Initialize()
 	. = ..()
@@ -23,9 +24,24 @@
 	second.adjustCloneLoss(round((first.getCloneLoss()/100)*percentage)-second.getCloneLoss())
 
 /obj/werewolf_holder/transformation/proc/trans_gender(mob/living/carbon/trans, form)
+	if(!given_quirks)
+		given_quirks = TRUE
+		if(HAS_TRAIT(trans, TRAIT_ACROBATIC))
+			var/datum/action/acrobate/DA = new()
+			DA.Grant(lupus_form)
+			var/datum/action/acrobate/NE = new()
+			NE.Grant(crinos_form)
+		if(HAS_TRAIT(trans, TRAIT_DANCER))
+			var/datum/action/dance/DA = new()
+			DA.Grant(lupus_form)
+			var/datum/action/dance/NE = new()
+			NE.Grant(crinos_form)
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
 	if(trans.auspice.rage == 0 && form != trans.auspice.base_breed)
-		to_chat(trans, "Not enough rage to transform into anything but [trans.auspice.base_breed]")
+		to_chat(trans, "Not enough rage to transform into anything but [trans.auspice.base_breed].")
+		return
+	if(trans.in_frenzy)
+		to_chat(trans, "You can't transform while in frenzy.")
 		return
 	trans.inspired = FALSE
 	switch(form)
