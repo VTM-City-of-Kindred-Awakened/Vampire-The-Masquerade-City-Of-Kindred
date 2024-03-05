@@ -1196,6 +1196,10 @@
 
 /datum/discipline/vicissitude/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
+	if(iswerewolf(target))
+		playsound(caster.loc, 'code/modules/ziggers/sounds/vicissitude.ogg', 50, TRUE)
+		caster.adjustFireLoss(50)		//абузеры страдайте
+		caster.emote("scream")
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		playsound(target.loc, 'code/modules/ziggers/sounds/vicissitude.ogg', 50, TRUE)
