@@ -279,9 +279,18 @@
 /area/vtm/interior/penumbra
 	name = "Penumbra"
 	icon_state = "church"
+	ambience_index = AMBIENCE_NATURE
 	upper = FALSE
 	zone_type = "battle"
-	music = /datum/vampiremusic/forest
+	music = /datum/vampiremusic/penumbra
+	fire_controled = FALSE
+
+/area/vtm/interior/backrooms
+	name = "Backrooms"
+	icon_state = "church"
+	ambience_index = AMBIENCE_INTERIOR
+	upper = FALSE
+	zone_type = "battle"
 	fire_controled = FALSE
 
 //MUSIC
@@ -294,6 +303,10 @@
 /datum/vampiremusic/forest
 	length = 389 SECONDS
 	sound = 'code/modules/ziggers/sounds/night_ambience.ogg'
+
+/datum/vampiremusic/penumbra
+	length = 336 SECONDS
+	sound = 'code/modules/ziggers/sounds/penumbra.ogg'
 
 /datum/vampiremusic/santamonica
 	length = 304 SECONDS

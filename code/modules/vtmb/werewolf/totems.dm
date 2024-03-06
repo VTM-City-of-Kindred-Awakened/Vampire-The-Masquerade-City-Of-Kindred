@@ -16,6 +16,7 @@
 	var/last_rage = 0
 
 	var/turf/teleport_turf
+	var/opening = FALSE
 
 /obj/structure/werewolf_totem/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -59,6 +60,10 @@
 							to_chat(C, "<span class='userdanger'><b>YOUR TOTEM IS DESTROYED</b></span>")
 							SEND_SOUND(C, sound('sound/effects/tendril_destroyed.ogg', 0, 0, 75))
 							adjust_gnosis(-5, C, FALSE)
+							var/obj/umbra_portal/prev = locate() in get_step(src, SOUTH)
+							if(prev)
+								qdel(prev.exit)
+								qdel(prev)
 		else
 			for(var/mob/living/carbon/C in GLOB.player_list)
 				if(iswerewolf(C) || isgarou(C))
@@ -121,18 +126,31 @@
 	if(iswerewolf(user) || isgarou(user))
 		var/mob/living/carbon/C = user
 		if(C.a_intent != INTENT_HARM)
+			if(health <= 0)
+				to_chat(C, "<span class='warning'>[src] is broken!</span>")
+				return
 			var/obj/umbra_portal/prev = locate() in get_step(src, SOUTH)
 			if(!prev)
-				playsound(loc, 'code/modules/ziggers/sounds/portal.ogg', 75, FALSE)
-				var/obj/umbra_portal/U = new (get_step(src, SOUTH))
-				U.id = "[tribe][rand(1, 999)]"
-				U.later_initialize()
-				var/obj/umbra_portal/P = new (teleport_turf)
-				P.id = U.id
-				P.later_initialize()
+				if(C.auspice.name == "Theurge")
+					if(!opening)
+						opening = TRUE
+						if(do_mob(user, src, 10 SECONDS))
+							playsound(loc, 'code/modules/ziggers/sounds/portal.ogg', 75, FALSE)
+							var/obj/umbra_portal/U = new (get_step(src, SOUTH))
+							U.id = "[tribe][rand(1, 999)]"
+							U.later_initialize()
+							var/obj/umbra_portal/P = new (teleport_turf)
+							P.id = U.id
+							P.later_initialize()
+							opening = FALSE
+						else
+							opening = FALSE
+				else
+					to_chat(C, "<span class='warning'>You need a Theurge to open the Moon Gates!</span>")
 			else
-				playsound(loc, 'code/modules/ziggers/sounds/portal.ogg', 75, FALSE)
-				qdel(prev.exit)
-				qdel(prev)
+				if(C.auspice.name == "Theurge")
+					playsound(loc, 'code/modules/ziggers/sounds/portal.ogg', 75, FALSE)
+					qdel(prev.exit)
+					qdel(prev)
 		else
 			adjust_totem_health(round(C.melee_damage_lower/2))

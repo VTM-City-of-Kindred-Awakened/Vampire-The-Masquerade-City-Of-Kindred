@@ -77,6 +77,13 @@
 				exit = T
 				T.exit = src
 
+/obj/transfer_point_vamp/backrooms
+	id = "backrooms"
+	alpha = 0
+
+/obj/transfer_point_vamp/backrooms/map
+	density = 0
+
 /obj/transfer_point_vamp/umbral
 	name = "portal"
 	icon = 'code/modules/ziggers/48x48.dmi'
