@@ -108,9 +108,9 @@
 				H.transformator.lupus_form.social = H.social
 				H.transformator.lupus_form.blood = H.blood
 
-				H.transformator.lupus_form.maxHealth = round((initial(H.transformator.lupus_form.maxHealth)+(initial(H.maxHealth)/4)*H.physique))
+				H.transformator.lupus_form.maxHealth = round((initial(H.transformator.lupus_form.maxHealth)+(initial(H.maxHealth)/4)*H.physique))+(H.auspice.level-1)*50
 				H.transformator.lupus_form.health = H.transformator.lupus_form.maxHealth
-				H.transformator.crinos_form.maxHealth = round((initial(H.transformator.crinos_form.maxHealth)+(initial(H.maxHealth)/4)*H.physique))
+				H.transformator.crinos_form.maxHealth = round((initial(H.transformator.crinos_form.maxHealth)+(initial(H.maxHealth)/4)*H.physique))+(H.auspice.level-1)*50
 				H.transformator.crinos_form.health = H.transformator.crinos_form.maxHealth
 	if(H.mind)
 		H.mind.add_antag_datum(/datum/antagonist/spiral)
