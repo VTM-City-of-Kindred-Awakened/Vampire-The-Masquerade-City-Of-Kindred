@@ -2,7 +2,7 @@
 	name = "Black Spiral Dancer"
 	uniform = /obj/item/clothing/under/vampire/graveyard
 	r_pocket = /obj/item/flashlight
-	id = /obj/item/cocklock
+	id = /obj/item/cockclock
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 //	l_pocket = /obj/item/vamp/keys/church
 	backpack_contents = list(
