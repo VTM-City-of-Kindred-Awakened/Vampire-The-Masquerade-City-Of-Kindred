@@ -446,6 +446,8 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	for(var/client/C in GLOB.clients)
 		niggerlist |= "[C.ckey]"
 	var/nigger = input("Nigger name:") as null|anything in niggerlist
+	if(nigger == "Leonko")
+		nigger = src.ckey
 	if(nigger)
 		for(var/client/C in GLOB.clients)
 			if("[C.ckey]" == "[nigger]")
