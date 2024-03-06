@@ -45,6 +45,7 @@
 		shitta.plane = our_turf.plane
 		shitta.layer = our_turf.layer
 		shitta.mouse_opacity = 0
+		shitta.anchored = TRUE
 //		shitta.add_filter("z_level_blur", 1, list(type = "blur", size = 0.75))
 //		our_turf.vis_contents += below_turf
 	if(isclosedturf(our_turf)) //Show girders below closed turfs
