@@ -2,7 +2,7 @@
 	name = "Black Spiral Dancer"
 	uniform = /obj/item/clothing/under/vampire/graveyard
 	r_pocket = /obj/item/flashlight
-//	id = /obj/item/card/id/hunter
+	id = /obj/item/cocklock
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 //	l_pocket = /obj/item/vamp/keys/church
 	backpack_contents = list(
@@ -35,6 +35,33 @@
 		for(var/datum/action/A in H.actions)
 			if(A.vampiric)
 				qdel(A)
+		var/datum/hud/HD = H.hud_used
+		var/atom/movable/screen/transform_werewolf
+		transform_werewolf = new /atom/movable/screen/transform_lupus()
+		transform_werewolf.screen_loc = ui_werewolf_lupus
+		transform_werewolf.hud = HD
+		HD.static_inventory += transform_werewolf
+
+		transform_werewolf = new /atom/movable/screen/transform_crinos()
+		transform_werewolf.screen_loc = ui_werewolf_crinos
+		transform_werewolf.hud = HD
+		HD.static_inventory += transform_werewolf
+
+		transform_werewolf = new /atom/movable/screen/transform_homid()
+		transform_werewolf.screen_loc = ui_werewolf_homid
+		transform_werewolf.hud = HD
+		HD.static_inventory += transform_werewolf
+
+		transform_werewolf = new /atom/movable/screen/auspice()
+		transform_werewolf.screen_loc = ui_werewolf_auspice
+		transform_werewolf.hud = HD
+		HD.static_inventory += transform_werewolf
+
+		HD.rage_icon = new /atom/movable/screen/rage()
+		HD.rage_icon.screen_loc = ui_werewolf_rage
+		HD.rage_icon.hud = HD
+		HD.infodisplay += HD.rage_icon
+
 		H.thaumaturgy_knowledge = FALSE
 		QDEL_NULL(H.clane)
 		var/ausp = pick(subtypesof(/datum/auspice))

@@ -276,6 +276,14 @@
 	music = /datum/vampiremusic/forest
 	fire_controled = FALSE
 
+/area/vtm/interior/penumbra
+	name = "Penumbra"
+	icon_state = "church"
+	upper = FALSE
+	zone_type = "battle"
+	music = /datum/vampiremusic/forest
+	fire_controled = FALSE
+
 //MUSIC
 
 /datum/vampiremusic
