@@ -77,6 +77,22 @@
 				exit = T
 				T.exit = src
 
+/obj/transfer_point_vamp/umbral
+	name = "portal"
+	icon = 'code/modules/ziggers/48x48.dmi'
+	icon_state = "portal"
+	plane = ABOVE_LIGHTING_PLANE
+	layer = ABOVE_LIGHTING_LAYER
+	pixel_w = -8
+
+/obj/transfer_point_vamp/umbral/Initialize()
+	. = ..()
+	set_light(2, 1, "#a4a0fb")
+
+/obj/transfer_point_vamp/umbral/Bumped(atom/movable/AM)
+	. = ..()
+	playsound(get_turf(AM), 'code/modules/ziggers/sounds/portal_enter.ogg', 75, FALSE)
+
 /obj/transfer_point_vamp/Bumped(atom/movable/AM)
 	. = ..()
 	var/turf/T = get_step(exit, get_dir(AM, src))

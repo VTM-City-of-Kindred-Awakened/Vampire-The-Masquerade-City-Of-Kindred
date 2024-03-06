@@ -107,6 +107,9 @@
 	tribe = "Black Spiral"
 	totem_overlay_color = "#ff5235"
 	pixel_w = -16
+	mouse_opacity = 0
+	alpha = 0
+	density = 0
 
 /obj/effect/landmark/teleport_mark
 	name = "Teleport"

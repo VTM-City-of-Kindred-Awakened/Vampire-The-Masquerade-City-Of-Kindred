@@ -18,6 +18,7 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	umbra = TRUE
 	density = TRUE
+	planetary_atmos = TRUE
 
 /turf/open/floor/plating/umbra/Initialize()
 	. = ..()
@@ -49,7 +50,7 @@
 
 /obj/minespot/playable/Initialize()
 	. = ..()
-	if(prob(25))
+	if(prob(30))
 		bomb = TRUE
 
 /obj/minespot/proc/uncover()

@@ -23,7 +23,7 @@
 			owner = null
 
 /obj/item/vtm_artifact
-	name = "unidentified occult artifact"
+	name = "unidentified occult fetish"
 	desc = "Who knows what secrets it could contain..."
 	icon_state = "arcane"
 	icon = 'code/modules/ziggers/items.dmi'
