@@ -266,15 +266,15 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		update_icon()
 
 		for(var/mob/living/M in conts)
-			if (M.stat != DEAD)
+			if(M.stat != DEAD)
 				M.emote("scream")
 				if(user)
-					if(ishuman(M) && !iskindred(M))
+					if(isnpc(M) && !iskindred(M))
 						var/mob/living/carbon/human/HM = user
 						HM.AdjustHumanity(-1, 0)
 			if(user)
 				log_combat(user, M, "cremated")
-				if(!iskindred(M) && ishuman(M) && M.stat == DEAD)
+				if(!iskindred(M) && isnpc(M) && M.stat == DEAD)
 					var/mob/living/carbon/human/HM = user
 					HM.AdjustMasquerade(1)
 			else

@@ -39,7 +39,7 @@
 	if(isnpc(mob))
 		var/mob/living/carbon/human/npc/NPC = mob
 		NPC.danger_source = null
-		NPC.last_attacker = src
+//		NPC.last_attacker = src
 
 	if(iskindred(mob))
 		to_chat(src, "<span class='userlove'>You notice a pleasant feeling while siping [mob]'s BLOOD...</span>")

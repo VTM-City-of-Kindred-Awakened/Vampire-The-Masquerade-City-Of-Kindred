@@ -351,6 +351,14 @@
 			drop.transfer_mob_blood_dna(src)
 			return
 
+	var/amount_of_blood = 0
+	for(var/obj/effect/decal/cleanable/blood/blod in T)
+		if(blod)
+			amount_of_blood = max(0, amount_of_blood+1)
+
+	if(amount_of_blood >= 10)
+		return
+
 	new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
 	var/obj/effect/decal/cleanable/blood/B = locate() in T
 	if(B)

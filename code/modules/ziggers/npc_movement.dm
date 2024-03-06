@@ -41,7 +41,7 @@
 /mob/living/carbon/human/npc/death()
 	walk(src,0)
 	if(last_attacker && !key && !hostile)
-		if(get_dist(src, last_attacker) < 30)
+		if(get_dist(src, last_attacker) < 10)
 			if(istype(last_attacker, /mob/living/simple_animal/hostile))
 				var/mob/living/simple_animal/hostile/HS = last_attacker
 				if(HS.my_creator)

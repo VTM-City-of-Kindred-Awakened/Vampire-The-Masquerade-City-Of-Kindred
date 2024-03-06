@@ -244,23 +244,8 @@
 				if(ishuman(H.pulling))
 					var/mob/living/carbon/human/pull = H.pulling
 					if(pull.stat == 4)
-						if(H.CheckEyewitness(H, H, 7, FALSE))
-							if(H.last_loot_check+50 <= world.time)
-								H.last_loot_check = world.time
-								H.last_nonraid = world.time
-								H.killed_count = H.killed_count+1
-								if(!H.warrant)
-									if(H.killed_count >= 5)
-										H.warrant = TRUE
-										SEND_SOUND(H, sound('code/modules/ziggers/sounds/suspect.ogg', 0, 0, 75))
-										to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
-									else
-										SEND_SOUND(H, sound('code/modules/ziggers/sounds/sus.ogg', 0, 0, 75))
-										to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (corpse)</b></span>")
-			for(var/obj/item/I in H.contents)
-				if(I)
-					if(I.masquerade_violating)
-						if(I.loc == H)
+						var/obj/item/card/id/id_card = H.get_idcard(FALSE)
+						if(!istype(id_cart, /obj/item/card/id/clinic) && !istype(id_cart, /obj/item/card/id/police))
 							if(H.CheckEyewitness(H, H, 7, FALSE))
 								if(H.last_loot_check+50 <= world.time)
 									H.last_loot_check = world.time
@@ -273,7 +258,26 @@
 											to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
 										else
 											SEND_SOUND(H, sound('code/modules/ziggers/sounds/sus.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
+											to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (corpse)</b></span>")
+			for(var/obj/item/I in H.contents)
+				if(I)
+					if(I.masquerade_violating)
+						if(I.loc == H)
+							var/obj/item/card/id/id_card = H.get_idcard(FALSE)
+							if(!istype(id_cart, /obj/item/card/id/police))
+								if(H.CheckEyewitness(H, H, 7, FALSE))
+									if(H.last_loot_check+50 <= world.time)
+										H.last_loot_check = world.time
+										H.last_nonraid = world.time
+										H.killed_count = H.killed_count+1
+										if(!H.warrant)
+											if(H.killed_count >= 5)
+												H.warrant = TRUE
+												SEND_SOUND(H, sound('code/modules/ziggers/sounds/suspect.ogg', 0, 0, 75))
+												to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
+											else
+												SEND_SOUND(H, sound('code/modules/ziggers/sounds/sus.ogg', 0, 0, 75))
+												to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
 	if(H.hearing_ghosts)
 		H.bloodpool = max(0, H.bloodpool-1)
 		to_chat(H, "<span class='warning'>Necromancy Vision reduces your blood points too sustain itself.</span>")
