@@ -126,7 +126,7 @@
 	if(iswerewolf(user) || isgarou(user))
 		var/mob/living/carbon/C = user
 		if(C.a_intent != INTENT_HARM)
-			if(health <= 0)
+			if(totem_health <= 0)
 				to_chat(C, "<span class='warning'>[src] is broken!</span>")
 				return
 			var/obj/umbra_portal/prev = locate() in get_step(src, SOUTH)
