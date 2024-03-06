@@ -212,6 +212,12 @@ Dancer
 	if(owner.pulledby)
 		return
 
+	if(istype(get_step(owner, owner.dir), /turf/open/floor/plating/umbra))
+		return
+
+	if(istype(get_step(get_step(owner, owner.dir), owner.dir), /turf/open/floor/plating/umbra))
+		return
+
 	if(isclosedturf(get_step(owner, owner.dir)))
 		return
 

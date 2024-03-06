@@ -214,7 +214,7 @@
 		if(!W)
 			var/mob/living/carbon/werewolf/wolf = src
 			var/allowed_to_proceed = FALSE
-			if(CanReach(A,src))
+			if(get_dist(A, src) <= 1)
 				allowed_to_proceed = TRUE
 			if(wolf.a_intent == INTENT_HARM && !isitem(A))
 				allowed_to_proceed = TRUE

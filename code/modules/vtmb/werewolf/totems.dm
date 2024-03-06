@@ -15,6 +15,8 @@
 
 	var/last_rage = 0
 
+	var/turf/teleport_turf
+
 /obj/structure/werewolf_totem/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 	if(I.force)
@@ -26,6 +28,9 @@
 
 /obj/structure/werewolf_totem/Initialize()
 	. = ..()
+	for(var/obj/effect/landmark/teleport_mark/T in GLOB.landmarks_list)
+		if(T.tribe == tribe)
+			teleport_turf = get_turf(T)
 	set_light(3, 0.5, totem_overlay_color)
 	GLOB.totems += src
 	totem_light_overlay = new(src)
@@ -102,3 +107,29 @@
 	tribe = "Black Spiral"
 	totem_overlay_color = "#ff5235"
 	pixel_w = -16
+
+/obj/effect/landmark/teleport_mark
+	name = "Teleport"
+	icon_state = "x"
+	var/tribe
+
+/obj/structure/werewolf_totem/attack_hand(mob/user)
+	. = ..()
+	if(iswerewolf(user) || isgarou(user))
+		var/mob/living/carbon/C = user
+		if(C.a_intent != INTENT_HARM)
+			var/obj/umbra_portal/prev = locate() in get_step(src, SOUTH)
+			if(!prev)
+				playsound(loc, 'code/modules/ziggers/sounds/portal.ogg', 75, FALSE)
+				var/obj/umbra_portal/U = new (get_step(src, SOUTH))
+				U.id = "[tribe][rand(1, 999)]"
+				U.later_initialize()
+				var/obj/umbra_portal/P = new (teleport_turf)
+				P.id = U.id
+				P.later_initialize()
+			else
+				playsound(loc, 'code/modules/ziggers/sounds/portal.ogg', 75, FALSE)
+				qdel(prev.exit)
+				qdel(prev)
+		else
+			adjust_totem_health(round(C.melee_damage_lower/2))

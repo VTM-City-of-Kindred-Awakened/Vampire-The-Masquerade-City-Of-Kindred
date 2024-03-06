@@ -41,6 +41,7 @@
 
 /obj/minespot/Initialize()
 	. = ..()
+	color = "#8e8e8e"
 	icon_state = "tile[rand(1, 16)]"
 
 /obj/minespot/playable
@@ -48,7 +49,6 @@
 
 /obj/minespot/playable/Initialize()
 	. = ..()
-	color = "#8e8e8e"
 	if(prob(25))
 		bomb = TRUE
 
@@ -139,3 +139,46 @@
 			else
 				M.icon_state = "unknown"
 				M.marked = FALSE
+
+/obj/umbra_portal
+	name = "portal"
+	desc = "Trahsfer your soul."
+	icon = 'code/modules/ziggers/48x48.dmi'
+	icon_state = "portal"
+	density = TRUE
+	anchored = TRUE
+	plane = ABOVE_LIGHTING_PLANE
+	layer = ABOVE_LIGHTING_LAYER
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	pixel_w = -8
+	var/obj/umbra_portal/exit
+	var/id
+
+/obj/umbra_portal/proc/later_initialize()
+	set_light(2, 1, "#a4a0fb")
+	if(id)
+		for(var/obj/umbra_portal/U in GLOB.umbra_portals)
+			if(U.id)
+				if(U.id == id)
+					U.exit = src
+					exit = U
+		GLOB.umbra_portals += src
+
+/obj/umbra_portal/Destroy()
+	. = ..()
+	if(id)
+		for(var/obj/umbra_portal/U in GLOB.umbra_portals)
+			if(U.id)
+				if(U.id == id)
+					U.exit = null
+					exit = null
+		GLOB.umbra_portals -= src
+
+/obj/umbra_portal/Bumped(atom/movable/AM)
+	. = ..()
+	var/turf/T = get_step(exit, get_dir(AM, src))
+//	to_chat(world, "Moving from [x] [y] [z] to [exit.x] [exit.y] [exit.z]")
+//	to_chat(world, "Actually [T.x] [T.y] [T.z]")
+	AM.forceMove(T)
+	playsound(loc, 'code/modules/ziggers/sounds/portal_enter.ogg', 75, FALSE)
+	playsound(T, 'code/modules/ziggers/sounds/portal_enter.ogg', 75, FALSE)
