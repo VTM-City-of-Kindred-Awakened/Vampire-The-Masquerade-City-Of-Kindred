@@ -296,7 +296,8 @@
 		name = real_name
 		dna.real_name = real_name
 		var/obj/item/organ/eyes/organ_eyes = getorgan(/obj/item/organ/eyes)
-		organ_eyes.eye_color = random_eye_color()
+		if(organ_eyes)
+			organ_eyes.eye_color = random_eye_color()
 		underwear = random_underwear(gender)
 		if(prob(50))
 			underwear_color = organ_eyes.eye_color

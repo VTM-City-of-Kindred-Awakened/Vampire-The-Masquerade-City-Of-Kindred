@@ -41,7 +41,7 @@ the new instance inside the host to be updated to the template's stats.
 	var/points = 0
 
 	var/last_move_tick = 0
-	var/move_delay = 1
+	//var/move_delay = 1
 
 	var/next_adaptation_time = 0
 	var/adaptation_cooldown = 600
@@ -110,14 +110,14 @@ the new instance inside the host to be updated to the template's stats.
 /mob/camera/disease/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	return
 
-/mob/camera/disease/Move(NewLoc, Dir = 0)
+/*mob/camera/disease/Move(NewLoc, Dir = 0)
 	if(freemove)
 		forceMove(NewLoc)
 	else
 		if(world.time > (last_move_tick + move_delay))
 			follow_next(Dir & NORTHWEST)
 			last_move_tick = world.time
-
+*/
 /mob/camera/disease/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
 	var/atom/movable/to_follow = speaker

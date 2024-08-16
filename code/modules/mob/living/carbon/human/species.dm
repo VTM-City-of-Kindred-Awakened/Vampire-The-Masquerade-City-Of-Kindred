@@ -1824,13 +1824,12 @@ GLOBAL_LIST_EMPTY(donation_races)
 		// Apply cold slow down
 		humi.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((bodytemp_cold_damage_limit - humi.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 		// Display alerts based how cold it is
-		switch(humi.bodytemperature)
-			if(201 to bodytemp_cold_damage_limit)
-				humi.throw_alert("temp", /atom/movable/screen/alert/cold, 1)
-			if(120 to 200)
-				humi.throw_alert("temp", /atom/movable/screen/alert/cold, 2)
-			else
-				humi.throw_alert("temp", /atom/movable/screen/alert/cold, 3)
+		if(humi.bodytemperature >= 201 && humi.bodytemperature <= bodytemp_cold_damage_limit)
+			humi.throw_alert("temp", /atom/movable/screen/alert/cold, 1)
+		else if(humi.bodytemperature >= 120 && humi.bodytemperature < 201)
+			humi.throw_alert("temp", /atom/movable/screen/alert/cold, 2)
+		else
+			humi.throw_alert("temp", /atom/movable/screen/alert/cold, 3)
 
 	// We are not to hot or cold, remove status and moods
 	else
@@ -1885,13 +1884,13 @@ GLOBAL_LIST_EMPTY(donation_races)
 	if(humi.coretemperature < cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
 		var/damage_type = is_hulk ? BRUTE : BURN
 		var/damage_mod = coldmod * humi.physiology.cold_mod * (is_hulk ? HULK_COLD_DAMAGE_MOD : 1)
-		switch(humi.coretemperature)
-			if(201 to cold_damage_limit)
-				humi.apply_damage(COLD_DAMAGE_LEVEL_1 * damage_mod, damage_type)
-			if(120 to 200)
-				humi.apply_damage(COLD_DAMAGE_LEVEL_2 * damage_mod, damage_type)
-			else
-				humi.apply_damage(COLD_DAMAGE_LEVEL_3 * damage_mod, damage_type)
+		if(humi.coretemperature >= 201 && humi.coretemperature <= cold_damage_limit)
+			humi.apply_damage(COLD_DAMAGE_LEVEL_1 * damage_mod, damage_type)
+		else if(humi.coretemperature >= 120 && humi.coretemperature < 201)
+			humi.apply_damage(COLD_DAMAGE_LEVEL_2 * damage_mod, damage_type)
+		else
+			humi.apply_damage(COLD_DAMAGE_LEVEL_3 * damage_mod, damage_type)
+
 
 /**
  * Used to apply burn wounds on random limbs

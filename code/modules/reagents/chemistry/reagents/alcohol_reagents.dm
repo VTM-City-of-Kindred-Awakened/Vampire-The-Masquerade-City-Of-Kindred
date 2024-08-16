@@ -1127,12 +1127,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of [name]"
 	glass_desc = description
 	for(var/taste in tastes)
-		switch(tastes[taste])
-			if(minimum_percent*2 to INFINITY)
-				primary_tastes += taste
-			if(minimum_percent to minimum_percent*2)
-				secondary_tastes += taste
-
+		var/taste_value = tastes[taste]
+		if(taste_value >= minimum_percent*2)
+			primary_tastes += taste
+		else if(taste_value >= minimum_percent)
+			secondary_tastes += taste
 	var/minimum_name_percent = 0.35
 	name = ""
 	var/list/names_in_order = sortTim(names, /proc/cmp_numeric_dsc, TRUE)

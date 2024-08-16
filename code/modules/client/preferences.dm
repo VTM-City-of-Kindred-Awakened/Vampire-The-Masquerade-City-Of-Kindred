@@ -580,13 +580,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							var/datum/action/T = new zalupa()
 							gifts_text += "[T.name], "
 				for(var/i in auspice.gifts)
-					var/datum/action/A = new i()
+					var/datum/action/ACT = new i()
 					num_of_gifts = min(num_of_gifts+1, length(auspice.gifts))
 					if(num_of_gifts != length(auspice.gifts))
-						gifts_text += "[A.name], "
+						gifts_text += "[ACT.name], "
 					else
-						gifts_text += "[A.name].<BR>"
-					qdel(A)
+						gifts_text += "[ACT.name].<BR>"
+					qdel(ACT)
 				dat += "<b>Initial Gifts:</b> [gifts_text]"
 				var/mob/living/carbon/werewolf/crinos/DAWOF = new(get_turf(parent.mob))
 				var/mob/living/carbon/werewolf/lupus/DAWOF2 = new(get_turf(parent.mob))

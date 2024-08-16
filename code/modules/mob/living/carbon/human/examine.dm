@@ -276,13 +276,12 @@
 	var/apparent_blood_volume = bloodpool
 //	if(skin_tone == "albino")
 //		apparent_blood_volume -= 150 // enough to knock you down one tier
-	switch(apparent_blood_volume)
-		if(maxbloodpool to round(maxbloodpool/2))
-			msg += "[t_He] [t_has] pale skin.\n"
-		if(round(maxbloodpool/2) to 1)
-			msg += "<b>[t_He] look[p_s()] like pale death.</b>\n"
-		if(-INFINITY to 0)
-			msg += "<span class='deadsay'><b>[t_He] resemble[p_s()] a crushed, empty juice pouch.</b></span>\n"
+	if(apparent_blood_volume >= round(maxbloodpool/2) && apparent_blood_volume <= maxbloodpool)
+		msg += "[t_He] [t_has] pale skin.\n"
+	else if(apparent_blood_volume >= 1 && apparent_blood_volume < round(maxbloodpool/2))
+		msg += "<b>[t_He] look[p_s()] like pale death.</b>\n"
+	else if(apparent_blood_volume <= 0)
+		msg += "<span class='deadsay'><b>[t_He] resemble[p_s()] a crushed, empty juice pouch.</b></span>\n"
 
 	if(is_bleeding())
 		var/list/obj/item/bodypart/bleeding_limbs = list()
